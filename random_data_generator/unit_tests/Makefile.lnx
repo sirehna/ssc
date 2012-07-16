@@ -1,0 +1,12 @@
+PLATFORM = lnx
+TRGT = lnx
+OBJ_EXT = .o
+DYN_EXT = .so
+EXE_EXT =
+LIB_EXT = .a
+
+
+GOOGLE_TEST_LIB = $(GOOGLE_TEST_DIR)/lib/$(PLATFORM)/libgtest_main$(LIB_EXT) $(GOOGLE_TEST_DIR)/lib/$(PLATFORM)/libgtest$(LIB_EXT) -lpthread
+include Makefile.mk
+
+include Makefile.inc

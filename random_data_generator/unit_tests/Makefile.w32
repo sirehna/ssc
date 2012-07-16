@@ -1,0 +1,18 @@
+PLATFORM = win32
+TRGT = w32
+
+OBJ_EXT = .o
+DYN_EXT = .dll
+EXE_EXT = .exe
+LIB_EXT = .lib
+
+IPOPT_DIR = ../
+
+
+GOOGLE_TEST_LIB = $(GOOGLE_TEST_DIR)/make/gtest_main.a $(GOOGLE_TEST_DIR)/make/gtest.a 
+include Makefile.mk
+
+
+CPP = g++ -mno-cygwin
+
+include Makefile.inc

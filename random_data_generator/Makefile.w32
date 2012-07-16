@@ -1,0 +1,13 @@
+PLATFORM = win32
+TRGT = w32
+
+OBJ_EXT = .o
+DYN_EXT = .dll
+EXE_EXT = .exe
+LIB_EXT = .lib
+
+include Makefile.mk
+
+CPP = g++ -mno-cygwin
+
+include Makefile.inc
