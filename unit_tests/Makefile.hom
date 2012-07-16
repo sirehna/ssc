@@ -1,4 +1,0 @@
-include ../../hom_makefile.mk
-include Makefile.mk
-include ../../make_tests.mk
-
