@@ -1,0 +1,12 @@
+PLATFORM = lnx
+TRGT = lnx
+
+CPP = g++
+OBJ_EXT = .o
+OBJ_DIR = bin/$(PLATFORM)
+DYN_EXT = .so
+EXE_EXT =
+LIB_EXT = .a
+
+include Makefile.mk
+include Makefile.inc
