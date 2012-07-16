@@ -1,0 +1,3 @@
+include ../w32_makefile.mk
+include Makefile.mk
+include ../make_libs.mk
