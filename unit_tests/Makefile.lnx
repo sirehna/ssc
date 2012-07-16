@@ -1,4 +1,0 @@
-include ../../lnx_makefile.mk
-include Makefile.mk
-include ../../make_tests.mk
-
