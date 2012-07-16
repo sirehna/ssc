@@ -1,0 +1,39 @@
+PLATFORM = lnx
+TRGT = hom
+
+OBJ_EXT = .o
+DYN_EXT = .so
+EXE_EXT =
+LIB_EXT = .a
+
+IPOPT_DIR = /home/charly/work/CoinIpopt
+
+YAML_INC = -I /usr/local/include/yaml-cpp/
+YAML_LIB = /usr/local/lib/libyaml-cpp$(LIB_EXT)
+PTHREAD = -lpthread
+JNI_INC = -isystem /usr/lib/jvm/java-6-sun/include/ -isystem /usr/lib/jvm/java-6-sun/include/linux/
+JNI_LIB = 
+
+include Makefile.mk
+
+IPOPT_LNK = $(IPOPT_DIR)/Ipopt/src/Interfaces/.libs/libipopt.so\
+            $(IPOPT_DIR)/ThirdParty/Mumps/.libs/libcoinmumps.so\
+            -L/usr/lib/gcc/i486-linux-gnu/4.4.3\
+            -L/usr/lib/\
+            -L/lib\
+            -L/usr/lib\
+            -L/usr/lib/i486-linux-gnu\
+            -lpthread\
+            $(IPOPT_DIR)/ThirdParty/HSL/.libs/libcoinhsl.so\
+            -lgfortranbegin\
+            -lgfortran\
+            -lgcc_s\
+            -llapack\
+            -lblas\
+            -lm\
+            -ldl\
+            -Wl,--rpath -Wl,$(IPOPT_DIR)/lib/coin\
+            -Wl,--rpath -Wl,$(IPOPT_DIR)/ThirdParty/Mumps/lib/coin/ThirdParty\
+            -Wl,--rpath -Wl,$(IPOPT_DIR)/lib/coin/ThirdParty
+
+include Makefile.inc
