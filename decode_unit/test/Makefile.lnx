@@ -1,0 +1,55 @@
+CPP = g++
+WARNING_AS_ERRORS = -Werror -Wfatal-errors
+AYATOLA = -ansi -Woverloaded-virtual -Weffc++ -pedantic  \
+		  -pedantic-errors -Wextra  -Wall\
+		  -Wvariadic-macros
+
+DISABLE_WARNING_FOR_SYSTEM_LIBS = -isystem /usr/include
+
+CFLAGS = $(WARNING_AS_ERRORS) $(AYATOLA) -g
+
+PLATFORM = lnx
+
+
+OBJ_EXT = .o
+OBJ_DIR = bin/$(PLATFORM)
+
+vpath %.cpp src
+vpath %.hpp inc
+
+
+DYN_EXT = .so
+EXE_EXT =
+
+LIB_EXT = .a
+
+
+OUTPUT_FILE = $(OBJ_DIR)/matrix_test$(EXE_EXT)
+
+GOOGLE_TEST_INC = -isystem ../../gtest-1.6.0/include/
+GOOGLE_TEST_LIB = ../../gtest-1.6.0/lib/.libs/libgtest.a -pthread 
+
+INC = -I inc/ -isystem ../include $(DISABLE_WARNING_FOR_SYSTEM_LIBS) $(GOOGLE_TEST_INC)
+
+
+
+OPTIMIZATION = -O3
+
+OBJ_FILES = $(OBJ_DIR)/matrix_extract_tests$(OBJ_EXT)
+
+.PHONY: all clean debug
+
+MAROFF_LNK = ../Cpp/bin/$(PLATFORM)/libmaroff_core$(DYN_EXT)
+
+all: $(OBJ_FILES) $(OBJ_DIR)/test_main$(OBJ_EXT)
+	cp ../$(OBJ_DIR)/libfm_tools.so $(OBJ_DIR)
+	$(CPP) -o $(OUTPUT_FILE) $(OBJ_FILES) $(OBJ_DIR)/test_main$(OBJ_EXT) $(GOOGLE_TEST_LIB) $(OBJ_DIR)/libfm_tools.so -llapack
+
+$(OBJ_DIR)/%.o : %.cpp %.hpp
+	$(CPP) $(INC) $(CFLAGS) -c $< $(OPTIMIZATION) -o $@
+
+$(OBJ_DIR)/test_main$(OBJ_EXT) : test_main.cpp
+	$(CPP) $(INC) $(CFLAGS) -c $< $(OPTIMIZATION) -o $@
+
+clean:
+	rm -f $(OUTPUT_FILE) $(OBJ_FILES)
