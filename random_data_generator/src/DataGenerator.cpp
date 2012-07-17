@@ -273,6 +273,11 @@ template <> bool TypedScalarDataGenerator<bool>::get() const
     return random_bool();
 }
 
+template <> std::string TypedScalarDataGenerator<std::string>::get() const
+{
+    return random_string();
+}
+
 
 template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
 {
