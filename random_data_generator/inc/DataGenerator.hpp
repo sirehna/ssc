@@ -35,47 +35,35 @@ class DataGenerator
 
         DataGenerator(const size_t& seed);
         virtual ~DataGenerator(){}
-        bool random_bool() const;
-        int    random_int() const;
-        size_t random_size_t() const;
-        size_t random_size_t_greater_than(const size_t& i0) const;
-        float  random_float() const;
-        long   random_long() const;
-        short  random_short() const;
-        double random_double() const;
-        double random_double_greater_than(const double& x0) const;
-
-        int    random_int(const int& a, const int& b) const;
-        size_t random_size_t(const size_t& a, const size_t& b) const;
-        float  random_float(const float& a, const float& b) const;
-        long   random_long(const long& a, const long& b) const;
-        short  random_short(const short& a, const short& b) const;
-        double random_double(const double& a, const double& b) const;
-        char   random_char() const;
-        const std::string random_string(const size_t& string_length) const;
-        const std::string random_string(const size_t& min_string_length, const size_t& max_string_length) const;
-        const std::string random_string() const;
-
-        const std::vector<bool>        vector_of_random_booleans(const size_t& n) const;
-        const std::vector<int>         vector_of_random_integers(const size_t& n, const int& a, const int& b) const;
-        const std::vector<size_t>      vector_of_random_size_ts(const size_t& n, const size_t& a, const size_t& b) const;
-        const std::vector<short>       vector_of_random_shorts(const size_t& n, const short& a, const short& b) const;
-        const std::vector<long>        vector_of_random_longs(const size_t& n, const long& a, const long& b) const;
-        const std::vector<float>       vector_of_random_floats(const size_t& n, const float& a, const float& b) const;
-        const std::vector<double>      vector_of_random_doubles(const size_t& n, const double& a, const double& b) const;
-        const std::vector<double>      vector_of_random_doubles(const size_t& n) const;
-        const std::vector<char>        vector_of_random_chars(const size_t& n) const;
-        const std::vector<std::string> vector_of_random_strings(const size_t& n) const;
-
-        const std::pair<int,int> random_pair_of_int() const;
 
         virtual DataGenerator& no();
 
     protected:
         bool negated;
+        bool random_bool() const;
+		int    random_int() const;
+		size_t random_size_t() const;
+		float  random_float() const;
+		long   random_long() const;
+		short  random_short() const;
+		double random_double() const;
+        const std::vector<size_t>      vector_of_random_size_ts(const size_t& n, const size_t& a, const size_t& b) const;
+        const std::vector<double>      vector_of_random_doubles(const size_t& n, const double& a, const double& b) const;
+
+		int    random_int(const int& a, const int& b) const;
+		size_t random_size_t(const size_t& a, const size_t& b) const;
+		float  random_float(const float& a, const float& b) const;
+		long   random_long(const long& a, const long& b) const;
+		short  random_short(const short& a, const short& b) const;
+		double random_double(const double& a, const double& b) const;
+		char   random_char() const;
+		const std::string random_string(const size_t& string_length) const;
+		const std::string random_string(const size_t& min_string_length, const size_t& max_string_length) const;
+		const std::string random_string() const;
     private:
         DataGenerator();
         int get_random_number() const;
+
 };
 
 template <class T> T get_min_bound() {return T();}
@@ -104,6 +92,11 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
             negated = false;
             return tmp;
         }
+
+        operator T()
+		{
+        	return this->operator()();
+		}
 
         TypedScalarDataGenerator& greater_than(const T& t)
         {
@@ -170,8 +163,6 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
         T forbidden_max;
 };
 
-
-
 template <class T> class TypedVectorDataGenerator : public DataGenerator
 {
     public:
@@ -196,6 +187,11 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
             return tmp;
         }
 
+        operator std::vector<T>()
+		{
+			return this->operator()();
+		}
+
         TypedVectorDataGenerator& greater_than(const T& t)
         {
             if (negated)
@@ -216,11 +212,23 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
         }
 
     private:
-        std::vector<T> get() const;
+        std::vector<T> get() const
+        {
+                	std::vector<T> ret;
+                	ret.reserve(size);
+        			for (size_t i = 0 ; i < size ; ++i)
+        			{
+        				ret.push_back(random<T>()());
+        			}
+        			return ret;
+                }
         size_t size;
         T min_bound;
         T max_bound;
 };
+
+template <> std::vector<double> TypedVectorDataGenerator<double>::get() const;
+template <> std::vector<size_t> TypedVectorDataGenerator<size_t>::get() const;
 
 template <class T> class TypedSetDataGenerator : public DataGenerator
 {
