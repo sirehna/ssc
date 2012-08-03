@@ -23,15 +23,15 @@ TEST_F(SparseMatrixTests, should_be_able_to_set_and_retrieve_an_element)
     for (size_t i = 0 ; i < nb_of_trials ; ++i)
     {
         SparseMatrix A(3);
-        const size_t idx1 = a.random<size_t>()();
-        const size_t idx2 = a.random<size_t>()();
-        const size_t idx3 = a.random<size_t>().greater_than(idx1)();
-        const size_t idx4 = a.random<size_t>()();
-        const size_t idx5 = a.random<size_t>().greater_than(idx3)();
-        const size_t idx6 = a.random<size_t>()();
-        const double val1 = a.random<double>()();
-        const double val2 = a.random<double>()();
-        const double val3 = a.random<double>()();
+        const size_t idx1 = a.random<size_t>();
+        const size_t idx2 = a.random<size_t>();
+        const size_t idx3 = a.random<size_t>().greater_than(idx1);
+        const size_t idx4 = a.random<size_t>();
+        const size_t idx5 = a.random<size_t>().greater_than(idx3);
+        const size_t idx6 = a.random<size_t>();
+        const double val1 = a.random<double>();
+        const double val2 = a.random<double>();
+        const double val3 = a.random<double>();
         A.add_element_in_row_order(idx1,idx2, val1);
         A.add_element_in_row_order(idx3,idx4, val2);
         A.add_element_in_row_order(idx5,idx6, val3);
@@ -44,43 +44,43 @@ TEST_F(SparseMatrixTests, should_be_able_to_set_and_retrieve_an_element)
 TEST_F(SparseMatrixTests, should_throw_an_exception_when_adding_an_element_twice_in_the_same_place)
 {
     SparseMatrix A(3);
-    const size_t idx1 = a.random_size_t();
-    const size_t idx2 = a.random_size_t();
-    A.add_element_in_row_order(idx1,idx2, a.random_double());
-    EXPECT_THROW(A.add_element_in_row_order(idx1,idx2, a.random_double()),Exception);
+    const size_t idx1 = a.random<size_t>();
+    const size_t idx2 = a.random<size_t>();
+    A.add_element_in_row_order(idx1,idx2, a.random<double>());
+    EXPECT_THROW(A.add_element_in_row_order(idx1,idx2, a.random<double>()),Exception);
 }
 
 TEST_F(SparseMatrixTests, should_throw_an_exception_when_inserting_an_element_not_in_row_order)
 {
     SparseMatrix A(2);
-    const size_t idx = a.random_size_t();
-    A.add_element_in_row_order(idx+1,idx+2,a.random_double());
-    EXPECT_THROW(A.add_element_in_row_order(idx,idx,a.random_double()), Exception);
+    const size_t idx = a.random<size_t>();
+    A.add_element_in_row_order(idx+1,idx+2,a.random<double>());
+    EXPECT_THROW(A.add_element_in_row_order(idx,idx,a.random<double>()), Exception);
 }
 
 TEST_F(SparseMatrixTests, elements_which_are_not_present_in_the_matrix_are_set_to_zero_by_default)
 {
     SparseMatrix A(1);
-    EXPECT_EQ(0, A.get(a.random_size_t(),a.random_size_t()));
+    EXPECT_EQ(0, A.get(a.random<size_t>(),a.random<size_t>()));
 }
 
 TEST_F(SparseMatrixTests, should_throw_an_exception_when_adding_too_many_elements_to_an_array)
 {
     SparseMatrix A(1);
-    const size_t idx = a.random_size_t();
-    A.add_element_in_row_order(idx,idx, a.random_double());
-    EXPECT_THROW(A.add_element_in_row_order(idx+1,idx+1, a.random_double()),Exception);
+    const size_t idx = a.random<size_t>();
+    A.add_element_in_row_order(idx,idx, a.random<double>());
+    EXPECT_THROW(A.add_element_in_row_order(idx+1,idx+1, a.random<double>()),Exception);
 }
 
 TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_indexes_and_all_column_indexes)
 {
-    const size_t nb_of_values = a.random_size_t(1,20);
-    std::vector<size_t> idx = a.vector_of_random_size_ts(nb_of_values, 1, 400*nb_of_values);
+    const size_t nb_of_values = a.random<size_t>().between(1,20);
+    std::vector<size_t> idx = a.random_vector_of<size_t>().of_size(nb_of_values).greater_than(1).no().greater_than(400*nb_of_values);
     std::sort(idx.begin(), idx.end());
     SparseMatrix A(nb_of_values);
     for (size_t i = 0 ; i < nb_of_values ; ++i)
     {
-        A.add_element_in_row_order(idx.at(i), idx.at(i), a.random_double());
+        A.add_element_in_row_order(idx.at(i), idx.at(i), a.random<double>());
     }
     SparseMatrix B(3);
     B.add_element_in_row_order(15, 9, 654);
@@ -239,7 +239,7 @@ TEST_F(SparseMatrixTests, no_memory_leaks_when_summing_an_empty_matrix)
 
 TEST_F(SparseMatrixTests, should_have_a_method_to_generate_an_identity_matrix_of_a_given_dimension)
 {
-    const size_t n = a.random_size_t();
+    const size_t n = a.random<size_t>();
     const SparseMatrix E(eye(n));
     const size_t *c = E.get_columns();
     const size_t *l = E.get_rows();
@@ -255,7 +255,7 @@ TEST_F(SparseMatrixTests, should_have_a_method_to_generate_an_identity_matrix_of
 TEST_F(SparseMatrixTests, should_have_a_function_to_efficiently_sum_sparse_matrices_in_a_vector_of_the_same)
 {
     std::vector<SparseMatrix> v;
-    const size_t n = a.random_size_t(10,20);
+    const size_t n = a.random<size_t>().between(10,20);
     for (size_t k = 0 ; k < n ; ++k)
     {
         v.push_back(eye(k+1));
@@ -391,7 +391,7 @@ TEST_F(SparseMatrixTests, should_be_able_to_copy_row_indexes_to_array)
     size_t *rows = new size_t[5];
     for (size_t i = 0 ; i < 5 ; ++i) rows[i] = 0;
     EXPECT_THROW(C.copy_row_indexes_to(5, NULL), SparseMatrixException);
-    EXPECT_THROW(C.copy_row_indexes_to(a.random<size_t>().but_not(5)(), rows), SparseMatrixException);
+    EXPECT_THROW(C.copy_row_indexes_to(a.random<size_t>().but_not(5), rows), SparseMatrixException);
     EXPECT_NO_THROW(C.copy_row_indexes_to(5, rows));
     EXPECT_EQ(0, rows[0]);
     EXPECT_EQ(0, rows[1]);
@@ -412,7 +412,7 @@ TEST_F(SparseMatrixTests, should_be_able_to_copy_column_indexes_to_array)
     size_t *columns = new size_t[5];
     for (size_t i = 0 ; i < 5 ; ++i) columns[i] = 0;
     EXPECT_THROW(C.copy_column_indexes_to(5, NULL), SparseMatrixException);
-    EXPECT_THROW(C.copy_column_indexes_to(a.random<size_t>().but_not(5)(), columns), SparseMatrixException);
+    EXPECT_THROW(C.copy_column_indexes_to(a.random<size_t>().but_not(5), columns), SparseMatrixException);
     EXPECT_NO_THROW(C.copy_column_indexes_to(5, columns));
     EXPECT_EQ(0, columns[0]);
     EXPECT_EQ(1, columns[1]);
@@ -433,7 +433,7 @@ TEST_F(SparseMatrixTests, should_be_able_to_copy_values_to_array)
     double *values = new double[5];
     for (size_t i = 0 ; i < 5 ; ++i) values[i] = 0;
     EXPECT_THROW(C.copy_values_to(5, NULL), SparseMatrixException);
-    EXPECT_THROW(C.copy_values_to(a.random<size_t>().but_not(5)(), values), SparseMatrixException);
+    EXPECT_THROW(C.copy_values_to(a.random<size_t>().but_not(5), values), SparseMatrixException);
     EXPECT_NO_THROW(C.copy_values_to(5, values));
     EXPECT_EQ(3, values[0]);
     EXPECT_EQ(3, values[1]);
