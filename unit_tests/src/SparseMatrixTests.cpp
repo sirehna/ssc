@@ -239,7 +239,7 @@ TEST_F(SparseMatrixTests, no_memory_leaks_when_summing_an_empty_matrix)
 
 TEST_F(SparseMatrixTests, should_have_a_method_to_generate_an_identity_matrix_of_a_given_dimension)
 {
-    const size_t n = a.random<size_t>();
+    const size_t n = a.random<size_t>().no().greater_than(100)();
     const SparseMatrix E(eye(n));
     const size_t *c = E.get_columns();
     const size_t *l = E.get_rows();
