@@ -19,13 +19,13 @@ TEST_F(SparseVectorTests, there_should_exist_a_sparse_vector_class)
 TEST_F(SparseVectorTests, should_be_able_to_set_and_retrieve_an_element)
 {
     SparseVector A(3);
-    const size_t idx1 = get_a.random_size_t();
-    const size_t idx2 = get_a.random_size_t(idx1, idx1+get_a.random_size_t());
-    const size_t idx3 = get_a.random_size_t(idx2, idx2+get_a.random_size_t());
-    const size_t idx4 = get_a.random_size_t(idx3, idx3+get_a.random_size_t());
-    const double val1 = get_a.random_double();
-    const double val2 = get_a.random_double();
-    const double val3 = get_a.random_double();
+    const size_t idx1 = a.random<size_t>();
+    const size_t idx2 = a.random<size_t>().between(idx1, idx1+a.random<size_t>());
+    const size_t idx3 = a.random<size_t>().between(idx2, idx2+a.random<size_t>());
+    const size_t idx4 = a.random<size_t>().between(idx3, idx3+a.random<size_t>());
+    const double val1 = a.random<double>();
+    const double val2 = a.random<double>();
+    const double val3 = a.random<double>();
     A.add_element_in_order(idx1, val1);
     A.add_element_in_order(idx2, val2);
     A.add_element_in_order(idx3, val3);
@@ -34,7 +34,7 @@ TEST_F(SparseVectorTests, should_be_able_to_set_and_retrieve_an_element)
     EXPECT_EQ(val3, A.get(idx3));
     EXPECT_THROW(A.add_element_in_order(idx1, val1),Exception);
     EXPECT_THROW(A.get(idx4),Exception);
-    EXPECT_THROW(A.add_element_in_order(idx2,get_a.random_double()), Exception);
+    EXPECT_THROW(A.add_element_in_order(idx2,a.random<double>()), Exception);
 }
 
 TEST_F(SparseVectorTests, should_be_able_to_retrieve_all_elements_and_all_indexes)
@@ -275,7 +275,7 @@ TEST_F(SparseVectorTests, should_be_able_to_copy_indexes_to_array)
     size_t *indexes = new size_t[5];
     for (size_t i = 0 ; i < 5 ; ++i) indexes[i] = 0;
     EXPECT_THROW(C.copy_indexes_to(5, NULL), SparseVectorException);
-    EXPECT_THROW(C.copy_indexes_to(get_a.random<size_t>().but_not(5)(), indexes), SparseVectorException);
+    EXPECT_THROW(C.copy_indexes_to(a.random<size_t>().but_not(5), indexes), SparseVectorException);
     EXPECT_NO_THROW(C.copy_indexes_to(5, indexes));
     EXPECT_EQ(0,  indexes[0]);
     EXPECT_EQ(1,  indexes[1]);
@@ -297,7 +297,7 @@ TEST_F(SparseVectorTests, should_be_able_to_copy_values_to_array)
     double *values = new double[5];
     for (size_t i = 0 ; i < 5 ; ++i) values[i] = 0;
     EXPECT_THROW(C.copy_values_to(5, NULL), SparseVectorException);
-    EXPECT_THROW(C.copy_values_to(get_a.random<size_t>().but_not(5)(), values), SparseVectorException);
+    EXPECT_THROW(C.copy_values_to(a.random<size_t>().but_not(5), values), SparseVectorException);
     EXPECT_NO_THROW(C.copy_values_to(5, values));
     EXPECT_EQ(3, values[0]);
     EXPECT_EQ(3, values[1]);
