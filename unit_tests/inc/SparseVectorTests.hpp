@@ -8,11 +8,11 @@
 class SparseVectorTests : public ::testing::Test
 {
     protected:
-        SparseVectorTests() : get_a(DataGenerator(95442))
+        SparseVectorTests() : a(DataGenerator(95442))
                                 {}
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator get_a;
+        DataGenerator a;
 
 };
 
