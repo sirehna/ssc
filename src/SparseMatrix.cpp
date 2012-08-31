@@ -433,7 +433,6 @@ bool SparseMatrix::operator!=(const SparseMatrix& rhs) const
         }
     }
     ++nb_of_columns; // indexes start at 0...
-    size_t k = 0;
     os.width(2);
     os.precision(0);
     os.setf(os.fixed);
@@ -445,6 +444,7 @@ bool SparseMatrix::operator!=(const SparseMatrix& rhs) const
     else
     {
         os << "(" << nb_of_rows << "x" << nb_of_columns << "):" << std::endl;
+        size_t k = 0;
         for (size_t i = 0 ; i < nb_of_rows ; ++i)
         {
             os << "| ";
