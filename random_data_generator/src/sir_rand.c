@@ -173,9 +173,10 @@ sir_rand_setseed (int put)
 double sir_rand_n01()
 {
 	static int i=0;
-	static double x=0.0,y=0.0;
-	double s;
+	static double y=0.0;
 	if( i==0 ) {
+	    double s;
+	    static double x=0.0;
 		do {
 			x=sir_rand_u01();
 			y=sir_rand_u01();
