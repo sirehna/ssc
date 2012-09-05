@@ -13,4 +13,4 @@ include_directories(${random_data_generator_INCLUDE_DIRS})
 
 # Linking libraries
 add_library(${PROJECT_NAME} OBJECT ${SRC})
-
+ADD_DEPENDENCIES(${PROJECT_NAME} googlemock)
