@@ -14,9 +14,8 @@ YamlParser::YamlParser(const std::string& contents_to_parse) : contents(contents
 
 YAML::Node& YamlParser::convert_stream_to_yaml_node(const std::string& input_data, YAML::Node& node) const
 {
-	std::stringstream stream(input_data);
-	YAML::Parser parser(stream);
-	parser.GetNextDocument(node);
-	return node;
+    std::stringstream stream(input_data);
+    YAML::Parser parser(stream);
+    parser.GetNextDocument(node);
+    return node;
 }
-
