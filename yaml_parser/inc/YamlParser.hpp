@@ -18,9 +18,9 @@ class YamlParser
 
 
 	protected:
-		YAML::Node& convert_stream_to_yaml_node(const std::string& input_data, YAML::Node& node) const;
+	    YAML::Node& convert_stream_to_yaml_node(const std::string& input_data, YAML::Node& node) const;
 		YamlParser();
-		std::string contents;
+		const std::string contents;
 };
 
 
