@@ -11,12 +11,6 @@ include_directories (inc)
 include_directories(SYSTEM ${GTEST_INCLUDE_DIR})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})
+ADD_DEPENDENCIES(${PROJECT_NAME} googlemock)
 
-# Build executable
-#add_executable(run_all_tests ${SRC})
-#target_link_libraries(run_all_tests ${GTEST_BOTH_LIBRARIES})
-#target_link_libraries(run_all_tests ${MODULE_UNDER_TEST}_static)
-#
-## Register test with CTest
-#add_test(all_tests_in_${MODULE_UNDER_TEST} run_all_tests)
 
