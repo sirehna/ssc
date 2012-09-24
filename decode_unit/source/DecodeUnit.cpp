@@ -1,5 +1,4 @@
-// TODO : 
-// - handle non ASCII characters ° µ centered dot, cross, divide... accents ?
+// TODO - handle non ASCII characters ° µ centered dot, cross, divide... accents ?
 // - find a syntax for absolute temperature (maybe +K, +°C, +°F)
 //   in this case we need function convertUsi(double value ,string unit)
 // - complete and test the units
