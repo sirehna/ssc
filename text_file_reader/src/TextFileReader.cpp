@@ -10,6 +10,16 @@
 #include <fstream>
 #include <sstream>
 #include "test_macros.hpp"
+#include "Exception.hpp"
+
+class TextFileReaderException: public Exception
+{
+    public:
+        TextFileReaderException(const char* s) :
+                Exception(s)
+        {
+        }
+};
 
 TextFileReader::TextFileReader(const std::vector<std::string>& filenames_) : filenames(filenames_),
 contents("")

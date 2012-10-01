@@ -5,19 +5,9 @@
  *  \author cec
  */
 
-#include "Exception.hpp"
+
 #include <string>
 #include <vector>
-
-class TextFileReaderException: public Exception
-{
-	public:
-		TextFileReaderException(const char* s) :
-				Exception(s)
-		{
-		}
-};
-
 
 #ifndef TEXTFILEREADER_HPP_
 #define TEXTFILEREADER_HPP_
