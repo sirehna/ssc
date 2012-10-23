@@ -205,6 +205,20 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
             return *this;
         }
 
+        TypedVectorDataGenerator<T>& but()
+        {
+            negated = false;
+            return *this;
+        }
+
+
+        TypedVectorDataGenerator& between(const T& t1, const T& t2)
+        {
+            min_bound = t1;
+            max_bound = t2;
+            return *this;
+        }
+
         TypedVectorDataGenerator<T>& no()
         {
             negated = true;
@@ -214,14 +228,14 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
     private:
         std::vector<T> get() const
         {
-                	std::vector<T> ret;
-                	ret.reserve(size);
-        			for (size_t i = 0 ; i < size ; ++i)
-        			{
-        				ret.push_back(random<T>()());
-        			}
-        			return ret;
-                }
+            std::vector<T> ret;
+            ret.reserve(size);
+            for (size_t i = 0 ; i < size ; ++i)
+            {
+                ret.push_back(random<T>().between(min_bound, max_bound)());
+            }
+            return ret;
+        }
         size_t size;
         T min_bound;
         T max_bound;

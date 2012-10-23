@@ -166,3 +166,46 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_random_double)
     }
     ASSERT_EQ(generated_numbers.size(), 2);
 }
+
+TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_between_two_values)
+{
+    const size_t nb_of_trials = 100;
+    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    {
+        const double lower_bound = a.random<double>();
+        const double upper_bound = a.random<double>().greater_than(lower_bound);
+        std::vector<double> v = a.random_vector_of<double>().between(lower_bound,upper_bound)();
+        for (std::vector<double>::const_iterator it = v.begin() ; it != v.end() ; ++it)
+        {
+            ASSERT_LE(*it, upper_bound);
+            ASSERT_GE(*it, lower_bound);
+        }
+    }
+}
+/*
+TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_outside_an_interval)
+{
+    const size_t nb_of_trials = 100;
+    std::set<double> generated_numbers;
+    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    {
+        const size_t n = a.random<size_t>().between(2,20);
+        const std::vector<double> v1 = a.random_vector_of<double>().of_size(n).outside(2.1,2.9).but().between(2,3);
+        const std::vector<double> v2 = a.random_vector_of<double>().of_size(n).between(2,3).but().outside(2.1,2.9);
+        ASSERT_EQ(n, v1.size());
+        ASSERT_EQ(n, v2.size());
+        for (std::vector<double>::const_iterator it = v1.begin() ; it != v1.end() ; ++it)
+        {
+            ASSERT_LT(*it, 3);
+            ASSERT_GT(*it, 2);
+            ASSERT_FALSE((*it>=2.1)&&(*it<=2.9));
+        }
+        for (std::vector<double>::const_iterator it = v2.begin() ; it != v2.end() ; ++it)
+        {
+            ASSERT_LT(*it, 3);
+            ASSERT_GT(*it, 2);
+            ASSERT_FALSE((*it>=2.1)&&(*it<=2.9));
+        }
+    }
+}
+*/
