@@ -56,7 +56,7 @@ Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<dou
 {
 }
 
-void Splines::set_computed_spline_value(const double& x0)
+void Splines::set_computed_value(const double& x0)
 {
 	if (n>1)
 	{

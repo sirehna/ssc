@@ -36,7 +36,7 @@ class Splines
 		Splines();
 		virtual ~Splines() {}
 		Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y);
-		void set_computed_spline_value(const double& x0);
+		void set_computed_value(const double& x0);
 		double f() const;
 		double df() const;
 		double d2f() const;

@@ -3,7 +3,8 @@ set(MODULE_UNDER_TEST interpolation)
 project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/SplinesTest.cpp
               src/VectorOfEquallySpacedNumbersTest.cpp
-              src/TwoDimensionalInterpolationTest.cpp)
+              src/TwoDimensionalInterpolationTest.cpp
+              src/LinearInterpolationTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

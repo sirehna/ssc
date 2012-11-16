@@ -8,7 +8,7 @@
 #include "TwoDimensionalInterpolationTest.hpp"
 #include "TwoDimensionalInterpolation.hpp"
 #include <vector>
-
+#include "LinearInterpolation.hpp"
 #include "test_macros.hpp"
 
 TwoDimensionalSplinesTest::TwoDimensionalSplinesTest() : a(DataGenerator(12))
@@ -30,8 +30,6 @@ void TwoDimensionalSplinesTest::TearDown()
 TEST_F(TwoDimensionalSplinesTest, example)
 {
 //! [TwoDimensionalSplinesTest example]
-    const std::vector<double> x = {1,2,3,4,5,6,7,8,9,10};
-    const std::vector<double> y(x);
     std::vector<std::vector<double> > M;
     M.push_back({2,5,10,17,26,37,50,65,82,101});
     M.push_back({5,8,13,20,29,40,53,68,85,104});
@@ -45,57 +43,61 @@ TEST_F(TwoDimensionalSplinesTest, example)
     M.push_back({101,104,109,116,125,136,149,164,181,200});
 //! [TwoDimensionalSplinesTest example]
 //! [TwoDimensionalSplinesTest expected output]
-    TwoDimensionalSplines spline(x,y,M);
-    ASSERT_DOUBLE_EQ(4.5, spline.f(1.5,1.5));
-    ASSERT_DOUBLE_EQ(8.5, spline.f(2.5,1.5));
+
+    TwoDimensionalInterpolation<LinearInterpolation> spline(1,10,1,10,M);
+    ASSERT_DOUBLE_EQ(5, spline.f(1.5,1.5));
+    ASSERT_DOUBLE_EQ(9, spline.f(2.5,1.5));
 //! [TwoDimensionalSplinesTest expected output]
 }
 
 TEST_F(TwoDimensionalSplinesTest, should_throw_if_all_elements_in_M_arent_the_same_size)
 {
-    const std::vector<double> x = a.random_vector_of<double>();
-    const std::vector<double> y = a.random_vector_of<double>();
     std::vector<std::vector<double> > M;
 
-    for (size_t i = 0 ; i < x.size() ; ++i)
-    {
-        M.push_back(a.random_vector_of<double>().of_size(y.size()));
-    }
-    ASSERT_THROW(TwoDimensionalSplines(x,y,M), TwoDimensionalSplinesException);
-}
-
-TEST_F(TwoDimensionalSplinesTest, should_throw_if_size_of_x_is_not_size_of_M)
-{
-    const std::vector<double> x = a.random_vector_of<double>();
-    const std::vector<double> y = a.random_vector_of<double>();
-    std::vector<std::vector<double> > M;
-    const size_t n = a.random<size_t>().but_not(x.size());
+    const size_t n = a.random<size_t>().no().greater_than(20);
     for (size_t i = 0 ; i < n ; ++i)
     {
-        M.push_back(a.random_vector_of<double>().of_size(y.size()));
+        M.push_back(a.random_vector_of<double>());
     }
-    ASSERT_THROW(TwoDimensionalSplines(x,y,M), TwoDimensionalSplinesException);
+    ASSERT_THROW(TwoDimensionalInterpolation<LinearInterpolation>(a.random<double>(),a.random<double>(),a.random<double>(),a.random<double>(),M), TwoDimensionalInterpolationException);
 }
 
-TEST_F(TwoDimensionalSplinesTest, should_throw_if_size_of_y_is_not_size_of_each_element_in_M)
+TEST_F(TwoDimensionalSplinesTest, should_throw_if_M_has_less_than_two_elements)
 {
-    const std::vector<double> x = a.random_vector_of<double>();
-    const std::vector<double> y = a.random_vector_of<double>();
     std::vector<std::vector<double> > M;
-    const size_t n = a.random<size_t>().but_not(y.size());
-    for (size_t i = 0 ; i < x.size() ; ++i)
+    ASSERT_THROW(TwoDimensionalInterpolation<LinearInterpolation>(a.random<double>(),a.random<double>(),a.random<double>(),a.random<double>(),M), TwoDimensionalInterpolationException);
+    M.push_back(a.random_vector_of<double>());
+    ASSERT_THROW(TwoDimensionalInterpolation<LinearInterpolation>(a.random<double>(),a.random<double>(),a.random<double>(),a.random<double>(),M), TwoDimensionalInterpolationException);
+}
+
+TEST_F(TwoDimensionalSplinesTest, should_throw_if_any_element_in_M_has_one_element)
+{
+    std::vector<std::vector<double> > M;
+
+    const size_t n = a.random<size_t>().no().greater_than(20);
+    for (size_t i = 0 ; i < n ; ++i)
     {
-        M.push_back(a.random_vector_of<double>().of_size(n));
+        M.push_back(std::vector<double>(1,a.random<double>()));
     }
-    ASSERT_THROW(TwoDimensionalSplines(x,y,M), TwoDimensionalSplinesException);
+    ASSERT_THROW(TwoDimensionalInterpolation<LinearInterpolation>(a.random<double>(),a.random<double>(),a.random<double>(),a.random<double>(),M), TwoDimensionalInterpolationException);
+}
+
+TEST_F(TwoDimensionalSplinesTest, should_throw_if_any_element_in_M_is_empty)
+{
+    std::vector<std::vector<double> > M;
+
+    const size_t n = a.random<size_t>().no().greater_than(20);
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        M.push_back(std::vector<double>());
+    }
+    ASSERT_THROW(TwoDimensionalInterpolation<LinearInterpolation>(a.random<double>(),a.random<double>(),a.random<double>(),a.random<double>(),M), TwoDimensionalInterpolationException);
 }
 
 
 TEST_F(TwoDimensionalSplinesTest, should_work_like_matlabs_griddedInterpolant)
 {
 //! [TwoDimensionalSplinesTest example]
-    const std::vector<double> x = {1,2,3,4,5,6,7,8,9,10};
-    const std::vector<double> y(x);
     std::vector<std::vector<double> > M;
     M.push_back({3,4,5,6,7,8,9,10,11,12});
     M.push_back({5,6,7,8,9,10,11,12,13,14});
@@ -109,7 +111,9 @@ TEST_F(TwoDimensionalSplinesTest, should_work_like_matlabs_griddedInterpolant)
     M.push_back({21,22,23,24,25,26,27,28,29,30});
 //! [TwoDimensionalSplinesTest example]
 //! [TwoDimensionalSplinesTest expected output]
-    TwoDimensionalSplines spline(x,y,M);
+    TwoDimensionalInterpolation<LinearInterpolation> spline(1,10,1,10,M);
+    ASSERT_DOUBLE_EQ(3, spline.f(1,1));
+    ASSERT_DOUBLE_EQ(30, spline.f(10,10));
     ASSERT_DOUBLE_EQ(4.5, spline.f(1.5,1.5));
     ASSERT_DOUBLE_EQ(6.5, spline.f(2.5,1.5));
     ASSERT_DOUBLE_EQ(5.5, spline.f(1.5,2.5));
