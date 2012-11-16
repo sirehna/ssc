@@ -35,9 +35,9 @@ class TwoDimensionalInterpolationException : public Exception
 template <typename T> class TwoDimensionalInterpolation
 {
     public:
-        TwoDimensionalInterpolation(const double& xmin, const double& xmax, const double& ymin_, const double& ymax_, const std::vector<std::vector<double> >& val) : interpolators(std::vector<std::tr1::shared_ptr<T> >()),
-        ymin(ymin_),
-        ymax(ymax_)
+        TwoDimensionalInterpolation(const double& xmin_, const double& xmax_, const double& ymin_, const double& ymax_, const std::vector<std::vector<double> >& val) : interpolators(std::vector<std::tr1::shared_ptr<T> >()),
+        xmin(xmin_),
+        xmax(xmax_)
         {
             if (val.size() < 2)
             {
@@ -54,7 +54,7 @@ template <typename T> class TwoDimensionalInterpolation
                 {
                     THROW("TwoDimensionalInterpolation::TwoDimensionalInterpolation(const double&, const double&, const double&, const double&, const std::vector<std::vector<double>>&)", TwoDimensionalInterpolationException, "At least one vector in val has fewer than 2 elements");
                 }
-                interpolators.push_back(std::tr1::shared_ptr<T>(new T(xmin, xmax, *it)));
+                interpolators.push_back(std::tr1::shared_ptr<T>(new T(ymin_, ymax_, *it)));
             }
         }
 
@@ -66,15 +66,15 @@ template <typename T> class TwoDimensionalInterpolation
                 (*it)->set_computed_value(y);
                 interpolated_values_for_x_fixed.push_back((*it)->f());
             }
-            T final_interpolation(ymin,ymax,interpolated_values_for_x_fixed);
+            T final_interpolation(xmin,xmax,interpolated_values_for_x_fixed);
             final_interpolation.set_computed_value(x);
             return final_interpolation.f();
         }
     private:
         TwoDimensionalInterpolation();
         std::vector<std::tr1::shared_ptr<T> > interpolators;
-        double ymin;
-        double ymax;
+        double xmin;
+        double xmax;
 };
 
 #endif /* TWODIMENSIONALSPLINES_HPP_ */
