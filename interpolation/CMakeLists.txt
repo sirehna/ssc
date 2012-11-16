@@ -6,7 +6,7 @@ FILE(GLOB SRC src/Splines.cpp
               src/ParabolicRunoutSplines.cpp
               src/CubicRunoutSplines.cpp
               src/VectorOfEquallySpacedNumbers.cpp
-              src/TwoDimensionalInterpolation.cpp)
+              src/LinearInterpolation.cpp)
 
 # Find exception_handling
 set(exception_handling_dir "${CMAKE_CURRENT_BINARY_DIR}/../exception_handling")# PATH "Installation path of the exception_handling module" )
