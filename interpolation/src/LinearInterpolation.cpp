@@ -22,7 +22,6 @@ n(y.size()),
 delta((xmax-xmin)/double(n-1)),
 val_sat(xmin)
 {
-    COUT(delta);
     if (y.size() < 2)
     {
         THROW("LinearInterpolation::LinearInterpolation(const double&, const double&, const std::vector<double>&)", Exception, "y must have at least two elements.");
@@ -42,12 +41,12 @@ void LinearInterpolation::set_computed_value(const double& val)
 
 double LinearInterpolation::f() const
 {
-    return y0+(val_sat-x0)*(y1-y0)/(x1-x0);
+    return y0+(val_sat-x0)*(y1-y0)/delta;
 }
 
 double LinearInterpolation::df() const
 {
-    return (y1-y0)/(x1-x0);
+    return (y1-y0)/delta;
 }
 
 double LinearInterpolation::d2f() const
