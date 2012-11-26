@@ -6,6 +6,8 @@
  */
 
 #include "YamlParser.hpp"
+#include <sstream>
+#include "yaml.h"
 
 YamlParser::YamlParser(const std::string& contents_to_parse) : contents(contents_to_parse)
 {
