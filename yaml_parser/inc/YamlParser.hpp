@@ -8,7 +8,6 @@
 #ifndef YAMLPARSER_HPP_
 #define YAMLPARSER_HPP_
 
-//#include "yaml.h"
 #include <string>
 
 namespace YAML
