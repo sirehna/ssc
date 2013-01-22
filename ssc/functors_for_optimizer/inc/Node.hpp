@@ -5,7 +5,24 @@
 #include <vector>
 #include <cstddef>
 
-typedef std::function<double ()> ValType;
+
+class ValType
+{
+    public:
+        ValType();
+        ValType(const std::function<double ()>& f);
+        ValType(const double& l, const std::function<double ()>& f);
+        double operator()() const;
+        ValType operator*(const double& l) const;
+        friend ValType operator*(const double& l, const ValType& v);
+    private:
+        double lambda;
+        std::function<double ()> _f;
+};
+
+ValType operator*(const double& l, const ValType& v);
+
+//typedef std::function<double ()> ValType;
 
 struct Grad
 {
@@ -25,10 +42,12 @@ struct Hes
 class Node
 {
     public:
+        Node() : lambda(1) {}
         virtual ~Node() {}
         virtual ValType val() const = 0;
         virtual Grad grad() const = 0;
         virtual Hes hes() const = 0;
+        double lambda;
 };
 
 
