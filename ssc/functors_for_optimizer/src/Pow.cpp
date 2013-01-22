@@ -1,12 +1,8 @@
 #include "Pow.hpp"
 #include <cmath>
 #include "State.hpp"
-#include "StateNode.hpp"
-
+#include "test_macros.hpp"
 #include <iostream>
-#define QUOTE_ME(a) #a
-#define QUOTE(a) QUOTE_ME(a)
-#define COUT(a) std::cout << "in file " << __FILE__ << ", line " << __LINE__ << ": " << QUOTE(a) << " = " << a << std::endl;
 Pow::Pow(const Node& n_, const double& exponent) :
 s(n_.val()),
 ds(n_.grad()),
@@ -16,16 +12,13 @@ ds_power_e(Grad()),
 d2s_power_e(Hes())
 {
     ds_power_e.idx = ds.idx;
-    for (auto f:ds.values)
+    for (auto ds_dx = ds.values.begin() ; ds_dx != ds.values.end() ; ++ds_dx)
     {
-        const auto df = [&]()->double
+        const auto df = [&,ds_dx]()->double
                         {
-                            COUT(exponent);
-                            COUT(s());
-                            //COUT(f());
-                            return exponent*pow(s(),exponent-1.);
+                            return exponent*pow(s(),exponent-1.)*(*ds_dx)();
                         };
-        ds_power_e.values.push_back(df);
+        ds_power_e.values.push_back(ValType(df));
     }
 }
 
