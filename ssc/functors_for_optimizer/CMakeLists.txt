@@ -4,7 +4,9 @@ set(SOURCES src/Node.cpp
             src/Pow.cpp
             src/Parameter.cpp
             src/State.cpp
-            src/StateGenerator.cpp)
+            src/StateGenerator.cpp
+            src/Multiply.cpp
+            src/NodeSerializationVisitor.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
