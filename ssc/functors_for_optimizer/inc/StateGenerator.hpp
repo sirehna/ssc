@@ -17,7 +17,7 @@ class StateGenerator
 {
     public:
         StateGenerator();
-        State* state(const std::string& name);
+        State state(const std::string& name);
         void reset();
 
     private:

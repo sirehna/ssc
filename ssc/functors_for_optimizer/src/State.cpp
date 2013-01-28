@@ -1,5 +1,6 @@
 #include "State.hpp"
 #include <iostream>
+#include "NodeAbstractVisitor.hpp"
 
 State::State(const std::string& name_, const size_t& index_) : Parameter(0), name(name_), index(index_)
 {
@@ -43,4 +44,14 @@ Grad State::grad() const
 Hes State::hes() const
 {
     return d2f;
+}
+
+void State::accept(NodeAbstractVisitor& v) const
+{
+    v.visit(*this);
+}
+
+Node* State::clone() const
+{
+    return new State(*this);
 }

@@ -1,5 +1,6 @@
 #include "Parameter.hpp"
-
+#include "NodeAbstractVisitor.hpp"
+#include <sstream>
 
 Parameter::~Parameter()
 {
@@ -43,3 +44,19 @@ double& operator*(const Parameter& s)
     return *s.ptr;
 }
 
+void Parameter::accept(NodeAbstractVisitor& v) const
+{
+    v.visit(*this);
+}
+
+Node* Parameter::clone() const
+{
+    return new Parameter(*this);
+}
+
+std::string Parameter::get_address_string() const
+{
+    std::stringstream ss;
+    ss << ptr.get();
+    return ss.str();
+}

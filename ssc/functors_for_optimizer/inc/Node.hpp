@@ -22,8 +22,6 @@ class ValType
 
 ValType operator*(const double& l, const ValType& v);
 
-//typedef std::function<double ()> ValType;
-
 struct Grad
 {
     Grad() : idx(std::vector<size_t>()), values(std::vector<ValType>()) {}
@@ -39,6 +37,8 @@ struct Hes
     std::vector<ValType> values;
 };
 
+class NodeAbstractVisitor;
+
 class Node
 {
     public:
@@ -47,9 +47,12 @@ class Node
         virtual ValType val() const = 0;
         virtual Grad grad() const = 0;
         virtual Hes hes() const = 0;
+        virtual void accept(NodeAbstractVisitor& v) const = 0;
+        virtual Node* clone() const = 0;
+
+    protected:
         double lambda;
 };
-
 
 #endif
 

@@ -17,6 +17,9 @@ class Parameter : public Node
           ValType val() const;
           virtual Grad grad() const;
           virtual Hes hes() const;
+          void accept(NodeAbstractVisitor& v) const;
+          virtual Node* clone() const;
+          std::string get_address_string() const;
 
     protected:
         SharedPtr ptr;

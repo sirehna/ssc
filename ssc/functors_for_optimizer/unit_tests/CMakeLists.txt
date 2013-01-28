@@ -4,7 +4,9 @@ project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/PowTest.cpp
               src/ParameterTest.cpp
               src/StateGeneratorTest.cpp
-              src/StateTest.cpp)
+              src/StateTest.cpp
+              src/MultiplyTest.cpp
+              src/NodeSerializationVisitorTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

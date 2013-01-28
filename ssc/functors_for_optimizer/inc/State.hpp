@@ -16,6 +16,8 @@ class State : public Parameter
       Hes hes() const;
 
       bool operator<(const State& rhs) const;
+      void accept(NodeAbstractVisitor& v) const;
+      Node* clone() const;
     private:
         State(); // Private & without implementation to disable the use of the default constructor
         std::string name;

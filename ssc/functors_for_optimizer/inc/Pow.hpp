@@ -11,6 +11,12 @@ class Pow : public Node
         ValType val() const;
         Grad grad() const;
         Hes hes() const;
+        void accept(NodeAbstractVisitor& v) const;
+        Node* clone() const;
+        std::tr1::shared_ptr<Node> get_child() const;
+        double get_exponent() const;
+
+
     private:
         ValType s;
         Grad ds;
@@ -19,6 +25,8 @@ class Pow : public Node
         ValType s_power_e;
         Grad ds_power_e;
         Hes d2s_power_e;
+        std::tr1::shared_ptr<Node> child;
+        double exponent_;
 };
 
 #endif
