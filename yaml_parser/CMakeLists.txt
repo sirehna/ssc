@@ -5,6 +5,7 @@ FILE(GLOB SRC src/YamlParser.cpp)
 
 set(ALL_SRC ${ALL_SRC} ${SRC} PARENT_SCOPE)
 
+
 include_directories(${test_macros_SOURCE_DIR})
 include_directories(inc)
 include_directories(SYSTEM ${YAMLCPP_INCLUDE_DIR})
