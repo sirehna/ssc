@@ -48,6 +48,6 @@ TEST_F(NodeSerializationVisitorTest, serialize_product)
     std::stringstream ss;
     NodeSerializationVisitor v(ss);
     Multiply(x,x).accept(v);
-    ASSERT_EQ("(x)*(x)", ss.str());
+    ASSERT_EQ("x * x", ss.str());
 }
 

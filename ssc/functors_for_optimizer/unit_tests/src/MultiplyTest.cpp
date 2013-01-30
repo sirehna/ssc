@@ -41,7 +41,7 @@ TEST_F(MultiplyTest, example)
 //! [MultiplyTest expected output]
 }
 
-TEST_F(MultiplyTest, should_be_able_to_multiply_with_Multiply)
+TEST_F(MultiplyTest, DISABLED_should_be_able_to_multiply_with_Multiply)
 {
     StateGenerator generate;
     State x1 = generate.state("x1");
@@ -76,7 +76,7 @@ TEST_F(MultiplyTest, should_be_able_to_calculate_gradient_simple)
     }
 }
 
-TEST_F(MultiplyTest, should_be_able_to_chain_multiplications)
+TEST_F(MultiplyTest, DISABLED_should_be_able_to_chain_multiplications)
 {
     StateGenerator generate;
     State x = generate.state("x");
@@ -91,7 +91,7 @@ TEST_F(MultiplyTest, should_be_able_to_chain_multiplications)
     }
 }
 
-TEST_F(MultiplyTest, should_be_able_to_calculate_gradient_complex)
+TEST_F(MultiplyTest, DISABLED_should_be_able_to_calculate_gradient_complex)
 {
     StateGenerator generate;
     State x1 = generate.state("x1");
