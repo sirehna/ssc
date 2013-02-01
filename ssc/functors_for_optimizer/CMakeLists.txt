@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (functors_for_optimizer2)
+project (functors_for_optimizer)
 set(SOURCES src/State.cpp
             src/StateGenerator.cpp
             src/Node.cpp

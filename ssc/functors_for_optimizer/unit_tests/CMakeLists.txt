@@ -1,5 +1,5 @@
 # ------8<---[LINES TO MODIFY WHEN CHANGING MODULE]----->8-----
-set(MODULE_UNDER_TEST functors_for_optimizer2)
+set(MODULE_UNDER_TEST functors_for_optimizer)
 project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/NullTest.cpp
               src/StateGeneratorTest.cpp
