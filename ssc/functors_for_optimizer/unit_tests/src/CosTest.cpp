@@ -47,11 +47,11 @@ TEST_F(CosTest, DISABLED_derivative)
 {
     auto x = generate.state("x");
     Cos s(x);
-    auto Cos = s.diff(x)->get_value();
+    auto dcos_dx = s.diff(x)->get_value();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
-        ASSERT_DOUBLE_EQ(-sin(X), Cos());
+        ASSERT_DOUBLE_EQ(-sin(X), dcos_dx());
     }
 }
 

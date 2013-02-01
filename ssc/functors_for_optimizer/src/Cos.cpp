@@ -10,6 +10,7 @@
 #include "State.hpp"
 #include "Multiply.hpp"
 #include "Constant.hpp"
+#include "FunctorAlgebra.hpp"
 #include <cmath>
 #include <string>
 
@@ -25,7 +26,9 @@ std::string Cos::get_operator_name() const
 
 NodePtr Cos::diff(const StatePtr& state) const
 {
-    return NodePtr(new Multiply(Mult(new Multiply(n->diff(state),ConstantPtr(new Constant(-1)))),SinPtr(new Sin(n))));
+    return (-1.)*n->diff(state)*Sin(n->clone());
+
+    //return NodePtr(new Multiply(Mult(new Multiply(n->diff(state),ConstantPtr(new Constant(-1)))),SinPtr(new Sin(n))));
 }
 
 NodePtr Cos::clone() const

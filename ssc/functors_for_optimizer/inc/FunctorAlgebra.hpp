@@ -8,14 +8,7 @@
 #ifndef FUNCTORALGEBRA_HPP_
 #define FUNCTORALGEBRA_HPP_
 
-#include "Constant.hpp"
-#include "Difference.hpp"
-#include "Sum.hpp"
-#include "Divide.hpp"
-#include "Multiply.hpp"
-#include "State.hpp"
-#include "Pow.hpp"
-#include "Null.hpp"
+#include <tr1/memory>
 
 #include "Exception.hpp"
 
@@ -28,6 +21,7 @@ class FunctorAlgebraException : public Exception
         }
 };
 
+class Node;
 class Constant;
 class Difference;
 class Sum;
@@ -36,11 +30,12 @@ class Multiply;
 class State;
 class Pow;
 class Null;
+typedef std::tr1::shared_ptr<Node> NodePtr;
 typedef std::tr1::shared_ptr<Constant> ConstantPtr;
 typedef std::tr1::shared_ptr<Difference> DifferencePtr;
 typedef std::tr1::shared_ptr<Sum> SumPtr;
 typedef std::tr1::shared_ptr<Divide> DividePtr;
-typedef std::tr1::shared_ptr<Multiply> MultiplyPtr;
+typedef std::tr1::shared_ptr<Multiply> Mult;
 typedef std::tr1::shared_ptr<State> StatePtr;
 typedef std::tr1::shared_ptr<Pow> PowPtr;
 typedef std::tr1::shared_ptr<Null> NullPtr;
