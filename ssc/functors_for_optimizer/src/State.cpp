@@ -48,3 +48,7 @@ void State::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
+NodePtr State::clone() const
+{
+    return NodePtr(new State(*this));
+}

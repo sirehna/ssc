@@ -23,3 +23,8 @@ NodePtr Ln::diff(const StatePtr& state) const
 {
     return NodePtr(new Divide(n->diff(state),n));
 }
+
+NodePtr Ln::clone() const
+{
+    return NodePtr(new Ln(*this));
+}

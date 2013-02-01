@@ -21,6 +21,7 @@ class Node
         virtual NodePtr diff(const StatePtr& state) const = 0;
         void multiply_by(const double& k);
         virtual void accept(NodeVisitor& v) const = 0;
+        virtual NodePtr clone() const  = 0;
 
     protected:
         double lambda;

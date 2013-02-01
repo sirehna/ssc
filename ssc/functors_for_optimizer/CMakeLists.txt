@@ -14,7 +14,10 @@ set(SOURCES src/State.cpp
             src/Difference.cpp
             src/Serialize.cpp
             src/Ln.cpp
-            src/Unary.cpp)
+            src/Unary.cpp
+            src/Sin.cpp
+            src/Cos.cpp
+            src/FunctorAlgebra.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

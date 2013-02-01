@@ -26,6 +26,7 @@ class Divide : public Binary
         Divide(const NodePtr& n1, const NodePtr& n2);
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
+        NodePtr clone() const;
 };
 
 typedef std::tr1::shared_ptr<Divide> DividePtr;

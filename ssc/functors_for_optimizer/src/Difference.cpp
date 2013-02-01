@@ -17,3 +17,8 @@ std::string Difference::get_operator_name() const
 {
     return "-";
 }
+
+NodePtr Difference::clone() const
+{
+    return NodePtr(new Difference(*this));
+}

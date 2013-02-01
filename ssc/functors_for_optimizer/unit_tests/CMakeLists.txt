@@ -11,7 +11,10 @@ FILE(GLOB SRC src/NullTest.cpp
               src/DivideTest.cpp
               src/DifferenceTest.cpp
               src/SerializeTest.cpp
-              src/LnTest.cpp)
+              src/LnTest.cpp
+              src/SinTest.cpp
+              src/CosTest.cpp
+              src/FunctorAlgebraTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

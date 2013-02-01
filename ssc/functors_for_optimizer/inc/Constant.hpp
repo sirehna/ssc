@@ -28,12 +28,15 @@ class Constant : public Nullary
         bool operator==(const Constant& rhs) const;
         bool operator!=(const Constant& rhs) const;
         void accept(NodeVisitor& v) const;
+        NodePtr clone() const;
     protected:
         std::tr1::shared_ptr<double> ptr;
         friend double& operator*(const Constant& s);
     private:
         Constant();
 };
+
+typedef std::tr1::shared_ptr<Constant> ConstantPtr;
 
 double& operator*(const Constant& s);
 
