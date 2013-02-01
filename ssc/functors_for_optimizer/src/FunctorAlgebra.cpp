@@ -6,6 +6,14 @@
  */
 
 #include "FunctorAlgebra.hpp"
+#include "Constant.hpp"
+#include "Difference.hpp"
+#include "Sum.hpp"
+#include "Divide.hpp"
+#include "Multiply.hpp"
+#include "State.hpp"
+#include "Pow.hpp"
+#include "Null.hpp"
 
 Mult operator*(const Node& n1, const Node& n2)
 {
