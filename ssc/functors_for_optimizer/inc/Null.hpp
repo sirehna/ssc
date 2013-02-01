@@ -26,6 +26,9 @@ class Null : public Nullary
         Null();
         NodePtr diff(const StatePtr& state) const;
         void accept(NodeVisitor& v) const;
+        NodePtr clone() const;
 };
+
+typedef std::tr1::shared_ptr<Null> NullPtr;
 
 #endif /* NULL_HPP_ */

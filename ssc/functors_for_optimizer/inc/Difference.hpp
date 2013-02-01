@@ -24,6 +24,7 @@ class Difference : public Sum
     public:
         Difference(const NodePtr& n1, const NodePtr& n2);
         std::string get_operator_name() const;
+        NodePtr clone() const;
 };
 
 typedef std::tr1::shared_ptr<Difference> DiffPtr;

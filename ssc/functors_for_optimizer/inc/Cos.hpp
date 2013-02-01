@@ -1,12 +1,12 @@
 /*
- * Ln.hpp
+ * Cos.hpp
  *
- * \date 1 févr. 2013, 12:32:08
+ * \date 1 févr. 2013, 14:40:27
  *  \author cec
  */
 
-#ifndef LN_HPP_
-#define LN_HPP_
+#ifndef COS_HPP_
+#define COS_HPP_
 
 #include "Unary.hpp"
 
@@ -15,20 +15,20 @@
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/LnTest.cpp LnTest example
+ *  \snippet MODULE_NAME/unit_tests/src/CosTest.cpp CosTest example
  *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/LnTest.cpp LnTest expected output
+ *  \snippet MODULE_NAME/unit_tests/src/CosTest.cpp CosTest expected output
  */
 
-class Ln : public Unary
+class Cos : public Unary
 {
     public:
-        Ln(const NodePtr& n_);
+        Cos(const NodePtr& n_);
         std::string get_operator_name() const;
         NodePtr diff(const StatePtr& state) const;
         NodePtr clone() const;
 };
 
-typedef std::tr1::shared_ptr<Ln> LnPtr;
+typedef std::tr1::shared_ptr<Cos> CosPtr;
 
-#endif /* LN_HPP_ */
+#endif /* COS_HPP_ */

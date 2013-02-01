@@ -5,18 +5,18 @@
  *  \author cec
  */
 
-#ifndef SINTEST_HPP_
-#define SINTEST_HPP_
+#ifndef COSTEST_HPP_
+#define COSTEST_HPP_
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
-class SinTest : public ::testing::Test
+class CosTest : public ::testing::Test
 {
     protected:
-        SinTest();
-	    virtual ~SinTest();
+        CosTest();
+	    virtual ~CosTest();
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;

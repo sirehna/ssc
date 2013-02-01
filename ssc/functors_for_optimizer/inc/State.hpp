@@ -15,6 +15,7 @@ class State : public Constant
       bool operator<(const State& rhs) const;
       ~State();
       void accept(NodeVisitor& v) const;
+      NodePtr clone() const;
 
 
     private:

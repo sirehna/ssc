@@ -23,3 +23,8 @@ std::string Multiply::get_operator_name() const
 {
     return "*";
 }
+
+NodePtr Multiply::clone() const
+{
+    return NodePtr(new Multiply(*this));
+}

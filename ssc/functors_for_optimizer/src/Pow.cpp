@@ -35,3 +35,8 @@ std::string Pow::get_operator_name() const
 {
     return "^";
 }
+
+NodePtr Pow::clone() const
+{
+    return NodePtr(new Pow(*this));
+}

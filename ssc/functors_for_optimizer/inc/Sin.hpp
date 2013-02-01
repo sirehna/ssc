@@ -1,12 +1,12 @@
 /*
- * Ln.hpp
+ * Sin.hpp
  *
- * \date 1 févr. 2013, 12:32:08
+ * \date 1 févr. 2013, 14:24:01
  *  \author cec
  */
 
-#ifndef LN_HPP_
-#define LN_HPP_
+#ifndef SIN_HPP_
+#define SIN_HPP_
 
 #include "Unary.hpp"
 
@@ -15,20 +15,20 @@
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/LnTest.cpp LnTest example
+ *  \snippet MODULE_NAME/unit_tests/src/SinTest.cpp SinTest example
  *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/LnTest.cpp LnTest expected output
+ *  \snippet MODULE_NAME/unit_tests/src/SinTest.cpp SinTest expected output
  */
 
-class Ln : public Unary
+class Sin : public Unary
 {
     public:
-        Ln(const NodePtr& n_);
+        Sin(const NodePtr& n_);
         std::string get_operator_name() const;
         NodePtr diff(const StatePtr& state) const;
         NodePtr clone() const;
 };
 
-typedef std::tr1::shared_ptr<Ln> LnPtr;
+typedef std::tr1::shared_ptr<Sin> SinPtr;
 
-#endif /* LN_HPP_ */
+#endif /* SIN_HPP_ */

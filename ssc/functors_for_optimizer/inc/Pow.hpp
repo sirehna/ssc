@@ -10,6 +10,7 @@ class Pow : public Binary
         Pow(const NodePtr& n1, const double& n2);
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
+        NodePtr clone() const;
 
     private:
         std::function<double()> get_pow_fun() const;

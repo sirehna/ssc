@@ -22,3 +22,8 @@ std::string Sum::get_operator_name() const
 {
     return "+";
 }
+
+NodePtr Sum::clone() const
+{
+    return NodePtr(new Sum(*this));
+}

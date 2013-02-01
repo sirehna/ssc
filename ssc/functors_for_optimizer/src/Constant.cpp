@@ -43,3 +43,8 @@ void Constant::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
+
+NodePtr Constant::clone() const
+{
+    return NodePtr(new Constant(*this));
+}

@@ -24,3 +24,8 @@ void Null::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
+
+NodePtr Null::clone() const
+{
+    return NodePtr(new Null(*this));
+}

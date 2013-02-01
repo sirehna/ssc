@@ -12,6 +12,7 @@
 #include "NodeVisitor.hpp"
 #include "Serialize.hpp"
 #include "test_macros.hpp"
+
 Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
     set_value([n1_,n2_,&lambda]()->double{return lambda*(n1_->get_value()()/n2_->get_value()());});
@@ -29,4 +30,9 @@ NodePtr Divide::diff(const StatePtr& state) const
 std::string Divide::get_operator_name() const
 {
     return "/";
+}
+
+NodePtr Divide::clone() const
+{
+    return NodePtr(new Divide(*this));
 }
