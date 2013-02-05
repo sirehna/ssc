@@ -29,7 +29,7 @@ class Serialize : public NodeVisitor
         ~Serialize() {}
         void visit(const Binary& node);
         void visit(const State& node);
-        void visit(const Constant& node);
+        void visit(const Parameter& node);
         void visit(const Null& node);
         void visit(const Unary& node);
     private:

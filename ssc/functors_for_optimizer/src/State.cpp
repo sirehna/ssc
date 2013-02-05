@@ -9,7 +9,7 @@ State::~State()
 {
 }
 
-State::State(const std::string& name_, const size_t& index_) : Constant(0),
+State::State(const std::string& name_, const size_t& index_) : Parameter(0),
                                                                name(name_),
                                                                index(index_)
 {
@@ -36,7 +36,7 @@ NodePtr State::diff(const StatePtr& state) const
 {
     if (*state==*this)
     {
-        return NodePtr(new Constant(lambda));
+        return NodePtr(new Parameter(lambda));
     }
     else
     {

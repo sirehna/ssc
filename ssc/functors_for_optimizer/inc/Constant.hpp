@@ -20,24 +20,24 @@
  *  \snippet MODULE_NAME/unit_tests/src/ConstantTest.cpp ConstantTest expected output
  */
 
-class Constant : public Nullary
+class Parameter : public Nullary
 {
     public:
-        Constant(const double& val);
+        Parameter(const double& val);
         NodePtr diff(const StatePtr& state) const;
-        bool operator==(const Constant& rhs) const;
-        bool operator!=(const Constant& rhs) const;
+        bool operator==(const Parameter& rhs) const;
+        bool operator!=(const Parameter& rhs) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;
     protected:
         std::tr1::shared_ptr<double> ptr;
-        friend double& operator*(const Constant& s);
+        friend double& operator*(const Parameter& s);
     private:
-        Constant();
+        Parameter();
 };
 
-typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+typedef std::tr1::shared_ptr<Parameter> ConstantPtr;
 
-double& operator*(const Constant& s);
+double& operator*(const Parameter& s);
 
 #endif /* CONSTANT_HPP_ */

@@ -10,7 +10,7 @@
 
 class Binary;
 class State;
-class Constant;
+class Parameter;
 class Null;
 class Unary;
 
@@ -19,7 +19,7 @@ class NodeVisitor
     public:
         virtual void visit(const Binary& node) = 0;
         virtual void visit(const State& node) = 0;
-        virtual void visit(const Constant& node) = 0;
+        virtual void visit(const Parameter& node) = 0;
         virtual void visit(const Null& node) = 0;
         virtual void visit(const Unary& node) = 0;
         virtual ~NodeVisitor() {};

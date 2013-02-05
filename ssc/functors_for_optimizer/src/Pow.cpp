@@ -12,7 +12,7 @@ Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
     set_value(get_pow_fun());
 }
 
-Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1, std::tr1::shared_ptr<Constant>(new Constant(n2)))
+Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1, std::tr1::shared_ptr<Parameter>(new Parameter(n2)))
 {
     set_value(get_pow_fun());
 }

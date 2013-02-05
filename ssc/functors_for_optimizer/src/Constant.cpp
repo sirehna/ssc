@@ -10,12 +10,12 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-Constant::Constant(const double& val) : ptr(new double(val))
+Parameter::Parameter(const double& val) : ptr(new double(val))
 {
     set_value([ptr,&lambda]()->double {return lambda*(*ptr);});
 }
 
-NodePtr Constant::diff(const StatePtr& state) const
+NodePtr Parameter::diff(const StatePtr& state) const
 {
     if (state->get_index())
     {
@@ -24,27 +24,27 @@ NodePtr Constant::diff(const StatePtr& state) const
     return NodePtr(new Null);
 }
 
-bool Constant::operator==(const Constant& rhs) const
+bool Parameter::operator==(const Parameter& rhs) const
 {
     return ptr==rhs.ptr;
 }
 
-bool Constant::operator!=(const Constant& rhs) const
+bool Parameter::operator!=(const Parameter& rhs) const
 {
     return not(*this==rhs);
 }
 
-double& operator*(const Constant& s)
+double& operator*(const Parameter& s)
 {
     return *s.ptr;
 }
 
-void Constant::accept(NodeVisitor& v) const
+void Parameter::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
 
-NodePtr Constant::clone() const
+NodePtr Parameter::clone() const
 {
-    return NodePtr(new Constant(*this));
+    return NodePtr(new Parameter(*this));
 }
