@@ -8,6 +8,7 @@ set(SOURCES src/State.cpp
             src/Nullary.cpp
             src/Sum.cpp
             src/Binary.cpp
+            src/N_ary.cpp
             src/Multiply.cpp
             src/Pow.cpp
             src/Divide.cpp

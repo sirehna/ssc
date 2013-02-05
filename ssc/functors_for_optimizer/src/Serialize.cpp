@@ -7,10 +7,13 @@
 
 #include "Serialize.hpp"
 #include "Binary.hpp"
+#include "N_ary.hpp"
 #include "State.hpp"
 #include "Null.hpp"
 #include "Unary.hpp"
 #include "Constant.hpp"
+
+#include "test_macros.hpp"
 
 Serialize::Serialize(std::ostream& os_) : os(os_)
 {
@@ -18,15 +21,42 @@ Serialize::Serialize(std::ostream& os_) : os(os_)
 }
 
 
+void Serialize::visit(const N_ary& node)
+{
+    auto sons = node.get_sons();
+    os << "(";
+    for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+    {
+        sons.at(i)->accept(*this);
+        os << " ";
+        os << node.get_operator_name();
+        os << " ";
+    }
+    if (not(sons.empty())) sons.back()->accept(*this);
+    os << ")";
+}
+
 void Serialize::visit(const Binary& node)
 {
+    COUT("");
+    auto n1 = node.get_lhs();
+    COUT("");
+    auto n2 = node.get_rhs();
+    COUT("");
     os << "(";
-    node.get_lhs()->accept(*this);
+    COUT("");
+    n1->accept(*this);
+    COUT("");
     os << " ";
+    COUT("");
     os << node.get_operator_name();
+    COUT("");
     os << " ";
-    node.get_rhs()->accept(*this);
+    COUT("");
+    n2->accept(*this);
+    COUT("");
     os << ")";
+    COUT("");
 }
 
 void Serialize::visit(const State& node)

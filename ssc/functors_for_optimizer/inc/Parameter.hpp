@@ -36,7 +36,7 @@ class Parameter : public Nullary
         Parameter();
 };
 
-typedef std::tr1::shared_ptr<Parameter> ConstantPtr;
+typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
 
 double& operator*(const Parameter& s);
 

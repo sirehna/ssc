@@ -29,3 +29,8 @@ NodePtr Null::clone() const
 {
     return NodePtr(new Null(*this));
 }
+
+bool Null::is_null() const
+{
+    return true;
+}

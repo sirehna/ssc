@@ -35,4 +35,6 @@ class Constant : public Nullary
         double val;
 };
 
+typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+
 #endif /* CONSTANT_HPP_ */

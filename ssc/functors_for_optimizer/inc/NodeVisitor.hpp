@@ -9,16 +9,19 @@
 #define NODEVISITOR_HPP_
 
 class Binary;
+class N_ary;
 class State;
 class Parameter;
 class Null;
 class Unary;
 class Constant;
+class Pow;
 
 class NodeVisitor
 {
     public:
         virtual void visit(const Binary& node) = 0;
+        virtual void visit(const N_ary& node) = 0;
         virtual void visit(const State& node) = 0;
         virtual void visit(const Parameter& node) = 0;
         virtual void visit(const Constant& node) = 0;

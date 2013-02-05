@@ -30,8 +30,9 @@ class Multiply;
 class State;
 class Pow;
 class Null;
+class Constant;
 typedef std::tr1::shared_ptr<Node> NodePtr;
-typedef std::tr1::shared_ptr<Parameter> ConstantPtr;
+typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
 typedef std::tr1::shared_ptr<Difference> DifferencePtr;
 typedef std::tr1::shared_ptr<Sum> SumPtr;
 typedef std::tr1::shared_ptr<Divide> DividePtr;
@@ -39,6 +40,7 @@ typedef std::tr1::shared_ptr<Multiply> Mult;
 typedef std::tr1::shared_ptr<State> StatePtr;
 typedef std::tr1::shared_ptr<Pow> PowPtr;
 typedef std::tr1::shared_ptr<Null> NullPtr;
+typedef std::tr1::shared_ptr<Constant> ConstantPtr;
 
 
 
@@ -53,7 +55,16 @@ NullPtr operator*(const NodePtr& n1, const Null& n2);
 NullPtr operator*(const Null& n1, const NodePtr& n2);
 NullPtr operator*(const Node& n1, const Null& n2);
 NullPtr operator*(const Null& n1, const Node& n2);
-
+/*
+NodePtr operator*(const Node& n1, const Constant& n2);
+NodePtr operator*(const Constant& n1, const Node& n2);
+NodePtr operator*(const NodePtr& n1, const Constant& n2);
+NodePtr operator*(const Constant& n1, const NodePtr& n2);
+NodePtr operator*(const Node& n1, const ConstantPtr& n2);
+NodePtr operator*(const ConstantPtr& n1, const Node& n2);
+NodePtr operator*(const NodePtr& n1, const ConstantPtr& n2);
+NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2);
+*/
 
 SumPtr operator+(const Node& n1, const Node& n2);
 SumPtr operator+(const Node& n1, const NodePtr& n2);
@@ -77,6 +88,11 @@ NullPtr operator/(const NodePtr& n1, const Null& n2);
 NullPtr operator/(const Null& n1, const NodePtr& n2);
 NullPtr operator/(const Node& n1, const Null& n2);
 NullPtr operator/(const Null& n1, const Node& n2);
+/*
+NodePtr operator/(const NodePtr& n1, const Constant& n2);
+NodePtr operator/(const Node& n1, const ConstantPtr& n2);
+NodePtr operator/(const NodePtr& n1, const ConstantPtr& n2);
+*/
 
 PowPtr pow(const Node& n1, const double& d);
 PowPtr pow(const NodePtr& n1, const double& d);
