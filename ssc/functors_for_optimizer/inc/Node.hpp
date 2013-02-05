@@ -22,6 +22,7 @@ class Node
         void multiply_by(const double& k);
         virtual void accept(NodeVisitor& v) const = 0;
         virtual NodePtr clone() const  = 0;
+        virtual bool is_null() const;
 
     protected:
         double lambda;

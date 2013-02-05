@@ -23,3 +23,8 @@ void Node::multiply_by(const double& k)
 {
     lambda *= k;
 }
+
+bool Node::is_null() const
+{
+    return false;
+}

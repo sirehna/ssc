@@ -7,15 +7,9 @@
 
 #include "Binary.hpp"
 #include "NodeVisitor.hpp"
-
-Binary::Binary(const NodePtr& n1, const NodePtr& n2) : n1_(n1), n2_(n2)
+#include "test_macros.hpp"
+Binary::Binary(const NodePtr& n1, const NodePtr& n2) : n1_(n1),n2_(n2)
 {
-
-}
-
-void Binary::set_value(const std::function<double()>& val)
-{
-    value = val;
 }
 
 NodePtr Binary::get_lhs() const
@@ -28,7 +22,14 @@ NodePtr Binary::get_rhs() const
     return n2_;
 }
 
+void Binary::set_value(const std::function<double()>& val)
+{
+    value = val;
+}
+
 void Binary::accept(NodeVisitor& v) const
 {
+    COUT("");
     v.visit(*this);
 }
+

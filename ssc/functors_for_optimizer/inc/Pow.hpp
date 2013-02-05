@@ -14,7 +14,6 @@ class Pow : public Binary
 
     private:
         std::function<double()> get_pow_fun() const;
-
 };
 
 typedef std::tr1::shared_ptr<Pow> PowPtr;

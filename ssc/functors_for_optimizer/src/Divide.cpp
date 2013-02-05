@@ -20,10 +20,16 @@ Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 
 NodePtr Divide::diff(const StatePtr& state) const
 {
+    COUT("");
     Mult n2_dn1(new Multiply(n2_,n1_->diff(state)));
+    COUT("");
     Mult n1_dn2(new Multiply(n1_,n2_->diff(state)));
+
+    COUT("");
     Mult n2_n2(new Multiply(n2_,n2_));
+    COUT("");
     DiffPtr s(new Difference(n2_dn1,n1_dn2));
+    COUT("");
     return NodePtr(new Divide(s,n2_n2));
 }
 

@@ -14,6 +14,7 @@
 #include "State.hpp"
 #include "Pow.hpp"
 #include "Null.hpp"
+#include "Constant.hpp"
 
 Mult operator*(const Node& n1, const Node& n2)
 {
@@ -73,9 +74,55 @@ NullPtr operator*(const Null& n1, const Node& n2)
 {
     return n2*n1;
 }
+/*
+NodePtr operator*(const Node& n1, const Constant& n2)
+{
+    auto ret = n1.clone();
+    ret->multiply_by(n2.get_value()());
+    return ret;
+}
 
+NodePtr operator*(const Constant& n1, const Node& n2)
+{
+    return n2*n1;
+}
 
+NodePtr operator*(const NodePtr& n1, const Constant& n2)
+{
+    auto ret = n1;
+    ret->multiply_by(n2.get_value()());
+    return ret;
+}
 
+NodePtr operator*(const Constant& n1, const NodePtr& n2)
+{
+    return n2*n1;
+}
+
+NodePtr operator*(const Node& n1, const ConstantPtr& n2)
+{
+    auto ret = n1.clone();
+    ret->multiply_by(n2->get_value()());
+    return ret;
+}
+
+NodePtr operator*(const ConstantPtr& n1, const Node& n2)
+{
+    return n2*n1;
+}
+
+NodePtr operator*(const NodePtr& n1, const ConstantPtr& n2)
+{
+    auto ret = n1;
+    ret->multiply_by(n2->get_value()());
+    return ret;
+}
+
+NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2)
+{
+    return n2*n1;
+}
+*/
 SumPtr operator+(const Node& n1, const Node& n2)
 {
     return SumPtr(new Sum(n1.clone(),n2.clone()));
@@ -192,15 +239,37 @@ NullPtr operator/(const Null& n1, const Node& n2)
     if (n2.get_value()) {}
     return NullPtr(new Null());
 }
+/*
+NodePtr operator/(const NodePtr& n1, const Constant& n2)
+{
+    auto ret = n1;
+    ret->multiply_by(1/n2.get_value()());
+    return ret;
+}
+
+NodePtr operator/(const Node& n1, const ConstantPtr& n2)
+{
+    auto ret = n1.clone();
+    ret->multiply_by(1/n2->get_value()());
+    return ret;
+}
+
+NodePtr operator/(const NodePtr& n1, const ConstantPtr& n2)
+{
+    auto ret = n1;
+    ret->multiply_by(1/n2->get_value()());
+    return ret;
+}
+*/
 
 PowPtr pow(const Node& n1, const double& d)
 {
-    return PowPtr(new Pow(n1.clone(),ConstantPtr(new Parameter(d))));
+    return PowPtr(new Pow(n1.clone(),ConstantPtr(new Constant(d))));
 }
 
 PowPtr pow(const NodePtr& n1, const double& d)
 {
-    return PowPtr(new Pow(n1,ConstantPtr(new Parameter(d))));
+    return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
 }
 
 PowPtr pow(const Node& n1, const Node& n2)

@@ -7,7 +7,7 @@
 
 #ifndef MULTIPLY_HPP_
 #define MULTIPLY_HPP_
-#include "Binary.hpp"
+#include "N_ary.hpp"
 
 /** \author cec
  *  \brief This class was created to
@@ -19,10 +19,11 @@
  *  \snippet MODULE_NAME/unit_tests/src/MultiplyTest.cpp MultiplyTest expected output
  */
 
-class Multiply : public Binary
+class Multiply : public N_ary
 {
     public:
         Multiply(const NodePtr& n1, const NodePtr& n2);
+        Multiply(const std::vector<NodePtr>& nodes);
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
         NodePtr clone() const;

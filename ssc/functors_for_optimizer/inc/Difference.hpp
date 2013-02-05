@@ -8,7 +8,7 @@
 #ifndef DIFFERENCE_HPP_
 #define DIFFERENCE_HPP_
 
-#include "Sum.hpp"
+#include "Binary.hpp"
 /** \author cec
  *  \brief This class was created to
  *  \details It has the following responsibilities:
@@ -19,12 +19,13 @@
  *  \snippet MODULE_NAME/unit_tests/src/DifferenceTest.cpp DifferenceTest expected output
  */
 
-class Difference : public Sum
+class Difference : public Binary
 {
     public:
         Difference(const NodePtr& n1, const NodePtr& n2);
         std::string get_operator_name() const;
         NodePtr clone() const;
+        NodePtr diff(const StatePtr& state) const;
 };
 
 typedef std::tr1::shared_ptr<Difference> DiffPtr;

@@ -5,11 +5,12 @@
  *  \author cec
  */
 
-#ifndef BINARY_HPP_
-#define BINARY_HPP_
+#ifndef NARY_HPP_
+#define NARY_HPP_
 
 #include "Node.hpp"
 #include <string>
+#include <vector>
 
 /** \author cec
  *  \brief This class was created to
@@ -21,22 +22,20 @@
  *  \snippet MODULE_NAME/unit_tests/src/BinaryTest.cpp BinaryTest expected output
  */
 
-class Binary : public Node
+class N_ary : public Node
 {
     public:
-        Binary(const NodePtr& n1, const NodePtr& n2);
-        ~Binary() {}
+        N_ary(const NodePtr& n1, const NodePtr& n2);
+        N_ary(const std::vector<NodePtr>& nodes);
+        ~N_ary() {}
+        std::vector<NodePtr> get_sons() const;
         void accept(NodeVisitor& v) const;
         virtual std::string get_operator_name() const = 0;
-        NodePtr get_lhs() const;
-        NodePtr get_rhs() const;
-
     protected:
-        NodePtr n1_;
-        NodePtr n2_;
+        std::vector<NodePtr> sons;
         void set_value(const std::function<double()>& val);
     private:
-        Binary();
+        N_ary();
 };
 
-#endif /* BINARY_HPP_ */
+#endif /* ARY_HPP_ */

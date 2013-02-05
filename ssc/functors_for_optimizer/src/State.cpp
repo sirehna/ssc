@@ -46,6 +46,7 @@ NodePtr State::diff(const StatePtr& state) const
 
 void State::accept(NodeVisitor& v) const
 {
+    COUT("");
     v.visit(*this);
 }
 NodePtr State::clone() const
