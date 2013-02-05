@@ -34,7 +34,7 @@ void FunctorAlgebraTest::TearDown()
 #define Y (**y)
 #define Z (**z)
 
-TEST_F(FunctorAlgebraTest, DISABLED_example)
+TEST_F(FunctorAlgebraTest, example)
 {
 //! [FunctorAlgebraTest example]
     auto x = generate.state("x");
