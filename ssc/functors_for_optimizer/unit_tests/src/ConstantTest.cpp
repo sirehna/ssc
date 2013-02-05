@@ -29,7 +29,7 @@ void ConstantTest::TearDown()
 TEST_F(ConstantTest, example)
 {
 //! [ConstantTest example]
-    Constant c(a.random<double>());
+    Parameter c(a.random<double>());
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double val = a.random<double>();
@@ -46,7 +46,7 @@ TEST_F(ConstantTest, derivative_is_always_zero)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const Constant n(a.random<double>());
+        const Parameter n(a.random<double>());
         StateGenerator generate;
         auto x = generate.state("x");
         ASSERT_EQ(0, n.diff(x)->get_value()());

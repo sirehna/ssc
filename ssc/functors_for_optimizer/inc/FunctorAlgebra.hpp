@@ -22,7 +22,7 @@ class FunctorAlgebraException : public Exception
 };
 
 class Node;
-class Constant;
+class Parameter;
 class Difference;
 class Sum;
 class Divide;
@@ -31,7 +31,7 @@ class State;
 class Pow;
 class Null;
 typedef std::tr1::shared_ptr<Node> NodePtr;
-typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+typedef std::tr1::shared_ptr<Parameter> ConstantPtr;
 typedef std::tr1::shared_ptr<Difference> DifferencePtr;
 typedef std::tr1::shared_ptr<Sum> SumPtr;
 typedef std::tr1::shared_ptr<Divide> DividePtr;

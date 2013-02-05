@@ -33,7 +33,7 @@ void Serialize::visit(const State& node)
     os << node.get_name();
 }
 
-void Serialize::visit(const Constant& node)
+void Serialize::visit(const Parameter& node)
 {
     os << node.get_value()();
 }

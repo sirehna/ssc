@@ -5,7 +5,7 @@
 #include <string>
 #include "Constant.hpp"
 
-class State : public Constant
+class State : public Parameter
 {
     public:
       State(const std::string& name_, const size_t& index_);

@@ -32,7 +32,7 @@ TEST_F(PowTest, should_be_able_to_define_x_power_something)
 TEST_F(PowTest, derivative)
 {
     const auto x = generate.state("x");
-    const std::tr1::shared_ptr<Constant> n(new Constant(10));
+    const std::tr1::shared_ptr<Parameter> n(new Parameter(10));
     const auto x_pow_n = Pow(x,n);
     for (size_t i = 0 ; i < 1000 ; ++i)
     {

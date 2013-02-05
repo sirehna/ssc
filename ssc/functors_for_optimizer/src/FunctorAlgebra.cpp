@@ -195,12 +195,12 @@ NullPtr operator/(const Null& n1, const Node& n2)
 
 PowPtr pow(const Node& n1, const double& d)
 {
-    return PowPtr(new Pow(n1.clone(),ConstantPtr(new Constant(d))));
+    return PowPtr(new Pow(n1.clone(),ConstantPtr(new Parameter(d))));
 }
 
 PowPtr pow(const NodePtr& n1, const double& d)
 {
-    return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
+    return PowPtr(new Pow(n1,ConstantPtr(new Parameter(d))));
 }
 
 PowPtr pow(const Node& n1, const Node& n2)

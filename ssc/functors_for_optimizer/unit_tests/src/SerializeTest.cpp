@@ -97,7 +97,7 @@ TEST_F(SerializeTest, state)
 TEST_F(SerializeTest, constant)
 {
     const double cst = 12365;
-    Constant c(cst);
+    Parameter c(cst);
     Serialize v(ss);
     c.accept(v);
     ASSERT_EQ("12365", ss.str());
