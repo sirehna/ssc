@@ -56,7 +56,7 @@ TEST_F(MultiplyTest, should_be_able_to_multiply_with_Multiply)
     }
 }
 
-TEST_F(MultiplyTest, DISABLED_derivative)
+TEST_F(MultiplyTest, derivative)
 {
     StateGenerator generate;
     auto x1 = generate.state("x1");
