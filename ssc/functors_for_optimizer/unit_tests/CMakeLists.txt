@@ -14,7 +14,8 @@ FILE(GLOB SRC src/NullTest.cpp
               src/LnTest.cpp
               src/SinTest.cpp
               src/CosTest.cpp
-              src/FunctorAlgebraTest.cpp)
+              src/FunctorAlgebraTest.cpp
+              src/ConstantTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

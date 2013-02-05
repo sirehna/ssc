@@ -17,7 +17,8 @@ set(SOURCES src/State.cpp
             src/Unary.cpp
             src/Sin.cpp
             src/Cos.cpp
-            src/FunctorAlgebra.cpp)
+            src/FunctorAlgebra.cpp
+            src/Constant.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

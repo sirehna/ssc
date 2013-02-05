@@ -10,6 +10,7 @@
 #include "State.hpp"
 #include "Null.hpp"
 #include "Unary.hpp"
+#include "Constant.hpp"
 
 Serialize::Serialize(std::ostream& os_) : os(os_)
 {
@@ -48,7 +49,11 @@ void Serialize::visit(const Unary& node)
     os << node.get_operator_name() << "(";
     node.get_son()->accept(*this);
     os << ")";
+}
 
+void Serialize::visit(const Constant& node)
+{
+    os << node.get_value()();
 }
 
 ::std::ostream& operator<<(::std::ostream& os, const Node& node)

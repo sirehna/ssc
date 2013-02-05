@@ -32,6 +32,7 @@ class Serialize : public NodeVisitor
         void visit(const Parameter& node);
         void visit(const Null& node);
         void visit(const Unary& node);
+        void visit(const Constant& node);
     private:
         Serialize();
         std::ostream& os;
