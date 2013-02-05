@@ -4,7 +4,7 @@ set(SOURCES src/State.cpp
             src/StateGenerator.cpp
             src/Node.cpp
             src/Null.cpp
-            src/Constant.cpp
+            src/Parameter.cpp
             src/Nullary.cpp
             src/Sum.cpp
             src/Binary.cpp

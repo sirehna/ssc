@@ -4,7 +4,7 @@ project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/NullTest.cpp
               src/StateGeneratorTest.cpp
               src/StateTest.cpp
-              src/ConstantTest.cpp
+              src/ParameterTest.cpp
               src/SumTest.cpp
               src/MultiplyTest.cpp
               src/PowTest.cpp

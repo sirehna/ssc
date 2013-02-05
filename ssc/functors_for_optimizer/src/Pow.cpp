@@ -1,7 +1,7 @@
 #include "Pow.hpp"
 #include "Sum.hpp"
 #include "Multiply.hpp"
-#include "Constant.hpp"
+#include "Parameter.hpp"
 #include "NodeVisitor.hpp"
 #include "Ln.hpp"
 #include "Divide.hpp"

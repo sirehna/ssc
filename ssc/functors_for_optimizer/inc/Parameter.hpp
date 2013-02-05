@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#ifndef CONSTANT_HPP_
-#define CONSTANT_HPP_
+#ifndef PARAMETER_HPP_
+#define PARAMETER_HPP_
 
 #include "Nullary.hpp"
 
@@ -40,4 +40,4 @@ typedef std::tr1::shared_ptr<Parameter> ConstantPtr;
 
 double& operator*(const Parameter& s);
 
-#endif /* CONSTANT_HPP_ */
+#endif /* PARAMETER_HPP_ */

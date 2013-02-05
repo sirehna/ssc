@@ -9,7 +9,7 @@
 #include "Sin.hpp"
 #include "State.hpp"
 #include "Multiply.hpp"
-#include "Constant.hpp"
+#include "Parameter.hpp"
 #include "FunctorAlgebra.hpp"
 #include <cmath>
 #include <string>
