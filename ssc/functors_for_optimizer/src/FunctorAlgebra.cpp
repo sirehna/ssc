@@ -6,7 +6,7 @@
  */
 
 #include "FunctorAlgebra.hpp"
-#include "Constant.hpp"
+#include "Parameter.hpp"
 #include "Difference.hpp"
 #include "Sum.hpp"
 #include "Divide.hpp"

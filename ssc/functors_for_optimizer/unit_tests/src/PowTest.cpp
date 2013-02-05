@@ -1,7 +1,7 @@
 #include "PowTest.hpp"
 #include "Pow.hpp"
 #include "StateGenerator.hpp"
-#include "Constant.hpp"
+#include "Parameter.hpp"
 #include "Serialize.hpp"
 
 PowTest::PowTest() : a(DataGenerator(171429)), generate(StateGenerator())

@@ -5,21 +5,21 @@
  *  \author cec
  */
 
-#ifndef CONSTANTTEST_HPP_
-#define CONSTANTTEST_HPP_
+#ifndef PARAMETERTEST_HPP_
+#define PARAMETERTEST_HPP_
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
 
-class ConstantTest : public ::testing::Test
+class ParameterTest : public ::testing::Test
 {
     protected:
-        ConstantTest();
-	    virtual ~ConstantTest();
+        ParameterTest();
+	    virtual ~ParameterTest();
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
 
 };
 
-#endif  /* CONSTANTTEST_HPP_ */
+#endif  /* PARAMETERTEST_HPP_ */

@@ -3,7 +3,7 @@
 
 #include <stdlib.h> // For size_t
 #include <string>
-#include "Constant.hpp"
+#include "Parameter.hpp"
 
 class State : public Parameter
 {

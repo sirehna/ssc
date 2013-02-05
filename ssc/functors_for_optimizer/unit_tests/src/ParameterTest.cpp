@@ -5,28 +5,28 @@
  *  \author cec
  */
 
-#include "ConstantTest.hpp"
-#include "Constant.hpp"
+#include "ParameterTest.hpp"
+#include "Parameter.hpp"
 #include "StateGenerator.hpp"
 #include "test_macros.hpp"
 
-ConstantTest::ConstantTest() : a(DataGenerator(123))
+ParameterTest::ParameterTest() : a(DataGenerator(123))
 {
 }
 
-ConstantTest::~ConstantTest()
+ParameterTest::~ParameterTest()
 {
 }
 
-void ConstantTest::SetUp()
+void ParameterTest::SetUp()
 {
 }
 
-void ConstantTest::TearDown()
+void ParameterTest::TearDown()
 {
 }
 
-TEST_F(ConstantTest, example)
+TEST_F(ParameterTest, example)
 {
 //! [ConstantTest example]
     Parameter c(a.random<double>());
@@ -42,7 +42,7 @@ TEST_F(ConstantTest, example)
 //! [ConstantTest expected output]
 }
 
-TEST_F(ConstantTest, derivative_is_always_zero)
+TEST_F(ParameterTest, derivative_is_always_zero)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
