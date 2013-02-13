@@ -53,4 +53,15 @@ TEST_F(ParameterTest, derivative_is_always_zero)
     }
 }
 
-
+TEST_F(ParameterTest, equality_operator)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const Parameter p1(a.random<double>());
+        const Parameter p2(a.random<double>());
+        ASSERT_TRUE(p1.equals(p1));
+        ASSERT_TRUE(p2.equals(p2));
+        ASSERT_FALSE(p1.equals(p2));
+        ASSERT_FALSE(p2.equals(p1));
+    }
+}

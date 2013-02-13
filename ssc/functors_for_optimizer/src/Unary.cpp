@@ -26,3 +26,13 @@ void Unary::set_value(const std::function<double()>& val)
 {
     value = val;
 }
+
+bool Unary::equals(const Node& rhs) const
+{
+     return rhs.equals_derived(*this);
+}
+
+bool Unary::equals_derived(const Unary& rhs) const
+{
+    return n->equals(*rhs.n);
+}

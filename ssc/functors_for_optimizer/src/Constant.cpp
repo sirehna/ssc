@@ -9,6 +9,7 @@
 #include "Null.hpp"
 #include "State.hpp"
 #include "NodeVisitor.hpp"
+#include "N_ary.hpp"
 
 Constant::Constant(const double& v) : val(v)
 {
@@ -39,4 +40,29 @@ void Constant::accept(NodeVisitor& v) const
 NodePtr Constant::clone() const
 {
     return NodePtr(new Constant(*this));
+}
+
+bool Constant::is_null() const
+{
+    return val==0;
+}
+
+bool Constant::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool Constant::equals_derived(const Constant& rhs) const
+{
+    return rhs.val==val;
+}
+
+bool Constant::equals_derived(const N_ary& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+std::string Constant::get_type() const
+{
+    return "Constant";
 }

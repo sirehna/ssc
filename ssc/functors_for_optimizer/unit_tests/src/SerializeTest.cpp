@@ -14,6 +14,7 @@
 #include "Serialize.hpp"
 #include "StateGenerator.hpp"
 #include "Ln.hpp"
+#include "FunctorAlgebra.hpp"
 
 SerializeTest::SerializeTest() : a(DataGenerator(12121)), generate(StateGenerator()), ss("")
 {
@@ -111,3 +112,15 @@ TEST_F(SerializeTest, logarithm)
     l.accept(v);
     ASSERT_EQ("log(x)", ss.str());
 }
+
+TEST_F(SerializeTest, DISABLED_bug_01)
+{
+    auto x = generate.state("x");
+    auto y = generate.state("y");
+    auto z = generate.state("z");
+    std::stringstream ss;
+    Serialize s(ss);
+    (x*y/z)->diff(x)->diff(y)->diff(z)->accept(s);
+    ASSERT_EQ("-1/z^2", ss.str());
+}
+

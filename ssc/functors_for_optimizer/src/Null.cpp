@@ -34,3 +34,19 @@ bool Null::is_null() const
 {
     return true;
 }
+
+bool Null::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool Null::equals_derived(const Null& rhs) const
+{
+    (void) rhs;
+    return true;
+}
+
+std::string Null::get_type() const
+{
+    return "Null";
+}

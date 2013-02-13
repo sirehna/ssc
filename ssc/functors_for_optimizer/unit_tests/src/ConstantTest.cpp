@@ -38,6 +38,16 @@ TEST_F(ConstantTest, example)
 //! [ConstantTest expected output]
 }
 
+TEST_F(ConstantTest, should_be_able_to_state_a_constant_is_null_or_equal_to_a_double)
+{
+    StateGenerator generate;
+    const double cst = a.random<double>().but_not(0);
+    Constant c(cst);
+    ASSERT_EQ(c, cst);
+    ASSERT_TRUE(Constant(0).is_null());
+    ASSERT_FALSE(c.is_null());
+}
+
 TEST_F(ConstantTest, derivative)
 {
     StateGenerator generate;
@@ -48,5 +58,16 @@ TEST_F(ConstantTest, derivative)
     {
         **x = a.random<double>();
         ASSERT_DOUBLE_EQ(0, d->get_value()());
+    }
+}
+
+TEST_F(ConstantTest, equality_operator)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const Constant c1(a.random<double>()), c2(a.random<double>());
+        ASSERT_TRUE(c1.equals(c1));
+        ASSERT_FALSE(c1.equals(c2));
+        ASSERT_FALSE(c2.equals(c1));
     }
 }

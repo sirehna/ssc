@@ -2,8 +2,7 @@
 #include "Parameter.hpp"
 #include "Null.hpp"
 #include "NodeVisitor.hpp"
-#include <iostream>
-#include "test_macros.hpp"
+#include "Constant.hpp"
 
 State::~State()
 {
@@ -36,7 +35,7 @@ NodePtr State::diff(const StatePtr& state) const
 {
     if (*state==*this)
     {
-        return NodePtr(new Parameter(lambda));
+        return NodePtr(new Constant(lambda));
     }
     else
     {
@@ -46,10 +45,29 @@ NodePtr State::diff(const StatePtr& state) const
 
 void State::accept(NodeVisitor& v) const
 {
-    COUT("");
     v.visit(*this);
 }
 NodePtr State::clone() const
 {
     return NodePtr(new State(*this));
+}
+
+bool State::is_null() const
+{
+    return false;
+}
+
+bool State::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool State::equals_derived(const State& rhs) const
+{
+    return ptr == rhs.ptr;
+}
+
+std::string State::get_type() const
+{
+    return "State";
 }

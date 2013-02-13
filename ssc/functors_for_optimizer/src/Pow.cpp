@@ -5,7 +5,10 @@
 #include "NodeVisitor.hpp"
 #include "Ln.hpp"
 #include "Divide.hpp"
+#include "State.hpp"
 #include <cmath>
+
+#include "FunctorAlgebra.hpp"
 
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
@@ -20,15 +23,12 @@ Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1,NodePtr(new Constant(n
 
 std::function<double()> Pow::get_pow_fun() const
 {
-    return [n1_,n2_,&lambda]()->double{return lambda*(pow(n1_->get_value()(),n2_->get_value()()));};
+    return [n1_,n2_,lambda]()->double{return lambda*(pow(n1_->get_value()(),n2_->get_value()()));};
 }
 
 NodePtr Pow::diff(const StatePtr& state) const
 {
-    //u(x)^v(x)*((diff(v(x), x))*ln(u(x))+v(x)*(diff(u(x), x))/u(x))
-
-
-    return NodePtr(Mult(new Multiply(PowPtr(new Pow(*this)), SumPtr(new Sum(Mult(new Multiply(n2_->diff(state),LnPtr(new Ln(n2_)))),DividePtr(new Divide(Mult(new Multiply(n1_->diff(state),n2_)),n1_)))))));
+    return Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
 }
 
 std::string Pow::get_operator_name() const
@@ -39,4 +39,24 @@ std::string Pow::get_operator_name() const
 NodePtr Pow::clone() const
 {
     return NodePtr(new Pow(*this));
+}
+
+bool Pow::is_null() const
+{
+    return n1_->is_null();
+}
+
+bool Pow::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool Pow::equals_derived(const Pow& rhs) const
+{
+    return ((*n1_==*rhs.n1_)&&(*n2_==*rhs.n2_));
+}
+
+std::string Pow::get_type() const
+{
+    return "Pow";
 }

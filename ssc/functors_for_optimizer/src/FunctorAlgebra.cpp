@@ -16,29 +16,39 @@
 #include "Null.hpp"
 #include "Constant.hpp"
 
+
 Mult operator*(const Node& n1, const Node& n2)
 {
+    if (n1.is_null()) return Mult(new Multiply(NullPtr(new Null()),n2.clone()));
+    if (n2.is_null()) return Mult(new Multiply(NullPtr(new Null()),n1.clone()));
     return Mult(new Multiply(n1.clone(),n2.clone()));
 }
 
 Mult operator*(const Node& n1, const NodePtr& n2)
 {
+    if (n1.is_null()) return Mult(new Multiply(NullPtr(new Null()),n2->clone()));
+    if (n2->is_null()) return Mult(new Multiply(NullPtr(new Null()),n1.clone()));
     return Mult(new Multiply(n1.clone(),n2));
 }
 
 Mult operator*(const NodePtr& n1, const NodePtr& n2)
 {
+    if (n1->is_null()) return Mult(new Multiply(NullPtr(new Null()),n2->clone()));
+    if (n2->is_null()) return Mult(new Multiply(NullPtr(new Null()),n1->clone()));
     return Mult(new Multiply(n1,n2));
 }
 
 Mult operator*(const NodePtr& n1, const Node& n2)
 {
+    if (n2.is_null()) return Mult(new Multiply(NullPtr(new Null()),n1->clone()));
+    if (n1->is_null()) return Mult(new Multiply(NullPtr(new Null()),n2.clone()));
     return Mult(new Multiply(n1,n2.clone()));
 }
 
 NodePtr operator*(const NodePtr& n, const double& d)
 {
     if (d == 0) return NullPtr(new Null());
+    if (n->is_null()) return NullPtr(new Null());
     auto c = n->clone();
     c->multiply_by(d);
     return c;
@@ -51,22 +61,22 @@ NodePtr operator*(const double& d, const NodePtr& n)
 
 NullPtr operator*(const NodePtr& n1, const Null& n2)
 {
-    n1->multiply_by(1);
-    if (n2.get_value()) {}
+    (void) n1;
+    (void) n2;
     return NullPtr(new Null());
 }
 
 NullPtr operator*(const Null& n1, const NodePtr& n2)
 {
-    n2->multiply_by(1);
-    if (n1.get_value()) {}
+    (void) n1;
+    (void) n2;
     return NullPtr(new Null());
 }
 
 NullPtr operator*(const Node& n1, const Null& n2)
 {
-    n1.get_value();
-    if (n2.get_value()) {}
+    (void) n1;
+    (void) n2;
     return NullPtr(new Null());
 }
 
@@ -74,7 +84,7 @@ NullPtr operator*(const Null& n1, const Node& n2)
 {
     return n2*n1;
 }
-/*
+
 NodePtr operator*(const Node& n1, const Constant& n2)
 {
     auto ret = n1.clone();
@@ -93,7 +103,7 @@ NodePtr operator*(const NodePtr& n1, const Constant& n2)
     ret->multiply_by(n2.get_value()());
     return ret;
 }
-
+/*
 NodePtr operator*(const Constant& n1, const NodePtr& n2)
 {
     return n2*n1;
@@ -167,6 +177,15 @@ NodePtr operator+(const Null& n1, const Node& n2)
     return n2.clone();
 }
 
+NodePtr operator+(const NodePtr& n, const double& d)
+{
+    return NodePtr(new Sum(n,NodePtr(new Constant(d))));
+}
+
+NodePtr operator-(const NodePtr& n, const double& d)
+{
+    return (n+(-d));
+}
 
 DividePtr operator/(const Node& n1, const Node& n2)
 {
@@ -314,4 +333,48 @@ NullPtr pow(const NullPtr& n1, const NodePtr& n2)
 {
     if (n2->get_value()()) {}
     return n1;
+}
+
+bool operator==(const double& v, const NodePtr& n)
+{
+    return n==v;
+}
+bool operator!=(const NodePtr& n, const double& v)
+{
+    return not(n==v);
+}
+
+bool operator!=(const double& v, const NodePtr& n)
+{
+    return not(n==v);
+}
+
+bool operator==(const NodePtr& n1, const NodePtr& n2)
+{
+    return *n1 == *n2;
+}
+
+bool operator!=(const NodePtr& n1, const NodePtr& n2)
+{
+    return not(n1!=n2);
+}
+
+bool operator==(const Node& n1, const Node& n2)
+{
+    return n1.equals(n2);
+}
+
+bool operator!=(const Node& n1, const Node& n2)
+{
+    return not(n1==n2);
+}
+
+bool operator==(const NodePtr& n1, const double& n2)
+{
+    return *n1==Constant(n2);
+}
+
+bool operator!=(const Node& n1, const double& n2)
+{
+    return not(n1==Constant(n2));
 }

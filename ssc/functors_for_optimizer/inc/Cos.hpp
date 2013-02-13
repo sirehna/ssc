@@ -20,6 +20,7 @@
  *  \snippet MODULE_NAME/unit_tests/src/CosTest.cpp CosTest expected output
  */
 
+
 class Cos : public Unary
 {
     public:
@@ -27,6 +28,8 @@ class Cos : public Unary
         std::string get_operator_name() const;
         NodePtr diff(const StatePtr& state) const;
         NodePtr clone() const;
+        bool is_null() const;
+        std::string get_type() const;
 };
 
 typedef std::tr1::shared_ptr<Cos> CosPtr;

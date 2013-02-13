@@ -32,3 +32,20 @@ NodePtr Sin::clone() const
 {
     return NodePtr(new Sin(*this));
 }
+
+bool Sin::is_null() const
+{
+    return false;
+}
+
+bool Sin::equals(const Node& rhs) const
+{
+    (void) rhs;
+        return false;
+        //return rhs.equals_derived(*this);
+}
+
+std::string Sin::get_type() const
+{
+    return "Sin";
+}

@@ -4,6 +4,8 @@
 #include "Parameter.hpp"
 #include "Serialize.hpp"
 
+#include "test_macros.hpp"
+
 PowTest::PowTest() : a(DataGenerator(171429)), generate(StateGenerator())
 {
 }
@@ -34,10 +36,13 @@ TEST_F(PowTest, derivative)
     const auto x = generate.state("x");
     const std::tr1::shared_ptr<Parameter> n(new Parameter(10));
     const auto x_pow_n = Pow(x,n);
+    const auto dpow = x_pow_n.diff(x)->get_value();
+    COUT(x_pow_n.diff(x));
+
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **x = a.random<double>().between(0,20);
         **n = a.random<double>().between(1,5);
-        ASSERT_DOUBLE_EQ((**n)*pow(**x,(**n)-1), x_pow_n.diff(x)->get_value()());
+        ASSERT_DOUBLE_EQ((**n)*pow(**x,(**n)-1), dpow());
     }
 }

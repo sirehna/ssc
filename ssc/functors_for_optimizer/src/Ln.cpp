@@ -7,6 +7,7 @@
 
 #include "Ln.hpp"
 #include "Divide.hpp"
+#include "FunctorAlgebra.hpp"
 #include <cmath>
 
 Ln::Ln(const NodePtr& n_) : Unary(n_)
@@ -27,4 +28,14 @@ NodePtr Ln::diff(const StatePtr& state) const
 NodePtr Ln::clone() const
 {
     return NodePtr(new Ln(*this));
+}
+
+bool Ln::is_null() const
+{
+    return n == 1;
+}
+
+std::string Ln::get_type() const
+{
+    return "Ln";
 }

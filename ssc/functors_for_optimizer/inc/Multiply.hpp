@@ -19,6 +19,9 @@
  *  \snippet MODULE_NAME/unit_tests/src/MultiplyTest.cpp MultiplyTest expected output
  */
 
+
+
+
 class Multiply : public N_ary
 {
     public:
@@ -27,6 +30,13 @@ class Multiply : public N_ary
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
         NodePtr clone() const;
+        bool is_null() const;
+        std::string get_type() const;
+
+    private:
+        void common_build();
+        void remove_ones_and_zeros();
+        bool null_or_one(const NodePtr& node) const;
 };
 
 typedef std::tr1::shared_ptr<Multiply> Mult;
