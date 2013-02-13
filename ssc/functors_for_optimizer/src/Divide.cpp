@@ -19,7 +19,6 @@ Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 }
 
 
-#include "test_macros.hpp"
 NodePtr Divide::diff(const StatePtr& state) const
 {
     auto n2_dn1dstate = (n1_->diff(state))*n2_;
@@ -29,21 +28,15 @@ NodePtr Divide::diff(const StatePtr& state) const
     if (n2_dn1dstate->is_null())
     {
         n1_dn2dstate->multiply_by(-1);
-        COUT(*this);
-        //COUT(Divide(n1_dn2dstate,n2_n2));
         return NodePtr(new Divide(n1_dn2dstate,n2_n2));
     }
     if (n1_dn2dstate->is_null())
     {
-        COUT(*this);
-        //COUT(Divide(n2_dn1dstate,n2_n2));
         return NodePtr(new Divide(n2_dn1dstate,n2_n2));
     }
 
 
     DiffPtr s(new Difference(n2_dn1dstate,n1_dn2dstate));
-COUT(*this);
-//COUT(Divide(s,n2_n2));
     return NodePtr(new Divide(s,n2_n2));
 }
 
@@ -75,4 +68,9 @@ bool Divide::equals_derived(const Divide& rhs) const
 std::string Divide::get_type() const
 {
     return "Divide";
+}
+
+NodePtr Divide::simplify() const
+{
+    return NodePtr(new Divide(*this));
 }

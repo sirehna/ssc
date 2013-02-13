@@ -33,6 +33,7 @@ class Difference : public Binary
         using Node::equals_derived;
         bool equals_derived(const Difference& rhs) const;
         std::string get_type() const;
+        NodePtr simplify() const;
 };
 
 typedef std::tr1::shared_ptr<Difference> DiffPtr;

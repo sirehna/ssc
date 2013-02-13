@@ -17,7 +17,7 @@ class Pow : public Binary
         using Node::equals_derived;
         bool equals_derived(const Pow& rhs) const;
         std::string get_type() const;
-
+        NodePtr simplify() const;
     private:
         std::function<double()> get_pow_fun() const;
 };

@@ -66,3 +66,8 @@ std::string Constant::get_type() const
 {
     return "Constant";
 }
+
+NodePtr Constant::simplify() const
+{
+    return NodePtr(new Constant(*this));
+}

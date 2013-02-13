@@ -32,6 +32,7 @@ class Multiply : public N_ary
         NodePtr clone() const;
         bool is_null() const;
         std::string get_type() const;
+        NodePtr simplify() const;
 
     private:
         void common_build();

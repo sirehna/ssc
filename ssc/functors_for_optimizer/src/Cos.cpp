@@ -47,3 +47,8 @@ std::string Cos::get_type() const
 {
     return "Cos";
 }
+
+NodePtr Cos::simplify() const
+{
+    return NodePtr(new Cos(*this));
+}
