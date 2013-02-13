@@ -21,6 +21,8 @@ class MultiplyTest : public ::testing::Test
         virtual void TearDown();
 		DataGenerator a;
 		StateGenerator generate;
+		StatePtr x1;
+		StatePtr x2;
 
 };
 

@@ -20,6 +20,7 @@
  *  \snippet MODULE_NAME/unit_tests/src/SumTest.cpp SumTest expected output
  */
 
+
 class Sum : public N_ary
 {
     public:
@@ -28,6 +29,12 @@ class Sum : public N_ary
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
         NodePtr clone() const;
+        bool is_null() const;
+        std::string get_type() const;
+
+    private:
+        void common_build();
+        void remove_zeros();
 };
 
 typedef std::tr1::shared_ptr<Sum> SumPtr;

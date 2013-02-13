@@ -26,7 +26,9 @@ std::string Cos::get_operator_name() const
 
 NodePtr Cos::diff(const StatePtr& state) const
 {
-    return (-1.)*n->diff(state)*Sin(n->clone());
+    auto ret = (n->diff(state)*Sin(n->clone()));
+    ret->multiply_by(-1);
+    return ret;
 
     //return NodePtr(new Multiply(Mult(new Multiply(n->diff(state),ConstantPtr(new Constant(-1)))),SinPtr(new Sin(n))));
 }
@@ -34,4 +36,14 @@ NodePtr Cos::diff(const StatePtr& state) const
 NodePtr Cos::clone() const
 {
     return NodePtr(new Cos(*this));
+}
+
+bool Cos::is_null() const
+{
+    return false;
+}
+
+std::string Cos::get_type() const
+{
+    return "Cos";
 }

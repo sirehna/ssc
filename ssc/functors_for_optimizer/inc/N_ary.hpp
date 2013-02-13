@@ -31,6 +31,10 @@ class N_ary : public Node
         std::vector<NodePtr> get_sons() const;
         void accept(NodeVisitor& v) const;
         virtual std::string get_operator_name() const = 0;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const N_ary& rhs) const;
+        bool equals_derived(const Constant& rhs) const;
     protected:
         std::vector<NodePtr> sons;
         void set_value(const std::function<double()>& val);

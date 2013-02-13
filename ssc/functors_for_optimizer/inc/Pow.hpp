@@ -3,6 +3,7 @@
 
 #include "Binary.hpp"
 
+
 class Pow : public Binary
 {
     public:
@@ -11,6 +12,11 @@ class Pow : public Binary
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
         NodePtr clone() const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const Pow& rhs) const;
+        std::string get_type() const;
 
     private:
         std::function<double()> get_pow_fun() const;

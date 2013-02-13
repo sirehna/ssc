@@ -27,8 +27,12 @@ class Divide : public Binary
         NodePtr diff(const StatePtr& state) const;
         std::string get_operator_name() const;
         NodePtr clone() const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const Divide& rhs) const;
+        std::string get_type() const;
 };
 
 typedef std::tr1::shared_ptr<Divide> DividePtr;
-
 #endif /* DIVIDE_HPP_ */

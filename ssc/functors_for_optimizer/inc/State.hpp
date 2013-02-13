@@ -5,6 +5,8 @@
 #include <string>
 #include "Parameter.hpp"
 
+
+
 class State : public Parameter
 {
     public:
@@ -16,6 +18,11 @@ class State : public Parameter
       ~State();
       void accept(NodeVisitor& v) const;
       NodePtr clone() const;
+      bool is_null() const;
+      bool equals(const Node& rhs) const;
+      using Parameter::equals_derived;
+      bool equals_derived(const State& rhs) const;
+      std::string get_type() const;
 
 
     private:
@@ -25,7 +32,5 @@ class State : public Parameter
 };
 
 typedef std::tr1::shared_ptr<State> StatePtr;
-
-
 
 #endif

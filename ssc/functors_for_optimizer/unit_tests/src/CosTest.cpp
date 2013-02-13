@@ -43,7 +43,7 @@ TEST_F(CosTest, example)
 //! [SinTest expected output]
 }
 
-TEST_F(CosTest, DISABLED_derivative)
+TEST_F(CosTest, derivative)
 {
     auto x = generate.state("x");
     Cos s(x);
@@ -53,6 +53,18 @@ TEST_F(CosTest, DISABLED_derivative)
         X = a.random<double>();
         ASSERT_DOUBLE_EQ(-sin(X), dcos_dx());
     }
+}
+
+TEST_F(CosTest, equality_operator)
+{
+    const auto x = generate.state("x");
+    const auto y = generate.state("y");
+    const Cos cos_x(x), cos_y(y);
+
+    ASSERT_TRUE(cos_x.equals(cos_x));
+    ASSERT_TRUE(cos_y.equals(cos_y));
+    ASSERT_FALSE(cos_x.equals(cos_y));
+    ASSERT_FALSE(cos_y.equals(cos_x));
 }
 
 

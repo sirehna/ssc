@@ -7,6 +7,8 @@
 
 #include "N_ary.hpp"
 #include "NodeVisitor.hpp"
+#include "Constant.hpp"
+#include <algorithm>
 
 N_ary::N_ary(const NodePtr& n1, const NodePtr& n2) : sons({n1,n2})
 {
@@ -30,4 +32,29 @@ void N_ary::accept(NodeVisitor& v) const
 std::vector<NodePtr> N_ary::get_sons() const
 {
     return sons;
+}
+
+bool N_ary::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool N_ary::equals_derived(const N_ary& rhs) const
+{
+    auto reference = rhs.sons;
+    for (auto son1 = sons.begin() ; son1 != sons.end() ; ++son1)
+    {
+        auto p = std::find (reference.begin(),reference.end(),*son1);
+        bool match = p!=reference.end();
+        if (not(match)) return false;
+        reference.erase(p);
+    }
+    return true;
+}
+
+bool N_ary::equals_derived(const Constant& rhs) const
+{
+    if (sons.empty()) return rhs.equals_derived(0);
+    if (sons.size() == 1) return sons.front()->equals_derived(rhs);
+    return false;
 }

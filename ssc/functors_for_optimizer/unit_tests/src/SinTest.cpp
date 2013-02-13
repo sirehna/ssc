@@ -44,7 +44,7 @@ TEST_F(SinTest, example)
 //! [SinTest expected output]
 }
 
-TEST_F(SinTest, DISABLED_derivative)
+TEST_F(SinTest, derivative)
 {
     auto x = generate.state("x");
     Sin s(x);

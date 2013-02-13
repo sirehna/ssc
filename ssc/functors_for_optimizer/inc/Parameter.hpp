@@ -29,6 +29,11 @@ class Parameter : public Nullary
         bool operator!=(const Parameter& rhs) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        virtual bool equals_derived(const Parameter& rhs) const;
+        std::string get_type() const;
     protected:
         std::tr1::shared_ptr<double> ptr;
         friend double& operator*(const Parameter& s);
@@ -36,8 +41,6 @@ class Parameter : public Nullary
         Parameter();
 };
 
-typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
-
 double& operator*(const Parameter& s);
-
+typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
 #endif /* PARAMETER_HPP_ */

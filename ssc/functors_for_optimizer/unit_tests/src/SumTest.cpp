@@ -8,7 +8,9 @@
 #include "SumTest.hpp"
 #include "StateGenerator.hpp"
 #include "Sum.hpp"
-#include "test_macros.hpp"
+#include "Constant.hpp"
+#include "FunctorAlgebra.hpp"
+#include "Serialize.hpp"
 
 SumTest::SumTest() : a(DataGenerator(12)), generate(StateGenerator())
 {
@@ -54,5 +56,13 @@ TEST_F(SumTest, derivative)
     Sum s(x,y);
     ASSERT_EQ(1,s.diff(x)->get_value()());
     ASSERT_EQ(1,s.diff(y)->get_value()());
+}
+
+TEST_F(SumTest, comparison_to_constant_bug)
+{
+    ConstantPtr c(new Constant(1));
+    std::vector<NodePtr> nodes(1,c);
+    SumPtr one(new Sum(nodes));
+    ASSERT_EQ(1, one);
 }
 

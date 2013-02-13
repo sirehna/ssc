@@ -20,6 +20,7 @@
  *  \snippet MODULE_NAME/unit_tests/src/NullTest.cpp NullTest expected output
  */
 
+
 class Null : public Nullary
 {
     public:
@@ -28,6 +29,10 @@ class Null : public Nullary
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;
         bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const Null& rhs) const;
+        std::string get_type() const;
 };
 
 typedef std::tr1::shared_ptr<Null> NullPtr;

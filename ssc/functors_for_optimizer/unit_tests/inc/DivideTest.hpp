@@ -21,6 +21,8 @@ class DivideTest : public ::testing::Test
         virtual void TearDown();
 		DataGenerator a;
 		StateGenerator generate;
+		StatePtr x;
+		StatePtr y;
 
 };
 

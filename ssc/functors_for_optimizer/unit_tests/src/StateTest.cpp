@@ -77,3 +77,15 @@ TEST_F(StateTest, derivative_zero_or_one)
     ASSERT_EQ(0, x->diff(y)->get_value()());
     ASSERT_EQ(0, y->diff(x)->get_value()());
 }
+
+TEST_F(StateTest, equality_operator)
+{
+    const State x("x", 2);
+    const State y("y", 3);
+
+    ASSERT_TRUE(x.equals(x));
+    ASSERT_FALSE(x.equals(y));
+    ASSERT_FALSE(y.equals(x));
+    ASSERT_TRUE(y.equals(y));
+}
+

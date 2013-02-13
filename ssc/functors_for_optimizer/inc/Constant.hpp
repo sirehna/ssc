@@ -20,6 +20,9 @@
  *  \snippet MODULE_NAME/unit_tests/src/ConstantTest.cpp ConstantTest expected output
  */
 
+class Constant;
+typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+
 class Constant : public Nullary
 {
     public:
@@ -29,12 +32,18 @@ class Constant : public Nullary
         bool operator!=(const Constant& rhs) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const Constant& rhs) const;
+        bool equals_derived(const N_ary& rhs) const;
+        std::string get_type() const;
 
     private:
         Constant();
         double val;
 };
 
-typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+
 
 #endif /* CONSTANT_HPP_ */

@@ -45,7 +45,14 @@ TEST_F(FunctorAlgebraTest, example)
     auto F2 = y/z;
     auto F3 = z+x*0+0*y;
     auto F4 = x*x*x*(y/z)+z+x*0+0*y;
+
+    std::stringstream ss;
+    Serialize s(ss);
+    auto d2F4dxdy = F4->diff(x)->diff(y);
+    d2F4dxdy->accept(s);
+
     auto dF4 = F4->diff(x)->diff(y)->diff(z);
+
     auto f1 = F1->get_value();
     auto f2 = F2->get_value();
     auto f3 = F3->get_value();
@@ -68,5 +75,26 @@ TEST_F(FunctorAlgebraTest, example)
 //! [FunctorAlgebraTest expected output]
 }
 
+TEST_F(FunctorAlgebraTest, bug)
+{
+    auto x = generate.state("x");
+    auto y = generate.state("y");
+    auto z = generate.state("z");
+    std::stringstream ss;
+    Serialize s(ss);
+    ((y / z) * ((x * (x + x)) + (x * x)))->diff(y)->accept(s);
+    ASSERT_EQ("(((x * (x + x)) + (x * x)) * (z / (z * z)))", ss.str());
+}
 
-
+TEST_F(FunctorAlgebraTest, bug_02)
+{
+    auto x = generate.state("x");
+    auto y = generate.state("y");
+    auto z = generate.state("z");
+    auto f = (x*y/z)->diff(x)->diff(y)->diff(z)->get_value();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        **z = a.random<double>().between(-1000,1000)();
+        ASSERT_NEAR(-1./((**z)*(**z)), f(),1E-15);
+    }
+}

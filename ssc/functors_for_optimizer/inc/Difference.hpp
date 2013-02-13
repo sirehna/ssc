@@ -19,6 +19,8 @@
  *  \snippet MODULE_NAME/unit_tests/src/DifferenceTest.cpp DifferenceTest expected output
  */
 
+
+
 class Difference : public Binary
 {
     public:
@@ -26,6 +28,11 @@ class Difference : public Binary
         std::string get_operator_name() const;
         NodePtr clone() const;
         NodePtr diff(const StatePtr& state) const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        using Node::equals_derived;
+        bool equals_derived(const Difference& rhs) const;
+        std::string get_type() const;
 };
 
 typedef std::tr1::shared_ptr<Difference> DiffPtr;

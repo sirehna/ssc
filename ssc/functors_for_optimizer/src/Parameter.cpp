@@ -48,3 +48,23 @@ NodePtr Parameter::clone() const
 {
     return NodePtr(new Parameter(*this));
 }
+
+bool Parameter::is_null() const
+{
+    return *ptr==0;
+}
+
+bool Parameter::equals(const Node& rhs) const
+{
+    return rhs.equals_derived(*this);
+}
+
+bool Parameter::equals_derived(const Parameter& rhs) const
+{
+    return *ptr == *(rhs.ptr);
+}
+
+std::string Parameter::get_type() const
+{
+    return "Parameter";
+}

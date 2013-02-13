@@ -55,15 +55,17 @@ NullPtr operator*(const NodePtr& n1, const Null& n2);
 NullPtr operator*(const Null& n1, const NodePtr& n2);
 NullPtr operator*(const Node& n1, const Null& n2);
 NullPtr operator*(const Null& n1, const Node& n2);
-/*
+
 NodePtr operator*(const Node& n1, const Constant& n2);
 NodePtr operator*(const Constant& n1, const Node& n2);
 NodePtr operator*(const NodePtr& n1, const Constant& n2);
+
+/*
+NodePtr operator*(const NodePtr& n1, const ConstantPtr& n2);
+NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2);
 NodePtr operator*(const Constant& n1, const NodePtr& n2);
 NodePtr operator*(const Node& n1, const ConstantPtr& n2);
 NodePtr operator*(const ConstantPtr& n1, const Node& n2);
-NodePtr operator*(const NodePtr& n1, const ConstantPtr& n2);
-NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2);
 */
 
 SumPtr operator+(const Node& n1, const Node& n2);
@@ -77,6 +79,7 @@ NodePtr operator+(const Null& n1, const NodePtr& n2);
 NodePtr operator+(const Node& n1, const Null& n2);
 NodePtr operator+(const Null& n1, const Node& n2);
 
+NodePtr operator-(const NodePtr& n, const double& d);
 
 DividePtr operator/(const Node& n1, const Node& n2);
 DividePtr operator/(const Node& n1, const NodePtr& n2);
@@ -105,4 +108,16 @@ NullPtr pow(const Null& n1, const NodePtr& n2);
 NullPtr pow(const NullPtr& n1, const Node& n2);
 NullPtr pow(const NullPtr& n1, const NodePtr& n2);
 
+bool operator==(const NodePtr& n, const double& v);
+bool operator==(const double& v, const NodePtr& n);
+bool operator!=(const NodePtr& n, const double& v);
+bool operator!=(const double& v, const NodePtr& n);
+
+
+bool operator==(const NodePtr& n1, const NodePtr& n2);
+bool operator!=(const NodePtr& n1, const NodePtr& n2);
+bool operator==(const Node& n1, const Node& n2);
+bool operator!=(const Node& n1, const Node& n2);
+bool operator==(const NodePtr& n1, const double& n2);
+bool operator!=(const Node& n1, const double& n2);
 #endif /* FUNCTORALGEBRA_HPP_ */

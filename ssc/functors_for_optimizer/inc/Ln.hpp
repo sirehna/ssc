@@ -27,8 +27,9 @@ class Ln : public Unary
         std::string get_operator_name() const;
         NodePtr diff(const StatePtr& state) const;
         NodePtr clone() const;
+        bool is_null() const;
+        std::string get_type() const;
 };
-
 typedef std::tr1::shared_ptr<Ln> LnPtr;
 
 #endif /* LN_HPP_ */

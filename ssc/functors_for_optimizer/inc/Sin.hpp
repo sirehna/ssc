@@ -20,6 +20,8 @@
  *  \snippet MODULE_NAME/unit_tests/src/SinTest.cpp SinTest expected output
  */
 
+
+
 class Sin : public Unary
 {
     public:
@@ -27,8 +29,11 @@ class Sin : public Unary
         std::string get_operator_name() const;
         NodePtr diff(const StatePtr& state) const;
         NodePtr clone() const;
+        bool is_null() const;
+        bool equals(const Node& rhs) const;
+        //bool equals(const Sin& rhs) const;
+        std::string get_type() const;
 };
 
 typedef std::tr1::shared_ptr<Sin> SinPtr;
-
 #endif /* SIN_HPP_ */

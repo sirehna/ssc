@@ -29,7 +29,6 @@ void Binary::set_value(const std::function<double()>& val)
 
 void Binary::accept(NodeVisitor& v) const
 {
-    COUT("");
     v.visit(*this);
 }
 
