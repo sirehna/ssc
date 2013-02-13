@@ -51,3 +51,8 @@ std::string Difference::get_type() const
 {
     return "Difference";
 }
+
+NodePtr Difference::simplify() const
+{
+    return NodePtr(new Difference(*this));
+}

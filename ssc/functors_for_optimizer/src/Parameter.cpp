@@ -68,3 +68,8 @@ std::string Parameter::get_type() const
 {
     return "Parameter";
 }
+
+NodePtr Parameter::simplify() const
+{
+    return NodePtr(new Parameter(*this));
+}

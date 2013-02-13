@@ -50,3 +50,8 @@ std::string Null::get_type() const
 {
     return "Null";
 }
+
+NodePtr Null::simplify() const
+{
+    return NodePtr(new Null(*this));
+}

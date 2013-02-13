@@ -39,3 +39,8 @@ std::string Ln::get_type() const
 {
     return "Ln";
 }
+
+NodePtr Ln::simplify() const
+{
+    return NodePtr(new Ln(*this));
+}

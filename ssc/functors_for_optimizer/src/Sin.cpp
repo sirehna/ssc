@@ -49,3 +49,8 @@ std::string Sin::get_type() const
 {
     return "Sin";
 }
+
+NodePtr Sin::simplify() const
+{
+    return NodePtr(new Sin(*this));
+}

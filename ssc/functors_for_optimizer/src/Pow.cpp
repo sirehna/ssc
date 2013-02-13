@@ -60,3 +60,8 @@ std::string Pow::get_type() const
 {
     return "Pow";
 }
+
+NodePtr Pow::simplify() const
+{
+    return NodePtr(new Pow(*this));
+}

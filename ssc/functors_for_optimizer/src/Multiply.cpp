@@ -59,7 +59,7 @@ bool Multiply::null_or_one(const NodePtr& node) const
 {
     return node->is_null() || (node == 1);
 }
-#include "State.hpp"
+
 NodePtr Multiply::diff(const StatePtr& state) const
 {
     std::vector<NodePtr> dsons_dstate;
@@ -107,4 +107,9 @@ bool Multiply::is_null() const
 std::string Multiply::get_type() const
 {
     return "Multiply";
+}
+
+NodePtr Multiply::simplify() const
+{
+    return NodePtr(new Multiply(*this));
 }

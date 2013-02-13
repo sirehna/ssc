@@ -48,6 +48,8 @@ class Node
 
         virtual std::string get_type() const = 0;
 
+        virtual NodePtr simplify() const = 0;
+
     protected:
         double lambda;
         std::function<double()> value;

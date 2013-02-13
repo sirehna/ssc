@@ -10,7 +10,6 @@
 #include <algorithm>
 
 #include "Serialize.hpp"
-#include "test_macros.hpp"
 
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
@@ -24,9 +23,7 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 
 void Sum::common_build()
 {
-    //COUT(sons.size());
     remove_zeros();
-    //COUT(sons.size());
     if (sons.empty())
     {
         set_value([sons,&lambda]()->double {return 0;});
@@ -60,7 +57,6 @@ NodePtr Sum::diff(const StatePtr& state) const
         auto dson_dstate = (*son)->diff(state);
         if (not(dson_dstate->is_null())) dsons.push_back(dson_dstate);
     }
-    //COUT(*this);
     return NodePtr(new Sum(dsons));
 }
 
@@ -85,4 +81,9 @@ bool Sum::is_null() const
 std::string Sum::get_type() const
 {
     return "Sum";
+}
+
+NodePtr Sum::simplify() const
+{
+    return NodePtr(new Sum(*this));
 }

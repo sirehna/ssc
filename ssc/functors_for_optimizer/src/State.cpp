@@ -71,3 +71,8 @@ std::string State::get_type() const
 {
     return "State";
 }
+
+NodePtr State::simplify() const
+{
+    return NodePtr(new State(*this));
+}
