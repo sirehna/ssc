@@ -11,6 +11,7 @@
 #include "Node.hpp"
 #include <string>
 #include <vector>
+#include <map>
 
 /** \author cec
  *  \brief This class was created to
@@ -41,6 +42,7 @@ class N_ary : public Node
         std::vector<NodePtr> sons;
         void set_value(const std::function<double()>& val);
         std::vector<NodePtr> extract_subnodes(const std::function<std::vector<NodePtr>(const NodePtr& n)>& extractor);
+        std::map<NodePtr, size_t> get_occurence_of_each_factor() const;
     private:
         N_ary();
 };

@@ -11,6 +11,7 @@
 #include "Null.hpp"
 #include "Sum.hpp"
 #include "FunctorAlgebra.hpp"
+#include "Multiply.hpp"
 
 SimplifyTest::SimplifyTest() : a(DataGenerator(22)),
                                generate(StateGenerator()),
@@ -79,4 +80,14 @@ TEST_F(SimplifyTest, simplify_sums)
     s->simplify()->accept(v);
     COUT(ss.str());
     ASSERT_TRUE((ss.str()=="x2 + 3*x1") || (ss.str()=="3*x1 + x2"));
+}
+
+TEST_F(SimplifyTest, simplify_products)
+{
+    std::stringstream ss;
+    Serialize v(ss);
+    auto s = x1*x1*x2*x1;
+    s->simplify()->accept(v);
+    COUT(ss.str());
+    ASSERT_TRUE((ss.str()=="x2 * x1 ^ 3") || (ss.str()=="x1 ^ 3 * x2"));
 }

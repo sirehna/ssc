@@ -69,3 +69,28 @@ void N_ary::update_lambda()
 {
     common_build();
 }
+
+std::map<NodePtr, size_t> N_ary::get_occurence_of_each_factor() const
+{
+    std::map < NodePtr, size_t > factor;
+    for (auto node = sons.begin(); node != sons.end(); ++node)
+    {
+        bool found = false;
+        Node* ptr = (*node).get();
+        for (auto it = factor.begin(); it != factor.end(); ++it)
+        {
+            if ((it->first)->equals(*ptr))
+            {
+                found = true;
+                it->second++;
+            }
+        }
+
+        if (!(found))
+        {
+            factor[*node] = 1;
+        }
+    }
+
+    return factor;
+}

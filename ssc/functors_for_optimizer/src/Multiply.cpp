@@ -11,6 +11,7 @@
 #include "Null.hpp"
 #include <algorithm>
 #include "FunctorAlgebra.hpp"
+#include "Pow.hpp"
 
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
@@ -114,7 +115,21 @@ std::string Multiply::get_type() const
 
 NodePtr Multiply::simplify() const
 {
-    return NodePtr(new Multiply(*this));
+    const std::map<NodePtr,size_t> factor = get_occurence_of_each_factor();
+    std::vector<NodePtr> ret;
+    for (auto f = factor.begin() ; f != factor.end() ; ++f)
+    {
+        const size_t nb_occurences = f->second;
+        if (nb_occurences>1)
+        {
+            ret.push_back(NodePtr(new Pow(f->first->simplify(), nb_occurences)));
+        }
+        else
+        {
+            ret.push_back(f->first->simplify());
+        }
+    }
+    return NodePtr(new Multiply(ret));
 }
 
 std::vector<NodePtr> Multiply::get_factors() const

@@ -8,7 +8,6 @@
 #include "Sum.hpp"
 #include "NodeVisitor.hpp"
 #include <algorithm>
-#include <map>
 #include "FunctorAlgebra.hpp"
 
 
@@ -88,24 +87,7 @@ std::string Sum::get_type() const
 
 NodePtr Sum::simplify() const
 {
-    std::map<NodePtr,size_t> factor;
-    for (auto node = sons.begin() ; node != sons.end() ; ++node)
-    {
-        bool found = false;
-        Node *ptr = (*node).get();
-        for (auto it = factor.begin() ; it != factor.end() ; ++it)
-        {
-            if ((it->first)->equals(*ptr))
-            {
-                found = true;
-                it->second++;
-            }
-        }
-        if (not(found))
-        {
-            factor[*node] = 1;
-        }
-    }
+    const std::map<NodePtr,size_t> factor = get_occurence_of_each_factor();
     std::vector<NodePtr> ret;
     for (auto f = factor.begin() ; f != factor.end() ; ++f)
     {
