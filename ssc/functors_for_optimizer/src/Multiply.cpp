@@ -12,9 +12,6 @@
 #include <algorithm>
 #include "FunctorAlgebra.hpp"
 
-#include "Serialize.hpp"
-#include "test_macros.hpp"
-
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -22,21 +19,24 @@ Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 
 void Multiply::common_build()
 {
+    auto factors = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_factors();};
+    sons = extract_subnodes(factors);
     remove_ones_and_zeros();
+
     if (sons.empty())
     {
         set_value([]()->double {return 0;});
     }
     else
     {
-        set_value([sons,&lambda]()->double
+        set_value([factor,sons]()->double
                   {
                       double ret = 1;
                       for (auto son = sons.begin() ; son != sons.end() ; ++son)
                       {
-                          ret *= (*son)->get_value()();
+                          ret *= (*son)->get_lambda()();
                       }
-                        return lambda*ret;
+                      return factor*ret;
                    });
     }
 }
@@ -92,13 +92,16 @@ std::string Multiply::get_operator_name() const
 
 NodePtr Multiply::clone() const
 {
-    return NodePtr(new Multiply(*this));
+    Multiply *ret = new Multiply(sons);
+    ret->multiply_by(factor);
+    ret->update_lambda();
+    return NodePtr(ret);
 }
 
 bool Multiply::is_null() const
 {
     auto isnull = [](NodePtr son)->double{return son->is_null();};
-    if (lambda==0)                                     return true;
+    if (factor==0)                                     return true;
     if (sons.empty())                                  return true;
     if (std::any_of(sons.begin(), sons.end(), isnull)) return true;
                                                        return false;
@@ -112,4 +115,13 @@ std::string Multiply::get_type() const
 NodePtr Multiply::simplify() const
 {
     return NodePtr(new Multiply(*this));
+}
+
+std::vector<NodePtr> Multiply::get_factors() const
+{
+    return sons;
+}
+void Multiply::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
 }

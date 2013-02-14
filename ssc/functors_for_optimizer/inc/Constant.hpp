@@ -38,7 +38,6 @@ class Constant : public Nullary
         bool equals_derived(const Constant& rhs) const;
         bool equals_derived(const N_ary& rhs) const;
         std::string get_type() const;
-        NodePtr simplify() const;
 
     private:
         Constant();

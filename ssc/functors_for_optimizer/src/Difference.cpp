@@ -11,9 +11,9 @@
 
 Difference::Difference(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
-    set_value([n1,n2,&lambda]()->double
+    set_value([n1,n2,factor]()->double
     {
-        return lambda*(n1->get_value()()-n2->get_value()());
+        return factor*(n1->get_lambda()()-n2->get_lambda()());
     });
 }
 

@@ -33,6 +33,7 @@ class Divide : public Binary
         bool equals_derived(const Divide& rhs) const;
         std::string get_type() const;
         NodePtr simplify() const;
+        bool must_parenthesize() const;
 };
 
 typedef std::tr1::shared_ptr<Divide> DividePtr;

@@ -28,7 +28,8 @@ class Serialize : public NodeVisitor
         Serialize(std::ostream& os_);
         ~Serialize() {}
         void visit(const Binary& node);
-        void visit(const N_ary& node);
+        void visit(const Multiply& node);
+        void visit(const Sum& node);
         void visit(const State& node);
         void visit(const Parameter& node);
         void visit(const Null& node);
@@ -37,6 +38,7 @@ class Serialize : public NodeVisitor
     private:
         Serialize();
         std::ostream& os;
+        bool parenthesize_next_node;
 };
 
 class Node;

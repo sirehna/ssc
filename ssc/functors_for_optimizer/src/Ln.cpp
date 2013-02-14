@@ -12,7 +12,7 @@
 
 Ln::Ln(const NodePtr& n_) : Unary(n_)
 {
-    set_value([n]()->double {return log(n->get_value()());});
+    set_value([factor,n]()->double {return factor*log(n->get_lambda()());});
 }
 
 std::string Ln::get_operator_name() const
@@ -38,9 +38,4 @@ bool Ln::is_null() const
 std::string Ln::get_type() const
 {
     return "Ln";
-}
-
-NodePtr Ln::simplify() const
-{
-    return NodePtr(new Ln(*this));
 }

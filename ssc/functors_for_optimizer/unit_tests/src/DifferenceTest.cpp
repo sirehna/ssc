@@ -36,7 +36,7 @@ TEST_F(DifferenceTest, example)
     const Difference d(x,y);
 //! [DifferenceTest example]
 //! [DifferenceTest expected output]
-    const auto dv = d.get_value();
+    const auto dv = d.get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
@@ -51,8 +51,8 @@ TEST_F(DifferenceTest, derivative)
     const auto x = generate.state("x");
     const auto y = generate.state("y");
     const Difference d(x,y);
-    const auto dx = d.diff(x)->get_value();
-    const auto dy = d.diff(y)->get_value();
+    const auto dx = d.diff(x)->get_lambda();
+    const auto dy = d.diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();

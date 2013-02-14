@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <tr1/memory>
+#include <vector>
 
 class Node;
 
@@ -28,7 +29,7 @@ class Node
     public:
         Node();
         virtual ~Node() {}
-        std::function<double()> get_value() const;
+        std::function<double()> get_lambda() const;
         virtual NodePtr diff(const StatePtr& state) const = 0;
         void multiply_by(const double& k);
         virtual void accept(NodeVisitor& v) const = 0;
@@ -48,10 +49,15 @@ class Node
 
         virtual std::string get_type() const = 0;
 
-        virtual NodePtr simplify() const = 0;
+        virtual NodePtr simplify() const;
+        virtual std::vector<NodePtr> get_factors() const;
+        virtual std::vector<NodePtr> get_operands() const;
+        double get_multiplicative_factor() const;
+        virtual bool must_parenthesize() const;
+        virtual void update_lambda();
 
     protected:
-        double lambda;
+        double factor;
         std::function<double()> value;
 };
 

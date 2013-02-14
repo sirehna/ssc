@@ -35,7 +35,7 @@ TEST_F(SinTest, example)
     Sin s(x);
 //! [SinTest example]
 //! [SinTest expected output]
-    auto sin_X = s.get_value();
+    auto sin_X = s.get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
@@ -48,7 +48,7 @@ TEST_F(SinTest, derivative)
 {
     auto x = generate.state("x");
     Sin s(x);
-    auto dsinX_dX = s.diff(x)->get_value();
+    auto dsinX_dX = s.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();

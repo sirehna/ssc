@@ -34,7 +34,7 @@ TEST_F(ParameterTest, example)
     {
         const double val = a.random<double>();
         *c = val;
-        ASSERT_DOUBLE_EQ(val, c.get_value()());
+        ASSERT_DOUBLE_EQ(val, c.get_lambda()());
     }
 
 //! [ConstantTest example]
@@ -49,7 +49,7 @@ TEST_F(ParameterTest, derivative_is_always_zero)
         const Parameter n(a.random<double>());
         StateGenerator generate;
         auto x = generate.state("x");
-        ASSERT_EQ(0, n.diff(x)->get_value()());
+        ASSERT_EQ(0, n.diff(x)->get_lambda()());
     }
 }
 

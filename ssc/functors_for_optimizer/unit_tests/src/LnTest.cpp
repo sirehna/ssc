@@ -31,7 +31,7 @@ TEST_F(LnTest, example)
 //! [LnTest example]
     auto x = generate.state("x");
     Ln l(x);
-    auto v = l.get_value();
+    auto v = l.get_lambda();
 //! [LnTest example]
 //! [LnTest expected output]
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -46,7 +46,7 @@ TEST_F(LnTest, derivative)
 {
     auto x = generate.state("x");
     Ln l(x);
-    auto v = l.diff(x)->get_value();
+    auto v = l.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **x = a.random<double>().greater_than(0);

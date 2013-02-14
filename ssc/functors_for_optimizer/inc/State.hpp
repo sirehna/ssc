@@ -23,7 +23,6 @@ class State : public Parameter
       using Parameter::equals_derived;
       bool equals_derived(const State& rhs) const;
       std::string get_type() const;
-      NodePtr simplify() const;
 
 
     private:

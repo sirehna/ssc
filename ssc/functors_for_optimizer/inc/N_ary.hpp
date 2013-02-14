@@ -29,15 +29,18 @@ class N_ary : public Node
         N_ary(const std::vector<NodePtr>& nodes);
         ~N_ary() {}
         std::vector<NodePtr> get_sons() const;
-        void accept(NodeVisitor& v) const;
         virtual std::string get_operator_name() const = 0;
         bool equals(const Node& rhs) const;
         using Node::equals_derived;
         bool equals_derived(const N_ary& rhs) const;
         bool equals_derived(const Constant& rhs) const;
+        void update_lambda();
+
     protected:
+        virtual void common_build() = 0;
         std::vector<NodePtr> sons;
         void set_value(const std::function<double()>& val);
+        std::vector<NodePtr> extract_subnodes(const std::function<std::vector<NodePtr>(const NodePtr& n)>& extractor);
     private:
         N_ary();
 };

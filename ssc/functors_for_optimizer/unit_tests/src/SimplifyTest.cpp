@@ -9,6 +9,8 @@
 #include "Serialize.hpp"
 #include "Constant.hpp"
 #include "Null.hpp"
+#include "Sum.hpp"
+#include "FunctorAlgebra.hpp"
 
 SimplifyTest::SimplifyTest() : a(DataGenerator(22)),
                                generate(StateGenerator()),
@@ -67,4 +69,14 @@ TEST_F(SimplifyTest, null_should_not_be_simplified)
     Serialize v(ss);
     Null().simplify()->accept(v);
     ASSERT_EQ("0", ss.str());
+}
+
+TEST_F(SimplifyTest, simplify_sums)
+{
+    std::stringstream ss;
+    Serialize v(ss);
+    auto s = x1+x1+x2+x1;
+    s->simplify()->accept(v);
+    COUT(ss.str());
+    ASSERT_TRUE((ss.str()=="x2 + 3*x1") || (ss.str()=="3*x1 + x2"));
 }

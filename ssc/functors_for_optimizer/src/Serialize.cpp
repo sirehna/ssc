@@ -12,61 +12,107 @@
 #include "Null.hpp"
 #include "Unary.hpp"
 #include "Constant.hpp"
+#include "Multiply.hpp"
+#include "Sum.hpp"
 
+
+#include <cmath>
 #include "test_macros.hpp"
 
-Serialize::Serialize(std::ostream& os_) : os(os_)
+Serialize::Serialize(std::ostream& os_) : os(os_), parenthesize_next_node(false)
 {
 
 }
 
 
-void Serialize::visit(const N_ary& node)
+void Serialize::visit(const Multiply& node)
 {
     auto sons = node.get_sons();
     if (sons.empty()) os << "0";
     if (sons.size()==1) sons.front()->accept(*this);
     if (sons.size()>1)
     {
-        os << "(";
+        const double k = node.get_multiplicative_factor();
+        if ((k<0) && (k!=-1)) os << "(" << k << ")*";
+        if (k==-1) os << "- ";
+        if ((k > 0) && (k!=1)) os << k << "*";
+        bool parenthesize_next_node_back = parenthesize_next_node;
+        parenthesize_next_node = true;
         for (size_t i = 0 ; i < sons.size()-1 ; ++i)
         {
             sons.at(i)->accept(*this);
-            os << " ";
-            os << node.get_operator_name();
-            os << " ";
+            os << " * ";
         }
         sons.back()->accept(*this);
-        os << ")";
+        parenthesize_next_node = parenthesize_next_node_back;
     }
 }
+
+void Serialize::visit(const Sum& node)
+{
+    auto sons = node.get_sons();
+    if (sons.empty()) os << "0";
+    if (sons.size()==1) sons.front()->accept(*this);
+    if (sons.size()>1)
+    {
+        const double k = node.get_multiplicative_factor();
+        if ((k<0) && (k!=-1)) os << "(" << k << ")*";
+        if (k==-1) os << "- ";
+        if ((k > 0) && (k!=1)) os << k << "*";
+        if (parenthesize_next_node || (k!=1)) os << "(";
+        for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+        {
+            sons.at(i)->accept(*this);
+            if (sons.at(i+1)->get_multiplicative_factor()<0)
+            {
+                os << " ";
+            }
+            else
+            {
+                os << " + ";
+            }
+        }
+        sons.back()->accept(*this);
+        if (parenthesize_next_node || (k!=1)) os << ")";
+    }
+}
+
 
 void Serialize::visit(const Binary& node)
 {
     auto n1 = node.get_lhs();
     auto n2 = node.get_rhs();
-    os << "(";
+    parenthesize_next_node = true;
     n1->accept(*this);
     os << " ";
     os << node.get_operator_name();
     os << " ";
     n2->accept(*this);
-    os << ")";
+    parenthesize_next_node = false;
 }
 
 void Serialize::visit(const State& node)
 {
+    const double k = node.get_multiplicative_factor();
+    if ((k<0) && parenthesize_next_node) os << "(";
+    if ((k>0) && (k!= 1))
+    {
+        os << k << "*";
+    }
+    if (k == -1) os << "- ";
+    if ((k<0) && (k!=-1)) os << "- " << fabs(k) << "*";
     os << node.get_name();
+    if ((k<0) && parenthesize_next_node) os << ")";
 }
 
 void Serialize::visit(const Parameter& node)
 {
-    os << node.get_value()();
+    os << node.get_lambda()();
 }
 
 void Serialize::visit(const Null& node)
 {
-    os << node.get_value()();
+    os << node.get_lambda()();
 }
 
 void Serialize::visit(const Unary& node)
@@ -78,7 +124,7 @@ void Serialize::visit(const Unary& node)
 
 void Serialize::visit(const Constant& node)
 {
-    os << node.get_value()();
+    os << node.get_lambda()();
 }
 
 ::std::ostream& operator<<(::std::ostream& os, const Node& node)

@@ -16,6 +16,8 @@
 #include "Null.hpp"
 #include "Constant.hpp"
 
+#include "test_macros.hpp"
+#include "Serialize.hpp"
 
 Mult operator*(const Node& n1, const Node& n2)
 {
@@ -88,7 +90,7 @@ NullPtr operator*(const Null& n1, const Node& n2)
 NodePtr operator*(const Node& n1, const Constant& n2)
 {
     auto ret = n1.clone();
-    ret->multiply_by(n2.get_value()());
+    ret->multiply_by(n2.get_lambda()());
     return ret;
 }
 
@@ -100,7 +102,7 @@ NodePtr operator*(const Constant& n1, const Node& n2)
 NodePtr operator*(const NodePtr& n1, const Constant& n2)
 {
     auto ret = n1;
-    ret->multiply_by(n2.get_value()());
+    ret->multiply_by(n2.get_lambda()());
     return ret;
 }
 /*
@@ -155,25 +157,25 @@ SumPtr operator+(const NodePtr& n1, const Node& n2)
 
 NodePtr operator+(const NodePtr& n1, const Null& n2)
 {
-    if (n2.get_value()) {}
+    if (n2.get_lambda()) {}
     return n1;
 }
 
 NodePtr operator+(const Null& n1, const NodePtr& n2)
 {
-    n1.get_value();
+    n1.get_lambda();
     return n2;
 }
 
 NodePtr operator+(const Node& n1, const Null& n2)
 {
-    if (n2.get_value()) {}
+    if (n2.get_lambda()) {}
     return n1.clone();
 }
 
 NodePtr operator+(const Null& n1, const Node& n2)
 {
-    if (n1.get_value()) {}
+    if (n1.get_lambda()) {}
     return n2.clone();
 }
 
@@ -185,6 +187,14 @@ NodePtr operator+(const NodePtr& n, const double& d)
 NodePtr operator-(const NodePtr& n, const double& d)
 {
     return (n+(-d));
+}
+
+NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
+{
+    auto n2_ = n2->clone();
+    n2_->multiply_by(-1);
+    Sum* ret = new Sum(n1,n2_);
+    return NodePtr(ret);
 }
 
 DividePtr operator/(const Node& n1, const Node& n2)
@@ -212,8 +222,6 @@ NodePtr operator/(const NodePtr& n, const double& d)
     if (d == 0)
     {
         THROW("operator /(const NodePtr&, const double&)", FunctorAlgebraException, "Division by zero");
-
-
     }
     auto c = n->clone();
     c->multiply_by(1./d);
@@ -228,34 +236,30 @@ NodePtr operator/(const double& d, const NodePtr& n)
 NullPtr operator/(const NodePtr& n1, const Null& n2)
 {
     THROW("operator /(const NodePtr&, const Null&)", FunctorAlgebraException, "Division by zero");
-
-
     n1->multiply_by(1);
-    if (n2.get_value()) {}
+    if (n2.get_lambda()) {}
     return NullPtr(new Null());
 }
 
 NullPtr operator/(const Null& n1, const NodePtr& n2)
 {
     n2->multiply_by(1);
-    if (n1.get_value()) {}
+    if (n1.get_lambda()) {}
     return NullPtr(new Null());
 }
 
 NullPtr operator/(const Node& n1, const Null& n2)
 {
     THROW("operator /(const Node&, const Null&)", FunctorAlgebraException, "Division by zero");
-
-
-    n1.get_value();
-    if (n2.get_value()) {}
+    n1.get_lambda();
+    if (n2.get_lambda()) {}
     return NullPtr(new Null());
 }
 
 NullPtr operator/(const Null& n1, const Node& n2)
 {
-    if (n1.get_value()) {}
-    if (n2.get_value()) {}
+    if (n1.get_lambda()) {}
+    if (n2.get_lambda()) {}
     return NullPtr(new Null());
 }
 /*
@@ -313,25 +317,25 @@ PowPtr pow(const NodePtr& n1, const NodePtr& n2)
 
 NullPtr pow(const Null& n1, const Node& n2)
 {
-    if (n1.get_value()()+n2.get_value()()) {}
+    if (n1.get_lambda()()+n2.get_lambda()()) {}
     return NullPtr(new Null());
 }
 
 NullPtr pow(const Null& n1, const NodePtr& n2)
 {
-    if (n1.get_value()()+n2->get_value()()) {}
+    if (n1.get_lambda()()+n2->get_lambda()()) {}
     return NullPtr(new Null());
 }
 
 NullPtr pow(const NullPtr& n1, const Node& n2)
 {
-    if (n2.get_value()()) {}
+    if (n2.get_lambda()()) {}
     return n1;
 }
 
 NullPtr pow(const NullPtr& n1, const NodePtr& n2)
 {
-    if (n2->get_value()()) {}
+    if (n2->get_lambda()()) {}
     return n1;
 }
 

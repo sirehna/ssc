@@ -32,7 +32,7 @@ TEST_F(NullTest, example)
     const Null n;
 //! [NullTest example]
 //! [NullTest expected output]
-    ASSERT_EQ(0, n.get_value()());
+    ASSERT_EQ(0, n.get_lambda()());
 //! [NullTest expected output]
 }
 
@@ -41,5 +41,5 @@ TEST_F(NullTest, derivative_is_always_zero)
     const Null n;
     StateGenerator generate;
     auto x = generate.state("x");
-    ASSERT_EQ(0, n.diff(x)->get_value()());
+    ASSERT_EQ(0, n.diff(x)->get_lambda()());
 }
