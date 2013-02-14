@@ -13,7 +13,10 @@
 #include "test_macros.hpp"
 #include "Serialize.hpp"
 
-MultiplyTest::MultiplyTest() : a(DataGenerator(99)), generate(StateGenerator()), x1(generate.state("x1")), x2(generate.state("x2"))
+MultiplyTest::MultiplyTest() : a(DataGenerator(99)),
+                               generate(StateGenerator()),
+                               x1(generate.state("x1")),
+                               x2(generate.state("x2"))
 {
 }
 
@@ -37,7 +40,7 @@ TEST_F(MultiplyTest, example)
     Multiply m(x1,x2);
 //! [MultiplyTest example]
 //! [MultiplyTest expected output]
-    ASSERT_DOUBLE_EQ((**x1)*(**x2),m.get_value()());
+    ASSERT_DOUBLE_EQ((**x1)*(**x2),m.get_lambda()());
 //! [MultiplyTest expected output]
 }
 
@@ -50,8 +53,8 @@ TEST_F(MultiplyTest, should_be_able_to_multiply_with_Multiply)
     {
         **x1 = a.random<double>();
         **x2 = a.random<double>();
-        ASSERT_DOUBLE_EQ((**x1)*(**x1)*(**x2),m2.get_value()());
-        ASSERT_DOUBLE_EQ(m3.get_value()(),m2.get_value()());
+        ASSERT_DOUBLE_EQ((**x1)*(**x1)*(**x2),m2.get_lambda()());
+        ASSERT_DOUBLE_EQ(m3.get_lambda()(),m2.get_lambda()());
     }
 }
 
@@ -74,8 +77,8 @@ TEST_F(MultiplyTest, derivative)
     {
         **x1 = a.random<double>();
         **x2 = a.random<double>();
-        ASSERT_DOUBLE_EQ(2*(**x1)*(**x2),dm2_dx1->get_value()());
-        ASSERT_DOUBLE_EQ((**x1)*(**x1),dm2_dx2->get_value()());
+        ASSERT_DOUBLE_EQ(2*(**x1)*(**x2),dm2_dx1->get_lambda()());
+        ASSERT_DOUBLE_EQ((**x1)*(**x1),dm2_dx2->get_lambda()());
     }
 }
 
@@ -94,18 +97,36 @@ TEST_F(MultiplyTest, bug_in_diff)
     std::stringstream ss;
     Serialize s(ss);
     df->accept(s);
-    ASSERT_EQ("((x1 * (x1 + x1)) + (x1 * x1))", ss.str());
+    ASSERT_EQ("x1 * x1 + x1 * x1 + x1 * x1", ss.str());
 }
 
 TEST_F(MultiplyTest, bug_02)
 {
-    StateGenerator generate;
-    auto x = generate.state("x");
     std::vector<NodePtr> sons;
-    sons.push_back(x);
+    sons.push_back(x1);
     Multiply m(sons);
     std::stringstream ss;
     Serialize s(ss);
-    m.diff(x)->accept(s);
+    m.diff(x1)->accept(s);
     ASSERT_EQ("1", ss.str());
+}
+
+TEST_F(MultiplyTest, should_be_able_to_get_the_factors_in_a_product_of_two)
+{
+    Mult m(new Multiply(x1,x2));
+    auto factors = m->get_factors();
+    ASSERT_EQ(2,factors.size());
+    ASSERT_EQ(*x1,*factors.at(0));
+    ASSERT_EQ(*x2,*factors.at(1));
+}
+
+TEST_F(MultiplyTest, should_be_able_to_get_the_factors_in_a_product_of_three)
+{
+    auto x3 = generate.state("x3");
+    auto m = x1*x2*x3;
+    auto factors = m->get_factors();
+    ASSERT_EQ(3,factors.size());
+    ASSERT_EQ(*x1,*factors.at(0));
+    ASSERT_EQ(*x2,*factors.at(1));
+    ASSERT_EQ(*x3,*factors.at(2));
 }

@@ -33,7 +33,6 @@ class Sin : public Unary
         bool equals(const Node& rhs) const;
         //bool equals(const Sin& rhs) const;
         std::string get_type() const;
-        NodePtr simplify() const;
 };
 
 typedef std::tr1::shared_ptr<Sin> SinPtr;

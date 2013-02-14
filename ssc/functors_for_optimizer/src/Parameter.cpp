@@ -12,7 +12,7 @@
 
 Parameter::Parameter(const double& val) : ptr(new double(val))
 {
-    set_value([ptr,&lambda]()->double {return lambda*(*ptr);});
+    set_value([ptr,factor]()->double {return factor*(*ptr);});
 }
 
 NodePtr Parameter::diff(const StatePtr& state) const
@@ -67,9 +67,4 @@ bool Parameter::equals_derived(const Parameter& rhs) const
 std::string Parameter::get_type() const
 {
     return "Parameter";
-}
-
-NodePtr Parameter::simplify() const
-{
-    return NodePtr(new Parameter(*this));
 }

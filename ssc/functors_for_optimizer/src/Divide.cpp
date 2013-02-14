@@ -15,7 +15,7 @@
 
 Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
-    set_value([n1_,n2_,&lambda]()->double{return lambda*(n1_->get_value()()/n2_->get_value()());});
+    set_value([n1_,n2_,factor]()->double{return factor*(n1_->get_lambda()()/n2_->get_lambda()());});
 }
 
 
@@ -73,4 +73,9 @@ std::string Divide::get_type() const
 NodePtr Divide::simplify() const
 {
     return NodePtr(new Divide(*this));
+}
+
+bool Divide::must_parenthesize() const
+{
+    return true;
 }

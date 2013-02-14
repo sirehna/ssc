@@ -80,6 +80,7 @@ NodePtr operator+(const Node& n1, const Null& n2);
 NodePtr operator+(const Null& n1, const Node& n2);
 
 NodePtr operator-(const NodePtr& n, const double& d);
+NodePtr operator-(const NodePtr& n1, const NodePtr&n2);
 
 DividePtr operator/(const Node& n1, const Node& n2);
 DividePtr operator/(const Node& n1, const NodePtr& n2);

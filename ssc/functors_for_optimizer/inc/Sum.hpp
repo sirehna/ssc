@@ -32,6 +32,9 @@ class Sum : public N_ary
         bool is_null() const;
         std::string get_type() const;
         NodePtr simplify() const;
+        std::vector<NodePtr> get_operands() const;
+        bool must_parenthesize() const;
+        void accept(NodeVisitor& v) const;
 
     private:
         void common_build();

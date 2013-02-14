@@ -24,11 +24,6 @@ void N_ary::set_value(const std::function<double()>& val)
     value = val;
 }
 
-void N_ary::accept(NodeVisitor& v) const
-{
-    v.visit(*this);
-}
-
 std::vector<NodePtr> N_ary::get_sons() const
 {
     return sons;
@@ -57,4 +52,20 @@ bool N_ary::equals_derived(const Constant& rhs) const
     if (sons.empty()) return rhs.equals_derived(0);
     if (sons.size() == 1) return sons.front()->equals_derived(rhs);
     return false;
+}
+
+std::vector<NodePtr> N_ary::extract_subnodes(const std::function<std::vector<NodePtr>(const NodePtr& n)>& extractor)
+{
+    std::vector<NodePtr> ret;
+    for (auto son = sons.begin(); son != sons.end(); ++son)
+    {
+        const std::vector<NodePtr> subnodes = extractor(*son);
+        ret.insert(ret.end(), subnodes.begin(), subnodes.end());
+    }
+    return ret;
+}
+
+void N_ary::update_lambda()
+{
+    common_build();
 }

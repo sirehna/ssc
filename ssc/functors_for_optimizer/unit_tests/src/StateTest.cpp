@@ -72,10 +72,10 @@ TEST_F(StateTest, derivative_zero_or_one)
 {
     const StatePtr x(new State("x", 1));
     const StatePtr y(new State("y", 1));
-    ASSERT_EQ(1, x->diff(x)->get_value()());
-    ASSERT_EQ(1, y->diff(y)->get_value()());
-    ASSERT_EQ(0, x->diff(y)->get_value()());
-    ASSERT_EQ(0, y->diff(x)->get_value()());
+    ASSERT_EQ(1, x->diff(x)->get_lambda()());
+    ASSERT_EQ(1, y->diff(y)->get_lambda()());
+    ASSERT_EQ(0, x->diff(y)->get_lambda()());
+    ASSERT_EQ(0, y->diff(x)->get_lambda()());
 }
 
 TEST_F(StateTest, equality_operator)
@@ -88,4 +88,3 @@ TEST_F(StateTest, equality_operator)
     ASSERT_FALSE(y.equals(x));
     ASSERT_TRUE(y.equals(y));
 }
-

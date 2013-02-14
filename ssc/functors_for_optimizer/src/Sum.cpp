@@ -8,8 +8,9 @@
 #include "Sum.hpp"
 #include "NodeVisitor.hpp"
 #include <algorithm>
+#include <map>
+#include "FunctorAlgebra.hpp"
 
-#include "Serialize.hpp"
 
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
@@ -23,21 +24,23 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 
 void Sum::common_build()
 {
+    auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
+    sons = extract_subnodes(operands);
     remove_zeros();
     if (sons.empty())
     {
-        set_value([sons,&lambda]()->double {return 0;});
+        set_value([]()->double {return 0;});
     }
     else
     {
-        set_value([sons,&lambda]()->double
+        set_value([sons,factor]()->double
                       {
                           double ret = 0;
                           for (auto son = sons.begin() ; son != sons.end() ; ++son)
                           {
-                              ret += (*son)->get_value()();
+                              ret += (*son)->get_lambda()();
                           }
-                            return lambda*ret;
+                          return factor*ret;
                        });
     }
 }
@@ -85,5 +88,51 @@ std::string Sum::get_type() const
 
 NodePtr Sum::simplify() const
 {
-    return NodePtr(new Sum(*this));
+    std::map<NodePtr,size_t> factor;
+    for (auto node = sons.begin() ; node != sons.end() ; ++node)
+    {
+        bool found = false;
+        Node *ptr = (*node).get();
+        for (auto it = factor.begin() ; it != factor.end() ; ++it)
+        {
+            if ((it->first)->equals(*ptr))
+            {
+                found = true;
+                it->second++;
+            }
+        }
+        if (not(found))
+        {
+            factor[*node] = 1;
+        }
+    }
+    std::vector<NodePtr> ret;
+    for (auto f = factor.begin() ; f != factor.end() ; ++f)
+    {
+        ret.push_back(f->first->simplify());
+        ret.back()->multiply_by(f->second);
+    }
+    return NodePtr(new Sum(ret));
+}
+
+std::vector<NodePtr> Sum::get_operands() const
+{
+    std::vector<NodePtr> ret;
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
+    {
+        ret.push_back((*son)->clone());
+        ret.back()->multiply_by(factor);
+        ret.back()->update_lambda();
+    }
+    return ret;
+}
+
+bool Sum::must_parenthesize() const
+{
+    return true;
+}
+
+void Sum::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
 }

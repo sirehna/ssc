@@ -15,7 +15,7 @@
 
 Sin::Sin(const NodePtr& n_) : Unary(n_)
 {
-    set_value([n]()->double {return sin(n->get_value()());});
+    set_value([n,factor]()->double {return factor*sin(n->get_lambda()());});
 }
 
 std::string Sin::get_operator_name() const
@@ -48,9 +48,4 @@ bool Sin::equals(const Node& rhs) const
 std::string Sin::get_type() const
 {
     return "Sin";
-}
-
-NodePtr Sin::simplify() const
-{
-    return NodePtr(new Sin(*this));
 }

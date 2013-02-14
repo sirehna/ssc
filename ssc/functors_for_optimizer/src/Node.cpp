@@ -20,19 +20,20 @@
 #include "State.hpp"
 #include "Sum.hpp"
 
-Node::Node() : lambda(1), value([&lambda]()->double{return lambda;})
+Node::Node() : factor(1), value([factor]()->double{return factor;})
 {
 
 }
 
-std::function<double()> Node::get_value() const
+std::function<double()> Node::get_lambda() const
 {
     return value;
 }
 
 void Node::multiply_by(const double& k)
 {
-    lambda *= k;
+    factor *= k;
+    update_lambda();
 }
 bool Node::equals_derived(const Constant& rhs) const
 {
@@ -86,4 +87,35 @@ bool Node::equals_derived(const State& rhs) const
 {
     (void)rhs; // Silence "unused parameter" warning
     return false;
+}
+
+NodePtr Node::simplify() const
+{
+    return clone();
+}
+
+std::vector<NodePtr> Node::get_factors() const
+{
+    NodePtr n = clone();
+    n->update_lambda();
+    return std::vector<NodePtr>(1,n);
+}
+
+std::vector<NodePtr> Node::get_operands() const
+{
+    return std::vector<NodePtr>(1,clone());
+}
+
+double Node::get_multiplicative_factor() const
+{
+    return factor;
+}
+
+bool Node::must_parenthesize() const
+{
+    return true;
+}
+
+void Node::update_lambda()
+{
 }

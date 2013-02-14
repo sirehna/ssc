@@ -13,7 +13,7 @@
 
 Constant::Constant(const double& v) : val(v)
 {
-    set_value([&lambda,&val]()->double {return lambda*val;});
+    set_value([factor,&val]()->double {return factor*val;});
 }
 
 NodePtr Constant::diff(const StatePtr& state) const
@@ -65,9 +65,4 @@ bool Constant::equals_derived(const N_ary& rhs) const
 std::string Constant::get_type() const
 {
     return "Constant";
-}
-
-NodePtr Constant::simplify() const
-{
-    return NodePtr(new Constant(*this));
 }

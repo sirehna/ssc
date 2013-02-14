@@ -16,7 +16,7 @@
 
 Cos::Cos(const NodePtr& n_) : Unary(n_)
 {
-    set_value([n]()->double {return cos(n->get_value()());});
+    set_value([factor,n]()->double {return factor*cos(n->get_lambda()());});
 }
 
 std::string Cos::get_operator_name() const
@@ -46,9 +46,4 @@ bool Cos::is_null() const
 std::string Cos::get_type() const
 {
     return "Cos";
-}
-
-NodePtr Cos::simplify() const
-{
-    return NodePtr(new Cos(*this));
 }

@@ -33,6 +33,8 @@ class Multiply : public N_ary
         bool is_null() const;
         std::string get_type() const;
         NodePtr simplify() const;
+        std::vector<NodePtr> get_factors() const;
+        void accept(NodeVisitor& v) const;
 
     private:
         void common_build();

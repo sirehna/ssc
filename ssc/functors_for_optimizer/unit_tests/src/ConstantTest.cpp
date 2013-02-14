@@ -34,7 +34,7 @@ TEST_F(ConstantTest, example)
     Constant c(val);
 //! [ConstantTest example]
 //! [ConstantTest expected output]
-    ASSERT_DOUBLE_EQ(val, c.get_value()());
+    ASSERT_DOUBLE_EQ(val, c.get_lambda()());
 //! [ConstantTest expected output]
 }
 
@@ -57,7 +57,7 @@ TEST_F(ConstantTest, derivative)
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         **x = a.random<double>();
-        ASSERT_DOUBLE_EQ(0, d->get_value()());
+        ASSERT_DOUBLE_EQ(0, d->get_lambda()());
     }
 }
 

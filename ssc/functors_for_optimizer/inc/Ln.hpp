@@ -29,7 +29,6 @@ class Ln : public Unary
         NodePtr clone() const;
         bool is_null() const;
         std::string get_type() const;
-        NodePtr simplify() const;
 };
 typedef std::tr1::shared_ptr<Ln> LnPtr;
 

@@ -36,7 +36,7 @@ TEST_F(DivideTest, example)
     Divide d(x,y);
 //! [DivideTest example]
 //! [DivideTest expected output]
-    auto dv = d.get_value();
+    auto dv = d.get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
@@ -52,7 +52,7 @@ TEST_F(DivideTest, derivative)
     COUT(d.diff(y));
 //! [DivideTest example]
 //! [DivideTest expected output]
-    auto dv = d.diff(y)->get_value();
+    auto dv = d.diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **x = a.random<double>();
@@ -64,7 +64,7 @@ TEST_F(DivideTest, derivative)
 TEST_F(DivideTest, bug_derive_a_double_division)
 {
     Divide d(DividePtr(new Divide(x,y)),y);
-    auto dv = d.diff(y)->get_value();
+    auto dv = d.diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **x = a.random<double>().between(-1000,1000);

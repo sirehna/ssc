@@ -23,7 +23,7 @@ Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1,NodePtr(new Constant(n
 
 std::function<double()> Pow::get_pow_fun() const
 {
-    return [n1_,n2_,lambda]()->double{return lambda*(pow(n1_->get_value()(),n2_->get_value()()));};
+    return [n1_,n2_,factor]()->double{return factor*(pow(n1_->get_lambda()(),n2_->get_lambda()()));};
 }
 
 NodePtr Pow::diff(const StatePtr& state) const

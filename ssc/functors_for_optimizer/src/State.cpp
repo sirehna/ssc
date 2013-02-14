@@ -12,7 +12,7 @@ State::State(const std::string& name_, const size_t& index_) : Parameter(0),
                                                                name(name_),
                                                                index(index_)
 {
-    value = [&lambda,ptr]() -> double {return lambda*(*ptr);};
+    value = [&factor,ptr]() -> double {return factor*(*ptr);};
 }
 
 
@@ -35,7 +35,7 @@ NodePtr State::diff(const StatePtr& state) const
 {
     if (*state==*this)
     {
-        return NodePtr(new Constant(lambda));
+        return NodePtr(new Constant(factor));
     }
     else
     {
@@ -47,9 +47,12 @@ void State::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
+
 NodePtr State::clone() const
 {
-    return NodePtr(new State(*this));
+    State* ret = new State(*this);
+    ret->value = [ret]() -> double {return ret->factor*(*(ret->ptr));};
+    return NodePtr(ret);
 }
 
 bool State::is_null() const
@@ -72,7 +75,3 @@ std::string State::get_type() const
     return "State";
 }
 
-NodePtr State::simplify() const
-{
-    return NodePtr(new State(*this));
-}

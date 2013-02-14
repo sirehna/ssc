@@ -9,12 +9,12 @@
 
 Nullary::Nullary() : Node()
 {
-    lambda = 1;
+    factor = 1;
 }
 
 Nullary::Nullary(const double& val)
 {
-    lambda = val;
+    factor = val;
 }
 
 void Nullary::set_value(const std::function<double()>& val)
