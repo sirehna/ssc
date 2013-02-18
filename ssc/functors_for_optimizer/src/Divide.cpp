@@ -21,9 +21,9 @@ Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 
 NodePtr Divide::diff(const StatePtr& state) const
 {
-    auto n2_dn1dstate = (n1_->diff(state))*n2_;
-    auto n1_dn2dstate = (n2_->diff(state))*n1_;
-    auto n2_n2 = n2_*n2_;
+    auto n2_dn1dstate = ((n1_->diff(state))*n2_);
+    auto n1_dn2dstate = ((n2_->diff(state))*n1_);
+    auto n2_n2 = (n2_*n2_);
 
     if (n2_dn1dstate->is_null())
     {

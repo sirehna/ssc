@@ -94,17 +94,25 @@ NodePtr Node::simplify() const
     return clone();
 }
 
-std::vector<NodePtr> Node::get_factors() const
+FactorMap Node::get_factors_with_exponents() const
 {
     NodePtr n = clone();
     n->update_lambda();
-    return std::vector<NodePtr>(1,n);
+    std::map<NodePtr,NodePtr> ret;
+    ret[n] = Constant(1).clone();
+    return ret;
 }
 
 std::vector<NodePtr> Node::get_operands() const
 {
     return std::vector<NodePtr>(1,clone());
 }
+
+std::vector<NodePtr> Node::get_factors() const
+{
+    return std::vector<NodePtr>(1,clone());
+}
+
 
 double Node::get_multiplicative_factor() const
 {

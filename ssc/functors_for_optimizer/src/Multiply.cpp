@@ -131,10 +131,19 @@ NodePtr Multiply::simplify() const
     }
     return NodePtr(new Multiply(ret));
 }
-
 std::vector<NodePtr> Multiply::get_factors() const
 {
     return sons;
+}
+
+FactorMap Multiply::get_factors_with_exponents() const
+{
+    FactorMap ret;
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
+    {
+        //ret += (*son)->get_factors_with_exponents();
+    }
+    return ret;
 }
 void Multiply::accept(NodeVisitor& v) const
 {

@@ -23,6 +23,7 @@ class SimplifyTest : public ::testing::Test
 		StateGenerator generate;
         StatePtr x1;
         StatePtr x2;
+        StatePtr x3;
 
 };
 

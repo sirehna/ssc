@@ -34,6 +34,7 @@ class Multiply : public N_ary
         std::string get_type() const;
         NodePtr simplify() const;
         std::vector<NodePtr> get_factors() const;
+        FactorMap get_factors_with_exponents() const;
         void accept(NodeVisitor& v) const;
 
     private:
@@ -43,5 +44,5 @@ class Multiply : public N_ary
 };
 
 typedef std::tr1::shared_ptr<Multiply> Mult;
-
+FactorMap operator+(const FactorMap& a, const FactorMap& b);
 #endif /* MULTIPLY_HPP_ */

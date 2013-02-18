@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <tr1/memory>
+#include <map>
 #include <vector>
 
 class Node;
@@ -10,6 +11,8 @@ class Node;
 class State;
 typedef std::tr1::shared_ptr<Node> NodePtr;
 typedef std::tr1::shared_ptr<State> StatePtr;
+
+typedef std::map<NodePtr,NodePtr> FactorMap;
 
 class NodeVisitor;
 
@@ -50,6 +53,7 @@ class Node
         virtual std::string get_type() const = 0;
 
         virtual NodePtr simplify() const;
+        virtual FactorMap get_factors_with_exponents() const;
         virtual std::vector<NodePtr> get_factors() const;
         virtual std::vector<NodePtr> get_operands() const;
         double get_multiplicative_factor() const;
