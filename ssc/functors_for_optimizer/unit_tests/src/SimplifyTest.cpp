@@ -12,11 +12,13 @@
 #include "Sum.hpp"
 #include "FunctorAlgebra.hpp"
 #include "Multiply.hpp"
+#include "Divide.hpp"
 
 SimplifyTest::SimplifyTest() : a(DataGenerator(22)),
                                generate(StateGenerator()),
                                x1(generate.state("x1")),
-                               x2(generate.state("x2"))
+                               x2(generate.state("x2")),
+                               x3(generate.state("x3"))
 {
 }
 
@@ -91,3 +93,4 @@ TEST_F(SimplifyTest, simplify_products)
     COUT(ss.str());
     ASSERT_TRUE((ss.str()=="x2 * x1 ^ 3") || (ss.str()=="x1 ^ 3 * x2"));
 }
+
