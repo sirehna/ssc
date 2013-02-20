@@ -17,7 +17,8 @@ FILE(GLOB SRC src/NullTest.cpp
               src/FunctorAlgebraTest.cpp
               src/ConstantTest.cpp
               src/SimplifyTest.cpp
-              src/SplineFunctorTest.cpp)
+              src/SplineFunctorTest.cpp
+              src/PiecewiseConstantFunctorTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

@@ -19,12 +19,16 @@ set(SOURCES src/State.cpp
             src/Sin.cpp
             src/Cos.cpp
             src/FunctorAlgebra.cpp
-            src/Constant.cpp)
+            src/Constant.cpp
+            src/PiecewiseConstantFunctor.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${test_macros_SOURCE_DIR})
+include_directories(${interpolation_INCLUDE_DIRS})
+
 link_directories(${CMAKE_SOURCE_DIR}/external/bin)
+
 
 #add_library(${PROJECT_NAME}_shared SHARED ${SOURCES})
 add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
