@@ -61,7 +61,7 @@ TEST_F(FunctorAlgebraTest, example)
 
 //! [FunctorAlgebraTest example]
 //! [FunctorAlgebraTest expected output]
-    const double eps = 1e-14;
+    const double eps = 1e-12;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **x = a.random<double>().between(-1000,100);
