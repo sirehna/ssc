@@ -8,7 +8,9 @@ FILE(GLOB SRC src/Splines.cpp
               src/VectorOfEquallySpacedNumbers.cpp
               src/LinearInterpolation.cpp
               src/RAO.cpp
-              src/PiecewiseConstant.cpp)
+              src/PiecewiseConstant.cpp
+              src/ParabolicInterpolation.cpp
+              src/ParabolicCoefficients.cpp)
 
 # Find exception_handling
 set(exception_handling_dir "${CMAKE_CURRENT_BINARY_DIR}/../exception_handling")# PATH "Installation path of the exception_handling module" )
