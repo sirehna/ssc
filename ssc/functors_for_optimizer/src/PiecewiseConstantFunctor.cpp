@@ -11,8 +11,6 @@
 #include "NodeVisitor.hpp"
 #include "State.hpp"
 
-#include "test_macros.hpp"
-
 PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state),
 f(new PiecewiseConstant(xmin,xmax,y_values))

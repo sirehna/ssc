@@ -20,7 +20,8 @@ set(SOURCES src/State.cpp
             src/Cos.cpp
             src/FunctorAlgebra.cpp
             src/Constant.cpp
-            src/PiecewiseConstantFunctor.cpp)
+            src/PiecewiseConstantFunctor.cpp
+            src/PiecewiseLinearFunctor.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
