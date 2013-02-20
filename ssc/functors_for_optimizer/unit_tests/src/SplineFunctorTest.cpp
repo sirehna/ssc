@@ -7,6 +7,9 @@
 
 #include "SplineFunctorTest.hpp"
 #include "SplineFunctor.hpp"
+#include "extra_test_assertions.hpp"
+#include "FunctorAlgebra.hpp"
+#include "Sum.hpp"
 
 SplineFunctorTest::SplineFunctorTest() : a(DataGenerator(7779988)),
                                                    generate(StateGenerator())
@@ -58,63 +61,118 @@ TEST_F(SplineFunctorTest, value_should_be_computed_properly)
 TEST_F(SplineFunctorTest, first_derivative_should_be_piecewise_parabolic)
 {
     auto x = generate.state("x");
-#define X (**x)
+    #define X (**x)
 
     SplineFunctor pl(x, 0, 3, {0,1,4,3});
     const auto df_dx = pl.diff(x)->get_lambda();
-
+    const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(0,1);
-        ASSERT_DOUBLE_EQ(1./5.+(12./5.)*X*X,df_dx());
+        X = a.random<double>().between(0,1);
+        ASSERT_SMALL_RELATIVE_ERROR(0.2+(3*0.8)*X*X,df_dx(),eps);
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(1,2);
-        ASSERT_DOUBLE_EQ(-41./5.+(84./5.)*X-6*X*X,df_dx());
+        X = a.random<double>().between(1,2);
+        ASSERT_SMALL_RELATIVE_ERROR(2.6+(2*2.4)*(X-1)-3*2*(X-1)*(X-1),df_dx(),eps);
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(2,3);
-        ASSERT_DOUBLE_EQ(151./5.-(108./5.)*X+(18./5.)*X*X,df_dx());
+        X = a.random<double>().between(2,3);
+        ASSERT_SMALL_RELATIVE_ERROR(1.4-(2*3.6)*(X-2)+(3*1.2)*(X-2)*(X-2),df_dx(),eps);
     }
 
 }
-/*
-TEST_F(CubicSplineFunctorTest, second_derivative_should_be_piecewise_linear)
+
+TEST_F(SplineFunctorTest, second_derivative_should_be_piecewise_linear)
 {
     auto x = generate.state("x");
-    for (size_t i = 0 ; i < 100 ; ++i)
+    #define X (**x)
+    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    const auto d2f_dx2 = pl.diff(x)->diff(x)->get_lambda();
+    const double eps = 1e-10;
+    for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const double xmin = a.random<double>();
-        const double xmax = a.random<double>().greater_than(xmin);
-        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
-        const CubicSplineFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
-        const auto f = pc.diff(x)->diff(x)->get_lambda();
-        **x = a.random<double>();
-        ASSERT_EQ(0,f());
+        X = a.random<double>().between(0,1);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(3*0.8)*X,d2f_dx2(),eps);
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(1,2);
+        ASSERT_SMALL_RELATIVE_ERROR((2*2.4)-2*3*2*(X-1),d2f_dx2(),eps);
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(2,3);
+        ASSERT_SMALL_RELATIVE_ERROR(-(2*3.6)+2*(3*1.2)*(X-2),d2f_dx2(),eps);
     }
 }
 
-TEST_F(CubicSplineFunctorTest, third_derivative_should_be_piecewise_constant)
-{
-}
-
-TEST_F(CubicSplineFunctorTest, fourth_derivative_should_be_zero)
-{
-}
-
-
-TEST_F(CubicSplineFunctorTest, should_be_able_to_use_piecewise_as_regular_functor)
+TEST_F(SplineFunctorTest, third_derivative_should_be_piecewise_constant)
 {
     auto x = generate.state("x");
-    const CubicSplineFunctor pl(x, 0, 10, {3,6,5,8,7,4,5,6,9,72,-56});
+    #define X (**x)
+    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    const auto d3f_dx3 = pl.diff(x)->diff(x)->diff(x)->get_lambda();
+    const double eps = 1e-10;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(0,1);
+        ASSERT_SMALL_RELATIVE_ERROR(2*3*0.8,d3f_dx3(),eps);
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(1,2);
+        ASSERT_SMALL_RELATIVE_ERROR(-2*3*2,d3f_dx3(),eps);
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(2,3);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(3*1.2),d3f_dx3(),eps);
+    }
+}
+
+TEST_F(SplineFunctorTest, fourth_derivative_should_be_zero)
+{
+    auto x = generate.state("x");
+    #define X (**x)
+    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    const auto d4f_dx4 = pl.diff(x)->diff(x)->diff(x)->diff(x)->get_lambda();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>();
+        ASSERT_EQ(0,d4f_dx4());
+    }
+}
+
+
+TEST_F(SplineFunctorTest, should_be_able_to_use_spline_as_regular_functor)
+{
+    auto x = generate.state("x");
+    const SplineFunctor pl(x, 0, 10, {3,6,5,8,7,4,5,6,9,72,-56});
     const auto F = 2*x+pl;
     const auto f = F->get_lambda();
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        **x = a.random<double>().between(0,1);
-        ASSERT_DOUBLE_EQ(5*(**x)+3, f());
-    }
+    **x = 0;
+    ASSERT_DOUBLE_EQ(2*(**x)+3, f());
+    **x = 1;
+    ASSERT_DOUBLE_EQ(2*(**x)+6, f());
+    **x = 2;
+    ASSERT_DOUBLE_EQ(2*(**x)+5, f());
+    **x = 3;
+    ASSERT_DOUBLE_EQ(2*(**x)+8, f());
+    **x = 4;
+    ASSERT_DOUBLE_EQ(2*(**x)+7, f());
+    **x = 5;
+    ASSERT_DOUBLE_EQ(2*(**x)+4, f());
+    **x = 6;
+    ASSERT_DOUBLE_EQ(2*(**x)+5, f());
+    **x = 7;
+    ASSERT_DOUBLE_EQ(2*(**x)+6, f());
+    **x = 8;
+    ASSERT_DOUBLE_EQ(2*(**x)+9, f());
+    **x = 9;
+    ASSERT_DOUBLE_EQ(2*(**x)+72, f());
+    **x = 10;
+    ASSERT_DOUBLE_EQ(2*(**x)-56, f());
 }
-*/
+
