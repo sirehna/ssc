@@ -21,7 +21,9 @@ set(SOURCES src/State.cpp
             src/FunctorAlgebra.cpp
             src/Constant.cpp
             src/PiecewiseConstantFunctor.cpp
-            src/PiecewiseLinearFunctor.cpp)
+            src/PiecewiseLinearFunctor.cpp
+            src/SplineFunctor.cpp
+            src/PiecewiseParabolicFunctor.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

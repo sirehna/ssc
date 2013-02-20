@@ -9,7 +9,8 @@
 #define PIECEWISELINEARFUNCTOR_HPP_
 
 #include "Unary.hpp"
-#include "LinearInterpolation.hpp"
+
+class LinearInterpolation;
 
 /** \author cec
  *  \brief This class was created to

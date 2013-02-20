@@ -19,7 +19,8 @@ FILE(GLOB SRC src/NullTest.cpp
               src/SimplifyTest.cpp
               src/SplineFunctorTest.cpp
               src/PiecewiseConstantFunctorTest.cpp
-              src/PiecewiseLinearFunctorTest.cpp)
+              src/PiecewiseLinearFunctorTest.cpp
+              src/PiecewiseParabolicFunctorTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 

@@ -121,7 +121,7 @@ TEST_F(FunctorAlgebraTest, bug_03)
         **x = a.random<double>().between(-1000,1000)();
         **y = a.random<double>().between(-1000,1000)();
         **z = a.random<double>().between(-1000,1000)();
-        ASSERT_SMALL_RELATIVE_ERROR(2*X-Z*(X+Y+3*X)*Y, f(),1E-14);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X-Z*(X+Y+3*X)*Y, f(),1E-8);
     }
 }
 

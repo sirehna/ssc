@@ -1,7 +1,7 @@
 /*
- * SplineFunctorTest.hpp
+ * CubicSplineFunctorTest.hpp
  *
- * \date 18 févr. 2013, 12:47:00
+ * \date 19 févr. 2013, 09:37:52
  *  \author cec
  */
 
@@ -10,6 +10,7 @@
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
+#include "StateGenerator.hpp"
 
 class SplineFunctorTest : public ::testing::Test
 {
@@ -19,6 +20,7 @@ class SplineFunctorTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
+		StateGenerator generate;
 
 };
 
