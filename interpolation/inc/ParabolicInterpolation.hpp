@@ -50,10 +50,10 @@ class ParabolicInterpolation
         std::vector<ParabolicCoefficients> coeffs_;
         size_t n;
         double delta;
-        double val_sat;
         double a;
         double b;
         double c;
+        double x_xi;
 };
 
 #endif /* PARABOLICINTERPOLATION_HPP_ */

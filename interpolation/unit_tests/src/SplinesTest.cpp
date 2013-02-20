@@ -140,15 +140,57 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 
 TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
 {
-    const std::vector<double> y = {1.0000,0.9397,0.7660,0.5000,0.1736,-0.1736,-0.5000,-0.7660,-0.9397,-1.0000};
+    /*const std::vector<double> y = {1.0000,0.9397,0.7660,0.5000,0.1736,-0.1736,-0.5000,-0.7660,-0.9397,-1.0000};
     const NaturalSplines spline1(0, 1,y);
     auto coeffs = spline1.get_parabolic_coefficients();
 
-    ASSERT_EQ(y.size()-1, coeffs.size());
+    ASSERT_EQ(y.size()-1, coeffs.size());*/
 
-    auto coeffs2 = NaturalSplines(0,3,{0,1,4,3}).get_parabolic_coefficients();
+    NaturalSplines s(0,3,{0,1,4,3});
+    s.set_computed_value(0);
+    ASSERT_DOUBLE_EQ(0,s.f());
+    s.set_computed_value(0.25);
+    ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f());
+    s.set_computed_value(0.5);
+    ASSERT_DOUBLE_EQ(0.2,s.f());
+    s.set_computed_value(0.75);
+    ASSERT_DOUBLE_EQ(.4875000000,s.f());
+    s.set_computed_value(1);
+    ASSERT_DOUBLE_EQ(1,s.f());
+    s.set_computed_value(1.25);
+    ASSERT_DOUBLE_EQ(1.768750000,s.f());
+    s.set_computed_value(1.5);
+    ASSERT_DOUBLE_EQ(2.65,s.f());
+    s.set_computed_value(1.75);
+    ASSERT_DOUBLE_EQ(3.45625000,s.f());
+    s.set_computed_value(2);
+    ASSERT_DOUBLE_EQ(4,s.f());
+    s.set_computed_value(2.25);
+    ASSERT_DOUBLE_EQ(4.14375000,s.f());
+    s.set_computed_value(2.5);
+    ASSERT_DOUBLE_EQ(3.95,s.f());
+    s.set_computed_value(2.75);
+    ASSERT_DOUBLE_EQ(3.53125000,s.f());
+    s.set_computed_value(3);
+    ASSERT_DOUBLE_EQ(3,s.f());
+
+
+
+    auto coeffs2 = s.get_parabolic_coefficients();
+
+
+
     ASSERT_EQ(3, coeffs2.size());
-    ASSERT_DOUBLE_EQ(12./5.,coeffs2.at(0).a);
+    ASSERT_DOUBLE_EQ(3*0.8,coeffs2.at(0).a);
     ASSERT_DOUBLE_EQ(0,coeffs2.at(0).b);
     ASSERT_DOUBLE_EQ(1./5.,coeffs2.at(0).c);
+
+    ASSERT_DOUBLE_EQ(3*(-2),coeffs2.at(1).a);
+    ASSERT_DOUBLE_EQ(2*2.4,coeffs2.at(1).b);
+    ASSERT_DOUBLE_EQ(2.6,coeffs2.at(1).c);
+
+    ASSERT_DOUBLE_EQ(3*1.2,coeffs2.at(2).a);
+    ASSERT_DOUBLE_EQ(2*(-3.6),coeffs2.at(2).b);
+    ASSERT_DOUBLE_EQ(1.4,coeffs2.at(2).c);
+
 }

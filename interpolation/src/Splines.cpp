@@ -21,7 +21,6 @@ extern "C"
 
 #include <math.h>
 #include <stdio.h>
-#include "test_macros.hpp"
 #include "VectorOfEquallySpacedNumbers.hpp"
 
 
