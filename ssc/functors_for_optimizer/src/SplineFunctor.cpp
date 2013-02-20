@@ -6,7 +6,7 @@
  */
 
 #include "SplineFunctor.hpp"
-#include "PiecewiseLinearFunctor.hpp"
+#include "PiecewiseParabolicFunctor.hpp"
 #include "NaturalSplines.hpp"
 #include "NodeVisitor.hpp"
 #include "State.hpp"
@@ -16,7 +16,7 @@ Unary(state),
 f(new NaturalSplines(xmin,xmax,y_values)),
 xmin_(xmin),
 xmax_(xmax),
-dy(std::vector<double>())
+dy(std::vector<ParabolicCoefficients>())
 {
     auto func = [f,state]()->double
         {
@@ -24,18 +24,12 @@ dy(std::vector<double>())
             return f->f();
         };
     set_value(func);
-    const size_t n = y_values.size();
-    const double delta = (xmax-xmin)/(n-1);
-    for (size_t i = 0 ; i < n-1 ; ++i)
-    {
-        f->set_computed_value(xmin+i*delta);
-        dy.push_back(f->df());
-    }
+    dy = f->get_parabolic_coefficients();
 }
 
 NodePtr SplineFunctor::diff(const StatePtr& state) const
 {
-    return NodePtr(new PiecewiseLinearFunctor(state, xmin_, xmax_, dy));
+    return NodePtr(new PiecewiseParabolicFunctor(state, xmin_, xmax_, dy));
 }
 
 void SplineFunctor::accept(NodeVisitor& v) const
