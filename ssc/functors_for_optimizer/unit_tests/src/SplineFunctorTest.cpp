@@ -12,7 +12,7 @@
 #include "Sum.hpp"
 
 SplineFunctorTest::SplineFunctorTest() : a(DataGenerator(7779988)),
-                                                   generate(StateGenerator())
+                                         generate(StateGenerator())
 {
 }
 
@@ -145,7 +145,6 @@ TEST_F(SplineFunctorTest, fourth_derivative_should_be_zero)
     }
 }
 
-
 TEST_F(SplineFunctorTest, should_be_able_to_use_spline_as_regular_functor)
 {
     auto x = generate.state("x");
@@ -175,4 +174,3 @@ TEST_F(SplineFunctorTest, should_be_able_to_use_spline_as_regular_functor)
     **x = 10;
     ASSERT_DOUBLE_EQ(2*(**x)-56, f());
 }
-
