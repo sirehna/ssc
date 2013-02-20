@@ -45,7 +45,8 @@ double PiecewiseConstant::d2f() const
     return 0;
 }
 
+#include "test_macros.hpp"
 void PiecewiseConstant::set_computed_value(const double& x0)
 {
-    idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*(n-1)),n-2));
+    idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*n),n-1));
 }

@@ -111,16 +111,65 @@ TEST_F(PiecewiseConstantTest, first_derivative_should_be_zero)
 
 TEST_F(PiecewiseConstantTest, computed_values_should_be_correct)
 {
+    PiecewiseConstant pc(0, 10, {3,6,5,8,7,4,5,6,9,78});
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
-        const std::vector<double> vals = a.random_vector_of<double>().of_size(n);
-        const double xmin = a.random<double>();
-        const double xmax = a.random<double>().greater_than(xmin);
-        PiecewiseConstant cst(xmin, xmax, vals);
-        const double val = a.random<double>().between(xmin,xmax);
-        const size_t idx = max(0,min(floor((val-xmin)/(xmax-xmin)*(n-1)),n-2));
-        cst.set_computed_value(val);
-        ASSERT_DOUBLE_EQ(vals.at(idx), cst.f());
+        const double x = a.random<double>().between(0,1);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(3,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(1,2);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(6,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(2,3);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(5,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(3,4);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(8,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(4,5);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(7,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(5,6);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(4,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(6,7);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(5,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(7,8);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(6,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(8,9);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(9,pc.f());
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().between(9,10);
+        pc.set_computed_value(x);
+        ASSERT_DOUBLE_EQ(78,pc.f());
     }
 }
