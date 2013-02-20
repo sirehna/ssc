@@ -182,6 +182,18 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_betwee
         }
     }
 }
+
+TEST_F(DataGeneratorTests, bug_detected_in_PiecewiseConstantTest)
+{
+    for (size_t i = 0 ; i < 100000 ; ++i)
+    {
+        const size_t random_double_between_2_and_1000 = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
+        ASSERT_LE(random_double_between_2_and_1000, 1000);
+        ASSERT_GT(random_double_between_2_and_1000, 1);
+    }
+}
+
+
 /*
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_outside_an_interval)
 {
