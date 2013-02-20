@@ -123,3 +123,13 @@ TEST_F(ParabolicInterpolationTest, should_not_throw_if_xmin_equals_xmax)
         ASSERT_NO_THROW(ParabolicInterpolation(xmin, xmax, a.random_vector_of<ParabolicCoefficients>().of_size(n)));
     }
 }
+
+TEST_F(ParabolicInterpolationTest, range_problem_detected_in_EONAV)
+{
+    std::vector<ParabolicCoefficients> coeffs;
+    coeffs.push_back(ParabolicCoefficients(12./5.,0,1./5.));
+    coeffs.push_back(ParabolicCoefficients(-6.,84./5.,-41./5.));
+    coeffs.push_back(ParabolicCoefficients(18./5.,-108./5.,151./5.));
+    ParabolicInterpolation pp(0, 3, coeffs);
+    ASSERT_NO_THROW(pp.set_computed_value(3));
+}
