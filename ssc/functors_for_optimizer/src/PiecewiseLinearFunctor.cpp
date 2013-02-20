@@ -11,8 +11,6 @@
 #include "State.hpp"
 #include "PiecewiseConstantFunctor.hpp"
 
-#include "test_macros.hpp"
-
 PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state),
 f(new LinearInterpolation(xmin,xmax,y_values)),
