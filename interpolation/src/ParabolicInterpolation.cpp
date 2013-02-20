@@ -17,10 +17,10 @@ ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const std::vector<ParabolicCoefficients>& coeffs) : xmin(xmin_), xmax(xmax_), coeffs_(coeffs),
 n(coeffs.size()+1),
 delta(0),
-val_sat(xmin),
 a(0),
 b(0),
-c(0)
+c(0),
+x_xi(0)
 {
     if (n < 3)
     {
@@ -33,24 +33,24 @@ c(0)
     delta = (xmax-xmin)/double(n-1);
 }
 
-
 void ParabolicInterpolation::set_computed_value(const double& val)
 {
-    val_sat = max(xmin,min(xmax,val));
+    const double val_sat = max(xmin,min(xmax,val));
     const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-2));
     a = coeffs_.at(idx).a;
     b = coeffs_.at(idx).b;
     c = coeffs_.at(idx).c;
+    x_xi = val_sat - (xmin + delta*idx);
 }
 
 double ParabolicInterpolation::f() const
 {
-    return a*val_sat*val_sat+b*val_sat+c;
+    return a*x_xi*x_xi+b*x_xi+c;
 }
 
 double ParabolicInterpolation::df() const
 {
-    return 2*a*val_sat+b;
+    return 2*a*x_xi+b;
 }
 
 double ParabolicInterpolation::d2f() const
