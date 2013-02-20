@@ -12,7 +12,6 @@
 #define max(a,b) (a)>(b)?a:b
 #include <math.h>
 
-
 ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
         const std::vector<ParabolicCoefficients>& coeffs) : xmin(xmin_), xmax(xmax_), coeffs_(coeffs),
@@ -38,7 +37,7 @@ c(0)
 void ParabolicInterpolation::set_computed_value(const double& val)
 {
     val_sat = max(xmin,min(xmax,val));
-    const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-1));
+    const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-2));
     a = coeffs_.at(idx).a;
     b = coeffs_.at(idx).b;
     c = coeffs_.at(idx).c;
