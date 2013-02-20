@@ -17,16 +17,21 @@ ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
         const std::vector<ParabolicCoefficients>& coeffs) : xmin(xmin_), xmax(xmax_), coeffs_(coeffs),
 n(coeffs.size()+1),
-delta((xmax-xmin)/double(n-1)),
+delta(0),
 val_sat(xmin),
 a(0),
 b(0),
 c(0)
 {
-    if (n < 2)
+    if (n < 3)
     {
-        THROW("ParabolicInterpolation::ParabolicInterpolation(const double&, const double&, const std::vector<double>&)", Exception, "y must have at least two elements.");
+        THROW("ParabolicInterpolation::ParabolicInterpolation(const double&, const double&, const std::vector<double>&)", ParabolicInterpolationException, "y must have at least two elements.");
     }
+    if (xmin>xmax)
+    {
+        THROW("ParabolicInterpolation::ParabolicInterpolation(const double&, const double&, const std::vector<ParabolicCoefficients>&)", ParabolicInterpolationException, "xmin>xmax");
+    }
+    delta = (xmax-xmin)/double(n-1);
 }
 
 
