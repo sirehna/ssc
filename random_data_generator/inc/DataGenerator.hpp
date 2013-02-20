@@ -107,6 +107,7 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
             else
             {
                 min_bound = t;
+                but_not(t);
             }
             return *this;
         }
