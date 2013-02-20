@@ -137,3 +137,18 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 
     ASSERT_NO_THROW(spline.set_computed_value(x0));
 }
+
+TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
+{
+    const std::vector<double> y = {1.0000,0.9397,0.7660,0.5000,0.1736,-0.1736,-0.5000,-0.7660,-0.9397,-1.0000};
+    const NaturalSplines spline1(0, 1,y);
+    auto coeffs = spline1.get_parabolic_coefficients();
+
+    ASSERT_EQ(y.size()-1, coeffs.size());
+
+    auto coeffs2 = NaturalSplines(0,3,{0,1,4,3}).get_parabolic_coefficients();
+    ASSERT_EQ(3, coeffs2.size());
+    ASSERT_DOUBLE_EQ(12./5.,coeffs2.at(0).a);
+    ASSERT_DOUBLE_EQ(0,coeffs2.at(0).b);
+    ASSERT_DOUBLE_EQ(1./5.,coeffs2.at(0).c);
+}

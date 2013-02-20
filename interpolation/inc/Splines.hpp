@@ -10,6 +10,8 @@
 
 #include <vector>
 #include "Exception.hpp"
+#include "ParabolicCoefficients.hpp"
+#include <functional>
 
 class SplinesException: public Exception {
 public:
@@ -17,6 +19,21 @@ public:
             Exception(s) {
     }
 };
+
+struct CubicCoefficients
+{
+    public:
+        CubicCoefficients(const double& a_, const double& b_, const double& c_, const double& d_) : a(a_),b(b_),c(c_),d(d_){}
+        double a;
+        double b;
+        double c;
+        double d;
+
+    private:
+        CubicCoefficients();
+};
+
+
 /** \author cec
  *  \brief This class was created to interpolate data from tables.
  *  \details It has the following responsibilities:
@@ -40,6 +57,7 @@ class Splines
 		double f() const;
 		double df() const;
 		double d2f() const;
+		std::vector<ParabolicCoefficients> get_parabolic_coefficients() const;
 
 	protected:
 		std::vector<double> compute_second_derivative() const;
@@ -48,9 +66,10 @@ class Splines
 		double h;
 
 	private:
+		CubicCoefficients compute_cubic_coeff_for_x0(const double& x0, double& xxi) const;
 		double get_x_intervals(const std::vector<double>& x) const;
 		size_t compute_interval_index(const double& x) const;
-		void update_spline_coefficients(const double& M1, const double& M2, const double& y1, const double& y2);
+		CubicCoefficients get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const;
 
 		double xmin;
 		double xmax;

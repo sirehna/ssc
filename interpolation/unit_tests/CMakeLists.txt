@@ -5,7 +5,8 @@ FILE(GLOB SRC src/SplinesTest.cpp
               src/VectorOfEquallySpacedNumbersTest.cpp
               src/TwoDimensionalInterpolationTest.cpp
               src/LinearInterpolationTest.cpp
-              src/PiecewiseConstantTest.cpp)
+              src/PiecewiseConstantTest.cpp
+              src/ParabolicInterpolationTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
