@@ -32,7 +32,7 @@ TEST_F(PiecewiseConstantFunctorTest, example)
 //! [PiecewiseConstantFunctor example]
     auto x = generate.state("x");
     PiecewiseConstantFunctor pc(x, 0, 10, {3,6,5,8,7,4,5,6,9,72});
-    auto f = pc.get_lambda();
+    const auto f = pc.get_lambda();
 //! [PiecewiseConstantFunctor example]
 //! [PiecewiseConstantFunctor expected output]
     **x = a.random<double>().between(0,1);
@@ -69,7 +69,6 @@ TEST_F(PiecewiseConstantFunctorTest, should_be_able_to_use_piecewise_as_regular_
     PiecewiseConstantFunctor pc(x, 0, 10, {3,6,5,8,7,4,5,6,9,72});
     const auto F = 2*x+pc;
     const auto f = F->get_lambda();
-    const auto df = F->diff(x)->get_lambda();
     **x = a.random<double>().between(0,1);
     ASSERT_DOUBLE_EQ(2*(**x)+3, f());
     **x = a.random<double>().between(1,2);
