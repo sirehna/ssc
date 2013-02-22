@@ -81,36 +81,83 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
 
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraint_bounds)
 {
-    double gl[2];
-    double gu[2];
+    double g_l[2];
+    double g_u[2];
     OptimizationProblem hs71;
     hs71.minimize(x1*x4*(x1+x2+x3)+x3)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40);
-    hs71.get_constraint_bounds(gl, gu);
-    ASSERT_EQ(25, gl[0]);
-    ASSERT_EQ(40, gl[1]);
-    ASSERT_EQ(2e19, gu[0]);
-    ASSERT_EQ(40, gu[1]);
+    hs71.get_constraint_bounds(2, g_l, g_u);
+    ASSERT_EQ(25, g_l[0]);
+    ASSERT_EQ(40, g_l[1]);
+    ASSERT_EQ(2e19, g_u[0]);
+    ASSERT_EQ(40, g_u[1]);
 }
 
 TEST_F(OptimizationProblemTest, method_to_retrieve_constraint_bounds_should_throw_if_any_pointers_are_null)
 {
-    double gl[2];
-    double gu[2];
+    double g_l[2];
+    double g_u[2];
     OptimizationProblem pb;
-    ASSERT_THROW(pb.get_constraint_bounds(NULL, gu), OptimizationProblemException);
-    ASSERT_THROW(pb.get_constraint_bounds(gl, NULL), OptimizationProblemException);
-    ASSERT_THROW(pb.get_constraint_bounds(NULL, NULL), OptimizationProblemException);
+    ASSERT_THROW(pb.get_constraint_bounds(2, NULL, g_u), OptimizationProblemException);
+    ASSERT_THROW(pb.get_constraint_bounds(2, g_l, NULL), OptimizationProblemException);
+    ASSERT_THROW(pb.get_constraint_bounds(2, NULL, NULL), OptimizationProblemException);
+}
+
+TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds_bug)
+{
+    OptimizationProblem pb;
+    pb.bound_state(1,x1,2);
+    pb.bound_state(3,x2,4);
+    const size_t nb_of_states = 2;
+    double x_l[nb_of_states];
+    double x_u[nb_of_states];
+    pb.get_state_bounds(nb_of_states,x_l,x_u);
+    ASSERT_EQ(1, x_l[0]);
+    ASSERT_EQ(2, x_u[0]);
+    ASSERT_EQ(3, x_l[1]);
+    ASSERT_EQ(4, x_u[1]);
+}
+
+TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds_bug_02)
+{
+    OptimizationProblem pb;
+    pb.minimize(x1*x4*(x1+x2+x3)+x3).bound_state(1,x1,2);
+    const size_t nb_of_states = 4;
+    double x_l[nb_of_states];
+    double x_u[nb_of_states];
+    pb.get_state_bounds(nb_of_states,x_l,x_u);
+    ASSERT_EQ(1, x_l[0]);
+}
+
+TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds)
+{
+    OptimizationProblem hs71;
+
+    hs71.minimize(x1*x4*(x1+x2+x3)+x3)
+        .bound_state(1,x1,2)
+        .bound_state(x2,3)
+        .bound_state(4,x3)
+        .bound_state(6,x4,7);
+
+    double x_l[4];
+    double x_u[4];
+    hs71.get_state_bounds(4,x_l,x_u);
+    ASSERT_EQ(1, x_l[0]);
+    ASSERT_EQ(-2e19, x_l[1]);
+    ASSERT_EQ(4, x_l[2]);
+    ASSERT_EQ(6, x_l[3]);
+    ASSERT_EQ(2, x_u[0]);
+    ASSERT_EQ(3, x_u[1]);
+    ASSERT_EQ(2e19, x_u[2]);
+    ASSERT_EQ(7, x_u[3]);
 }
 
 /*
-TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds)
+
+TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_retrieve_state_bounds_from_an_absent_state)
 {
-
 }
-
-
 
 TEST_F(OptimizationProblemTest, different_ways_to_specify_constraint_bounds)
 {

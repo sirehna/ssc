@@ -44,9 +44,14 @@ class OptimizationProblem
         OptimizationProblem& minimize(const NodePtr& objective_function);
         OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint);
         OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint, const double& max_bound);
+        OptimizationProblem& bound_state(const double& min_bound, const StatePtr& state, const double& max_bound);
+        OptimizationProblem& bound_state(const StatePtr& state, const double& max_bound);
+        OptimizationProblem& bound_state(const double& min_bound, const StatePtr& state);
+
         StateList get_states() const;
         NodePtr get_objective_function() const;
-        void get_constraint_bounds(double* const gl, double* const gu) const;
+        void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
+        void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
 
     private:
         class OptimizationProblem_pimpl;
