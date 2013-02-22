@@ -55,7 +55,8 @@ TEST_F(PiecewiseConstantFunctorTest, first_derivative_should_be_zero)
     {
         const double xmin = a.random<double>();
         const double xmax = a.random<double>().greater_than(xmin);
-        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
+        size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
+        n = n<=1 ? 2 : n;
         const PiecewiseConstantFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
         const auto f = pc.diff(x)->get_lambda();
         **x = a.random<double>();
