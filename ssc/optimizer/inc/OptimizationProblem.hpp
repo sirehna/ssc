@@ -51,8 +51,9 @@ class OptimizationProblem
         OptimizationProblem& bound_state(const Parameter& min_bound, const StatePtr& state);
 
         StateList get_states() const;
-        NodePtr get_objective_function() const;
-        std::vector<NodePtr> get_constraints() const;
+        std::function<double()> get_objective_function() const;
+        std::vector<std::function<double()> > get_constraints() const;
+        Grad get_grad_objective_function() const;
         void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
         void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
 

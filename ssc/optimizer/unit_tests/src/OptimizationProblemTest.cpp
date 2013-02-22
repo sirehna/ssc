@@ -8,6 +8,9 @@
 #include "OptimizationProblemTest.hpp"
 #include "OptimizationProblem.hpp"
 #include "GradHes.hpp"
+#include "Grad.hpp"
+#include "FunctionMatrix.hpp"
+#include "extra_test_assertions.hpp"
 
 #define X1 (**x1)
 #define X2 (**x2)
@@ -67,8 +70,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
 {
     OptimizationProblem hs71;
     hs71.minimize(x1*x4*(x1+x2+x3)+x3);
-    const auto F = hs71.get_objective_function();
-    const auto objective_function = F->get_lambda();
+    const auto objective_function = hs71.get_objective_function();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X1 = a.random<double>();
@@ -261,11 +263,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
 
-
     auto constraints = hs71.get_constraints();
     ASSERT_EQ(2, constraints.size());
-    const auto g1 = constraints.at(0)->get_lambda();
-    const auto g2 = constraints.at(1)->get_lambda();
+    const auto g1 = constraints.at(0);
+    const auto g2 = constraints.at(1);
     for (size_t i = 0 ; i< 1000 ; ++i)
     {
         X1 = a.random<double>();
@@ -276,12 +277,36 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)
         ASSERT_DOUBLE_EQ(pow(X1,2)+pow(X2,2)+pow(X3,2)+pow(X4,2), g2());
     }
 }
-/*
+
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_gradient_of_objective_function)
 {
+    OptimizationProblem hs71;
+    hs71.minimize(x1*x4*(x1+x2+x3)+x3)
+        .subject_to(25,x1*x2*x3*x4)
+        .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+        .bound_state(2,x1);
+    Grad grad_f = hs71.get_grad_objective_function();
+    ASSERT_EQ(4, grad_f.index.size());
+    ASSERT_EQ(4, grad_f.values.size());
 
+    const auto df_dx1 = grad_f.values.at(0);
+    const auto df_dx2 = grad_f.values.at(1);
+    const auto df_dx3 = grad_f.values.at(2);
+    const auto df_dx4 = grad_f.values.at(3);
+    const double eps = 1e-6;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(X4*(2*X1+X2+X3), df_dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*(X1+X2+X3), df_dx4(),eps);
+    }
 }
-
+/*
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints_jacobian)
 {
 

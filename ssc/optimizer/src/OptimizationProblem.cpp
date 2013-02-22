@@ -11,7 +11,9 @@
 #include "Null.hpp"
 #include "State.hpp"
 #include "Serialize.hpp"
-
+#include "GradHes.hpp"
+#include "Grad.hpp"
+#include "FunctionMatrix.hpp"
 #include "test_macros.hpp"
 
 template <class T> class MinMaxList
@@ -133,9 +135,14 @@ template <class T> class MinMaxList
             return already_present;
         }
 
-        std::vector<T> get() const
+        std::vector<std::function<double()> > get() const
         {
-            return val;
+            std::vector<std::function<double()> > ret;
+            for (auto it = val.begin() ; it != val.end() ; ++it)
+            {
+                ret.push_back((*it)->get_lambda());
+            }
+            return ret;
         }
 
     private:
@@ -270,14 +277,19 @@ StateList OptimizationProblem::get_states() const
     return pimpl->states.get_vals();
 }
 
-NodePtr OptimizationProblem::get_objective_function() const
+std::function<double()> OptimizationProblem::get_objective_function() const
 {
-    return pimpl->objective_function;
+    return pimpl->objective_function->get_lambda();
 }
 
-std::vector<NodePtr> OptimizationProblem::get_constraints() const
+std::vector<std::function<double()> > OptimizationProblem::get_constraints() const
 {
     return pimpl->constraints.get();
+}
+
+Grad OptimizationProblem::get_grad_objective_function() const
+{
+    return grad(pimpl->objective_function, pimpl->get_states());
 }
 
 void OptimizationProblem::get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const
