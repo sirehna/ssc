@@ -41,9 +41,10 @@ link_directories(${CMAKE_SOURCE_DIR}/external/bin)
 add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
 add_library(${PROJECT_NAME}_object OBJECT ${SOURCES})
 
-#FIND_LIBRARY(${exception_handling_LIBRARIES} exception_handling ${CMAKE_CURRENT_BUILD_DIR}/../exception_handling)
-#FILE(TO_CMAKE_PATH ${exception_handling_LIBRARIES} exception_handling_LIBRARIES)
-#target_link_libraries(${PROJECT_NAME}_shared "${exception_handling_STATIC}")
+set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
+set(${PROJECT_NAME}_STATIC_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}_static${CMAKE_STATIC_LIBRARY_SUFFIX}  CACHE FILEPATH "${PROJECT_NAME}'s static library")
+set(${PROJECT_NAME}_FOUND            TRUE                                                                                                            CACHE BOOL     "Is ${PROJECT_NAME} available to other modules?")
 
 add_subdirectory(unit_tests)
 
