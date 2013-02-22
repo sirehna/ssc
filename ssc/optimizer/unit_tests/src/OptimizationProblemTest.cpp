@@ -197,11 +197,34 @@ TEST_F(OptimizationProblemTest, different_ways_to_specify_constraint_bounds)
     ASSERT_EQ(40, g_u[1]);
     ASSERT_EQ(50, g_u[2]);
 }
-/*
+
 TEST_F(OptimizationProblemTest, should_be_able_to_specify_constraints_bounds_with_parameters)
+{
+    OptimizationProblem problem;
+    Parameter p1, p2, p3, p4;
+    problem.minimize(x1*x4)
+           .subject_to(p1,x1*x3)
+           .subject_to(p2,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),p3)
+           .subject_to(x2*x3,p4);
+    double g_l[3];
+    double g_u[3];
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        problem.get_constraint_bounds(3, g_l, g_u);
+        ASSERT_DOUBLE_EQ(*p1, g_l[0]);
+        ASSERT_DOUBLE_EQ(*p2, g_l[1]);
+        ASSERT_EQ(-INFTY, g_l[2]);
+        ASSERT_EQ(INFTY, g_u[0]);
+        ASSERT_DOUBLE_EQ(*p3, g_u[1]);
+        ASSERT_DOUBLE_EQ(*p4, g_u[2]);
+    }
+}
+/*
+TEST_F(OptimizationProblemTest, should_be_able_to_specify_state_bounds_with_parameters)
 {
 
 }
+
 
 
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)

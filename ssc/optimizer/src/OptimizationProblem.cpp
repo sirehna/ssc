@@ -179,21 +179,21 @@ OptimizationProblem& OptimizationProblem::minimize(const NodePtr& objective_func
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::subject_to(const double& min_bound, const NodePtr& constraint)
+OptimizationProblem& OptimizationProblem::subject_to(const Parameter& min_bound, const NodePtr& constraint)
 {
     pimpl->constraints.push_back(min_bound, constraint);
     pimpl->register_states();
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::subject_to(const double& min_bound, const NodePtr& constraint, const double& max_bound)
+OptimizationProblem& OptimizationProblem::subject_to(const Parameter& min_bound, const NodePtr& constraint, const Parameter& max_bound)
 {
     pimpl->constraints.push_back(min_bound,constraint,max_bound);
     pimpl->register_states();
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, const double& max_bound)
+OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, const Parameter& max_bound)
 {
     pimpl->constraints.push_back(constraint,max_bound);
     pimpl->register_states();
