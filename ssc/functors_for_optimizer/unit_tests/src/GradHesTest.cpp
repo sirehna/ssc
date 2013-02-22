@@ -7,6 +7,7 @@
 
 #include "GradHesTest.hpp"
 #include "GradHes.hpp"
+#include "FunctionMatrix.hpp"
 #include "FunctorAlgebra.hpp"
 #include "StateGenerator.hpp"
 #include "Sum.hpp"
@@ -87,14 +88,14 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x1 = a.random<double>();
-        **x2 = a.random<double>();
-        **x3 = a.random<double>();
-        **x4 = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR(X4*(2*X1+**x2+**x3), df_dx1(),eps);
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(X4*(2*X1+X2+X3), df_dx1(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx2(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx3(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(X1*(**x1+**x2+**x3), df_dx4(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*(X1+X2+X3), df_dx4(),eps);
     }
 }
 
@@ -123,10 +124,10 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x1 = a.random<double>();
-        **x2 = a.random<double>();
-        **x3 = a.random<double>();
-        **x4 = a.random<double>();
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
         *lambda_1 = a.random<double>();
         *lambda_2 = a.random<double>();
         *sigma_f  = a.random<double>();
@@ -162,10 +163,10 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x1 = a.random<double>();
-        **x2 = a.random<double>();
-        **x3 = a.random<double>();
-        **x4 = a.random<double>();
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(X2*X3*X4, dg1_dx1(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X3*X4, dg1_dx2(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X4, dg1_dx3(), eps);
