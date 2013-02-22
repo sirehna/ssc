@@ -43,9 +43,9 @@ class OptimizationProblem
     public:
         OptimizationProblem();
         OptimizationProblem& minimize(const NodePtr& objective_function);
-        OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint);
-        OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint, const double& max_bound);
-        OptimizationProblem& subject_to(const NodePtr& constraint, const double& max_bound);
+        OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint);
+        OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint, const Parameter& max_bound);
+        OptimizationProblem& subject_to(const NodePtr& constraint, const Parameter& max_bound);
         OptimizationProblem& bound_state(const double& min_bound, const StatePtr& state, const double& max_bound);
         OptimizationProblem& bound_state(const StatePtr& state, const double& max_bound);
         OptimizationProblem& bound_state(const double& min_bound, const StatePtr& state);
