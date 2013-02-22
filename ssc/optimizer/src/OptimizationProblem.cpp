@@ -34,7 +34,7 @@ template <class T> class MinMaxList
         void add_to_val(const T& v)
         {
             COUT("");
-            const bool already_present = has(v);//std::any_of(val.begin(), val.end(), [this,v](const T& t)->bool{
+            const bool already_present = bounds_already_set(v);//std::any_of(val.begin(), val.end(), [this,v](const T& t)->bool{
                 //return this->get_string(t)==this->get_string(v);});
             if (already_present)
             {
@@ -109,7 +109,7 @@ template <class T> class MinMaxList
             return ss.str();
         }
 
-        bool has(const T& t) const
+        bool bounds_already_set(const T& t) const
         {
             bool already_present = false;
             for (auto it = min.begin() ; (it != min.end()) && (not(already_present)) ; ++it)
@@ -119,6 +119,16 @@ template <class T> class MinMaxList
             for (auto it = max.begin() ; (it != max.end()) && (not(already_present)) ; ++it)
             {
                 if (it->first == get_string(t)) already_present = true;
+            }
+            return already_present;
+        }
+
+        bool has(const T& t) const
+        {
+            bool already_present = false;
+            for (auto it = val.begin() ; (it != val.end()) && (not(already_present)) ; ++it)
+            {
+                if (get_string(*it) == get_string(t)) already_present = true;
             }
             return already_present;
         }
@@ -200,10 +210,16 @@ OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, 
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state, const double& max_bound)
+OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state, const Parameter& max_bound)
 {
     COUT("");
-    if (pimpl->states.has(state))
+    if (not(pimpl->states.has(state)))
+    {
+        std::stringstream ss;
+        ss << "State '" << state->get_name() << "' is not present in this optimization problem.";
+        THROW("OptimizationProblem::bound_state(const double&, const StatePtr&, const double&)", OptimizationProblemException, ss.str());
+    }
+    if (pimpl->states.bounds_already_set(state))
     {
         THROW("OptimizationProblem::bound_state(const double&, const StatePtr&, const double&)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
     }
@@ -211,20 +227,32 @@ OptimizationProblem& OptimizationProblem::bound_state(const double& min_bound, c
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, const double& max_bound)
+OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, const Parameter& max_bound)
 {
     COUT("");
-    if (pimpl->states.has(state))
+    if (not(pimpl->states.has(state)))
+    {
+        std::stringstream ss;
+        ss << "State '" << state->get_name() << "' is not present in this optimization problem.";
+        THROW("OptimizationProblem::bound_stateconst StatePtr& state, const Parameter& max_bound)", OptimizationProblemException, ss.str());
+    }
+    if (pimpl->states.bounds_already_set(state))
     {
         THROW("OptimizationProblem::bound_state(const StatePtr&, const double&)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
     }
     pimpl->states.push_back(state, Parameter(max_bound));
     return *this;
 }
-OptimizationProblem& OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state)
+OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state)
 {
     COUT("");
-    if (pimpl->states.has(state))
+    if (not(pimpl->states.has(state)))
+    {
+        std::stringstream ss;
+        ss << "State '" << state->get_name() << "' is not present in this optimization problem.";
+        THROW("OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state)", OptimizationProblemException, ss.str());
+    }
+    if (pimpl->states.bounds_already_set(state))
     {
         THROW("OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
     }
