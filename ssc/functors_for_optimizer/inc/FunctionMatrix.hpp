@@ -24,10 +24,10 @@ class Node;
 typedef std::tr1::shared_ptr<Node> NodePtr;
 
 
-class Hes
+class FunctionMatrix
 {
     public:
-        Hes();
+        FunctionMatrix();
         std::vector<size_t> row_index;
         std::vector<size_t> col_index;
         std::vector<std::function<double()> > values;

@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "Hes.hpp"
+#include "FunctionMatrix.hpp"
 
-Hes::Hes() : row_index(std::vector<size_t>()),
+FunctionMatrix::FunctionMatrix() : row_index(std::vector<size_t>()),
              col_index(std::vector<size_t>()),
              values(std::vector<std::function<double()> >())
 {
