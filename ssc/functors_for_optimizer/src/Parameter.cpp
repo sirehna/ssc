@@ -10,6 +10,11 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
+Parameter::Parameter() : ptr(new double(0))
+{
+    set_value([ptr,factor]()->double {return factor*(*ptr);});
+}
+
 Parameter::Parameter(const double& val) : ptr(new double(val))
 {
     set_value([ptr,factor]()->double {return factor*(*ptr);});
@@ -68,3 +73,5 @@ std::string Parameter::get_type() const
 {
     return "Parameter";
 }
+
+

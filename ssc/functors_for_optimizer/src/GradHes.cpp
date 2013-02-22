@@ -36,6 +36,13 @@ StateList get_states(const std::vector<NodePtr>& constraints)
     return retrieve_states.get();
 }
 
+void append(StateList& list, const StatePtr& state)
+{
+    StateGetter retrieve_states(list);
+    retrieve_states(state);
+    list = retrieve_states.get();
+}
+
 Grad grad(const NodePtr& f, const StateList& states)
 {
     Grad ret;
