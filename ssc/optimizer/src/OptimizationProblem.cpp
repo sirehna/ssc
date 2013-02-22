@@ -133,6 +133,11 @@ template <class T> class MinMaxList
             return already_present;
         }
 
+        std::vector<T> get() const
+        {
+            return val;
+        }
+
     private:
         std::map<std::string,Parameter> min;
         std::map<std::string,Parameter> max;
@@ -268,6 +273,11 @@ StateList OptimizationProblem::get_states() const
 NodePtr OptimizationProblem::get_objective_function() const
 {
     return pimpl->objective_function;
+}
+
+std::vector<NodePtr> OptimizationProblem::get_constraints() const
+{
+    return pimpl->constraints.get();
 }
 
 void OptimizationProblem::get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const
