@@ -131,17 +131,17 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
     ASSERT_EQ(10, hessian.values.size());
     ASSERT_EQ(10, hessian.row_index.size());
     ASSERT_EQ(10, hessian.col_index.size());
-/*
+
     const auto d2f_dx1dx1 = hessian.values.at(0);
-    const auto d2f_dxdx = hessian.values.at(1);
-    const auto d2f_dxdx = hessian.values.at(2);
-    const auto d2f_dxdx = hessian.values.at(3);
-    const auto d2f_dxdx = hessian.values.at(4);
-    const auto d2f_dxdx = hessian.values.at(5);
-    const auto d2f_dxdx = hessian.values.at(6);
-    const auto d2f_dxdx = hessian.values.at(7);
-    const auto d2f_dxdx = hessian.values.at(8);
-    const auto d2f_dxdx = hessian.values.at(9);
+    const auto d2f_dx2dx1 = hessian.values.at(1);
+    const auto d2f_dx2dx2 = hessian.values.at(2);
+    const auto d2f_dx3dx1 = hessian.values.at(3);
+    const auto d2f_dx3dx2 = hessian.values.at(4);
+    const auto d2f_dx3dx3 = hessian.values.at(5);
+    const auto d2f_dx4dx1 = hessian.values.at(6);
+    const auto d2f_dx4dx2 = hessian.values.at(7);
+    const auto d2f_dx4dx3 = hessian.values.at(8);
+    const auto d2f_dx4dx4 = hessian.values.at(9);
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
@@ -149,21 +149,21 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
         **x2 = a.random<double>();
         **x3 = a.random<double>();
         **x4 = a.random<double>();
-        **lambda_1 = a.random<double>();
-        **lambda_2 = a.random<double>();
-        **sigma_f  = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(, d2f_dx1(),eps);
+        *lambda_1 = a.random<double>();
+        *lambda_2 = a.random<double>();
+        *sigma_f  = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*(**x4))+2*(*lambda_2), d2f_dx1dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x4)+(*lambda_1)*(**x3)*(**x4), d2f_dx2dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx2dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x4)+(*lambda_1)*(**x2)*(**x4), d2f_dx3dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR((*lambda_1)*(**x1)*(**x4), d2f_dx3dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx3dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*(**x1)+(**x2)+(**x3))+(*lambda_1)*(**x2)*(**x3), d2f_dx4dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x1)+(*lambda_1)*(**x1)*(**x3), d2f_dx4dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x1)+(*lambda_1)*(**x1)*(**x2), d2f_dx4dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx4dx4(),eps);
     }
-    */
+
 }
 
 TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
