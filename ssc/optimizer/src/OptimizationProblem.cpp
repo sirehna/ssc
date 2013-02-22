@@ -292,6 +292,11 @@ Grad OptimizationProblem::get_grad_objective_function() const
     return grad(pimpl->objective_function, pimpl->get_states());
 }
 
+FunctionMatrix OptimizationProblem::get_constraint_jacobian() const
+{
+    return jac(pimpl->constraints.get_vals(), pimpl->get_states());
+}
+
 void OptimizationProblem::get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const
 {
     pimpl->constraints.get_bounds(n, gl, gu);
