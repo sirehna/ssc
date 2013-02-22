@@ -80,8 +80,17 @@ TEST_F(SimplifyTest, simplify_sums)
     Serialize v(ss);
     auto s = x1+x1+x2+x1;
     s->simplify()->accept(v);
-    COUT(ss.str());
     ASSERT_TRUE((ss.str()=="x2 + 3*x1") || (ss.str()=="3*x1 + x2"));
+}
+
+TEST_F(SimplifyTest, simplify_sums_bug_01)
+{
+    auto x4 = generate.state("x4");
+    std::stringstream ss;
+    Serialize v(ss);
+    auto s = x1*x4*(x1+x2+x3)+x3;
+    s->diff(x1)->diff(x1)->simplify()->accept(v);
+    ASSERT_EQ("2*x4",ss.str());
 }
 
 TEST_F(SimplifyTest, simplify_products)
@@ -90,7 +99,6 @@ TEST_F(SimplifyTest, simplify_products)
     Serialize v(ss);
     auto s = x1*x1*x2*x1;
     s->simplify()->accept(v);
-    COUT(ss.str());
     ASSERT_TRUE((ss.str()=="x2 * x1 ^ 3") || (ss.str()=="x1 ^ 3 * x2"));
 }
 

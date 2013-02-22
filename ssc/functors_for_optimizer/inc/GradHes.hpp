@@ -13,12 +13,16 @@
 
 class State;
 class Node;
+class Grad;
+class Parameter;
+class Hes;
 typedef std::tr1::shared_ptr<Node> NodePtr;
 typedef std::tr1::shared_ptr<State> StatePtr;
 
 typedef std::vector<StatePtr> StateList;
 
-
 StateList get_states(const NodePtr& objective_function, const std::vector<NodePtr>& constraints);
+Grad grad(const NodePtr& f, const StateList& states);
+Hes hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
 
 #endif /* GRADHES_HPP_ */

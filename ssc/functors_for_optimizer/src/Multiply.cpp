@@ -115,6 +115,7 @@ std::string Multiply::get_type() const
 
 NodePtr Multiply::simplify() const
 {
+    if (sons.size() == 1) return sons.front()->clone();
     const std::map<NodePtr,size_t> factor = get_occurence_of_each_factor();
     std::vector<NodePtr> ret;
     for (auto f = factor.begin() ; f != factor.end() ; ++f)

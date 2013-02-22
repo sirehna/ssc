@@ -73,7 +73,13 @@ void N_ary::update_lambda()
 std::map<NodePtr, size_t> N_ary::get_occurence_of_each_factor() const
 {
     std::map < NodePtr, size_t > factor;
+    std::vector<NodePtr> simplified_sons;
     for (auto node = sons.begin(); node != sons.end(); ++node)
+    {
+        simplified_sons.push_back((*node)->simplify());
+    }
+
+    for (auto node = simplified_sons.begin(); node != simplified_sons.end(); ++node)
     {
         bool found = false;
         Node* ptr = (*node).get();
