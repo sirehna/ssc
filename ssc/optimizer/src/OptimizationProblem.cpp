@@ -36,8 +36,7 @@ template <class T> class MinMaxList
         void add_to_val(const T& v)
         {
             COUT("");
-            const bool already_present = bounds_already_set(v);//std::any_of(val.begin(), val.end(), [this,v](const T& t)->bool{
-                //return this->get_string(t)==this->get_string(v);});
+            const bool already_present = bounds_already_set(v);
             if (already_present)
             {
                 THROW("add_to_val(const T&)", OptimizationProblemException, "Attempting to specify bounds for the same constraint twice");
@@ -161,7 +160,9 @@ class OptimizationProblem::OptimizationProblem_pimpl
     public:
         OptimizationProblem_pimpl() : objective_function(Null().clone()),
                                       constraints(MinMaxList<NodePtr>()),
-                                      states(MinMaxList<StatePtr>())
+                                      states(MinMaxList<StatePtr>()),
+                                      sigma_f(Parameter(2)),
+                                      lambda(std::vector<Parameter>())
         {
 
         }
@@ -188,6 +189,8 @@ class OptimizationProblem::OptimizationProblem_pimpl
         NodePtr objective_function;
         MinMaxList<NodePtr> constraints;
         MinMaxList<StatePtr> states;
+        Parameter sigma_f;
+        std::vector<Parameter> lambda;
 };
 
 OptimizationProblem::OptimizationProblem() : pimpl(new OptimizationProblem_pimpl())
@@ -205,6 +208,7 @@ OptimizationProblem& OptimizationProblem::subject_to(const Parameter& min_bound,
 {
     pimpl->constraints.push_back(min_bound, constraint);
     pimpl->register_states();
+    pimpl->lambda.push_back(Parameter(11));
     return *this;
 }
 
@@ -212,6 +216,7 @@ OptimizationProblem& OptimizationProblem::subject_to(const Parameter& min_bound,
 {
     pimpl->constraints.push_back(min_bound,constraint,max_bound);
     pimpl->register_states();
+    pimpl->lambda.push_back(Parameter(12));
     return *this;
 }
 
@@ -219,6 +224,7 @@ OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, 
 {
     pimpl->constraints.push_back(constraint,max_bound);
     pimpl->register_states();
+    pimpl->lambda.push_back(Parameter(13));
     return *this;
 }
 
@@ -295,6 +301,21 @@ Grad OptimizationProblem::get_grad_objective_function() const
 FunctionMatrix OptimizationProblem::get_constraint_jacobian() const
 {
     return jac(pimpl->constraints.get_vals(), pimpl->get_states());
+}
+
+FunctionMatrix OptimizationProblem::get_hessian() const
+{
+    return hes(pimpl->objective_function,pimpl->constraints.get_vals(),pimpl->sigma_f,pimpl->lambda,pimpl->get_states());
+}
+
+Parameter OptimizationProblem::get_sigma_f() const
+{
+    return pimpl->sigma_f;
+}
+
+std::vector<Parameter> OptimizationProblem::get_lambda() const
+{
+    return pimpl->lambda;
 }
 
 void OptimizationProblem::get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const
