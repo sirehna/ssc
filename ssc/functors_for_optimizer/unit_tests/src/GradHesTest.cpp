@@ -17,6 +17,11 @@
 #include "FunctionMatrix.hpp"
 #include "extra_test_assertions.hpp"
 
+#define X1 (**x1)
+#define X2 (**x2)
+#define X3 (**x3)
+#define X4 (**x4)
+
 GradHesTest::GradHesTest() : a(DataGenerator(76945)),
                              generate(StateGenerator()),
                              x1(generate.state("x1")),
@@ -86,10 +91,10 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
         **x2 = a.random<double>();
         **x3 = a.random<double>();
         **x4 = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR((**x4)*(2*(**x1)+**x2+**x3), df_dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x4), df_dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x4), df_dx3(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x1+**x2+**x3), df_dx4(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X4*(2*X1+**x2+**x3), df_dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*(**x1+**x2+**x3), df_dx4(),eps);
     }
 }
 
@@ -125,15 +130,15 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
         *lambda_1 = a.random<double>();
         *lambda_2 = a.random<double>();
         *sigma_f  = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*(**x4))+2*(*lambda_2), d2f_dx1dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x4)+(*lambda_1)*(**x3)*(**x4), d2f_dx2dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X4)+2*(*lambda_2), d2f_dx1dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda_1)*X3*X4, d2f_dx2dx1(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx2dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x4)+(*lambda_1)*(**x2)*(**x4), d2f_dx3dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR((*lambda_1)*(**x1)*(**x4), d2f_dx3dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda_1)*X2*X4, d2f_dx3dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR((*lambda_1)*X1*X4, d2f_dx3dx2(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx3dx3(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*(**x1)+(**x2)+(**x3))+(*lambda_1)*(**x2)*(**x3), d2f_dx4dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x1)+(*lambda_1)*(**x1)*(**x3), d2f_dx4dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(**x1)+(*lambda_1)*(**x1)*(**x2), d2f_dx4dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X1+X2+X3)+(*lambda_1)*X2*X3, d2f_dx4dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda_1)*X1*X3, d2f_dx4dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda_1)*X1*X2, d2f_dx4dx3(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda_2), d2f_dx4dx4(),eps);
     }
 
@@ -161,14 +166,14 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
         **x2 = a.random<double>();
         **x3 = a.random<double>();
         **x4 = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR((**x2)*(**x3)*(**x4), dg1_dx1(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x3)*(**x4), dg1_dx2(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x2)*(**x4), dg1_dx3(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x2)*(**x3), dg1_dx4(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(**x1), dg2_dx1(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(**x2), dg2_dx2(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(**x3), dg2_dx3(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(**x4), dg2_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X2*X3*X4, dg1_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X3*X4, dg1_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X4, dg1_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X3, dg1_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X1, dg2_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X2, dg2_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X3, dg2_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X4, dg2_dx4(), eps);
     }
 }
 
