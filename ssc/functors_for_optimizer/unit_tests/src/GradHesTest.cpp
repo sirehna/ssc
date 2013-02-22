@@ -14,7 +14,7 @@
 #include "Pow.hpp"
 #include "Serialize.hpp"
 #include "Grad.hpp"
-#include "Hes.hpp"
+#include "FunctionMatrix.hpp"
 #include "extra_test_assertions.hpp"
 
 GradHesTest::GradHesTest() : a(DataGenerator(76945))
@@ -51,7 +51,7 @@ TEST_F(GradHesTest, example)
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
     lambda.push_back(lambda_2);
-    Hes hessian = hes(f,g,sigma_f,lambda,states);
+    FunctionMatrix hessian = hes(f,g,sigma_f,lambda,states);
 //! [GradHesTest example]
 //! [GradHesTest expected output]
 //! [GradHesTest expected output]
@@ -85,10 +85,7 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
     auto x3 = generate.state("x3");
     auto x4 = generate.state("x4");
     auto f = x1*x4*(x1+x2+x3)+x3;
-    std::vector<NodePtr> g;
-    g.push_back(x1*x2*x3*x4);
-    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
-    const StateList states = get_states(f,g);
+    const StateList states = get_states(f);
     Grad grad_f = grad(f, states);
     ASSERT_EQ(4, grad_f.index.size());
     ASSERT_EQ(4, grad_f.values.size());
@@ -127,7 +124,7 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
     lambda.push_back(lambda_2);
-    Hes hessian = hes(f,g,sigma_f,lambda,states);
+    FunctionMatrix hessian = hes(f,g,sigma_f,lambda,states);
     ASSERT_EQ(10, hessian.values.size());
     ASSERT_EQ(10, hessian.row_index.size());
     ASSERT_EQ(10, hessian.col_index.size());
@@ -168,6 +165,42 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
 
 TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
 {
-
+    StateGenerator generate;
+    auto x1 = generate.state("x1");
+    auto x2 = generate.state("x2");
+    auto x3 = generate.state("x3");
+    auto x4 = generate.state("x4");
+    std::vector<NodePtr> g;
+    g.push_back(x1*x2*x3*x4);
+    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
+    const StateList states = get_states(g);
+    FunctionMatrix jacobian = jac(g,states);
+    ASSERT_EQ(8, jacobian.values.size());
+    ASSERT_EQ(8, jacobian.row_index.size());
+    ASSERT_EQ(8, jacobian.col_index.size());
+    const auto dg1_dx1 = jacobian.values.at(0);
+    const auto dg1_dx2 = jacobian.values.at(1);
+    const auto dg1_dx3 = jacobian.values.at(2);
+    const auto dg1_dx4 = jacobian.values.at(3);
+    const auto dg2_dx1 = jacobian.values.at(4);
+    const auto dg2_dx2 = jacobian.values.at(5);
+    const auto dg2_dx3 = jacobian.values.at(6);
+    const auto dg2_dx4 = jacobian.values.at(7);
+    const double eps = 1e-6;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        **x1 = a.random<double>();
+        **x2 = a.random<double>();
+        **x3 = a.random<double>();
+        **x4 = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR((**x2)*(**x3)*(**x4), dg1_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x3)*(**x4), dg1_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x2)*(**x4), dg1_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR((**x1)*(**x2)*(**x3), dg1_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(**x1), dg2_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(**x2), dg2_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(**x3), dg2_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(**x4), dg2_dx4(), eps);
+    }
 }
 
