@@ -17,8 +17,17 @@
 #include "FunctionMatrix.hpp"
 #include "extra_test_assertions.hpp"
 
-GradHesTest::GradHesTest() : a(DataGenerator(76945))
+GradHesTest::GradHesTest() : a(DataGenerator(76945)),
+                             generate(StateGenerator()),
+                             x1(generate.state("x1")),
+                             x2(generate.state("x2")),
+                             x3(generate.state("x3")),
+                             x4(generate.state("x4")),
+                             f(x1*x4*(x1+x2+x3)+x3),
+                             g(std::vector<NodePtr>())
 {
+    g.push_back(x1*x2*x3*x4);
+    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
 }
 
 GradHesTest::~GradHesTest()
@@ -36,15 +45,6 @@ void GradHesTest::TearDown()
 TEST_F(GradHesTest, example)
 {
 //! [GradHesTest example]
-    StateGenerator generate;
-    auto x1 = generate.state("x1");
-    auto x2 = generate.state("x2");
-    auto x3 = generate.state("x3");
-    auto x4 = generate.state("x4");
-    auto f = x1*x4*(x1+x2+x3)+x3;
-    std::vector<NodePtr> g;
-    g.push_back(x1*x2*x3*x4);
-    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
     const StateList states = get_states(f,g);
     Grad grad_f = grad(f, states);
     Parameter sigma_f(1), lambda_1(1), lambda_2(1);
@@ -59,15 +59,6 @@ TEST_F(GradHesTest, example)
 
 TEST_F(GradHesTest, should_be_able_to_retrieve_states_from_objective_and_constraints)
 {
-    StateGenerator generate;
-    auto x1 = generate.state("x1");
-    auto x2 = generate.state("x2");
-    auto x3 = generate.state("x3");
-    auto x4 = generate.state("x4");
-    auto f = x1*x4*(x1+x2+x3)+x3;
-    std::vector<NodePtr> g;
-    g.push_back(x1*x2*x3*x4);
-    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
     const StateList states = get_states(f,g);
 
     ASSERT_EQ(4, states.size());
@@ -79,12 +70,6 @@ TEST_F(GradHesTest, should_be_able_to_retrieve_states_from_objective_and_constra
 
 TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
 {
-    StateGenerator generate;
-    auto x1 = generate.state("x1");
-    auto x2 = generate.state("x2");
-    auto x3 = generate.state("x3");
-    auto x4 = generate.state("x4");
-    auto f = x1*x4*(x1+x2+x3)+x3;
     const StateList states = get_states(f);
     Grad grad_f = grad(f, states);
     ASSERT_EQ(4, grad_f.index.size());
@@ -110,15 +95,6 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
 
 TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
 {
-    StateGenerator generate;
-    auto x1 = generate.state("x1");
-    auto x2 = generate.state("x2");
-    auto x3 = generate.state("x3");
-    auto x4 = generate.state("x4");
-    auto f = x1*x4*(x1+x2+x3)+x3;
-    std::vector<NodePtr> g;
-    g.push_back(x1*x2*x3*x4);
-    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
     const StateList states = get_states(f,g);
     Parameter sigma_f(1), lambda_1(1), lambda_2(1);
     std::vector<Parameter> lambda;
@@ -165,14 +141,6 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
 
 TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
 {
-    StateGenerator generate;
-    auto x1 = generate.state("x1");
-    auto x2 = generate.state("x2");
-    auto x3 = generate.state("x3");
-    auto x4 = generate.state("x4");
-    std::vector<NodePtr> g;
-    g.push_back(x1*x2*x3*x4);
-    g.push_back(pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2));
     const StateList states = get_states(g);
     FunctionMatrix jacobian = jac(g,states);
     ASSERT_EQ(8, jacobian.values.size());

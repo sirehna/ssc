@@ -10,6 +10,7 @@
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
+#include "StateGenerator.hpp"
 
 class GradHesTest : public ::testing::Test
 {
@@ -19,7 +20,10 @@ class GradHesTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
-
+		StateGenerator generate;
+		StatePtr x1,x2,x3,x4;
+		NodePtr f;
+		std::vector<NodePtr> g;
 };
 
 #endif  /* GRADHESTEST_HPP_ */
