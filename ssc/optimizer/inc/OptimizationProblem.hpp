@@ -12,6 +12,8 @@
 #include "Sum.hpp"
 #include "Multiply.hpp"
 #include "Pow.hpp"
+#include "Difference.hpp"
+#include "GradHes.hpp"
 
 /** \author cec
  *  \brief This class was created to
@@ -27,6 +29,14 @@ class OptimizationProblem
 {
     public:
         OptimizationProblem();
+        OptimizationProblem& minimize(const NodePtr& objective_function);
+        OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint);
+        OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint, const double& max_bound);
+        StateList get_states() const;
+
+    private:
+        class OptimizationProblem_pimpl;
+        std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
 };
 
 #endif /* OPTIMIZATIONPROBLEM_HPP_ */
