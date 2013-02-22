@@ -10,6 +10,7 @@
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
+#include "StateGenerator.hpp"
 
 class OptimizationProblemTest : public ::testing::Test
 {
@@ -19,6 +20,8 @@ class OptimizationProblemTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
+		StateGenerator generate;
+        StatePtr x1,x2,x3,x4;
 
 };
 
