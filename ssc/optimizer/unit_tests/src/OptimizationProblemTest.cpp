@@ -344,14 +344,51 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints_jacobian)
     }
 }
 
-/*
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_hessian)
 {
+    OptimizationProblem hs71;
+    hs71.minimize(x1*x4*(x1+x2+x3)+x3)
+        .subject_to(25,x1*x2*x3*x4)
+        .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+        .bound_state(2,x1);
+    const FunctionMatrix hessian = hs71.get_hessian();
+    ASSERT_EQ(10, hessian.values.size());
+    ASSERT_EQ(10, hessian.row_index.size());
+    ASSERT_EQ(10, hessian.col_index.size());
 
+    const auto d2f_dx1dx1 = hessian.values.at(0);
+    const auto d2f_dx2dx1 = hessian.values.at(1);
+    const auto d2f_dx2dx2 = hessian.values.at(2);
+    const auto d2f_dx3dx1 = hessian.values.at(3);
+    const auto d2f_dx3dx2 = hessian.values.at(4);
+    const auto d2f_dx3dx3 = hessian.values.at(5);
+    const auto d2f_dx4dx1 = hessian.values.at(6);
+    const auto d2f_dx4dx2 = hessian.values.at(7);
+    const auto d2f_dx4dx3 = hessian.values.at(8);
+    const auto d2f_dx4dx4 = hessian.values.at(9);
+    const double eps = 1e-6;
+    auto sigma_f = hs71.get_sigma_f();
+    auto lambda = hs71.get_lambda();
+    ASSERT_EQ(2, lambda.size());
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
+        *lambda.at(0) = a.random<double>();
+        *lambda.at(1) = a.random<double>();
+        *sigma_f  = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X4)+2*(*lambda.at(1)), d2f_dx1dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda.at(0))*X3*X4, d2f_dx2dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx2dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda.at(0))*X2*X4, d2f_dx3dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR((*lambda.at(0))*X1*X4, d2f_dx3dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx3dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X1+X2+X3)+(*lambda.at(0))*X2*X3, d2f_dx4dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda.at(0))*X1*X3, d2f_dx4dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda.at(0))*X1*X2, d2f_dx4dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx4dx4(),eps);
+    }
 }
 
-TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_sigmaf_and_lambda_corresponding_to_hessian)
-{
-
-}
-*/
