@@ -86,3 +86,26 @@ StateList OptimizationProblem::get_states() const
 {
     return pimpl->states;
 }
+
+NodePtr OptimizationProblem::get_objective_function() const
+{
+    return pimpl->objective_function;
+}
+
+void OptimizationProblem::get_constraint_bounds(double* const gl, double* const gu) const
+{
+    size_t i = 0;
+    if (gl == NULL)
+    {
+        THROW("OptimizationProblem::get_constraint_bounds(double* const, double* const)", OptimizationProblemException, "gl == NULL");
+    }
+    if (gu == NULL)
+    {
+        THROW("OptimizationProblem::get_constraint_bounds(double* const, double* const)", OptimizationProblemException, "gu == NULL");
+    }
+    for (auto it = pimpl->constraints.begin() ; it != pimpl->constraints.end() ; ++it)
+    {
+        gl[i] = *(it->min);
+        gu[i++] = *(it->max);
+    }
+}

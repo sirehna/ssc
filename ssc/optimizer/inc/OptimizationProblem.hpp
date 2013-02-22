@@ -25,6 +25,18 @@
  *  \snippet MODULE_NAME/unit_tests/src/OptimizationProblemTest.cpp OptimizationProblemTest expected output
  */
 
+#include "Exception.hpp"
+
+class OptimizationProblemException : public Exception
+{
+    public:
+        OptimizationProblemException(const char* s) :
+                Exception(s)
+        {
+        }
+};
+
+
 class OptimizationProblem
 {
     public:
@@ -33,6 +45,8 @@ class OptimizationProblem
         OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint);
         OptimizationProblem& subject_to(const double& min_bound, const NodePtr& constraint, const double& max_bound);
         StateList get_states() const;
+        NodePtr get_objective_function() const;
+        void get_constraint_bounds(double* const gl, double* const gu) const;
 
     private:
         class OptimizationProblem_pimpl;
