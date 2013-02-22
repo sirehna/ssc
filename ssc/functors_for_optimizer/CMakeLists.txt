@@ -23,7 +23,9 @@ set(SOURCES src/State.cpp
             src/PiecewiseConstantFunctor.cpp
             src/PiecewiseLinearFunctor.cpp
             src/SplineFunctor.cpp
-            src/PiecewiseParabolicFunctor.cpp)
+            src/PiecewiseParabolicFunctor.cpp
+            src/GradHes.cpp
+            src/StateGetter.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

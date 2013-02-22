@@ -20,7 +20,9 @@ FILE(GLOB SRC src/NullTest.cpp
               src/SplineFunctorTest.cpp
               src/PiecewiseConstantFunctorTest.cpp
               src/PiecewiseLinearFunctorTest.cpp
-              src/PiecewiseParabolicFunctorTest.cpp)
+              src/PiecewiseParabolicFunctorTest.cpp
+              src/GradHesTest.cpp
+              src/StateGetterTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
