@@ -15,9 +15,7 @@
 #include "Multiply.hpp"
 #include "Sum.hpp"
 
-
 #include <cmath>
-#include "test_macros.hpp"
 
 Serialize::Serialize(std::ostream& os_) : os(os_), parenthesize_next_node(false)
 {
