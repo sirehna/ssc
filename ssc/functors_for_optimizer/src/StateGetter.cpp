@@ -59,6 +59,15 @@ StateGetter::StateGetter() : pimpl(new StateGetter_pimpl())
 {
 }
 
+StateGetter::StateGetter(const StateList& list) : pimpl(new StateGetter_pimpl())
+{
+    for (auto l = list.begin() ; l != list.end() ; ++l)
+    {
+        (*l)->accept(*this);
+    }
+}
+
+
 void StateGetter::operator()(const NodePtr& f)
 {
     f->accept(*this);

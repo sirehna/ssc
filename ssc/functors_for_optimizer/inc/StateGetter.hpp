@@ -22,10 +22,16 @@
  *  \snippet MODULE_NAME/unit_tests/src/StateGetterTest.cpp StateGetterTest expected output
  */
 
+class State;
+typedef std::tr1::shared_ptr<State> StatePtr;
+typedef std::vector<StatePtr> StateList;
+
+
 class StateGetter : public NodeVisitor
 {
     public:
         StateGetter();
+        StateGetter(const StateList& list);
         void operator()(const NodePtr& f);
         void operator()(const std::vector<NodePtr>& g);
         std::vector<StatePtr> get() const;

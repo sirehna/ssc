@@ -177,3 +177,33 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
     }
 }
 
+TEST_F(GradHesTest, should_be_able_to_append_states_to_existing_StateList)
+{
+    StateGenerator generate;
+    auto x1 = generate.state("x1");
+    auto x2 = generate.state("x2");
+    auto x3 = generate.state("x3");
+    auto x4 = generate.state("x4");
+    auto x5 = generate.state("x5");
+    auto x6 = generate.state("x6");
+    auto x7 = generate.state("x7");
+    auto x8 = generate.state("x8");
+    auto l = get_states(x5);
+    append(l, x3);
+    append(l, x8);
+    append(l, x2);
+    append(l, x7);
+    append(l, x6);
+    append(l, x1);
+    append(l, x4);
+
+    ASSERT_EQ(8,l.size());
+    ASSERT_EQ(*x1,*l.at(0));
+    ASSERT_EQ(*x2,*l.at(1));
+    ASSERT_EQ(*x3,*l.at(2));
+    ASSERT_EQ(*x4,*l.at(3));
+    ASSERT_EQ(*x5,*l.at(4));
+    ASSERT_EQ(*x6,*l.at(5));
+    ASSERT_EQ(*x7,*l.at(6));
+    ASSERT_EQ(*x8,*l.at(7));
+}

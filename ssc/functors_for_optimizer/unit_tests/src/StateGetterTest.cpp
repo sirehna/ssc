@@ -12,8 +12,6 @@
 #include "Multiply.hpp"
 #include "Sum.hpp"
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
 
 StateGetterTest::StateGetterTest() : a(DataGenerator(1))
 {

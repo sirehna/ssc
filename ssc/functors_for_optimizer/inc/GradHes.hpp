@@ -24,6 +24,7 @@ typedef std::vector<StatePtr> StateList;
 StateList get_states(const NodePtr& objective_function, const std::vector<NodePtr>& constraints);
 StateList get_states(const NodePtr& objective_function);
 StateList get_states(const std::vector<NodePtr>& constraints);
+void append(StateList& list, const StatePtr& state);
 Grad grad(const NodePtr& f, const StateList& states);
 FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
 FunctionMatrix jac(const std::vector<NodePtr>& g, const StateList& states);
