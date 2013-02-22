@@ -58,11 +58,12 @@ Grad grad(const NodePtr& f, const StateList& states)
 
     return ret;
 }
-
+#include "test_macros.hpp"
 FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states)
 {
     FunctionMatrix ret;
     const size_t n = states.size();
+
     for (size_t i = 0 ; i < n ; ++i)
     {
         auto xi = states.at(i);
