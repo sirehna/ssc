@@ -65,3 +65,14 @@ TEST_F(ParameterTest, equality_operator)
         ASSERT_FALSE(p2.equals(p1));
     }
 }
+
+TEST_F(ParameterTest, should_be_able_to_assign_a_parameter)
+{
+    Parameter p1;
+    Parameter p2 = p1;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        *p1 = a.random<double>();
+        ASSERT_DOUBLE_EQ(*p1,*p2);
+    }
+}
