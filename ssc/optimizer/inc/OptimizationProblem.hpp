@@ -8,6 +8,11 @@
 #ifndef OPTIMIZATIONPROBLEM_HPP_
 #define OPTIMIZATIONPROBLEM_HPP_
 
+#include "FunctorAlgebra.hpp"
+#include "Sum.hpp"
+#include "Multiply.hpp"
+#include "Pow.hpp"
+
 /** \author cec
  *  \brief This class was created to
  *  \details It has the following responsibilities:
