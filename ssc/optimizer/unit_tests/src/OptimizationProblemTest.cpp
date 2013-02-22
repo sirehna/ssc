@@ -90,7 +90,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraint_bounds)
     hs71.get_constraint_bounds(2, g_l, g_u);
     ASSERT_EQ(25, g_l[0]);
     ASSERT_EQ(40, g_l[1]);
-    ASSERT_EQ(2e19, g_u[0]);
+    ASSERT_EQ(INFTY, g_u[0]);
     ASSERT_EQ(40, g_u[1]);
 }
 
@@ -144,19 +144,40 @@ TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds)
     double x_u[4];
     hs71.get_state_bounds(4,x_l,x_u);
     ASSERT_EQ(1, x_l[0]);
-    ASSERT_EQ(-2e19, x_l[1]);
+    ASSERT_EQ(-INFTY, x_l[1]);
     ASSERT_EQ(4, x_l[2]);
     ASSERT_EQ(6, x_l[3]);
     ASSERT_EQ(2, x_u[0]);
     ASSERT_EQ(3, x_u[1]);
-    ASSERT_EQ(2e19, x_u[2]);
+    ASSERT_EQ(INFTY, x_u[2]);
     ASSERT_EQ(7, x_u[3]);
 }
 
-/*
-
-TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_retrieve_state_bounds_from_an_absent_state)
+TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_retrieve_state_bounds_with_an_invalid_number_of_states)
 {
+    OptimizationProblem pb;
+    pb.minimize(x1*x4*(x1+x2+x3)+x3);
+    double x_l[4];
+    double x_u[4];
+    ASSERT_THROW(pb.get_state_bounds(a.random<size_t>().but_not(4),x_l,x_u), OptimizationProblemException);
+    ASSERT_THROW(pb.get_state_bounds(4,NULL,x_u), OptimizationProblemException);
+    ASSERT_THROW(pb.get_state_bounds(4,NULL,NULL), OptimizationProblemException);
+    ASSERT_THROW(pb.get_state_bounds(4,x_l,NULL), OptimizationProblemException);
+    ASSERT_NO_THROW(pb.get_state_bounds(4,x_l,x_u));
+}
+
+TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_set_the_same_constraint_twice)
+{
+    OptimizationProblem problem;
+    problem.subject_to(25,x1*x3);
+    ASSERT_THROW(problem.subject_to(x1*x3,25), OptimizationProblemException);
+}
+
+TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_set_the_same_state_bounds_twice)
+{
+    OptimizationProblem problem;
+    problem.bound_state(1,x1,2);
+    ASSERT_THROW(problem.bound_state(x1,2), OptimizationProblemException);
 }
 
 TEST_F(OptimizationProblemTest, different_ways_to_specify_constraint_bounds)
@@ -165,9 +186,18 @@ TEST_F(OptimizationProblemTest, different_ways_to_specify_constraint_bounds)
     problem.minimize(x1*x4)
            .subject_to(25,x1*x3)
            .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
-           .subject_to(x1*x3,50);
+           .subject_to(x2*x3,50);
+    double g_l[3];
+    double g_u[3];
+    problem.get_constraint_bounds(3, g_l, g_u);
+    ASSERT_EQ(25, g_l[0]);
+    ASSERT_EQ(40, g_l[1]);
+    ASSERT_EQ(-INFTY, g_l[2]);
+    ASSERT_EQ(INFTY, g_u[0]);
+    ASSERT_EQ(40, g_u[1]);
+    ASSERT_EQ(50, g_u[2]);
 }
-
+/*
 TEST_F(OptimizationProblemTest, should_be_able_to_specify_constraints_bounds_with_parameters)
 {
 

@@ -4,13 +4,15 @@
  * \date 21 févr. 2013, 10:15:54
  *  \author cec
  */
-
+#include <map>
+#include <algorithm>    // std::find
 #include "OptimizationProblem.hpp"
 #include "Parameter.hpp"
 #include "Null.hpp"
-#include <map>
 #include "State.hpp"
 #include "Serialize.hpp"
+
+#include "test_macros.hpp"
 
 template <class T> class MinMaxList
 {
@@ -31,11 +33,19 @@ template <class T> class MinMaxList
 
         void add_to_val(const T& v)
         {
+            COUT("");
+            const bool already_present = has(v);//std::any_of(val.begin(), val.end(), [this,v](const T& t)->bool{
+                //return this->get_string(t)==this->get_string(v);});
+            if (already_present)
+            {
+                THROW("add_to_val(const T&)", OptimizationProblemException, "Attempting to specify bounds for the same constraint twice");
+            }
             val.push_back(v);
         }
 
         void push_back(const Parameter& min_, const T& val_, const Parameter& max_)
         {
+            COUT("");
             add_to_val(val_);
             min[get_string(val_)] = min_;
             max[get_string(val_)] = max_;
@@ -43,20 +53,21 @@ template <class T> class MinMaxList
 
         void push_back(const Parameter& min_, const T& val_)
         {
+            COUT("");
             add_to_val(val_);
             min[get_string(val_)] = min_;
         }
 
         void push_back(const T& val_, const Parameter& max_)
         {
+            COUT("");
             add_to_val(val_);
-            (void)max_;
             max[get_string(val_)] = max_;
         }
 
         double get_max_bound() const
         {
-            return 2e19;
+            return INFTY;
         }
 
         double get_min_bound() const
@@ -96,6 +107,20 @@ template <class T> class MinMaxList
             Serialize v(ss);
             t->accept(v);
             return ss.str();
+        }
+
+        bool has(const T& t) const
+        {
+            bool already_present = false;
+            for (auto it = min.begin() ; (it != min.end()) && (not(already_present)) ; ++it)
+            {
+                if (it->first == get_string(t)) already_present = true;
+            }
+            for (auto it = max.begin() ; (it != max.end()) && (not(already_present)) ; ++it)
+            {
+                if (it->first == get_string(t)) already_present = true;
+            }
+            return already_present;
         }
 
     private:
@@ -168,19 +193,41 @@ OptimizationProblem& OptimizationProblem::subject_to(const double& min_bound, co
     return *this;
 }
 
+OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, const double& max_bound)
+{
+    pimpl->constraints.push_back(constraint,max_bound);
+    pimpl->register_states();
+    return *this;
+}
+
 OptimizationProblem& OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state, const double& max_bound)
 {
+    COUT("");
+    if (pimpl->states.has(state))
+    {
+        THROW("OptimizationProblem::bound_state(const double&, const StatePtr&, const double&)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
+    }
     pimpl->states.push_back(min_bound, state, max_bound);
     return *this;
 }
 
 OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, const double& max_bound)
 {
+    COUT("");
+    if (pimpl->states.has(state))
+    {
+        THROW("OptimizationProblem::bound_state(const StatePtr&, const double&)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
+    }
     pimpl->states.push_back(state, Parameter(max_bound));
     return *this;
 }
 OptimizationProblem& OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state)
 {
+    COUT("");
+    if (pimpl->states.has(state))
+    {
+        THROW("OptimizationProblem::bound_state(const double& min_bound, const StatePtr& state)", OptimizationProblemException, "Attempting to set bounds to the same state twice.");
+    }
     pimpl->states.push_back(min_bound, state);
     return *this;
 }
