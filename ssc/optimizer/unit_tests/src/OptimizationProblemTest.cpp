@@ -263,7 +263,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
 
-    auto constraints = hs71.get_constraints();
+    const auto constraints = hs71.get_constraints();
     ASSERT_EQ(2, constraints.size());
     const auto g1 = constraints.at(0);
     const auto g2 = constraints.at(1);
@@ -285,7 +285,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_gradient_of_objective
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
-    Grad grad_f = hs71.get_grad_objective_function();
+    const Grad grad_f = hs71.get_grad_objective_function();
     ASSERT_EQ(4, grad_f.index.size());
     ASSERT_EQ(4, grad_f.values.size());
 
@@ -306,12 +306,45 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_gradient_of_objective
         ASSERT_SMALL_RELATIVE_ERROR(X1*(X1+X2+X3), df_dx4(),eps);
     }
 }
-/*
+
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints_jacobian)
 {
-
+    OptimizationProblem hs71;
+    hs71.minimize(x1*x4*(x1+x2+x3)+x3)
+        .subject_to(25,x1*x2*x3*x4)
+        .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+        .bound_state(2,x1);
+    const FunctionMatrix jacobian = hs71.get_constraint_jacobian();
+    ASSERT_EQ(8, jacobian.values.size());
+    ASSERT_EQ(8, jacobian.row_index.size());
+    ASSERT_EQ(8, jacobian.col_index.size());
+    const auto dg1_dx1 = jacobian.values.at(0);
+    const auto dg1_dx2 = jacobian.values.at(1);
+    const auto dg1_dx3 = jacobian.values.at(2);
+    const auto dg1_dx4 = jacobian.values.at(3);
+    const auto dg2_dx1 = jacobian.values.at(4);
+    const auto dg2_dx2 = jacobian.values.at(5);
+    const auto dg2_dx3 = jacobian.values.at(6);
+    const auto dg2_dx4 = jacobian.values.at(7);
+    const double eps = 1e-6;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(X2*X3*X4, dg1_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X3*X4, dg1_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X4, dg1_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X3, dg1_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X1, dg2_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X2, dg2_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X3, dg2_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X4, dg2_dx4(), eps);
+    }
 }
 
+/*
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_hessian)
 {
 
