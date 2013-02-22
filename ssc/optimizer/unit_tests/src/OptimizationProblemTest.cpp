@@ -107,6 +107,7 @@ TEST_F(OptimizationProblemTest, method_to_retrieve_constraint_bounds_should_thro
 TEST_F(OptimizationProblemTest, should_be_able_to_set_and_retrieve_state_bounds_bug)
 {
     OptimizationProblem pb;
+    pb.minimize(x1*x2);
     pb.bound_state(1,x1,2);
     pb.bound_state(3,x2,4);
     const size_t nb_of_states = 2;
@@ -176,6 +177,7 @@ TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_set_the_same_const
 TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_set_the_same_state_bounds_twice)
 {
     OptimizationProblem problem;
+    problem.minimize(pow(x1-2,2));
     problem.bound_state(1,x1,2);
     ASSERT_THROW(problem.bound_state(x1,2), OptimizationProblemException);
 }
@@ -219,13 +221,39 @@ TEST_F(OptimizationProblemTest, should_be_able_to_specify_constraints_bounds_wit
         ASSERT_DOUBLE_EQ(*p4, g_u[2]);
     }
 }
-/*
-TEST_F(OptimizationProblemTest, should_be_able_to_specify_state_bounds_with_parameters)
-{
 
+TEST_F(OptimizationProblemTest, should_throw_if_attempting_to_specify_bounds_to_inexistant_state)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x2);
+    ASSERT_THROW(problem.bound_state(1,x3,2), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(1,x3), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(x3,2), OptimizationProblemException);
 }
 
+TEST_F(OptimizationProblemTest, should_be_able_to_specify_state_bounds_with_parameters)
+{
+    OptimizationProblem problem;
+    Parameter p1, p2, p3, p4;
+    problem.minimize(x1*x2*x3).bound_state(p1,x1,p2)
+                           .bound_state(x2,p3)
+                           .bound_state(p4,x3);
+    const size_t nb_of_states = 3;
+    double x_l[nb_of_states];
+    double x_u[nb_of_states];
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        problem.get_state_bounds(nb_of_states, x_l, x_u);
+        ASSERT_DOUBLE_EQ(*p1, x_l[0]);
+        ASSERT_EQ(-INFTY, x_l[1]);
+        ASSERT_EQ(*p4, x_l[2]);
+        ASSERT_EQ(*p2, x_u[0]);
+        ASSERT_DOUBLE_EQ(*p3, x_u[1]);
+        ASSERT_EQ(INFTY, x_u[2]);
+    }
+}
 
+/*
 
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)
 {
