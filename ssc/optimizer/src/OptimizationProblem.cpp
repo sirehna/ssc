@@ -14,7 +14,6 @@
 #include "GradHes.hpp"
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
-#include "test_macros.hpp"
 
 template <class T> class MinMaxList
 {
@@ -35,7 +34,6 @@ template <class T> class MinMaxList
 
         void add_to_val(const T& v)
         {
-            COUT("");
             const bool already_present = bounds_already_set(v);
             if (already_present)
             {
@@ -46,7 +44,6 @@ template <class T> class MinMaxList
 
         void push_back(const Parameter& min_, const T& val_, const Parameter& max_)
         {
-            COUT("");
             add_to_val(val_);
             min[get_string(val_)] = min_;
             max[get_string(val_)] = max_;
@@ -54,14 +51,12 @@ template <class T> class MinMaxList
 
         void push_back(const Parameter& min_, const T& val_)
         {
-            COUT("");
             add_to_val(val_);
             min[get_string(val_)] = min_;
         }
 
         void push_back(const T& val_, const Parameter& max_)
         {
-            COUT("");
             add_to_val(val_);
             max[get_string(val_)] = max_;
         }
@@ -230,7 +225,6 @@ OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, 
 
 OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state, const Parameter& max_bound)
 {
-    COUT("");
     if (not(pimpl->states.has(state)))
     {
         std::stringstream ss;
@@ -247,7 +241,6 @@ OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound
 
 OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, const Parameter& max_bound)
 {
-    COUT("");
     if (not(pimpl->states.has(state)))
     {
         std::stringstream ss;
@@ -263,7 +256,6 @@ OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, con
 }
 OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state)
 {
-    COUT("");
     if (not(pimpl->states.has(state)))
     {
         std::stringstream ss;
