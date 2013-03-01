@@ -28,6 +28,7 @@ struct OptimizationResult
     double value_of_the_objective_function;
     double total_time_needed_for_optimization;
     std::vector<double> state_values;
+    std::vector<double> constraint_values;
     SparseVector gradient_of_the_objective_function;
     SparseMatrix constraint_jacobian;
     SparseMatrix hessian_of_the_lagrangian;

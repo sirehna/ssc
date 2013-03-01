@@ -31,16 +31,17 @@
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
 #include "Parameter.hpp"
+#include "OptimizationResult.hpp"
 
 using namespace Ipopt;
 
 class OptimizationResult;
-
+class IpoptParameters;
 class InternalIpopt : public TNLP
 {
     public:
       /** default constructor */
-        InternalIpopt(const OptimizationProblem& problem, const bool& show_debug_info = false);
+        InternalIpopt(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters);
 
        void set_starting_point(const std::vector<double>& start);
 
@@ -118,8 +119,7 @@ class InternalIpopt : public TNLP
       InternalIpopt(const InternalIpopt&);
       InternalIpopt& operator=(const InternalIpopt&);
 
-      bool debugging_on;
-      OptimizationProblem problem_;
+      std::tr1::shared_ptr<OptimizationProblem> problem_;
       std::function<double()> objective_function;
       std::vector<std::function<double()> > constraints;
       Grad grad_objective_function;
@@ -129,6 +129,8 @@ class InternalIpopt : public TNLP
       std::vector<Parameter> lambda;
       std::vector<double> starting_point;
       StateList states;
+      OptimizationResult results;
+      bool trace_function_calls;
 
 
       //@}
