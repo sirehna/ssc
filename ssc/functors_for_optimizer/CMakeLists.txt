@@ -27,7 +27,8 @@ set(SOURCES src/State.cpp
             src/GradHes.cpp
             src/StateGetter.cpp
             src/Grad.cpp
-            src/FunctionMatrix.cpp)
+            src/FunctionMatrix.cpp
+            src/SerializeReversePolish.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
