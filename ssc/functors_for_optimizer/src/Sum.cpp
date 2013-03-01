@@ -27,17 +27,17 @@ void Sum::common_build()
     auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
     for (auto son=sons.begin() ; son != sons.end() ; ++son)
     {
-        COUT(*son);
+//        COUT(*son);
     }
     sons = extract_subnodes(operands);
     for (auto son=sons.begin() ; son != sons.end() ; ++son)
     {
-        COUT(*son);
+//        COUT(*son);
     }
     remove_zeros();
     for (auto son=sons.begin() ; son != sons.end() ; ++son)
     {
-        COUT(*son);
+//        COUT(*son);
     }
     if (sons.empty())
     {
@@ -50,10 +50,10 @@ void Sum::common_build()
                           double ret = 0;
                           for (auto son = sons.begin() ; son != sons.end() ; ++son)
                           {
-                              COUT(*son);
+                            //  COUT(*son);
                               ret += (*son)->get_lambda()();
                           }
-                          COUT(factor);
+                          //COUT(factor);
                           return factor*ret;
                        });
     }
