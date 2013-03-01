@@ -2,15 +2,9 @@ cmake_minimum_required (VERSION 2.6)
 project (exception_handling)
 FILE(GLOB SRC src/Exception.cpp)
 
-SET (${PROJECT_NAME}_build_shared OFF CACHE BOOL "Build shared library (i.e. DLL under Windows)")
-SET (${PROJECT_NAME}_build_static ON CACHE BOOL "Build static library")
-include_directories (${${PROJECT_NAME}_SOURCE_DIR}/inc)
-if (${PROJECT_NAME}_build_shared)
-	add_library(${PROJECT_NAME} SHARED ${SRC})
-endif()
-if (${PROJECT_NAME}_build_static)
-	add_library (${PROJECT_NAME}_static OBJECT ${SRC})
-endif()
+include_directories(inc)
+
+add_library (${PROJECT_NAME}_static OBJECT ${SRC})
 
 set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
 set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
