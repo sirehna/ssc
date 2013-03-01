@@ -321,9 +321,9 @@ TEST_F(FunctorAlgebraTest, bug_15)
     const auto df_dy = F->diff(y)->get_lambda();
     const auto d2f_dx2 = F->diff(x)->diff(x)->get_lambda();
     const auto d2f_dy2 = F->diff(y)->diff(y)->get_lambda();
-    const auto d2f_dxy = F->diff(x)->diff(y)->get_lambda();
-    COUT(F->diff(x)->diff(x)->get_type());
-    COUT(*(F->diff(x)->diff(x)));
+    const auto d2f_dxy = (-400 * (y - (pow(x, 2))) * x + 2 * (x - 1))->diff(y)->get_lambda();//F->diff(x)->diff(y)->get_lambda();
+    COUT(*(F->diff(x)));
+    COUT(*(F->diff(x)->diff(y)));
     //for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = 2;//a.random<double>().between(-1000,1000);
@@ -332,7 +332,7 @@ TEST_F(FunctorAlgebraTest, bug_15)
         ASSERT_DOUBLE_EQ(100*pow(Y-X*X,2)+pow(X-1,2), f());
         ASSERT_DOUBLE_EQ(-400*X*(Y-X*X)+2*(X-1), df_dx());
         ASSERT_DOUBLE_EQ(200*(Y-X*X), df_dy());
-        ASSERT_DOUBLE_EQ(400*(3*X*X-Y)-2, d2f_dx2());
+        ASSERT_DOUBLE_EQ(400*(3*X*X-Y)+2, d2f_dx2());
         ASSERT_DOUBLE_EQ(200, d2f_dy2());
         ASSERT_DOUBLE_EQ(-400*X, d2f_dxy());
     }
@@ -423,5 +423,33 @@ TEST_F(FunctorAlgebraTest, bug_22)
     {
         X = a.random<double>().between(-1000,1000);
         ASSERT_DOUBLE_EQ(2*(X-1), f());
+    }
+}
+
+
+TEST_F(FunctorAlgebraTest, bug_23)
+{
+    auto x = generate.state("x");
+    const auto F = 2*(pow(x,2)+x);
+    const auto df_dx = F->diff(x)->get_lambda();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(-1000,1000);
+        ASSERT_DOUBLE_EQ(4*X+2, df_dx());
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_24)
+{
+    auto x = generate.state("x");
+    auto y = generate.state("y");
+    const auto F = -400 * (y - (pow(x, 2))) * x + 2 * (x - 1);
+    const auto df_dy = (-400 * (y - (pow(x, 2))) * x + 2 * (x - 1))->diff(y)->get_lambda();
+    //const auto df_dy = F->diff(y)->get_lambda();
+    //for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X = a.random<double>().between(-1000,1000);
+        Y = a.random<double>().between(-1000,1000);
+        ASSERT_DOUBLE_EQ(-400*X, df_dy());
     }
 }

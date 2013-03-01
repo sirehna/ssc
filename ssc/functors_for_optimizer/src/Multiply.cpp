@@ -72,7 +72,6 @@ NodePtr Multiply::diff(const StatePtr& state) const
     auto is_null = [](const NodePtr& node){return node->is_null();};
     auto not_equal_to_one = [](const NodePtr& node){return node != 1;};
     if (std::any_of(sons.begin(), sons.end(), is_null)) return NodePtr(new Null());
-    //COUT(*this);
     for (size_t i = 0 ; i < n ; ++i)
     {
         std::vector<NodePtr> all_sons_except_i = sons;
@@ -81,15 +80,17 @@ NodePtr Multiply::diff(const StatePtr& state) const
         auto new_end = std::copy_if(all_sons_except_i.begin(),all_sons_except_i.end(), prod.begin(), not_equal_to_one);
         prod.erase(new_end, prod.end());
 
-        if (sons.at(i)->diff(state) != 1)
+        auto dson_dstate = sons.at(i)->diff(state);
+        dson_dstate->update_lambda();
+        if (dson_dstate != 1)
         {
-            prod.push_back(sons.at(i)->diff(state));
+            prod.push_back(dson_dstate);
         }
-        COUT(*sons.at(i));
-        COUT(sons.at(i)->diff(state));
         dsons_dstate.push_back(NodePtr(new Multiply(prod)));
     }
-    return NodePtr(new Sum(dsons_dstate));
+    NodePtr ret(new Sum(dsons_dstate));
+    ret->multiply_by(factor);
+    return ret;
 }
 
 std::string Multiply::get_operator_name() const

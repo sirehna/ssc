@@ -77,6 +77,7 @@ NodePtr Sum::diff(const StatePtr& state) const
     for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
         auto dson_dstate = (*son)->diff(state);
+        dson_dstate->multiply_by(factor);
         if (not(dson_dstate->is_null())) dsons.push_back(dson_dstate);
     }
     return NodePtr(new Sum(dsons));
@@ -144,4 +145,9 @@ bool Sum::must_parenthesize() const
 void Sum::accept(NodeVisitor& v) const
 {
     v.visit(*this);
+}
+
+void Sum::update_lambda()
+{
+    common_build();
 }
