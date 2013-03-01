@@ -71,8 +71,11 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
 {
     OptimizationProblem rosenbrock;
     rosenbrock.minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
-    IpoptSolver optimize(rosenbrock);
-    const auto result = optimize.solve({-1.2,1});
+    IpoptParameters ipopt_parameters;
+    ipopt_parameters.print_level = 5;
+    IpoptSolver optimize(rosenbrock, ipopt_parameters);
+
+    const auto result = optimize.solve({5,3});
     ASSERT_EQ(2, result.state_values.size());
     const double eps = 1e-6;
     ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
