@@ -20,16 +20,15 @@
 class IpoptSolver::IpoptSolverPimpl
 {
     public:
-        ~IpoptSolverPimpl(){COUT("");}
-        IpoptSolverPimpl(const OptimizationProblem& problem) : internal(new InternalIpopt(problem)),
-                                                               nlp(internal.get()),
+        ~IpoptSolverPimpl(){}
+        IpoptSolverPimpl(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) : nlp(new InternalIpopt(problem, parameters)),
                                                                app(IpoptApplicationFactory())
         {
-            app->Options()->SetNumericValue("tol", 1e-9);
-            app->Options()->SetNumericValue("bound_relax_factor", 0);
-            app->Options()->SetStringValue("mu_strategy", "adaptive");
-            app->Options()->SetIntegerValue("print_level", 0);
-            app->Options()->SetIntegerValue("max_iter", 1000);
+            app->Options()->SetNumericValue("tol", parameters.tolerance);
+            app->Options()->SetNumericValue("bound_relax_factor", parameters.bound_relaxation_factor);
+            app->Options()->SetStringValue("mu_strategy", parameters.mu_strategy);
+            app->Options()->SetIntegerValue("print_level", parameters.print_level);
+            app->Options()->SetIntegerValue("max_iter", parameters.maximum_number_of_iterations);
             const ApplicationReturnStatus status = app->Initialize();
 
             if (status != Solve_Succeeded)
@@ -40,33 +39,27 @@ class IpoptSolver::IpoptSolverPimpl
 
         OptimizationResult solve(const std::vector<double>& starting_point)
         {
-            COUT("");
-            internal->set_starting_point(starting_point);
-            COUT("");
+            (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->set_starting_point(starting_point);
             const ApplicationReturnStatus status = app->OptimizeTNLP(nlp);
-            COUT("");
-            OptimizationResult ret = ((InternalIpopt*)GetRawPtr(nlp))->get_results();
-            COUT("");
+            OptimizationResult ret = (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->get_results();
             ret.converged = status == Solve_Succeeded;
-            COUT("");
             return ret;
         }
 
     private:
         IpoptSolverPimpl();
-        std::tr1::shared_ptr<InternalIpopt> internal;
         SmartPtr<TNLP> nlp;
         SmartPtr<IpoptApplication> app;
 };
 
 
 
-IpoptSolver::IpoptSolver(const OptimizationProblem& problem) : pimpl(new IpoptSolverPimpl(problem))
+IpoptSolver::IpoptSolver(const OptimizationProblem& problem, const IpoptParameters& parameters) :
+        pimpl(new IpoptSolverPimpl(std::tr1::shared_ptr<OptimizationProblem>(new OptimizationProblem(problem)),parameters))
 {
 }
 
 OptimizationResult IpoptSolver::solve(const std::vector<double>& starting_point)
 {
-    COUT("");
     return pimpl->solve(starting_point);
 }

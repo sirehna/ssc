@@ -10,7 +10,7 @@
 
 #include <tr1/memory>
 #include <vector>
-
+#include "IpoptParameters.hpp"
 
 class OptimizationResult;
 class OptimizationProblem;
@@ -30,7 +30,7 @@ class OptimizationProblem;
 class IpoptSolver
 {
     public:
-        IpoptSolver(const OptimizationProblem& problem);
+        IpoptSolver(const OptimizationProblem& problem, const IpoptParameters& parameters = IpoptParameters());
         OptimizationResult solve(const std::vector<double>& starting_point);
 
     private:

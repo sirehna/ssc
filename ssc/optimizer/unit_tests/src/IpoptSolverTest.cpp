@@ -10,6 +10,8 @@
 #include "OptimizationProblem.hpp"
 #include "OptimizationResult.hpp"
 
+#include "State.hpp"
+
 #include "extra_test_assertions.hpp"
 
 IpoptSolverTest::IpoptSolverTest() : a(DataGenerator(56)),
@@ -44,32 +46,65 @@ TEST_F(IpoptSolverTest, example)
         .bound_state(1,x2,5)
         .bound_state(1,x3,5)
         .bound_state(1,x4,5);
-    IpoptSolver optimize(hs71);
+    IpoptParameters ipopt_parameters;
+    ipopt_parameters.print_level = 5;
+    IpoptSolver optimize(hs71,ipopt_parameters);
     const std::vector<double> x0({1,5,5,1});
-    COUT("");
     const auto result = optimize.solve(x0);
-    COUT("");
 //! [IpoptSolverTest example]
 //! [IpoptSolverTest expected output]
     const double eps = 1e-6;
-    COUT("");
+    for (auto state = result.state_values.begin() ; state != result.state_values.end() ; ++state)
+    {
+        COUT(*state);
+    }
+
     ASSERT_EQ(4, result.state_values.size());
-    ASSERT_DOUBLE_EQ(1,result.state_values.at(0));
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
     ASSERT_SMALL_RELATIVE_ERROR(4.74299963,result.state_values.at(1),eps);
     ASSERT_SMALL_RELATIVE_ERROR(3.82114998,result.state_values.at(2),eps);
     ASSERT_SMALL_RELATIVE_ERROR(1.37940829,result.state_values.at(3),eps);
-    COUT("");
 //! [IpoptSolverTest expected output]
 }
-/*
+
+TEST_F(IpoptSolverTest, rosenbrock_banana)
+{
+    OptimizationProblem rosenbrock;
+    rosenbrock.minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
+    IpoptParameters parameters;
+    parameters.print_level = 5;
+    parameters.maximum_number_of_iterations = 47;
+    IpoptSolver optimize(rosenbrock, parameters);
+    const auto result = optimize.solve({-1.2,1});
+    COUT(result.value_of_the_objective_function);
+
+    for (auto state = result.state_values.begin() ; state != result.state_values.end() ; ++state)
+    {
+        COUT(*state);
+    }
+}
+
 TEST_F(IpoptSolverTest, test_01)
 {
     OptimizationProblem pb;
     Parameter c0(2);
-    pb.minimize(pow(x1*x1-c0.clone(),2));
+    pb.minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
-    const std::vector<double> x0({0});
-    const double eps = 1e-6;
+    const std::vector<double> x0({1});
+    const double eps = 1e-3;
+    *c0 = 2;
+    const auto result = optimize.solve(x0);
+    ASSERT_SMALL_RELATIVE_ERROR(sqrt(2),result.state_values.at(0),eps);
+}
+
+TEST_F(IpoptSolverTest, test_02)
+{
+    OptimizationProblem pb;
+    Parameter c0(2);
+    pb.minimize(pow(x1*x1-c0,2));
+    IpoptSolver optimize(pb);
+    const std::vector<double> x0({1});
+    const double eps = 1e-3;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         *c0 = a.random<double>().between(0,100);
@@ -77,4 +112,4 @@ TEST_F(IpoptSolverTest, test_01)
         ASSERT_SMALL_RELATIVE_ERROR(sqrt(*c0),result.state_values.at(0),eps);
     }
 }
-*/
+
