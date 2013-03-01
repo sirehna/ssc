@@ -71,17 +71,12 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
 {
     OptimizationProblem rosenbrock;
     rosenbrock.minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
-    IpoptParameters parameters;
-    parameters.print_level = 5;
-    parameters.maximum_number_of_iterations = 47;
-    IpoptSolver optimize(rosenbrock, parameters);
+    IpoptSolver optimize(rosenbrock);
     const auto result = optimize.solve({-1.2,1});
-    COUT(result.value_of_the_objective_function);
-
-    for (auto state = result.state_values.begin() ; state != result.state_values.end() ; ++state)
-    {
-        COUT(*state);
-    }
+    ASSERT_EQ(2, result.state_values.size());
+    const double eps = 1e-6;
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(1),eps);
 }
 
 TEST_F(IpoptSolverTest, test_01)
@@ -105,7 +100,7 @@ TEST_F(IpoptSolverTest, test_02)
     IpoptSolver optimize(pb);
     const std::vector<double> x0({1});
     const double eps = 1e-3;
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         *c0 = a.random<double>().between(0,100);
         const auto result = optimize.solve(x0);
