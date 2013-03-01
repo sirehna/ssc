@@ -212,7 +212,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_specify_constraints_bounds_wit
            .subject_to(x2*x3,p4);
     double g_l[3];
     double g_u[3];
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         problem.get_constraint_bounds(3, g_l, g_u);
         ASSERT_DOUBLE_EQ(*p1, g_l[0]);
