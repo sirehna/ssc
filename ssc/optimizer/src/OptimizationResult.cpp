@@ -15,5 +15,6 @@ total_time_needed_for_optimization(0),
 state_values(std::vector<double>()),
 gradient_of_the_objective_function(SparseVector()),
 constraint_jacobian(SparseMatrix()),
-hessian_of_the_lagrangian(SparseMatrix())
+hessian_of_the_lagrangian(SparseMatrix()),
+converged(false)
 {}

@@ -2,13 +2,16 @@ cmake_minimum_required (VERSION 2.6)
 project (optimizer)
 set(SOURCES src/OptimizationProblem.cpp
             src/IpoptSolver.cpp
-            src/OptimizationResult.cpp)
+            src/OptimizationResult.cpp
+            src/InternalIpopt.cpp)
 
 include_directories(inc)
 include_directories(${test_macros_SOURCE_DIR})
 include_directories(${functors_for_optimizer_INCLUDE_DIRS})
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${matrix_and_vector_classes_INCLUDE_DIRS})
+include_directories(SYSTEM ${IPOPT_INCLUDE_DIRS})
+add_definitions(-DHAVE_CONFIG_H)
 link_directories(${CMAKE_SOURCE_DIR}/external/bin)
 
 

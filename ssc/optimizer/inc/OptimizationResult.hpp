@@ -31,6 +31,7 @@ struct OptimizationResult
     SparseVector gradient_of_the_objective_function;
     SparseMatrix constraint_jacobian;
     SparseMatrix hessian_of_the_lagrangian;
+    bool converged;
 
 };
 

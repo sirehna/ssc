@@ -15,6 +15,8 @@
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
 
+#include "test_macros.hpp"
+
 template <class T> class MinMaxList
 {
     public:
@@ -88,6 +90,7 @@ template <class T> class MinMaxList
             size_t i = 0;
             for (auto v = val.begin() ; v != val.end() ; ++v)
             {
+                COUT("");
                 auto it_min = min.find(get_string(*v));
                 auto it_max = max.find(get_string(*v));
                 bool found_value_in_min_map = not(it_min==min.end());
@@ -95,6 +98,7 @@ template <class T> class MinMaxList
                 l[i]   = found_value_in_min_map ? *(it_min->second) : get_min_bound();
                 u[i++] = found_value_in_max_map ? *(it_max->second) : get_max_bound();
             }
+            COUT("");
         }
 
         std::string get_string(const T& t) const
@@ -310,9 +314,10 @@ std::vector<Parameter> OptimizationProblem::get_lambda() const
     return pimpl->lambda;
 }
 
-void OptimizationProblem::get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const
+void OptimizationProblem::get_constraint_bounds(const size_t& m, double* const gl, double* const gu) const
 {
-    pimpl->constraints.get_bounds(n, gl, gu);
+    COUT(m);
+    pimpl->constraints.get_bounds(m, gl, gu);
 }
 
 void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, double* const xu) const
