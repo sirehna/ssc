@@ -212,3 +212,16 @@ TEST_F(FunctorAlgebraTest, bug_09)
         ASSERT_DOUBLE_EQ(X-Y*X, f());
     }
 }
+
+TEST_F(FunctorAlgebraTest, should_be_able_to_substract_a_parameter)
+{
+    auto x = generate.state("x");
+    Parameter p(12);
+    auto f = pow(x-p,2)->get_lambda();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        **x = 13;//a.random<double>();
+        //*p = a.random<double>();
+        ASSERT_DOUBLE_EQ(pow(**x-*p,2),f());
+    }
+}

@@ -35,6 +35,7 @@ class Parameter : public Nullary
         using Node::equals_derived;
         virtual bool equals_derived(const Parameter& rhs) const;
         std::string get_type() const;
+        void update_lambda();
     protected:
         std::tr1::shared_ptr<double> ptr;
         friend double& operator*(const Parameter& s);
