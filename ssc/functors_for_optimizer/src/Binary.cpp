@@ -7,7 +7,7 @@
 
 #include "Binary.hpp"
 #include "NodeVisitor.hpp"
-#include "test_macros.hpp"
+
 Binary::Binary(const NodePtr& n1, const NodePtr& n2) : n1_(n1),n2_(n2)
 {
 }
