@@ -26,44 +26,36 @@ std::function<double()> Pow::get_pow_fun() const
     return [n1_,n2_,factor]()->double{
         return factor*(pow(n1_->get_lambda()(),n2_->get_lambda()()));};
 }
-#include "test_macros.hpp"
-#include "Serialize.hpp"
+
 NodePtr Pow::diff(const StatePtr& state) const
 {
-    NodePtr ret;
-//    if (n2_->diff(state)->is_null())
-  /*  if (n2_->is_constant())
+    NodePtr dthis_dstate;
+    if (n2_->is_constant())
     {
-            COUT(*n1_);
-            COUT(*n2_);
         const double val = n2_->get_lambda()();
         if (val == 0)
         {
-            ret = NodePtr(new Null());
+            dthis_dstate = NodePtr(new Null());
         }
         else if (val == 1)
         {
-            ret = n1_->diff(state);
+            dthis_dstate = n1_->diff(state);
         }
         else if (val == 2)
         {
-            ret = 2*n1_*(n1_->diff(state));
+            dthis_dstate = 2*n1_*(n1_->diff(state));
         }
         else
         {
-            ret = val*Pow(n1_,(val-1))*(n1_->diff(state));
+            dthis_dstate = val*Pow(n1_,(val-1))*(n1_->diff(state));
         }
     }
-    else*/
+    else
     {
-        //COUT(*n1_);
-        //COUT(*n2_);
-        ret = Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
-        //COUT(*ret);
+        dthis_dstate = Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
     }
-    ret->multiply_by(factor);
-    ret->update_lambda();
-    return ret;
+    dthis_dstate->multiply_by(factor);
+    return dthis_dstate;
 }
 
 std::string Pow::get_operator_name() const

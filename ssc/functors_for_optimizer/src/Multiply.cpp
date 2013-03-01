@@ -13,7 +13,6 @@
 #include "FunctorAlgebra.hpp"
 #include "Pow.hpp"
 
-
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -21,7 +20,7 @@ Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 
 void Multiply::common_build()
 {
-   auto factors = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_factors();};
+    auto factors = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_factors();};
     sons = extract_subnodes(factors);
     remove_ones_and_zeros();
 
@@ -66,9 +65,14 @@ NodePtr Multiply::diff(const StatePtr& state) const
 {
     std::vector<NodePtr> dsons_dstate;
     const size_t n = sons.size();
-    if (n==1) return sons.front()->diff(state);
-    auto is_null = [](const NodePtr& node){return node->is_null();};
-    auto not_equal_to_one = [](const NodePtr& node){return node != 1;};
+    if (n==1)
+    {
+        auto dthis_dstate = sons.front()->diff(state);
+        dthis_dstate->multiply_by(factor);
+        return dthis_dstate;
+    }
+    auto is_null = [](const NodePtr& node)->bool{return node->is_null();};
+    auto not_equal_to_one = [](const NodePtr& node)->bool{return node != 1;};
     if (std::any_of(sons.begin(), sons.end(), is_null)) return NodePtr(new Null());
     for (size_t i = 0 ; i < n ; ++i)
     {
@@ -81,9 +85,9 @@ NodePtr Multiply::diff(const StatePtr& state) const
         prod.push_back(dson_dstate);
         dsons_dstate.push_back(NodePtr(new Multiply(prod)));
     }
-    NodePtr ret(new Sum(dsons_dstate));
-    ret->multiply_by(factor);
-    return ret;
+    NodePtr dthis_dstate(new Sum(dsons_dstate));
+    dthis_dstate->multiply_by(factor);
+    return dthis_dstate;
 }
 
 std::string Multiply::get_operator_name() const
@@ -148,10 +152,6 @@ std::vector<NodePtr> Multiply::get_factors() const
 FactorMap Multiply::get_factors_with_exponents() const
 {
     FactorMap ret;
-    for (auto son = sons.begin() ; son != sons.end() ; ++son)
-    {
-        //ret += (*son)->get_factors_with_exponents();
-    }
     return ret;
 }
 void Multiply::accept(NodeVisitor& v) const

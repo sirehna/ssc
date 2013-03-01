@@ -11,7 +11,6 @@
 #include "FunctorAlgebra.hpp"
 #include "Constant.hpp"
 
-
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();

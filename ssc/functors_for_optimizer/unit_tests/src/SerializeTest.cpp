@@ -220,7 +220,7 @@ TEST_F(SerializeTest, bug_11)
     ASSERT_EQ("x - 1", ss.str());
 }
 
-TEST_F(SerializeTest, bug_12)
+TEST_F(SerializeTest, DISABLED_bug_12)
 {
     auto x = generate.state("x");
     std::stringstream ss;

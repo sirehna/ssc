@@ -22,7 +22,8 @@ FILE(GLOB SRC src/NullTest.cpp
               src/PiecewiseLinearFunctorTest.cpp
               src/PiecewiseParabolicFunctorTest.cpp
               src/GradHesTest.cpp
-              src/StateGetterTest.cpp)
+              src/StateGetterTest.cpp
+              src/SerializeReversePolishTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
