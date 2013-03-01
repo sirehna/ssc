@@ -36,6 +36,7 @@ class Multiply : public N_ary
         std::vector<NodePtr> get_factors() const;
         FactorMap get_factors_with_exponents() const;
         void accept(NodeVisitor& v) const;
+        void update_lambda();
 
     private:
         void common_build();

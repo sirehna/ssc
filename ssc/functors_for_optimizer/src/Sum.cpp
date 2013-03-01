@@ -12,9 +12,6 @@
 #include "Constant.hpp"
 
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
-
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -28,24 +25,8 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 void Sum::common_build()
 {
     auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
-    //COUT("_______________")
-    //COUT(*this)
-    for (auto son = sons.begin() ; son != sons.end() ; ++son)
-    {
-        //COUT(*son);
-    }
     sons = extract_subnodes(operands);
-    //COUT("11111111111111111111111111")
-    for (auto son = sons.begin() ; son != sons.end() ; ++son)
-    {
-        //COUT(*son);
-    }
     remove_zeros();
-    //COUT("22222222222222222222222222")
-    for (auto son = sons.begin() ; son != sons.end() ; ++son)
-    {
-        //COUT(*son);
-    }
     if (sons.empty())
     {
         set_value([]()->double {return 0;});
@@ -76,9 +57,12 @@ NodePtr Sum::diff(const StatePtr& state) const
     std::vector<NodePtr> dsons;
     for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
-        auto dson_dstate = (*son)->diff(state);
-        dson_dstate->multiply_by(factor);
-        if (not(dson_dstate->is_null())) dsons.push_back(dson_dstate);
+        auto dson_dstate = (*son)->diff(state);//->simplify();
+        if (not(dson_dstate->is_null()))
+	    {
+            dson_dstate->multiply_by(factor);
+	    	dsons.push_back(dson_dstate);
+	    }
     }
     return NodePtr(new Sum(dsons));
 }

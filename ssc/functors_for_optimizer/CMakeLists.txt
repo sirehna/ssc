@@ -34,11 +34,11 @@ include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${test_macros_SOURCE_DIR})
 include_directories(${interpolation_INCLUDE_DIRS})
 
-link_directories(${CMAKE_SOURCE_DIR}/external/bin)
+#link_directories(${CMAKE_SOURCE_DIR}/external/bin)
 
 
 #add_library(${PROJECT_NAME}_shared SHARED ${SOURCES})
-add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
+#add_library(${PROJECT_NAME}_static STATIC ${SOURCES})
 add_library(${PROJECT_NAME}_object OBJECT ${SOURCES})
 
 set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")

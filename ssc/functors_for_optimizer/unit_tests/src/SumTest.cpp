@@ -78,7 +78,7 @@ TEST_F(SumTest, should_be_able_to_get_the_operands_in_a_sum_of_two)
     ASSERT_EQ(*y,*operands.at(1));
 }
 
-TEST_F(SumTest, should_be_able_to_get_the_foperands_in_a_sum_of_three)
+TEST_F(SumTest, should_be_able_to_get_the_operands_in_a_sum_of_three)
 {
     StateGenerator generate;
     auto x = generate.state("x");

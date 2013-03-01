@@ -19,6 +19,7 @@ class Pow : public Binary
         std::string get_type() const;
         NodePtr simplify() const;
         void update_lambda();
+        bool is_constant() const;
     private:
         std::function<double()> get_pow_fun() const;
 };

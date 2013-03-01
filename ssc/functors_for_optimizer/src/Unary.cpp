@@ -36,3 +36,9 @@ bool Unary::equals_derived(const Unary& rhs) const
 {
     return n->equals(*rhs.n);
 }
+
+bool Unary::is_constant() const
+{
+    return n->is_constant();
+}
+

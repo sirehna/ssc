@@ -86,12 +86,17 @@ void Serialize::visit(const Binary& node)
     auto n2 = node.get_rhs();
     bool parenthesize_next_node_back = parenthesize_next_node;
     parenthesize_next_node = true;
+    /*os << "(";
+    serialize_multiplicative_factor(k);
+    auto n1 = node.get_lhs();
+    auto n2 = node.get_rhs();*/
     n1->accept(*this);
     os << " ";
     os << node.get_operator_name();
     os << " ";
     n2->accept(*this);
     parenthesize_next_node = parenthesize_next_node_back;
+    //os << ")";
     if (k !=1) os << ")";
 }
 
@@ -102,6 +107,25 @@ void Serialize::serialize_multiplicative_factor(const double& k)
     if (k == -1)              os << "- ";
     if ((k < 0) && (k != -1)) os << "- " << fabs(k) << " * ";
     if (parenthesize_next_node && (fabs(k) != 1)) os << ")";
+    /*if (k == -1)
+    {
+        os << "- ";
+    }
+    else if (k == 1)
+    {
+    }
+    else
+    {
+        if (k < 0)
+        {
+            os << "- " << fabs(k);
+        }
+        else
+        {
+            os << k;
+        }
+        os << " * ";
+    }*/
 }
 void Serialize::visit(const State& node)
 {

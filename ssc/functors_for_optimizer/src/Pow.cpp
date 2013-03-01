@@ -8,6 +8,7 @@
 #include "State.hpp"
 #include <cmath>
 #include "FunctorAlgebra.hpp"
+#include "Null.hpp"
 
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
@@ -30,13 +31,35 @@ std::function<double()> Pow::get_pow_fun() const
 NodePtr Pow::diff(const StatePtr& state) const
 {
     NodePtr ret;
-    if (n2_->diff(state)->is_null())
+//    if (n2_->diff(state)->is_null())
+  /*  if (n2_->is_constant())
     {
-        ret = n2_*Pow(n1_,(n2_-1))*(n1_->diff(state));
+            COUT(*n1_);
+            COUT(*n2_);
+        const double val = n2_->get_lambda()();
+        if (val == 0)
+        {
+            ret = NodePtr(new Null());
+        }
+        else if (val == 1)
+        {
+            ret = n1_->diff(state);
+        }
+        else if (val == 2)
+        {
+            ret = 2*n1_*(n1_->diff(state));
+        }
+        else
+        {
+            ret = val*Pow(n1_,(val-1))*(n1_->diff(state));
+        }
     }
-    else
+    else*/
     {
+        //COUT(*n1_);
+        //COUT(*n2_);
         ret = Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
+        //COUT(*ret);
     }
     ret->multiply_by(factor);
     ret->update_lambda();
@@ -88,3 +111,9 @@ void Pow::update_lambda()
 {
     set_value(get_pow_fun());
 }
+
+bool Pow::is_constant() const
+{
+    return (n2_->is_null() || (n1_->is_constant() && n2_->is_constant()) || n1_->equals_one());
+}
+

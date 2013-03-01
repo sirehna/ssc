@@ -22,6 +22,7 @@ class Unary : public Node
         bool equals(const Node& n_) const;
         using Node::equals_derived;
         virtual bool equals_derived(const Unary& rhs) const;
+        bool is_constant() const;
     protected:
         NodePtr n;
         void set_value(const std::function<double()>& val);

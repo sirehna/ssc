@@ -135,3 +135,14 @@ bool Node::must_parenthesize() const
 void Node::update_lambda()
 {
 }
+
+bool Node::equals_one() const
+{
+    if (not(is_constant())) return false;
+    return (get_lambda()() == 1);
+}
+
+bool Node::is_constant() const
+{
+    return false;
+}

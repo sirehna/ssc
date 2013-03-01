@@ -33,6 +33,7 @@ class Null : public Nullary
         using Node::equals_derived;
         bool equals_derived(const Null& rhs) const;
         std::string get_type() const;
+        bool is_constant() const;
 };
 
 typedef std::tr1::shared_ptr<Null> NullPtr;

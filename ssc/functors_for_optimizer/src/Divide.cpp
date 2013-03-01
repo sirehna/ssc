@@ -79,3 +79,9 @@ bool Divide::must_parenthesize() const
 {
     return true;
 }
+
+bool Divide::is_constant() const
+{
+    return (n1_->is_constant() && n2_->is_constant());
+}
+
