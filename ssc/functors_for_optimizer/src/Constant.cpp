@@ -13,7 +13,7 @@
 
 Constant::Constant(const double& v) : val(v)
 {
-    set_value([factor,&val]()->double {return factor*val;});
+    set_value([factor,val]()->double {return factor*val;});
 }
 
 NodePtr Constant::diff(const StatePtr& state) const
