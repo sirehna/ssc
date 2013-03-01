@@ -196,6 +196,16 @@ NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
     Sum* ret = new Sum(n1,n2_);
     return NodePtr(ret);
 }
+#include "test_macros.hpp"
+NodePtr operator-(const NodePtr& n, const Parameter&p)
+{
+    NodePtr pp = p.clone();
+    pp->multiply_by(-1);
+    pp->update_lambda();
+    COUT(*pp);
+    Sum* ret = new Sum(n,pp);
+    ret->update_lambda();    return NodePtr(ret);
+}
 
 DividePtr operator/(const Node& n1, const Node& n2)
 {

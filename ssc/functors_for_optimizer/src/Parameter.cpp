@@ -15,6 +15,11 @@ Parameter::Parameter() : ptr(new double(0))
     set_value([ptr,factor]()->double {return factor*(*ptr);});
 }
 
+void Parameter::update_lambda()
+{
+    set_value([ptr,factor]()->double {return factor*(*ptr);});
+}
+
 Parameter::Parameter(const double& val) : ptr(new double(val))
 {
     set_value([ptr,factor]()->double {return factor*(*ptr);});
