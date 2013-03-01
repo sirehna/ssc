@@ -41,6 +41,7 @@ class Multiply : public N_ary
         void common_build();
         void remove_ones_and_zeros();
         bool null_or_one(const NodePtr& node) const;
+        std::vector<NodePtr> group_factors_together() const;
 };
 
 typedef std::tr1::shared_ptr<Multiply> Mult;

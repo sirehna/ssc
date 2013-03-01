@@ -182,3 +182,58 @@ TEST_F(SerializeTest, bug_07)
     (x + 2*y - 3*x)->accept(s);
     ASSERT_EQ("x + 2*y - 3*x", ss.str());
 }
+
+TEST_F(SerializeTest, bug_08)
+{
+    auto x = generate.state("x");
+    std::stringstream ss;
+    Serialize s(ss);
+    pow(x-1,2)->accept(s);
+    ASSERT_EQ("(x - 1) ^ 2", ss.str());
+}
+
+TEST_F(SerializeTest, bug_09)
+{
+    auto x = generate.state("x");
+    std::stringstream ss;
+    Serialize s(ss);
+    (100*pow(x,2))->accept(s);
+    ASSERT_EQ("100*(x ^ 2)", ss.str());
+}
+
+TEST_F(SerializeTest, bug_10)
+{
+    auto x = generate.state("x");
+    auto y = generate.state("y");
+    std::stringstream ss;
+    Serialize s(ss);
+    (100*pow(y-pow(x,2),2))->accept(s);
+    ASSERT_EQ("100*((y - (x ^ 2)) ^ 2)", ss.str());
+}
+
+TEST_F(SerializeTest, bug_11)
+{
+    auto x = generate.state("x");
+    std::stringstream ss;
+    Serialize s(ss);
+    (x-1)->accept(s);
+    ASSERT_EQ("x - 1", ss.str());
+}
+
+TEST_F(SerializeTest, bug_12)
+{
+    auto x = generate.state("x");
+    std::stringstream ss;
+    Serialize s(ss);
+    (pow((-1)*x,3))->diff(x)->accept(s);
+    ASSERT_EQ("3 * (- x) ^ (3 - 1)", ss.str());
+}
+
+TEST_F(SerializeTest, bug_13)
+{
+    auto x = generate.state("x");
+    std::stringstream ss;
+    Serialize s(ss);
+    (2*(x-1))->accept(s);
+    ASSERT_EQ("2*(x - 1)", ss.str());
+}

@@ -13,6 +13,9 @@
 #include "FunctorAlgebra.hpp"
 #include "Pow.hpp"
 
+#include "test_macros.hpp"
+#include "Serialize.hpp"
+
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -69,6 +72,7 @@ NodePtr Multiply::diff(const StatePtr& state) const
     auto is_null = [](const NodePtr& node){return node->is_null();};
     auto not_equal_to_one = [](const NodePtr& node){return node != 1;};
     if (std::any_of(sons.begin(), sons.end(), is_null)) return NodePtr(new Null());
+    //COUT(*this);
     for (size_t i = 0 ; i < n ; ++i)
     {
         std::vector<NodePtr> all_sons_except_i = sons;
@@ -81,6 +85,8 @@ NodePtr Multiply::diff(const StatePtr& state) const
         {
             prod.push_back(sons.at(i)->diff(state));
         }
+        COUT(*sons.at(i));
+        COUT(sons.at(i)->diff(state));
         dsons_dstate.push_back(NodePtr(new Multiply(prod)));
     }
     return NodePtr(new Sum(dsons_dstate));
@@ -113,23 +119,31 @@ std::string Multiply::get_type() const
     return "Multiply";
 }
 
-NodePtr Multiply::simplify() const
+std::vector<NodePtr> Multiply::group_factors_together() const
 {
-    if (sons.size() == 1) return sons.front()->clone();
-    const std::map<NodePtr,size_t> factor = get_occurence_of_each_factor();
-    std::vector<NodePtr> ret;
-    for (auto f = factor.begin() ; f != factor.end() ; ++f)
+    std::vector < NodePtr > ret;
+    const std::map<NodePtr, size_t> factor = get_occurence_of_each_factor();
+    for (auto f = factor.begin(); f != factor.end(); ++f)
     {
         const size_t nb_occurences = f->second;
-        if (nb_occurences>1)
+        if (nb_occurences > 1)
         {
-            ret.push_back(NodePtr(new Pow(f->first->simplify(), nb_occurences)));
-        }
-        else
+            ret.push_back(
+                    NodePtr(new Pow(f->first->simplify(), nb_occurences)));
+        } else
         {
             ret.push_back(f->first->simplify());
         }
     }
+
+    return ret;
+}
+
+NodePtr Multiply::simplify() const
+{
+    if (sons.size() == 1) return sons.front()->clone();
+    std::vector<NodePtr> ret = group_factors_together();
+    //ret = group_constants_together(ret, [](const double& a, const double& b)->double{return a*b;});
     return NodePtr(new Multiply(ret));
 }
 std::vector<NodePtr> Multiply::get_factors() const

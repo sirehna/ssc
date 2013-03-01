@@ -39,6 +39,7 @@ class Sum : public N_ary
     private:
         void common_build();
         void remove_zeros();
+        std::vector<NodePtr> factorize_operands() const;
 };
 
 typedef std::tr1::shared_ptr<Sum> SumPtr;

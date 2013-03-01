@@ -14,14 +14,7 @@ Parameter::Parameter() : ptr(new double(0))
 {
     set_value([ptr,factor]()->double {return factor*(*ptr);});
 }
-/*
-#include "Serialize.hpp"
-#include "test_macros.hpp"
-Parameter::Parameter(const Parameter& rhs) : Nullary(),ptr(rhs.ptr)
-{
-COUT(this);
-}
-*/
+
 void Parameter::update_lambda()
 {
     set_value([ptr,factor]()->double {return factor*(*ptr);});

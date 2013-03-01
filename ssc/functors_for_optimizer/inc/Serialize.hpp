@@ -37,6 +37,7 @@ class Serialize : public NodeVisitor
         void visit(const Constant& node);
     private:
         Serialize();
+        void serialize_multiplicative_factor(const double& k);
         std::ostream& os;
         bool parenthesize_next_node;
 };
