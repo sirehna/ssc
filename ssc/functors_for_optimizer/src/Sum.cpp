@@ -10,7 +10,8 @@
 #include <algorithm>
 #include "FunctorAlgebra.hpp"
 
-
+#include "test_macros.hpp"
+#include "Serialize.hpp"
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -24,8 +25,20 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 void Sum::common_build()
 {
     auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
+    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    {
+        COUT(*son);
+    }
     sons = extract_subnodes(operands);
+    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    {
+        COUT(*son);
+    }
     remove_zeros();
+    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    {
+        COUT(*son);
+    }
     if (sons.empty())
     {
         set_value([]()->double {return 0;});
@@ -37,8 +50,10 @@ void Sum::common_build()
                           double ret = 0;
                           for (auto son = sons.begin() ; son != sons.end() ; ++son)
                           {
+                              COUT(*son);
                               ret += (*son)->get_lambda()();
                           }
+                          COUT(factor);
                           return factor*ret;
                        });
     }

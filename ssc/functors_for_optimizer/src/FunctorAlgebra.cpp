@@ -137,27 +137,35 @@ NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2)
 */
 SumPtr operator+(const Node& n1, const Node& n2)
 {
+    COUT(n1);
+    COUT(n2);
     return SumPtr(new Sum(n1.clone(),n2.clone()));
 }
 
 SumPtr operator+(const Node& n1, const NodePtr& n2)
 {
+    COUT(n1);
+    COUT(*n2);
     return SumPtr(new Sum(n1.clone(),n2));
 }
 
 SumPtr operator+(const NodePtr& n1, const NodePtr& n2)
 {
+    COUT(*n1);
+    COUT(*n2);
     return SumPtr(new Sum(n1,n2));
 }
 
 SumPtr operator+(const NodePtr& n1, const Node& n2)
 {
+    COUT(*n1);
+    COUT(n2);
     return SumPtr(new Sum(n1,n2.clone()));
 }
 
 NodePtr operator+(const NodePtr& n1, const Null& n2)
 {
-    if (n2.get_lambda()) {}
+    (void) n2;
     return n1;
 }
 
@@ -181,11 +189,27 @@ NodePtr operator+(const Null& n1, const Node& n2)
 
 NodePtr operator+(const NodePtr& n, const double& d)
 {
+    COUT(*n);
+    COUT(d);
     return NodePtr(new Sum(n,NodePtr(new Constant(d))));
 }
-
+/*
+NodePtr operator-(const double& d, const NodePtr& n)
+{
+    auto n_ = n->clone();
+    COUT(*n);
+    COUT(*n_);
+    COUT(d);
+    n_->multiply_by(-1);
+    COUT(*n_);
+    COUT(*(n_+d));
+    return n_+d;
+}
+*/
 NodePtr operator-(const NodePtr& n, const double& d)
 {
+    COUT(*n);
+    COUT(d);
     return (n+(-d));
 }
 
@@ -196,15 +220,16 @@ NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
     Sum* ret = new Sum(n1,n2_);
     return NodePtr(ret);
 }
-#include "test_macros.hpp"
+
 NodePtr operator-(const NodePtr& n, const Parameter&p)
 {
+    COUT("");
     NodePtr pp = p.clone();
     pp->multiply_by(-1);
     pp->update_lambda();
-    COUT(*pp);
     Sum* ret = new Sum(n,pp);
-    ret->update_lambda();    return NodePtr(ret);
+    ret->update_lambda();
+    return NodePtr(ret);
 }
 
 DividePtr operator/(const Node& n1, const Node& n2)
@@ -302,7 +327,11 @@ PowPtr pow(const Node& n1, const double& d)
 
 PowPtr pow(const NodePtr& n1, const double& d)
 {
-    return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
+    COUT(*n1);
+    COUT(n1->get_lambda()());
+    COUT(d);
+    //return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
+    return PowPtr(new Pow(n1,ConstantPtr(new Constant(333))));
 }
 
 PowPtr pow(const Node& n1, const Node& n2)

@@ -11,6 +11,7 @@ class State : public Parameter
 {
     public:
       State(const std::string& name_, const size_t& index_);
+      //State(const State& rhs);
       NodePtr diff(const StatePtr& state) const;
       std::string get_name() const;
       size_t get_index() const;

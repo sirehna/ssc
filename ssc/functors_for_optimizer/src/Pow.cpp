@@ -7,11 +7,14 @@
 #include "Divide.hpp"
 #include "State.hpp"
 #include <cmath>
-
 #include "FunctorAlgebra.hpp"
 
+#include "test_macros.hpp"
+#include "Serialize.hpp"
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
+    COUT(*n1);
+    COUT(*n2);
     set_value(get_pow_fun());
 }
 
