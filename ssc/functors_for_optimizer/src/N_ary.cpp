@@ -119,3 +119,13 @@ std::vector<NodePtr> N_ary::group_constants_together(const std::vector<NodePtr>&
     if (constant_term != 0) ret.push_back(Constant(constant_term).clone());
     return ret;
 }
+
+bool N_ary::is_constant() const
+{
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
+    {
+        if (not((*son)->is_constant())) return false;
+    }
+    return true;
+}
+

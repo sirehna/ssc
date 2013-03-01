@@ -40,6 +40,7 @@ class Constant : public Nullary
         std::string get_type() const;
         bool is_negative() const;
         void update_lambda();
+        bool is_constant() const;
 
     private:
         Constant();

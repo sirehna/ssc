@@ -38,6 +38,8 @@ class Node
         virtual void accept(NodeVisitor& v) const = 0;
         virtual NodePtr clone() const  = 0;
         virtual bool is_null() const = 0;
+        bool equals_one() const;
+        virtual bool is_constant() const;
         virtual bool is_negative() const;
 
         virtual bool equals(const Node& rhs) const = 0;

@@ -184,7 +184,7 @@ NodePtr operator+(const NodePtr& n, const double& d)
 {
     return NodePtr(new Sum(n,NodePtr(new Constant(d))));
 }
-/*
+
 NodePtr operator-(const double& d, const NodePtr& n)
 {
     auto n_ = n->clone();
@@ -196,7 +196,7 @@ NodePtr operator-(const double& d, const NodePtr& n)
     //COUT(*(n_+d));
     return n_+d;
 }
-*/
+
 NodePtr operator-(const NodePtr& n, const double& d)
 {
     return (n+(-d));

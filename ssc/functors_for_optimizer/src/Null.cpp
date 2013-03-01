@@ -50,3 +50,8 @@ std::string Null::get_type() const
 {
     return "Null";
 }
+
+bool Null::is_constant() const
+{
+    return true;
+}

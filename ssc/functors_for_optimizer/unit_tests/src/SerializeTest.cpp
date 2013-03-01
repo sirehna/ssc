@@ -180,7 +180,7 @@ TEST_F(SerializeTest, bug_07)
     std::stringstream ss;
     Serialize s(ss);
     (x + 2*y - 3*x)->accept(s);
-    ASSERT_EQ("x + 2*y - 3*x", ss.str());
+    ASSERT_EQ("x + 2*y - 3 * x", ss.str());
 }
 
 TEST_F(SerializeTest, bug_08)
@@ -226,7 +226,7 @@ TEST_F(SerializeTest, bug_12)
     std::stringstream ss;
     Serialize s(ss);
     (pow((-1)*x,3))->diff(x)->accept(s);
-    ASSERT_EQ("3 * (- x) ^ (3 - 1)", ss.str());
+    ASSERT_EQ("3 * (- x) ^ (3 - 1) * (- 1)", ss.str());
 }
 
 TEST_F(SerializeTest, bug_13)

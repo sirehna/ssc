@@ -36,6 +36,7 @@ class N_ary : public Node
         bool equals_derived(const N_ary& rhs) const;
         bool equals_derived(const Constant& rhs) const;
         void update_lambda();
+        bool is_constant() const;
 
     protected:
         virtual void common_build() = 0;

@@ -56,3 +56,9 @@ NodePtr Difference::simplify() const
 {
     return NodePtr(new Difference(*this));
 }
+
+bool Difference::is_constant() const
+{
+    return is_null() || (n1_->is_constant() && n2_->is_constant());
+}
+

@@ -76,3 +76,9 @@ void Constant::update_lambda()
 {
     set_value([factor,val]()->double {return factor*val;});
 }
+
+bool Constant::is_constant() const
+{
+    return true;
+}
+

@@ -13,8 +13,6 @@
 #include "FunctorAlgebra.hpp"
 #include "Pow.hpp"
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
 
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
@@ -23,7 +21,7 @@ Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 
 void Multiply::common_build()
 {
-    auto factors = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_factors();};
+   auto factors = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_factors();};
     sons = extract_subnodes(factors);
     remove_ones_and_zeros();
 
@@ -47,7 +45,7 @@ void Multiply::common_build()
 
 void Multiply::remove_ones_and_zeros()
 {
-    auto equal_to_one = [](NodePtr node)->bool{return node == 1;};
+    auto equal_to_one = [](NodePtr node)->bool{return node->equals_one();};
     auto equal_to_zero = [](NodePtr node)->bool{return node->is_null();};
     if (std::any_of(sons.begin(), sons.end(), equal_to_zero)) sons.clear();
     auto new_end = std::remove_if (sons.begin(), sons.end(), equal_to_one );
@@ -79,13 +77,8 @@ NodePtr Multiply::diff(const StatePtr& state) const
         std::vector<NodePtr> prod = all_sons_except_i;
         auto new_end = std::copy_if(all_sons_except_i.begin(),all_sons_except_i.end(), prod.begin(), not_equal_to_one);
         prod.erase(new_end, prod.end());
-
         auto dson_dstate = sons.at(i)->diff(state);
-        dson_dstate->update_lambda();
-        if (dson_dstate != 1)
-        {
-            prod.push_back(dson_dstate);
-        }
+        prod.push_back(dson_dstate);
         dsons_dstate.push_back(NodePtr(new Multiply(prod)));
     }
     NodePtr ret(new Sum(dsons_dstate));
@@ -165,3 +158,9 @@ void Multiply::accept(NodeVisitor& v) const
 {
     v.visit(*this);
 }
+
+void Multiply::update_lambda()
+{
+	common_build();
+}
+
