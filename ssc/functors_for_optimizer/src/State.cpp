@@ -4,9 +4,6 @@
 #include "NodeVisitor.hpp"
 #include "Constant.hpp"
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
-
 State::~State()
 {
 }
@@ -17,15 +14,7 @@ State::State(const std::string& name_, const size_t& index_) : Parameter(0),
 {
     value = [&factor,ptr]() -> double {return factor*(*ptr);};
 }
-/*
-State::State(const State& rhs) : Parameter(*rhs.ptr),
-                                 name(rhs.name),
-                                 index(rhs.index)
-{
-    COUT(factor);
-COUT(*this);
-}
-*/
+
 bool State::operator<(const State& rhs) const
 {
     return index<rhs.index;

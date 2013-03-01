@@ -43,6 +43,7 @@ class N_ary : public Node
         void set_value(const std::function<double()>& val);
         std::vector<NodePtr> extract_subnodes(const std::function<std::vector<NodePtr>(const NodePtr& n)>& extractor);
         std::map<NodePtr, size_t> get_occurence_of_each_factor() const;
+        std::vector<NodePtr> group_constants_together(const std::vector<NodePtr>& nodes, const std::function<double(double,double)>& f) const;
     private:
         N_ary();
 };

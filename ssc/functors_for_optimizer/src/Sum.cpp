@@ -9,9 +9,12 @@
 #include "NodeVisitor.hpp"
 #include <algorithm>
 #include "FunctorAlgebra.hpp"
+#include "Constant.hpp"
+
 
 #include "test_macros.hpp"
 #include "Serialize.hpp"
+
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -25,19 +28,23 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 void Sum::common_build()
 {
     auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
-    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    //COUT("_______________")
+    //COUT(*this)
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
-//        COUT(*son);
+        //COUT(*son);
     }
     sons = extract_subnodes(operands);
-    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    //COUT("11111111111111111111111111")
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
-//        COUT(*son);
+        //COUT(*son);
     }
     remove_zeros();
-    for (auto son=sons.begin() ; son != sons.end() ; ++son)
+    //COUT("22222222222222222222222222")
+    for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
-//        COUT(*son);
+        //COUT(*son);
     }
     if (sons.empty())
     {
@@ -45,15 +52,13 @@ void Sum::common_build()
     }
     else
     {
-        set_value([sons,factor]()->double
+        set_value([sons,factor,this]()->double
                       {
                           double ret = 0;
                           for (auto son = sons.begin() ; son != sons.end() ; ++son)
                           {
-                            //  COUT(*son);
                               ret += (*son)->get_lambda()();
                           }
-                          //COUT(factor);
                           return factor*ret;
                        });
     }
@@ -100,15 +105,22 @@ std::string Sum::get_type() const
     return "Sum";
 }
 
-NodePtr Sum::simplify() const
+std::vector<NodePtr> Sum::factorize_operands() const
 {
-    const std::map<NodePtr,size_t> factor = get_occurence_of_each_factor();
-    std::vector<NodePtr> ret;
-    for (auto f = factor.begin() ; f != factor.end() ; ++f)
+    std::vector < NodePtr > ret;
+    const std::map<NodePtr, size_t> factor = get_occurence_of_each_factor();
+    for (auto f = factor.begin(); f != factor.end(); ++f)
     {
         ret.push_back(f->first->simplify());
         ret.back()->multiply_by(f->second);
     }
+    return ret;
+}
+
+NodePtr Sum::simplify() const
+{
+    std::vector<NodePtr> ret = factorize_operands();
+    //ret = group_constants_together(ret, [](const double& a, const double& b)->double{////COUT(a);////COUT(b);return a+b;});
     return NodePtr(new Sum(ret));
 }
 

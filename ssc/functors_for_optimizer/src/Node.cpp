@@ -35,6 +35,12 @@ void Node::multiply_by(const double& k)
     factor *= k;
     update_lambda();
 }
+
+bool Node::is_negative() const
+{
+    return factor<0;
+}
+
 bool Node::equals_derived(const Constant& rhs) const
 {
     (void)rhs; // Silence "unused parameter" warning
@@ -105,7 +111,9 @@ FactorMap Node::get_factors_with_exponents() const
 
 std::vector<NodePtr> Node::get_operands() const
 {
-    return std::vector<NodePtr>(1,clone());
+    NodePtr p = clone();
+    p->update_lambda();
+    return std::vector<NodePtr>(1,p);
 }
 
 std::vector<NodePtr> Node::get_factors() const

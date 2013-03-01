@@ -100,3 +100,22 @@ std::map<NodePtr, size_t> N_ary::get_occurence_of_each_factor() const
 
     return factor;
 }
+
+std::vector<NodePtr> N_ary::group_constants_together(const std::vector<NodePtr>& nodes, const std::function<double(double,double)>& f) const
+{
+    double constant_term = 0;
+    std::vector<NodePtr> ret;
+    for (auto node = nodes.begin() ; node != nodes.end() ; ++node)
+    {
+        if ((*node)->get_type() == "Constant") // TODO: use a visitor for simplifications
+        {
+            constant_term = f(constant_term,(*node)->get_lambda()());
+        }
+        else
+        {
+            ret.push_back(*node);
+        }
+    }
+    if (constant_term != 0) ret.push_back(Constant(constant_term).clone());
+    return ret;
+}

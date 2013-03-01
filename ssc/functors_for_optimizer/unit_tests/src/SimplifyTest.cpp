@@ -54,18 +54,6 @@ TEST_F(SimplifyTest, parameters_should_not_be_simplified)
     ASSERT_EQ(ss_ref.str(), ss.str());
 }
 
-TEST_F(SimplifyTest, constants_should_not_be_simplified)
-{
-    std::stringstream ss;
-    std::stringstream ss_ref;
-    Serialize v(ss);
-    const double cst = a.random<double>();
-    Constant c(cst);
-    c.simplify()->accept(v);
-    ss_ref << cst;
-    ASSERT_EQ(ss_ref.str(), ss.str());
-}
-
 TEST_F(SimplifyTest, null_should_not_be_simplified)
 {
     std::stringstream ss;

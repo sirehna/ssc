@@ -9,12 +9,8 @@
 #include <cmath>
 #include "FunctorAlgebra.hpp"
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
-    COUT(*n1);
-    COUT(*n2);
     set_value(get_pow_fun());
 }
 
@@ -26,12 +22,25 @@ Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1,NodePtr(new Constant(n
 
 std::function<double()> Pow::get_pow_fun() const
 {
-    return [n1_,n2_,factor]()->double{return factor*(pow(n1_->get_lambda()(),n2_->get_lambda()()));};
+    return [n1_,n2_,factor]()->double{
+        return factor*(pow(n1_->get_lambda()(),n2_->get_lambda()()));};
 }
-
+#include "test_macros.hpp"
+#include "Serialize.hpp"
 NodePtr Pow::diff(const StatePtr& state) const
 {
-    return Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
+    NodePtr ret;
+    if (n2_->diff(state)->is_null())
+    {
+        ret = n2_*Pow(n1_,(n2_-1))*(n1_->diff(state));
+    }
+    else
+    {
+        ret = Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
+    }
+    ret->multiply_by(factor);
+    ret->update_lambda();
+    return ret;
 }
 
 std::string Pow::get_operator_name() const
@@ -66,5 +75,16 @@ std::string Pow::get_type() const
 
 NodePtr Pow::simplify() const
 {
-    return NodePtr(new Pow(*this));
+    if ((n1_->get_type() == "Constant") && (n2_->get_type() == "Constant"))
+    {
+        return NodePtr(new Constant(get_lambda()()));
+    }
+    if (n2_->is_null())           return NodePtr(new Constant(1));
+    if (n2_->equals(Constant(1))) return n1_->clone();
+                                  return NodePtr(new Pow(*this));
+}
+
+void Pow::update_lambda()
+{
+    set_value(get_pow_fun());
 }
