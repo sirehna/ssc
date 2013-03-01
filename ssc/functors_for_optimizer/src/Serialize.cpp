@@ -97,9 +97,11 @@ void Serialize::visit(const Binary& node)
 
 void Serialize::serialize_multiplicative_factor(const double& k)
 {
+    if (parenthesize_next_node && (fabs(k) != 1)) os << "(";
     if ((k > 0) && (k != 1))  os << k << "*";
     if (k == -1)              os << "- ";
-    if ((k < 0) && (k != -1)) os << "- " << fabs(k) << "*";
+    if ((k < 0) && (k != -1)) os << "- " << fabs(k) << " * ";
+    if (parenthesize_next_node && (fabs(k) != 1)) os << ")";
 }
 void Serialize::visit(const State& node)
 {

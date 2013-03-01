@@ -35,6 +35,7 @@ class Sum : public N_ary
         std::vector<NodePtr> get_operands() const;
         bool must_parenthesize() const;
         void accept(NodeVisitor& v) const;
+        void update_lambda();
 
     private:
         void common_build();
