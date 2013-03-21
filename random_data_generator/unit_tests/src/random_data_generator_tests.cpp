@@ -193,6 +193,21 @@ TEST_F(DataGeneratorTests, bug_detected_in_PiecewiseConstantTest)
     }
 }
 
+TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
+{
+    for (size_t i = 0 ; i < 480000 ; ++i)
+    {
+        const double xmin = a.random<double>();
+        const double xmax = a.random<double>().greater_than(xmin);
+        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
+        a.random_vector_of<double>().of_size(n);
+        a.random<double>();
+        ASSERT_NE(1,n);
+    }
+}
+
+
+
 
 /*
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_outside_an_interval)
