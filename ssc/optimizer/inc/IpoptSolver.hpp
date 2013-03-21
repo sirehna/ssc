@@ -31,12 +31,12 @@ class IpoptSolver
 {
     public:
         IpoptSolver(const OptimizationProblem& problem, const IpoptParameters& parameters = IpoptParameters());
+        IpoptSolver();
         OptimizationResult solve(const std::vector<double>& starting_point);
 
     private:
         struct IpoptSolverPimpl;
         std::tr1::shared_ptr<IpoptSolverPimpl> pimpl;
-        IpoptSolver();
 };
 
 #endif /* IPOPTSOLVER_HPP_ */

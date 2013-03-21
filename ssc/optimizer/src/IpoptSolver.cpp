@@ -59,6 +59,12 @@ IpoptSolver::IpoptSolver(const OptimizationProblem& problem, const IpoptParamete
 {
 }
 
+IpoptSolver::IpoptSolver() : pimpl(std::tr1::shared_ptr<IpoptSolverPimpl>())
+{
+
+}
+
+
 OptimizationResult IpoptSolver::solve(const std::vector<double>& starting_point)
 {
     return pimpl->solve(starting_point);
