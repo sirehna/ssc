@@ -319,3 +319,46 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
 {
     pimpl->states.get_bounds(n, xl, xu);
 }
+
+#include "test_macros.hpp"
+::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb)
+{
+    os << "min " << *(pb.pimpl->objective_function) << std::endl;
+    auto l = pb.get_states();
+    if (not(l.empty()))
+    {
+        os << "(";
+    }
+    const size_t n = l.size();
+    for (size_t i = 0 ; i < ((n-1)>n?0:(n-1)) ; ++i)
+    {
+        os << *(l.at(i)) << ",";
+    }
+    if (not(l.empty()))
+    {
+        os << *(l.back());
+        os << ")" << std::endl;
+    }
+    auto constraints = pb.pimpl->get_constraints();
+    const size_t m = constraints.size();
+    double *gu = new double[m];
+    double *gl = new double[m];
+    pb.get_constraint_bounds(m, gl, gu);
+    for (size_t i = 0 ; i < m ; ++i)
+    {
+        os << "subject to ";
+        os << gl[i] << " < " << *(constraints.at(i)) << " < " << gu[i] << std::endl;
+    }
+    delete[] gl;
+    delete[] gu;
+    double *xu = new double[l.size()];
+    double *xl = new double[l.size()];
+    pb.get_state_bounds(n, xl, xu);
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        os << xl[i] << " < " << *(l.at(i)) << " < " << xu[i] << std::endl;
+    }
+    delete[] xl;
+    delete[] xu;
+    return os;
+}

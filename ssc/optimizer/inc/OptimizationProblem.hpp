@@ -60,10 +60,13 @@ class OptimizationProblem
         std::vector<Parameter> get_lambda() const;
         void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
         void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
+        friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
 
     private:
         class OptimizationProblem_pimpl;
         std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
 };
+
+::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
 
 #endif /* OPTIMIZATIONPROBLEM_HPP_ */
