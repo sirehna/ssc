@@ -411,7 +411,8 @@ double DecodeUnit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,i
 		// search highest precedence and evaluate
 		int hprec = 0;
 		int iprec = (int)tokens.size();
-		for(int i=tbeg;i<tend;i++) {
+		for(int i=tend;i>tbeg;) {
+		    i--;
 			if(isOpToken(tokens[i],'*') || isOpToken(tokens[i],'/') ) {
 				if(i==tbeg || i==tend-1) {
 					throw std::string("unexpected */ position");
