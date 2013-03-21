@@ -13,7 +13,6 @@ include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${matrix_and_vector_classes_INCLUDE_DIRS})
 include_directories(SYSTEM ${IPOPT_INCLUDE_DIRS})
 add_definitions(-DHAVE_CONFIG_H)
-link_directories(${CMAKE_SOURCE_DIR}/external/bin)
 
 
 #add_library(${PROJECT_NAME}_shared SHARED ${SOURCES})
