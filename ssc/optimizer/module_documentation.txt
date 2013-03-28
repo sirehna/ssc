@@ -1,0 +1,5 @@
+/**
+\page optimizer Generic optimizer
+\section responsibilities Responsibilities
+
+*/
