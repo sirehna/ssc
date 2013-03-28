@@ -1,0 +1,5 @@
+/**
+\page functors_for_optimizer Functors for optimizer
+\section responsibilities Responsibilities
+
+*/
