@@ -21,14 +21,14 @@ class LatitudeLongitudeException : public Exception
 
 
 /** \author cec
- *  \brief This class was created to store latitude and longitude information
+ *  \brief Stores latitude and longitude information
  *  \details It has the following responsibilities:
  *  - Store geographical coordinates in degrees
  *  - Check that the coordinates are within the (-180°,180°) range at construction
  *  \section ex1 Example
- *  \snippet ECA_zones/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest example
+ *  \snippet geometry/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest example
  *  \section ex2 Expected output
- *  \snippet ECA_zones/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest expected output
+ *  \snippet geometry/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest expected output
  */
 
 class LongitudeLatitude

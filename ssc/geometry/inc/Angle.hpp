@@ -9,7 +9,7 @@
 #define ANGLE_HPP_
 
 /** \author cec
- *  \brief This class was created to represent angles with various units
+ *  \brief Represents angles with various units
  *  \details It has the following responsibilities:
  *  - Store the value of the angle
  *  - Convert values to any angle unit
