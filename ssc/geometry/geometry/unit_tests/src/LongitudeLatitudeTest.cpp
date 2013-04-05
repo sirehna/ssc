@@ -33,6 +33,7 @@ TEST_F(LongitudeLatitudeTest, example)
 //! [LongitudeLatitudeTest expected output]
     ASSERT_EQ(123, ll.lon);
     ASSERT_EQ(45, ll.lat);
+    ASSERT_THROW(LongitudeLatitude(a.random<double>().between(-180,180),a.random<double>().outside(-180,180)),LatitudeLongitudeException);
 //! [LongitudeLatitudeTest expected output]
 }
 
