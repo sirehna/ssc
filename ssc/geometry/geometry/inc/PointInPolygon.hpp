@@ -25,8 +25,8 @@ class PointInPolygonException : public Exception
 
 
 /** \author cec
- *  \brief This class was created to test whether a point is in a polygon.
- *  \details This is a base class: specific coordinate systems (Cartesian, spherical, geographical)
+ *  \brief Interface for classes testing whether a point is in a polygon.
+ *  \details Implementation for specific coordinate systems (Cartesian, spherical, geographical)
  *  are defined in derived classes. It is a simple wrapper around boost.geometry.
  *  \section ex1 Example
  *  See derived classes.

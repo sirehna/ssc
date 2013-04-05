@@ -11,12 +11,12 @@
 #include "PointInPolygon.hpp"
 
 /** \author cec
- *  \brief This class was created to check if a point is in a polygon defined on a sphere.
+ *  \brief Check if a point is in a polygon defined on a sphere.
  *  \details The points are given in (longitude,latitude) in degrees.
  *  \section ex1 Example
- *  \snippet ECA_zones/unit_tests/src/PointInSphericalPolygonTest.cpp PointInSphericalPolygonTest example
+ *  \snippet geometry/unit_tests/src/PointInSphericalPolygonTest.cpp PointInSphericalPolygonTest example
  *  \section ex2 Expected output
- *  \snippet ECA_zones/unit_tests/src/PointInSphericalPolygonTest.cpp PointInSphericalPolygonTest expected output
+ *  \snippet geometry/unit_tests/src/PointInSphericalPolygonTest.cpp PointInSphericalPolygonTest expected output
  */
 
 class PointInSphericalPolygon : public PointInPolygon
