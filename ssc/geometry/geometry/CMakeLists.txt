@@ -1,0 +1,34 @@
+cmake_minimum_required (VERSION 2.6)
+project (geometry)
+set(SOURCES src/PointInPolygon.cpp
+            src/PointInCartesianPolygon.cpp
+            src/PointInSphericalPolygon.cpp
+            src/PointInGeographicalPolygon.cpp
+            src/LongitudeLatitude.cpp
+            src/Angle.cpp)
+
+#unset(CMAKE_C_FLAGS)
+#unset(CMAKE_CXX_FLAGS)
+#unset(C_FLAGS)
+#unset(CXX_FLAGS)
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wvariadic-macros -fno-common -Wformat=2 -Winit-self -Wpacked -Wp,-D_FORTIFY_SOURCE=2 -Wpointer-arith -Wlarger-than-65500 -Wmissing-declarations -Wmissing-format-attribute -Wno-deprecated -Wsign-compare -Wstrict-aliasing=2 -Wundef -ffast-math -fomit-frame-pointer")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS}")
+#set(C_FLAGS "${CMAKE_C_FLAGS}")
+#set(CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+
+
+include_directories(inc)
+include_directories(${exception_handling_INCLUDE_DIRS})
+include_directories(${test_macros_SOURCE_DIR})
+include_directories(SYSTEM ${boost_INCLUDE_DIRS})
+include_directories(SYSTEM ${libgeographic_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME}_object OBJECT ${SOURCES})
+
+set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
+set(${PROJECT_NAME}_STATIC_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}_static${CMAKE_STATIC_LIBRARY_SUFFIX}  CACHE FILEPATH "${PROJECT_NAME}'s static library")
+set(${PROJECT_NAME}_FOUND            TRUE                                                                                                            CACHE BOOL     "Is ${PROJECT_NAME} available to other modules?")
+
+add_subdirectory(unit_tests)
+
