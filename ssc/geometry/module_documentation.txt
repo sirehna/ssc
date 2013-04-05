@@ -1,0 +1,5 @@
+/**
+\page eca_zones Geometry
+\section responsibilities Responsibilities
+This module is a simple wrapper around Boost.geometry and libGeographic.
+*/
