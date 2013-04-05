@@ -11,12 +11,12 @@
 #include "PointInPolygon.hpp"
 
 /** \author cec
- *  \brief This class was created to check if a point is in a polygon defined in Cartesian coordinates.
+ *  \brief Checks if a point is in a polygon defined in Cartesian coordinates.
  *  \details It's a simple wrapper around boost.geometry.
  *  \section ex1 Example
- *  \snippet ECA_zones/unit_tests/src/PointInCartesianPolygonTest.cpp PointInCartesianPolygonTest example
+ *  \snippet geometry/unit_tests/src/PointInCartesianPolygonTest.cpp PointInCartesianPolygonTest example
  *  \section ex2 Expected output
- *  \snippet ECA_zones/unit_tests/src/PointInCartesianPolygonTest.cpp PointInCartesianPolygonTest expected output
+ *  \snippet geometry/unit_tests/src/PointInCartesianPolygonTest.cpp PointInCartesianPolygonTest expected output
  */
 
 class PointInCartesianPolygon : public PointInPolygon
