@@ -11,7 +11,7 @@
 
 LongitudeLatitude::LongitudeLatitude(const double& longitude, const double& latitude) : lat(latitude), lon(longitude)
 {
-    if ((fabs(latitude)>180) || (fabs(longitude)>180))
+    if ((fabs(latitude)>90) || (fabs(longitude)>180))
     {
         THROW("LatitudeLongitude::LatitudeLongitude(const double&, const double&)", LatitudeLongitudeException, "Latitude or longitude out of range");
     }
