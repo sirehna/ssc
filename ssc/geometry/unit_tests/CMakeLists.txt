@@ -8,7 +8,8 @@ FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/LatitudeOfPointOnBorder.cpp
               src/LongitudeLatitudeTest.cpp
               src/AngleTest.cpp
-              src/TrackTest.cpp)
+              src/TrackTest.cpp
+              src/LegTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
