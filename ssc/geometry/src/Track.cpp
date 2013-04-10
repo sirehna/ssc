@@ -83,6 +83,8 @@ Track::Track(const std::vector<LongitudeLatitude>& waypoints,//!< List of points
  *  \date 8 avr. 2013, 15:32:27
  *  \brief Computes the sum of the lengths of each segment taken on the WGS84 (geodesic arcs)
  *  \returns Length of the track (in meters)
+ *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest example
+ *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest expected output
  */
 double Track::length() const
 {
@@ -93,6 +95,7 @@ double Track::length() const
  *  \date 8 avr. 2013, 18:06:31
  *  \brief Find a waypoint on the track, at a given distance from the first point
  *  \returns Point at given distance from start of track
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_waypoint_on_track_example
  */
 LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance from first waypoint (in meters)
                                                ) const
@@ -113,6 +116,7 @@ LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Dist
  *  \date 8 avr. 2013, 18:08:44
  *  \brief When calling find_waypoint_on_track, we need to know the waypoints surrounding the target:
  *  \returns Index of point just before the point at 'distance' from first waypoint (start of track)
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_leg_index_example
  */
 size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Distance from first waypoint (in meters)
                              ) const
@@ -129,6 +133,7 @@ size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Dis
  *  \date 9 avr. 2013, 12:58:22
  *  \brief Distance (on track) of waypoint 'waypoint_idx' from the first waypoint
  *  \returns Distance from first waypoint (in meters)
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest distance_from_start_example
  */
 double Track::distance_from_start(const size_t& waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
                                   ) const

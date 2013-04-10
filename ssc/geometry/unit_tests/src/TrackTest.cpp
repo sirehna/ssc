@@ -92,17 +92,23 @@ TEST_F(TrackTest,should_throw_if_any_date_is_negative)
 
 TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_given_waypoint)
 {
+    //! [TrackTest distance_from_start_example]
+    // Define a series of points on the globe
     LongitudeLatitude boston(-71.0603,42.3583),
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
+    // Any departure & arrival date will do for this example
     const Date departure = a.random<double>().greater_than(0);
     const Date arrival = a.random<double>().greater_than((double)departure);
+    // Construct the track
     const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    // The distances of each waypoint from the start of the leg are then given by distance_from_start
     ASSERT_DOUBLE_EQ(0, track.distance_from_start(0));
     ASSERT_DOUBLE_EQ(2583009.0737499665, track.distance_from_start(1));
     ASSERT_DOUBLE_EQ(1509875.9483076334+track.distance_from_start(1), track.distance_from_start(2));
     ASSERT_DOUBLE_EQ(2807378.1345177018+track.distance_from_start(2), track.distance_from_start(3));
+    //! [TrackTest distance_from_start_example]
 }
 
 TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
@@ -135,21 +141,47 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
     }
 }
 
-TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
+TEST_F(TrackTest, leg_index_example)
 {
+    //! [TrackTest find_leg_index_example]
+    // Define a series of points on the globe
     LongitudeLatitude boston(-71.0603,42.3583),
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
+    // Any departure & arrival date will do for this example
     const Date departure = a.random<double>().greater_than(0);
     const Date arrival = a.random<double>().greater_than((double)departure);
+    // Construct the track
+    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    // For any point between waypoints 2 & 3, the returned index should be 1 because they are on the second leg (indexes start at 0)
+    for (size_t i = 0 ; i < 100 ; ++i)
+    {
+        ASSERT_EQ(1, track.find_leg_index(a.random<double>().between(track.distance_from_start(1),track.distance_from_start(2))));
+    }
+    //! [TrackTest find_leg_index_example]
+}
 
+TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
+{
+    //! [TrackTest find_waypoint_on_track_example]
+    // Define a series of points on the globe
+    LongitudeLatitude boston(-71.0603,42.3583),
+                      houston(-95.3631,29.7631),
+                      chicago(-87.65,41.85),
+                      los_angeles(-118.2428,34.0522);
+    // Any departure & arrival date will do for this example
+    const Date departure = a.random<double>().greater_than(0);
+    const Date arrival = a.random<double>().greater_than((double)departure);
+    // Construct the track
     Track track({boston, houston, chicago, los_angeles}, departure, arrival);
 
+    // In this particular case, we are attempting to find the second point on the track (special case)
     const double eps = 1e-6;
     const LongitudeLatitude p0 = track.find_waypoint_on_track(0);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lat, p0.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lon, p0.lon, eps);
+    //! [TrackTest find_waypoint_on_track_example]
     const LongitudeLatitude p1 = track.find_waypoint_on_track(2583009.0737499665-eps);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lat, p1.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lon, p1.lon, eps);

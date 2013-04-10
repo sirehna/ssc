@@ -44,18 +44,23 @@ TEST_F(LegTest, example)
 
 TEST_F(LegTest, should_be_able_to_compute_the_distance_between_two_points)
 {
+//! [LegTest length_example]
+    // Define a series of points on the globe
     const LongitudeLatitude boston(-71.0603,42.3583),
                             houston(-95.3631,29.7631),
                             chicago(-87.65,41.85),
                             los_angeles(-118.2428,34.0522);
+    // Construct legs between those points
     const Leg boston_houston(boston, houston);
     const Leg houston_chicago(houston, chicago);
     const Leg houston_los_angeles(chicago, los_angeles);
     const Leg boston_los_angeles(boston, los_angeles);
+    // The geodesic distances on the WGS84 are then given by the method length()
     ASSERT_DOUBLE_EQ(2583009.0737499665, boston_houston.length());
     ASSERT_DOUBLE_EQ(1509875.9483076334, houston_chicago.length());
     ASSERT_DOUBLE_EQ(2807378.1345177018, houston_los_angeles.length());
     ASSERT_DOUBLE_EQ(4178586.7239053571, boston_los_angeles.length());
+//! [LegTest length_example]
 }
 
 TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
@@ -63,9 +68,12 @@ TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
     for (size_t i = 0 ; i < 200 ; ++i)
     {
         //! [LegTest find_waypoint_at_example]
+        // Definie the two waypoints composing the leg
         const LongitudeLatitude point1 = a.random<LongitudeLatitude>();
         const LongitudeLatitude point2 = a.random<LongitudeLatitude>();
+        // Construct the leg
         const Leg leg(point1, point2);
+        // The input argument must be between 0 and the leg length, otherwise an exception is thrown
         ASSERT_THROW(leg.find_waypoint_at(a.random<double>().no().greater_than(0)), LegException);
         ASSERT_THROW(leg.find_waypoint_at(a.random<double>().greater_than(leg.length())), LegException);
         //! [LegTest find_waypoint_at_example]
