@@ -11,6 +11,7 @@ The basic underlying types are:
 
 \subsection Algorithms
 The implemented algorithms are:
+- Leg: determine the length of a leg or find a point on a leg
 - Track: determine the length of a track or find a point on a track
 - PointInCartesianPolygon: test if a point lies in a polygon on the earth surface, defined in Cartesian coordinates
 - PointInSphericalPolygon: test if a point lies in a polygon on the earth surface, defined in spherical coordinates
