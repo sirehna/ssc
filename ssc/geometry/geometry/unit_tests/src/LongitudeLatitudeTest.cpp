@@ -39,11 +39,13 @@ TEST_F(LongitudeLatitudeTest, example)
 
 TEST_F(LongitudeLatitudeTest, constructor_should_throw_if_input_is_not_bounded)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 10000 ; ++i)
     {
-        ASSERT_THROW(LongitudeLatitude(a.random<double>().between(-180,180),a.random<double>().outside(-180,180)),LatitudeLongitudeException);
-        ASSERT_THROW(LongitudeLatitude(a.random<double>().outside(-180,180),a.random<double>().between(-180,180)),LatitudeLongitudeException);
-        ASSERT_THROW(LongitudeLatitude(a.random<double>().outside(-180,180),a.random<double>().outside(-180,180)),LatitudeLongitudeException);
+        ASSERT_THROW(LongitudeLatitude(a.random<double>().between(-180,180),a.random<double>().between(-180,-90)),LatitudeLongitudeException);
+        ASSERT_THROW(LongitudeLatitude(a.random<double>().between(-180,180),a.random<double>().between(90,180)),LatitudeLongitudeException);
+        ASSERT_THROW(LongitudeLatitude(a.random<double>().outside(-180,180),a.random<double>().between(-90,90)),LatitudeLongitudeException);
+        ASSERT_THROW(LongitudeLatitude(a.random<double>().outside(-180,180),a.random<double>().between(-180,-90)),LatitudeLongitudeException);
+        ASSERT_THROW(LongitudeLatitude(a.random<double>().outside(-180,180),a.random<double>().between(90,180)),LatitudeLongitudeException);
     }
 }
 

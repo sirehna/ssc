@@ -39,16 +39,22 @@ class Track
 {
     public:
         Track(const std::vector<LongitudeLatitude>& waypoints_, const Date& departure_time_, const Date& arrival_time_);
-        double distance() const;
+        double length() const;
+        LongitudeLatitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
+        size_t find_leg_index(const double& distance_from_start_of_track) const;
+        double distance_from_start(const size_t& waypoint_idx) const;
 
     private:
         Track();
         double distance(const LongitudeLatitude& point1, const LongitudeLatitude& point2) const;
+        double azimuth_at_point_1(const LongitudeLatitude& point1, const LongitudeLatitude& point2) const;
 
         std::vector<LongitudeLatitude> waypoints;
         Date departure_time;
         Date arrival_time;
         std::vector<double> distances_between_waypoints;
+        std::vector<double> distance_from_start_;
+        std::vector<double> azimuth_at_start;
 };
 
 #endif /* TRACK_HPP_ */
