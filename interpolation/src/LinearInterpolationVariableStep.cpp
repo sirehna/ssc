@@ -7,7 +7,6 @@
 
 #include "LinearInterpolationVariableStep.hpp"
 #include <sstream>
-#include "test_macros.hpp"
 
 LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) : n(x.size()), x_(x), y_(y), val(0), der(0)
 {
