@@ -41,7 +41,8 @@ Leg::Leg(const LongitudeLatitude& point1, const LongitudeLatitude& point2) : pim
  *  \date 9 avr. 2013, 17:02:49
  *  \brief Length of the leg
  *  \returns Length in meters between point1 and point2, on a geodesic on the WGS84
- */
+ *  \snippet /unit_tests/src/LegTest.cpp LegTest length_example
+*/
 double Leg::length() const
 {
     return pimpl->length;
