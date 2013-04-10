@@ -6,7 +6,8 @@ set(SOURCES src/PointInPolygon.cpp
             src/PointInGeographicalPolygon.cpp
             src/LongitudeLatitude.cpp
             src/Angle.cpp
-            src/Track.cpp)
+            src/Track.cpp
+            src/Leg.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
