@@ -6,51 +6,78 @@
  */
 
 #include "Track.hpp"
-#include <GeographicLib/Geodesic.hpp>
-#include <GeographicLib/GeodesicLine.hpp>
-#include <math.h>
-#include <limits>
-#include "test_macros.hpp"
-#include <sstream>
+#include "Leg.hpp"
 
-Track::Track(const std::vector<LongitudeLatitude>& waypoints_,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-             const Date& departure_time_,                     //!< Time at the first point (in UTC at GMT)
-             const Date& arrival_time_                        //!< Time at last point (greater than departure time) (in UTC at GMT)
-             ) :
-waypoints(waypoints_),
-departure_time(departure_time_),
-arrival_time(arrival_time_),
-distances_between_waypoints(std::vector<double>()),
-distance_from_start_(std::vector<double>()),
-azimuth_at_start(std::vector<double>())
-
+class Track::TrackImpl
 {
-    if (waypoints.size() < 2)
-    {
-        THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Track should contain at least two waypoints");
-    }
-    if (arrival_time<departure_time)
-    {
-        THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time should be later than departure time");
-    }
-    if (departure_time<0)
-    {
-        THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Departure time is negative");
-    }
-    if (arrival_time<0)
-    {
-        THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time is negative");
-    }
-    const size_t n = waypoints.size();
-    distance_from_start_.push_back(0);
-    for (size_t i = 0 ; i < (n-1) ; ++i)
-    {
-        const double d = distance(waypoints.at(i),waypoints.at(i+1));
-        distances_between_waypoints.push_back(d);
-        azimuth_at_start.push_back(azimuth_at_point_1(waypoints.at(i),waypoints.at(i+1)));
-        distance_from_start_.push_back(distance_from_start_.back()+d);
-    }
+    public:
+        TrackImpl(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+                     const Date& departure_time_,                     //!< Time at the first point (in UTC at GMT)
+                     const Date& arrival_time_                        //!< Time at last point (greater than departure time) (in UTC at GMT)
+                     ) :
+        departure_time(departure_time_),
+        arrival_time(arrival_time_),
+        distance_from_start_to_begining_of_leg(std::vector<double>()),
+        legs(std::vector<Leg>()),
+        length(0),
+        nb_of_legs(waypoints.size()-1)
+        {
+            if (waypoints.size() < 2)
+            {
+                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Track should contain at least two waypoints");
+            }
+            if (arrival_time<departure_time)
+            {
+                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time should be later than departure time");
+            }
+            if (departure_time<0)
+            {
+                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Departure time is negative");
+            }
+            if (arrival_time<0)
+            {
+                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time is negative");
+            }
+            distance_from_start_to_begining_of_leg.push_back(0);
+            for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
+            {
+                legs.push_back(Leg(waypoints.at(i),waypoints.at(i+1)));
+                const double d = legs.back().length();
+                length += d;
+                distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
+            }
+            legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
+            length += legs.back().length();
+        }
+
+        size_t find_leg_index(const double& distance) const
+        {
+            for (size_t i = 1 ; i < nb_of_legs ; ++i)
+            {
+                if (distance<=distance_from_start_to_begining_of_leg.at(i)) return i-1;
+            }
+            return nb_of_legs-1;
+        }
+
+        Date departure_time;
+        Date arrival_time;
+        std::vector<double> distance_from_start_to_begining_of_leg;
+        std::vector<Leg> legs;
+        double length;
+        size_t nb_of_legs;
+
+    private:
+        TrackImpl();
+};
+
+Track::Track(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+             const Date& departure_time,                     //!< Time at the first point (in UTC at GMT)
+             const Date& arrival_time                        //!< Time at last point (greater than departure time) (in UTC at GMT)
+             ) : pimpl(new Track::TrackImpl(waypoints, departure_time, arrival_time))
+{
+
 }
+
 
 /** \author cec
  *  \date 8 avr. 2013, 15:32:27
@@ -59,43 +86,7 @@ azimuth_at_start(std::vector<double>())
  */
 double Track::length() const
 {
-    double d = 0;
-    for (auto it = distances_between_waypoints.begin() ; it != distances_between_waypoints.end() ; ++it)
-    {
-        d += *it;
-    }
-    return d;
-}
-
-/** \author cec
- *  \date 8 avr. 2013, 17:37:12
- *  \brief Calculates the shortest distance between two points on the WGS84
- *  \returns Distance in meters between point1 and point2
- */
-double Track::distance(const LongitudeLatitude& point1, //!< Coordinates of first point
-                       const LongitudeLatitude& point2  //!< Coordinates of first point
-                       ) const
-{
-    const GeographicLib::Geodesic& geod = GeographicLib::Geodesic::WGS84;
-    double s12 = 0;
-    geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, s12);
-    return s12;
-}
-
-/** \author cec
- *  \date 8 avr. 2013, 18:36:48
- *  \brief Returns the azimuth at point 1 between two points on a geodesic
- *  \returns Azimuth at departure point
- */
-double Track::azimuth_at_point_1(const LongitudeLatitude& point1, //!< Coordinates of first point
-                                 const LongitudeLatitude& point2  //!< Coordinates of first point
-                                ) const
-{
-    const GeographicLib::Geodesic& geod = GeographicLib::Geodesic::WGS84;
-    double az1 = 0;
-    double az2 = 0;
-    geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, az1, az2);
-    return az1;
+    return pimpl->length;
 }
 
 /** \author cec
@@ -106,7 +97,7 @@ double Track::azimuth_at_point_1(const LongitudeLatitude& point1, //!< Coordinat
 LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance from first waypoint (in meters)
                                                ) const
 {
-    if (distance>distance_from_start_.back())
+    if (distance>length())
     {
         THROW("Track::find_waypoint_on_track(const double&)", TrackException, "Point is farther than the last point on track");
     }
@@ -115,16 +106,7 @@ LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Dist
         THROW("Track::find_waypoint_on_track(const double&)", TrackException, "received a negative distance");
     }
     const size_t idx = find_leg_index(distance);
-    COUT(idx);
-    const GeographicLib::Geodesic& geod = GeographicLib::Geodesic::WGS84;
-    LongitudeLatitude ret(0,0);
-    double azi = azimuth_at_start.at(idx);
-    COUT(azi);
-    COUT(distance_from_start_.at(idx));
-    COUT(distance);
-    COUT(distance-distance_from_start_.at(idx));
-    geod.Direct(waypoints.at(0).lat, waypoints.at(0).lon, azi, distance-distance_from_start_.at(idx), ret.lat, ret.lon);
-    return ret;
+    return pimpl->legs.at(idx).find_waypoint_at(distance-pimpl->distance_from_start_to_begining_of_leg.at(idx));
 }
 
 /** \author cec
@@ -135,16 +117,11 @@ LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Dist
 size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Distance from first waypoint (in meters)
                              ) const
 {
-    const size_t n=distance_from_start_.size();
-    if (distance_from_start_of_track<=0)
+    if (distance_from_start_of_track<0)
     {
         THROW("Track::find_leg_index(const double&)", TrackException, "Distance from start of track can't be negative");
     }
-    for (size_t i = 1 ; i < n ; ++i)
-    {
-        if (distance_from_start_of_track<=distance_from_start_.at(i)) return i-1;
-    }
-    return n-1;
+    return pimpl->find_leg_index(distance_from_start_of_track);
 }
 
 
@@ -153,7 +130,9 @@ size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Dis
  *  \brief Distance (on track) of waypoint 'waypoint_idx' from the first waypoint
  *  \returns Distance from first waypoint (in meters)
  */
-double Track::distance_from_start(const size_t& waypoint_idx) const
+double Track::distance_from_start(const size_t& waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
+                                  ) const
 {
-    return distance_from_start_.at(waypoint_idx);
+    if (waypoint_idx < pimpl->nb_of_legs) return pimpl->distance_from_start_to_begining_of_leg.at(waypoint_idx);
+    return pimpl->length;
 }

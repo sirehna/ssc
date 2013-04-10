@@ -62,11 +62,13 @@ TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
 {
     for (size_t i = 0 ; i < 200 ; ++i)
     {
+        //! [LegTest find_waypoint_at_example]
         const LongitudeLatitude point1 = a.random<LongitudeLatitude>();
         const LongitudeLatitude point2 = a.random<LongitudeLatitude>();
         const Leg leg(point1, point2);
         ASSERT_THROW(leg.find_waypoint_at(a.random<double>().no().greater_than(0)), LegException);
         ASSERT_THROW(leg.find_waypoint_at(a.random<double>().greater_than(leg.length())), LegException);
+        //! [LegTest find_waypoint_at_example]
     }
 }
 
