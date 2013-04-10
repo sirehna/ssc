@@ -110,24 +110,31 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
     const double eps=1e-5;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const size_t n = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(n);
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
         const Date departure = a.random<double>().greater_than(0);
         const Date arrival = a.random<double>().greater_than((double)departure);
         const Track track(waypoints, departure, arrival);
-        const size_t idx = a.random<size_t>().between(0,n-2);
-        const double d1 = track.distance_from_start(idx);
-        const double d2 = track.distance_from_start(idx+1);
-        ASSERT_EQ(idx, track.find_leg_index(d1+eps));
-        ASSERT_EQ(idx+1, track.find_leg_index(d2+eps));
+        const size_t leg_index = a.random<size_t>().between(0,nb_of_waypoints-2);
+        const double position_of_first_point = track.distance_from_start(leg_index);
+        const double position_of_second_point = track.distance_from_start(leg_index+1);
+        ASSERT_EQ(leg_index, track.find_leg_index(position_of_first_point+eps));
+        if (leg_index == nb_of_waypoints-2)
+        {
+            ASSERT_EQ(leg_index, track.find_leg_index(position_of_second_point+eps));
+        }
+        else
+        {
+            ASSERT_EQ(leg_index+1, track.find_leg_index(position_of_second_point+eps));
+        }
         for (size_t j = 0 ; j< 10 ; ++j)
         {
-            const double d = a.random<double>().between(d1,d2).but_not(d2);
-            ASSERT_EQ(idx, track.find_leg_index(d));
+            const double d = a.random<double>().between(position_of_first_point,position_of_second_point).but_not(position_of_second_point);
+            ASSERT_EQ(leg_index, track.find_leg_index(d));
         }
     }
 }
-/*
+
 TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
 {
     LongitudeLatitude boston(-71.0603,42.3583),
@@ -136,23 +143,18 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
                       los_angeles(-118.2428,34.0522);
     const Date departure = a.random<double>().greater_than(0);
     const Date arrival = a.random<double>().greater_than((double)departure);
-    // Declare track
+
     Track track({boston, houston, chicago, los_angeles}, departure, arrival);
 
     const double eps = 1e-6;
     const LongitudeLatitude p0 = track.find_waypoint_on_track(0);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lat, p0.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lon, p0.lon, eps);
-
     const LongitudeLatitude p1 = track.find_waypoint_on_track(2583009.0737499665-eps);
-    COUT(p1.lon);
-    COUT(p1.lat);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lat, p1.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lon, p1.lon, eps);
 
     const LongitudeLatitude p2 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334-eps);
-    COUT(p2.lon);
-    COUT(p2.lat);
     ASSERT_SMALL_RELATIVE_ERROR(chicago.lat, p2.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(chicago.lon, p2.lon, eps);
 
@@ -160,6 +162,3 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lat, p3.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lon, p3.lon, eps);
 }
-
-
-*/
