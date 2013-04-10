@@ -5,17 +5,8 @@ set(SOURCES src/PointInPolygon.cpp
             src/PointInSphericalPolygon.cpp
             src/PointInGeographicalPolygon.cpp
             src/LongitudeLatitude.cpp
-            src/Angle.cpp)
-
-#unset(CMAKE_C_FLAGS)
-#unset(CMAKE_CXX_FLAGS)
-#unset(C_FLAGS)
-#unset(CXX_FLAGS)
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -Wvariadic-macros -fno-common -Wformat=2 -Winit-self -Wpacked -Wp,-D_FORTIFY_SOURCE=2 -Wpointer-arith -Wlarger-than-65500 -Wmissing-declarations -Wmissing-format-attribute -Wno-deprecated -Wsign-compare -Wstrict-aliasing=2 -Wundef -ffast-math -fomit-frame-pointer")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS}")
-#set(C_FLAGS "${CMAKE_C_FLAGS}")
-#set(CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-
+            src/Angle.cpp
+            src/Track.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

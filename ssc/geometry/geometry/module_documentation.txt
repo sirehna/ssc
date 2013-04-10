@@ -2,4 +2,19 @@
 \page geometry Geometry
 \section responsibilities Responsibilities
 This module is a simple wrapper around Boost.geometry and libGeographic.
+This module's API is provided by the following classes:
+
+\subsection Types 
+The basic underlying types are:
+- LongitudeLatitude: position on the globe (in spherical, Cartesian or geographical coordinates)
+- Angle: conversion between various angle units
+
+\subsection Algorithms
+The implemented algorithms are:
+- Track: determine the length of a track or find a point on a track
+- PointInCartesianPolygon: test if a point lies in a polygon on the earth surface, defined in Cartesian coordinates
+- PointInSphericalPolygon: test if a point lies in a polygon on the earth surface, defined in spherical coordinates
+- PointInGeographicalPolygon: test if a point lies in a polygon on the earth surface, defined on the WGS84
+
+
 */
