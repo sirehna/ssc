@@ -8,7 +8,6 @@
 #include "LinearInterpolationVariableStepTest.hpp"
 #include "LinearInterpolationVariableStep.hpp"
 #include "extra_test_assertions.hpp"
-#include "test_macros.hpp"
 
 #define EPS 1e-10
 
@@ -73,24 +72,15 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_zero_if_y
 {
     for (size_t i = 0 ; i < 100 ; ++i)
     {
-        //COUT("");
         const size_t n = a.random<size_t>().between(2,100);
-        //COUT("");
         const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
-        //COUT("");
         const std::vector<double> y(n, a.random<double>());
-        //COUT("");
         LinearInterpolationVariableStep interpolate(x,y);
-        //COUT("");
         for (size_t i = 0 ; i < n ; ++i)
         {
-            //COUT("");
             x.front();
-            //COUT("");
             x.back();
-            //COUT("");
             interpolate.set_computed_value(a.random<double>().between(x.front(),x.back()));
-            //COUT("");
             ASSERT_DOUBLE_EQ(0, interpolate.df());
         }
     }
