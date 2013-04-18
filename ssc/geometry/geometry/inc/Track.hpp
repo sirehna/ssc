@@ -45,6 +45,7 @@ class Track
         double get_waypoint_position_on_track(const size_t& waypoint_idx) const;
         void set_arrival_time(const Date& time);
         Date get_departure_time() const;
+        double get_average_speed() const;
 
     private:
         Track();
