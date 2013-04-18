@@ -233,3 +233,50 @@ TEST_F(TrackTest, should_be_able_to_retrieve_all_waypoints_further_than_a_certai
     }
 }
 
+TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
+{
+    const double eps = 1e-10;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        //! [TrackTest split_at_example]
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Track track(expected_waypoints);
+        const double L = track.length();
+        const auto subtracks = track.split_at(L/2.);
+        ASSERT_SMALL_RELATIVE_ERROR(subtracks.first.length(), subtracks.second.length(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(track.length()/2., subtracks.first.length(), eps);
+        //! [TrackTest split_at_example]
+        const auto last_point_on_first_subtrack = subtracks.first.get_all_waypoints().back();
+        const auto first_point_on_second_subtrack = subtracks.second.get_all_waypoints().front();
+        ASSERT_DOUBLE_EQ(first_point_on_second_subtrack.lat, last_point_on_first_subtrack.lat);
+        ASSERT_DOUBLE_EQ(first_point_on_second_subtrack.lon, last_point_on_first_subtrack.lon);
+        const size_t nb_of_points_on_subtrack_1 = subtracks.first.get_all_waypoints().size();
+        const size_t nb_of_points_on_subtrack_2 = subtracks.second.get_all_waypoints().size();
+        ASSERT_EQ(nb_of_waypoints+2,nb_of_points_on_subtrack_1+nb_of_points_on_subtrack_2);
+    }
+}
+
+TEST_F(TrackTest, should_throw_if_split_length_is_zero_or_less)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Track track(expected_waypoints);
+        ASSERT_THROW(track.split_at(0), TrackException);
+        ASSERT_THROW(track.split_at(a.random<double>().no().greater_than(0)), TrackException);
+    }
+}
+
+TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track_length)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Track track(expected_waypoints);
+        ASSERT_THROW(track.split_at(track.length()), TrackException);
+        ASSERT_THROW(track.split_at(a.random<double>().greater_than(track.length())), TrackException);
+    }
+}
