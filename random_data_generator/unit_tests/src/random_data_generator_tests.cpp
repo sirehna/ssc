@@ -17,7 +17,7 @@ TEST_F(DataGeneratorTests, should_have_a_random_data_generator_for_doubles)
     for (size_t i =0 ; i < NB_OF_TRIALS ; ++i)
     {
         S.clear();
-        const size_t nb_of_values_to_generate = a.random<size_t>().between(1,100);
+        const size_t nb_of_values_to_generate = a.random<size_t>().between(1,10);
         for (size_t j = 0 ; j < nb_of_values_to_generate ; ++j)
         {
             S.insert(a.random<double>());
@@ -139,7 +139,7 @@ TEST_F(DataGeneratorTests, should_return_zero_if_forbidden_interval_matches_allo
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_size_ts_for_all_but_one_value)
 {
-    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS; ++i)
     {
         const size_t lower_bound = a.random<size_t>().between(1,5);
         const size_t upper_bound = a.random<size_t>().between(1,5).greater_than(lower_bound);

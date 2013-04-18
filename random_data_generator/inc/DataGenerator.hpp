@@ -161,6 +161,9 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
     private:
         TypedScalarDataGenerator();
         T get() const;
+
+
+
         T min_bound;
         T max_bound;
         T forbidden_min;
