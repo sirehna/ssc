@@ -103,7 +103,7 @@ double Track::length() const
 /** \author cec
  *  \date 8 avr. 2013, 18:06:31
  *  \brief Find a waypoint on the track, at a given distance from the first point
- *  \returns Point at given distance from start of track
+ *  \returns Longitude & latitude of point at given distance from start of track
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_waypoint_on_track_example
  */
 LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance from first waypoint (in meters)
