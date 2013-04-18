@@ -11,7 +11,7 @@
 class Track::TrackImpl
 {
     public:
-        TrackImpl(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+        TrackImpl(const std::vector<LongitudeLatitude>& waypoints_,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
                      const Date& departure_time_,                     //!< Time at the first point (POSIX time)
                      const Date& arrival_time_                        //!< Time at last point (greater than departure time) (POSIX time)
                      ) :
@@ -20,7 +20,8 @@ class Track::TrackImpl
         distance_from_start_to_begining_of_leg(std::vector<double>()),
         legs(std::vector<Leg>()),
         length(0),
-        nb_of_legs(waypoints.size()-1)
+        nb_of_legs(waypoints_.size()-1),
+        waypoints(waypoints_)
         {
             if (waypoints.size() < 2)
             {
@@ -65,6 +66,7 @@ class Track::TrackImpl
         std::vector<Leg> legs;
         double length;
         size_t nb_of_legs;
+        std::vector<LongitudeLatitude> waypoints;
 
     private:
         TrackImpl();
@@ -106,6 +108,17 @@ Date Track::get_departure_time() const
 double Track::get_average_speed() const
 {
     return pimpl->length / (pimpl->arrival_time - pimpl->departure_time);
+}
+
+/** \author cec
+ *  \date 11 avr. 2013, 15:26:32
+ *  \brief Retrieve the waypoints used to construct the track
+ *  \returns List of waypoints
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_example
+*/
+std::vector<LongitudeLatitude> Track::get_waypoints() const
+{
+    return pimpl->waypoints;
 }
 
 
