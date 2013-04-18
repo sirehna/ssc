@@ -87,6 +87,16 @@ void Track::set_arrival_time(const Date& time)
     pimpl->arrival_time = time;
 }
 
+/** \author maroff
+ *  \date 11 avr. 2013, 12:55:00
+ *  \brief Simple accessor
+ *  \returns Time of departure (POSIX time)
+*/
+Date Track::get_departure_time() const
+{
+    return pimpl->departure_time;
+}
+
 
 /** \author cec
  *  \date 8 avr. 2013, 15:32:27
@@ -144,7 +154,7 @@ size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Dis
  *  \returns Distance from first waypoint (in meters)
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest distance_from_start_example
  */
-double Track::distance_from_start(const size_t& waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
+double Track::get_waypoint_position_on_track(const size_t& waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
                                   ) const
 {
     if (waypoint_idx < pimpl->nb_of_legs) return pimpl->distance_from_start_to_begining_of_leg.at(waypoint_idx);

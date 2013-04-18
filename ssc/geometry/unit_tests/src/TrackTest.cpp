@@ -104,10 +104,10 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_gi
     // Construct the track
     const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
     // The distances of each waypoint from the start of the leg are then given by distance_from_start
-    ASSERT_DOUBLE_EQ(0, track.distance_from_start(0));
-    ASSERT_DOUBLE_EQ(2583009.0737499665, track.distance_from_start(1));
-    ASSERT_DOUBLE_EQ(1509875.9483076334+track.distance_from_start(1), track.distance_from_start(2));
-    ASSERT_DOUBLE_EQ(2807378.1345177018+track.distance_from_start(2), track.distance_from_start(3));
+    ASSERT_DOUBLE_EQ(0, track.get_waypoint_position_on_track(0));
+    ASSERT_DOUBLE_EQ(2583009.0737499665, track.get_waypoint_position_on_track(1));
+    ASSERT_DOUBLE_EQ(1509875.9483076334+track.get_waypoint_position_on_track(1), track.get_waypoint_position_on_track(2));
+    ASSERT_DOUBLE_EQ(2807378.1345177018+track.get_waypoint_position_on_track(2), track.get_waypoint_position_on_track(3));
     //! [TrackTest distance_from_start_example]
 }
 
@@ -122,8 +122,8 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
         const Date arrival = a.random<double>().greater_than((double)departure);
         const Track track(waypoints, departure, arrival);
         const size_t leg_index = a.random<size_t>().between(0,nb_of_waypoints-2);
-        const double position_of_first_point = track.distance_from_start(leg_index);
-        const double position_of_second_point = track.distance_from_start(leg_index+1);
+        const double position_of_first_point = track.get_waypoint_position_on_track(leg_index);
+        const double position_of_second_point = track.get_waypoint_position_on_track(leg_index+1);
         ASSERT_EQ(leg_index, track.find_leg_index(position_of_first_point+eps));
         if (leg_index == nb_of_waypoints-2)
         {
@@ -157,7 +157,7 @@ TEST_F(TrackTest, leg_index_example)
     // For any point between waypoints 2 & 3, the returned index should be 1 because they are on the second leg (indexes start at 0)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
-        ASSERT_EQ(1, track.find_leg_index(a.random<double>().between(track.distance_from_start(1),track.distance_from_start(2))));
+        ASSERT_EQ(1, track.find_leg_index(a.random<double>().between(track.get_waypoint_position_on_track(1),track.get_waypoint_position_on_track(2))));
     }
     //! [TrackTest find_leg_index_example]
 }
