@@ -24,8 +24,8 @@ class TrackException : public Exception
 
 
 /** \author cec
- *  \brief A track has at least two waypoints, a departure time & an arrival time
- *  \details It has the following responsibilities:
+ *  \brief A track is a list of waypoints connected together by geodesics.
+ *  \details It can be viewed as a list of connecting legs & as such must contain at lest two waypoints.
  *  - Should be able to find the distance between two points (spherical & WGS84)
  *  - Can find a point on track at a given distance from the beginning of the track
  *  All these functionalities are basically implemented in GeographicLib: this class is merely a wrapper.
