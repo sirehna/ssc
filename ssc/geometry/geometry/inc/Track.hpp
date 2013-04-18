@@ -44,6 +44,8 @@ class Track
         double get_waypoint_position_on_track(const size_t& waypoint_idx) const;
         std::vector<LongitudeLatitude> get_all_waypoints() const;
         std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
+        bool operator==(const Track& rhs) const;
+        bool operator!=(const Track& rhs) const;
 
     private:
         Track();

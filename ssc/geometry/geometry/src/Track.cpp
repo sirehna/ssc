@@ -8,6 +8,7 @@
 #include "Track.hpp"
 #include "Leg.hpp"
 #include <sstream>
+#include <cmath>
 
 class Track::TrackImpl
 {
@@ -170,4 +171,38 @@ double Track::get_waypoint_position_on_track(const size_t& waypoint_idx //!< Ind
 {
     if (waypoint_idx < pimpl->nb_of_legs) return pimpl->distance_from_start_to_begining_of_leg.at(waypoint_idx);
     return pimpl->length;
+}
+
+/** \author cec
+ *  \date 12 avr. 2013, 16:27:37
+ *  \brief Test two tracks for equality
+ *  \returns true if the two tracks are equal (within 1 mm), false otherwise
+*/
+bool Track::operator==(const Track& rhs) const
+{
+    const double tolerance = 1e-3;
+    const auto waypoints_track_1 = pimpl->waypoints;
+    const auto waypoints_track_2 = rhs.get_all_waypoints();
+    const size_t n = waypoints_track_1.size();
+    if (waypoints_track_2.size() != n) return false;
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        const double lon1 = waypoints_track_1.at(i).lon;
+        const double lat1 = waypoints_track_1.at(i).lat;
+        const double lon2 = waypoints_track_2.at(i).lon;
+        const double lat2 = waypoints_track_2.at(i).lat;
+        if (fabs(lon1-lon2)>tolerance) return false;
+        if (fabs(lat1-lat2)>tolerance) return false;
+    }
+    return true;
+}
+
+/** \author cec
+ *  \date 12 avr. 2013, 16:27:37
+ *  \brief Test two tracks for equality
+ *  \returns false if the two tracks are equal (within 1 mm), true otherwise
+*/
+bool Track::operator!=(const Track& rhs) const
+{
+    return not(operator==(rhs));
 }
