@@ -12,8 +12,8 @@ class Track::TrackImpl
 {
     public:
         TrackImpl(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-                     const Date& departure_time_,                     //!< Time at the first point (in UTC at GMT)
-                     const Date& arrival_time_                        //!< Time at last point (greater than departure time) (in UTC at GMT)
+                     const Date& departure_time_,                     //!< Time at the first point (POSIX time)
+                     const Date& arrival_time_                        //!< Time at last point (greater than departure time) (POSIX time)
                      ) :
         departure_time(departure_time_),
         arrival_time(arrival_time_),
@@ -71,11 +71,20 @@ class Track::TrackImpl
 };
 
 Track::Track(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-             const Date& departure_time,                     //!< Time at the first point (in UTC at GMT)
-             const Date& arrival_time                        //!< Time at last point (greater than departure time) (in UTC at GMT)
+             const Date& departure_time,                     //!< Time at the first point (POSIX time)
+             const Date& arrival_time                        //!< Time at last point (greater than departure time) (POSIX time)
              ) : pimpl(new Track::TrackImpl(waypoints, departure_time, arrival_time))
 {
 
+}
+
+/** \author cec
+*  \date 10 avr. 2013, 16:14:48
+*  \brief Change arrival time (eg. if it is not know at construction)
+*/
+void Track::set_arrival_time(const Date& time)
+{
+    pimpl->arrival_time = time;
 }
 
 
