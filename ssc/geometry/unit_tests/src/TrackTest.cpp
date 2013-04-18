@@ -228,3 +228,23 @@ TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track
         ASSERT_THROW(track.split_at(a.random<double>().greater_than(track.length())), TrackException);
     }
 }
+
+TEST_F(TrackTest, should_be_able_to_test_that_two_tracks_are_equal)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> waypoints_track_1 = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LongitudeLatitude> waypoints_track_2 = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LongitudeLatitude> waypoints_track_3 = a.random_vector_of<LongitudeLatitude>().of_size(a.random<size_t>().between(2, 10).but_not(nb_of_waypoints));
+        const Track track_1(waypoints_track_1);
+        const Track track_2(waypoints_track_2);
+        const Track track_3(waypoints_track_3);
+        ASSERT_EQ(track_1, track_1);
+        ASSERT_EQ(track_2, track_2);
+        ASSERT_EQ(track_3, track_3);
+        ASSERT_NE(track_1, track_2);
+        ASSERT_NE(track_1, track_3);
+        ASSERT_NE(track_3, track_2);
+    }
+}
