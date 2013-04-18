@@ -18,7 +18,6 @@ class LinearInterpolationVariableStepTest : public ::testing::Test
 	    virtual ~LinearInterpolationVariableStepTest();
         virtual void SetUp();
         virtual void TearDown();
-        std::vector<double> a_random_vector_of_doubles_in_increasing_order_of_size(const size_t& n) const;
 
 		DataGenerator a;
 

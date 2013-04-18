@@ -7,9 +7,12 @@
 
 #include "LinearInterpolationVariableStepTest.hpp"
 #include "LinearInterpolationVariableStep.hpp"
+#include "PiecewiseConstantVariableStep.hpp"
+#include "random_increasing_vector.hpp"
 #include "extra_test_assertions.hpp"
 
-#define EPS 1e-10
+#define EPS 1e-4
+
 
 LinearInterpolationVariableStepTest::LinearInterpolationVariableStepTest() : a(DataGenerator(12))
 {
@@ -40,30 +43,18 @@ TEST_F(LinearInterpolationVariableStepTest, example)
 //! [LinearInterpolationVariableStepTest expected output]
 }
 
-std::vector<double> LinearInterpolationVariableStepTest::a_random_vector_of_doubles_in_increasing_order_of_size(const size_t& n) const
-{
-    std::vector<double> ret;
-    if (n) ret.push_back(a.random<double>());
-    for (size_t i = 1 ; i < n ; ++i)
-    {
-        const double step = a.random<double>().between(0,1000);
-        ret.push_back(ret.back()+step);
-    }
-    return ret;
-}
-
 TEST_F(LinearInterpolationVariableStepTest, should_be_able_to_retrieve_initial_values)
 {
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < n ; ++i)
         {
             interpolate.set_computed_value(x.at(i));
-            ASSERT_DOUBLE_EQ(y.at(i), interpolate.f());
+            ASSERT_SMALL_RELATIVE_ERROR(y.at(i), interpolate.f(),EPS);
         }
     }
 }
@@ -73,7 +64,7 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_zero_if_y
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y(n, a.random<double>());
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < n ; ++i)
@@ -92,7 +83,7 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_constant_
     {
         const double slope = a.random<double>();
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         std::vector<double> y;
         const double x0 = x.front();
         for (auto it = x.begin() ; it != x.end() ; ++it)
@@ -133,7 +124,7 @@ TEST_F(LinearInterpolationVariableStepTest, second_derivative_should_always_be_z
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < 20 ; ++i)
@@ -149,7 +140,7 @@ TEST_F(LinearInterpolationVariableStepTest, interpolated_values_should_be_betwee
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < n-1 ; ++i)
@@ -169,9 +160,9 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_x_and_y_have_differe
     {
         const size_t n = a.random<size_t>().between(2,100);
         const size_t different_n = a.random<size_t>().between(2,100).but_not(n);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(different_n);
-        ASSERT_THROW(LinearInterpolationVariableStep(x,y), LinearInterpolationVariableStepException);
+        ASSERT_THROW(LinearInterpolationVariableStep(x,y), PiecewiseConstantVariableStepException);
     }
 }
 
@@ -180,21 +171,21 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_x_is_not_in_strictly
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         ASSERT_NO_THROW(LinearInterpolationVariableStep(x,y));
         const size_t idx = a.random<size_t>().between(1,n-1);
         x.at(idx) = x.at(idx-1);
-        ASSERT_THROW(LinearInterpolationVariableStep(x,y), LinearInterpolationVariableStepException);
+        ASSERT_THROW(LinearInterpolationVariableStep(x,y), PiecewiseConstantVariableStepException);
         x.at(idx) = x.at(idx-1)-1;
-        ASSERT_THROW(LinearInterpolationVariableStep(x,y), LinearInterpolationVariableStepException);
+        ASSERT_THROW(LinearInterpolationVariableStep(x,y), PiecewiseConstantVariableStepException);
     }
 }
 
 TEST_F(LinearInterpolationVariableStepTest, should_throw_if_there_are_not_at_least_two_points)
 {
-    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(),std::vector<double>()), LinearInterpolationVariableStepException);
-    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(1,a.random<double>()),std::vector<double>(1,a.random<double>())), LinearInterpolationVariableStepException);
+    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(),std::vector<double>()), PiecewiseConstantVariableStepException);
+    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(1,a.random<double>()),std::vector<double>(1,a.random<double>())), PiecewiseConstantVariableStepException);
 }
 
 TEST_F(LinearInterpolationVariableStepTest, should_throw_if_retrieving_an_x_outside_bounds)
@@ -202,9 +193,9 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_retrieving_an_x_outs
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
-        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(n);
+        const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         LinearInterpolationVariableStep interpolate(x,y);
-        ASSERT_THROW(interpolate.set_computed_value(a.random<double>().outside(x.front(),x.back())), LinearInterpolationVariableStepException);
+        ASSERT_THROW(interpolate.set_computed_value(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
     }
 }

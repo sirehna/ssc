@@ -6,43 +6,85 @@
  */
 
 #include "LinearInterpolationVariableStep.hpp"
-#include <sstream>
+#include "PiecewiseConstantVariableStep.hpp"
 
-LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) : n(x.size()), x_(x), y_(y), val(0), der(0)
+class Linear
 {
-    if (y.size() != n)
-    {
-        std::stringstream ss;
-        ss << "x has size " << n
-           << ", but y has size " << y.size() << ": the two should be equal";
-        THROW("LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>&, const std::vector<double>&)", LinearInterpolationVariableStepException, ss.str());
-    }
-    if (n < 2)
-    {
-        std::stringstream ss;
-        ss << "x has size " << x.size() << " but size should be at least 2";
-        THROW("LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>&, const std::vector<double>&)", LinearInterpolationVariableStepException, ss.str());
-    }
-    for (size_t i = 1 ; i < n ; ++i)
-    {
-        if (x.at(i)<=x.at(i-1))
+    public:
+        Linear() : slope(0), intersection_with_origin(0)
         {
-            std::stringstream ss;
-            ss << "x should be in strictly increasing order: x[" << i-1 << "] = " << x.at(i-1)
-               << ", but x" << "[" << i << "] = " << x.at(i);
-            THROW("LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>&, const std::vector<double>&)", LinearInterpolationVariableStepException, ss.str());
         }
+
+        Linear(const double& slope_, const double& intersection_with_origin_) : slope(slope_), intersection_with_origin(intersection_with_origin_)
+        {
+        }
+
+        double slope;
+        double intersection_with_origin;
+};
+
+std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y);
+std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y)
+{
+    const size_t n = x.size();
+    std::vector<Linear> ret;
+    PiecewiseConstantVariableStep<double>(x,y); // Checks if x is in strictly increasing order & that x & y have same size
+    for (size_t i = 0 ; i < n-1 ; ++i)
+    {
+        const double a = (y.at(i+1) - y.at(i)) / (x.at(i+1) - x.at(i));
+        const double b = y.at(i) - a*x.at(i);
+        ret.push_back(Linear(a,b));
     }
+    ret.push_back(ret.back());
+    return ret;
+}
+
+class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
+{
+    public:
+        LinearInterpolationVariableStepImpl(const std::vector<double>& x, const std::vector<double>& y) : coeff(PiecewiseConstantVariableStep<Linear>(x, compute_linear_coefficients(x,y))), current_coeff(Linear()), x0_(0)
+        {
+
+        }
+
+        void set_computed_value(const double& x0)
+        {
+            x0_ = x0;
+            coeff.set_computed_value(x0);
+            current_coeff = coeff.f();
+        }
+
+        double get_val() const
+        {
+            return current_coeff.slope*x0_ + current_coeff.intersection_with_origin;
+        }
+
+        double get_derivative() const
+        {
+            return current_coeff.slope;
+        }
+
+    private:
+        LinearInterpolationVariableStepImpl();
+        PiecewiseConstantVariableStep<Linear> coeff;
+        Linear current_coeff;
+        double x0_;
+};
+
+
+LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) : pimpl(new LinearInterpolationVariableStepImpl(x,y))
+{
+
 }
 
 double LinearInterpolationVariableStep::f() const
 {
-    return val;
+    return pimpl->get_val();
 }
 
 double LinearInterpolationVariableStep::df() const
 {
-    return der;
+    return pimpl->get_derivative();
 }
 
 double LinearInterpolationVariableStep::d2f() const
@@ -52,26 +94,5 @@ double LinearInterpolationVariableStep::d2f() const
 
 void LinearInterpolationVariableStep::set_computed_value(const double& x0)
 {
-    if ((x0 < x_.front()) || (x0 > x_.back()))
-    {
-        std::stringstream ss;
-        ss << "x0 should be within [" << x_.front() << "," << x_.back() << "] but received x0 = " << x0;
-        THROW("LinearInterpolationVariableStep::set_computed_value(const double&)", LinearInterpolationVariableStepException, ss.str());
-    }
-    bool set = false;
-    for (size_t i = 1 ; i < n ; ++i)
-    {
-        if (x0 < x_.at(i))
-        {
-            der = (y_.at(i) - y_.at(i-1))/(x_.at(i) - x_.at(i-1));
-            val = der*(x0-x_.at(i-1)) + y_.at(i-1);
-            set = true;
-            break;
-        }
-    }
-    if (not(set))
-    {
-        der = (y_.at(n-1) - y_.at(n-2))/(x_.at(n-1) - x_.at(n-2));
-        val = y_.at(n-1);
-    }
+    pimpl->set_computed_value(x0);
 }
