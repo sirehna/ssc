@@ -7,6 +7,7 @@
 
 #include "Track.hpp"
 #include "Leg.hpp"
+#include <sstream>
 
 class Track::TrackImpl
 {
@@ -94,6 +95,44 @@ std::vector<LongitudeLatitude> Track::get_waypoints_closer_than(const double& di
     }
     return ret;
 }
+
+/** \author cec
+ *  \date 12 avr. 2013, 14:31:24
+ *  \brief Separates a track in two subtracks of length d and L-d where L is the length of the original track & d the parameter of this method
+ *  \returns Pair of tracks
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest split_at_example
+*/
+std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_track) const
+{
+    if ((distance_from_start_of_track<=0) || (distance_from_start_of_track>=length()))
+    {
+        std::stringstream ss;
+        ss << "Invalid split length: split distance should be within [0,"
+           << length() << ", but asked to split at " << distance_from_start_of_track;
+        THROW("Track::split_at(const double&)", TrackException, ss.str());
+    }
+    const std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
+    std::vector<LongitudeLatitude> waypoints_on_first_subtrack, waypoints_on_second_subtrack;
+    const size_t n = waypoints.size();
+    const LongitudeLatitude common_point_to_two_subtracks = find_waypoint_on_track(distance_from_start_of_track);
+    waypoints_on_second_subtrack.push_back(common_point_to_two_subtracks);
+    for (size_t i = 0 ; i < (n-1) ; ++i)
+    {
+        const double distance_from_start_to_waypoint_i = pimpl->distance_from_start_to_begining_of_leg.at(i);
+        if (distance_from_start_to_waypoint_i>distance_from_start_of_track)
+        {
+            waypoints_on_second_subtrack.push_back(waypoints.at(i));
+        }
+        else
+        {
+            waypoints_on_first_subtrack.push_back(waypoints.at(i));
+        }
+    }
+    waypoints_on_first_subtrack.push_back(common_point_to_two_subtracks);
+    waypoints_on_second_subtrack.push_back(waypoints.back());
+    return std::make_pair(Track(waypoints_on_first_subtrack), Track(waypoints_on_second_subtrack));
+}
+
 
 /** \author cec
  *  \date 11 avr. 2013, 17:05:45
