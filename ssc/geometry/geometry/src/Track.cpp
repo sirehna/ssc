@@ -73,30 +73,6 @@ std::vector<LongitudeLatitude> Track::get_all_waypoints() const
 }
 
 /** \author cec
- *  \date 11 avr. 2013, 16:26:03
- *  \brief Find all waypoints within a given distance (measured on the track) from the beginning on track
- *  \returns List containing all matching waypoints
- *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_example
-*/
-std::vector<LongitudeLatitude> Track::get_waypoints_closer_than(const double& distance_from_beginning_of_track) const
-{
-    std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
-    if (distance_from_beginning_of_track>=pimpl->length) return waypoints;
-    std::vector<LongitudeLatitude> ret(1, waypoints.front());
-    const size_t n = waypoints.size();
-
-    for (size_t i = 1 ; i < (n-1) ; ++i)
-    {
-        if (pimpl->distance_from_start_to_begining_of_leg.at(i)>distance_from_beginning_of_track)
-        {
-            break;
-        }
-        ret.push_back(waypoints.at(i));
-    }
-    return ret;
-}
-
-/** \author cec
  *  \date 12 avr. 2013, 14:31:24
  *  \brief Separates a track in two subtracks of length d and L-d where L is the length of the original track & d the parameter of this method
  *  \returns Pair of tracks
@@ -133,33 +109,6 @@ std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_trac
     return std::make_pair(Track(waypoints_on_first_subtrack), Track(waypoints_on_second_subtrack));
 }
 
-
-/** \author cec
- *  \date 11 avr. 2013, 17:05:45
- *  \brief Find all waypoints further than a given distance (measured on the track) from the beginning on track
- *  \returns List containing all matching waypoints
- *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_further_than_example
-*/
-std::vector<LongitudeLatitude> Track::get_waypoints_further_than(const double& distance_from_beginning_of_track) const
-{
-
-
-    std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
-    std::vector<LongitudeLatitude> ret;
-    const size_t n = waypoints.size();
-
-    for (size_t i = 0 ; i < (n-1) ; ++i)
-    {
-        if (pimpl->distance_from_start_to_begining_of_leg.at(i)>=distance_from_beginning_of_track)
-        {
-            ret.push_back(waypoints.at(i));
-        }
-    }
-    ret.push_back(waypoints.back());
-    return ret;
-}
-
-
 /** \author cec
  *  \date 8 avr. 2013, 15:32:27
  *  \brief Computes the sum of the lengths of each segment taken on the WGS84 (geodesic arcs)
@@ -178,7 +127,7 @@ double Track::length() const
  *  \returns Longitude & latitude of point at given distance from start of track
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_waypoint_on_track_example
  */
-LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance from first waypoint (in meters)
+LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance (measured on the track) from first waypoint (in meters)
                                                ) const
 {
     if (distance>length())
