@@ -9,7 +9,6 @@
 #define TRACK_HPP_
 
 #include "LongitudeLatitude.hpp"
-typedef double Date;
 #include <vector>
 #include <tr1/memory>
 #include "Exception.hpp"
@@ -38,15 +37,14 @@ class TrackException : public Exception
 class Track
 {
     public:
-        Track(const std::vector<LongitudeLatitude>& waypoints, const Date& departure_time, const Date& arrival_time);
+        Track(const std::vector<LongitudeLatitude>& waypoints);
         double length() const;
         LongitudeLatitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
         size_t find_leg_index(const double& distance_from_start_of_track) const;
         double get_waypoint_position_on_track(const size_t& waypoint_idx) const;
-        void set_arrival_time(const Date& time);
-        Date get_departure_time() const;
-        double get_average_speed() const;
-        std::vector<LongitudeLatitude> get_waypoints() const;
+        std::vector<LongitudeLatitude> get_all_waypoints() const;
+        std::vector<LongitudeLatitude> get_waypoints_closer_than(const double& distance_from_beginning_of_track) const;
+        std::vector<LongitudeLatitude> get_waypoints_further_than(const double& distance_from_beginning_of_track) const;
 
     private:
         Track();

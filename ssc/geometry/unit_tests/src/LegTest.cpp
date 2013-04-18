@@ -151,4 +151,3 @@ TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_correspond_t
         ASSERT_SMALL_RELATIVE_ERROR(Leg(point1, intermediate).length(), d, eps);
     }
 }
-
