@@ -116,7 +116,7 @@ TEST_F(PointInCartesianPolygonTest, simple_triangle_example)
 
 TEST_F(PointInCartesianPolygonTest, constructor_should_throw_if_received_less_than_three_points)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         std::vector<LongitudeLatitude> zone;
         ASSERT_THROW(PointInCartesianPolygon p1(zone), PointInPolygonException);
