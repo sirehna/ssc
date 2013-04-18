@@ -54,10 +54,6 @@ TEST_F(IpoptSolverTest, example)
 //! [IpoptSolverTest example]
 //! [IpoptSolverTest expected output]
     const double eps = 1e-6;
-    for (auto state = result.state_values.begin() ; state != result.state_values.end() ; ++state)
-    {
-        COUT(*state);
-    }
 
     ASSERT_EQ(4, result.state_values.size());
     ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
