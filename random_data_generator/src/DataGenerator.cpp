@@ -51,37 +51,61 @@ short DataGenerator::random_short() const
 
 double DataGenerator::random_double(const double& a, const double& b) const
 {
-    return (b-a)*get_random_number()/MAX_RAND_INT + a;
+    const double r = sir_rand_u01();
+    return (b-a)*r + a;
 }
+
+template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::between(const double& t1, const double& t2)
+{
+    min_bound = t1;
+    max_bound = t2;
+    return *this;
+}
+
+template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::greater_than(const double& t)
+        {
+            if (negated)
+            {
+                max_bound = t;
+            }
+            else
+            {
+                min_bound = t;
+            }
+            return *this;
+        }
 
 int DataGenerator::random_int(const int& a, const int& b) const
 {
-    return int(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    //return int(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    return a + static_cast<int>(sir_rand_u01()*(b-a));
 }
 
 size_t DataGenerator::random_size_t(const size_t& a, const size_t& b) const
 {
-    return size_t(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    //return size_t(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    return a + static_cast<size_t>(sir_rand_u01()*(b-a));
 }
 
 float DataGenerator::random_float(const float& a, const float& b) const
 {
-    return (b-a)*float(get_random_number())/float(MAX_RAND_INT) + a;
+    return a + static_cast<float>(sir_rand_u01()*(b-a));
 }
 
 long DataGenerator::random_long(const long& a, const long& b) const
 {
-    return long(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    return a + static_cast<long>(sir_rand_u01()*(b-a));
 }
 
 short DataGenerator::random_short(const short& a, const short& b) const
 {
-    return short(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    return a + static_cast<short>(sir_rand_u01()*(b-a));
+    //return short(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
 }
 
 bool DataGenerator::random_bool() const
 {
-    return (get_random_number()%2) == 0;
+    return (sir_rand_u01()>0.5);
 }
 
 char DataGenerator::random_char() const
@@ -146,7 +170,13 @@ int DataGenerator::get_random_number() const
 
 template <> double TypedScalarDataGenerator<double>::get() const
 {
+    /*COUT(forbidden_min);
+    COUT(forbidden_max);
+    COUT(min_bound);
+    COUT(max_bound);*/
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
+    //COUT(min_bound);
+    //COUT(max_bound);
     const double a = random_double(min_bound, max_bound);
     const bool outside_forbidden_zone = not((a>=forbidden_min)&&(a<=forbidden_max));
     if (outside_forbidden_zone) return a;
@@ -171,11 +201,41 @@ template <> std::string TypedScalarDataGenerator<std::string>::get() const
 {
     return random_string();
 }
-
+/*
 template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
 {
     return vector_of_random_doubles(size, min_bound, max_bound);
-}
+}*/
+
+
+template <> double TypedScalarDataGenerator<double>::operator()()
+        {
+            double tmp = get();
+            min_bound = get_min_bound<double>();
+            max_bound = get_max_bound<double>();
+            negated = false;
+            return tmp;
+        }
+
+template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
+        {
+                    std::vector<double> ret;
+                    ret.reserve(size);
+                    TypedScalarDataGenerator<double> r(DataGenerator(random<size_t>()));// = random<double>();
+                                r.between(min_bound, max_bound);
+                                 //.outside(forbidden_min,forbidden_max);
+                                /*COUT(min_bound);
+                                COUT(max_bound);
+                                COUT(forbidden_min);
+                                COUT(forbidden_max);*/
+                                for (size_t i = 0 ; i < size ; ++i)
+                                {
+                                    ret.push_back(r());
+                                    r.between(min_bound, max_bound);
+                                }
+                    return ret;
+                }
+
 
 template <> std::vector<size_t> TypedVectorDataGenerator<size_t>::get() const
 {
