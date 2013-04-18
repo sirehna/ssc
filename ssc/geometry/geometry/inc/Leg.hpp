@@ -22,6 +22,7 @@ class LegException : public Exception
 };
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief Two waypoints connected by a geodesic on the WGS84.
  *  \details This class has the following responsibility:
  *  - Find a point on track at a given distance from the beginning of the track
