@@ -11,7 +11,6 @@
 #include <vector>
 #include <set>
 
-#include "test_macros.hpp"
 
 template <class C> class TypedScalarDataGenerator;
 template <class C> class TypedVectorDataGenerator;
@@ -22,7 +21,9 @@ class DataGenerator
     public:
         template <class T> TypedScalarDataGenerator<T> random() const
         {
-            return TypedScalarDataGenerator<T>(*this);
+            TypedScalarDataGenerator<T> ret(*this);
+            ret.negated = false;
+            return ret;
         }
         template <class T> TypedVectorDataGenerator<T> random_vector_of() const
         {
@@ -82,7 +83,8 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
                                                              max_bound(get_max_bound<T>()),
                                                              forbidden_min(get_max_bound<T>()),
                                                              forbidden_max(get_min_bound<T>())
-        {}
+        {
+        }
 
         T operator()()
         {
@@ -151,12 +153,13 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
 
         TypedScalarDataGenerator<T>& but_not(const T& t)
         {
-            return outside(t, t).but();
+            return outside(t, t);
         }
 
 
 
     private:
+        TypedScalarDataGenerator();
         T get() const;
         T min_bound;
         T max_bound;
@@ -170,7 +173,9 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
         TypedVectorDataGenerator(const DataGenerator& rhs) : DataGenerator(rhs),
                                                              size(0),
                                                              min_bound(get_min_bound<T>()),
-                                                             max_bound(get_max_bound<T>())
+                                                             max_bound(get_max_bound<T>()),
+                                                             forbidden_min(get_max_bound<T>()),
+                                                             forbidden_max(get_min_bound<T>())
         {}
 
         TypedVectorDataGenerator& of_size(const size_t& n)
@@ -215,8 +220,16 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
 
         TypedVectorDataGenerator& between(const T& t1, const T& t2)
         {
-            min_bound = t1;
-            max_bound = t2;
+            if (not(negated))
+            {
+                min_bound = t1;
+                max_bound = t2;
+            }
+            else
+            {
+                forbidden_min = t1;
+                forbidden_max = t2;
+            }
             return *this;
         }
 
@@ -231,18 +244,29 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
         {
             std::vector<T> ret;
             ret.reserve(size);
+            TypedScalarDataGenerator<T> r = random<T>();
+            r.between(min_bound, max_bound)
+             .outside(forbidden_min,forbidden_max);
             for (size_t i = 0 ; i < size ; ++i)
             {
-                ret.push_back(random<T>().between(min_bound, max_bound)());
+                ret.push_back(random<T>()());
             }
             return ret;
         }
         size_t size;
         T min_bound;
         T max_bound;
+        T forbidden_min;
+        T forbidden_max;
 };
 
+template <> double TypedScalarDataGenerator<double>::operator()();
+
 template <> std::vector<double> TypedVectorDataGenerator<double>::get() const;
+template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::between(const double& t1, const double& t2);
+template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::greater_than(const double& t);
+
+
 template <> std::vector<size_t> TypedVectorDataGenerator<size_t>::get() const;
 
 template <class T> class TypedSetDataGenerator : public DataGenerator

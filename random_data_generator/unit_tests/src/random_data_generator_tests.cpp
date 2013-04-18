@@ -1,6 +1,8 @@
 #include "random_data_generator_tests.hpp"
 #include <set>
 
+#define NB_OF_TRIALS 10000
+
 void DataGeneratorTests::SetUp()
 {
 }
@@ -12,8 +14,7 @@ void DataGeneratorTests::TearDown()
 TEST_F(DataGeneratorTests, should_have_a_random_data_generator_for_doubles)
 {
     std::set<double> S;
-    const size_t nb_of_trials = 100;
-    for (size_t i =0 ; i < nb_of_trials ; ++i)
+    for (size_t i =0 ; i < NB_OF_TRIALS ; ++i)
     {
         S.clear();
         const size_t nb_of_values_to_generate = a.random<size_t>().between(1,100);
@@ -28,8 +29,7 @@ TEST_F(DataGeneratorTests, should_have_a_random_data_generator_for_doubles)
 TEST_F(DataGeneratorTests, should_have_a_random_data_generator_for_vector_of_doubles)
 {
     std::set<std::vector<double> > S;
-    const size_t nb_of_trials = 100;
-    for (size_t i =0 ; i < nb_of_trials ; ++i)
+    for (size_t i =0 ; i < NB_OF_TRIALS ; ++i)
     {
         S.clear();
         const size_t nb_of_values_to_generate = a.random<size_t>().between(1,5);
@@ -46,9 +46,8 @@ TEST_F(DataGeneratorTests, should_have_a_random_data_generator_for_vector_of_dou
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_greater_than_a_value)
 {
-    const size_t nb_of_trials = 100;
-    std::vector<double> v(nb_of_trials);
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    std::vector<double> v(NB_OF_TRIALS);
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double lower_bound = a.random<double>();
         ASSERT_GE(a.random<double>().greater_than(lower_bound)(), lower_bound);
@@ -57,9 +56,8 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_greater_than_a_val
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_no_greater_than_a_value)
 {
-    const size_t nb_of_trials = 100;
-    std::vector<double> v(nb_of_trials);
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    std::vector<double> v(NB_OF_TRIALS);
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double upper_bound = a.random<double>();
         ASSERT_LE(a.random<double>().no().greater_than(upper_bound)(), upper_bound);
@@ -68,9 +66,8 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_no_greater_than_a_
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_greater_than_a_value)
 {
-    const size_t nb_of_trials = 100;
-    std::vector<double> v(nb_of_trials);
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    std::vector<double> v(NB_OF_TRIALS);
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double lower_bound = a.random<double>();
         const size_t n = a.random<size_t>().no().greater_than(20);
@@ -84,13 +81,13 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_greate
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_no_greater_than_a_value)
 {
-    const size_t nb_of_trials = 100;
-    std::vector<double> v(nb_of_trials);
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    std::vector<double> v(NB_OF_TRIALS);
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double upper_bound = a.random<double>();
         const size_t n = a.random<size_t>().no().greater_than(20);
         const std::vector<double> v = a.random_vector_of<double>().of_size(n).no().greater_than(upper_bound);
+        ASSERT_EQ(n,v.size());
         for (std::vector<double>::const_iterator it = v.begin() ; it != v.end() ; ++it)
         {
             ASSERT_LE(*it, upper_bound);
@@ -100,8 +97,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_no_gre
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_between_two_values)
 {
-    const size_t nb_of_trials = 100;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double lower_bound = a.random<double>();
         const double upper_bound = a.random<double>().greater_than(lower_bound);
@@ -112,9 +108,8 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_between_two_values
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_outside_an_interval)
 {
-    const size_t nb_of_trials = 100;
     std::set<double> generated_numbers;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double number1 = a.random<double>().outside(2.1,2.9).but().between(2,3);
         const double number2 = a.random<double>().between(2,3).but().outside(2.1,2.9);
@@ -127,13 +122,12 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_outside_an_interva
         generated_numbers.insert(number1);
         generated_numbers.insert(number2);
     }
-    ASSERT_EQ(generated_numbers.size(), 2*nb_of_trials);
+    ASSERT_EQ(generated_numbers.size(), 2*NB_OF_TRIALS);
 }
 
 TEST_F(DataGeneratorTests, should_return_zero_if_forbidden_interval_matches_allowed_interval)
 {
-    const size_t nb_of_trials = 100;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double min_bound = a.random<double>();
         const double max_bound = a.random<double>().greater_than(min_bound);
@@ -145,8 +139,7 @@ TEST_F(DataGeneratorTests, should_return_zero_if_forbidden_interval_matches_allo
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_size_ts_for_all_but_one_value)
 {
-    const size_t nb_of_trials = 100;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const size_t lower_bound = a.random<size_t>().between(1,5);
         const size_t upper_bound = a.random<size_t>().between(1,5).greater_than(lower_bound);
@@ -158,9 +151,8 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_size_ts_for_all_but_one_va
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_random_double)
 {
-    const size_t nb_of_trials = 100;
     std::set<double> generated_numbers;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         generated_numbers.insert(a.random<bool>());
     }
@@ -169,8 +161,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_random_double)
 
 TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_between_two_values)
 {
-    const size_t nb_of_trials = 100;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double lower_bound = a.random<double>();
         const double upper_bound = a.random<double>().greater_than(lower_bound);
@@ -185,7 +176,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_betwee
 
 TEST_F(DataGeneratorTests, bug_detected_in_PiecewiseConstantTest)
 {
-    for (size_t i = 0 ; i < 100000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const size_t random_double_between_2_and_1000 = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
         ASSERT_LE(random_double_between_2_and_1000, 1000);
@@ -195,7 +186,7 @@ TEST_F(DataGeneratorTests, bug_detected_in_PiecewiseConstantTest)
 
 TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
 {
-    for (size_t i = 0 ; i < 480000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double xmin = a.random<double>();
         const double xmax = a.random<double>().greater_than(xmin);
