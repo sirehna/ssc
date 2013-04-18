@@ -8,6 +8,11 @@
 #include "Leg.hpp"
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicLine.hpp>
+#include <sstream>
+
+#define EPS 1e-6
+#define max(a,b) (a) > (b) ? (a) : (b)
+#define min(a,b) (a) < (b) ? (a) : (b)
 
 class Leg::LegImpl
 {
@@ -58,14 +63,20 @@ double Leg::length() const
 LongitudeLatitude Leg::find_waypoint_at(const double& distance //!< Distance from first waypoint (in meters)
                                        ) const
 {
-    if (distance>pimpl->length)
+    if (distance>(pimpl->length+EPS))
     {
-        THROW("Leg::find_waypoint_at(const double&)", LegException, "Point is farther than the leg length");
+        std::stringstream ss;
+        ss << "Asked to find waypoint at d = "
+           << distance
+           << " m from start of track but length of track is only "
+           << pimpl->length
+           << " m long (distance - length = " << distance - pimpl->length << " m)";
+        THROW("Leg::find_waypoint_at(const double&)", LegException, ss.str());
     }
-    if (distance<0)
+    if (distance<(-EPS))
     {
         THROW("Leg::find_waypoint_at(const double&)", LegException, "received a negative distance");
     }
-    return pimpl->waypoint(distance);
+    return pimpl->waypoint(max(min(pimpl->length,distance),0));
 }
 

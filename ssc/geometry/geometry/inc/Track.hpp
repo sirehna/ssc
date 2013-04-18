@@ -46,6 +46,7 @@ class Track
         void set_arrival_time(const Date& time);
         Date get_departure_time() const;
         double get_average_speed() const;
+        std::vector<LongitudeLatitude> get_waypoints() const;
 
     private:
         Track();
