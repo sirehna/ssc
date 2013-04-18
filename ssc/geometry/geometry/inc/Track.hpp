@@ -45,6 +45,7 @@ class Track
         std::vector<LongitudeLatitude> get_all_waypoints() const;
         std::vector<LongitudeLatitude> get_waypoints_closer_than(const double& distance_from_beginning_of_track) const;
         std::vector<LongitudeLatitude> get_waypoints_further_than(const double& distance_from_beginning_of_track) const;
+        std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
 
     private:
         Track();
