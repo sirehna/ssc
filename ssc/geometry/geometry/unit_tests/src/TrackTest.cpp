@@ -181,58 +181,6 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
     }
 }
 
-TEST_F(TrackTest, should_be_able_to_retrieve_all_waypoints_closer_than_a_certain_distance_to_track_start)
-{
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        //! [TrackTest get_waypoints_example]
-        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
-        const std::vector<LongitudeLatitude> waypoints_ = track.get_all_waypoints();
-
-        for (size_t k = 0 ; k < nb_of_waypoints-1 ; ++k)
-        {
-            const double d1 = track.get_waypoint_position_on_track(k);
-            const double d2 = track.get_waypoint_position_on_track(k+1);
-            const double d = a.random<double>().between(d1,d2);
-            const auto waypoints = track.get_waypoints_closer_than(d);
-            ASSERT_EQ(k+1, waypoints.size());
-            if (waypoints.size() > 1)
-            {
-                ASSERT_LE(Track(waypoints).length(), track.length());
-            }
-        }
-        //! [TrackTest get_waypoints_example]
-    }
-}
-
-TEST_F(TrackTest, should_be_able_to_retrieve_all_waypoints_further_than_a_certain_distance_to_track_start)
-{
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        //! [TrackTest get_waypoints_further_than_example]
-        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
-
-        for (size_t k = 0 ; k < nb_of_waypoints-1 ; ++k)
-        {
-            const double d1 = track.get_waypoint_position_on_track(k);
-            const double d2 = track.get_waypoint_position_on_track(k+1);
-            const double d = a.random<double>().between(d1,d2);
-            const auto waypoints = track.get_waypoints_further_than(d);
-            ASSERT_EQ(nb_of_waypoints-1-k, waypoints.size());
-            for (size_t i = 0 ; i<waypoints.size() ; ++i)
-            {
-                ASSERT_DOUBLE_EQ(expected_waypoints.at(k+1+i).lat, waypoints.at(i).lat);
-                ASSERT_DOUBLE_EQ(expected_waypoints.at(k+1+i).lon, waypoints.at(i).lon);
-            }
-        }
-        //! [TrackTest get_waypoints_further_than_example]
-    }
-}
-
 TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
 {
     const double eps = 1e-10;
