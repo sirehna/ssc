@@ -33,6 +33,6 @@ if (${BUILD_STANDALONE_LIB})
                       ${GTEST_BOTH_LIBRARIES}
                       )
 else()
-    add_library (${PROJECT_NAME} OBJECT SRC)
+    add_library (${PROJECT_NAME} OBJECT ${SRC})
     ADD_DEPENDENCIES(${PROJECT_NAME} googlemock)
 endif()
