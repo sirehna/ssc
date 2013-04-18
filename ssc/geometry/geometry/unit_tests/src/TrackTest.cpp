@@ -9,6 +9,7 @@
 #include "Track.hpp"
 #include "LongitudeLatitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
+#include "Leg.hpp"
 #include "test_macros.hpp"
 
 TrackTest::TrackTest() : a(DataGenerator(557))
@@ -35,11 +36,8 @@ TEST_F(TrackTest, example)
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
-    // Specify the departure & arrival dates, making sure arrival is after departure)
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
     // Declare track
-    Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    Track track({boston, houston, chicago, los_angeles});
 //! [TrackTest example]
 //! [TrackTest expected output]
     // Calculate track length
@@ -51,42 +49,12 @@ TEST_F(TrackTest, should_throw_if_track_has_fewer_than_two_points)
 {
     const std::vector<LongitudeLatitude> empty;
     const std::vector<LongitudeLatitude> only_one_longitude_latitude(1,a.random<LongitudeLatitude>());
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
-    ASSERT_THROW(Track(empty, departure, arrival), TrackException);
-    ASSERT_THROW(Track(only_one_longitude_latitude, departure, arrival), TrackException);
+    ASSERT_THROW(Track track(empty), TrackException);
+    ASSERT_THROW(Track track(only_one_longitude_latitude), TrackException);
     for (size_t i = 2 ; i < 100 ; ++i)
     {
         const std::vector<LongitudeLatitude> waypoints(i,a.random<LongitudeLatitude>());
-        ASSERT_NO_THROW(Track(waypoints, departure, arrival));
-    }
-}
-
-TEST_F(TrackTest,should_throw_if_departure_date_is_later_than_arrival_date)
-{
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        const size_t n = a.random<size_t>().between(2,10);
-        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(n);
-        const Date arrival = a.random<double>().greater_than(0);
-        const Date departure_later_than_arrival = a.random<double>().greater_than((double)arrival);
-        ASSERT_THROW(Track(waypoints, departure_later_than_arrival, arrival), TrackException);
-        ASSERT_NO_THROW(Track(waypoints, arrival, arrival));
-    }
-}
-
-TEST_F(TrackTest,should_throw_if_any_date_is_negative)
-{
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(3);
-        const Date departure = a.random<double>().greater_than(0);
-        const Date arrival = a.random<double>().greater_than((double)departure);
-        const Date negative_departure = a.random<double>().no().greater_than(0);
-        const Date negative_arrival = a.random<double>().between((double)departure,0);
-        ASSERT_THROW(Track(waypoints, negative_departure, arrival), TrackException);
-        ASSERT_THROW(Track(waypoints, departure, negative_arrival), TrackException);
-        ASSERT_THROW(Track(waypoints, negative_departure, negative_arrival), TrackException);
+        ASSERT_NO_THROW(Track track(waypoints));
     }
 }
 
@@ -98,11 +66,8 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_gi
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
-    // Any departure & arrival date will do for this example
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    const Track track({boston, houston, chicago, los_angeles});
     // The distances of each waypoint from the start of the leg are then given by distance_from_start
     ASSERT_DOUBLE_EQ(0, track.get_waypoint_position_on_track(0));
     ASSERT_DOUBLE_EQ(2583009.0737499665, track.get_waypoint_position_on_track(1));
@@ -118,9 +83,7 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const Date departure = a.random<double>().greater_than(0);
-        const Date arrival = a.random<double>().greater_than((double)departure);
-        const Track track(waypoints, departure, arrival);
+        const Track track(waypoints);
         const size_t leg_index = a.random<size_t>().between(0,nb_of_waypoints-2);
         const double position_of_first_point = track.get_waypoint_position_on_track(leg_index);
         const double position_of_second_point = track.get_waypoint_position_on_track(leg_index+1);
@@ -149,11 +112,8 @@ TEST_F(TrackTest, leg_index_example)
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
-    // Any departure & arrival date will do for this example
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    const Track track({boston, houston, chicago, los_angeles});
     // For any point between waypoints 2 & 3, the returned index should be 1 because they are on the second leg (indexes start at 0)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
@@ -170,11 +130,8 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
                       houston(-95.3631,29.7631),
                       chicago(-87.65,41.85),
                       los_angeles(-118.2428,34.0522);
-    // Any departure & arrival date will do for this example
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    const Track track({boston, houston, chicago, los_angeles});
 
     // In this particular case, we are attempting to find the second point on the track (special case)
     const double eps = 1e-6;
@@ -195,34 +152,13 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lon, p3.lon, eps);
 }
 
-TEST_F(TrackTest, should_be_able_to_retrieve_the_average_speed_on_track)
-{
-    //! [TrackTest get_average_speed_example]
-    // Define a series of points on the globe
-    LongitudeLatitude boston(-71.0603,42.3583),
-                      houston(-95.3631,29.7631),
-                      chicago(-87.65,41.85),
-                      los_angeles(-118.2428,34.0522);
-    // Any departure & arrival date will do for this example
-    const Date departure = a.random<double>().greater_than(0);
-    const Date arrival = a.random<double>().greater_than((double)departure);
-    // Construct the track
-    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
-    // Expected speed is simply the length of the track divided by the time "en route"
-    const double expected_speed = track.length() / (arrival - departure);
-    ASSERT_DOUBLE_EQ(expected_speed, track.get_average_speed());
-    //! [TrackTest get_average_speed_example]
-}
-
 TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const Date departure = a.random<double>().greater_than(0);
-        const Date arrival = a.random<double>().greater_than((double)departure);
-        const Track track(waypoints, departure, arrival);
+        const Track track(waypoints);
         ASSERT_NO_THROW(track.find_leg_index(track.length()));
     }
 }
@@ -231,15 +167,11 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        //! [TrackTest get_waypoints_example]
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const Date departure = a.random<double>().greater_than(0);
-        const Date arrival = a.random<double>().greater_than((double)departure);
-        const Track track(expected_waypoints, departure, arrival);
-        const std::vector<LongitudeLatitude> waypoints = track.get_waypoints();
+        const Track track(expected_waypoints);
+        const std::vector<LongitudeLatitude> waypoints = track.get_all_waypoints();
         ASSERT_EQ(expected_waypoints.size(), waypoints.size());
-        //! [TrackTest get_waypoints_example]
         const size_t n = expected_waypoints.size();
         for (size_t j = 0 ; j < n ; ++j)
         {
@@ -248,3 +180,56 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
         }
     }
 }
+
+TEST_F(TrackTest, should_be_able_to_retrieve_all_waypoints_closer_than_a_certain_distance_to_track_start)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        //! [TrackTest get_waypoints_example]
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Track track(expected_waypoints);
+        const std::vector<LongitudeLatitude> waypoints_ = track.get_all_waypoints();
+
+        for (size_t k = 0 ; k < nb_of_waypoints-1 ; ++k)
+        {
+            const double d1 = track.get_waypoint_position_on_track(k);
+            const double d2 = track.get_waypoint_position_on_track(k+1);
+            const double d = a.random<double>().between(d1,d2);
+            const auto waypoints = track.get_waypoints_closer_than(d);
+            ASSERT_EQ(k+1, waypoints.size());
+            if (waypoints.size() > 1)
+            {
+                ASSERT_LE(Track(waypoints).length(), track.length());
+            }
+        }
+        //! [TrackTest get_waypoints_example]
+    }
+}
+
+TEST_F(TrackTest, should_be_able_to_retrieve_all_waypoints_further_than_a_certain_distance_to_track_start)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        //! [TrackTest get_waypoints_further_than_example]
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Track track(expected_waypoints);
+
+        for (size_t k = 0 ; k < nb_of_waypoints-1 ; ++k)
+        {
+            const double d1 = track.get_waypoint_position_on_track(k);
+            const double d2 = track.get_waypoint_position_on_track(k+1);
+            const double d = a.random<double>().between(d1,d2);
+            const auto waypoints = track.get_waypoints_further_than(d);
+            ASSERT_EQ(nb_of_waypoints-1-k, waypoints.size());
+            for (size_t i = 0 ; i<waypoints.size() ; ++i)
+            {
+                ASSERT_DOUBLE_EQ(expected_waypoints.at(k+1+i).lat, waypoints.at(i).lat);
+                ASSERT_DOUBLE_EQ(expected_waypoints.at(k+1+i).lon, waypoints.at(i).lon);
+            }
+        }
+        //! [TrackTest get_waypoints_further_than_example]
+    }
+}
+
