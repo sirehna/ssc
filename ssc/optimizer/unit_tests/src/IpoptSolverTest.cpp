@@ -103,7 +103,7 @@ TEST_F(IpoptSolverTest, test_02)
     IpoptSolver optimize(pb);
     const std::vector<double> x0({1});
     const double eps = 1e-3;
-    for (size_t i = 0 ; i < 100 ; ++i)
+    for (size_t i = 0 ; i < 20 ; ++i)
     {
         *c0 = a.random<double>().between(0,100);
         const auto result = optimize.solve(x0);
