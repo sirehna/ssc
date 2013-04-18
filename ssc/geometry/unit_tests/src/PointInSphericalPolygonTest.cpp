@@ -149,7 +149,7 @@ TEST_F(PointInSphericalPolygonTest, simple_triangle_example)
 
 TEST_F(PointInSphericalPolygonTest, constructor_should_throw_if_received_less_than_three_points)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         std::vector<LongitudeLatitude> zone;
         ASSERT_THROW(PointInSphericalPolygon p1(zone), PointInPolygonException);
@@ -164,7 +164,7 @@ TEST_F(PointInSphericalPolygonTest, constructor_should_throw_if_received_less_th
 
 TEST_F(PointInSphericalPolygonTest, constructor_should_throw_if_polygon_is_not_closed)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(3,200);
         std::vector<LongitudeLatitude> zone = a.random_vector_of<LongitudeLatitude>().of_size(n);

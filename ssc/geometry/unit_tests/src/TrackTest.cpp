@@ -79,7 +79,7 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_gi
 TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
 {
     const double eps=1e-5;
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
@@ -154,7 +154,7 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
 
 TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
@@ -165,7 +165,7 @@ TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
 
 TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
@@ -184,7 +184,7 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
 TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
 {
     const double eps = 1e-10;
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         //! [TrackTest split_at_example]
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
@@ -207,7 +207,7 @@ TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
 
 TEST_F(TrackTest, should_throw_if_split_length_is_zero_or_less)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
@@ -219,7 +219,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_zero_or_less)
 
 TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track_length)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
@@ -231,7 +231,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track
 
 TEST_F(TrackTest, should_be_able_to_test_that_two_tracks_are_equal)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LongitudeLatitude> waypoints_track_1 = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
