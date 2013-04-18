@@ -9,16 +9,7 @@
 #define LINEARINTERPOLATIONVARIABLESTEP_HPP_
 
 #include <vector>
-#include "Exception.hpp"
-
-class LinearInterpolationVariableStepException : public Exception
-{
-    public:
-        LinearInterpolationVariableStepException(const char* s) :
-                Exception(s)
-        {
-        }
-};
+#include <tr1/memory>
 
 /** \author cec
  *  \brief This class was created to
@@ -40,11 +31,8 @@ class LinearInterpolationVariableStep
 
     private:
         LinearInterpolationVariableStep();
-        size_t n;
-        std::vector<double> x_;
-        std::vector<double> y_;
-        double val;
-        double der;
+        class LinearInterpolationVariableStepImpl;
+        std::tr1::shared_ptr<LinearInterpolationVariableStepImpl> pimpl;
 };
 
 #endif /* LINEARINTERPOLATIONVARIABLESTEP_HPP_ */
