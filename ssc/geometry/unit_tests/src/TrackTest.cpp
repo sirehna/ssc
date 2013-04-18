@@ -213,3 +213,38 @@ TEST_F(TrackTest, should_be_able_to_retrieve_the_average_speed_on_track)
     ASSERT_DOUBLE_EQ(expected_speed, track.get_average_speed());
     //! [TrackTest get_average_speed_example]
 }
+
+TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Date departure = a.random<double>().greater_than(0);
+        const Date arrival = a.random<double>().greater_than((double)departure);
+        const Track track(waypoints, departure, arrival);
+        ASSERT_NO_THROW(track.find_leg_index(track.length()));
+    }
+}
+
+TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        //! [TrackTest get_waypoints_example]
+        const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
+        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const Date departure = a.random<double>().greater_than(0);
+        const Date arrival = a.random<double>().greater_than((double)departure);
+        const Track track(expected_waypoints, departure, arrival);
+        const std::vector<LongitudeLatitude> waypoints = track.get_waypoints();
+        ASSERT_EQ(expected_waypoints.size(), waypoints.size());
+        //! [TrackTest get_waypoints_example]
+        const size_t n = expected_waypoints.size();
+        for (size_t j = 0 ; j < n ; ++j)
+        {
+            ASSERT_DOUBLE_EQ(expected_waypoints.at(j).lat, waypoints.at(j).lat);
+            ASSERT_DOUBLE_EQ(expected_waypoints.at(j).lon, waypoints.at(j).lon);
+        }
+    }
+}
