@@ -37,6 +37,7 @@ class TrackException : public Exception
 class Track
 {
     public:
+        virtual ~Track();
         Track(const std::vector<LongitudeLatitude>& waypoints);
         double length() const;
         LongitudeLatitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
