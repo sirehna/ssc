@@ -108,7 +108,7 @@ TEST_F(PiecewiseLinearFunctorTest, first_derivative_should_be_piecewise_constant
         ASSERT_DOUBLE_EQ(-128,df_dx());
     }
 }
-
+#include "test_macros.hpp"
 TEST_F(PiecewiseLinearFunctorTest, second_derivative_should_be_zero)
 {
     auto x = generate.state("x");
@@ -124,6 +124,20 @@ TEST_F(PiecewiseLinearFunctorTest, second_derivative_should_be_zero)
     }
 }
 
+TEST_F(PiecewiseLinearFunctorTest, should_be_second_derivative_even_if_there_are_only_two_y_values)
+{
+    auto x = generate.state("x");
+    for (size_t i = 0 ; i < 100 ; ++i)
+    {
+        const double xmin = a.random<double>();
+        const double xmax = a.random<double>().greater_than(xmin);
+        const size_t n = 2;
+        const PiecewiseLinearFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
+        const auto f = pc.diff(x)->diff(x)->get_lambda();
+        **x = a.random<double>();
+        ASSERT_EQ(0,f());
+    }
+}
 
 TEST_F(PiecewiseLinearFunctorTest, should_be_able_to_use_piecewise_as_regular_functor)
 {

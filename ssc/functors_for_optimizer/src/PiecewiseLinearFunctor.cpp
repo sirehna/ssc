@@ -35,7 +35,8 @@ dy(std::vector<double>())
 
 NodePtr PiecewiseLinearFunctor::diff(const StatePtr& state) const
 {
-    return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, dy));
+    if (dy.size() > 1) return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, dy));
+    return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, {dy.front(),dy.front()}));
 }
 
 void PiecewiseLinearFunctor::accept(NodeVisitor& v) const
