@@ -11,6 +11,7 @@
 #include "PointInPolygon.hpp"
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief Check if a point is in a polygon defined on a sphere.
  *  \details The points are given in (longitude,latitude) in degrees.
  *  \section ex1 Example
@@ -18,7 +19,6 @@
  *  \section ex2 Expected output
  *  \snippet geometry/unit_tests/src/PointInSphericalPolygonTest.cpp PointInSphericalPolygonTest expected output
  */
-
 class PointInSphericalPolygon : public PointInPolygon
 {
     public:

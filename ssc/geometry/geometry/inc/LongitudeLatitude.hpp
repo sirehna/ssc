@@ -21,6 +21,7 @@ class LatitudeLongitudeException : public Exception
 
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief Stores latitude and longitude information
  *  \details It has the following responsibilities:
  *  - Store geographical coordinates in degrees
