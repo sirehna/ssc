@@ -96,7 +96,7 @@ TEST_F(FunctorAlgebraTest, bug_02)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         **z = a.random<double>().between(-1000,1000)();
-        ASSERT_SMALL_RELATIVE_ERROR(-1./((**z)*(**z)), f(),1E-15);
+        ASSERT_SMALL_RELATIVE_ERROR(-1./((**z)*(**z)), f(),1E-14);
     }
 }
 
