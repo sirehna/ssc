@@ -51,11 +51,11 @@ TEST_F(PiecewiseConstantFunctorTest, example)
 TEST_F(PiecewiseConstantFunctorTest, first_derivative_should_be_zero)
 {
     auto x = generate.state("x");
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 100 ; ++i)
     {
         const double xmin = a.random<double>();
         const double xmax = a.random<double>().greater_than(xmin);
-        size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
+        size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
         n = n<=1 ? 2 : n;
         const PiecewiseConstantFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
         const auto f = pc.diff(x)->get_lambda();
