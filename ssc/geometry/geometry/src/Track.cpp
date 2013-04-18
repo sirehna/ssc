@@ -11,12 +11,8 @@
 class Track::TrackImpl
 {
     public:
-        TrackImpl(const std::vector<LongitudeLatitude>& waypoints_,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-                     const Date& departure_time_,                     //!< Time at the first point (POSIX time)
-                     const Date& arrival_time_                        //!< Time at last point (greater than departure time) (POSIX time)
+        TrackImpl(const std::vector<LongitudeLatitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
                      ) :
-        departure_time(departure_time_),
-        arrival_time(arrival_time_),
         distance_from_start_to_begining_of_leg(std::vector<double>()),
         legs(std::vector<Leg>()),
         length(0),
@@ -25,19 +21,7 @@ class Track::TrackImpl
         {
             if (waypoints.size() < 2)
             {
-                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Track should contain at least two waypoints");
-            }
-            if (arrival_time<departure_time)
-            {
-                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time should be later than departure time");
-            }
-            if (departure_time<0)
-            {
-                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Departure time is negative");
-            }
-            if (arrival_time<0)
-            {
-                THROW("Track::Track(const std::vector<LongitudeLatitude>&, const Date&, const Date&)", TrackException, "Arrival time is negative");
+                THROW("Track::Track(const std::vector<LongitudeLatitude>&)", TrackException, "Track should contain at least two waypoints");
             }
             distance_from_start_to_begining_of_leg.push_back(0);
             for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
@@ -60,8 +44,6 @@ class Track::TrackImpl
             return nb_of_legs-1;
         }
 
-        Date departure_time;
-        Date arrival_time;
         std::vector<double> distance_from_start_to_begining_of_leg;
         std::vector<Leg> legs;
         double length;
@@ -72,42 +54,10 @@ class Track::TrackImpl
         TrackImpl();
 };
 
-Track::Track(const std::vector<LongitudeLatitude>& waypoints,//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-             const Date& departure_time,                     //!< Time at the first point (POSIX time)
-             const Date& arrival_time                        //!< Time at last point (greater than departure time) (POSIX time)
-             ) : pimpl(new Track::TrackImpl(waypoints, departure_time, arrival_time))
+Track::Track(const std::vector<LongitudeLatitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+             ) : pimpl(new Track::TrackImpl(waypoints))
 {
 
-}
-
-/** \author cec
-*  \date 10 avr. 2013, 16:14:48
-*  \brief Change arrival time (eg. if it is not know at construction)
-*/
-void Track::set_arrival_time(const Date& time)
-{
-    pimpl->arrival_time = time;
-}
-
-/** \author cec
- *  \date 11 avr. 2013, 12:55:00
- *  \brief Simple accessor
- *  \returns Time of departure (POSIX time)
-*/
-Date Track::get_departure_time() const
-{
-    return pimpl->departure_time;
-}
-
-/** \author cec
- *  \date 11 avr. 2013, 14:42:30
- *  \brief Computes the average speed on track
- *  \returns average speed on track (in m/s)
- *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_average_speed_example
-*/
-double Track::get_average_speed() const
-{
-    return pimpl->length / (pimpl->arrival_time - pimpl->departure_time);
 }
 
 /** \author cec
@@ -116,9 +66,58 @@ double Track::get_average_speed() const
  *  \returns List of waypoints
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_example
 */
-std::vector<LongitudeLatitude> Track::get_waypoints() const
+std::vector<LongitudeLatitude> Track::get_all_waypoints() const
 {
     return pimpl->waypoints;
+}
+
+/** \author cec
+ *  \date 11 avr. 2013, 16:26:03
+ *  \brief Find all waypoints within a given distance (measured on the track) from the beginning on track
+ *  \returns List containing all matching waypoints
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_example
+*/
+std::vector<LongitudeLatitude> Track::get_waypoints_closer_than(const double& distance_from_beginning_of_track) const
+{
+    std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
+    if (distance_from_beginning_of_track>=pimpl->length) return waypoints;
+    std::vector<LongitudeLatitude> ret(1, waypoints.front());
+    const size_t n = waypoints.size();
+
+    for (size_t i = 1 ; i < (n-1) ; ++i)
+    {
+        if (pimpl->distance_from_start_to_begining_of_leg.at(i)>distance_from_beginning_of_track)
+        {
+            break;
+        }
+        ret.push_back(waypoints.at(i));
+    }
+    return ret;
+}
+
+/** \author cec
+ *  \date 11 avr. 2013, 17:05:45
+ *  \brief Find all waypoints further than a given distance (measured on the track) from the beginning on track
+ *  \returns List containing all matching waypoints
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_further_than_example
+*/
+std::vector<LongitudeLatitude> Track::get_waypoints_further_than(const double& distance_from_beginning_of_track) const
+{
+
+
+    std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
+    std::vector<LongitudeLatitude> ret;
+    const size_t n = waypoints.size();
+
+    for (size_t i = 0 ; i < (n-1) ; ++i)
+    {
+        if (pimpl->distance_from_start_to_begining_of_leg.at(i)>=distance_from_beginning_of_track)
+        {
+            ret.push_back(waypoints.at(i));
+        }
+    }
+    ret.push_back(waypoints.back());
+    return ret;
 }
 
 
