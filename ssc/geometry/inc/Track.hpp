@@ -24,6 +24,7 @@ class TrackException : public Exception
 
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief A track is a list of waypoints connected together by geodesics.
  *  \details It can be viewed as a list of connecting legs & as such must contain at lest two waypoints.
  *  - Should be able to find the distance between two points (spherical & WGS84)

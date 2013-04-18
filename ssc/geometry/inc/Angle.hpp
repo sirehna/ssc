@@ -9,6 +9,7 @@
 #define ANGLE_HPP_
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief Represents angles with various units
  *  \details It has the following responsibilities:
  *  - Store the value of the angle
@@ -18,7 +19,6 @@
  *  \section ex2 Expected output
  *  \snippet geometry/unit_tests/src/AngleTest.cpp AngleTest expected output
  */
-
 class Angle
 {
     public:

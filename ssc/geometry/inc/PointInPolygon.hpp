@@ -25,6 +25,7 @@ class PointInPolygonException : public Exception
 
 
 /** \author cec
+ *  \ingroup geometry
  *  \brief Interface for classes testing whether a point is in a polygon.
  *  \details Implementation for specific coordinate systems (Cartesian, spherical, geographical)
  *  are defined in derived classes. It is a simple wrapper around boost.geometry.
