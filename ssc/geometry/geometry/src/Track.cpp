@@ -122,6 +122,11 @@ double Track::length() const
     return pimpl->length;
 }
 
+Track::~Track()
+{
+
+}
+
 /** \author cec
  *  \date 8 avr. 2013, 18:06:31
  *  \brief Find a waypoint on the track, at a given distance from the first point
