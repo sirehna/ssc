@@ -11,11 +11,11 @@ if (${BUILD_STANDALONE_LIB})
     # used to compile the installed Google Mock libraries; otherwise he may run into undefined behaviors. If you compile
     # Google Mock and your test code using different compiler flags, they may see different definitions of the same
     # class/function/variable)
-    IF (WIN32)
+#    IF (WIN32)
        set(DISABLE_PTHREADS OFF) # Otherwise doesn't compile on MinGW because of MinGW's non-standard implementation
-    ELSE()
-       set(DISABLE_PTHREADS ON)
-    ENDIF()
+#    ELSE()
+#       set(DISABLE_PTHREADS ON)
+#    ENDIF()
     set(GTEST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/${GTEST_ROOT})
     find_package(GTest REQUIRED)
 endif()

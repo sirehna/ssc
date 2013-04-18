@@ -2,11 +2,15 @@
 #include "sir_rand.h"
 #include <iostream>
 
-
 #define MAX_RAND_INT 2147483647
 
 #define MIN(a,b) (a<b) ? a : b;
 #define MAX(a,b) (a>b) ? a : b;
+
+template <typename T> bool outside_forbidden_zone(const T& forbidden_min, const T& value_to_test, const T& forbidden_max)
+{
+    return not((value_to_test>=forbidden_min)&&(value_to_test<=forbidden_max));
+}
 
 DataGenerator::DataGenerator(const size_t& seed) : negated(false)
 {
@@ -77,14 +81,12 @@ template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::
 
 int DataGenerator::random_int(const int& a, const int& b) const
 {
-    //return int(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
     return a + static_cast<int>(sir_rand_u01()*(b-a));
 }
 
 size_t DataGenerator::random_size_t(const size_t& a, const size_t& b) const
 {
-    //return size_t(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
-    return a + static_cast<size_t>(sir_rand_u01()*(b-a));
+    return a + static_cast<size_t>(floor(sir_rand_u01()*double(b-a)+0.5));
 }
 
 float DataGenerator::random_float(const float& a, const float& b) const
@@ -94,13 +96,12 @@ float DataGenerator::random_float(const float& a, const float& b) const
 
 long DataGenerator::random_long(const long& a, const long& b) const
 {
-    return a + static_cast<long>(sir_rand_u01()*(b-a));
+    return a + static_cast<long>(floor(sir_rand_u01()*double(b-a)+0.5));
 }
 
 short DataGenerator::random_short(const short& a, const short& b) const
 {
-    return a + static_cast<short>(sir_rand_u01()*(b-a));
-    //return short(floor(double(b-a)*double(get_random_number())/MAX_RAND_INT + 0.5)) + a;
+    return a + static_cast<short>(floor(sir_rand_u01()*double(b-a)+0.5));
 }
 
 bool DataGenerator::random_bool() const
@@ -170,26 +171,19 @@ int DataGenerator::get_random_number() const
 
 template <> double TypedScalarDataGenerator<double>::get() const
 {
-    /*COUT(forbidden_min);
-    COUT(forbidden_max);
-    COUT(min_bound);
-    COUT(max_bound);*/
+
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
-    //COUT(min_bound);
-    //COUT(max_bound);
     const double a = random_double(min_bound, max_bound);
-    const bool outside_forbidden_zone = not((a>=forbidden_min)&&(a<=forbidden_max));
-    if (outside_forbidden_zone) return a;
-    else                        return get();
+    if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
+    else                                                         return get();
 }
 
 template <> size_t TypedScalarDataGenerator<size_t>::get() const
 {
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
     const size_t a = random_size_t(min_bound, max_bound);
-    const bool outside_forbidden_zone = not((a>=forbidden_min)&&(a<=forbidden_max));
-    if (outside_forbidden_zone) return a;
-    else                        return get();
+    if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
+    else                                                         return get();
 }
 
 template <> bool TypedScalarDataGenerator<bool>::get() const
