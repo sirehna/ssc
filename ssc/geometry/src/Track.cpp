@@ -87,7 +87,7 @@ void Track::set_arrival_time(const Date& time)
     pimpl->arrival_time = time;
 }
 
-/** \author maroff
+/** \author cec
  *  \date 11 avr. 2013, 12:55:00
  *  \brief Simple accessor
  *  \returns Time of departure (POSIX time)
@@ -95,6 +95,17 @@ void Track::set_arrival_time(const Date& time)
 Date Track::get_departure_time() const
 {
     return pimpl->departure_time;
+}
+
+/** \author cec
+ *  \date 11 avr. 2013, 14:42:30
+ *  \brief Computes the average speed on track
+ *  \returns average speed on track (in m/s)
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_average_speed_example
+*/
+double Track::get_average_speed() const
+{
+    return pimpl->length / (pimpl->arrival_time - pimpl->departure_time);
 }
 
 
