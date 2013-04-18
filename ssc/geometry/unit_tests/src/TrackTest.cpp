@@ -174,7 +174,7 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
     const Date departure = a.random<double>().greater_than(0);
     const Date arrival = a.random<double>().greater_than((double)departure);
     // Construct the track
-    Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
 
     // In this particular case, we are attempting to find the second point on the track (special case)
     const double eps = 1e-6;
@@ -193,4 +193,23 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
     const LongitudeLatitude p3 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334+2807378.1345177018-eps);
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lat, p3.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lon, p3.lon, eps);
+}
+
+TEST_F(TrackTest, should_be_able_to_retrieve_the_average_speed_on_track)
+{
+    //! [TrackTest get_average_speed_example]
+    // Define a series of points on the globe
+    LongitudeLatitude boston(-71.0603,42.3583),
+                      houston(-95.3631,29.7631),
+                      chicago(-87.65,41.85),
+                      los_angeles(-118.2428,34.0522);
+    // Any departure & arrival date will do for this example
+    const Date departure = a.random<double>().greater_than(0);
+    const Date arrival = a.random<double>().greater_than((double)departure);
+    // Construct the track
+    const Track track({boston, houston, chicago, los_angeles}, departure, arrival);
+    // Expected speed is simply the length of the track divided by the time "en route"
+    const double expected_speed = track.length() / (arrival - departure);
+    ASSERT_DOUBLE_EQ(expected_speed, track.get_average_speed());
+    //! [TrackTest get_average_speed_example]
 }
