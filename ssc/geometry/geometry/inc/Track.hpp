@@ -43,6 +43,7 @@ class Track
         LongitudeLatitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
         size_t find_leg_index(const double& distance_from_start_of_track) const;
         double distance_from_start(const size_t& waypoint_idx) const;
+        void set_arrival_time(const Date& time);
 
     private:
         Track();
