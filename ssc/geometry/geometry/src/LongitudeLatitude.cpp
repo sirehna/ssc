@@ -16,3 +16,8 @@ LongitudeLatitude::LongitudeLatitude(const double& longitude, const double& lati
         THROW("LatitudeLongitude::LatitudeLongitude(const double&, const double&)", LatitudeLongitudeException, "Latitude or longitude out of range");
     }
 }
+
+std::ostream& operator<<(std::ostream& os, const LongitudeLatitude& bar)
+{
+    return os << "(" << bar.lon << "," << bar.lat << ")";
+}
