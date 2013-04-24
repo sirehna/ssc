@@ -1,9 +1,12 @@
 # ------8<---[LINES TO MODIFY WHEN CHANGING MODULE]----->8-----
 set(MODULE_UNDER_TEST quadpack)
 project (${MODULE_UNDER_TEST}_tests)
+
 FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/SimpsonTest.cpp) 
 #src/IntegrateTest.cpp)
+
+
 # ------8<---------------------------------------------->8-----
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Woverloaded-virtual -Wwrite-strings -DGTEST_HAS_PTHREAD=0")
