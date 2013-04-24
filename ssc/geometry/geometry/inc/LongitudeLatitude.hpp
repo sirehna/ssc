@@ -8,6 +8,8 @@
 #ifndef LATITUDELONGITUDE_HPP_
 #define LATITUDELONGITUDE_HPP_
 
+#include <iostream>
+
 #include "Exception.hpp"
 
 class LatitudeLongitudeException : public Exception
@@ -39,5 +41,8 @@ class LongitudeLatitude
         double lat;
         double lon;
 };
+
+std::ostream& operator<<(std::ostream& os, const LongitudeLatitude& bar);
+
 
 #endif /* LATITUDELONGITUDE_HPP_ */
