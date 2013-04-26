@@ -18,7 +18,7 @@
  * Gauss quadrature weights and Kronrod quadrature abscissae and weights as
  * evaluated with 80 decimal digit arithmetic by L. W. Fullerton, Bell Labs,
  * Nov. 1981.
- */
+
 static const std::vector<double> weights_of_10_point_gauss_rule = {0.066671344308688137593568809893332,
                                                                      0.149451349150580593145776339657697,
                                                                      0.219086362515982043995534934228163,
@@ -115,15 +115,14 @@ class Integrate::IntegrateImpl
           const double overflow = std::numeric_limits<double>::max();
 
           GK21_Result res = gauss_kronrod_21_points(a,b);
-
-
+          return Result();
 
 
         }
 
         GK21_Result gauss_kronrod_21_points(const double& a, const double& b) const
         {
-            const double epsilon = scalbn(std::numeric_limits<double>::epsilon,1);
+            const double epsilon = scalbn((double)std::numeric_limits<double>::epsilon,1);
             const double underflow = std::numeric_limits<double>::min();
             const double midpoint = (a+b)/2.;
             const double half_length = (b-a)/2.;
@@ -194,3 +193,4 @@ double Integrate::integrate(const double& a, const double& b) const
     return pimpl->integrate(a,b,1,1).result;
 }
 
+*/
