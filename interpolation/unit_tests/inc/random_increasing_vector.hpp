@@ -8,6 +8,7 @@
 #ifndef RANDOM_INCREASING_VECTOR_HPP_
 #define RANDOM_INCREASING_VECTOR_HPP_
 
+#include <cstddef>
 #include <vector>
 
 
