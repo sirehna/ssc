@@ -197,20 +197,7 @@ TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
     }
 }
 
-TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_inside_an_interval)
-{
-    const double m0 = 39.5187;
-    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
-    {
-        const std::vector<double> dv = a.random_vector_of<double>().between(-m0,m0).of_size(5);
-        ASSERT_EQ(5, dv.size());
-        for (std::vector<double>::const_iterator it = dv.begin() ; it != dv.end() ; ++it)
-        {
-            ASSERT_LE(-m0,*it);
-            ASSERT_LE(*it,m0);
-        }
-    }
-}
+
 
 
 /*
