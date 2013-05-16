@@ -22,15 +22,15 @@ class OptimizationProblem;
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest example
+ *  \snippet optimizer/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest example
  *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest expected output
+ *  \snippet optimizer/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest expected output
  */
 
 class IpoptSolver
 {
     public:
-        IpoptSolver(const OptimizationProblem& problem, const IpoptParameters& parameters = IpoptParameters());
+        IpoptSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters = IpoptParameters());
         IpoptSolver();
         OptimizationResult solve(const std::vector<double>& starting_point);
 
