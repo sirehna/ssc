@@ -38,8 +38,8 @@ void IpoptSolverTest::TearDown()
 TEST_F(IpoptSolverTest, example)
 {
 //! [IpoptSolverTest example]
-    OptimizationProblem hs71;
-    hs71.minimize(x1*x4*(x1+x2+x3)+x3)
+    std::tr1::shared_ptr<OptimizationProblem> hs71(new OptimizationProblem());
+    hs71->minimize(x1*x4*(x1+x2+x3)+x3)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(1,x1,5)
@@ -65,8 +65,8 @@ TEST_F(IpoptSolverTest, example)
 
 TEST_F(IpoptSolverTest, rosenbrock_banana)
 {
-    OptimizationProblem rosenbrock;
-    rosenbrock.minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
+    std::tr1::shared_ptr<OptimizationProblem> rosenbrock(new OptimizationProblem());
+    rosenbrock->minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
     IpoptParameters ipopt_parameters;
     ipopt_parameters.print_level = 5;
     IpoptSolver optimize(rosenbrock, ipopt_parameters);
@@ -80,9 +80,9 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
 
 TEST_F(IpoptSolverTest, test_01)
 {
-    OptimizationProblem pb;
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
     Parameter c0(2);
-    pb.minimize(pow(x1*x1-c0,2));
+    pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
     const std::vector<double> x0({1});
     const double eps = 1e-3;
@@ -93,9 +93,9 @@ TEST_F(IpoptSolverTest, test_01)
 
 TEST_F(IpoptSolverTest, test_02)
 {
-    OptimizationProblem pb;
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
     Parameter c0(2);
-    pb.minimize(pow(x1*x1-c0,2));
+    pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
     const std::vector<double> x0({1});
     const double eps = 1e-3;

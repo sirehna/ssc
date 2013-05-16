@@ -54,8 +54,8 @@ class IpoptSolver::IpoptSolverPimpl
 
 
 
-IpoptSolver::IpoptSolver(const OptimizationProblem& problem, const IpoptParameters& parameters) :
-        pimpl(new IpoptSolverPimpl(std::tr1::shared_ptr<OptimizationProblem>(new OptimizationProblem(problem)),parameters))
+IpoptSolver::IpoptSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) :
+        pimpl(new IpoptSolverPimpl(problem, parameters))
 {
 }
 
