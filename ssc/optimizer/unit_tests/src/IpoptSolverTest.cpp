@@ -93,7 +93,7 @@ TEST_F(IpoptSolverTest, test_01)
     IpoptSolver optimize(pb);
     const std::vector<double> x0({1});
     const double eps = 1e-3;
-    *c0 = 2;
+    c0 = 2;
     auto result = optimize.solve(x0);
     ASSERT_SMALL_RELATIVE_ERROR(sqrt(2),result.state_values["x1"],eps);
 }
@@ -108,9 +108,9 @@ TEST_F(IpoptSolverTest, test_02)
     const double eps = 1e-3;
     for (size_t i = 0 ; i < 20 ; ++i)
     {
-        *c0 = a.random<double>().between(0,100);
+        c0 = a.random<double>().between(0,100);
         auto result = optimize.solve(x0);
-        ASSERT_SMALL_RELATIVE_ERROR(sqrt(*c0),result.state_values["x1"],eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sqrt(c0.get_lambda()()),result.state_values["x1"],eps);
     }
 }
 

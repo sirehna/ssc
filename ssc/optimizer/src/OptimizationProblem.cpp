@@ -92,8 +92,8 @@ template <class T> class MinMaxList
                 auto it_max = max.find(get_string(*v));
                 bool found_value_in_min_map = not(it_min==min.end());
                 bool found_value_in_max_map = not(it_max==max.end());
-                l[i]   = found_value_in_min_map ? *(it_min->second) : get_min_bound();
-                u[i++] = found_value_in_max_map ? *(it_max->second) : get_max_bound();
+                l[i]   = found_value_in_min_map ? (it_min->second).get_lambda()() : get_min_bound();
+                u[i++] = found_value_in_max_map ? (it_max->second).get_lambda()() : get_max_bound();
             }
         }
 

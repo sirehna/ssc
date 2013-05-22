@@ -20,10 +20,15 @@
 #include <cmath>
 #define PI (4.*atan(1.))
 
-#define X1 (**x1)
-#define X2 (**x2)
-#define X3 (**x3)
-#define X4 (**x4)
+#define X1_ (*x1)
+#define X2_ (*x2)
+#define X3_ (*x3)
+#define X4_ (*x4)
+
+#define X1 (x1->get_lambda()())
+#define X2 (x2->get_lambda()())
+#define X3 (x3->get_lambda()())
+#define X4 (x4->get_lambda()())
 
 OptimizationProblemTest::OptimizationProblemTest() : a(DataGenerator(1)),
                                                      generate(StateGenerator()),
@@ -81,10 +86,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
     const auto objective_function = hs71.get_objective_function();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
         ASSERT_DOUBLE_EQ(X1*X4*(X1+X2+X3)+X3, objective_function());
     }
 }
@@ -223,12 +228,12 @@ TEST_F(OptimizationProblemTest, should_be_able_to_specify_constraints_bounds_wit
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         problem.get_constraint_bounds(3, g_l, g_u);
-        ASSERT_DOUBLE_EQ(*p1, g_l[0]);
-        ASSERT_DOUBLE_EQ(*p2, g_l[1]);
+        ASSERT_DOUBLE_EQ(p1.get_lambda()(), g_l[0]);
+        ASSERT_DOUBLE_EQ(p2.get_lambda()(), g_l[1]);
         ASSERT_EQ(-INFTY, g_l[2]);
         ASSERT_EQ(INFTY, g_u[0]);
-        ASSERT_DOUBLE_EQ(*p3, g_u[1]);
-        ASSERT_DOUBLE_EQ(*p4, g_u[2]);
+        ASSERT_DOUBLE_EQ(p3.get_lambda()(), g_u[1]);
+        ASSERT_DOUBLE_EQ(p4.get_lambda()(), g_u[2]);
     }
 }
 
@@ -253,16 +258,16 @@ TEST_F(OptimizationProblemTest, should_be_able_to_specify_state_bounds_with_para
     double x_u[nb_of_states];
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        *p1 = a.random<double>();
-        *p2 = a.random<double>();
-        *p3 = a.random<double>();
-        *p4 = a.random<double>();
+        p1 = a.random<double>();
+        p2 = a.random<double>();
+        p3 = a.random<double>();
+        p4 = a.random<double>();
         problem.get_state_bounds(nb_of_states, x_l, x_u);
-        ASSERT_DOUBLE_EQ(*p1, x_l[0]);
+        ASSERT_DOUBLE_EQ(p1.get_lambda()(), x_l[0]);
         ASSERT_EQ(-INFTY, x_l[1]);
-        ASSERT_EQ(*p4, x_l[2]);
-        ASSERT_EQ(*p2, x_u[0]);
-        ASSERT_DOUBLE_EQ(*p3, x_u[1]);
+        ASSERT_EQ(p4.get_lambda()(), x_l[2]);
+        ASSERT_EQ(p2.get_lambda()(), x_u[0]);
+        ASSERT_DOUBLE_EQ(p3.get_lambda()(), x_u[1]);
         ASSERT_EQ(INFTY, x_u[2]);
     }
 }
@@ -281,10 +286,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints)
     const auto g2 = constraints.at(1);
     for (size_t i = 0 ; i< 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
         ASSERT_DOUBLE_EQ(X1*X2*X3*X4, g1());
         ASSERT_DOUBLE_EQ(pow(X1,2)+pow(X2,2)+pow(X3,2)+pow(X4,2), g2());
     }
@@ -308,10 +313,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_gradient_of_objective
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(X4*(2*X1+X2+X3), df_dx1(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx2(),eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X4, df_dx3(),eps);
@@ -341,10 +346,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints_jacobian)
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(X2*X3*X4, dg1_dx1(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X3*X4, dg1_dx2(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X2*X4, dg1_dx3(), eps);
@@ -384,23 +389,23 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_hessian)
     ASSERT_EQ(2, lambda.size());
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
-        *lambda.at(0) = a.random<double>();
-        *lambda.at(1) = a.random<double>();
-        *sigma_f  = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X4)+2*(*lambda.at(1)), d2f_dx1dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda.at(0))*X3*X4, d2f_dx2dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx2dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X4+(*lambda.at(0))*X2*X4, d2f_dx3dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR((*lambda.at(0))*X1*X4, d2f_dx3dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx3dx3(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*(2*X1+X2+X3)+(*lambda.at(0))*X2*X3, d2f_dx4dx1(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda.at(0))*X1*X3, d2f_dx4dx2(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(*sigma_f*X1+(*lambda.at(0))*X1*X2, d2f_dx4dx3(),eps);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(*lambda.at(1)), d2f_dx4dx4(),eps);
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
+        lambda.at(0) = a.random<double>();
+        lambda.at(1) = a.random<double>();
+        sigma_f  = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*(2*X4)+2*(lambda.at(1).get_lambda()()), d2f_dx1dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*X4+(lambda.at(0).get_lambda()())*X3*X4, d2f_dx2dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(lambda.at(1).get_lambda()()), d2f_dx2dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*X4+(lambda.at(0).get_lambda()())*X2*X4, d2f_dx3dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR((lambda.at(0).get_lambda()())*X1*X4, d2f_dx3dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(lambda.at(1).get_lambda()()), d2f_dx3dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*(2*X1+X2+X3)+(lambda.at(0).get_lambda()())*X2*X3, d2f_dx4dx1(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*X1+(lambda.at(0).get_lambda()())*X1*X3, d2f_dx4dx2(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(sigma_f.get_lambda()()*X1+(lambda.at(0).get_lambda()())*X1*X2, d2f_dx4dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(lambda.at(1).get_lambda()()), d2f_dx4dx4(),eps);
     }
 }
 
@@ -420,16 +425,16 @@ TEST_F(OptimizationProblemTest, should_be_able_to_reset_state_bounds)
     double x_u[nb_of_states];
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        *p1 = a.random<double>();
-        *p2 = a.random<double>();
-        *p3 = a.random<double>();
-        *p4 = a.random<double>();
+        p1 = a.random<double>();
+        p2 = a.random<double>();
+        p3 = a.random<double>();
+        p4 = a.random<double>();
         problem.get_state_bounds(nb_of_states, x_l, x_u);
-        ASSERT_DOUBLE_EQ(*p1, x_l[0]);
+        ASSERT_DOUBLE_EQ(p1.get_lambda()(), x_l[0]);
         ASSERT_EQ(-INFTY, x_l[1]);
-        ASSERT_EQ(*p4, x_l[2]);
-        ASSERT_EQ(*p2, x_u[0]);
-        ASSERT_DOUBLE_EQ(*p3, x_u[1]);
+        ASSERT_EQ(p4.get_lambda()(), x_l[2]);
+        ASSERT_EQ(p2.get_lambda()(), x_u[0]);
+        ASSERT_DOUBLE_EQ(p3.get_lambda()(), x_u[1]);
         ASSERT_EQ(INFTY, x_u[2]);
     }
 }
@@ -460,10 +465,10 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
     const double eps = 1e-6;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = a.random<double>();
-        X2 = a.random<double>();
-        X3 = a.random<double>();
-        X4 = a.random<double>();
+        X1_ = a.random<double>();
+        X2_ = a.random<double>();
+        X3_ = a.random<double>();
+        X4_ = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(2*X1*cos(X3), dg1_dx1(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*X2*cos(X4), dg1_dx2(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(-X1*X1*sin(X3), dg1_dx3(), eps);

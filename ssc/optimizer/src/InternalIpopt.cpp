@@ -155,7 +155,7 @@ bool InternalIpopt::eval_f(Index n, const Number* x, bool new_x, Number& obj_val
 
     for (size_t i = 0 ; i < (size_t)n ; ++i)
     {
-        **states.at(i) = (double)x[i];
+        *states.at(i) = (double)x[i];
     }
 
     (void) obj_value;
@@ -183,7 +183,7 @@ bool InternalIpopt::eval_grad_f(Index n, const Number* x, bool new_x, Number* gr
     (void) grad_f;
     for (size_t i = 0 ; i < (size_t)n ; ++i)
     {
-        **states.at(i) = x[i];
+        *states.at(i) = x[i];
     }
     (void) new_x;
     const size_t p = grad_objective_function.index.size();
@@ -222,7 +222,7 @@ bool InternalIpopt::eval_g(Index n, const Number* x, bool new_x, Index m, Number
 
     for (size_t i = 0 ; i < (size_t)n ; ++i)
     {
-        **states.at(i) = x[i];
+        *states.at(i) = x[i];
     }
     (void) new_x;
     (void) m;
@@ -276,7 +276,7 @@ bool InternalIpopt::eval_jac_g(Index n, const Number* x, bool new_x,
     {
         for (size_t i = 0 ; i < (size_t)n ; ++i)
         {
-            **states.at(i) = x[i];
+            *states.at(i) = x[i];
         }
         for (size_t i = 0 ; i < (size_t)nele_jac ; ++i)
         {
@@ -321,14 +321,14 @@ bool InternalIpopt::eval_h(Index n, const Number* x, bool new_x,
     }
     else
     {
-        *sigma_f = obj_factor;
+        sigma_f = obj_factor;
         for (size_t j = 0 ; j < (size_t)m ; ++j)
         {
-            *lambda.at(j) = lambda_[j];
+            lambda.at(j) = lambda_[j];
         }
         for (size_t i = 0 ; i < (size_t)n ; ++i)
         {
-            **states.at(i) = x[i];
+            *states.at(i) = x[i];
         }
         for (size_t i = 0 ; i < (size_t)nele_hess ; ++i)
         {
