@@ -24,7 +24,7 @@ class Parameter : public Nullary
 {
     public:
         Parameter(const double& val);
-        //Parameter(const Parameter& rhs);
+        Parameter(const Parameter& rhs);
         Parameter();
         NodePtr diff(const StatePtr& state) const;
         bool operator==(const Parameter& rhs) const;

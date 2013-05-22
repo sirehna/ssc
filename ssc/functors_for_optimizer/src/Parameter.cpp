@@ -25,6 +25,45 @@ Parameter::Parameter(const double& val) : ptr(new double(val))
     update_lambda();
 }
 
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr)
+{
+    update_lambda();
+}
+
+/*
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr)
+{
+    update_lambda();
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(new double(*rhs.ptr))
+{
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(new double(*rhs.ptr))
+{
+    update_lambda();
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(), ptr(rhs.ptr)
+{
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(), ptr(rhs.ptr)
+{
+    update_lambda();
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(), ptr(new double(*rhs.ptr))
+{
+}
+
+Parameter::Parameter(const Parameter& rhs) : Nullary(), ptr(new double(*rhs.ptr))
+{
+    update_lambda();
+}
+*/
+
 NodePtr Parameter::diff(const StatePtr& state) const
 {
     (void)state;
