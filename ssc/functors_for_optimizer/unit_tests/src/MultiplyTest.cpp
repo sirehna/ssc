@@ -35,12 +35,12 @@ void MultiplyTest::TearDown()
 TEST_F(MultiplyTest, example)
 {
 //! [MultiplyTest example]
-    **x1 = a.random<double>();
-    **x2 = a.random<double>();
+    *x1 = a.random<double>();
+    *x2 = a.random<double>();
     Multiply m(x1,x2);
 //! [MultiplyTest example]
 //! [MultiplyTest expected output]
-    ASSERT_DOUBLE_EQ((**x1)*(**x2),m.get_lambda()());
+    ASSERT_DOUBLE_EQ((x1->get_lambda()())*(x2->get_lambda()()),m.get_lambda()());
 //! [MultiplyTest expected output]
 }
 
@@ -51,9 +51,9 @@ TEST_F(MultiplyTest, should_be_able_to_multiply_with_Multiply)
     Multiply m3(m1,x1);
     for (size_t i = 0 ; i < 100 ; ++i)
     {
-        **x1 = a.random<double>();
-        **x2 = a.random<double>();
-        ASSERT_DOUBLE_EQ((**x1)*(**x1)*(**x2),m2.get_lambda()());
+        *x1 = a.random<double>();
+        *x2 = a.random<double>();
+        ASSERT_DOUBLE_EQ((x1->get_lambda()())*(x1->get_lambda()())*(x2->get_lambda()()),m2.get_lambda()());
         ASSERT_DOUBLE_EQ(m3.get_lambda()(),m2.get_lambda()());
     }
 }
@@ -75,10 +75,10 @@ TEST_F(MultiplyTest, derivative)
     auto dm2_dx2 = m2.diff(x2);
     for (size_t i = 0 ; i < 100 ; ++i)
     {
-        **x1 = a.random<double>();
-        **x2 = a.random<double>();
-        ASSERT_DOUBLE_EQ(2*(**x1)*(**x2),dm2_dx1->get_lambda()());
-        ASSERT_DOUBLE_EQ((**x1)*(**x1),dm2_dx2->get_lambda()());
+        *x1 = a.random<double>();
+        *x2 = a.random<double>();
+        ASSERT_DOUBLE_EQ(2*(x1->get_lambda()())*(x2->get_lambda()()),dm2_dx1->get_lambda()());
+        ASSERT_DOUBLE_EQ((x1->get_lambda()())*(x1->get_lambda()()),dm2_dx2->get_lambda()());
     }
 }
 

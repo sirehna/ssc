@@ -21,6 +21,14 @@ void State::update_lambda()
     value = [factor,ptr]() -> double {return factor*(*ptr);};
 }
 
+State& State::operator=(const double& a)
+{
+    *ptr = a;
+    factor = 1;
+    update_lambda();
+    return *this;
+}
+
 bool State::operator<(const State& rhs) const
 {
     return index<rhs.index;

@@ -33,7 +33,7 @@ void PiecewiseParabolicFunctor::update_lambda()
 {
     auto func = [f,state]()->double
         {
-            f->set_computed_value(**state);
+            f->set_computed_value(state->get_lambda()());
             return f->f();
         };
     set_value(func);

@@ -26,6 +26,9 @@ class Parameter : public Nullary
         Parameter(const double& val);
         Parameter(const Parameter& rhs);
         Parameter();
+        ~Parameter();
+        Parameter& operator=(const Parameter& rhs);
+        Parameter& operator=(const double& rhs);
         NodePtr diff(const StatePtr& state) const;
         bool operator==(const Parameter& rhs) const;
         bool operator!=(const Parameter& rhs) const;
@@ -40,10 +43,10 @@ class Parameter : public Nullary
 
     protected:
         std::tr1::shared_ptr<double> ptr;
-        friend double& operator*(const Parameter& s);
+        //friend double& operator*(const Parameter& s);
+        int nb_of_copies;
 
 };
 
-double& operator*(const Parameter& s);
 typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
 #endif /* PARAMETER_HPP_ */

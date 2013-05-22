@@ -48,8 +48,8 @@ TEST_F(SimplifyTest, parameters_should_not_be_simplified)
     std::stringstream ss_ref;
     Serialize v(ss);
     Parameter p(a.random<double>());
-    *p = a.random<double>();
-    ss_ref << *p;
+    p = a.random<double>();
+    ss_ref << p.get_lambda()();
     p.simplify()->accept(v);
     ASSERT_EQ(ss_ref.str(), ss.str());
 }

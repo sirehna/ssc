@@ -25,8 +25,10 @@ void DifferenceTest::SetUp()
 void DifferenceTest::TearDown()
 {
 }
-#define X (**x)
-#define Y (**y)
+#define X (*x)
+#define Y (*y)
+#define X_ (x->get_lambda()())
+#define Y_ (y->get_lambda()())
 
 TEST_F(DifferenceTest, example)
 {
@@ -41,7 +43,7 @@ TEST_F(DifferenceTest, example)
     {
         X = a.random<double>();
         Y = a.random<double>();
-        ASSERT_DOUBLE_EQ(X-Y, dv());
+        ASSERT_DOUBLE_EQ(X_-Y_, dv());
     }
 //! [DifferenceTest expected output]
 }

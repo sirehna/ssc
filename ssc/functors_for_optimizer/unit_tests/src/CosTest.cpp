@@ -9,7 +9,8 @@
 #include "Cos.hpp"
 
 
-#define X (**x)
+#define X (*x)
+#define X_ (x->get_lambda()())
 
 CosTest::CosTest() : a(DataGenerator(1)), generate(StateGenerator())
 {
@@ -38,7 +39,7 @@ TEST_F(CosTest, example)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
-        ASSERT_DOUBLE_EQ(cos(X), cos_X());
+        ASSERT_DOUBLE_EQ(cos(X_), cos_X());
     }
 //! [SinTest expected output]
 }
@@ -52,7 +53,7 @@ TEST_F(CosTest, derivative)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
-        ASSERT_DOUBLE_EQ(-sin(X), dcos_dx());
+        ASSERT_DOUBLE_EQ(-sin(X_), dcos_dx());
     }
 }
 
@@ -67,5 +68,3 @@ TEST_F(CosTest, equality_operator)
     ASSERT_FALSE(cos_x.equals(cos_y));
     ASSERT_FALSE(cos_y.equals(cos_x));
 }
-
-

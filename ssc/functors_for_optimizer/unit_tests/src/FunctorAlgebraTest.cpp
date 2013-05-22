@@ -26,7 +26,6 @@
 #define EPS 1e-8
 
 
-
 FunctorAlgebraTest::FunctorAlgebraTest() : a(DataGenerator(88)), generate(StateGenerator()),
 x(generate.state("x")),
 y(generate.state("y")),
@@ -46,9 +45,9 @@ void FunctorAlgebraTest::TearDown()
 {
 }
 
-#define X (**x)
-#define Y (**y)
-#define Z (**z)
+#define X (x->get_lambda()())
+#define Y (y->get_lambda()())
+#define Z (z->get_lambda()())
 
 TEST_F(FunctorAlgebraTest, example)
 {
@@ -75,9 +74,9 @@ TEST_F(FunctorAlgebraTest, example)
     const double eps = 1e-12;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(-1000,100);
-        **y = a.random<double>().between(-1000,100);
-        **z = a.random<double>().between(-1000,100);
+        *x = a.random<double>().between(-1000,100);
+        *y = a.random<double>().between(-1000,100);
+        *z = a.random<double>().between(-1000,100);
         ASSERT_SMALL_RELATIVE_ERROR(X*X*X, f1(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(Y/Z, f2(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(Z, f3(),EPS);
@@ -94,8 +93,8 @@ TEST_F(FunctorAlgebraTest, bug_01)
     auto f = ((y / z) * ((x * (x + x)) + (x * x)))->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1 ; ++i)
     {
-        **z = a.random<double>().between(-1000,1000)();
-        ASSERT_SMALL_RELATIVE_ERROR(3.*pow(**x,2.)/(**z), f(),1E-15);
+        *z = a.random<double>().between(-1000,1000)();
+        ASSERT_SMALL_RELATIVE_ERROR(3.*pow(x->get_lambda()(),2.)/(z->get_lambda()()), f(),1E-15);
     }
 }
 
@@ -104,45 +103,45 @@ TEST_F(FunctorAlgebraTest, bug_02)
     auto f = (x*y/z)->diff(x)->diff(y)->diff(z)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **z = a.random<double>().between(-1000,1000)();
-        ASSERT_SMALL_RELATIVE_ERROR(-1./((**z)*(**z)), f(),1E-14);
+        *z = a.random<double>().between(-1000,1000)();
+        ASSERT_SMALL_RELATIVE_ERROR(-1./((z->get_lambda()())*(z->get_lambda()())), f(),1E-14);
     }
 }
 
 TEST_F(FunctorAlgebraTest, bug_03)
 {
-    X = 3;
-    Y = 5;
-    Z = 7;
+    *x = 3;
+    *y = 5;
+    *z = 7;
     auto F = (2*x-z*(x+y+3*x)*y);
     auto f = F->get_lambda();
     ASSERT_EQ(2*X-Z*(X+Y+3*X)*Y, f());
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(-1000,1000)();
-        **y = a.random<double>().between(-1000,1000)();
-        **z = a.random<double>().between(-1000,1000)();
+        *x = a.random<double>().between(-1000,1000)();
+        *y = a.random<double>().between(-1000,1000)();
+        *z = a.random<double>().between(-1000,1000)();
         ASSERT_SMALL_RELATIVE_ERROR(2*X-Z*(X+Y+3*X)*Y, f(),1E-8);
     }
 }
 
 TEST_F(FunctorAlgebraTest, bug_04)
 {
-    X = 3;
+    *x = 3;
     auto F = 3*x;
     auto f = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>();
+        *x = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(3*X,f(),EPS);
     }
 }
 
 TEST_F(FunctorAlgebraTest, bug_05)
 {
-    X = 3;
-    Y = 500;
-    Z = 70000;
+    *x = 3;
+    *y = 500;
+    *z = 70000;
     auto F = x+y+3*x;
     auto f = F->get_lambda();
     ASSERT_EQ(X+Y+3*X, f());
@@ -150,8 +149,8 @@ TEST_F(FunctorAlgebraTest, bug_05)
 
 TEST_F(FunctorAlgebraTest, bug_06)
 {
-    X = 3;
-    Y = 500;
+    *x = 3;
+    *y = 500;
     auto F = 3*(x+y);
     auto f = F->get_lambda();
     ASSERT_EQ(3*(X+Y), f());
@@ -165,7 +164,7 @@ TEST_F(FunctorAlgebraTest, crash)
 
 TEST_F(FunctorAlgebraTest, bug_07)
 {
-    X = 3;
+    *x = 3;
     auto F = (x-(x+3*x));
     SerializeReversePolish s(std::cout);
     F->accept(s);std::cout<<std::endl;
@@ -178,23 +177,23 @@ TEST_F(FunctorAlgebraTest, bug_08)
     auto f = (2*x-z*(x+y+3*x)*y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
-        Z = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
+        *z = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(2*X-Z*(X+Y+3*X)*Y, f(),EPS);
     }
 }
 
 TEST_F(FunctorAlgebraTest, bug_09)
 {
-    X = 3;
-    Y = 50;
+    *x = 3;
+    *y = 50;
     auto f = (x-y*x)->get_lambda();
     ASSERT_EQ(X-Y*X, f());
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(X-Y*X, f(),EPS);
     }
 }
@@ -205,9 +204,9 @@ TEST_F(FunctorAlgebraTest, should_be_able_to_substract_a_parameter)
     auto f = pow(x-p,2)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>();
-        *p = a.random<double>();
-        ASSERT_SMALL_RELATIVE_ERROR(pow(**x-*p,2),f(),EPS);
+        *x = a.random<double>();
+        p = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(pow(x->get_lambda()()-p.get_lambda()(),2),f(),EPS);
     }
 }
 
@@ -217,20 +216,20 @@ TEST_F(FunctorAlgebraTest, bug_10)
     const auto f = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(1-X, f(),EPS);
     }
 }
 
 TEST_F(FunctorAlgebraTest, bug_11)
 {
-    X = 3;
+    *x = 3;
     const auto F0 = x-1;
     const auto F05 = pow(F0,5);
     const auto f0 = F0->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(X-1, f0(),EPS);
     }
 }
@@ -246,8 +245,8 @@ TEST_F(FunctorAlgebraTest, bug_12)
     const auto d2f_dxy = F->diff(x)->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(100*pow(Y-X*X,2)+pow(1.-X,2), f(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(-400*X*(Y-X*X)+2*(X-1), df_dx(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(200*(Y-X*X), df_dy(),EPS);
@@ -265,7 +264,7 @@ TEST_F(FunctorAlgebraTest, bug_13)
     const auto f = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(X-1, f(),EPS);
     }
 }
@@ -276,8 +275,8 @@ TEST_F(FunctorAlgebraTest, bug_14)
     const auto rosenbrock_banana_function = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(100*pow(Y-X*X,2)+pow(X-1,2), rosenbrock_banana_function(),1E-8);
     }
 }
@@ -293,8 +292,8 @@ TEST_F(FunctorAlgebraTest, bug_15)
     const auto d2f_dxy = (-400 * (y - (pow(x, 2))) * x + 2 * (x - 1))->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(100*pow(Y-X*X,2)+pow(X-1,2), f(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(-400*X*(Y-X*X)+2*(X-1), df_dx(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(200*(Y-X*X), df_dy(),EPS);
@@ -310,8 +309,8 @@ TEST_F(FunctorAlgebraTest, bug_16)
     const auto f = pow(y-pow(x,2),2)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(pow(Y-X*X,2), f(),EPS);
     }
 }
@@ -321,7 +320,7 @@ TEST_F(FunctorAlgebraTest, bug_17)
     const auto f = ((-1)*pow(x,2))->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-pow(X,2), f(),EPS);
     }
 }
@@ -331,7 +330,7 @@ TEST_F(FunctorAlgebraTest, bug_18)
     const auto df_dx = ((-1)*pow(x,2))->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-2*X, df_dx(),EPS);
     }
 }
@@ -341,8 +340,8 @@ TEST_F(FunctorAlgebraTest, bug_19)
     const auto df_dx = (pow(y-pow(x,2),2))->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-4*X*(Y-X*X), df_dx(),EPS);
     }
 }
@@ -351,7 +350,7 @@ TEST_F(FunctorAlgebraTest, bug_20)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         const auto f = (x+2*(x-1))->get_lambda();
         ASSERT_SMALL_RELATIVE_ERROR(X+2*(X-1), f(),EPS);
     }
@@ -362,8 +361,8 @@ TEST_F(FunctorAlgebraTest, bug_21)
     const auto df_dx = (x*(y-x*x))->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-3*X*X+Y, df_dx(),EPS);
     }
 }
@@ -374,7 +373,7 @@ TEST_F(FunctorAlgebraTest, bug_22)
     const auto f = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(2*(X-1), f(),EPS);
     }
 }
@@ -386,7 +385,7 @@ TEST_F(FunctorAlgebraTest, bug_23)
     const auto df_dx = F->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(4*X+2, df_dx(),EPS);
     }
 }
@@ -396,8 +395,8 @@ TEST_F(FunctorAlgebraTest, bug_24)
     const auto f = (-400 * (y - (pow(x, 2))) * x + 2 * (x - 1))->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-400*X, f(),EPS);
     }
 }
@@ -407,8 +406,8 @@ TEST_F(FunctorAlgebraTest, bug_25)
 	const auto f = (400*(y - x) * x)->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(400*X, f(),EPS);
     }
 }
@@ -418,8 +417,8 @@ TEST_F(FunctorAlgebraTest, bug_26)
     const auto d2f_dxy = pow(y-pow(x,2),2)->diff(x)->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-4*X, d2f_dxy(),EPS);
     }
 }
@@ -429,8 +428,8 @@ TEST_F(FunctorAlgebraTest, bug_27)
     const auto d2f_dx2 = pow(y-pow(x,2),2)->diff(x)->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(4*(3*X*X-Y), d2f_dx2(),EPS);
     }
 }
@@ -440,7 +439,7 @@ TEST_F(FunctorAlgebraTest, bug_28)
     const auto df_dx = (-1.*pow(x,2))->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-2.*X, df_dx(),EPS);
     }
 }
@@ -451,8 +450,8 @@ TEST_F(FunctorAlgebraTest, bug_29)
     const auto df_dx = dF_dx->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(4*X*(X*X-Y), df_dx(),EPS);
     }
 }
@@ -464,8 +463,8 @@ TEST_F(FunctorAlgebraTest, bug_30)
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(4*(3*X*X-Y), d2f_dx2(),EPS);
     }
 }
@@ -482,8 +481,8 @@ TEST_F(FunctorAlgebraTest, bug_31)
     auto f = sum.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = a.random<double>().between(-1000,1000);
-        Y = a.random<double>().between(-1000,1000);
+        *x = a.random<double>().between(-1000,1000);
+        *y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-2, f(),EPS);
     }
 }
@@ -499,11 +498,11 @@ TEST_F(FunctorAlgebraTest, bug_32)
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = a.random<double>().between(-1000,1000);
-        (**x2) = a.random<double>().between(-1000,1000);
-        (**x3) = a.random<double>().between(-1000,1000);
-        (**x4) = a.random<double>().between(-1000,1000);
-        ASSERT_SMALL_RELATIVE_ERROR(2*(**x1)*cos(**x3), df->get_lambda()(),EPS);
+        (*x1) = a.random<double>().between(-1000,1000);
+        (*x2) = a.random<double>().between(-1000,1000);
+        (*x3) = a.random<double>().between(-1000,1000);
+        (*x4) = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(x1->get_lambda()())*cos(x3->get_lambda()()), df->get_lambda()(),EPS);
     }
 }
 
@@ -518,10 +517,10 @@ TEST_F(FunctorAlgebraTest, bug_33)
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = a.random<double>().between(-1000,1000);
-        (**x2) = a.random<double>().between(-1000,1000);
-        (**x3) = a.random<double>().between(-1000,1000);
-        (**x4) = a.random<double>().between(-1000,1000);
+        (*x1) = a.random<double>().between(-1000,1000);
+        (*x2) = a.random<double>().between(-1000,1000);
+        (*x3) = a.random<double>().between(-1000,1000);
+        (*x4) = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(0, df->get_lambda()(),EPS);
     }
 }
@@ -535,9 +534,9 @@ TEST_F(FunctorAlgebraTest, bug_34)
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = a.random<double>().between(-1000,1000);
-        (**x3) = a.random<double>().between(-1000,1000);
-        ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), df->get_lambda()(),EPS);
+        (*x1) = a.random<double>().between(-1000,1000);
+        (*x3) = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(-pow((x1->get_lambda()()),2)*sin(x3->get_lambda()()), df->get_lambda()(),EPS);
 
     }
 }
@@ -554,8 +553,20 @@ TEST_F(FunctorAlgebraTest, bug_35)
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = a.random<double>().between(-1000,1000);
-        (**x3) = a.random<double>().between(-1000,1000);
-        ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), f->get_lambda()(),EPS);
+        (*x1) = a.random<double>().between(-1000,1000);
+        (*x3) = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(-pow((x1->get_lambda()()),2)*sin(x3->get_lambda()()), f->get_lambda()(),EPS);
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_36)
+{
+    Parameter x0 = 3;
+    auto f = pow(x-x0,2);
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        x0 = a.random<double>();
+        *x = a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(pow((x->get_lambda()() - x0.get_lambda()()),2), f->get_lambda()(),EPS);
     }
 }

@@ -36,8 +36,8 @@ TEST_F(LnTest, example)
 //! [LnTest expected output]
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().greater_than(0);
-        ASSERT_DOUBLE_EQ(log(**x), v());
+        *x = a.random<double>().greater_than(0);
+        ASSERT_DOUBLE_EQ(log(x->get_lambda()()), v());
     }
 //! [LnTest expected output]
 }
@@ -49,8 +49,8 @@ TEST_F(LnTest, derivative)
     auto v = l.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().greater_than(0);
-        ASSERT_DOUBLE_EQ(1/(**x), v());
+        *x = a.random<double>().greater_than(0);
+        ASSERT_DOUBLE_EQ(1/(x->get_lambda()()), v());
     }
 }
 
