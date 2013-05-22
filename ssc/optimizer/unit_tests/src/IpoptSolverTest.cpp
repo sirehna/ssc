@@ -127,21 +127,12 @@ TEST_F(IpoptSolverTest, allocation_problem)
        .bound_state(0,x2,1)
        .bound_state(0,x3,PI)
        .bound_state(0,x4,PI);
-    IpoptParameters parameters;
-    parameters.show_evaluated_points = true;
-    parameters.check_first_derivative = true;
-    parameters.check_second_derivative = false;
-    parameters.maximum_number_of_iterations = 1;
-    //parameters.trace_function_calls = true;
-    IpoptSolver optimize(pb, parameters);
+    IpoptSolver optimize(pb);
     const std::vector<double> x0({0.5,0.5,PI/2,PI/2});
     const double eps = 1e-3;
 
     const auto result = optimize.solve(x0);
-    for (auto it = result.constraint_values.begin() ; it != result.constraint_values.end() ; ++it)
-    {
-        std::cout << *it << std::endl;
-    }
+
     ASSERT_SMALL_RELATIVE_ERROR(cos(theta),result.constraint_values.at(0),eps);
     ASSERT_SMALL_RELATIVE_ERROR(sin(theta),result.constraint_values.at(1),eps);
 }
