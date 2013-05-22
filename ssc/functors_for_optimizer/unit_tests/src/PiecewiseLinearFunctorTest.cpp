@@ -35,9 +35,9 @@ TEST_F(PiecewiseLinearFunctorTest, example)
     const auto f = pl.get_lambda();
 //! [PiecewiseLinearFunctorTest example]
 //! [PiecewiseLinearFunctorTest expected output]
-    **x = 0;
+    *x = 0;
     ASSERT_DOUBLE_EQ(3, f());
-    **x = 0.5;
+    *x = 0.5;
     ASSERT_DOUBLE_EQ(4.5, f());
 //! [PiecewiseLinearFunctorTest expected output]
 }
@@ -47,9 +47,9 @@ TEST_F(PiecewiseLinearFunctorTest, value_should_be_computed_properly)
     auto x = generate.state("x");
     PiecewiseLinearFunctor pl(x, 0, 10, {3,6,5,8,7,4,5,6,9,72,-56});
     const auto f = pl.get_lambda();
-    **x = 1.5;
+    *x = 1.5;
     ASSERT_DOUBLE_EQ(5.5, f());
-    **x = 2.7;
+    *x = 2.7;
     ASSERT_DOUBLE_EQ(5+0.7*3, f());
 }
 TEST_F(PiecewiseLinearFunctorTest, first_derivative_should_be_piecewise_constant)
@@ -59,52 +59,52 @@ TEST_F(PiecewiseLinearFunctorTest, first_derivative_should_be_piecewise_constant
     const auto df_dx = pl.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(0,1);
+        *x = a.random<double>().between(0,1);
         ASSERT_DOUBLE_EQ(3,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(1,2);
+        *x = a.random<double>().between(1,2);
         ASSERT_DOUBLE_EQ(-1,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(2,3);
+        *x = a.random<double>().between(2,3);
         ASSERT_DOUBLE_EQ(3,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(3,4);
+        *x = a.random<double>().between(3,4);
         ASSERT_DOUBLE_EQ(-1,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(4,5);
+        *x = a.random<double>().between(4,5);
         ASSERT_DOUBLE_EQ(-3,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(5,6);
+        *x = a.random<double>().between(5,6);
         ASSERT_DOUBLE_EQ(1,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(6,7);
+        *x = a.random<double>().between(6,7);
         ASSERT_DOUBLE_EQ(1,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(7,8);
+        *x = a.random<double>().between(7,8);
         ASSERT_DOUBLE_EQ(3,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(8,9);
+        *x = a.random<double>().between(8,9);
         ASSERT_DOUBLE_EQ(63,df_dx());
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(9,10);
+        *x = a.random<double>().between(9,10);
         ASSERT_DOUBLE_EQ(-128,df_dx());
     }
 }
@@ -119,7 +119,7 @@ TEST_F(PiecewiseLinearFunctorTest, second_derivative_should_be_zero)
         const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(10000);
         const PiecewiseLinearFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
         const auto f = pc.diff(x)->diff(x)->get_lambda();
-        **x = a.random<double>();
+        *x = a.random<double>();
         ASSERT_EQ(0,f());
     }
 }
@@ -134,7 +134,7 @@ TEST_F(PiecewiseLinearFunctorTest, should_be_second_derivative_even_if_there_are
         const size_t n = 2;
         const PiecewiseLinearFunctor pc(x, xmin, xmax, a.random_vector_of<double>().of_size(n));
         const auto f = pc.diff(x)->diff(x)->get_lambda();
-        **x = a.random<double>();
+        *x = a.random<double>();
         ASSERT_EQ(0,f());
     }
 }
@@ -147,9 +147,7 @@ TEST_F(PiecewiseLinearFunctorTest, should_be_able_to_use_piecewise_as_regular_fu
     const auto f = F->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(0,1);
-        ASSERT_DOUBLE_EQ(5*(**x)+3, f());
+        *x = a.random<double>().between(0,1);
+        ASSERT_DOUBLE_EQ(5*(x->get_lambda()())+3, f());
     }
 }
-
-

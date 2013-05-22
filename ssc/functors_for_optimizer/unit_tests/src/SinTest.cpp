@@ -12,7 +12,8 @@
 
 #include "test_macros.hpp"
 
-#define X (**x)
+#define X (*x)
+#define X_ (x->get_lambda()())
 
 SinTest::SinTest() : a(DataGenerator(1)), generate(StateGenerator())
 {
@@ -41,7 +42,7 @@ TEST_F(SinTest, example)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
-        ASSERT_DOUBLE_EQ(sin(X), sin_X());
+        ASSERT_DOUBLE_EQ(sin(X_), sin_X());
     }
 //! [SinTest expected output]
 }
@@ -53,8 +54,8 @@ TEST_F(SinTest, derivative)
     auto dsinX_dX = s.diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = PI/4;//a.random<double>();
-        ASSERT_DOUBLE_EQ(cos(X), dsinX_dX());
+        X = a.random<double>();
+        ASSERT_DOUBLE_EQ(cos(X_), dsinX_dX());
     }
 }
 

@@ -56,7 +56,7 @@ TEST_F(ConstantTest, derivative)
     auto d = c.diff(x);
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
-        **x = a.random<double>();
+        *x = a.random<double>();
         ASSERT_DOUBLE_EQ(0, d->get_lambda()());
     }
 }

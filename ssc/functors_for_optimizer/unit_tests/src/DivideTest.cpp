@@ -27,8 +27,10 @@ void DivideTest::TearDown()
 {
 }
 
-#define X (**x)
-#define Y (**y)
+#define X (*x)
+#define Y (*y)
+#define X_ (x->get_lambda()())
+#define Y_ (y->get_lambda()())
 
 TEST_F(DivideTest, example)
 {
@@ -41,7 +43,7 @@ TEST_F(DivideTest, example)
     {
         X = a.random<double>();
         Y = a.random<double>();
-        ASSERT_DOUBLE_EQ(X/Y, dv());
+        ASSERT_DOUBLE_EQ(X_/Y_, dv());
     }
 //! [DivideTest expected output]
 }
@@ -55,9 +57,9 @@ TEST_F(DivideTest, derivative)
     auto dv = d.diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>();
-        **y = a.random<double>();
-        ASSERT_NEAR(-X/(Y*Y), dv(), 1E-10);
+        X = a.random<double>();
+        Y = a.random<double>();
+        ASSERT_NEAR(-X_/(Y_*Y_), dv(), 1E-10);
     }
 }
 
@@ -67,8 +69,8 @@ TEST_F(DivideTest, bug_derive_a_double_division)
     auto dv = d.diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        **x = a.random<double>().between(-1000,1000);
-        **y = a.random<double>().between(-1000,1000);
-        ASSERT_DOUBLE_EQ(-2.*(**x)/pow(**y,3),dv());
+        X = a.random<double>().between(-1000,1000);
+        Y = a.random<double>().between(-1000,1000);
+        ASSERT_DOUBLE_EQ(-2.*(X_)/pow(Y_,3),dv());
     }
 }

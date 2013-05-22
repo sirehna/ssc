@@ -41,8 +41,8 @@ TEST_F(SumTest, example)
     {
         const double v1 = a.random<double>();
         const double v2 = a.random<double>();
-        **x = v1;
-        **y = v2;
+        *x = v1;
+        *y = v2;
         ASSERT_DOUBLE_EQ(v1+v2,s.get_lambda()());
     }
 //! [SumTest expected output]

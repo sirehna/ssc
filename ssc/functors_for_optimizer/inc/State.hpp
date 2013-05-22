@@ -25,6 +25,7 @@ class State : public Parameter
       bool equals_derived(const State& rhs) const;
       std::string get_type() const;
       void update_lambda();
+      State& operator=(const double& a);
 
 
     private:

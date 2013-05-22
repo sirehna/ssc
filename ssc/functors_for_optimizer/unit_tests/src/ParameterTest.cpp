@@ -33,7 +33,7 @@ TEST_F(ParameterTest, example)
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double val = a.random<double>();
-        *c = val;
+        c = val;
         ASSERT_DOUBLE_EQ(val, c.get_lambda()());
     }
 
@@ -72,7 +72,7 @@ TEST_F(ParameterTest, should_be_able_to_assign_a_parameter)
     Parameter p2 = p1;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        *p1 = a.random<double>();
-        ASSERT_DOUBLE_EQ(*p1,*p2);
+        p1 = a.random<double>();
+        ASSERT_DOUBLE_EQ(p1.get_lambda()(),p2.get_lambda()());
     }
 }

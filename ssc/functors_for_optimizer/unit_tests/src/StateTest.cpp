@@ -17,12 +17,12 @@ TEST_F(StateTest, should_have_one_and_only_one_constructor_which_takes_the_name_
 {
     const std::string name = a.random<std::string>();
     const size_t index = a.random<size_t>();
-    const State x(name, index);
+    State x(name, index);
     ASSERT_EQ(name, x.get_name());
     ASSERT_EQ(index, x.get_index());
     const double value = a.random<double>();
-    *x = value;
-    ASSERT_EQ(value, *x);
+    x = value;
+    ASSERT_EQ(value, x.get_lambda()());
 }
 
 TEST_F(StateTest, should_be_able_to_compare_two_states)
