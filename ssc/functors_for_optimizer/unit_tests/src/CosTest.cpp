@@ -48,13 +48,12 @@ TEST_F(CosTest, derivative)
     auto x = generate.state("x");
     Cos s(x);
     auto dcos_dx = s.diff(x)->get_lambda();
-    dcos_dx();
-    /*
+
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>();
         ASSERT_DOUBLE_EQ(-sin(X), dcos_dx());
-    }*/
+    }
 }
 
 TEST_F(CosTest, equality_operator)

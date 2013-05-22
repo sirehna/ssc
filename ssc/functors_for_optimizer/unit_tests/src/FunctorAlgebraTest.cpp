@@ -244,17 +244,16 @@ TEST_F(FunctorAlgebraTest, bug_12)
     const auto d2f_dx2 = F->diff(x)->diff(x)->get_lambda();
     const auto d2f_dy2 = F->diff(y)->diff(y)->get_lambda();
     const auto d2f_dxy = F->diff(x)->diff(y)->get_lambda();
-    //for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X = 2;//a.random<double>().between(-1000,1000);
-        Y = 3;//a.random<double>().between(-1000,1000);
-        ASSERT_DOUBLE_EQ(100*pow(Y-X*X,2)+pow(1.-X,2), f());
-//                         -(400*(y-x^2))*x-2.+2*x
-        ASSERT_DOUBLE_EQ(-400*X*(Y-X*X)+2*(X-1), df_dx());
-        ASSERT_DOUBLE_EQ(200*(Y-X*X), df_dy());
-        ASSERT_DOUBLE_EQ(400*(3*X*X-Y)+2, d2f_dx2());
-        ASSERT_DOUBLE_EQ(200, d2f_dy2());
-        ASSERT_DOUBLE_EQ(-400*X, d2f_dxy());
+        X = a.random<double>().between(-1000,1000);
+        Y = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(100*pow(Y-X*X,2)+pow(1.-X,2), f(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(-400*X*(Y-X*X)+2*(X-1), df_dx(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(200*(Y-X*X), df_dy(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(400*(3*X*X-Y)+2, d2f_dx2(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(200, d2f_dy2(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(-400*X, d2f_dxy(),EPS);
     }
 
 }
@@ -534,17 +533,10 @@ TEST_F(FunctorAlgebraTest, bug_34)
     auto f = pow(x1,2)*Cos(x3);
     auto df = f->diff(x3);
 
-    SerializeReversePolish s(std::cout);
-
-    COUT(*df);
-    df->accept(s);
-    std::cout << std::endl;
-    COUT("");
-
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = 1;//a.random<double>().between(-1000,1000);
-        (**x3) = PI/4.;//a.random<double>().between(-1000,1000);
+        (**x1) = a.random<double>().between(-1000,1000);
+        (**x3) = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), df->get_lambda()(),EPS);
 
     }
@@ -557,21 +549,13 @@ TEST_F(FunctorAlgebraTest, bug_35)
 
     auto f1 = Sin(x3).clone();
     f1->multiply_by(-1);
-    //auto f = pow(x1,2)*((-1)*Sin(x3));
     auto f = pow(x1,2)*f1;
-
-    SerializeReversePolish s(std::cout);
-
-    COUT(*f);
-    f->accept(s);
-    std::cout << std::endl;
-    COUT("");
 
 
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        (**x1) = 1;//a.random<double>().between(-1000,1000);
-        (**x3) = PI/4.;//a.random<double>().between(-1000,1000);
+        (**x1) = a.random<double>().between(-1000,1000);
+        (**x3) = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), f->get_lambda()(),EPS);
     }
 }
