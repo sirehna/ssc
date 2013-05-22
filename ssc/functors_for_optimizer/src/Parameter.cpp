@@ -12,25 +12,22 @@
 
 Parameter::Parameter() : ptr(new double(0))
 {
-    set_value([ptr,factor]()->double {return factor*(*ptr);});
+    update_lambda();
 }
 
 void Parameter::update_lambda()
 {
-    set_value([ptr,factor]()->double {return factor*(*ptr);});
+    set_value([ptr,&factor]()->double {return factor*(*ptr);});
 }
 
 Parameter::Parameter(const double& val) : ptr(new double(val))
 {
-    set_value([ptr,factor]()->double {return factor*(*ptr);});
+    update_lambda();
 }
 
 NodePtr Parameter::diff(const StatePtr& state) const
 {
-    if (state->get_index())
-    {
-
-    }
+    (void)state;
     return NodePtr(new Null);
 }
 

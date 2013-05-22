@@ -8,13 +8,20 @@
 #include "Cos.hpp"
 #include "Sin.hpp"
 #include "State.hpp"
+#include "Constant.hpp"
 #include "Multiply.hpp"
 #include "Parameter.hpp"
 #include "FunctorAlgebra.hpp"
 #include <cmath>
 #include <string>
 
+
 Cos::Cos(const NodePtr& n_) : Unary(n_)
+{
+    update_lambda();
+}
+
+void Cos::update_lambda()
 {
     set_value([factor,n]()->double {return factor*cos(n->get_lambda()());});
 }
@@ -26,11 +33,14 @@ std::string Cos::get_operator_name() const
 
 NodePtr Cos::diff(const StatePtr& state) const
 {
-    auto ret = (n->diff(state)*Sin(n->clone()));
-    ret->multiply_by(-1);
-    return ret;
-
-    //return NodePtr(new Multiply(Mult(new Multiply(n->diff(state),ConstantPtr(new Constant(-1)))),SinPtr(new Sin(n))));
+    auto du_dstate = n->diff(state);
+    auto dv_dstate = Sin(n->clone()).clone();
+    dv_dstate->multiply_by(-1);
+    if (n->diff(state)->equals_derived(Constant(1)))
+    {
+        return dv_dstate;
+    }
+    return du_dstate*dv_dstate;
 }
 
 NodePtr Cos::clone() const

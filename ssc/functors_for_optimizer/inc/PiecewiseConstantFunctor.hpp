@@ -21,6 +21,7 @@
  */
 
 class PiecewiseConstant;
+class State;
 
 class PiecewiseConstantFunctor : public Unary
 {
@@ -34,9 +35,11 @@ class PiecewiseConstantFunctor : public Unary
         bool equals_derived(const PiecewiseConstantFunctor& rhs) const;
         std::string get_type() const;
         std::string get_operator_name() const;
+        void update_lambda();
     private:
         PiecewiseConstantFunctor();
         std::tr1::shared_ptr<PiecewiseConstant> f;
+        std::tr1::shared_ptr<State> state;
 
 };
 

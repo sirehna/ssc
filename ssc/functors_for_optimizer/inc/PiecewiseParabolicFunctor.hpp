@@ -11,6 +11,7 @@
 #include "Unary.hpp"
 #include "ParabolicCoefficients.hpp"
 class ParabolicInterpolation;
+class State;
 
 /** \author cec
  *  \brief This class was created to
@@ -34,12 +35,14 @@ class PiecewiseParabolicFunctor : public Unary
         bool equals_derived(const PiecewiseParabolicFunctor& rhs) const;
         std::string get_type() const;
         std::string get_operator_name() const;
+        void update_lambda();
     private:
         PiecewiseParabolicFunctor();
         std::tr1::shared_ptr<ParabolicInterpolation> f;
         double xmin_;
         double xmax_;
         std::vector<double> dy;
+        std::tr1::shared_ptr<State> state;
 };
 
 #endif /* PIECEWISEPARABOLICFUNCTOR_HPP_ */

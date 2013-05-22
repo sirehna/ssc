@@ -31,7 +31,7 @@ class Sin : public Unary
         NodePtr clone() const;
         bool is_null() const;
         bool equals(const Node& rhs) const;
-        //bool equals(const Sin& rhs) const;
+        void update_lambda();
         std::string get_type() const;
 };
 

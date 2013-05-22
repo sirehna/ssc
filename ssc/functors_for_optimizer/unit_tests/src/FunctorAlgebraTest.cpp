@@ -16,7 +16,16 @@
 #include "extra_test_assertions.hpp"
 #include "SerializeReversePolish.hpp"
 
+#include "Cos.hpp"
+#include "Sin.hpp"
+#include "Constant.hpp"
+#include <cmath>
+#include <sstream>
+
+#define PI (4.*atan(1.))
 #define EPS 1e-8
+
+
 
 FunctorAlgebraTest::FunctorAlgebraTest() : a(DataGenerator(88)), generate(StateGenerator()),
 x(generate.state("x")),
@@ -158,6 +167,8 @@ TEST_F(FunctorAlgebraTest, bug_07)
 {
     X = 3;
     auto F = (x-(x+3*x));
+    SerializeReversePolish s(std::cout);
+    F->accept(s);std::cout<<std::endl;
     auto f = F->get_lambda();
     ASSERT_EQ(X-(X+3*X), f());
 }
@@ -199,7 +210,7 @@ TEST_F(FunctorAlgebraTest, should_be_able_to_substract_a_parameter)
         ASSERT_SMALL_RELATIVE_ERROR(pow(**x-*p,2),f(),EPS);
     }
 }
-/*
+
 TEST_F(FunctorAlgebraTest, bug_10)
 {
     const auto F = 1-x;
@@ -210,7 +221,6 @@ TEST_F(FunctorAlgebraTest, bug_10)
         ASSERT_SMALL_RELATIVE_ERROR(1-X, f(),EPS);
     }
 }
-*/
 
 TEST_F(FunctorAlgebraTest, bug_11)
 {
@@ -476,5 +486,92 @@ TEST_F(FunctorAlgebraTest, bug_31)
         X = a.random<double>().between(-1000,1000);
         Y = a.random<double>().between(-1000,1000);
         ASSERT_SMALL_RELATIVE_ERROR(-2, f(),EPS);
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_32)
+{
+    auto x1 = generate.state("x1");
+    auto x2 = generate.state("x2");
+    auto x3 = generate.state("x3");
+    auto x4 = generate.state("x4");
+    auto f = (pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4));
+    auto df = f->diff(x1);
+
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        (**x1) = a.random<double>().between(-1000,1000);
+        (**x2) = a.random<double>().between(-1000,1000);
+        (**x3) = a.random<double>().between(-1000,1000);
+        (**x4) = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(2*(**x1)*cos(**x3), df->get_lambda()(),EPS);
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_33)
+{
+    auto x1 = generate.state("x1");
+    auto x2 = generate.state("x2");
+    auto x3 = generate.state("x3");
+    auto x4 = generate.state("x4");
+    auto f = pow(x2,2)*Cos(x4);
+    auto df = f->diff(x1);
+
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        (**x1) = a.random<double>().between(-1000,1000);
+        (**x2) = a.random<double>().between(-1000,1000);
+        (**x3) = a.random<double>().between(-1000,1000);
+        (**x4) = a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(0, df->get_lambda()(),EPS);
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_34)
+{
+    auto x1 = generate.state("x1");
+    auto x3 = generate.state("x3");
+    auto f = pow(x1,2)*Cos(x3);
+    auto df = f->diff(x3);
+
+    SerializeReversePolish s(std::cout);
+
+    COUT(*df);
+    df->accept(s);
+    std::cout << std::endl;
+    COUT("");
+
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        (**x1) = 1;//a.random<double>().between(-1000,1000);
+        (**x3) = PI/4.;//a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), df->get_lambda()(),EPS);
+
+    }
+}
+
+TEST_F(FunctorAlgebraTest, bug_35)
+{
+    auto x1 = generate.state("x1");
+    auto x3 = generate.state("x3");
+
+    auto f1 = Sin(x3).clone();
+    f1->multiply_by(-1);
+    //auto f = pow(x1,2)*((-1)*Sin(x3));
+    auto f = pow(x1,2)*f1;
+
+    SerializeReversePolish s(std::cout);
+
+    COUT(*f);
+    f->accept(s);
+    std::cout << std::endl;
+    COUT("");
+
+
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        (**x1) = 1;//a.random<double>().between(-1000,1000);
+        (**x3) = PI/4.;//a.random<double>().between(-1000,1000);
+        ASSERT_SMALL_RELATIVE_ERROR(-pow((**x1),2)*sin(**x3), f->get_lambda()(),EPS);
     }
 }

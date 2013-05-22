@@ -11,19 +11,15 @@
 #include "State.hpp"
 #include "PiecewiseConstantFunctor.hpp"
 
-PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
-Unary(state),
+PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+Unary(state_),
 f(new LinearInterpolation(xmin,xmax,y_values)),
 xmin_(xmin),
 xmax_(xmax),
-dy(std::vector<double>())
+dy(std::vector<double>()),
+state(state_)
 {
-    auto func = [f,state]()->double
-        {
-            f->set_computed_value(**state);
-            return f->f();
-        };
-    set_value(func);
+    update_lambda();
     const size_t n = y_values.size();
     const double delta = (xmax-xmin)/(n-1);
     for (size_t i = 0 ; i < n-1 ; ++i)
@@ -31,6 +27,16 @@ dy(std::vector<double>())
         f->set_computed_value(xmin+i*delta);
         dy.push_back(f->df());
     }
+}
+
+void PiecewiseLinearFunctor::update_lambda()
+{
+    auto func = [f,state]()->double
+        {
+            f->set_computed_value(**state);
+            return f->f();
+        };
+    set_value(func);
 }
 
 NodePtr PiecewiseLinearFunctor::diff(const StatePtr& state) const

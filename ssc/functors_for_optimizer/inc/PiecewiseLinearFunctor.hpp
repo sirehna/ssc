@@ -11,6 +11,7 @@
 #include "Unary.hpp"
 
 class LinearInterpolation;
+class State;
 
 /** \author cec
  *  \brief This class was created to
@@ -34,12 +35,14 @@ class PiecewiseLinearFunctor : public Unary
         bool equals_derived(const PiecewiseLinearFunctor& rhs) const;
         std::string get_type() const;
         std::string get_operator_name() const;
+        void update_lambda();
     private:
         PiecewiseLinearFunctor();
         std::tr1::shared_ptr<LinearInterpolation> f;
         double xmin_;
         double xmax_;
         std::vector<double> dy;
+        StatePtr state;
 
 };
 

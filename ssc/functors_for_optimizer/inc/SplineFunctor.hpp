@@ -21,7 +21,7 @@
  *  \snippet MODULE_NAME/unit_tests/src/CubicSplineFunctorTest.cpp CubicSplineFunctorTest expected output
  */
 class NaturalSplines;
-
+class State;
 class SplineFunctor : public Unary
 {
     public:
@@ -34,12 +34,15 @@ class SplineFunctor : public Unary
         bool equals_derived(const SplineFunctor& rhs) const;
         std::string get_type() const;
         std::string get_operator_name() const;
+        void update_lambda();
+
     private:
         SplineFunctor();
         std::tr1::shared_ptr<NaturalSplines> f;
         double xmin_;
         double xmax_;
         std::vector<ParabolicCoefficients> dy;
+        std::tr1::shared_ptr<State> state;
 
 };
 

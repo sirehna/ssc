@@ -11,6 +11,11 @@
 
 Null::Null()
 {
+    update_lambda();
+}
+
+void Null::update_lambda()
+{
     value = []()->double {return 0;};
 }
 

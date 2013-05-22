@@ -35,6 +35,7 @@ class Difference : public Binary
         std::string get_type() const;
         NodePtr simplify() const;
         bool is_constant() const;
+        void update_lambda();
 };
 
 typedef std::tr1::shared_ptr<Difference> DiffPtr;

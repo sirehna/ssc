@@ -12,6 +12,12 @@ State::State(const std::string& name_, const size_t& index_) : Parameter(0),
                                                                name(name_),
                                                                index(index_)
 {
+    update_lambda();
+}
+
+
+void State::update_lambda()
+{
     value = [&factor,ptr]() -> double {return factor*(*ptr);};
 }
 
@@ -50,7 +56,7 @@ void State::accept(NodeVisitor& v) const
 NodePtr State::clone() const
 {
     State* ret = new State(*this);
-    ret->value = [ret]() -> double {return ret->factor*(*(ret->ptr));};
+    ret->value = [ret]() -> double {return (ret->factor)*(*(ret->ptr));};
     return NodePtr(ret);
 }
 
