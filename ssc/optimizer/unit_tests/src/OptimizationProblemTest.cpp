@@ -11,6 +11,14 @@
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
 #include "extra_test_assertions.hpp"
+#include "Serialize.hpp"
+#include "Cos.hpp"
+#include "Sin.hpp"
+
+#include "test_macros.hpp"
+
+#include <cmath>
+#define PI (4.*atan(1.))
 
 #define X1 (**x1)
 #define X2 (**x2)
@@ -245,6 +253,10 @@ TEST_F(OptimizationProblemTest, should_be_able_to_specify_state_bounds_with_para
     double x_u[nb_of_states];
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
+        *p1 = a.random<double>();
+        *p2 = a.random<double>();
+        *p3 = a.random<double>();
+        *p4 = a.random<double>();
         problem.get_state_bounds(nb_of_states, x_l, x_u);
         ASSERT_DOUBLE_EQ(*p1, x_l[0]);
         ASSERT_EQ(-INFTY, x_l[1]);
@@ -392,3 +404,75 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_hessian)
     }
 }
 
+TEST_F(OptimizationProblemTest, should_be_able_to_reset_state_bounds)
+{
+    OptimizationProblem problem;
+    Parameter p1, p2, p3, p4;
+    problem.minimize(x1*x2*x3).bound_state(p3,x1)
+                           .bound_state(p1,x2,p4)
+                           .bound_state(x3,p2);
+    problem.reset_state_bounds();
+    ASSERT_NO_THROW(problem.bound_state(p1,x1,p2));
+    ASSERT_NO_THROW(problem.bound_state(x2,p3));
+    ASSERT_NO_THROW(problem.bound_state(p4,x3));
+    const size_t nb_of_states = 3;
+    double x_l[nb_of_states];
+    double x_u[nb_of_states];
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        *p1 = a.random<double>();
+        *p2 = a.random<double>();
+        *p3 = a.random<double>();
+        *p4 = a.random<double>();
+        problem.get_state_bounds(nb_of_states, x_l, x_u);
+        ASSERT_DOUBLE_EQ(*p1, x_l[0]);
+        ASSERT_EQ(-INFTY, x_l[1]);
+        ASSERT_EQ(*p4, x_l[2]);
+        ASSERT_EQ(*p2, x_u[0]);
+        ASSERT_DOUBLE_EQ(*p3, x_u[1]);
+        ASSERT_EQ(INFTY, x_u[2]);
+    }
+}
+
+
+TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
+{
+    const double theta = PI/4.;
+    Parameter b1(cos(theta));
+    Parameter b2(sin(theta));
+    OptimizationProblem pb;
+    pb.minimize(pow(x1,3)+pow(x2,3))
+      .subject_to(b1,(pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4)),b1)
+      .subject_to(b2,(pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4)),b2);
+    auto f = (pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4));
+    COUT(*f);
+    COUT(f->diff(x3));
+    const FunctionMatrix jacobian = pb.get_constraint_jacobian();
+    ASSERT_EQ(8, jacobian.values.size());
+    ASSERT_EQ(8, jacobian.row_index.size());
+    ASSERT_EQ(8, jacobian.col_index.size());
+    const auto dg1_dx1 = jacobian.values.at(0);
+    const auto dg1_dx2 = jacobian.values.at(1);
+    const auto dg1_dx3 = jacobian.values.at(2);
+    const auto dg1_dx4 = jacobian.values.at(3);
+    const auto dg2_dx1 = jacobian.values.at(4);
+    const auto dg2_dx2 = jacobian.values.at(5);
+    const auto dg2_dx3 = jacobian.values.at(6);
+    const auto dg2_dx4 = jacobian.values.at(7);
+    const double eps = 1e-6;
+    //for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        X1 = 0.5;//a.random<double>();
+        X2 = 0.5;//a.random<double>();
+        X3 = PI/2;//a.random<double>();
+        X4 = PI/2;//a.random<double>();
+        ASSERT_SMALL_RELATIVE_ERROR(2*X1*cos(X3), dg1_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X2*cos(X4), dg1_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(-X1*X1*sin(X3), dg1_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(-X2*X2*sin(X4), dg1_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X1*sin(X3), dg2_dx1(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(2*X2*sin(X4), dg2_dx2(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X1*cos(X3), dg2_dx3(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X2*X2*cos(X3), dg2_dx4(), eps);
+    }
+}

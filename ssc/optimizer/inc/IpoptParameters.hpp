@@ -68,6 +68,9 @@ class IpoptParameters
         size_t print_level;
         size_t maximum_number_of_iterations;
         bool trace_function_calls;
+        bool show_evaluated_points;
+        bool check_first_derivative;
+        bool check_second_derivative;
 };
 
 #endif /* IPOPTPARAMETERS_HPP_ */

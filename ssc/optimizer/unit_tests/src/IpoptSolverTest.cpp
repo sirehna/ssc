@@ -14,6 +14,13 @@
 
 #include "extra_test_assertions.hpp"
 
+#include "Cos.hpp"
+#include "Sin.hpp"
+#include "FunctorAlgebra.hpp"
+
+#include <iostream>
+#include <cmath>
+#define PI (4.*atan(1.))
 IpoptSolverTest::IpoptSolverTest() : a(DataGenerator(56)),
                                      generate(StateGenerator()),
                                      x1(generate.state("x1")),
@@ -105,5 +112,37 @@ TEST_F(IpoptSolverTest, test_02)
         const auto result = optimize.solve(x0);
         ASSERT_SMALL_RELATIVE_ERROR(sqrt(*c0),result.state_values.at(0),eps);
     }
+}
+
+TEST_F(IpoptSolverTest, allocation_problem)
+{
+    const double theta = PI/4.;
+    Parameter b1(cos(theta));
+    Parameter b2(sin(theta));
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    pb->minimize(pow(x1,3)+pow(x2,3))
+       .subject_to(b1,(pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4)),b1)
+       .subject_to(b2,(pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4)),b2)
+       .bound_state(0,x1,1)
+       .bound_state(0,x2,1)
+       .bound_state(0,x3,PI)
+       .bound_state(0,x4,PI);
+    IpoptParameters parameters;
+    parameters.show_evaluated_points = true;
+    parameters.check_first_derivative = true;
+    parameters.check_second_derivative = false;
+    parameters.maximum_number_of_iterations = 1;
+    //parameters.trace_function_calls = true;
+    IpoptSolver optimize(pb, parameters);
+    const std::vector<double> x0({0.5,0.5,PI/2,PI/2});
+    const double eps = 1e-3;
+
+    const auto result = optimize.solve(x0);
+    for (auto it = result.constraint_values.begin() ; it != result.constraint_values.end() ; ++it)
+    {
+        std::cout << *it << std::endl;
+    }
+    ASSERT_SMALL_RELATIVE_ERROR(cos(theta),result.constraint_values.at(0),eps);
+    ASSERT_SMALL_RELATIVE_ERROR(sin(theta),result.constraint_values.at(1),eps);
 }
 

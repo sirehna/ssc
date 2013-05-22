@@ -42,6 +42,7 @@ class OptimizationProblem
 {
     public:
         OptimizationProblem();
+        virtual ~OptimizationProblem();
         OptimizationProblem& minimize(const NodePtr& objective_function);
         OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint);
         OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint, const Parameter& max_bound);
@@ -61,6 +62,7 @@ class OptimizationProblem
         void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
         void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
         friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
+        void reset_state_bounds();
 
     private:
         class OptimizationProblem_pimpl;

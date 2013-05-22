@@ -9,8 +9,8 @@
 #include "State.hpp"
 #include "IpIpoptData.hpp"
 #include "IpoptParameters.hpp"
-
-
+#include <sstream>
+#include <iomanip> //std::set_precision
 #include "test_macros.hpp"
 
 InternalIpopt::InternalIpopt(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) :
@@ -25,14 +25,48 @@ lambda(problem_->get_lambda()),
 starting_point(std::vector<double>()),
 states(problem_->get_states()),
 results(OptimizationResult()),
-trace_function_calls(parameters.trace_function_calls)
+trace_function_calls(parameters.trace_function_calls),
+show_evaluated_points(parameters.show_evaluated_points)
 {
+}
+
+std::string InternalIpopt::display_vector(const std::vector<double>& v) const
+{
+    if (not(v.empty()))
+    {
+        const double* v0 = &(v.front());
+        return display_array(v0, v.size());
+    }
+    else
+    {
+        return "[]";
+    }
+}
+
+std::string InternalIpopt::display_array(const double* v, const size_t& n) const
+{
+    std::stringstream ss;
+    ss << "[";
+    if (n)
+    {
+        ss << std::setprecision(16) << v[0];
+    }
+    for (size_t i = 1; i < n; ++i)
+    {
+        ss << ", " << v[i];
+    }
+    ss << "]";
+    return ss.str();
 }
 
 void InternalIpopt::set_starting_point(const std::vector<double>& start)
 {
     if (trace_function_calls) std::cout << "entering InternalIpopt::set_starting_point" << std::endl;
     starting_point = start;
+    if (show_evaluated_points)
+    {
+        std::cout << "starting point: " << display_vector(start);
+    }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::set_starting_point" << std::endl;
 }
 
@@ -74,6 +108,13 @@ bool InternalIpopt::get_bounds_info(Index n, Number* x_l, Number* x_u,
     (void) x_u;
     problem_->get_state_bounds(n, x_l, x_u);
     problem_->get_constraint_bounds(m, g_l, g_u);
+    if (show_evaluated_points)
+    {
+        std::cout << "lower state bounds: " << display_array(x_l,n) << std::endl;
+        std::cout << "upper state bounds: " << display_array(x_u,n) << std::endl;
+        std::cout << "lower constraint bounds: " << display_array(g_l,m) << std::endl;
+        std::cout << "upper constraint bounds: " << display_array(g_u,m) << std::endl;
+    }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::get_bounds_info" << std::endl;
     return true;
 }
@@ -116,9 +157,18 @@ bool InternalIpopt::eval_f(Index n, const Number* x, bool new_x, Number& obj_val
     {
         **states.at(i) = (double)x[i];
     }
+
     (void) obj_value;
     (void) new_x;
     obj_value = objective_function();
+    if (show_evaluated_points)
+    {
+        std::cout << "eval_f("
+                  << display_array(x,n)
+                  << ") = "
+                  << obj_value
+                  << std::endl;
+    }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_f" << std::endl;
     return true;
 }
@@ -128,7 +178,6 @@ bool InternalIpopt::eval_grad_f(Index n, const Number* x, bool new_x, Number* gr
 {
     if (trace_function_calls) std::cout << "entering InternalIpopt::eval_grad_f" << std::endl;
     (void) new_x;
-    (void) n;
     (void) x;
     (void) new_x;
     (void) grad_f;
@@ -139,9 +188,22 @@ bool InternalIpopt::eval_grad_f(Index n, const Number* x, bool new_x, Number* gr
     (void) new_x;
     const size_t p = grad_objective_function.index.size();
 
+    for (int i = 0 ; i < n ; ++i)
+    {
+        grad_f[i] = 0;
+    }
     for (size_t i = 0 ; i < p ; ++i)
     {
-        grad_f[i] = grad_objective_function.values.at(i)();
+        grad_f[grad_objective_function.index.at(i)] = grad_objective_function.values.at(i)();
+    }
+
+    if (show_evaluated_points)
+    {
+        std::cout << "eval_grad_f("
+                  << display_array(x,n)
+                  << ") = "
+                  << display_array(grad_f,n)
+                  << std::endl;
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_grad_f" << std::endl;
     return true;
@@ -169,6 +231,14 @@ bool InternalIpopt::eval_g(Index n, const Number* x, bool new_x, Index m, Number
     for (size_t i = 0 ; i < p ; ++i)
     {
         g[i] = constraints.at(i)();
+    }
+    if (show_evaluated_points)
+    {
+        std::cout << "eval_g("
+                  << display_array(x,n)
+                  << ") = "
+                  << display_array(g,m)
+                  << std::endl;
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_g" << std::endl;
     return true;
@@ -212,6 +282,16 @@ bool InternalIpopt::eval_jac_g(Index n, const Number* x, bool new_x,
         {
             values[i] = constraint_jacobian.values.at(i)();
         }
+        if (show_evaluated_points)
+        {
+            std::cout << "eval_jac_g("
+                      << display_array(x,n)
+                      << ") = \n";
+            for (size_t i = 0 ; i < (size_t)nele_jac ; ++i)
+            {
+                std::cout << "jac_g[" << constraint_jacobian.row_index.at(i) << "][" << constraint_jacobian.col_index.at(i) << "] = " << values[i] << std::endl;
+            }
+        }
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_jac_g" << std::endl;
     return true;
@@ -253,6 +333,16 @@ bool InternalIpopt::eval_h(Index n, const Number* x, bool new_x,
         for (size_t i = 0 ; i < (size_t)nele_hess ; ++i)
         {
             values[i] = hessian.values.at(i)();
+        }
+        if (show_evaluated_points)
+        {
+            std::cout << "eval_h("
+                      << display_array(x,n)
+                      << ") = \n";
+            for (size_t i = 0 ; i < (size_t)nele_hess ; ++i)
+            {
+                std::cout << "hes[" << hessian.row_index.at(i) << "][" << hessian.col_index.at(i) << "] = " << values[i] << std::endl;
+            }
         }
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_h" << std::endl;
