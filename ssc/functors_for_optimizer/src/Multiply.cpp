@@ -13,6 +13,10 @@
 #include "FunctorAlgebra.hpp"
 #include "Pow.hpp"
 
+#include "SerializeReversePolish.hpp"
+#include "test_macros.hpp"
+#include "Serialize.hpp"
+
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
@@ -30,7 +34,7 @@ void Multiply::common_build()
     }
     else
     {
-        set_value([factor,sons]()->double
+        set_value([&factor,sons]()->double
                   {
                       double ret = 1;
                       for (auto son = sons.begin() ; son != sons.end() ; ++son)
@@ -64,6 +68,7 @@ bool Multiply::null_or_one(const NodePtr& node) const
 NodePtr Multiply::diff(const StatePtr& state) const
 {
     std::vector<NodePtr> dsons_dstate;
+    SerializeReversePolish s(std::cout);
     const size_t n = sons.size();
     if (n==1)
     {
@@ -71,9 +76,9 @@ NodePtr Multiply::diff(const StatePtr& state) const
         dthis_dstate->multiply_by(factor);
         return dthis_dstate;
     }
-    auto is_null = [](const NodePtr& node)->bool{return node->is_null();};
-    auto not_equal_to_one = [](const NodePtr& node)->bool{return node != 1;};
+    const auto is_null = [](const NodePtr& node)->bool{return node->is_null();};
     if (std::any_of(sons.begin(), sons.end(), is_null)) return NodePtr(new Null());
+    const auto not_equal_to_one = [](const NodePtr& node)->bool{return node != 1;};
     for (size_t i = 0 ; i < n ; ++i)
     {
         std::vector<NodePtr> all_sons_except_i = sons;
@@ -82,12 +87,22 @@ NodePtr Multiply::diff(const StatePtr& state) const
         auto new_end = std::copy_if(all_sons_except_i.begin(),all_sons_except_i.end(), prod.begin(), not_equal_to_one);
         prod.erase(new_end, prod.end());
         auto dson_dstate = sons.at(i)->diff(state);
-        prod.push_back(dson_dstate);
-        dsons_dstate.push_back(NodePtr(new Multiply(prod)));
+
+        if (not(dson_dstate->is_null()))
+        {
+            prod.push_back(dson_dstate);
+            dsons_dstate.push_back(NodePtr(new Multiply(prod)));
+        }
     }
-    NodePtr dthis_dstate(new Sum(dsons_dstate));
-    dthis_dstate->multiply_by(factor);
-    return dthis_dstate;
+    if (std::all_of(dsons_dstate.begin(), dsons_dstate.end(), is_null)) return NodePtr(new Null());
+    if (dsons_dstate.size()>1)
+    {
+        NodePtr dthis_dstate(new Sum(dsons_dstate));
+        dthis_dstate->multiply_by(factor);
+        return dthis_dstate;
+    }
+    dsons_dstate.back()->multiply_by(factor);
+    return dsons_dstate.back();
 }
 
 std::string Multiply::get_operator_name() const

@@ -16,6 +16,8 @@
 #include "Multiply.hpp"
 #include "Sum.hpp"
 
+#include "test_macros.hpp"
+
 #include <cmath>
 
 SerializeReversePolish::SerializeReversePolish(std::ostream& os_) : os(os_)
@@ -26,17 +28,23 @@ SerializeReversePolish::SerializeReversePolish(std::ostream& os_) : os(os_)
 void SerializeReversePolish::visit_nary(const N_ary& node)
 {
     auto sons = node.get_sons();
-    if (sons.empty()) os << "0";
-    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    if (sons.empty())
     {
-        os << node.get_type() << "(";
-        for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+        os << "0";
+    }
+    else
+    {
+        serialize_multiplicative_factor(node.get_multiplicative_factor());
         {
-            sons.at(i)->accept(*this);
-            os << ",";
+            os << node.get_type() << "(";
+            for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+            {
+                sons.at(i)->accept(*this);
+                os << ",";
+            }
+            sons.back()->accept(*this);
+            os << ")";
         }
-        sons.back()->accept(*this);
-        os << ")";
     }
 }
 

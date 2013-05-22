@@ -34,6 +34,7 @@ class Null : public Nullary
         bool equals_derived(const Null& rhs) const;
         std::string get_type() const;
         bool is_constant() const;
+        void update_lambda();
 };
 
 typedef std::tr1::shared_ptr<Null> NullPtr;

@@ -20,7 +20,8 @@
 #include "State.hpp"
 #include "Sum.hpp"
 
-Node::Node() : factor(1), value([factor]()->double{return factor;})
+
+Node::Node() : factor(1), value([&factor]()->double{return factor;})
 {
 
 }

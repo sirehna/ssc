@@ -15,9 +15,13 @@
 
 Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
-    set_value([n1_,n2_,factor]()->double{return factor*(n1_->get_lambda()()/n2_->get_lambda()());});
+    update_lambda();
 }
 
+void Divide::update_lambda()
+{
+    set_value([n1_,n2_,&factor]()->double{return factor*(n1_->get_lambda()()/n2_->get_lambda()());});
+}
 
 NodePtr Divide::diff(const StatePtr& state) const
 {

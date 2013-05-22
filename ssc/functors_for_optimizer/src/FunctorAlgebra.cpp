@@ -16,8 +16,6 @@
 #include "Null.hpp"
 #include "Constant.hpp"
 
-#include "test_macros.hpp"
-#include "Serialize.hpp"
 
 Mult operator*(const Node& n1, const Node& n2)
 {

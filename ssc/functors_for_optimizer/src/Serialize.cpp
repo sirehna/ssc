@@ -26,23 +26,30 @@ Serialize::Serialize(std::ostream& os_) : os(os_), parenthesize_next_node(false)
 void Serialize::visit(const Multiply& node)
 {
     auto sons = node.get_sons();
-    if (sons.empty()) os << "0";
-    if (sons.size()==1) sons.front()->accept(*this);
-    if (sons.size()>1)
+    if (sons.empty())
     {
-        const double k = node.get_multiplicative_factor();
+        os << "0";
+    }
+    else
+    {
+        double k = node.get_multiplicative_factor();
         if ((k<0) && (k!=-1)) os << "(" << k << ")*";
         if (k==-1) os << "- ";
         if ((k > 0) && (k!=1)) os << k << "*";
-        bool parenthesize_next_node_back = parenthesize_next_node;
-        parenthesize_next_node = true;
-        for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+
+        if (sons.size()==1) sons.front()->accept(*this);
+        if (sons.size()>1)
         {
-            sons.at(i)->accept(*this);
-            os << " * ";
+            bool parenthesize_next_node_back = parenthesize_next_node;
+            parenthesize_next_node = true;
+            for (size_t i = 0 ; i < sons.size()-1 ; ++i)
+            {
+                sons.at(i)->accept(*this);
+                os << " * ";
+            }
+            sons.back()->accept(*this);
+            parenthesize_next_node = parenthesize_next_node_back;
         }
-        sons.back()->accept(*this);
-        parenthesize_next_node = parenthesize_next_node_back;
     }
 }
 
@@ -148,6 +155,7 @@ void Serialize::visit(const Null& node)
 
 void Serialize::visit(const Unary& node)
 {
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
     os << node.get_operator_name() << "(";
     node.get_son()->accept(*this);
     os << ")";

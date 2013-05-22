@@ -11,12 +11,18 @@
 #include "NodeVisitor.hpp"
 #include "State.hpp"
 
-SplineFunctor::SplineFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
-Unary(state),
+SplineFunctor::SplineFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+Unary(state_),
 f(new NaturalSplines(xmin,xmax,y_values)),
 xmin_(xmin),
 xmax_(xmax),
-dy(std::vector<ParabolicCoefficients>())
+dy(std::vector<ParabolicCoefficients>()),
+state(state_)
+{
+    update_lambda();
+}
+
+void SplineFunctor::update_lambda()
 {
     auto func = [f,state]()->double
         {

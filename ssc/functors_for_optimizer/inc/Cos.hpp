@@ -30,6 +30,7 @@ class Cos : public Unary
         NodePtr clone() const;
         bool is_null() const;
         std::string get_type() const;
+        void update_lambda();
 };
 
 typedef std::tr1::shared_ptr<Cos> CosPtr;

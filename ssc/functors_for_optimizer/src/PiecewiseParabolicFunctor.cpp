@@ -11,19 +11,15 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs) :
-Unary(state),
+PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs) :
+Unary(state_),
 f(new ParabolicInterpolation(xmin,xmax,coeffs)),
 xmin_(xmin),
 xmax_(xmax),
-dy(std::vector<double>())
+dy(std::vector<double>()),
+state(state_)
 {
-    auto func = [f,state]()->double
-        {
-            f->set_computed_value(**state);
-            return f->f();
-        };
-    set_value(func);
+    update_lambda();
     const size_t n = coeffs.size();
     const double delta = (xmax-xmin)/n;
     for (size_t i = 0 ; i < n+1 ; ++i)
@@ -33,9 +29,19 @@ dy(std::vector<double>())
     }
 }
 
-NodePtr PiecewiseParabolicFunctor::diff(const StatePtr& state) const
+void PiecewiseParabolicFunctor::update_lambda()
 {
-    return NodePtr(new PiecewiseLinearFunctor(state, xmin_, xmax_, dy));
+    auto func = [f,state]()->double
+        {
+            f->set_computed_value(**state);
+            return f->f();
+        };
+    set_value(func);
+}
+
+NodePtr PiecewiseParabolicFunctor::diff(const StatePtr& state_) const
+{
+    return NodePtr(new PiecewiseLinearFunctor(state_, xmin_, xmax_, dy));
 }
 
 void PiecewiseParabolicFunctor::accept(NodeVisitor& v) const

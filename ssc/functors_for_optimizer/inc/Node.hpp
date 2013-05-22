@@ -62,7 +62,7 @@ class Node
         virtual std::vector<NodePtr> get_operands() const;
         double get_multiplicative_factor() const;
         virtual bool must_parenthesize() const;
-        virtual void update_lambda();
+        virtual void update_lambda() = 0;
 
     protected:
         double factor;

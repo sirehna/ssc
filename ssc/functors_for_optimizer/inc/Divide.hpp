@@ -35,6 +35,7 @@ class Divide : public Binary
         NodePtr simplify() const;
         bool must_parenthesize() const;
         bool is_constant() const;
+        void update_lambda();
 };
 
 typedef std::tr1::shared_ptr<Divide> DividePtr;

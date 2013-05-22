@@ -10,10 +10,18 @@
 #include "State.hpp"
 #include "Node.hpp"
 #include "Multiply.hpp"
+#include "Constant.hpp"
+#include "FunctorAlgebra.hpp"
 #include <cmath>
 #include <string>
 
+
 Sin::Sin(const NodePtr& n_) : Unary(n_)
+{
+    update_lambda();
+}
+
+void Sin::update_lambda()
 {
     set_value([n,factor]()->double {return factor*sin(n->get_lambda()());});
 }
@@ -25,8 +33,15 @@ std::string Sin::get_operator_name() const
 
 NodePtr Sin::diff(const StatePtr& state) const
 {
-    return NodePtr(new Multiply(n->diff(state),CosPtr(new Cos(n))));
+    auto du_dstate = n->diff(state);
+    auto dv_dstate = Cos(n->clone()).clone();
+    if (n->diff(state)->equals_derived(Constant(1)))
+    {
+        return dv_dstate;
+    }
+    return du_dstate*dv_dstate;
 }
+
 
 NodePtr Sin::clone() const
 {
