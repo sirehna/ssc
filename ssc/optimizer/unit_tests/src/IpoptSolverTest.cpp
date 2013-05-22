@@ -57,16 +57,16 @@ TEST_F(IpoptSolverTest, example)
     ipopt_parameters.print_level = 5;
     IpoptSolver optimize(hs71,ipopt_parameters);
     const std::vector<double> x0({1,5,5,1});
-    const auto result = optimize.solve(x0);
+    auto result = optimize.solve(x0);
 //! [IpoptSolverTest example]
 //! [IpoptSolverTest expected output]
     const double eps = 1e-6;
 
     ASSERT_EQ(4, result.state_values.size());
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
-    ASSERT_SMALL_RELATIVE_ERROR(4.74299963,result.state_values.at(1),eps);
-    ASSERT_SMALL_RELATIVE_ERROR(3.82114998,result.state_values.at(2),eps);
-    ASSERT_SMALL_RELATIVE_ERROR(1.37940829,result.state_values.at(3),eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x1"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(4.74299963,result.state_values["x2"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(3.82114998,result.state_values["x3"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1.37940829,result.state_values["x4"],eps);
 //! [IpoptSolverTest expected output]
 }
 
@@ -78,11 +78,11 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
     ipopt_parameters.print_level = 5;
     IpoptSolver optimize(rosenbrock, ipopt_parameters);
 
-    const auto result = optimize.solve({5,3});
+    auto result = optimize.solve({5,3});
     ASSERT_EQ(2, result.state_values.size());
     const double eps = 1e-6;
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(0),eps);
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values.at(1),eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x1"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x2"],eps);
 }
 
 TEST_F(IpoptSolverTest, test_01)
@@ -94,8 +94,8 @@ TEST_F(IpoptSolverTest, test_01)
     const std::vector<double> x0({1});
     const double eps = 1e-3;
     *c0 = 2;
-    const auto result = optimize.solve(x0);
-    ASSERT_SMALL_RELATIVE_ERROR(sqrt(2),result.state_values.at(0),eps);
+    auto result = optimize.solve(x0);
+    ASSERT_SMALL_RELATIVE_ERROR(sqrt(2),result.state_values["x1"],eps);
 }
 
 TEST_F(IpoptSolverTest, test_02)
@@ -109,8 +109,8 @@ TEST_F(IpoptSolverTest, test_02)
     for (size_t i = 0 ; i < 20 ; ++i)
     {
         *c0 = a.random<double>().between(0,100);
-        const auto result = optimize.solve(x0);
-        ASSERT_SMALL_RELATIVE_ERROR(sqrt(*c0),result.state_values.at(0),eps);
+        auto result = optimize.solve(x0);
+        ASSERT_SMALL_RELATIVE_ERROR(sqrt(*c0),result.state_values["x1"],eps);
     }
 }
 

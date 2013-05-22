@@ -367,6 +367,7 @@ void InternalIpopt::finalize_solution(SolverReturn status,
     (void) lambda;
     (void) obj_value;
     (void) ip_cq;
+    (void) n;
 
     const size_t njac = constraint_jacobian.row_index.size();
     results.constraint_jacobian = SparseMatrix(njac);
@@ -390,7 +391,11 @@ void InternalIpopt::finalize_solution(SolverReturn status,
             break;
     }
 
-    results.state_values                       = std::vector<double>(x, x+n);
+    size_t k = 0 ;
+    for (auto it = states.begin() ; it != states.end() ; ++it)
+    {
+        results.state_values[(*it)->get_name()] = x[k++];
+    }
     results.value_of_the_objective_function    = objective_function();
     results.constraint_values                  = std::vector<double>(g, g+m);
     results.nb_of_iterations                   = ip_data ? (size_t)ip_data->iter_count() : 0;
