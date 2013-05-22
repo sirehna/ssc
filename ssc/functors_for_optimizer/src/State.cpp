@@ -18,7 +18,7 @@ State::State(const std::string& name_, const size_t& index_) : Parameter(0),
 
 void State::update_lambda()
 {
-    value = [&factor,ptr]() -> double {return factor*(*ptr);};
+    value = [factor,ptr]() -> double {return factor*(*ptr);};
 }
 
 bool State::operator<(const State& rhs) const
