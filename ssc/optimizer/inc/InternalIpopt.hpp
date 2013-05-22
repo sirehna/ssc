@@ -26,6 +26,7 @@
     in <stddef.h>, so if you use the global namespace types
     from stddef.h or offsetof/NULL, just include <cstddef>
     explicitly.*/
+#include <vector>
 #include "IpTNLP.hpp"
 #include "OptimizationProblem.hpp"
 #include "Grad.hpp"
@@ -115,25 +116,25 @@ class InternalIpopt : public TNLP
        *
        */
       //@{
-      InternalIpopt();
-      InternalIpopt(const InternalIpopt&);
-      InternalIpopt& operator=(const InternalIpopt&);
+        InternalIpopt();
+        InternalIpopt(const InternalIpopt&);
+        InternalIpopt& operator=(const InternalIpopt&);
+        std::string display_array(const double* v, const size_t& n) const;
+        std::string display_vector(const std::vector<double>& v) const;
 
-      std::tr1::shared_ptr<OptimizationProblem> problem_;
-      std::function<double()> objective_function;
-      std::vector<std::function<double()> > constraints;
-      Grad grad_objective_function;
-      FunctionMatrix constraint_jacobian;
-      FunctionMatrix hessian;
-      Parameter sigma_f;
-      std::vector<Parameter> lambda;
-      std::vector<double> starting_point;
-      StateList states;
-      OptimizationResult results;
-      bool trace_function_calls;
-
-
-      //@}
+        std::tr1::shared_ptr<OptimizationProblem> problem_;
+        std::function<double()> objective_function;
+        std::vector<std::function<double()> > constraints;
+        Grad grad_objective_function;
+        FunctionMatrix constraint_jacobian;
+        FunctionMatrix hessian;
+        Parameter sigma_f;
+        std::vector<Parameter> lambda;
+        std::vector<double> starting_point;
+        StateList states;
+        OptimizationResult results;
+        bool trace_function_calls;
+        bool show_evaluated_points;
 };
 
 

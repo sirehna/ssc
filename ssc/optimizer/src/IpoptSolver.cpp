@@ -21,12 +21,39 @@ class IpoptSolver::IpoptSolverPimpl
 {
     public:
         ~IpoptSolverPimpl(){}
-        IpoptSolverPimpl(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) : nlp(new InternalIpopt(problem, parameters)),
+        IpoptSolverPimpl(const std::tr1::shared_ptr<OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
                                                                app(IpoptApplicationFactory())
         {
             app->Options()->SetNumericValue("tol", parameters.tolerance);
             app->Options()->SetNumericValue("bound_relax_factor", parameters.bound_relaxation_factor);
             app->Options()->SetStringValue("mu_strategy", parameters.mu_strategy);
+
+            if (not(parameters.check_first_derivative||parameters.check_second_derivative))
+            {
+                app->Options()->SetStringValue("derivative_test", "none");
+            }
+            if (not(parameters.check_first_derivative)&&parameters.check_second_derivative)
+            {
+                app->Options()->SetStringValue("derivative_test", "only-second-order");
+            }
+            if (parameters.check_first_derivative&&not(parameters.check_second_derivative))
+            {
+                app->Options()->SetStringValue("derivative_test", "first-order");
+            }
+            if (parameters.check_first_derivative&&parameters.check_second_derivative)
+            {
+                app->Options()->SetStringValue("derivative_test", "second-order");
+
+            }
+            if (parameters.check_first_derivative||parameters.check_second_derivative)
+            {
+                app->Options()->SetStringValue("derivative_test_print_all", "yes");
+                if (parameters.print_level<4) parameters.print_level = 4;
+                app->Options()->SetNumericValue("derivative_test_perturbation", 1e-8);
+                app->Options()->SetNumericValue("derivative_test_tol", 1e-4);
+                app->Options()->SetNumericValue("point_perturbation_radius", 0);
+            }
+
             app->Options()->SetIntegerValue("print_level", parameters.print_level);
             app->Options()->SetIntegerValue("max_iter", parameters.maximum_number_of_iterations);
             const ApplicationReturnStatus status = app->Initialize();

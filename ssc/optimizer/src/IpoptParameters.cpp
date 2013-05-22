@@ -95,7 +95,10 @@ IpoptParameters::IpoptParameters() : tolerance(1e-9),
                                      mu_strategy("adaptive"),
                                      print_level(0),
                                      maximum_number_of_iterations(1000),
-                                     trace_function_calls(false)
+                                     trace_function_calls(false),
+                                     show_evaluated_points(false),
+                                     check_first_derivative(false),
+                                     check_second_derivative(false)
 {
 }
 
