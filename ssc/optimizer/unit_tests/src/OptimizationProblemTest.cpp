@@ -445,8 +445,6 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
       .subject_to(b1,(pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4)),b1)
       .subject_to(b2,(pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4)),b2);
     auto f = (pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4));
-    COUT(*f);
-    COUT(f->diff(x3));
     const FunctionMatrix jacobian = pb.get_constraint_jacobian();
     ASSERT_EQ(8, jacobian.values.size());
     ASSERT_EQ(8, jacobian.row_index.size());
@@ -460,12 +458,12 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
     const auto dg2_dx3 = jacobian.values.at(6);
     const auto dg2_dx4 = jacobian.values.at(7);
     const double eps = 1e-6;
-    //for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        X1 = 0.5;//a.random<double>();
-        X2 = 0.5;//a.random<double>();
-        X3 = PI/2;//a.random<double>();
-        X4 = PI/2;//a.random<double>();
+        X1 = a.random<double>();
+        X2 = a.random<double>();
+        X3 = a.random<double>();
+        X4 = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(2*X1*cos(X3), dg1_dx1(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*X2*cos(X4), dg1_dx2(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(-X1*X1*sin(X3), dg1_dx3(), eps);
@@ -473,6 +471,6 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
         ASSERT_SMALL_RELATIVE_ERROR(2*X1*sin(X3), dg2_dx1(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(2*X2*sin(X4), dg2_dx2(), eps);
         ASSERT_SMALL_RELATIVE_ERROR(X1*X1*cos(X3), dg2_dx3(), eps);
-        ASSERT_SMALL_RELATIVE_ERROR(X2*X2*cos(X3), dg2_dx4(), eps);
+        ASSERT_SMALL_RELATIVE_ERROR(X2*X2*cos(X4), dg2_dx4(), eps);
     }
 }
