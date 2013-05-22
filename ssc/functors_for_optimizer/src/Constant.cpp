@@ -74,7 +74,7 @@ bool Constant::is_negative() const
 
 void Constant::update_lambda()
 {
-    set_value([&factor,val]()->double {return factor*val;});
+    set_value([factor,val]()->double {return factor*val;});
 }
 
 bool Constant::is_constant() const

@@ -34,7 +34,7 @@ void Multiply::common_build()
     }
     else
     {
-        set_value([&factor,sons]()->double
+        set_value([factor,sons]()->double
                   {
                       double ret = 1;
                       for (auto son = sons.begin() ; son != sons.end() ; ++son)
