@@ -16,7 +16,7 @@ template <> boost::geometry::model::d2::point_xy<double> convert_to(const double
     return boost::geometry::model::d2::point_xy<double>(longitude,latitude);
 }
 
-PointInCartesianPolygon::PointInCartesianPolygon(const std::vector<LongitudeLatitude>& polygon) : PointInPolygon(polygon)
+PointInCartesianPolygon::PointInCartesianPolygon(const std::vector<LatitudeLongitude>& polygon) : PointInPolygon(polygon)
 {
     pimpl = std::tr1::shared_ptr<Pimpl<Point> >(new Pimpl<Point>(polygon));
 }

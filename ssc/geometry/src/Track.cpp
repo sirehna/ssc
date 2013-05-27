@@ -13,7 +13,7 @@
 class Track::TrackImpl
 {
     public:
-        TrackImpl(const std::vector<LongitudeLatitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+        TrackImpl(const std::vector<LatitudeLongitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
                      ) :
         distance_from_start_to_begining_of_leg(std::vector<double>()),
         legs(std::vector<Leg>()),
@@ -50,13 +50,13 @@ class Track::TrackImpl
         std::vector<Leg> legs;
         double length;
         size_t nb_of_legs;
-        std::vector<LongitudeLatitude> waypoints;
+        std::vector<LatitudeLongitude> waypoints;
 
     private:
         TrackImpl();
 };
 
-Track::Track(const std::vector<LongitudeLatitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+Track::Track(const std::vector<LatitudeLongitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
              ) : pimpl(new Track::TrackImpl(waypoints))
 {
 
@@ -68,7 +68,7 @@ Track::Track(const std::vector<LongitudeLatitude>& waypoints //!< List of points
  *  \returns List of waypoints
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest get_waypoints_example
 */
-std::vector<LongitudeLatitude> Track::get_all_waypoints() const
+std::vector<LatitudeLongitude> Track::get_all_waypoints() const
 {
     return pimpl->waypoints;
 }
@@ -88,10 +88,10 @@ std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_trac
            << length() << ", but asked to split at " << distance_from_start_of_track;
         THROW("Track::split_at(const double&)", TrackException, ss.str());
     }
-    const std::vector<LongitudeLatitude> waypoints = pimpl->waypoints;
-    std::vector<LongitudeLatitude> waypoints_on_first_subtrack, waypoints_on_second_subtrack;
+    const std::vector<LatitudeLongitude> waypoints = pimpl->waypoints;
+    std::vector<LatitudeLongitude> waypoints_on_first_subtrack, waypoints_on_second_subtrack;
     const size_t n = waypoints.size();
-    const LongitudeLatitude common_point_to_two_subtracks = find_waypoint_on_track(distance_from_start_of_track);
+    const LatitudeLongitude common_point_to_two_subtracks = find_waypoint_on_track(distance_from_start_of_track);
     waypoints_on_second_subtrack.push_back(common_point_to_two_subtracks);
     for (size_t i = 0 ; i < (n-1) ; ++i)
     {
@@ -133,7 +133,7 @@ Track::~Track()
  *  \returns Longitude & latitude of point at given distance from start of track
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_waypoint_on_track_example
  */
-LongitudeLatitude Track::find_waypoint_on_track(const double& distance //!< Distance (measured on the track) from first waypoint (in meters)
+LatitudeLongitude Track::find_waypoint_on_track(const double& distance //!< Distance (measured on the track) from first waypoint (in meters)
                                                ) const
 {
     if (distance>length())

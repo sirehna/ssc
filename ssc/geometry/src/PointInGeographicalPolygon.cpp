@@ -22,7 +22,7 @@ template <> boost::geometry::model::ll::point<boost::geometry::degree> convert_t
     return p;
 }
 
-PointInGeographicalPolygon::PointInGeographicalPolygon(const std::vector<LongitudeLatitude>& polygon) : PointInPolygon(polygon)
+PointInGeographicalPolygon::PointInGeographicalPolygon(const std::vector<LatitudeLongitude>& polygon) : PointInPolygon(polygon)
 {
     pimpl = std::tr1::shared_ptr<Pimpl<Point> >(new Pimpl<Point>(polygon));
 }

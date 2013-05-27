@@ -4,7 +4,7 @@ set(SOURCES src/PointInPolygon.cpp
             src/PointInCartesianPolygon.cpp
             src/PointInSphericalPolygon.cpp
             src/PointInGeographicalPolygon.cpp
-            src/LongitudeLatitude.cpp
+            src/LatitudeLongitude.cpp
             src/Angle.cpp
             src/Track.cpp
             src/Leg.cpp)

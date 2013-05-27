@@ -16,7 +16,7 @@ LatitudeOfPointOnBorder::LatitudeOfPointOnBorder(PointInPolygon* eca_zone, const
 
 double LatitudeOfPointOnBorder::get_latitude(const double& longitude) const
 {
-    if (not(eca->is_in_polygon(LongitudeLatitude(longitude,eps_)))) return 0;
+    if (not(eca->is_in_polygon(LatitudeLongitude(eps_,longitude)))) return 0;
     MinMax ret = bisection(std::make_pair(eps_,40),longitude);
     return (ret.second+ret.first)/2.;
 }
@@ -25,7 +25,7 @@ MinMax LatitudeOfPointOnBorder::bisection(const MinMax& latitude_bounds, const d
 {
     if (fabs(latitude_bounds.second-latitude_bounds.first)<eps_) return latitude_bounds;
     const double median_latitude = (latitude_bounds.second+latitude_bounds.first)/2.;
-    if (eca->is_in_polygon(LongitudeLatitude(longitude,median_latitude)))
+    if (eca->is_in_polygon(LatitudeLongitude(median_latitude,longitude)))
     {
         return bisection(std::make_pair(median_latitude,latitude_bounds.second),longitude);
     }

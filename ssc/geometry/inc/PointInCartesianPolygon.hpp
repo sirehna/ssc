@@ -22,7 +22,7 @@
 class PointInCartesianPolygon : public PointInPolygon
 {
     public:
-        PointInCartesianPolygon(const std::vector<LongitudeLatitude>& polygon);
+        PointInCartesianPolygon(const std::vector<LatitudeLongitude>& polygon);
 };
 
 #endif /* POINTINCARTESIANPOLYGON_HPP_ */

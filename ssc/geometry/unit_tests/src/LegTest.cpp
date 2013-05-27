@@ -7,7 +7,7 @@
 
 #include "LegTest.hpp"
 #include "Leg.hpp"
-#include "LongitudeLatitudeGenerators.hpp"
+#include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
 
 LegTest::LegTest() : a(DataGenerator(8796))
@@ -30,8 +30,8 @@ TEST_F(LegTest, example)
 {
 //! [LegTest example]
     // Start by defining the two points composing the leg
-    const LongitudeLatitude boston(-71.0603,42.3583),
-                            houston(-95.3631,29.7631);
+    const LatitudeLongitude boston(42.3583,-71.0603),
+                            houston(29.7631,-95.3631);
     // Construct the leg
     const Leg leg(boston, houston);
     // We can now compute the length of the leg
@@ -46,10 +46,10 @@ TEST_F(LegTest, should_be_able_to_compute_the_distance_between_two_points)
 {
 //! [LegTest length_example]
     // Define a series of points on the globe
-    const LongitudeLatitude boston(-71.0603,42.3583),
-                            houston(-95.3631,29.7631),
-                            chicago(-87.65,41.85),
-                            los_angeles(-118.2428,34.0522);
+    const LatitudeLongitude boston(42.3583,-71.0603),
+                            houston(29.7631,-95.3631),
+                            chicago(41.85,-87.65),
+                            los_angeles(34.0522,-118.2428);
     // Construct legs between those points
     const Leg boston_houston(boston, houston);
     const Leg houston_chicago(houston, chicago);
@@ -69,8 +69,8 @@ TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
     {
         //! [LegTest find_waypoint_at_example]
         // Definie the two waypoints composing the leg
-        const LongitudeLatitude point1 = a.random<LongitudeLatitude>();
-        const LongitudeLatitude point2 = a.random<LongitudeLatitude>();
+        const LatitudeLongitude point1 = a.random<LatitudeLongitude>();
+        const LatitudeLongitude point2 = a.random<LatitudeLongitude>();
         // Construct the leg
         const Leg leg(point1, point2);
         // The input argument must be between 0 and the leg length, otherwise an exception is thrown
@@ -87,14 +87,14 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_meridian)
         const double latitude1 = a.random<double>().between(-90,90);
         const double latitude2 = a.random<double>().between(-90,90);
         const double longitude = a.random<double>().between(-180,180);
-        const LongitudeLatitude point1(longitude,latitude1);
-        const LongitudeLatitude point2(longitude,latitude2);
+        const LatitudeLongitude point1(latitude1,longitude);
+        const LatitudeLongitude point2(latitude2,longitude);
         const Leg leg(point1, point2);
         const double L = leg.length();
         for (size_t j = 0 ; j < 10 ; ++j)
         {
             const double d = a.random<double>().between(0, L);
-            const LongitudeLatitude intermediate = leg.find_waypoint_at(d);
+            const LatitudeLongitude intermediate = leg.find_waypoint_at(d);
             ASSERT_DOUBLE_EQ(longitude, intermediate.lon);
         }
     }
@@ -110,14 +110,14 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_the_equator)
         const double delta_longitude = a.random<double>().between(-130,130);
         const double longitude2 = max(-180,min(longitude1+delta_longitude,180));
         const double latitude = 0;//a.random<double>().between(-90,90);
-        const LongitudeLatitude point1(longitude1,latitude);
-        const LongitudeLatitude point2(longitude2,latitude);
+        const LatitudeLongitude point1(latitude,longitude1);
+        const LatitudeLongitude point2(latitude,longitude2);
         const Leg leg(point1, point2);
         const double L = leg.length();
         for (size_t j = 0 ; j < 10 ; ++j)
         {
             const double d = a.random<double>().between(0, L);
-            const LongitudeLatitude intermediate = leg.find_waypoint_at(d);
+            const LatitudeLongitude intermediate = leg.find_waypoint_at(d);
             ASSERT_DOUBLE_EQ(latitude, intermediate.lat);
         }
     }
@@ -127,12 +127,12 @@ TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_always_be_le
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const LongitudeLatitude point1 = a.random<LongitudeLatitude>();
-        const LongitudeLatitude point2 = a.random<LongitudeLatitude>();
+        const LatitudeLongitude point1 = a.random<LatitudeLongitude>();
+        const LatitudeLongitude point2 = a.random<LatitudeLongitude>();
         const Leg leg(point1, point2);
         const double leg_length = leg.length();
         const double d = a.random<double>().between(0, leg_length);
-        const LongitudeLatitude intermediate = leg.find_waypoint_at(d);
+        const LatitudeLongitude intermediate = leg.find_waypoint_at(d);
         ASSERT_LE(Leg(point1, intermediate).length(), leg_length);
     }
 }
@@ -142,12 +142,47 @@ TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_correspond_t
     const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const LongitudeLatitude point1 = a.random<LongitudeLatitude>();
-        const LongitudeLatitude point2 = a.random<LongitudeLatitude>();
+        const LatitudeLongitude point1 = a.random<LatitudeLongitude>();
+        const LatitudeLongitude point2 = a.random<LatitudeLongitude>();
         const Leg leg(point1, point2);
         const double leg_length = leg.length();
         const double d = a.random<double>().between(0, leg_length);
-        const LongitudeLatitude intermediate = leg.find_waypoint_at(d);
+        const LatitudeLongitude intermediate = leg.find_waypoint_at(d);
         ASSERT_SMALL_RELATIVE_ERROR(Leg(point1, intermediate).length(), d, eps);
     }
 }
+
+TEST_F(LegTest, distance_between_miami_and_WP1_on_Norwegian_Epic_cruise_should_be_calculated_properly)
+{
+    const LatitudeLongitude miami(25.7744,80.1637);
+    const LatitudeLongitude wpA(26.1802,79.099);
+    ASSERT_NEAR(115.706, Leg(miami,wpA).length()/1e3, 1e-3);
+}
+
+/*
+TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
+{
+
+}
+
+c:/Documents and Settings/maroff/eclipse_workspace/EONAV OAD modules/trunk/modules/geometry/unit_tests/src/LegTest.cpp(159): Error: The difference between 115.7 and Leg(miami,wpA).length()/1e3 is 3.4603894821678551, which exceeds 0.1, where
+115.7 evaluates to 115.7,
+Leg(miami,wpA).length()/1e3 evaluates to 119.16038948216786, and
+0.1 evaluates to 0.10000000000000001.
+
+
+TEST_F(LegTest, can_calculate_heading_on_leg_of_any_point_for_leg_defined_by_two_symetrical_points)
+{
+
+}
+
+TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
+{
+
+}
+
+TEST_F(LegTest, can_find_closest_point_on_leg_to_a_given_point)
+{
+
+}
+*/

@@ -34,15 +34,15 @@ class LatitudeLongitudeException : public Exception
  *  \snippet geometry/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest expected output
  */
 
-class LongitudeLatitude
+class LatitudeLongitude
 {
     public:
-        LongitudeLatitude(const double& latitude_in_degrees, const double& longitude_in_degrees);
+        LatitudeLongitude(const double& latitude_in_degrees, const double& longitude_in_degrees);
         double lat;
         double lon;
 };
 
-std::ostream& operator<<(std::ostream& os, const LongitudeLatitude& bar);
+std::ostream& operator<<(std::ostream& os, const LatitudeLongitude& bar);
 
 
 #endif /* LATITUDELONGITUDE_HPP_ */
