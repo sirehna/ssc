@@ -37,6 +37,7 @@ class Leg
         Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         double length() const;
         LatitudeLongitude find_waypoint_at(const double& distance_from_point1) const;
+        double azimuth_at(const double& distance_from_point1) const;
 
     private:
         Leg();
