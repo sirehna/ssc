@@ -8,7 +8,7 @@
 #ifndef TRACK_HPP_
 #define TRACK_HPP_
 
-#include "LongitudeLatitude.hpp"
+#include "LatitudeLongitude.hpp"
 #include <vector>
 #include <tr1/memory>
 #include "Exception.hpp"
@@ -39,12 +39,12 @@ class Track
 {
     public:
         virtual ~Track();
-        Track(const std::vector<LongitudeLatitude>& waypoints);
+        Track(const std::vector<LatitudeLongitude>& waypoints);
         double length() const;
-        LongitudeLatitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
+        LatitudeLongitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
         size_t find_leg_index(const double& distance_from_start_of_track) const;
         double get_waypoint_position_on_track(const size_t& waypoint_idx) const;
-        std::vector<LongitudeLatitude> get_all_waypoints() const;
+        std::vector<LatitudeLongitude> get_all_waypoints() const;
         std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
         bool operator==(const Track& rhs) const;
         bool operator!=(const Track& rhs) const;

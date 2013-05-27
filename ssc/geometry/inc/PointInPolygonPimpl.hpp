@@ -38,13 +38,13 @@ class PointInPolygon::PointInPolygonPimpl
     public:
         virtual ~PointInPolygonPimpl() {}
 
-        virtual bool is_in_polygon(const LongitudeLatitude& point) const = 0;
+        virtual bool is_in_polygon(const LatitudeLongitude& point) const = 0;
 };
 
 template<typename PointType> class Pimpl : public PointInPolygon::PointInPolygonPimpl
 {
     public:
-        Pimpl(const std::vector<LongitudeLatitude>& eca_zone) : polygon(boost::geometry::model::polygon<PointType>())
+        Pimpl(const std::vector<LatitudeLongitude>& eca_zone) : polygon(boost::geometry::model::polygon<PointType>())
         {
             if (eca_zone.size() < 3)
             {
@@ -64,7 +64,7 @@ template<typename PointType> class Pimpl : public PointInPolygon::PointInPolygon
             }
         }
 
-        bool is_in_polygon(const LongitudeLatitude& point) const
+        bool is_in_polygon(const LatitudeLongitude& point) const
         {
             const PointType p = convert_to<PointType>(point.lon, point.lat);
             return boost::geometry::within(p, polygon);

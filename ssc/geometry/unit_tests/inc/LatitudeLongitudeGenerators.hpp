@@ -9,12 +9,12 @@
 #define LONGITUDELATITUDEGENERATORS_HPP_
 
 #include "DataGenerator.hpp"
-#include "LongitudeLatitude.hpp"
+#include "LatitudeLongitude.hpp"
 
-template <> LongitudeLatitude get_min_bound();
-template <> LongitudeLatitude get_max_bound();
+template <> LatitudeLongitude get_min_bound();
+template <> LatitudeLongitude get_max_bound();
 
-template <> LongitudeLatitude TypedScalarDataGenerator<LongitudeLatitude>::get() const;
+template <> LatitudeLongitude TypedScalarDataGenerator<LatitudeLongitude>::get() const;
 
 
 
