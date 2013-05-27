@@ -10,6 +10,8 @@
 #include <GeographicLib/GeodesicLine.hpp>
 #include <sstream>
 
+#include "test_macros.hpp"
+
 #define EPS 1e-6
 #define max(a,b) (a) > (b) ? (a) : (b)
 #define min(a,b) (a) < (b) ? (a) : (b)
@@ -17,27 +19,27 @@
 class Leg::LegImpl
 {
     public:
-        LegImpl(const LongitudeLatitude& point1, const LongitudeLatitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0)
+        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0)
         {
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, length);
-            double az2 = 0;
-            geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, az2);
+            geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
         }
 
-        LongitudeLatitude waypoint(const double& distance_from_point1) const
+        LatitudeLongitude waypoint(const double& distance_from_point1) const
         {
-            LongitudeLatitude ret(0,0);
+            LatitudeLongitude ret(0,0);
             geod.Direct(point_1.lat, point_1.lon, direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
             return ret;
         }
-        LongitudeLatitude point_1;
-        LongitudeLatitude point_2;
+        LatitudeLongitude point_1;
+        LatitudeLongitude point_2;
         double length;
         const GeographicLib::Geodesic& geod;
         double direction_of_the_geodesic_at_point_1;
+        double direction_of_the_geodesic_at_point_2;
 };
 
-Leg::Leg(const LongitudeLatitude& point1, const LongitudeLatitude& point2) : pimpl(new LegImpl(point1,point2))
+Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
 {
 
 }
@@ -50,6 +52,7 @@ Leg::Leg(const LongitudeLatitude& point1, const LongitudeLatitude& point2) : pim
 */
 double Leg::length() const
 {
+    COUT("");
     return pimpl->length;
 }
 
@@ -60,7 +63,7 @@ double Leg::length() const
  *  \section ex1 Example
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest find_waypoint_at_example
  */
-LongitudeLatitude Leg::find_waypoint_at(const double& distance //!< Distance from first waypoint (in meters)
+LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance from first waypoint (in meters)
                                        ) const
 {
     if (distance>(pimpl->length+EPS))

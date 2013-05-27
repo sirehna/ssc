@@ -7,7 +7,7 @@
 
 #include "PointInGeographicalPolygonTest.hpp"
 #include "PointInGeographicalPolygon.hpp"
-#include "LongitudeLatitudeGenerators.hpp"
+#include "LatitudeLongitudeGenerators.hpp"
 #include "LatitudeOfPointOnBorder.hpp"
 
 #define EPS 1e-6
@@ -32,91 +32,91 @@ TEST_F(PointInGeographicalPolygonTest, example)
 {
 //! [PointInGeographicalPolygonTest example]
     // Start by declaring an ECA zone
-    std::vector<LongitudeLatitude> zone;
-    zone.push_back(LongitudeLatitude(-117.101833, 32.535000));
-    zone.push_back(LongitudeLatitude(-117.121500, 32.534000));
-    zone.push_back(LongitudeLatitude(-117.236667, 32.523167));
-    zone.push_back(LongitudeLatitude(-117.258333, 32.552167));
-    zone.push_back(LongitudeLatitude(-117.366833, 32.570167));
-    zone.push_back(LongitudeLatitude(-117.458833, 32.587167));
-    zone.push_back(LongitudeLatitude(-117.822333, 32.623000));
-    zone.push_back(LongitudeLatitude(-118.603500, 31.126500));
-    zone.push_back(LongitudeLatitude(-121.788167, 30.554167));
-    zone.push_back(LongitudeLatitude(-123.287000, 31.768500));
-    zone.push_back(LongitudeLatitude(-123.840667, 32.359667));
-    zone.push_back(LongitudeLatitude(-124.191167, 32.939833));
-    zone.push_back(LongitudeLatitude(-124.452500, 33.668667));
-    zone.push_back(LongitudeLatitude(-125.275333, 34.521333));
-    zone.push_back(LongitudeLatitude(-125.720500, 35.239667));
-    zone.push_back(LongitudeLatitude(-126.308833, 35.726667));
-    zone.push_back(LongitudeLatitude(-126.755000, 36.270833));
-    zone.push_back(LongitudeLatitude(-127.119667, 37.022500));
-    zone.push_back(LongitudeLatitude(-127.633667, 37.756500));
-    zone.push_back(LongitudeLatitude(-127.876667, 38.418000));
-    zone.push_back(LongitudeLatitude(-128.520500, 39.417500));
-    zone.push_back(LongitudeLatitude(-128.757667, 40.307833));
-    zone.push_back(LongitudeLatitude(-128.670333, 41.223167));
-    zone.push_back(LongitudeLatitude(-129.006333, 42.208167));
-    zone.push_back(LongitudeLatitude(-129.090333, 42.789000));
-    zone.push_back(LongitudeLatitude(-129.021000, 43.437000));
-    zone.push_back(LongitudeLatitude(-128.687167, 44.407167));
-    zone.push_back(LongitudeLatitude(-128.667000, 45.507167));
-    zone.push_back(LongitudeLatitude(-128.816833, 46.183500));
-    zone.push_back(LongitudeLatitude(-129.071500, 46.559167));
-    zone.push_back(LongitudeLatitude(-131.256833, 47.659167));
-    zone.push_back(LongitudeLatitude(-132.683333, 48.538667));
-    zone.push_back(LongitudeLatitude(-133.241167, 48.957833));
-    zone.push_back(LongitudeLatitude(-134.258500, 49.373167));
-    zone.push_back(LongitudeLatitude(-135.316833, 50.025333));
-    zone.push_back(LongitudeLatitude(-136.757500, 51.053000));
-    zone.push_back(LongitudeLatitude(-137.692333, 51.900667));
-    zone.push_back(LongitudeLatitude(-138.335667, 52.752000));
-    zone.push_back(LongitudeLatitude(-138.672667, 53.486667));
-    zone.push_back(LongitudeLatitude(-138.808833, 53.673167));
-    zone.push_back(LongitudeLatitude(-139.539667, 54.224167));
-    zone.push_back(LongitudeLatitude(-139.936500, 54.654167));
-    zone.push_back(LongitudeLatitude(-140.924167, 55.336333));
-    zone.push_back(LongitudeLatitude(-141.603000, 56.118667));
-    zone.push_back(LongitudeLatitude(-142.286500, 56.472000));
-    zone.push_back(LongitudeLatitude(-142.809500, 56.619833));
-    zone.push_back(LongitudeLatitude(-153.250500, 58.850667));
-    zone.push_back(LongitudeLatitude(-140.657281, 61.141487));
-    zone.push_back(LongitudeLatitude(-119.457813, 47.718672));
-    zone.push_back(LongitudeLatitude(-123.824749, 40.227427));
-    zone.push_back(LongitudeLatitude(-116.627637, 32.974717));
-    zone.push_back(LongitudeLatitude(-117.101833, 32.535000)); // Polygon needs to be closed
+    std::vector<LatitudeLongitude> zone;
+    zone.push_back(LatitudeLongitude( 32.535000,-117.101833));
+    zone.push_back(LatitudeLongitude( 32.534000,-117.121500));
+    zone.push_back(LatitudeLongitude( 32.523167,-117.236667));
+    zone.push_back(LatitudeLongitude( 32.552167,-117.258333));
+    zone.push_back(LatitudeLongitude( 32.570167,-117.366833));
+    zone.push_back(LatitudeLongitude( 32.587167,-117.458833));
+    zone.push_back(LatitudeLongitude( 32.623000,-117.822333));
+    zone.push_back(LatitudeLongitude( 31.126500,-118.603500));
+    zone.push_back(LatitudeLongitude( 30.554167,-121.788167));
+    zone.push_back(LatitudeLongitude( 31.768500,-123.287000));
+    zone.push_back(LatitudeLongitude( 32.359667,-123.840667));
+    zone.push_back(LatitudeLongitude( 32.939833,-124.191167));
+    zone.push_back(LatitudeLongitude( 33.668667,-124.452500));
+    zone.push_back(LatitudeLongitude( 34.521333,-125.275333));
+    zone.push_back(LatitudeLongitude( 35.239667,-125.720500));
+    zone.push_back(LatitudeLongitude( 35.726667,-126.308833));
+    zone.push_back(LatitudeLongitude( 36.270833,-126.755000));
+    zone.push_back(LatitudeLongitude( 37.022500,-127.119667));
+    zone.push_back(LatitudeLongitude( 37.756500,-127.633667));
+    zone.push_back(LatitudeLongitude( 38.418000,-127.876667));
+    zone.push_back(LatitudeLongitude( 39.417500,-128.520500));
+    zone.push_back(LatitudeLongitude( 40.307833,-128.757667));
+    zone.push_back(LatitudeLongitude( 41.223167,-128.670333));
+    zone.push_back(LatitudeLongitude( 42.208167,-129.006333));
+    zone.push_back(LatitudeLongitude( 42.789000,-129.090333));
+    zone.push_back(LatitudeLongitude( 43.437000,-129.021000));
+    zone.push_back(LatitudeLongitude( 44.407167,-128.687167));
+    zone.push_back(LatitudeLongitude( 45.507167,-128.667000));
+    zone.push_back(LatitudeLongitude( 46.183500,-128.816833));
+    zone.push_back(LatitudeLongitude( 46.559167,-129.071500));
+    zone.push_back(LatitudeLongitude( 47.659167,-131.256833));
+    zone.push_back(LatitudeLongitude( 48.538667,-132.683333));
+    zone.push_back(LatitudeLongitude( 48.957833,-133.241167));
+    zone.push_back(LatitudeLongitude( 49.373167,-134.258500));
+    zone.push_back(LatitudeLongitude( 50.025333,-135.316833));
+    zone.push_back(LatitudeLongitude( 51.053000,-136.757500));
+    zone.push_back(LatitudeLongitude( 51.900667,-137.692333));
+    zone.push_back(LatitudeLongitude( 52.752000,-138.335667));
+    zone.push_back(LatitudeLongitude( 53.486667,-138.672667));
+    zone.push_back(LatitudeLongitude( 53.673167,-138.808833));
+    zone.push_back(LatitudeLongitude( 54.224167,-139.539667));
+    zone.push_back(LatitudeLongitude( 54.654167,-139.936500));
+    zone.push_back(LatitudeLongitude( 55.336333,-140.924167));
+    zone.push_back(LatitudeLongitude( 56.118667,-141.603000));
+    zone.push_back(LatitudeLongitude( 56.472000,-142.286500));
+    zone.push_back(LatitudeLongitude( 56.619833,-142.809500));
+    zone.push_back(LatitudeLongitude( 58.850667,-153.250500));
+    zone.push_back(LatitudeLongitude( 61.141487,-140.657281));
+    zone.push_back(LatitudeLongitude( 47.718672,-119.457813));
+    zone.push_back(LatitudeLongitude( 40.227427,-123.824749));
+    zone.push_back(LatitudeLongitude( 32.974717,-116.627637));
+    zone.push_back(LatitudeLongitude( 32.535000,-117.101833)); // Polygon needs to be closed
     // Then build a PointInGeographicalPolygon object
     const PointInGeographicalPolygon eca(zone);
 //! [PointInGeographicalPolygonTest example]
 //! [PointInGeographicalPolygonTest expected output]
     // This object can then be asked if a point is in the zone or not
-    ASSERT_FALSE(eca.is_in_polygon(LongitudeLatitude(0,0)));
-    ASSERT_TRUE(eca.is_in_polygon(LongitudeLatitude(-126,40)));
+    ASSERT_FALSE(eca.is_in_polygon(LatitudeLongitude(0,0)));
+    ASSERT_TRUE(eca.is_in_polygon(LatitudeLongitude(40,-126)));
 //! [PointInGeographicalPolygonTest expected output]
 }
 
 TEST_F(PointInGeographicalPolygonTest, known_limitation_does_not_work_for_north_pole)
 {
-    std::vector<LongitudeLatitude> zone;
+    std::vector<LatitudeLongitude> zone;
 
-    zone.push_back(LongitudeLatitude(0,60));
-    zone.push_back(LongitudeLatitude(-90,60));
-    zone.push_back(LongitudeLatitude(180,60));
-    zone.push_back(LongitudeLatitude(90,60));
-    zone.push_back(LongitudeLatitude(0,90));
-    zone.push_back(LongitudeLatitude(0,60));
+    zone.push_back(LatitudeLongitude(60,0));
+    zone.push_back(LatitudeLongitude(60,-90));
+    zone.push_back(LatitudeLongitude(60,180));
+    zone.push_back(LatitudeLongitude(60,90));
+    zone.push_back(LatitudeLongitude(90,0));
+    zone.push_back(LatitudeLongitude(60,0));
     const PointInGeographicalPolygon eca(zone);
-    ASSERT_FALSE(eca.is_in_polygon(LongitudeLatitude(0,90)));
+    ASSERT_FALSE(eca.is_in_polygon(LatitudeLongitude(90,0)));
 }
 
 
 TEST_F(PointInGeographicalPolygonTest, simple_triangle_example)
 {
-    std::vector<LongitudeLatitude> zone;
-    zone.push_back(LongitudeLatitude(0,0));
-    zone.push_back(LongitudeLatitude(80,0));
-    zone.push_back(LongitudeLatitude(40,40));
-    zone.push_back(LongitudeLatitude(0,0));
+    std::vector<LatitudeLongitude> zone;
+    zone.push_back(LatitudeLongitude(0,0));
+    zone.push_back(LatitudeLongitude(0,80));
+    zone.push_back(LatitudeLongitude(40,40));
+    zone.push_back(LatitudeLongitude(0,0));
 
     const PointInGeographicalPolygon eca(zone);
     const LatitudeOfPointOnBorder g(new PointInGeographicalPolygon(eca),1e-10);
@@ -165,11 +165,11 @@ TEST_F(PointInGeographicalPolygonTest, constructor_should_throw_if_received_less
 {
     for (size_t i = 0 ; i < 100 ; ++i)
     {
-        std::vector<LongitudeLatitude> zone;
+        std::vector<LatitudeLongitude> zone;
         ASSERT_THROW(PointInGeographicalPolygon p1(zone), PointInPolygonException);
-        zone.push_back(a.random<LongitudeLatitude>());
+        zone.push_back(a.random<LatitudeLongitude>());
         ASSERT_THROW(PointInGeographicalPolygon p2(zone), PointInPolygonException);
-        zone.push_back(a.random<LongitudeLatitude>());
+        zone.push_back(a.random<LatitudeLongitude>());
         ASSERT_THROW(PointInGeographicalPolygon p3(zone), PointInPolygonException);
         zone.push_back(zone.front());
         ASSERT_NO_THROW(PointInGeographicalPolygon p4(zone));
@@ -181,7 +181,7 @@ TEST_F(PointInGeographicalPolygonTest, constructor_should_throw_if_polygon_is_no
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(3,200);
-        std::vector<LongitudeLatitude> zone = a.random_vector_of<LongitudeLatitude>().of_size(n);
+        std::vector<LatitudeLongitude> zone = a.random_vector_of<LatitudeLongitude>().of_size(n);
         ASSERT_THROW(PointInGeographicalPolygon p1(zone), PointInPolygonException);
         zone.push_back(zone.front());
         ASSERT_NO_THROW(PointInGeographicalPolygon p2(zone));

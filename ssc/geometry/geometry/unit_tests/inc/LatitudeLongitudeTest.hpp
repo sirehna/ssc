@@ -11,11 +11,11 @@
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
 
-class LongitudeLatitudeTest : public ::testing::Test
+class LatitudeLongitudeTest : public ::testing::Test
 {
     protected:
-        LongitudeLatitudeTest();
-	    virtual ~LongitudeLatitudeTest();
+        LatitudeLongitudeTest();
+	    virtual ~LatitudeLongitudeTest();
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
