@@ -10,6 +10,10 @@
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
 
+#include <cmath>
+
+#define PI 4.*atan(1.)
+
 LegTest::LegTest() : a(DataGenerator(8796))
 {
 }
@@ -159,30 +163,30 @@ TEST_F(LegTest, distance_between_miami_and_WP1_on_Norwegian_Epic_cruise_should_b
     ASSERT_NEAR(115.706, Leg(miami,wpA).length()/1e3, 1e-3);
 }
 
-/*
+
 TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
 {
-
-}
-
-c:/Documents and Settings/maroff/eclipse_workspace/EONAV OAD modules/trunk/modules/geometry/unit_tests/src/LegTest.cpp(159): Error: The difference between 115.7 and Leg(miami,wpA).length()/1e3 is 3.4603894821678551, which exceeds 0.1, where
-115.7 evaluates to 115.7,
-Leg(miami,wpA).length()/1e3 evaluates to 119.16038948216786, and
-0.1 evaluates to 0.10000000000000001.
-
-
-TEST_F(LegTest, can_calculate_heading_on_leg_of_any_point_for_leg_defined_by_two_symetrical_points)
-{
-
+    //! [LegTest azimuth_at_example]
+    const LatitudeLongitude P(0, a.random<double>().between(-180,180));
+    const LatitudeLongitude Q(0, a.random<double>().between(-180,180));
+    const Leg l(P,Q);
+    const double d = l.length();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        ASSERT_DOUBLE_EQ(PI/2., fabs(l.azimuth_at(a.random<double>().between(0, d))));
+    }
+    //! [LegTest azimuth_at_example]
 }
 
 TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
 {
-
+    const LatitudeLongitude P(a.random<double>().between(-90,90), 0);
+    const LatitudeLongitude Q(a.random<double>().between(-90,90), 0);
+    const Leg l(P,Q);
+    const double d = l.length();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        ASSERT_DOUBLE_EQ(0, fmod(l.azimuth_at(a.random<double>().between(0, d)),PI));
+    }
 }
 
-TEST_F(LegTest, can_find_closest_point_on_leg_to_a_given_point)
-{
-
-}
-*/
