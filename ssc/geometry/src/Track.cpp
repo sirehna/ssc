@@ -111,6 +111,19 @@ std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_trac
 }
 
 /** \author cec
+ *  \date 27 mai 2013, 15:01:34
+ *  \brief
+ *  \returns
+ *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest Track::azimuth_at_example
+*/
+double Track::azimuth_at(const double& distance_from_point1) const
+{
+    const size_t idx = find_leg_index(distance_from_point1);
+    const double d = distance_from_point1-pimpl->distance_from_start_to_begining_of_leg.at(idx);
+    return pimpl->legs.at(idx).azimuth_at(d);
+}
+
+/** \author cec
  *  \date 8 avr. 2013, 15:32:27
  *  \brief Computes the sum of the lengths of each segment taken on the WGS84 (geodesic arcs)
  *  \returns Length of the track (in meters)
