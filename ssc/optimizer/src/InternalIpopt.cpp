@@ -386,11 +386,13 @@ void InternalIpopt::finalize_solution(SolverReturn status,
         case STOP_AT_ACCEPTABLE_POINT:
             results.converged = true;
             break;
+        case FEASIBLE_POINT_FOUND:
+            results.converged = true;
+            break;
         default:
             results.converged = false;
             break;
     }
-
     size_t k = 0 ;
     for (auto it = states.begin() ; it != states.end() ; ++it)
     {
