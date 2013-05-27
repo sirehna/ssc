@@ -9,9 +9,9 @@
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicLine.hpp>
 #include <sstream>
+#include <cmath>
 
-#include "test_macros.hpp"
-
+#define PI 4.*atan(1.)
 #define EPS 1e-6
 #define max(a,b) (a) > (b) ? (a) : (b)
 #define min(a,b) (a) < (b) ? (a) : (b)
@@ -52,7 +52,6 @@ Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pim
 */
 double Leg::length() const
 {
-    COUT("");
     return pimpl->length;
 }
 
@@ -83,3 +82,14 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
     return pimpl->waypoint(max(min(pimpl->length,distance),0));
 }
 
+/** \author cec
+ *  \date 27 mai 2013, 12:24:45
+ *  \brief Calculates the heading of a point on a geodesic
+ *  \returns Heading on geodesic for point at a given distance from first point in leg
+ *  \snippet geometry/unit_tests/src/Test.cpp LegTest azimuth_at_example
+*/
+double Leg::azimuth_at(const double& distance_from_point1) const
+{
+    Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
+    return l.pimpl->direction_of_the_geodesic_at_point_2*PI/180.;
+}
