@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <tr1/memory>
-#include "LongitudeLatitude.hpp"
+#include "LatitudeLongitude.hpp"
 
 #include "Exception.hpp"
 
@@ -35,14 +35,14 @@ class PointInPolygonException : public Exception
 class PointInPolygon
 {
     public:
-        bool is_in_polygon(const LongitudeLatitude& point) const;
+        bool is_in_polygon(const LatitudeLongitude& point) const;
         virtual ~PointInPolygon();
 
     private:
         PointInPolygon();
 
     protected:
-        PointInPolygon(const std::vector<LongitudeLatitude>& polygon);
+        PointInPolygon(const std::vector<LatitudeLongitude>& polygon);
         class PointInPolygonPimpl;
         std::tr1::shared_ptr<PointInPolygonPimpl> pimpl;
 };

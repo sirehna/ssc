@@ -17,7 +17,7 @@ template <> boost::geometry::model::point<double, 2, boost::geometry::cs::spheri
     return boost::geometry::model::point<double, 2, boost::geometry::cs::spherical_equatorial<boost::geometry::degree> >(longitude,latitude);
 }
 
-PointInSphericalPolygon::PointInSphericalPolygon(const std::vector<LongitudeLatitude>& polygon) : PointInPolygon(polygon)
+PointInSphericalPolygon::PointInSphericalPolygon(const std::vector<LatitudeLongitude>& polygon) : PointInPolygon(polygon)
 {
     pimpl = std::tr1::shared_ptr<Pimpl<Point> >(new Pimpl<Point>(polygon));
 }

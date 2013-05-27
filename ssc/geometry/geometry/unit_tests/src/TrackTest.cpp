@@ -7,7 +7,7 @@
 
 #include "TrackTest.hpp"
 #include "Track.hpp"
-#include "LongitudeLatitudeGenerators.hpp"
+#include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
 #include "Leg.hpp"
 #include "test_macros.hpp"
@@ -32,10 +32,10 @@ TEST_F(TrackTest, example)
 {
 //! [TrackTest example]
     // Start by declaring the waypoints (at least two)
-    LongitudeLatitude boston(-71.0603,42.3583),
-                      houston(-95.3631,29.7631),
-                      chicago(-87.65,41.85),
-                      los_angeles(-118.2428,34.0522);
+    LatitudeLongitude boston(42.3583,-71.0603),
+                      houston(29.7631,-95.3631),
+                      chicago(41.85,-87.65),
+                      los_angeles(34.0522,-118.2428);
     // Declare track
     Track track({boston, houston, chicago, los_angeles});
 //! [TrackTest example]
@@ -47,13 +47,13 @@ TEST_F(TrackTest, example)
 
 TEST_F(TrackTest, should_throw_if_track_has_fewer_than_two_points)
 {
-    const std::vector<LongitudeLatitude> empty;
-    const std::vector<LongitudeLatitude> only_one_longitude_latitude(1,a.random<LongitudeLatitude>());
+    const std::vector<LatitudeLongitude> empty;
+    const std::vector<LatitudeLongitude> only_one_longitude_latitude(1,a.random<LatitudeLongitude>());
     ASSERT_THROW(Track track(empty), TrackException);
     ASSERT_THROW(Track track(only_one_longitude_latitude), TrackException);
     for (size_t i = 2 ; i < 100 ; ++i)
     {
-        const std::vector<LongitudeLatitude> waypoints(i,a.random<LongitudeLatitude>());
+        const std::vector<LatitudeLongitude> waypoints(i,a.random<LatitudeLongitude>());
         ASSERT_NO_THROW(Track track(waypoints));
     }
 }
@@ -62,10 +62,10 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_gi
 {
     //! [TrackTest distance_from_start_example]
     // Define a series of points on the globe
-    LongitudeLatitude boston(-71.0603,42.3583),
-                      houston(-95.3631,29.7631),
-                      chicago(-87.65,41.85),
-                      los_angeles(-118.2428,34.0522);
+    LatitudeLongitude boston(42.3583,-71.0603),
+            houston(29.7631,-95.3631),
+            chicago(41.85,-87.65),
+            los_angeles(34.0522,-118.2428);
     // Construct the track
     const Track track({boston, houston, chicago, los_angeles});
     // The distances of each waypoint from the start of the leg are then given by distance_from_start
@@ -82,7 +82,7 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(waypoints);
         const size_t leg_index = a.random<size_t>().between(0,nb_of_waypoints-2);
         const double position_of_first_point = track.get_waypoint_position_on_track(leg_index);
@@ -108,10 +108,10 @@ TEST_F(TrackTest, leg_index_example)
 {
     //! [TrackTest find_leg_index_example]
     // Define a series of points on the globe
-    LongitudeLatitude boston(-71.0603,42.3583),
-                      houston(-95.3631,29.7631),
-                      chicago(-87.65,41.85),
-                      los_angeles(-118.2428,34.0522);
+    LatitudeLongitude boston(42.3583,-71.0603),
+                      houston(29.7631,-95.3631),
+                      chicago(41.85,-87.65),
+                      los_angeles(34.0522,-118.2428);
     // Construct the track
     const Track track({boston, houston, chicago, los_angeles});
     // For any point between waypoints 2 & 3, the returned index should be 1 because they are on the second leg (indexes start at 0)
@@ -126,28 +126,28 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
 {
     //! [TrackTest find_waypoint_on_track_example]
     // Define a series of points on the globe
-    LongitudeLatitude boston(-71.0603,42.3583),
-                      houston(-95.3631,29.7631),
-                      chicago(-87.65,41.85),
-                      los_angeles(-118.2428,34.0522);
+    LatitudeLongitude boston(42.3583,-71.0603),
+                      houston(29.7631,-95.3631),
+                      chicago(41.85,-87.65),
+                      los_angeles(34.0522,-118.2428);
     // Construct the track
     const Track track({boston, houston, chicago, los_angeles});
 
     // In this particular case, we are attempting to find the second point on the track (special case)
     const double eps = 1e-6;
-    const LongitudeLatitude p0 = track.find_waypoint_on_track(0);
+    const LatitudeLongitude p0 = track.find_waypoint_on_track(0);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lat, p0.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(boston.lon, p0.lon, eps);
     //! [TrackTest find_waypoint_on_track_example]
-    const LongitudeLatitude p1 = track.find_waypoint_on_track(2583009.0737499665-eps);
+    const LatitudeLongitude p1 = track.find_waypoint_on_track(2583009.0737499665-eps);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lat, p1.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(houston.lon, p1.lon, eps);
 
-    const LongitudeLatitude p2 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334-eps);
+    const LatitudeLongitude p2 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334-eps);
     ASSERT_SMALL_RELATIVE_ERROR(chicago.lat, p2.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(chicago.lon, p2.lon, eps);
 
-    const LongitudeLatitude p3 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334+2807378.1345177018-eps);
+    const LatitudeLongitude p3 = track.find_waypoint_on_track(2583009.0737499665+1509875.9483076334+2807378.1345177018-eps);
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lat, p3.lat, eps);
     ASSERT_SMALL_RELATIVE_ERROR(los_angeles.lon, p3.lon, eps);
 }
@@ -157,7 +157,7 @@ TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(waypoints);
         ASSERT_NO_THROW(track.find_leg_index(track.length()));
     }
@@ -168,9 +168,9 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(expected_waypoints);
-        const std::vector<LongitudeLatitude> waypoints = track.get_all_waypoints();
+        const std::vector<LatitudeLongitude> waypoints = track.get_all_waypoints();
         ASSERT_EQ(expected_waypoints.size(), waypoints.size());
         const size_t n = expected_waypoints.size();
         for (size_t j = 0 ; j < n ; ++j)
@@ -188,7 +188,7 @@ TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
     {
         //! [TrackTest split_at_example]
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(expected_waypoints);
         const double L = track.length();
         const auto subtracks = track.split_at(L/2.);
@@ -210,7 +210,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_zero_or_less)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(expected_waypoints);
         ASSERT_THROW(track.split_at(0), TrackException);
         ASSERT_THROW(track.split_at(a.random<double>().no().greater_than(0)), TrackException);
@@ -222,7 +222,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> expected_waypoints = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const Track track(expected_waypoints);
         ASSERT_THROW(track.split_at(track.length()), TrackException);
         ASSERT_THROW(track.split_at(a.random<double>().greater_than(track.length())), TrackException);
@@ -234,9 +234,9 @@ TEST_F(TrackTest, should_be_able_to_test_that_two_tracks_are_equal)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
-        const std::vector<LongitudeLatitude> waypoints_track_1 = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const std::vector<LongitudeLatitude> waypoints_track_2 = a.random_vector_of<LongitudeLatitude>().of_size(nb_of_waypoints);
-        const std::vector<LongitudeLatitude> waypoints_track_3 = a.random_vector_of<LongitudeLatitude>().of_size(a.random<size_t>().between(2, 10).but_not(nb_of_waypoints));
+        const std::vector<LatitudeLongitude> waypoints_track_1 = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> waypoints_track_2 = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
+        const std::vector<LatitudeLongitude> waypoints_track_3 = a.random_vector_of<LatitudeLongitude>().of_size(a.random<size_t>().between(2, 10).but_not(nb_of_waypoints));
         const Track track_1(waypoints_track_1);
         const Track track_2(waypoints_track_2);
         const Track track_3(waypoints_track_3);

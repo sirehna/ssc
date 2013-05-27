@@ -8,7 +8,7 @@
 #ifndef LEG_HPP_
 #define LEG_HPP_
 
-#include "LongitudeLatitude.hpp"
+#include "LatitudeLongitude.hpp"
 #include <tr1/memory>
 #include "Exception.hpp"
 
@@ -34,9 +34,9 @@ class LegException : public Exception
 class Leg
 {
     public:
-        Leg(const LongitudeLatitude& point1, const LongitudeLatitude& point2);
+        Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         double length() const;
-        LongitudeLatitude find_waypoint_at(const double& distance_from_point1) const;
+        LatitudeLongitude find_waypoint_at(const double& distance_from_point1) const;
 
     private:
         Leg();

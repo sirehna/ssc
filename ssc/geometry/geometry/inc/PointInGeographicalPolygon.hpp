@@ -24,7 +24,7 @@
 class PointInGeographicalPolygon : public PointInPolygon
 {
     public:
-        PointInGeographicalPolygon(const std::vector<LongitudeLatitude>& polygon);
+        PointInGeographicalPolygon(const std::vector<LatitudeLongitude>& polygon);
 };
 
 #endif /* POINTINGEOGRAPHICALPOLYGON_HPP_ */

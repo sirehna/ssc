@@ -22,7 +22,7 @@
 class PointInSphericalPolygon : public PointInPolygon
 {
     public:
-        PointInSphericalPolygon(const std::vector<LongitudeLatitude>& polygon);
+        PointInSphericalPolygon(const std::vector<LatitudeLongitude>& polygon);
 };
 
 #endif /* POINTINSPHERICALPOLYGON_HPP_ */

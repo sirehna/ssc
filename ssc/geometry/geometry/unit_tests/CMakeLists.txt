@@ -4,9 +4,9 @@ project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/PointInSphericalPolygonTest.cpp
               src/PointInGeographicalPolygonTest.cpp
-              src/LongitudeLatitudeGenerators.cpp
+              src/LatitudeLongitudeGenerators.cpp
               src/LatitudeOfPointOnBorder.cpp
-              src/LongitudeLatitudeTest.cpp
+              src/LatitudeLongitudeTest.cpp
               src/AngleTest.cpp
               src/TrackTest.cpp
               src/LegTest.cpp)
