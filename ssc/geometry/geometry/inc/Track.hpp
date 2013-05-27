@@ -48,6 +48,7 @@ class Track
         std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
         bool operator==(const Track& rhs) const;
         bool operator!=(const Track& rhs) const;
+        double azimuth_at(const double& distance_from_point1) const;
 
     private:
         Track();
