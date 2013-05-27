@@ -69,7 +69,7 @@ class IpoptSolver::IpoptSolverPimpl
             (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->set_starting_point(starting_point);
             const ApplicationReturnStatus status = app->OptimizeTNLP(nlp);
             OptimizationResult ret = (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->get_results();
-            ret.converged = status == Solve_Succeeded;
+            ret.converged = (status == Solve_Succeeded) || (status == Solved_To_Acceptable_Level) || (status == Feasible_Point_Found);
             return ret;
         }
 

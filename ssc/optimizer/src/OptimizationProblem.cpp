@@ -11,6 +11,7 @@
 #include "Null.hpp"
 #include "State.hpp"
 #include "Serialize.hpp"
+#include "SerializeReversePolish.hpp"
 #include "GradHes.hpp"
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
@@ -344,7 +345,12 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
 #include "test_macros.hpp"
 ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb)
 {
-    os << "min " << *(pb.pimpl->objective_function) << std::endl;
+    SerializeReversePolish s(os);
+    os << "min ";
+    //os << *(pb.pimpl->objective_function);
+    pb.pimpl->objective_function->accept(s);
+    os << std::endl;
+
     auto l = pb.get_states();
     if (not(l.empty()))
     {
@@ -353,11 +359,15 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     const size_t n = l.size();
     for (size_t i = 0 ; i < ((n-1)>n?0:(n-1)) ; ++i)
     {
-        os << *(l.at(i)) << ",";
+        os << *(l.at(i));
+        //l.at(i)->accept(s);
+        os << ",";
+
     }
     if (not(l.empty()))
     {
         os << *(l.back());
+        //l.back()->accept(s);
         os << ")" << std::endl;
     }
     auto constraints = pb.pimpl->get_constraints();
@@ -368,7 +378,10 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     for (size_t i = 0 ; i < m ; ++i)
     {
         os << "subject to ";
-        os << gl[i] << " < " << *(constraints.at(i)) << " < " << gu[i] << std::endl;
+        os << gl[i] << " < ";
+        //os << *(constraints.at(i));
+        constraints.at(i)->accept(s);
+        os << " < " << gu[i] << std::endl;
     }
     delete[] gl;
     delete[] gu;
