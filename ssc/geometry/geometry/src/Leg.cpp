@@ -6,6 +6,8 @@
  */
 
 #include "Leg.hpp"
+#include "GreatCircle.h"
+
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicLine.hpp>
 #include <sstream>
@@ -19,7 +21,8 @@
 class Leg::LegImpl
 {
     public:
-        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0)
+        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
+        geodesic(Geometry::GreatCircle(point1,point2))
         {
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, length);
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
@@ -37,6 +40,7 @@ class Leg::LegImpl
         const GeographicLib::Geodesic& geod;
         double direction_of_the_geodesic_at_point_1;
         double direction_of_the_geodesic_at_point_2;
+        Geometry::GreatCircle geodesic;
 };
 
 Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
@@ -88,8 +92,20 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
  *  \returns Heading on geodesic for point at a given distance from first point in leg
  *  \snippet geometry/unit_tests/src/Test.cpp LegTest azimuth_at_example
 */
-double Leg::azimuth_at(const double& distance_from_point1) const
+Angle Leg::azimuth_at(const double& distance_from_point1) const
 {
     Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
-    return l.pimpl->direction_of_the_geodesic_at_point_2*PI/180.;
+    return Angle::degree(l.pimpl->direction_of_the_geodesic_at_point_2);
+}
+
+/** \author cec
+ *  \date 27 mai 2013, 17:22:02
+ *  \brief
+ *  \returns
+ *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest Leg::find_closest_point_to_example
+*/
+LatitudeLongitude Leg::find_closest_point_to(const LatitudeLongitude& point) const
+{
+    return pimpl->geodesic.nearestPointTo(point);
+
 }

@@ -173,7 +173,7 @@ TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
     const double d = l.length();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        ASSERT_DOUBLE_EQ(PI/2., fabs(l.azimuth_at(a.random<double>().between(0, d))));
+        ASSERT_DOUBLE_EQ(90, fabs(l.azimuth_at(a.random<double>().between(0, d)).get_degree()));
     }
     //! [LegTest azimuth_at_example]
 }
@@ -186,7 +186,7 @@ TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
     const double d = l.length();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        ASSERT_DOUBLE_EQ(0, fmod(l.azimuth_at(a.random<double>().between(0, d)),PI));
+        ASSERT_DOUBLE_EQ(0, fmod(l.azimuth_at(a.random<double>().between(0, d)).get_radian(),PI));
     }
 }
 
