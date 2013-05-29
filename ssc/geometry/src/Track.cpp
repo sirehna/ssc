@@ -10,6 +10,8 @@
 #include <sstream>
 #include <cmath>
 
+#include "test_macros.hpp"
+
 class Track::TrackImpl
 {
     public:
@@ -116,7 +118,7 @@ std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_trac
  *  \returns
  *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest Track::azimuth_at_example
 */
-double Track::azimuth_at(const double& distance_from_point1) const
+Angle Track::azimuth_at(const double& distance_from_point1) const
 {
     const size_t idx = find_leg_index(distance_from_point1);
     const double d = distance_from_point1-pimpl->distance_from_start_to_begining_of_leg.at(idx);
@@ -223,4 +225,46 @@ bool Track::operator==(const Track& rhs) const
 bool Track::operator!=(const Track& rhs) const
 {
     return not(operator==(rhs));
+}
+
+/** \author cec
+ *  \date 27 mai 2013, 17:07:35
+ *  \brief Projects a point on a geodesic
+ *  \returns
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest Track::find_closest_point_to_example
+*/
+std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const LatitudeLongitude& point) const
+{
+    LatitudeLongitude nearest_point = pimpl->waypoints.front();
+    double smallest_distance = 1e3*pimpl->length;
+    size_t idx = 0;
+    for (auto that_leg = pimpl->legs.begin() ; that_leg != pimpl->legs.end() ; ++that_leg)
+    {
+        LatitudeLongitude p = that_leg->find_closest_point_to(point);
+        const double d = Leg(p,point).length();
+        if (d<smallest_distance)
+        {
+            nearest_point = p;
+            smallest_distance = d;
+            idx = that_leg-pimpl->legs.begin();
+        }
+    }
+    return std::make_pair(nearest_point,idx);
+}
+
+/** \author cec
+ *  \date 28 mai 2013, 10:18:13
+ *  \brief
+ *  \returns
+ *  \snippet /unit_tests/src/TrackTest.cpp TrackTest Track::distance_from_beginning_of_track_to_closest_point_example
+*/
+double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLongitude& point) const
+{
+    COUT(point);
+    const std::pair<LatitudeLongitude,size_t> nearest_point = find_closest_point_to(point);
+    COUT(nearest_point.first);
+    const double pos = get_waypoint_position_on_track(nearest_point.second);
+    COUT(pos);
+    COUT(Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length());
+    return pos + Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
 }

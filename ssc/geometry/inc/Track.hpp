@@ -12,6 +12,7 @@
 #include <vector>
 #include <tr1/memory>
 #include "Exception.hpp"
+#include "Angle.hpp"
 
 class TrackException : public Exception
 {
@@ -48,7 +49,9 @@ class Track
         std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
         bool operator==(const Track& rhs) const;
         bool operator!=(const Track& rhs) const;
-        double azimuth_at(const double& distance_from_point1) const;
+        Angle azimuth_at(const double& distance_from_point1) const;
+        std::pair<LatitudeLongitude, size_t> find_closest_point_to(const LatitudeLongitude& point) const;
+        double distance_from_beginning_of_track_to_closest_point(const LatitudeLongitude& point) const;
 
     private:
         Track();
