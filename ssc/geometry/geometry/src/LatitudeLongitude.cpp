@@ -21,3 +21,8 @@ std::ostream& operator<<(std::ostream& os, const LatitudeLongitude& bar)
 {
     return os << "(" << bar.lat << "," << bar.lon << ")";
 }
+
+LatitudeLongitude LatitudeLongitude::antipode() const
+{
+    return LatitudeLongitude(- lat, (lon >=0) ? lon-180. :lon+1800 );
+}

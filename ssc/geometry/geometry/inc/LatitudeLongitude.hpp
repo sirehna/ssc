@@ -40,6 +40,7 @@ class LatitudeLongitude
         LatitudeLongitude(const double& latitude_in_degrees, const double& longitude_in_degrees);
         double lat;
         double lon;
+        LatitudeLongitude antipode() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const LatitudeLongitude& bar);
