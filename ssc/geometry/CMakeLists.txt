@@ -7,7 +7,11 @@ set(SOURCES src/PointInPolygon.cpp
             src/LatitudeLongitude.cpp
             src/Angle.cpp
             src/Track.cpp
-            src/Leg.cpp)
+            src/Leg.cpp
+            src/GreatCircle.cpp
+            src/Vector3D.cpp
+            src/Geometry.cpp
+            src/Angle.cxx)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})

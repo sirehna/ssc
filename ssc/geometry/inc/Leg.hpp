@@ -11,6 +11,7 @@
 #include "LatitudeLongitude.hpp"
 #include <tr1/memory>
 #include "Exception.hpp"
+#include "Angle.hpp"
 
 class LegException : public Exception
 {
@@ -37,7 +38,8 @@ class Leg
         Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         double length() const;
         LatitudeLongitude find_waypoint_at(const double& distance_from_point1) const;
-        double azimuth_at(const double& distance_from_point1) const;
+        Angle azimuth_at(const double& distance_from_point1) const;
+        LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const;
 
     private:
         Leg();
