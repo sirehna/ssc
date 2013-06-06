@@ -6,17 +6,19 @@
  */
 
 #include "TrapezoidalIntegration.hpp"
+#include <cmath>
 
 class TrapezoidalIntegration::Impl
 {
     public:
-        Impl(const Function& f_) : f(f_)
+        Impl()
         {
 
         }
 
-        double integrate(const double& a, const double& b, const size_t& nb_of_evaluations) const
+        double integrate(const Function& f, const double& a, const double& b, const double& eps) const
         {
+            const size_t nb_of_evaluations = floor((b-a)/eps);
             const double h = (b - a) / nb_of_evaluations;
             double S = f(a) + f(b);
             for (size_t i  = 1 ; i < nb_of_evaluations ; ++i)
@@ -25,21 +27,17 @@ class TrapezoidalIntegration::Impl
             }
             return S * h / 2.;
         }
-
-
-    private:
-        Function f;
 };
 
 
 
-TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : pimpl(new Impl(f))
+TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : Integrator(f), pimpl(new Impl())
 {
 
 }
 
 
-double TrapezoidalIntegration::integrate(const double& a, const double& b, const size_t& nb_of_evaluations) const
+double TrapezoidalIntegration::integrate(const double& a, const double& b, const double& eps) const
 {
-    return pimpl->integrate(a,b,nb_of_evaluations);
+    return pimpl->integrate(f,a,b,eps);
 }
