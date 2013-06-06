@@ -8,9 +8,8 @@
 #ifndef TRAPEZOIDALINTEGRATION_HPP_
 #define TRAPEZOIDALINTEGRATION_HPP_
 
-#include <functional>
+#include "Integrator.hpp"
 #include <tr1/memory>
-typedef std::function<double (const double&)> Function;
 
 /** \author cec
  *  \brief This class was created to
@@ -23,11 +22,11 @@ typedef std::function<double (const double&)> Function;
  *  \snippet quadpack/unit_tests/src/TrapezoidalIntegrationTest.cpp TrapezoidalIntegrationTest expected output
  */
 
-class TrapezoidalIntegration
+class TrapezoidalIntegration : public Integrator
 {
     public:
         TrapezoidalIntegration(const Function& f);
-        double integrate(const double& a, const double& b, const size_t& nb_of_evaluations) const;
+        double integrate(const double& a, const double& b, const double& eps=1e-6) const;
 
     private:
         class Impl;

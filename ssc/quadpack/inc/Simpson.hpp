@@ -7,9 +7,12 @@
 
 #ifndef SIMPSON_HPP_
 #define SIMPSON_HPP_
-#include <functional>
+
 #include <tr1/memory>
-typedef std::function<double (const double&)> Function;
+
+#include "Integrator.hpp"
+
+
 
 
 /** \author cec
@@ -22,7 +25,7 @@ typedef std::function<double (const double&)> Function;
  *  \section ex2 Expected output
  *  \snippet quadpack/unit_tests/src/SimpsonTest.cpp SimpsonTest expected output
  */
-class Simpson
+class Simpson : public Integrator
 {
     public:
         Simpson(const Function& f);

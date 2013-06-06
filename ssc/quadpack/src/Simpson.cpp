@@ -12,11 +12,11 @@
 class Simpson::Impl
 {
     public:
-        Impl(const Function& f_) : f(f_)
+        Impl()
         {
 
         }
-        double adaptive_simpson(const double& a, const double& b, const double& epsilon,
+        double adaptive_simpson(const Function& f, const double& a, const double& b, const double& epsilon,
                 const double& S, const double& fa, const double& fb, const double& fc, const int& bottom) const
         {
           const double c = (a + b)/2.;
@@ -31,11 +31,11 @@ class Simpson::Impl
           //COUT(bottom);
           if (bottom <= 0 || fabs(S2 - S) <= 15*epsilon)
             return S2 + (S2 - S)/15;
-          return adaptive_simpson(a, c, epsilon/2., Sleft,  fa, fc, fd, bottom-1) +
-                 adaptive_simpson(c, b, epsilon/2., Sright, fc, fb, fe, bottom-1);
+          return adaptive_simpson(f, a, c, epsilon/2., Sleft,  fa, fc, fd, bottom-1) +
+                 adaptive_simpson(f, c, b, epsilon/2., Sright, fc, fb, fe, bottom-1);
         }
 
-        double integrate(const double& a, const double& b, const double& eps) const
+        double integrate(const Function& f, const double& a, const double& b, const double& eps) const
         {
             COUT(a);
             COUT(b);
@@ -43,20 +43,18 @@ class Simpson::Impl
             const double c = (a + b)/2, h = b - a;
             const double fa = f(a), fb = f(b), fc = f(c);
             const double S = (h/6.)*(fa + 4*fc + fb);
-            return adaptive_simpson(a, b, eps, S, fa, fb, fc, 20);
+            return adaptive_simpson(f, a, b, eps, S, fa, fb, fc, 20);
         }
 
 
-    private:
-        Function f;
 };
 
-Simpson::Simpson(const Function& f) : pimpl(new Impl(f))
+Simpson::Simpson(const Function& f) : Integrator(f), pimpl(new Impl())
 {
 
 }
 
 double Simpson::integrate(const double& a, const double& b, const double& eps) const
 {
-    return pimpl->integrate(a,b,eps);
+    return pimpl->integrate(f,a,b,eps);
 }
