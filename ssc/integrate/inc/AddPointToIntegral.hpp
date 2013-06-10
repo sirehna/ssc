@@ -8,18 +8,11 @@
 #ifndef ADDPOINTTOINTEGRAL_HPP_
 #define ADDPOINTTOINTEGRAL_HPP_
 
-/** \author cec
- *  \ingroup MODULE_NAME
- *  \brief Responsibility
- *  \details 
- *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/AddPointToIntegralTest.cpp AddPointToIntegralTest example
- *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/AddPointToIntegralTest.cpp AddPointToIntegralTest expected output
- */
 
-class AddPointToIntegral
-{
-};
+double integrate(double previous_value_of_the_integral,
+                 double x1,
+                 double y1,
+                 double x2,
+                 double y2);
 
 #endif /* ADDPOINTTOINTEGRAL_HPP_ */
