@@ -10,9 +10,8 @@
 
 
 double integrate(double previous_value_of_the_integral,
-                 double x1,
                  double y1,
-                 double x2,
-                 double y2);
+                 double y2,
+                 double Dx);
 
 #endif /* ADDPOINTTOINTEGRAL_HPP_ */
