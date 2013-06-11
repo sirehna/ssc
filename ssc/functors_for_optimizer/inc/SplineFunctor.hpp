@@ -9,7 +9,7 @@
 #define SPLINEFUNCTOR_HPP_
 
 #include "Unary.hpp"
-#include "ParabolicCoefficients.hpp"
+
 
 /** \author cec
  *  \brief This class was created to
@@ -38,11 +38,9 @@ class SplineFunctor : public Unary
 
     private:
         SplineFunctor();
-        std::tr1::shared_ptr<NaturalSplines> f;
-        double xmin_;
-        double xmax_;
-        std::vector<ParabolicCoefficients> dy;
-        std::tr1::shared_ptr<State> state;
+        class Impl;
+        std::tr1::shared_ptr<Impl> pimpl;
+
 
 };
 
