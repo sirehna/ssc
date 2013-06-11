@@ -4,7 +4,8 @@ set(SOURCES src/OptimizationProblem.cpp
             src/IpoptSolver.cpp
             src/OptimizationResult.cpp
             src/InternalIpopt.cpp
-            src/IpoptParameters.cpp)
+            src/IpoptParameters.cpp
+            src/MinimizeSpline.cpp)
 
 include_directories(inc)
 include_directories(${test_macros_SOURCE_DIR})
