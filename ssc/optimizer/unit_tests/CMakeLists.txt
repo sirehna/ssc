@@ -2,7 +2,8 @@
 set(MODULE_UNDER_TEST optimizer)
 project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/OptimizationProblemTest.cpp
-              src/IpoptSolverTest.cpp)
+              src/IpoptSolverTest.cpp
+              src/MinimizeSplineTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories
