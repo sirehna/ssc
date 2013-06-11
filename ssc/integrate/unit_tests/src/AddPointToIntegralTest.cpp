@@ -39,8 +39,8 @@ TEST_F(AddPointToIntegralTest, example)
         const double y1 = lambda*x1+mu;
         const double y2 = lambda*x2+mu;
         const double y3 = lambda*x3+mu;
-        const double I1 = integrate(0, x1, y1, x2, y2);
-        const double I2 = integrate(I1, x2, y2, x3, y3);
+        const double I1 = integrate(0, y1, y2, x2-x1);
+        const double I2 = integrate(I1, y2, y3, x3-x2);
 //! [AddPointToIntegralTest example]
 //! [AddPointToIntegralTest expected output]
         ASSERT_DOUBLE_EQ((x2-x1)*(lambda/2*(x1+x2)+mu), I1);
