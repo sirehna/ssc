@@ -10,32 +10,47 @@
 #include "NaturalSplines.hpp"
 #include "NodeVisitor.hpp"
 #include "State.hpp"
+#include "ParabolicCoefficients.hpp"
+
+class SplineFunctor::Impl
+{
+    public:
+        Impl(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
+                xmin_(xmin),
+                xmax_(xmax),
+                dy(std::vector<ParabolicCoefficients>()),
+                state(state_)
+        {
+
+        }
+        std::tr1::shared_ptr<NaturalSplines> f;
+        double xmin_;
+        double xmax_;
+        std::vector<ParabolicCoefficients> dy;
+        std::tr1::shared_ptr<State> state;
+};
 
 SplineFunctor::SplineFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state_),
-f(new NaturalSplines(xmin,xmax,y_values)),
-xmin_(xmin),
-xmax_(xmax),
-dy(std::vector<ParabolicCoefficients>()),
-state(state_)
+pimpl(new Impl(state_, xmin, xmax, y_values))
 {
     update_lambda();
 }
 
 void SplineFunctor::update_lambda()
 {
-    auto func = [f,state]()->double
+    auto func = [pimpl]()->double
         {
-            f->set_computed_value(state->get_lambda()());
-            return f->f();
+            pimpl->f->set_computed_value(pimpl->state->get_lambda()());
+            return pimpl->f->f();
         };
     set_value(func);
-    dy = f->get_parabolic_coefficients();
+    pimpl->dy = pimpl->f->get_parabolic_coefficients();
 }
 
 NodePtr SplineFunctor::diff(const StatePtr& state) const
 {
-    return NodePtr(new PiecewiseParabolicFunctor(state, xmin_, xmax_, dy));
+    return NodePtr(new PiecewiseParabolicFunctor(state, pimpl->xmin_, pimpl->xmax_, pimpl->dy));
 }
 
 void SplineFunctor::accept(NodeVisitor& v) const
