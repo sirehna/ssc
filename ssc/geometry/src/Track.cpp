@@ -260,11 +260,11 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
 */
 double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLongitude& point) const
 {
-    COUT(point);
+    //COUT(point);
     const std::pair<LatitudeLongitude,size_t> nearest_point = find_closest_point_to(point);
-    COUT(nearest_point.first);
+    //COUT(nearest_point.first);
     const double pos = get_waypoint_position_on_track(nearest_point.second);
-    COUT(pos);
-    COUT(Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length());
+    //COUT(pos);
+    //COUT(Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length());
     return pos + Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
 }
