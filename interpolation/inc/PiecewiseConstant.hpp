@@ -27,9 +27,6 @@ class PiecewiseConstant : public Interpolator
 {
     public:
         PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_);
-        double f(const double x0);
-        double df(const double x0);
-        double d2f(const double x0);
         void set_computed_value(const double& x0);
 
     private:

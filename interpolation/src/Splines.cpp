@@ -71,30 +71,9 @@ CubicCoefficients Splines::compute_cubic_coeff_for_x0(const double& x0, double& 
     return get_cubic_coefficients(M.at(idx), M.at(idx+1), y.at(idx),y.at(idx+1));
 }
 
-double Splines::f(const double x0)
-{
-    set_computed_value(x0);
-    if (n==1) return y.back();
-	return d+x_xi*(c+x_xi*(b+x_xi*a));
-}
-
-double Splines::df(const double x0)
-{
-    set_computed_value(x0);
-    if (n==1) return 0;
-	return c+x_xi*(2*b+x_xi*3*a);
-}
-
-double Splines::d2f(const double x0)
-{
-    set_computed_value(x0);
-    if (n==1) return 0;
-	return 2*b+x_xi*6*a;
-}
-
 double Splines::get_f() const
 {
-    return y.at(idx);
+    return (n==1) ? y.back() : d+x_xi*(c+x_xi*(b+x_xi*a));
 }
 
 double Splines::get_df(const size_t derivative_order) const

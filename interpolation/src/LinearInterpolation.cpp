@@ -31,24 +31,6 @@ void LinearInterpolation::set_computed_value(const double& val)
     y1 = y.at(idx+1);
 }
 
-double LinearInterpolation::f(const double x)
-{
-    set_computed_value(x);
-    return y0+(val_sat-x0)*(y1-y0)/delta;
-}
-
-double LinearInterpolation::df(const double x)
-{
-    set_computed_value(x);
-    return (y1-y0)/delta;
-}
-
-double LinearInterpolation::d2f(const double x)
-{
-    (void)x;
-    return 0;
-}
-
 double LinearInterpolation::get_f() const
 {
     return y0+(val_sat-x0)*(y1-y0)/delta;

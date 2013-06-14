@@ -37,24 +37,6 @@ void ParabolicInterpolation::set_computed_value(const double& val)
     x_xi = val_sat - (xmin + delta*idx);
 }
 
-double ParabolicInterpolation::f(const double x0)
-{
-    set_computed_value(x0);
-    return a*x_xi*x_xi+b*x_xi+c;
-}
-
-double ParabolicInterpolation::df(const double x0)
-{
-    set_computed_value(x0);
-    return 2*a*x_xi+b;
-}
-
-double ParabolicInterpolation::d2f(const double x0)
-{
-    set_computed_value(x0);
-    return 2*a;
-}
-
 double ParabolicInterpolation::get_f() const
 {
     return a*x_xi*x_xi+b*x_xi+c;

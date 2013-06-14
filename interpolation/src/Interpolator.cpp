@@ -38,3 +38,22 @@ void Interpolator::update_index(const double x0)
     idx = floor((x0-xmin)/(xmax-xmin)*(n-1));
     idx = min(idx,n-2);
 }
+
+double Interpolator::f(const double x)
+{
+    set_computed_value(x);
+    return get_f();
+}
+
+double Interpolator::df(const double x)
+{
+    set_computed_value(x);
+    return get_df(1);
+}
+
+double Interpolator::d2f(const double x)
+{
+    set_computed_value(x);
+    return get_df(2);
+}
+
