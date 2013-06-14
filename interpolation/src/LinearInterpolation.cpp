@@ -49,3 +49,15 @@ double LinearInterpolation::d2f(const double x)
     return 0;
 }
 
+double LinearInterpolation::get_f() const
+{
+    return y0+(val_sat-x0)*(y1-y0)/delta;
+}
+
+double LinearInterpolation::get_df(const size_t derivative_order) const
+{
+    if (derivative_order==0) return get_f();
+    if (derivative_order==1) return (y1-y0)/delta;
+                             return 0;
+}
+

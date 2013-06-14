@@ -92,6 +92,20 @@ double Splines::d2f(const double x0)
 	return 2*b+x_xi*6*a;
 }
 
+double Splines::get_f() const
+{
+    return y.at(idx);
+}
+
+double Splines::get_df(const size_t derivative_order) const
+{
+    if (derivative_order==0) return get_f();
+    if (derivative_order==1) return (n==1) ? 0 : c+x_xi*(2*b+x_xi*3*a);
+    if (derivative_order==2) return (n==1) ? 0 : 2*b+x_xi*6*a;
+                             return 0;
+}
+
+
 std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients() const
 {
     std::vector<ParabolicCoefficients> ret;

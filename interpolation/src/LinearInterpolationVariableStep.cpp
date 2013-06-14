@@ -99,3 +99,15 @@ void LinearInterpolationVariableStep::set_computed_value(const double& x0)
 {
     pimpl->set_computed_value(x0);
 }
+
+double LinearInterpolationVariableStep::get_f() const
+{
+    return pimpl->get_val();
+}
+
+double LinearInterpolationVariableStep::get_df(const size_t derivative_order) const
+{
+    if (derivative_order==0) return get_f();
+    if (derivative_order==1) return pimpl->get_derivative();
+                             return 0;
+}

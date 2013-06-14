@@ -34,6 +34,8 @@ class PiecewiseConstant : public Interpolator
 
     private:
         PiecewiseConstant();
+        double get_f() const;
+        double get_df(const size_t derivative_order) const;
 };
 
 #endif /* PIECEWISECONSTANT_HPP_ */

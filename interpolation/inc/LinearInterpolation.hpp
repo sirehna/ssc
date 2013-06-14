@@ -34,6 +34,8 @@ class LinearInterpolation : public Interpolator
 
     private:
         LinearInterpolation();
+        double get_f() const;
+        double get_df(const size_t derivative_order) const;
         double x0;
         double x1;
         double y0;
