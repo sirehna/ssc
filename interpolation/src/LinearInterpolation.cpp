@@ -13,7 +13,7 @@
 
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
-        const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_),
+        const std::vector<double>& y_) : Interpolator(xmin_,xmax_,y_)/*xmin(xmin_), xmax(xmax_), y(y_)*/,
         x0(xmin),
         x1(xmax),
         y0(y.front()),
