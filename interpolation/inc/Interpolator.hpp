@@ -27,7 +27,7 @@ class Interpolator
         virtual ~Interpolator() {}
         Interpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
         double f(const double x0);
-        double df(const double x0);
+        double df(const double x0, const size_t derivative_order=1);
         double d2f(const double x0);
 
     protected:
