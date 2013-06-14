@@ -47,7 +47,6 @@ TEST_F(SplinesTest, example)
 	NaturalSplines spline(0,9,y);
 //! [SplineTest example]
 //! [SplineTest expected output]
-	spline.update_coefficients_if_necessary(3);
 	ASSERT_DOUBLE_EQ(9,spline.f(3));
 	ASSERT_DOUBLE_EQ(5.4,spline.df(3));
 	ASSERT_DOUBLE_EQ(2.4,spline.d2f(3));
@@ -63,7 +62,6 @@ TEST_F(SplinesTest, value_at_the_interpolation_points_should_be_the_same_as_that
         NaturalSplines spline(x.get_min(),x.get_max(),y);
         for (size_t j = 0 ; j < x.size() ; ++j)
         {
-            spline.update_coefficients_if_necessary(x.at(j));
             ASSERT_SMALL_RELATIVE_ERROR(y.at(j), spline.f(x.at(j)),EPS);
         }
     }
@@ -77,7 +75,6 @@ TEST_F(SplinesTest, interpolated_value_should_lie_between_the_value_of_the_splin
 	for (size_t i = 0 ; i < x.size()-1 ; ++i)
 	{
 		const double x0 = a.random<double>().between(x.at(i),x.at(i+1));
-		spline.update_coefficients_if_necessary(x0);
 		const double lower_bound = min(y.at(i),y.at(i+1));
 		const double upper_bound = max(y.at(i),y.at(i+1));
 		ASSERT_GE(spline.f(x0),lower_bound);
@@ -97,7 +94,6 @@ TEST_F(SplinesTest, constructor_should_throw_an_exception_if_there_are_fewer_tha
 TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)
 {
 	NaturalSplines s;
-	s.update_coefficients_if_necessary(a.random<double>());
 	ASSERT_EQ(0, s.f(a.random<double>()));
 	ASSERT_EQ(0, s.df(a.random<double>()));
 	ASSERT_EQ(0, s.d2f(a.random<double>()));
@@ -107,7 +103,6 @@ TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
 {
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,9,y);
-	spline.update_coefficients_if_necessary(3);
 	ASSERT_EQ(9,spline.f(3));
 	NaturalSplines empty;
 	spline = empty;
@@ -118,7 +113,6 @@ TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_greater_than_max_
 {
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,4,y);
-	spline.update_coefficients_if_necessary(a.random<double>().greater_than(123456789));
 	ASSERT_NO_THROW(spline.f(a.random<double>().greater_than(123456789)));
 }
 
@@ -126,7 +120,6 @@ TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_lower_than_min_bo
 {
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,4,y);
-	spline.update_coefficients_if_necessary(a.random<double>().no().greater_than(-123456789));
 	ASSERT_NO_THROW(spline.f(a.random<double>().no().greater_than(-123456789)));
 }
 
@@ -138,7 +131,6 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
     const double xmax = 0;
     NaturalSplines spline(xmin, xmax,y);
 
-    ASSERT_NO_THROW(spline.update_coefficients_if_necessary(x0));
     ASSERT_NO_THROW(spline.f(x0));
     ASSERT_NO_THROW(spline.df(x0));
     ASSERT_NO_THROW(spline.d2f(x0));
@@ -153,31 +145,18 @@ TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
     ASSERT_EQ(y.size()-1, coeffs.size());*/
 
     NaturalSplines s(0,3,{0,1,4,3});
-    s.update_coefficients_if_necessary(0);
     ASSERT_DOUBLE_EQ(0,s.f(0));
-    s.update_coefficients_if_necessary(0.25);
     ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f(0.25));
-    s.update_coefficients_if_necessary(0.5);
     ASSERT_DOUBLE_EQ(0.2,s.f(0.5));
-    s.update_coefficients_if_necessary(0.75);
     ASSERT_DOUBLE_EQ(.4875000000,s.f(0.75));
-    s.update_coefficients_if_necessary(1);
     ASSERT_DOUBLE_EQ(1,s.f(1));
-    s.update_coefficients_if_necessary(1.25);
     ASSERT_DOUBLE_EQ(1.768750000,s.f(1.25));
-    s.update_coefficients_if_necessary(1.5);
     ASSERT_DOUBLE_EQ(2.65,s.f(1.5));
-    s.update_coefficients_if_necessary(1.75);
     ASSERT_DOUBLE_EQ(3.45625000,s.f(1.75));
-    s.update_coefficients_if_necessary(2);
     ASSERT_DOUBLE_EQ(4,s.f(2));
-    s.update_coefficients_if_necessary(2.25);
     ASSERT_DOUBLE_EQ(4.14375000,s.f(2.25));
-    s.update_coefficients_if_necessary(2.5);
     ASSERT_DOUBLE_EQ(3.95,s.f(2.5));
-    s.update_coefficients_if_necessary(2.75);
     ASSERT_DOUBLE_EQ(3.53125000,s.f(2.75));
-    s.update_coefficients_if_necessary(3);
     ASSERT_DOUBLE_EQ(3,s.f(3));
 
 

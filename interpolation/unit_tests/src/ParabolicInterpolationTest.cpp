@@ -56,15 +56,12 @@ TEST_F(ParabolicInterpolationTest, example)
 //! [ParabolicInterpolationTest example]
 //! [ParabolicInterpolationTest expected output]
     double x = 0.5;
-    pi.update_coefficients_if_necessary(x);
     double x_xi = x-0;
     ASSERT_DOUBLE_EQ(1*x_xi*x_xi+2*x_xi+3, pi.f(x));
     x = 1.7;
-    pi.update_coefficients_if_necessary(x);
     x_xi = x-1;
     ASSERT_DOUBLE_EQ(4*x_xi*x_xi+5*x_xi+6, pi.f(x));
     x = 2.8;
-    pi.update_coefficients_if_necessary(x);
     x_xi = x-2;
     ASSERT_DOUBLE_EQ(7*x_xi*x_xi+8*x_xi+9, pi.f(x));
 //! [ParabolicInterpolationTest expected output]
@@ -80,19 +77,16 @@ TEST_F(ParabolicInterpolationTest, derivative)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double X = a.random<double>().between(0,1);
-        pp.update_coefficients_if_necessary(X);
         ASSERT_DOUBLE_EQ(2.*(12./5.)*X,pp.df(X));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double X = a.random<double>().between(1,2);
-        pp.update_coefficients_if_necessary(X);
         ASSERT_DOUBLE_EQ((84./5.)-2.*6.*(X-1),pp.df(X));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double X = a.random<double>().between(2,3);
-        pp.update_coefficients_if_necessary(X);
         ASSERT_DOUBLE_EQ(-(108./5.)+2.*(18./5.)*(X-2),pp.df(X));
     }
 }
@@ -139,5 +133,7 @@ TEST_F(ParabolicInterpolationTest, range_problem_detected_in_EONAV)
     coeffs.push_back(ParabolicCoefficients(-6.,84./5.,-41./5.));
     coeffs.push_back(ParabolicCoefficients(18./5.,-108./5.,151./5.));
     ParabolicInterpolation pp(0, 3, coeffs);
-    ASSERT_NO_THROW(pp.update_coefficients_if_necessary(3));
+    ASSERT_NO_THROW(pp.f(3));
+    ASSERT_NO_THROW(pp.df(3));
+    ASSERT_NO_THROW(pp.d2f(3));
 }

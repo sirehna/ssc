@@ -25,10 +25,10 @@ class LinearInterpolationVariableStep : public Interpolator
 {
     public:
         LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y);
-        void update_coefficients_if_necessary(const double& x0);
 
     private:
         LinearInterpolationVariableStep();
+        void update_coefficients_if_necessary(const double& x0);
         double get_f() const;
         double get_df(const size_t derivative_order) const;
         class LinearInterpolationVariableStepImpl;
