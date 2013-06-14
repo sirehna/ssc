@@ -6,6 +6,9 @@
  */
 
 #include "Splines.hpp"
+
+#include "test_macros.hpp"
+
 typedef long int integer;
 typedef double doublereal;
 
@@ -29,10 +32,10 @@ Splines::Splines() :
 				h(0),
 				n(0),
 				x_xi(0),
-				a(0),
-				b(0),
-				c(0),
-				d(0)
+				a(std::vector<double>()),
+				b(std::vector<double>()),
+				c(std::vector<double>()),
+				d(std::vector<double>())
 {
 }
 
@@ -42,60 +45,68 @@ Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<dou
 		h(VectorOfEquallySpacedNumbers(xmin_,xmax_,y.size()).get_delta()),
 		n(y.size()),
 		x_xi(0),
-		a(0),
-		b(0),
-		c(0),
-		d(0)
+		a(std::vector<double>()),
+		b(std::vector<double>()),
+		c(std::vector<double>()),
+		d(std::vector<double>())
 {
     if (n==0)
     {
         THROW(__PRETTY_FUNCTION__, SplinesException, "There needs to be at least one point to define the spline (y vector is empty)");
     }
+    a = std::vector<double>(n-1,0);
+    b = std::vector<double>(n-1,0);
+    c = std::vector<double>(n-1,0);
+    d = std::vector<double>(n-1,0);
 }
 
 void Splines::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
-    (void)i;
 	if (n>1)
 	{
-	    auto coeff = compute_cubic_coeff_for_x0(x0, x_xi);
-	    a = coeff.a;
-        b = coeff.b;
-        c = coeff.c;
-        d = coeff.d;
+	    auto coeff = compute_cubic_coeff_for_x0(x0);
+	    a[i] = coeff.a;
+        b[i] = coeff.b;
+        c[i] = coeff.c;
+        d[i] = coeff.d;
 	}
-
 }
 
-CubicCoefficients Splines::compute_cubic_coeff_for_x0(const double& x0, double& xxi) const
+CubicCoefficients Splines::compute_cubic_coeff_for_x0(const double& x0)
 {
-    const size_t idx = compute_interval_index(x0);
+    find_index_of_interval_containing(x0);
+    return get_cubic_coefficients(M[idx], M[idx+1], y[idx],y[idx+1]);
+}
+
+void Splines::find_index_of_interval_containing(const double val)
+{
+    Interpolator::find_index_of_interval_containing(val);
     const double xi = xmin + (xmax-xmin)*double(idx)/double(n-1);
-    xxi = x0-xi;
-    return get_cubic_coefficients(M.at(idx), M.at(idx+1), y.at(idx),y.at(idx+1));
+    x_xi = val-xi;
 }
 
 double Splines::get_f() const
 {
-    return (n==1) ? y.back() : d+x_xi*(c+x_xi*(b+x_xi*a));
+    if (n==0) return 0;
+    return (n==1) ? y.back() : d[idx]+x_xi*(c[idx]+x_xi*(b[idx]+x_xi*a[idx]));
 }
 
 double Splines::get_df(const size_t derivative_order) const
 {
+    if (n==0) return 0;
     if (derivative_order==0) return get_f();
-    if (derivative_order==1) return (n==1) ? 0 : c+x_xi*(2*b+x_xi*3*a);
-    if (derivative_order==2) return (n==1) ? 0 : 2*b+x_xi*6*a;
+    if (derivative_order==1) return (n==1) ? 0 : c[idx]+x_xi*(2*b[idx]+x_xi*3*a[idx]);
+    if (derivative_order==2) return (n==1) ? 0 : 2*b[idx]+x_xi*6*a[idx];
                              return 0;
 }
 
 
-std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients() const
+std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients()
 {
     std::vector<ParabolicCoefficients> ret;
     for (size_t i = 0 ; i < n-1 ; ++i)
     {
-        double x_xi;
-        auto coeff = compute_cubic_coeff_for_x0(xmin+(i+0.5)*h, x_xi);
+        auto coeff = compute_cubic_coeff_for_x0(xmin+(i+0.5)*h);
         ret.push_back(ParabolicCoefficients(3*coeff.a,2*coeff.b,coeff.c));
     }
     return ret;
@@ -138,12 +149,6 @@ std::vector<double> Splines::compute_second_derivative() const
 	delete info;
     delete ldb;
 	return ret;
-}
-
-size_t Splines::compute_interval_index(const double& x0) const
-{
-    const size_t idx = floor((x0-xmin)/(xmax-xmin)*(n-1));
-    return std::min(idx,n-2);
 }
 
 CubicCoefficients Splines::get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const

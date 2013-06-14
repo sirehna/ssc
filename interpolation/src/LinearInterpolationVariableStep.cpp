@@ -8,6 +8,8 @@
 #include "LinearInterpolationVariableStep.hpp"
 #include "PiecewiseConstantVariableStep.hpp"
 
+#include <cmath>
+
 class Linear
 {
     public:
@@ -42,55 +44,83 @@ std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, co
 class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
 {
     public:
-        LinearInterpolationVariableStepImpl(const std::vector<double>& x, const std::vector<double>& y) : coeff(PiecewiseConstantVariableStep<Linear>(x, compute_linear_coefficients(x,y))), current_coeff(Linear()), x0_(0)
+        LinearInterpolationVariableStepImpl(const std::vector<double>& x_, const std::vector<double>& y) : coeff_computer(PiecewiseConstantVariableStep<Linear>(x_, compute_linear_coefficients(x_,y))), coeffs(std::vector<Linear>(x_.size()-1,Linear())), x0_(0), x(x_)
         {
 
         }
 
-        void set_computed_value(const double& x0)
+        void set_computed_value(const double x0, const size_t i)
         {
-            x0_ = x0;
-            coeff.set_computed_value(x0);
-            current_coeff = coeff.f();
+            coeff_computer.set_computed_value(x0);
+            coeffs[i] = coeff_computer.f();
         }
 
-        double get_val() const
+        double get_val(const size_t i) const
         {
-            return current_coeff.slope*x0_ + current_coeff.intersection_with_origin;
+            return coeffs[i].slope*x0_ + coeffs[i].intersection_with_origin;
         }
 
-        double get_derivative() const
+        double get_derivative(const size_t i) const
         {
-            return current_coeff.slope;
+            return coeffs[i].slope;
         }
 
     private:
         LinearInterpolationVariableStepImpl();
-        PiecewiseConstantVariableStep<Linear> coeff;
-        Linear current_coeff;
+        PiecewiseConstantVariableStep<Linear> coeff_computer;
+        std::vector<Linear> coeffs;
+
+    public:
         double x0_;
+        std::vector<double> x;
 };
 
-
-LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) : pimpl(new LinearInterpolationVariableStepImpl(x,y))
+size_t find_index_of_interval(const double x, const std::vector<double>& xs);
+size_t find_index_of_interval(const double x, const std::vector<double>& xs)
 {
+    size_t idx2 = xs.size();
+    if (idx2==0) return 0;
+    if (x<=xs.front()) return 0;
+    if (x>=xs.back()) return idx2-2;
 
+    size_t idx1 = 0;
+
+    while (idx2-idx1>1)
+    {
+        const size_t idx_med = (idx1+idx2)/2;
+        if (x >= xs[idx_med]) idx1 = idx_med;
+        else                  idx2 = idx_med;
+    }
+    return idx1;
+}
+
+void LinearInterpolationVariableStep::find_index_of_interval_containing(const double val)
+{
+    pimpl->x0_ = val;
+    idx = find_index_of_interval(val, pimpl->x);
+}
+
+
+LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) :
+        Interpolator(0,1,y),pimpl(new LinearInterpolationVariableStepImpl(x,y))
+{
+    xmin = x.front();
+    xmax = x.back();
 }
 
 void LinearInterpolationVariableStep::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
-    (void) i;
-    pimpl->set_computed_value(x0);
+    pimpl->set_computed_value(x0,i);
 }
 
 double LinearInterpolationVariableStep::get_f() const
 {
-    return pimpl->get_val();
+    return pimpl->get_val(idx);
 }
 
 double LinearInterpolationVariableStep::get_df(const size_t derivative_order) const
 {
     if (derivative_order==0) return get_f();
-    if (derivative_order==1) return pimpl->get_derivative();
+    if (derivative_order==1) return pimpl->get_derivative(idx);
                              return 0;
 }

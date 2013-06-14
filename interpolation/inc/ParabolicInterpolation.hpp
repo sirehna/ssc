@@ -36,10 +36,6 @@ class ParabolicInterpolation : public Interpolator
         double get_f() const;
         double get_df(const size_t derivative_order) const;
         std::vector<ParabolicCoefficients> coeffs_;
-        double a;
-        double b;
-        double c;
-        double x_xi;
 };
 
 #endif /* PARABOLICINTERPOLATION_HPP_ */

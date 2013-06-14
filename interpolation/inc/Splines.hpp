@@ -49,7 +49,7 @@ class Splines : public Interpolator
 		Splines();
 		virtual ~Splines() {}
 		Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y);
-		std::vector<ParabolicCoefficients> get_parabolic_coefficients() const;
+		std::vector<ParabolicCoefficients> get_parabolic_coefficients();
 
 	protected:
 		std::vector<double> compute_second_derivative() const;
@@ -58,22 +58,21 @@ class Splines : public Interpolator
 		double h;
 
 	private:
-		CubicCoefficients compute_cubic_coeff_for_x0(const double& x0, double& xxi) const;
-		double get_x_intervals(const std::vector<double>& x) const;
-		size_t compute_interval_index(const double& x) const;
+		CubicCoefficients compute_cubic_coeff_for_x0(const double& x0);
 		CubicCoefficients get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const;
 		double get_f() const;
         double get_df(const size_t derivative_order) const;
         void compute_coefficients_for_ith_interval(const double x0, const size_t i);
+        void find_index_of_interval_containing(const double val);
 
 	protected:
 		size_t n;
 	private:
 		double x_xi;
-		double a;
-		double b;
-		double c;
-		double d;
+		std::vector<double> a;
+		std::vector<double> b;
+		std::vector<double> c;
+		std::vector<double> d;
 };
 
 #endif /* SPLINES_HPP_ */
