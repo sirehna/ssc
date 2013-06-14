@@ -61,7 +61,7 @@ TEST_F(LinearInterpolationTest, df_should_work_properly)
 
 TEST_F(LinearInterpolationTest, d2f_should_work_properly)
 {
-    const size_t n = a.random<size_t>().no().greater_than(30);
+    const size_t n = a.random<size_t>().no().greater_than(30).but().greater_than(0);
     LinearInterpolation interpolate(0,10,a.random_vector_of<double>().of_size(n));
     for (size_t i = 0 ; i < 1000 ; ++i)
     {

@@ -32,9 +32,9 @@ Interpolator::Interpolator(const double& xmin_,
     delta = n==1 ? (xmax-xmin) : (xmax-xmin)/double(n-1);
 }
 
-void Interpolator::update_index(const double x0)
+void Interpolator::update_index(const double val)
 {
-    val_sat = std::max(xmin,std::min(xmax,x0));
+    val_sat = std::max(xmin,std::min(xmax,val));
     idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
     idx = std::min(idx,n-2);
 }
