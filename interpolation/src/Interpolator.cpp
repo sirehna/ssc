@@ -50,9 +50,3 @@ double Interpolator::df(const double x, const size_t derivative_order)
     return get_df(derivative_order);
 }
 
-double Interpolator::d2f(const double x)
-{
-    update_coefficients_if_necessary(x);
-    return get_df(2);
-}
-

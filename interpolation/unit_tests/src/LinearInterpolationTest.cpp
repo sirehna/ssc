@@ -66,7 +66,7 @@ TEST_F(LinearInterpolationTest, d2f_should_work_properly)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double val = a.random<double>();
-        ASSERT_EQ(0, interpolate.d2f(val));
+        ASSERT_EQ(0, interpolate.df(val,2));
     }
 }
 
