@@ -30,7 +30,7 @@ class Interpolator
         double df(const double x0, const size_t derivative_order=1);
 
     protected:
-        virtual void update_index(const double x0);
+        virtual void update_coefficients_if_necessary(const double x0);
         virtual double get_f() const = 0;
         virtual double get_df(const size_t derivative_order) const = 0;
 

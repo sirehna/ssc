@@ -18,7 +18,7 @@ Interpolator(xmin_,xmax_,y_)
     }
 }
 
-void PiecewiseConstant::update_index(const double val)
+void PiecewiseConstant::update_coefficients_if_necessary(const double val)
 {
     idx = std::max(0,std::min((int)floor((val-xmin)/(xmax-xmin)*n),(int)n-1));
 }
