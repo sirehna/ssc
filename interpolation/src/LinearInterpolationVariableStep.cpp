@@ -77,8 +77,9 @@ LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vect
 
 }
 
-void LinearInterpolationVariableStep::update_coefficients_if_necessary(const double& x0)
+void LinearInterpolationVariableStep::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
+    (void) i;
     pimpl->set_computed_value(x0);
 }
 

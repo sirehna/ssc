@@ -64,7 +64,7 @@ class Splines : public Interpolator
 		CubicCoefficients get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const;
 		double get_f() const;
         double get_df(const size_t derivative_order) const;
-        void update_coefficients_if_necessary(const double& x0);
+        void compute_coefficients_for_ith_interval(const double x0, const size_t i);
 
 	protected:
 		size_t n;

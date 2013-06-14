@@ -23,8 +23,9 @@ void PiecewiseConstant::update_index(const double val)
     idx = std::max(0,std::min((int)floor((val-xmin)/(xmax-xmin)*n),(int)n-1));
 }
 
-void PiecewiseConstant::update_coefficients_if_necessary(const double& x0)
+void PiecewiseConstant::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
+    (void) i;
     update_index(x0);
 }
 
