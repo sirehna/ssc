@@ -9,10 +9,10 @@
 #include "InterpolatorException.hpp"
 #include <cmath>
 
-
+#include "test_macros.hpp"
 
 Interpolator::Interpolator() :
-xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0)
+xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0), coefficients_have_been_computed_for_interval(std::vector<bool>())
 {
 
 }
@@ -20,6 +20,7 @@ xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0)
 Interpolator::Interpolator(const double& xmin_,
         const double& xmax_,
         const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_), n(y.size()), delta(0), idx(0), val_sat(xmin)
+        , coefficients_have_been_computed_for_interval(std::vector<bool>())
 {
     if (n == 0)
     {
@@ -30,6 +31,7 @@ Interpolator::Interpolator(const double& xmin_,
         THROW(__PRETTY_FUNCTION__, InterpolatorException, "xmin>xmax");
     }
     delta = n==1 ? (xmax-xmin) : (xmax-xmin)/double(n-1);
+    coefficients_have_been_computed_for_interval = std::vector<bool>(n-1,false);
 }
 
 void Interpolator::update_index(const double val)
@@ -42,14 +44,20 @@ void Interpolator::update_index(const double val)
 double Interpolator::f(const double x)
 {
     update_index(x);
-    compute_coefficients_for_ith_interval(x,idx);
+    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
+    {
+        compute_coefficients_for_ith_interval(x,idx);
+    }
     return get_f();
 }
 
 double Interpolator::df(const double x, const size_t derivative_order)
 {
     update_index(x);
-    compute_coefficients_for_ith_interval(x,idx);
+    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
+    {
+        compute_coefficients_for_ith_interval(x,idx);
+    }
     return get_df(derivative_order);
 }
 
