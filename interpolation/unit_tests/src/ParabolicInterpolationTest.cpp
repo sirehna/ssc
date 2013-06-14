@@ -7,6 +7,8 @@
 
 #include "ParabolicInterpolationTest.hpp"
 #include "ParabolicInterpolation.hpp"
+#include "ParabolicInterpolationException.hpp"
+#include "InterpolatorException.hpp"
 
 ParabolicInterpolationTest::ParabolicInterpolationTest() : a(DataGenerator(77))
 {
@@ -108,22 +110,24 @@ TEST_F(ParabolicInterpolationTest, should_throw_if_coeffs_has_too_few_elements)
 
 TEST_F(ParabolicInterpolationTest, should_throw_if_xmin_greater_than_xmax)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    const size_t N = 100;
+    for (size_t i = 0 ; i < N ; ++i)
     {
         const double xmax = a.random<double>();
         const double xmin = a.random<double>().greater_than(xmax);
-        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
-        ASSERT_THROW(ParabolicInterpolation(xmin, xmax, a.random_vector_of<ParabolicCoefficients>().of_size(n)), ParabolicInterpolationException);
+        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(N);
+        ASSERT_THROW(ParabolicInterpolation(xmin, xmax, a.random_vector_of<ParabolicCoefficients>().of_size(n)), InterpolatorException);
     }
 }
 
 TEST_F(ParabolicInterpolationTest, should_not_throw_if_xmin_equals_xmax)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    const size_t N = 100;
+    for (size_t i = 0 ; i < N ; ++i)
     {
         const double xmin = a.random<double>();
         const double xmax = xmin;
-        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
+        const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(N);
         ASSERT_NO_THROW(ParabolicInterpolation(xmin, xmax, a.random_vector_of<ParabolicCoefficients>().of_size(n)));
     }
 }

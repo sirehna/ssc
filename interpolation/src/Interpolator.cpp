@@ -24,4 +24,8 @@ Interpolator::Interpolator(const double& xmin_,
     {
         THROW(__PRETTY_FUNCTION__, InterpolatorException, "y must have at least two elements.");
     }
+    if (xmin>xmax)
+    {
+        THROW(__PRETTY_FUNCTION__, InterpolatorException, "xmin>xmax");
+    }
 }
