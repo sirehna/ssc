@@ -7,6 +7,7 @@
 
 #include "PiecewiseConstantTest.hpp"
 #include "PiecewiseConstant.hpp"
+#include "InterpolatorException.hpp"
 
 #define min(a,b) (a)>(b)?b:a
 #define max(a,b) (a)>(b)?a:b
@@ -52,7 +53,7 @@ TEST_F(PiecewiseConstantTest, should_throw_if_y_has_too_few_elements)
         const double xmin = a.random<double>();
         const double xmax = a.random<double>().greater_than(xmin);
         const size_t n = a.random<size_t>().no().greater_than(1);
-        ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(n)), PiecewiseConstantException);
+        ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(n)), InterpolatorException);
     }
 }
 
@@ -63,7 +64,7 @@ TEST_F(PiecewiseConstantTest, should_throw_if_xmin_greater_than_xmax)
         const double xmax = a.random<double>();
         const double xmin = a.random<double>().greater_than(xmax);
         const size_t n = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
-        ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(n)), PiecewiseConstantException);
+        ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(n)), InterpolatorException);
     }
 }
 

@@ -38,6 +38,8 @@ class Interpolator
         double xmax;
         std::vector<double> y;
         size_t n;
+        double delta;
+        size_t idx;
 };
 
 #endif /* INTERPOLATOR_HPP_ */

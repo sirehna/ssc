@@ -9,23 +9,17 @@
 #define min(a,b) (a)>(b)?b:a
 #define max(a,b) (a)>(b)?a:b
 #include <math.h>
-#include "test_macros.hpp"
+
 
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
-        const std::vector<double>& y_) : Interpolator(xmin_,xmax_,y_)/*xmin(xmin_), xmax(xmax_), y(y_)*/,
+        const std::vector<double>& y_) : Interpolator(xmin_,xmax_,y_),
         x0(xmin),
         x1(xmax),
         y0(y.front()),
         y1(y.back()),
-n(y.size()),
-delta((xmax-xmin)/double(n-1)),
 val_sat(xmin)
 {
-    if (y.size() < 2)
-    {
-        THROW("LinearInterpolation::LinearInterpolation(const double&, const double&, const std::vector<double>&)", Exception, "y must have at least two elements.");
-    }
 }
 
 

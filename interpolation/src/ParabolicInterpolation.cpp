@@ -14,7 +14,6 @@
 ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
         const std::vector<ParabolicCoefficients>& coeffs) : Interpolator(xmin_,xmax_,std::vector<double>(2,0)), coeffs_(coeffs),
-delta(0),
 a(0),
 b(0),
 c(0),
