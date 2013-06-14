@@ -9,7 +9,7 @@
 #define PIECEWISECONSTANT_HPP_
 
 #include <vector>
-
+#include "Interpolator.hpp"
 #include "Exception.hpp"
 
 class PiecewiseConstantException : public Exception
@@ -32,7 +32,7 @@ class PiecewiseConstantException : public Exception
  *  \snippet MODULE_NAME/unit_tests/src/PiecewiseConstantTest.cpp PiecewiseConstantTest expected output
  */
 
-class PiecewiseConstant
+class PiecewiseConstant : public Interpolator
 {
     public:
         PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_);
