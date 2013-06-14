@@ -16,7 +16,7 @@ Interpolator(xmin_,xmax_,y_)
 {
 }
 
-void PiecewiseConstant::set_computed_value(const double& x0)
+void PiecewiseConstant::update_coefficients_if_necessary(const double& x0)
 {
     idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*n),n-1));
 }

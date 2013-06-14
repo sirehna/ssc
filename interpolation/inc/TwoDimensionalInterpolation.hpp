@@ -63,11 +63,11 @@ template <typename T> class TwoDimensionalInterpolation
             std::vector<double> interpolated_values_for_x_fixed;
             for (auto it = interpolators.begin() ; it != interpolators.end() ; ++it)
             {
-                (*it)->set_computed_value(y);
+                (*it)->update_coefficients_if_necessary(y);
                 interpolated_values_for_x_fixed.push_back((*it)->f(y));
             }
             T final_interpolation(xmin,xmax,interpolated_values_for_x_fixed);
-            final_interpolation.set_computed_value(x);
+            final_interpolation.update_coefficients_if_necessary(x);
             return final_interpolation.f(x);
         }
     private:

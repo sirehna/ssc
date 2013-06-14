@@ -21,7 +21,7 @@ val_sat(xmin)
 }
 
 
-void LinearInterpolation::set_computed_value(const double& val)
+void LinearInterpolation::update_coefficients_if_necessary(const double& val)
 {
     val_sat = std::max(xmin,std::min(xmax,val));
     const size_t idx = std::max(0.,std::min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),(double)n-2));

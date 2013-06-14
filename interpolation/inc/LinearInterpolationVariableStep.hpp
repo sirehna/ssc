@@ -25,7 +25,7 @@ class LinearInterpolationVariableStep : public Interpolator
 {
     public:
         LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y);
-        void set_computed_value(const double& x0);
+        void update_coefficients_if_necessary(const double& x0);
 
     private:
         LinearInterpolationVariableStep();

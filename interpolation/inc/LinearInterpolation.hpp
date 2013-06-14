@@ -27,7 +27,7 @@ class LinearInterpolation : public Interpolator
 {
     public:
         LinearInterpolation(const double& xmin_, const double& xmax_, const std::vector<double>& y_);
-        void set_computed_value(const double& x0);
+        void update_coefficients_if_necessary(const double& x0);
 
     private:
         LinearInterpolation();
