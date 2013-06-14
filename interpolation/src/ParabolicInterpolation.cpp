@@ -29,8 +29,7 @@ x_xi(0)
 
 void ParabolicInterpolation::update_coefficients_if_necessary(const double& val)
 {
-    const double val_sat = max(xmin,min(xmax,val));
-    const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-2));
+    update_index(val);
     a = coeffs_.at(idx).a;
     b = coeffs_.at(idx).b;
     c = coeffs_.at(idx).c;
