@@ -40,6 +40,7 @@ class Interpolator
         size_t n;
         double delta;
         size_t idx;
+        double val_sat;
 
     private:
         virtual void update_coefficients_if_necessary(const double& x0) = 0;

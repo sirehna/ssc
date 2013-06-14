@@ -37,7 +37,6 @@ class LinearInterpolation : public Interpolator
         double x1;
         double y0;
         double y1;
-        double val_sat;
 };
 
 #endif /* LINEARINTERPOLATION_HPP_ */
