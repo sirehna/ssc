@@ -6,19 +6,21 @@
  */
 
 #include "PiecewiseConstant.hpp"
+#include "PiecewiseConstantException.hpp"
 #include <cmath>
-
-#define min(a,b) (a)>(b)?b:a
-#define max(a,b) (a)>(b)?a:b
 
 PiecewiseConstant::PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_) :
 Interpolator(xmin_,xmax_,y_)
 {
+    if (n < 2)
+    {
+        THROW(__PRETTY_FUNCTION__, PiecewiseConstantException, "Needs at least two points in vector y");
+    }
 }
 
 void PiecewiseConstant::update_coefficients_if_necessary(const double& x0)
 {
-    idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*n),n-1));
+    idx = std::max(0,std::min((int)floor((x0-xmin)/(xmax-xmin)*n),(int)n-1));
 }
 
 double PiecewiseConstant::get_f() const

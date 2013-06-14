@@ -9,6 +9,7 @@
 #include "VectorOfEquallySpacedNumbersException.hpp"
 #include <sstream>
 
+
 VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double& min_bound, const double& max_bound, const size_t& nb_of_values) :
 _min_bound(min_bound),
 _max_bound(max_bound),

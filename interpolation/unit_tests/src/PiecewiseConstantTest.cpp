@@ -7,10 +7,9 @@
 
 #include "PiecewiseConstantTest.hpp"
 #include "PiecewiseConstant.hpp"
+#include "PiecewiseConstantException.hpp"
 #include "InterpolatorException.hpp"
 
-#define min(a,b) (a)>(b)?b:a
-#define max(a,b) (a)>(b)?a:b
 
 PiecewiseConstantTest::PiecewiseConstantTest() : a(DataGenerator(22338888))
 {
@@ -46,15 +45,12 @@ TEST_F(PiecewiseConstantTest, example)
     }
 }
 
-TEST_F(PiecewiseConstantTest, should_throw_if_y_has_too_few_elements)
+TEST_F(PiecewiseConstantTest, should_throw_if_y_has_less_than_two_elements)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
-    {
-        const double xmin = a.random<double>();
-        const double xmax = a.random<double>().greater_than(xmin);
-        const size_t n = a.random<size_t>().no().greater_than(1);
-        ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(n)), InterpolatorException);
-    }
+    const double xmin = a.random<double>();
+    const double xmax = a.random<double>().greater_than(xmin);
+    ASSERT_THROW(PiecewiseConstant(xmin, xmax, a.random_vector_of<double>().of_size(1)), PiecewiseConstantException);
+    ASSERT_THROW(PiecewiseConstant(xmin, xmax, std::vector<double>()), InterpolatorException);
 }
 
 TEST_F(PiecewiseConstantTest, should_throw_if_xmin_greater_than_xmax)
