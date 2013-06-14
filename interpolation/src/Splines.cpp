@@ -9,8 +9,8 @@
 typedef long int integer;
 typedef double doublereal;
 
-#define min(a,b) a>b?b:a
-#define max(a,b) a<b?b:a
+
+#include "test_macros.hpp"
 
 extern "C"
 {
@@ -19,8 +19,8 @@ extern "C"
     	*info);
 }
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include "VectorOfEquallySpacedNumbers.hpp"
 
 
@@ -50,10 +50,11 @@ Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<dou
 {
 }
 
-void Splines::set_computed_value(const double& x0)
+void Splines::update_coefficients_if_necessary(const double& x0)
 {
 	if (n>1)
 	{
+	    COUT(x0);
 	    auto coeff = compute_cubic_coeff_for_x0(x0, x_xi);
 	    a = coeff.a;
         b = coeff.b;
@@ -139,7 +140,7 @@ std::vector<double> Splines::compute_second_derivative() const
 size_t Splines::compute_interval_index(const double& x0) const
 {
     const size_t idx = floor((x0-xmin)/(xmax-xmin)*(n-1));
-    return min(idx,n-2);
+    return std::min(idx,n-2);
 }
 
 CubicCoefficients Splines::get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const

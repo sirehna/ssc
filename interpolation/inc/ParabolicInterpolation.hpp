@@ -29,7 +29,7 @@ class ParabolicInterpolation : public Interpolator
 {
     public:
         ParabolicInterpolation(const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs);
-        void set_computed_value(const double& x0);
+        void update_coefficients_if_necessary(const double& x0);
 
     private:
         ParabolicInterpolation();

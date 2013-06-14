@@ -27,7 +27,7 @@ x_xi(0)
     delta = (xmax-xmin)/double(n-1);
 }
 
-void ParabolicInterpolation::set_computed_value(const double& val)
+void ParabolicInterpolation::update_coefficients_if_necessary(const double& val)
 {
     const double val_sat = max(xmin,min(xmax,val));
     const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-2));

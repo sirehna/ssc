@@ -26,7 +26,7 @@ class Interpolator
         Interpolator();
         virtual ~Interpolator() {}
         Interpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
-        virtual void set_computed_value(const double& x0) = 0;
+        virtual void update_coefficients_if_necessary(const double& x0) = 0;
         double f(const double x0);
         double df(const double x0);
         double d2f(const double x0);

@@ -49,7 +49,7 @@ class Splines : public Interpolator
 		Splines();
 		virtual ~Splines() {}
 		Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y);
-		void set_computed_value(const double& x0);
+		void update_coefficients_if_necessary(const double& x0);
 		std::vector<ParabolicCoefficients> get_parabolic_coefficients() const;
 
 	protected:
