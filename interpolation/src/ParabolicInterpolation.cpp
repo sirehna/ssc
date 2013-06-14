@@ -6,29 +6,24 @@
  */
 
 #include "ParabolicInterpolation.hpp"
-
-
+#include "ParabolicInterpolationException.hpp"
 #define min(a,b) (a)>(b)?b:a
 #define max(a,b) (a)>(b)?a:b
 #include <math.h>
 
 ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
-        const std::vector<ParabolicCoefficients>& coeffs) : xmin(xmin_), xmax(xmax_), coeffs_(coeffs),
-n(coeffs.size()+1),
+        const std::vector<ParabolicCoefficients>& coeffs) : Interpolator(xmin_,xmax_,std::vector<double>(2,0)), coeffs_(coeffs),
 delta(0),
 a(0),
 b(0),
 c(0),
 x_xi(0)
 {
-    if (n < 3)
+    n = coeffs.size()+1;
+    if (coeffs.size() < 2)
     {
-        THROW("ParabolicInterpolation::ParabolicInterpolation(const double&, const double&, const std::vector<double>&)", ParabolicInterpolationException, "y must have at least two elements.");
-    }
-    if (xmin>xmax)
-    {
-        THROW("ParabolicInterpolation::ParabolicInterpolation(const double&, const double&, const std::vector<ParabolicCoefficients>&)", ParabolicInterpolationException, "xmin>xmax");
+        THROW(__PRETTY_FUNCTION__, ParabolicInterpolationException, "Too few elements in coeffs (requires at least 2)");
     }
     delta = (xmax-xmin)/double(n-1);
 }

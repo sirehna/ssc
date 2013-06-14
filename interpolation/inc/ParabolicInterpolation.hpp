@@ -9,32 +9,23 @@
 #define PARABOLICINTERPOLATION_HPP_
 
 #include <vector>
-#include "Exception.hpp"
+
 #include "ParabolicCoefficients.hpp"
-
-class ParabolicInterpolationException : public Exception
-{
-    public:
-        ParabolicInterpolationException(const char* s) :
-                Exception(s)
-        {
-        }
-};
-
+#include "Interpolator.hpp"
 
 /** \author cec
  *  \brief This class was created to
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/ParabolicInterpolationTest.cpp ParabolicInterpolationTest example
+ *  \snippet interpolation/unit_tests/src/ParabolicInterpolationTest.cpp ParabolicInterpolationTest example
  *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/ParabolicInterpolationTest.cpp ParabolicInterpolationTest expected output
+ *  \snippet interpolation/unit_tests/src/ParabolicInterpolationTest.cpp ParabolicInterpolationTest expected output
  */
 
 
 
-class ParabolicInterpolation
+class ParabolicInterpolation : public Interpolator
 {
     public:
         ParabolicInterpolation(const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs);
@@ -45,10 +36,7 @@ class ParabolicInterpolation
 
     private:
         ParabolicInterpolation();
-        double xmin;
-        double xmax;
         std::vector<ParabolicCoefficients> coeffs_;
-        size_t n;
         double delta;
         double a;
         double b;
