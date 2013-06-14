@@ -47,6 +47,17 @@ TEST_F(LinearInterpolationTest, f_should_work_properly)
         const double val = a.random<double>().between(0,10);
         ASSERT_DOUBLE_EQ(10-val, interpolate.f(val));
     }
+    LinearInterpolation interpolate2(0,10,{1,-10,40,98,2,3,7,0,8,10,11});
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double val = a.random<double>().between(4,5);
+        ASSERT_DOUBLE_EQ(val-2, interpolate2.f(val));
+    }
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double val = a.random<double>().between(9,10);
+        ASSERT_DOUBLE_EQ(val+1, interpolate2.f(val));
+    }
 }
 
 TEST_F(LinearInterpolationTest, df_should_work_properly)

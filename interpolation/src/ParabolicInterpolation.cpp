@@ -30,7 +30,7 @@ x_xi(0)
 void ParabolicInterpolation::compute_coefficients_for_ith_interval(const double val, const size_t i)
 {
     (void) i;
-    update_index(val);
+    (void) val;
     a = coeffs_.at(idx).a;
     b = coeffs_.at(idx).b;
     c = coeffs_.at(idx).c;
