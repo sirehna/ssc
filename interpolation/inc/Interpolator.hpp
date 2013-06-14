@@ -33,6 +33,8 @@ class Interpolator
 
     protected:
         void update_index(const double x0);
+        virtual double get_f() const = 0;
+        virtual double get_df(const size_t derivative_order) const = 0;
 
         double xmin;
         double xmax;

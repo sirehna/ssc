@@ -32,6 +32,8 @@ class LinearInterpolationVariableStep : public Interpolator
 
     private:
         LinearInterpolationVariableStep();
+        double get_f() const;
+        double get_df(const size_t derivative_order) const;
         class LinearInterpolationVariableStepImpl;
         std::tr1::shared_ptr<LinearInterpolationVariableStepImpl> pimpl;
 };

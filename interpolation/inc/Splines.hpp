@@ -66,6 +66,8 @@ class Splines : public Interpolator
 		double get_x_intervals(const std::vector<double>& x) const;
 		size_t compute_interval_index(const double& x) const;
 		CubicCoefficients get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const;
+		double get_f() const;
+        double get_df(const size_t derivative_order) const;
 
 	protected:
 		size_t n;
