@@ -7,8 +7,7 @@
 
 #include "VectorOfEquallySpacedNumbersTest.hpp"
 #include "VectorOfEquallySpacedNumbers.hpp"
-
-#include "test_macros.hpp"
+#include "VectorOfEquallySpacedNumbersException.hpp"
 
 VectorOfEquallySpacedNumbersTest::VectorOfEquallySpacedNumbersTest() : a(DataGenerator(666558882)),
 eps(1E-10)

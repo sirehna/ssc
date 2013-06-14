@@ -28,10 +28,7 @@ extern "C"
 Splines::Splines() :
 				M(std::vector<double>()),
 				h(0),
-				xmin(0),
-				xmax(0),
 				n(0),
-				y_(std::vector<double>()),
 				x_xi(0),
 				a(0),
 				b(0),
@@ -41,12 +38,10 @@ Splines::Splines() :
 }
 
 Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y) :
+        Interpolator(xmin_,xmax_,y),
 		M(std::vector<double>()),
 		h(VectorOfEquallySpacedNumbers(xmin_,xmax_,y.size()).get_delta()),
-		xmin(xmin_),
-		xmax(xmax_),
 		n(y.size()),
-		y_(y),
 		x_xi(0),
 		a(0),
 		b(0),
@@ -73,12 +68,12 @@ CubicCoefficients Splines::compute_cubic_coeff_for_x0(const double& x0, double& 
     const size_t idx = compute_interval_index(x0);
     const double xi = xmin + (xmax-xmin)*double(idx)/double(n-1);
     xxi = x0-xi;
-    return get_cubic_coefficients(M.at(idx), M.at(idx+1), y_.at(idx),y_.at(idx+1));
+    return get_cubic_coefficients(M.at(idx), M.at(idx+1), y.at(idx),y.at(idx+1));
 }
 
 double Splines::f() const
 {
-    if (n==1) return y_.back();
+    if (n==1) return y.back();
 	return d+x_xi*(c+x_xi*(b+x_xi*a));
 }
 
@@ -108,33 +103,33 @@ std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients() const
 
 std::vector<double> Splines::compute_second_derivative() const
 {
-	if (y_.size()==2) return {0,0};
-	if (y_.size()==3) return {0,3./2./h/h*(y_[0]-2.*y_[1]+y_[2]),0};
-	integer *n = new integer;
+	if (n==2) return {0,0};
+	if (n==3) return {0,3./2./h/h*(y[0]-2.*y[1]+y[2]),0};
+	integer *n_ = new integer;
 	integer *nrhs = new integer;
-	*n = y_.size()-2;
+	*n_ = n-2;
 	*nrhs = 1;
-	doublereal *dl = new doublereal[*n];
-	doublereal *d__ = new doublereal[*n+2];
-	doublereal *du = new doublereal[*n];
-	doublereal *b = new doublereal[*n+2];
+	doublereal *dl = new doublereal[*n_];
+	doublereal *d__ = new doublereal[*n_+2];
+	doublereal *du = new doublereal[*n_];
+	doublereal *b = new doublereal[*n_+2];
 	integer *ldb = new integer;
 	integer *info = new integer;
-	*ldb = *n;
+	*ldb = *n_;
 	d__[0] = get_endpoint_value();
-	d__[*n+1] = get_endpoint_value();
+	d__[*n_+1] = get_endpoint_value();
 	b[0] = 0;
-	for (int i = 1 ; i <= *n ; ++i)
+	for (int i = 1 ; i <= *n_ ; ++i)
 	{
 		dl[i-1] = 1;
 		du[i-1] = 1;
 		d__[i] = 4;
-		b[i] = 6./h/h*(y_[i-1]-2.*y_[i]+y_[i+1]);
+		b[i] = 6./h/h*(y[i-1]-2.*y[i]+y[i+1]);
 	}
-	b[*n+1] = 0;
-	dgtsv_(n, nrhs, dl, d__, du, b+1, ldb, info);
-	const std::vector<double> ret(b,b+*n+2);
-	delete n;
+	b[*n_+1] = 0;
+	dgtsv_(n_, nrhs, dl, d__, du, b+1, ldb, info);
+	const std::vector<double> ret(b,b+*n_+2);
+	delete n_;
 	delete nrhs;
 	delete [] dl;
 	delete [] d__;

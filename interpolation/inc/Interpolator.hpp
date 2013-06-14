@@ -23,6 +23,7 @@
 class Interpolator
 {
     public:
+        Interpolator();
         virtual ~Interpolator() {}
         Interpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
         virtual void set_computed_value(const double& x0) = 0;
@@ -30,13 +31,13 @@ class Interpolator
         virtual double df() const = 0;
         virtual double d2f() const = 0;
 
-    private:
-        Interpolator();
+
 
     protected:
         double xmin;
         double xmax;
         std::vector<double> y;
+        size_t n;
 };
 
 #endif /* INTERPOLATOR_HPP_ */
