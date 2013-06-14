@@ -26,7 +26,7 @@ void PiecewiseConstant::update_index(const double val)
 void PiecewiseConstant::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
     (void) i;
-    update_index(x0);
+    (void) x0;
 }
 
 double PiecewiseConstant::get_f() const

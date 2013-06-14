@@ -8,7 +8,6 @@
 
 #include "LinearInterpolation.hpp"
 #include <cmath>
-#include "test_macros.hpp"
 
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
@@ -24,7 +23,7 @@ LinearInterpolation::LinearInterpolation(const double& xmin_,
 void LinearInterpolation::compute_coefficients_for_ith_interval(const double val, const size_t i)
 {
     (void) i;
-    update_index(val);
+    (void) val;
     x0 = xmin + idx*delta;
 
     x1 = x0 + delta;
