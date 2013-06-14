@@ -5,11 +5,9 @@
  *  \author cec
  */
 
-#include "LinearInterpolation.hpp"
-#define min(a,b) (a)>(b)?b:a
-#define max(a,b) (a)>(b)?a:b
-#include <math.h>
 
+#include "LinearInterpolation.hpp"
+#include <cmath>
 
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
@@ -25,26 +23,29 @@ val_sat(xmin)
 
 void LinearInterpolation::set_computed_value(const double& val)
 {
-    val_sat = max(xmin,min(xmax,val));
-    const size_t idx = max(0,min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),n-2));
+    val_sat = std::max(xmin,std::min(xmax,val));
+    const size_t idx = std::max(0.,std::min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),(double)n-2));
     x0 = xmin + idx*delta;
     x1 = x0 + delta;
     y0 = y.at(idx);
     y1 = y.at(idx+1);
 }
 
-double LinearInterpolation::f() const
+double LinearInterpolation::f(const double x)
 {
+    set_computed_value(x);
     return y0+(val_sat-x0)*(y1-y0)/delta;
 }
 
-double LinearInterpolation::df() const
+double LinearInterpolation::df(const double x)
 {
+    set_computed_value(x);
     return (y1-y0)/delta;
 }
 
-double LinearInterpolation::d2f() const
+double LinearInterpolation::d2f(const double x)
 {
+    (void)x;
     return 0;
 }
 

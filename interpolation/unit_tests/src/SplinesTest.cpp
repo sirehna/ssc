@@ -46,9 +46,9 @@ TEST_F(SplinesTest, example)
 //! [SplineTest example]
 //! [SplineTest expected output]
 	spline.set_computed_value(3);
-	ASSERT_DOUBLE_EQ(9,spline.f());
-	ASSERT_DOUBLE_EQ(5.4,spline.df());
-	ASSERT_DOUBLE_EQ(2.4,spline.d2f());
+	ASSERT_DOUBLE_EQ(9,spline.f(3));
+	ASSERT_DOUBLE_EQ(5.4,spline.df(3));
+	ASSERT_DOUBLE_EQ(2.4,spline.d2f(3));
 //! [SplineTest expected output]
 }
 
@@ -62,8 +62,7 @@ TEST_F(SplinesTest, value_at_the_interpolation_points_should_be_the_same_as_that
         for (size_t j = 0 ; j < x.size() ; ++j)
         {
             spline.set_computed_value(x.at(j));
-            //ASSERT_DOUBLE_EQ(y.at(j), spline.f());
-            ASSERT_SMALL_RELATIVE_ERROR(y.at(j), spline.f(),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(y.at(j), spline.f(x.at(j)),EPS);
         }
     }
 }
@@ -79,8 +78,8 @@ TEST_F(SplinesTest, interpolated_value_should_lie_between_the_value_of_the_splin
 		spline.set_computed_value(x0);
 		const double lower_bound = min(y.at(i),y.at(i+1));
 		const double upper_bound = max(y.at(i),y.at(i+1));
-		ASSERT_GE(spline.f(),lower_bound);
-		ASSERT_LE(spline.f(),upper_bound);
+		ASSERT_GE(spline.f(x0),lower_bound);
+		ASSERT_LE(spline.f(x0),upper_bound);
 	}
 }
 
@@ -96,9 +95,9 @@ TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)
 {
 	NaturalSplines s;
 	s.set_computed_value(a.random<double>());
-	ASSERT_EQ(0, s.f());
-	ASSERT_EQ(0, s.df());
-	ASSERT_EQ(0, s.d2f());
+	ASSERT_EQ(0, s.f(a.random<double>()));
+	ASSERT_EQ(0, s.df(a.random<double>()));
+	ASSERT_EQ(0, s.d2f(a.random<double>()));
 }
 
 TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
@@ -106,10 +105,10 @@ TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,9,y);
 	spline.set_computed_value(3);
-	ASSERT_EQ(9,spline.f());
+	ASSERT_EQ(9,spline.f(3));
 	NaturalSplines empty;
 	spline = empty;
-	ASSERT_EQ(0,spline.f());
+	ASSERT_EQ(0,spline.f(a.random<double>()));
 }
 
 TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_greater_than_max_bound)
@@ -117,7 +116,7 @@ TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_greater_than_max_
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,4,y);
 	spline.set_computed_value(a.random<double>().greater_than(123456789));
-	ASSERT_NO_THROW(spline.f());
+	ASSERT_NO_THROW(spline.f(a.random<double>().greater_than(123456789)));
 }
 
 TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_lower_than_min_bound)
@@ -125,7 +124,7 @@ TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_lower_than_min_bo
 	const std::vector<double> y = {0,9,36,81};
 	NaturalSplines spline(0,4,y);
 	spline.set_computed_value(a.random<double>().no().greater_than(-123456789));
-	ASSERT_NO_THROW(spline.f());
+	ASSERT_NO_THROW(spline.f(a.random<double>().no().greater_than(-123456789)));
 }
 
 TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
@@ -137,6 +136,9 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
     NaturalSplines spline(xmin, xmax,y);
 
     ASSERT_NO_THROW(spline.set_computed_value(x0));
+    ASSERT_NO_THROW(spline.f(x0));
+    ASSERT_NO_THROW(spline.df(x0));
+    ASSERT_NO_THROW(spline.d2f(x0));
 }
 
 TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
@@ -149,31 +151,31 @@ TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
 
     NaturalSplines s(0,3,{0,1,4,3});
     s.set_computed_value(0);
-    ASSERT_DOUBLE_EQ(0,s.f());
+    ASSERT_DOUBLE_EQ(0,s.f(0));
     s.set_computed_value(0.25);
-    ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f());
+    ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f(0.25));
     s.set_computed_value(0.5);
-    ASSERT_DOUBLE_EQ(0.2,s.f());
+    ASSERT_DOUBLE_EQ(0.2,s.f(0.5));
     s.set_computed_value(0.75);
-    ASSERT_DOUBLE_EQ(.4875000000,s.f());
+    ASSERT_DOUBLE_EQ(.4875000000,s.f(0.75));
     s.set_computed_value(1);
-    ASSERT_DOUBLE_EQ(1,s.f());
+    ASSERT_DOUBLE_EQ(1,s.f(1));
     s.set_computed_value(1.25);
-    ASSERT_DOUBLE_EQ(1.768750000,s.f());
+    ASSERT_DOUBLE_EQ(1.768750000,s.f(1.25));
     s.set_computed_value(1.5);
-    ASSERT_DOUBLE_EQ(2.65,s.f());
+    ASSERT_DOUBLE_EQ(2.65,s.f(1.5));
     s.set_computed_value(1.75);
-    ASSERT_DOUBLE_EQ(3.45625000,s.f());
+    ASSERT_DOUBLE_EQ(3.45625000,s.f(1.75));
     s.set_computed_value(2);
-    ASSERT_DOUBLE_EQ(4,s.f());
+    ASSERT_DOUBLE_EQ(4,s.f(2));
     s.set_computed_value(2.25);
-    ASSERT_DOUBLE_EQ(4.14375000,s.f());
+    ASSERT_DOUBLE_EQ(4.14375000,s.f(2.25));
     s.set_computed_value(2.5);
-    ASSERT_DOUBLE_EQ(3.95,s.f());
+    ASSERT_DOUBLE_EQ(3.95,s.f(2.5));
     s.set_computed_value(2.75);
-    ASSERT_DOUBLE_EQ(3.53125000,s.f());
+    ASSERT_DOUBLE_EQ(3.53125000,s.f(2.75));
     s.set_computed_value(3);
-    ASSERT_DOUBLE_EQ(3,s.f());
+    ASSERT_DOUBLE_EQ(3,s.f(3));
 
 
 
