@@ -16,24 +16,6 @@ Interpolator(xmin_,xmax_,y_)
 {
 }
 
-double PiecewiseConstant::f(const double x0)
-{
-    set_computed_value(x0);
-    return y.at(idx);
-}
-
-double PiecewiseConstant::df(const double x0)
-{
-    set_computed_value(x0);
-    return 0;
-}
-
-double PiecewiseConstant::d2f(const double x0)
-{
-    set_computed_value(x0);
-    return 0;
-}
-
 void PiecewiseConstant::set_computed_value(const double& x0)
 {
     idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*n),n-1));

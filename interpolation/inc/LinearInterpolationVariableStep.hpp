@@ -25,9 +25,6 @@ class LinearInterpolationVariableStep : public Interpolator
 {
     public:
         LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y);
-        double f(const double x0);
-        double df(const double x0);
-        double d2f(const double x0);
         void set_computed_value(const double& x0);
 
     private:
