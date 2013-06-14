@@ -86,7 +86,7 @@ TEST_F(PiecewiseConstantTest, second_derivative_should_be_zero)
         const double xmax = a.random<double>().greater_than(xmin);
         PiecewiseConstant cst(xmin, xmax, vals);
         const double val = a.random<double>().between(xmin,xmax);
-        ASSERT_EQ(0, cst.d2f(val));
+        ASSERT_EQ(0, cst.df(val,2));
     }
 }
 

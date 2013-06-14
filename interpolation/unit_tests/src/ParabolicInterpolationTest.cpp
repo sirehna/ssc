@@ -135,5 +135,5 @@ TEST_F(ParabolicInterpolationTest, range_problem_detected_in_EONAV)
     ParabolicInterpolation pp(0, 3, coeffs);
     ASSERT_NO_THROW(pp.f(3));
     ASSERT_NO_THROW(pp.df(3));
-    ASSERT_NO_THROW(pp.d2f(3));
+    ASSERT_NO_THROW(pp.df(3,2));
 }

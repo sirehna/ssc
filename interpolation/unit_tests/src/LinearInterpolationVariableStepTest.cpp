@@ -118,7 +118,7 @@ TEST_F(LinearInterpolationVariableStepTest, second_derivative_should_always_be_z
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < 20 ; ++i)
         {
-            ASSERT_DOUBLE_EQ(0, interpolate.d2f(a.random<double>().between(x.front(),x.back())));
+            ASSERT_DOUBLE_EQ(0, interpolate.df(a.random<double>().between(x.front(),x.back()),2));
         }
     }
 }
@@ -185,6 +185,6 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_retrieving_an_x_outs
         LinearInterpolationVariableStep interpolate(x,y);
         ASSERT_THROW(interpolate.f(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
         ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
-        ASSERT_THROW(interpolate.d2f(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back()),2), PiecewiseConstantVariableStepException);
     }
 }

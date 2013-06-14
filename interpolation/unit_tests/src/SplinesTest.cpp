@@ -49,7 +49,7 @@ TEST_F(SplinesTest, example)
 //! [SplineTest expected output]
 	ASSERT_DOUBLE_EQ(9,spline.f(3));
 	ASSERT_DOUBLE_EQ(5.4,spline.df(3));
-	ASSERT_DOUBLE_EQ(2.4,spline.d2f(3));
+	ASSERT_DOUBLE_EQ(2.4,spline.df(3,2));
 //! [SplineTest expected output]
 }
 
@@ -96,7 +96,7 @@ TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)
 	NaturalSplines s;
 	ASSERT_EQ(0, s.f(a.random<double>()));
 	ASSERT_EQ(0, s.df(a.random<double>()));
-	ASSERT_EQ(0, s.d2f(a.random<double>()));
+	ASSERT_EQ(0, s.df(a.random<double>(),2));
 }
 
 TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
@@ -133,7 +133,7 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 
     ASSERT_NO_THROW(spline.f(x0));
     ASSERT_NO_THROW(spline.df(x0));
-    ASSERT_NO_THROW(spline.d2f(x0));
+    ASSERT_NO_THROW(spline.df(x0,2));
 }
 
 TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
