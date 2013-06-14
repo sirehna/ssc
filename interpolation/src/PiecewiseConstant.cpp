@@ -12,22 +12,8 @@
 #define max(a,b) (a)>(b)?a:b
 
 PiecewiseConstant::PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_) :
-            xmin(xmin_),
-            xmax(xmax_),
-            y(y_),
-            n(y.size()),
-            delta(0),
-            idx(0)
+Interpolator(xmin_,xmax_,y_)
 {
-    if (xmin>xmax)
-    {
-        THROW("PiecewiseConstant::PiecewiseConstant(const double&, const double&, const std::vector<double>&)", PiecewiseConstantException, "xmin>xmax");
-    }
-    if (n<=1)
-    {
-        THROW("PiecewiseConstant::PiecewiseConstant(const double&, const double&, const std::vector<double>&)", PiecewiseConstantException, "Too few elements in y");
-    }
-    delta = (xmax-xmin)/double(n-1);
 }
 
 double PiecewiseConstant::f() const
@@ -45,7 +31,6 @@ double PiecewiseConstant::d2f() const
     return 0;
 }
 
-#include "test_macros.hpp"
 void PiecewiseConstant::set_computed_value(const double& x0)
 {
     idx = max(0,min(floor((x0-xmin)/(xmax-xmin)*n),n-1));

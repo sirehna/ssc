@@ -9,16 +9,7 @@
 #define LINEARINTERPOLATION_HPP_
 #include <vector>
 #include "Interpolator.hpp"
-#include "Exception.hpp"
 
-class LinearInterpolationException : public Exception
-{
-    public:
-        LinearInterpolationException(const char* s) :
-                Exception(s)
-        {
-        }
-};
 
 
 
@@ -47,8 +38,6 @@ class LinearInterpolation : public Interpolator
         double x1;
         double y0;
         double y1;
-        size_t n;
-        double delta;
         double val_sat;
 };
 

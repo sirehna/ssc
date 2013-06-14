@@ -37,7 +37,6 @@ class ParabolicInterpolation : public Interpolator
     private:
         ParabolicInterpolation();
         std::vector<ParabolicCoefficients> coeffs_;
-        double delta;
         double a;
         double b;
         double c;
