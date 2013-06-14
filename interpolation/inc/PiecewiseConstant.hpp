@@ -31,7 +31,7 @@ class PiecewiseConstant : public Interpolator
     private:
         PiecewiseConstant();
         void compute_coefficients_for_ith_interval(const double x0, const size_t i);
-        void update_index(const double val);
+        void update_coefficients_if_necessary(const double val);
         double get_f() const;
         double get_df(const size_t derivative_order) const;
 };

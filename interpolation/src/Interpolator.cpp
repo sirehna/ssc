@@ -34,7 +34,7 @@ Interpolator::Interpolator(const double& xmin_,
     coefficients_have_been_computed_for_interval = std::vector<bool>(n-1,false);
 }
 
-void Interpolator::update_index(const double val)
+void Interpolator::update_coefficients_if_necessary(const double val)
 {
     val_sat = std::max(xmin,std::min(xmax,val));
     idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
@@ -47,13 +47,13 @@ void Interpolator::update_index(const double val)
 
 double Interpolator::f(const double x)
 {
-    update_index(x);
+    update_coefficients_if_necessary(x);
     return get_f();
 }
 
 double Interpolator::df(const double x, const size_t derivative_order)
 {
-    update_index(x);
+    update_coefficients_if_necessary(x);
     return get_df(derivative_order);
 }
 
