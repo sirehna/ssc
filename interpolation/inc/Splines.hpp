@@ -9,16 +9,12 @@
 #define SPLINES_HPP_
 
 #include <vector>
-#include "Exception.hpp"
+
 #include "ParabolicCoefficients.hpp"
+#include "Interpolator.hpp"
 #include <functional>
 
-class SplinesException: public Exception {
-public:
-    SplinesException(const char* s) :
-            Exception(s) {
-    }
-};
+
 
 struct CubicCoefficients
 {
@@ -47,7 +43,7 @@ struct CubicCoefficients
  *  \section ex2 Expected output
  *  \snippet splines/unit_tests/src/SplinesTest.cpp SplinesTest expected output
  */
-class Splines
+class Splines : public Interpolator
 {
 	public:
 		Splines();
@@ -71,12 +67,9 @@ class Splines
 		size_t compute_interval_index(const double& x) const;
 		CubicCoefficients get_cubic_coefficients(const double& M1, const double& M2, const double& y1, const double& y2) const;
 
-		double xmin;
-		double xmax;
 	protected:
 		size_t n;
 	private:
-		std::vector<double> y_;
 		double x_xi;
 		double a;
 		double b;

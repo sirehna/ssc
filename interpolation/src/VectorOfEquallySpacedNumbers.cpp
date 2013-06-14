@@ -6,7 +6,7 @@
  */
 
 #include "VectorOfEquallySpacedNumbers.hpp"
-#include "test_macros.hpp"
+#include "VectorOfEquallySpacedNumbersException.hpp"
 #include <sstream>
 
 VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double& min_bound, const double& max_bound, const size_t& nb_of_values) :
@@ -21,15 +21,15 @@ delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 	    std::stringstream msg;
 	    msg << "_min_bound = " << _min_bound
 	        << ", _max_bound = " << _max_bound;
-		THROW("VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double&, const double&, const size_t&)", VectorOfEquallySpacedNumbersException, msg.str());
+		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, msg.str());
 	}
 	if (_nb_of_values<1)
 	{
-		THROW("VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double&, const double&, const size_t&)", VectorOfEquallySpacedNumbersException, "need at least two values in VectorOfEquallySpacedNumbers");
+		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "need at least two values in VectorOfEquallySpacedNumbers");
 	}
 	if (_nb_of_values>vec.max_size())
 	{
-		THROW("VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double&, const double&, const size_t&)", VectorOfEquallySpacedNumbersException, "too many elements");
+		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "too many elements");
 	}
 	vec.reserve(_nb_of_values);
 	if (_nb_of_values>1)
@@ -44,7 +44,7 @@ delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 	{
 	    if (min_bound!=max_bound)
 	    {
-	        THROW("VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double&, const double&, const size_t&)", VectorOfEquallySpacedNumbersException, "If there is only one value, min & max need to be equal");
+	        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "If there is only one value, min & max need to be equal");
 	    }
 	    vec.push_back(min_bound);
 	}
@@ -80,7 +80,7 @@ double VectorOfEquallySpacedNumbers::at(const size_t& i) const
     if (_nb_of_values==1) return vec.back();
 	if (i>=_nb_of_values)
 	{
-		THROW("VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers::at(const size_t&)", VectorOfEquallySpacedNumbersException, "Index out of range");
+		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "Index out of range");
 	}
 	return (_min_bound*(_nb_of_values-1)+i*(_max_bound-_min_bound))/double(_nb_of_values-1);
 }

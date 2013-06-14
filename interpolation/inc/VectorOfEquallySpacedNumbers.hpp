@@ -9,16 +9,6 @@
 #define VECTOROFEQUALLYSPACEDNUMBERS_HPP_
 #include <vector>
 
-#include "Exception.hpp"
-
-class VectorOfEquallySpacedNumbersException: public Exception {
-public:
-	VectorOfEquallySpacedNumbersException(const char* s) :
-			Exception(s) {
-	}
-};
-
-
 /** \author cec
  *  \brief This class was created to ensure that Splines get equally spaced numbers without having to test at runtime
  *  \details It has the following responsibilities:
