@@ -7,16 +7,7 @@
 
 #include "Interpolator.hpp"
 
-#include "Exception.hpp"
-
-class InterpolatorException : public Exception
-{
-    public:
-        InterpolatorException(const char* s) :
-                Exception(s)
-        {
-        }
-};
+#include "InterpolatorException.hpp"
 
 
 Interpolator::Interpolator(const double& xmin_,
