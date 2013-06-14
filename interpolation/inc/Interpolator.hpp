@@ -44,6 +44,7 @@ class Interpolator
 
     private:
         virtual void compute_coefficients_for_ith_interval(const double x0, const size_t i) = 0;
+        std::vector<bool> coefficients_have_been_computed_for_interval;
 };
 
 #endif /* INTERPOLATOR_HPP_ */
