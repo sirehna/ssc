@@ -39,7 +39,7 @@ TEST_F(LinearInterpolationVariableStepTest, example)
     interpolate.set_computed_value(7.5);
 //! [LinearInterpolationVariableStepTest example]
 //! [LinearInterpolationVariableStepTest expected output]
-    ASSERT_DOUBLE_EQ(4, interpolate.f());
+    ASSERT_DOUBLE_EQ(4, interpolate.f(7.5));
 //! [LinearInterpolationVariableStepTest expected output]
 }
 
@@ -54,7 +54,7 @@ TEST_F(LinearInterpolationVariableStepTest, should_be_able_to_retrieve_initial_v
         for (size_t i = 0 ; i < n ; ++i)
         {
             interpolate.set_computed_value(x.at(i));
-            ASSERT_SMALL_RELATIVE_ERROR(y.at(i), interpolate.f(),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(y.at(i), interpolate.f(x.at(i)),EPS);
         }
     }
 }
@@ -72,7 +72,7 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_zero_if_y
             x.front();
             x.back();
             interpolate.set_computed_value(a.random<double>().between(x.front(),x.back()));
-            ASSERT_DOUBLE_EQ(0, interpolate.df());
+            ASSERT_DOUBLE_EQ(0, interpolate.df(a.random<double>().between(x.front(),x.back())));
         }
     }
 }
@@ -94,7 +94,7 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_constant_
         for (size_t i = 0 ; i < n ; ++i)
         {
             interpolate.set_computed_value(a.random<double>().between(x.front(),x.back()));
-            ASSERT_SMALL_RELATIVE_ERROR(slope, interpolate.df(),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(slope, interpolate.df(a.random<double>().between(x.front(),x.back())),EPS);
         }
     }
 }
@@ -107,15 +107,15 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_correctly
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         interpolate.set_computed_value(a.random<double>().between(2,5));
-        ASSERT_DOUBLE_EQ(0,interpolate.df());
+        ASSERT_DOUBLE_EQ(0,interpolate.df(a.random<double>().between(2,5)));
         interpolate.set_computed_value(a.random<double>().between(5,7));
-        ASSERT_DOUBLE_EQ(1.5,interpolate.df());
+        ASSERT_DOUBLE_EQ(1.5,interpolate.df(a.random<double>().between(5,7)));
         interpolate.set_computed_value(a.random<double>().between(7,7.5));
-        ASSERT_DOUBLE_EQ(-2,interpolate.df());
+        ASSERT_DOUBLE_EQ(-2,interpolate.df(a.random<double>().between(7,7.5)));
         interpolate.set_computed_value(a.random<double>().between(7.5,11));
-        ASSERT_DOUBLE_EQ(4./3.5,interpolate.df());
+        ASSERT_DOUBLE_EQ(4./3.5,interpolate.df(a.random<double>().between(7.5,11)));
         interpolate.set_computed_value(a.random<double>().between(11,13));
-        ASSERT_DOUBLE_EQ(-0.5,interpolate.df());
+        ASSERT_DOUBLE_EQ(-0.5,interpolate.df(a.random<double>().between(11,13)));
     }
 }
 
@@ -130,7 +130,7 @@ TEST_F(LinearInterpolationVariableStepTest, second_derivative_should_always_be_z
         for (size_t i = 0 ; i < 20 ; ++i)
         {
             interpolate.set_computed_value(a.random<double>().between(x.front(),x.back()));
-            ASSERT_DOUBLE_EQ(0, interpolate.d2f());
+            ASSERT_DOUBLE_EQ(0, interpolate.d2f(a.random<double>().between(x.front(),x.back())));
         }
     }
 }
@@ -148,8 +148,8 @@ TEST_F(LinearInterpolationVariableStepTest, interpolated_values_should_be_betwee
             interpolate.set_computed_value(a.random<double>().between(x.at(i),x.at(i+1)));
             const double y0 = y.at(i)>y.at(i+1) ? y.at(i+1) : y.at(i);
             const double y1 = y.at(i)>y.at(i+1) ? y.at(i) : y.at(i+1);
-            ASSERT_LE(y0, interpolate.f());
-            ASSERT_GE(y1, interpolate.f());
+            ASSERT_LE(y0, interpolate.f(a.random<double>().between(x.at(i),x.at(i+1))));
+            ASSERT_GE(y1, interpolate.f(a.random<double>().between(x.at(i),x.at(i+1))));
         }
     }
 }

@@ -77,18 +77,21 @@ LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vect
 
 }
 
-double LinearInterpolationVariableStep::f() const
+double LinearInterpolationVariableStep::f(const double x0)
 {
+    set_computed_value(x0);
     return pimpl->get_val();
 }
 
-double LinearInterpolationVariableStep::df() const
+double LinearInterpolationVariableStep::df(const double x0)
 {
+    set_computed_value(x0);
     return pimpl->get_derivative();
 }
 
-double LinearInterpolationVariableStep::d2f() const
+double LinearInterpolationVariableStep::d2f(const double x0)
 {
+    set_computed_value(x0);
     return 0;
 }
 

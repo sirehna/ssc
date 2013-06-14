@@ -6,8 +6,10 @@
  */
 
 #include "Interpolator.hpp"
-
 #include "InterpolatorException.hpp"
+#include <cmath>
+
+#define min(a,b) a>b?b:a
 
 Interpolator::Interpolator() :
 xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0)
@@ -29,4 +31,10 @@ Interpolator::Interpolator(const double& xmin_,
         THROW(__PRETTY_FUNCTION__, InterpolatorException, "xmin>xmax");
     }
     delta = (xmax-xmin)/double(n-1);
+}
+
+void Interpolator::update_index(const double x0)
+{
+    idx = floor((x0-xmin)/(xmax-xmin)*(n-1));
+    idx = min(idx,n-2);
 }

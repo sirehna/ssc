@@ -34,8 +34,8 @@ TEST_F(LinearInterpolationTest, example)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double val = a.random<double>().between(0,10);
-        interpolate.set_computed_value(val);
-        ASSERT_DOUBLE_EQ(val, interpolate.f());
+        //interpolate.set_computed_value(val);
+        ASSERT_DOUBLE_EQ(val, interpolate.f(val));
     }
 //! [LinearInterpolationTest expected output]
 }
@@ -47,7 +47,7 @@ TEST_F(LinearInterpolationTest, f_should_work_properly)
     {
         const double val = a.random<double>().between(0,10);
         interpolate.set_computed_value(val);
-        ASSERT_DOUBLE_EQ(10-val, interpolate.f());
+        ASSERT_DOUBLE_EQ(10-val, interpolate.f(val));
     }
 }
 
@@ -58,7 +58,7 @@ TEST_F(LinearInterpolationTest, df_should_work_properly)
     {
         const double val = a.random<double>().between(0,10);
         interpolate.set_computed_value(val);
-        ASSERT_DOUBLE_EQ(-1, interpolate.df());
+        ASSERT_DOUBLE_EQ(-1, interpolate.df(val));
     }
 }
 
@@ -70,7 +70,7 @@ TEST_F(LinearInterpolationTest, d2f_should_work_properly)
     {
         const double val = a.random<double>();
         interpolate.set_computed_value(val);
-        ASSERT_EQ(0, interpolate.d2f());
+        ASSERT_EQ(0, interpolate.d2f(val));
     }
 }
 
@@ -80,51 +80,51 @@ TEST_F(LinearInterpolationTest, bug_detected_in_EONAV_PiecewiseLinearFunctor)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(0,1));
-        ASSERT_DOUBLE_EQ(3,pl.df());
+        ASSERT_DOUBLE_EQ(3,pl.df(a.random<double>().between(0,1)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(1,2));
-        ASSERT_DOUBLE_EQ(-1,pl.df());
+        ASSERT_DOUBLE_EQ(-1,pl.df(a.random<double>().between(1,2)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(2,3));
-        ASSERT_DOUBLE_EQ(3,pl.df());
+        ASSERT_DOUBLE_EQ(3,pl.df(a.random<double>().between(2,3)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(3,4));
-        ASSERT_DOUBLE_EQ(-1,pl.df());
+        ASSERT_DOUBLE_EQ(-1,pl.df(a.random<double>().between(3,4)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(4,5));
-        ASSERT_DOUBLE_EQ(-3,pl.df());
+        ASSERT_DOUBLE_EQ(-3,pl.df(a.random<double>().between(4,5)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(5,6));
-        ASSERT_DOUBLE_EQ(1,pl.df());
+        ASSERT_DOUBLE_EQ(1,pl.df(a.random<double>().between(5,6)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(6,7));
-        ASSERT_DOUBLE_EQ(1,pl.df());
+        ASSERT_DOUBLE_EQ(1,pl.df(a.random<double>().between(6,7)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(7,8));
-        ASSERT_DOUBLE_EQ(3,pl.df());
+        ASSERT_DOUBLE_EQ(3,pl.df(a.random<double>().between(7,8)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(8,9));
-        ASSERT_DOUBLE_EQ(63,pl.df());
+        ASSERT_DOUBLE_EQ(63,pl.df(a.random<double>().between(8,9)));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         pl.set_computed_value(a.random<double>().between(9,10));
-        ASSERT_DOUBLE_EQ(-128,pl.df());
+        ASSERT_DOUBLE_EQ(-128,pl.df(a.random<double>().between(9,10)));
     }
 }

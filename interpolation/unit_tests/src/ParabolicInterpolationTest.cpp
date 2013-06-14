@@ -58,15 +58,15 @@ TEST_F(ParabolicInterpolationTest, example)
     double x = 0.5;
     pi.set_computed_value(x);
     double x_xi = x-0;
-    ASSERT_DOUBLE_EQ(1*x_xi*x_xi+2*x_xi+3, pi.f());
+    ASSERT_DOUBLE_EQ(1*x_xi*x_xi+2*x_xi+3, pi.f(x));
     x = 1.7;
     pi.set_computed_value(x);
     x_xi = x-1;
-    ASSERT_DOUBLE_EQ(4*x_xi*x_xi+5*x_xi+6, pi.f());
+    ASSERT_DOUBLE_EQ(4*x_xi*x_xi+5*x_xi+6, pi.f(x));
     x = 2.8;
     pi.set_computed_value(x);
     x_xi = x-2;
-    ASSERT_DOUBLE_EQ(7*x_xi*x_xi+8*x_xi+9, pi.f());
+    ASSERT_DOUBLE_EQ(7*x_xi*x_xi+8*x_xi+9, pi.f(x));
 //! [ParabolicInterpolationTest expected output]
 }
 
@@ -81,19 +81,19 @@ TEST_F(ParabolicInterpolationTest, derivative)
     {
         const double X = a.random<double>().between(0,1);
         pp.set_computed_value(X);
-        ASSERT_DOUBLE_EQ(2.*(12./5.)*X,pp.df());
+        ASSERT_DOUBLE_EQ(2.*(12./5.)*X,pp.df(X));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double X = a.random<double>().between(1,2);
         pp.set_computed_value(X);
-        ASSERT_DOUBLE_EQ((84./5.)-2.*6.*(X-1),pp.df());
+        ASSERT_DOUBLE_EQ((84./5.)-2.*6.*(X-1),pp.df(X));
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double X = a.random<double>().between(2,3);
         pp.set_computed_value(X);
-        ASSERT_DOUBLE_EQ(-(108./5.)+2.*(18./5.)*(X-2),pp.df());
+        ASSERT_DOUBLE_EQ(-(108./5.)+2.*(18./5.)*(X-2),pp.df(X));
     }
 }
 
