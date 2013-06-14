@@ -39,25 +39,21 @@ void Interpolator::update_index(const double val)
     val_sat = std::max(xmin,std::min(xmax,val));
     idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
     idx = std::min(idx,n-2);
+    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
+    {
+        compute_coefficients_for_ith_interval(val,idx);
+    }
 }
 
 double Interpolator::f(const double x)
 {
     update_index(x);
-    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
-    {
-        compute_coefficients_for_ith_interval(x,idx);
-    }
     return get_f();
 }
 
 double Interpolator::df(const double x, const size_t derivative_order)
 {
     update_index(x);
-    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
-    {
-        compute_coefficients_for_ith_interval(x,idx);
-    }
     return get_df(derivative_order);
 }
 
