@@ -43,7 +43,7 @@ class Interpolator
         double val_sat;
 
     private:
-        virtual void update_coefficients_if_necessary(const double& x0) = 0;
+        virtual void compute_coefficients_for_ith_interval(const double x0, const size_t i) = 0;
 };
 
 #endif /* INTERPOLATOR_HPP_ */

@@ -41,13 +41,13 @@ void Interpolator::update_index(const double val)
 
 double Interpolator::f(const double x)
 {
-    update_coefficients_if_necessary(x);
+    compute_coefficients_for_ith_interval(x,idx);
     return get_f();
 }
 
 double Interpolator::df(const double x, const size_t derivative_order)
 {
-    update_coefficients_if_necessary(x);
+    compute_coefficients_for_ith_interval(x,idx);
     return get_df(derivative_order);
 }
 

@@ -53,8 +53,9 @@ Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<dou
     }
 }
 
-void Splines::update_coefficients_if_necessary(const double& x0)
+void Splines::compute_coefficients_for_ith_interval(const double x0, const size_t i)
 {
+    (void)i;
 	if (n>1)
 	{
 	    auto coeff = compute_cubic_coeff_for_x0(x0, x_xi);

@@ -21,8 +21,9 @@ LinearInterpolation::LinearInterpolation(const double& xmin_,
 }
 
 
-void LinearInterpolation::update_coefficients_if_necessary(const double& val)
+void LinearInterpolation::compute_coefficients_for_ith_interval(const double val, const size_t i)
 {
+    (void) i;
     update_index(val);
     x0 = xmin + idx*delta;
 
