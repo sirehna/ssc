@@ -31,6 +31,7 @@ class LinearInterpolationVariableStep : public Interpolator
         void compute_coefficients_for_ith_interval(const double x0, const size_t i);
         double get_f() const;
         double get_df(const size_t derivative_order) const;
+        void find_index_of_interval_containing(const double val);
         class LinearInterpolationVariableStepImpl;
         std::tr1::shared_ptr<LinearInterpolationVariableStepImpl> pimpl;
 };

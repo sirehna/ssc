@@ -13,11 +13,7 @@
 
 ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
-        const std::vector<ParabolicCoefficients>& coeffs) : Interpolator(xmin_,xmax_,std::vector<double>(coeffs.size()+1,0)), coeffs_(coeffs),
-a(0),
-b(0),
-c(0),
-x_xi(0)
+        const std::vector<ParabolicCoefficients>& coeffs) : Interpolator(xmin_,xmax_,std::vector<double>(coeffs.size()+1,0)), coeffs_(coeffs)
 {
     n = coeffs.size()+1;
     if (coeffs.size() < 2)
@@ -31,21 +27,20 @@ void ParabolicInterpolation::compute_coefficients_for_ith_interval(const double 
 {
     (void) i;
     (void) val;
-    a = coeffs_.at(idx).a;
-    b = coeffs_.at(idx).b;
-    c = coeffs_.at(idx).c;
-    x_xi = val_sat - (xmin + delta*idx);
+
 }
 
 double ParabolicInterpolation::get_f() const
 {
-    return a*x_xi*x_xi+b*x_xi+c;
+    double x_xi = val_sat - (xmin + delta*idx);
+    return coeffs_.at(idx).a*x_xi*x_xi+coeffs_.at(idx).b*x_xi+coeffs_.at(idx).c;
 }
 
 double ParabolicInterpolation::get_df(const size_t derivative_order) const
 {
+    double x_xi = val_sat - (xmin + delta*idx);
     if (derivative_order==0) return get_f();
-    if (derivative_order==1) return 2*a*x_xi+b;
-    if (derivative_order==2) return 2*a;
+    if (derivative_order==1) return 2*coeffs_.at(idx).a*x_xi+coeffs_.at(idx).b;
+    if (derivative_order==2) return 2*coeffs_.at(idx).a;
                              return 0;
 }

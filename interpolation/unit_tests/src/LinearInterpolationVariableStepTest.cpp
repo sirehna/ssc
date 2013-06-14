@@ -8,6 +8,7 @@
 #include "LinearInterpolationVariableStepTest.hpp"
 #include "LinearInterpolationVariableStep.hpp"
 #include "PiecewiseConstantVariableStep.hpp"
+#include "InterpolatorException.hpp"
 #include "random_increasing_vector.hpp"
 #include "extra_test_assertions.hpp"
 
@@ -38,10 +39,16 @@ TEST_F(LinearInterpolationVariableStepTest, example)
     LinearInterpolationVariableStep interpolate(x,y);
 //! [LinearInterpolationVariableStepTest example]
 //! [LinearInterpolationVariableStepTest expected output]
+    ASSERT_DOUBLE_EQ(2, interpolate.f(2));
+    ASSERT_DOUBLE_EQ(2, interpolate.f(5));
+    ASSERT_DOUBLE_EQ(5, interpolate.f(7));
     ASSERT_DOUBLE_EQ(4, interpolate.f(7.5));
+    ASSERT_DOUBLE_EQ(8, interpolate.f(11));
+    ASSERT_DOUBLE_EQ(7, interpolate.f(13));
+
 //! [LinearInterpolationVariableStepTest expected output]
 }
-
+#include "test_macros.hpp"
 TEST_F(LinearInterpolationVariableStepTest, should_be_able_to_retrieve_initial_values)
 {
     for (size_t i = 0 ; i < 100 ; ++i)
@@ -171,7 +178,7 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_x_is_not_in_strictly
 
 TEST_F(LinearInterpolationVariableStepTest, should_throw_if_there_are_not_at_least_two_points)
 {
-    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(),std::vector<double>()), PiecewiseConstantVariableStepException);
+    ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(),std::vector<double>()), InterpolatorException);
     ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(1,a.random<double>()),std::vector<double>(1,a.random<double>())), PiecewiseConstantVariableStepException);
 }
 

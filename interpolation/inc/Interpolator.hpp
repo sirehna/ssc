@@ -31,6 +31,7 @@ class Interpolator
 
     protected:
         virtual void update_coefficients_if_necessary(const double x0);
+        virtual void find_index_of_interval_containing(const double val);
         virtual double get_f() const = 0;
         virtual double get_df(const size_t derivative_order) const = 0;
 

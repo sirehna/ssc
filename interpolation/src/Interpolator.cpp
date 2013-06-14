@@ -34,14 +34,21 @@ Interpolator::Interpolator(const double& xmin_,
     coefficients_have_been_computed_for_interval = std::vector<bool>(n-1,false);
 }
 
-void Interpolator::update_coefficients_if_necessary(const double val)
+void Interpolator::find_index_of_interval_containing(const double val)
 {
     val_sat = std::max(xmin,std::min(xmax,val));
     idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
     idx = std::min(idx,n-2);
-    if (idx >= coefficients_have_been_computed_for_interval.size() || not(coefficients_have_been_computed_for_interval.at(idx)))
+}
+
+void Interpolator::update_coefficients_if_necessary(const double val)
+{
+    find_index_of_interval_containing(val);
+    const bool enough_coefficients = not(coefficients_have_been_computed_for_interval.empty()) && (idx < coefficients_have_been_computed_for_interval.size());
+    if (enough_coefficients && not(coefficients_have_been_computed_for_interval[idx]))
     {
         compute_coefficients_for_ith_interval(val,idx);
+        coefficients_have_been_computed_for_interval[idx] = true;
     }
 }
 
