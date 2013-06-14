@@ -10,7 +10,9 @@
 #include "NaturalSplines.hpp"
 #include <math.h>
 #include "VectorOfEquallySpacedNumbers.hpp"
+#include "VectorOfEquallySpacedNumbersException.hpp"
 #include "InterpolatorException.hpp"
+#include "SplinesException.hpp"
 
 #define min(a,b) a<b ? a : b;
 #define max(a,b) a>b ? a : b;
@@ -83,12 +85,13 @@ TEST_F(SplinesTest, interpolated_value_should_lie_between_the_value_of_the_splin
 	}
 }
 
-TEST_F(SplinesTest, constructor_should_throw_an_exception_if_there_are_fewer_than_two_points)
+TEST_F(SplinesTest, constructor_should_throw_an_exception_if_there_are_fewer_than_two_points_and_xmin_doesnt_equal_xmax)
 {
 	const std::vector<double> an_empty_vector = std::vector<double>();
 	const std::vector<double> a_vector_with_one_element = a.random_vector_of<double>().of_size(1);
 	ASSERT_THROW(NaturalSplines(0, 1,an_empty_vector),InterpolatorException);
-	ASSERT_THROW(NaturalSplines(0, 1,a_vector_with_one_element),InterpolatorException);
+	ASSERT_THROW(NaturalSplines(0, 1,a_vector_with_one_element),VectorOfEquallySpacedNumbersException);
+	ASSERT_NO_THROW(NaturalSplines(0, 0,a_vector_with_one_element));
 }
 
 TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)

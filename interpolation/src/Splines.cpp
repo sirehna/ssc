@@ -9,8 +9,7 @@
 typedef long int integer;
 typedef double doublereal;
 
-
-#include "test_macros.hpp"
+#include "SplinesException.hpp"
 
 extern "C"
 {
@@ -48,13 +47,16 @@ Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<dou
 		c(0),
 		d(0)
 {
+    if (n==0)
+    {
+        THROW(__PRETTY_FUNCTION__, SplinesException, "There needs to be at least one point to define the spline (y vector is empty)");
+    }
 }
 
 void Splines::update_coefficients_if_necessary(const double& x0)
 {
 	if (n>1)
 	{
-	    COUT(x0);
 	    auto coeff = compute_cubic_coeff_for_x0(x0, x_xi);
 	    a = coeff.a;
         b = coeff.b;

@@ -9,7 +9,6 @@
 #include "InterpolatorException.hpp"
 #include <cmath>
 
-#include "test_macros.hpp"
 
 
 Interpolator::Interpolator() :
@@ -18,17 +17,10 @@ xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0)
 
 }
 
-
 Interpolator::Interpolator(const double& xmin_,
         const double& xmax_,
         const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_), n(y.size()), delta(0), idx(0)
 {
-    COUT(xmin);
-    COUT(xmax);
-    COUT(y_.front());
-    COUT(y_.back());
-    COUT(n);
-    std::cout << "____________________________________" << std::endl;
     if (n == 0)
     {
         THROW(__PRETTY_FUNCTION__, InterpolatorException, "y must have at least one element.");
