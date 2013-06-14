@@ -8,7 +8,7 @@
 #ifndef LINEARINTERPOLATION_HPP_
 #define LINEARINTERPOLATION_HPP_
 #include <vector>
-
+#include "Interpolator.hpp"
 #include "Exception.hpp"
 
 class LinearInterpolationException : public Exception
@@ -32,7 +32,7 @@ class LinearInterpolationException : public Exception
  *  \snippet interpolation/unit_tests/src/LinearInterpolationTest.cpp LinearInterpolationTest expected output
  */
 
-class LinearInterpolation
+class LinearInterpolation : public Interpolator
 {
     public:
         LinearInterpolation(const double& xmin_, const double& xmax_, const std::vector<double>& y_);
@@ -43,9 +43,6 @@ class LinearInterpolation
 
     private:
         LinearInterpolation();
-        double xmin;
-        double xmax;
-        std::vector<double> y;
         double x0;
         double x1;
         double y0;
