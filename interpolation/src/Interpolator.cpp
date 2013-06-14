@@ -12,14 +12,14 @@
 
 
 Interpolator::Interpolator() :
-xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0)
+xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0)
 {
 
 }
 
 Interpolator::Interpolator(const double& xmin_,
         const double& xmax_,
-        const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_), n(y.size()), delta(0), idx(0)
+        const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_), n(y.size()), delta(0), idx(0), val_sat(xmin)
 {
     if (n == 0)
     {
@@ -34,7 +34,8 @@ Interpolator::Interpolator(const double& xmin_,
 
 void Interpolator::update_index(const double x0)
 {
-    idx = (n==1) ? 0 : floor((x0-xmin)/(xmax-xmin)*(n-1));
+    val_sat = std::max(xmin,std::min(xmax,x0));
+    idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
     idx = std::min(idx,n-2);
 }
 

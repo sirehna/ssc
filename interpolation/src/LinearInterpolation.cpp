@@ -15,17 +15,14 @@ LinearInterpolation::LinearInterpolation(const double& xmin_,
         x0(xmin),
         x1(xmax),
         y0(y.front()),
-        y1(y.back()),
-val_sat(xmin)
+        y1(y.back())
 {
 }
 
 
 void LinearInterpolation::update_coefficients_if_necessary(const double& val)
 {
-    val_sat = std::max(xmin,std::min(xmax,val));
-    //const size_t idx = std::max(0.,std::min(floor((val_sat-xmin)/(xmax-xmin)*(n-1)),(double)n-2));
-    update_index(val_sat);
+    update_index(val);
     x0 = xmin + idx*delta;
     x1 = x0 + delta;
     y0 = y.at(idx);
