@@ -41,8 +41,7 @@ void SplineFunctor::update_lambda()
 {
     auto func = [pimpl]()->double
         {
-            pimpl->f->set_computed_value(pimpl->state->get_lambda()());
-            return pimpl->f->f();
+            return pimpl->f->f(pimpl->state->get_lambda()());
         };
     set_value(func);
     pimpl->dy = pimpl->f->get_parabolic_coefficients();

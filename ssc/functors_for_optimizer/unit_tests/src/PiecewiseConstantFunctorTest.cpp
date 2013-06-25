@@ -9,6 +9,7 @@
 #include "PiecewiseConstantFunctor.hpp"
 #include "FunctorAlgebra.hpp"
 #include "Sum.hpp"
+#include "extra_test_assertions.hpp"
 
 PiecewiseConstantFunctorTest::PiecewiseConstantFunctorTest() : a(DataGenerator(669)),
 generate(StateGenerator())
@@ -81,5 +82,5 @@ TEST_F(PiecewiseConstantFunctorTest, should_be_able_to_use_piecewise_as_regular_
     *x = a.random<double>().between(3,4);
     ASSERT_DOUBLE_EQ(2*X+8, f());
     *x = a.random<double>().greater_than(10);
-    ASSERT_DOUBLE_EQ(2*X+72, f());
+    ASSERT_SMALL_RELATIVE_ERROR(2*X+72, f(), 1E-7);
 }
