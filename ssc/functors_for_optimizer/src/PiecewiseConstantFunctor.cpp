@@ -23,8 +23,7 @@ void PiecewiseConstantFunctor::update_lambda()
 {
     auto func = [f,state]()->double
         {
-            f->set_computed_value(state->get_lambda()());
-            return f->f();
+            return f->f(state->get_lambda()());
         };
     set_value(func);
 }
