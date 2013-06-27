@@ -178,6 +178,15 @@ template <> double TypedScalarDataGenerator<double>::get() const
     else                                                         return get();
 }
 
+template <> double TypedScalarDataGenerator<double>::operator()()
+{
+    double tmp = get();
+    min_bound = get_min_bound<double>();
+    max_bound = get_max_bound<double>();
+    negated = false;
+    return tmp;
+}
+
 template <> size_t TypedScalarDataGenerator<size_t>::get() const
 {
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
@@ -221,14 +230,7 @@ template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
 }*/
 
 
-template <> double TypedScalarDataGenerator<double>::operator()()
-        {
-            double tmp = get();
-            min_bound = get_min_bound<double>();
-            max_bound = get_max_bound<double>();
-            negated = false;
-            return tmp;
-        }
+
 
 template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
         {
