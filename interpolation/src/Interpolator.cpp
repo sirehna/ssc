@@ -9,8 +9,6 @@
 #include "InterpolatorException.hpp"
 #include <cmath>
 
-#include "test_macros.hpp"
-
 Interpolator::Interpolator() :
 xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0), coefficients_have_been_computed_for_interval(std::vector<bool>())
 {
