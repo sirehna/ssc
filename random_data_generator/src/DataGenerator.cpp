@@ -186,6 +186,25 @@ template <> size_t TypedScalarDataGenerator<size_t>::get() const
     else                                                         return get();
 }
 
+template <> float TypedScalarDataGenerator<float>::get() const
+{
+
+    if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
+    const float a = random_float(min_bound, max_bound);
+    if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
+    else                                                         return get();
+}
+
+template <> int TypedScalarDataGenerator<int>::get() const
+{
+
+    if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
+    const int a = random_double(min_bound, max_bound);
+    if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
+    else                                                         return get();
+}
+
+
 template <> bool TypedScalarDataGenerator<bool>::get() const
 {
     return random_bool();
