@@ -107,11 +107,11 @@ TEST_F(PiecewiseConstantTest, first_derivative_should_be_zero)
 TEST_F(PiecewiseConstantTest, computed_values_should_be_correct)
 {
     PiecewiseConstant pc(0, 10, {3,6,5,8,7,4,5,6,9,78});
-    /*for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double x = a.random<double>().between(0,1);
         ASSERT_DOUBLE_EQ(3,pc.f(x));
-    }*/
+    }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double x = a.random<double>().between(1,2);
@@ -156,5 +156,16 @@ TEST_F(PiecewiseConstantTest, computed_values_should_be_correct)
     {
         const double x = a.random<double>().between(9,10);
         ASSERT_DOUBLE_EQ(78,pc.f(x));
+    }
+}
+
+TEST_F(PiecewiseConstantTest, bug_detected_in_EONAV)
+{
+    PiecewiseConstant pc(0, 10, {3,6,5,8,7,4,5,6,9,72});
+
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>().greater_than(10);
+        ASSERT_DOUBLE_EQ(72, pc.f(x));
     }
 }
