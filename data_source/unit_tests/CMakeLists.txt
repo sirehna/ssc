@@ -16,7 +16,6 @@ include_directories(SYSTEM inc)
 include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
 include_directories(${random_data_generator_INCLUDE_DIRS})
 include_directories(${test_macros_SOURCE_DIR})
-include_directories(SYSTEM ${boost_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})
 

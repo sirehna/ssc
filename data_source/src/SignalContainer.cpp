@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "../inc/SignalContainer.hpp"
+#include "SignalContainer.hpp"
+#include <boost/any.hpp>
 
-SignalContainer::SignalContainer()
+SignalContainer::SignalContainer() : signals(Signals())
 {
-    // TODO Auto-generated constructor stub
 
 }
 
