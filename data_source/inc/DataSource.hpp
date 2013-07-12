@@ -211,7 +211,7 @@ class DataSource
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
                             std::string("Unable to find signal '") + signal_name
-                                    + "'");
+                                    + "' required by module '" + current_module + "'");
                 }
             }
             return signals.get < T > (signal_name + typeid(T).name());
