@@ -70,6 +70,7 @@ typedef Signals::const_iterator ConstSignalIterator;
 struct ConvertibleTypes
 {
     ConvertibleTypes();
+    void clear();
     std::list<ConstSignalIterator> iter_bool;
     std::list<ConstSignalIterator> iter_char;
     std::list<ConstSignalIterator> iter_wchar_t;

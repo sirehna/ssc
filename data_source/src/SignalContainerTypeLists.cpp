@@ -49,6 +49,21 @@ bin(std::list<ConstSignalIterator>())
 
 }
 
+void ConvertibleTypes::clear()
+{
+    iter_bool.clear();
+    iter_char.clear();
+    iter_wchar_t.clear();
+    iter_short.clear();
+    iter_int.clear();
+    iter_size_t.clear();
+    iter_long.clear();
+    iter_float.clear();
+    iter_double.clear();
+    iter_phys_qty.clear();
+    bin.clear();
+}
+
 template<> std::list<ConstSignalIterator>& select_list_from_type<bool>(ConvertibleTypes& lists)
 {
     return lists.iter_bool;

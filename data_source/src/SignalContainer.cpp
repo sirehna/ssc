@@ -71,3 +71,10 @@ void SignalContainer::from_doubles(std::list<double> l)
     decoerce_type<double>(l);
     decoerce_type<PhysicalQuantity>(l);
 }
+
+void SignalContainer::clear()
+{
+    signals.clear();
+    scalar_convertible_types.clear();
+    vector_convertible_types.clear();
+}
