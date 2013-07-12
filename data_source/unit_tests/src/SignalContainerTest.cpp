@@ -229,31 +229,22 @@ TEST_F(SignalContainerTest, should_be_able_to_set_all_coercible_types_using_a_li
         ASSERT_DOUBLE_EQ((size_t)ref.at(k++), vvs.at(i));
     }
 
-COUT("");
     ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal5"));
-    COUT("");
     ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal7"));
-    COUT("");
     std::vector<float> vvf = signals.get<std::vector<float> >("signal4");
     for (size_t i = 0 ; i < n ; ++i)
     {
-        COUT("");
         ref.at(k);
-        COUT("");
         vvf.at(i);
-        COUT("");
         ASSERT_DOUBLE_EQ((float)ref.at(k++), vvf.at(i));
     }
-    COUT("");
     ASSERT_DOUBLE_EQ(ref.at(k++), signals.get<double>("signal1"));
-    COUT("");
     ASSERT_DOUBLE_EQ(ref.at(k++), signals.get<double>("signal3"));
-    COUT("");
     std::vector<double> vvd = signals.get<std::vector<double> >("signal2");
     for (size_t i = 0 ; i < n ; ++i)
     {
         ASSERT_DOUBLE_EQ(ref.at(k++), vvd.at(i));
-    }COUT("");
+    }
 }
 
 TEST_F(SignalContainerTest, float_coercion_bug)

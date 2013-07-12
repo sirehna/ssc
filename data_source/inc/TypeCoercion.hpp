@@ -14,8 +14,6 @@
 #include "CoercionException.hpp"
 
 
-#include <cstdio>
-#include "test_macros.hpp"
 
 template<bool B, class T = void>
 struct enable_if {};
@@ -69,9 +67,7 @@ typename enable_if<is_arithmetic<T>::value,void>::type decoerce(std::list<double
     {
         THROW(__PRETTY_FUNCTION__, CoercionException, "List is empty.");
     }
-    printf("in file %s, line %i: %f\n",__FILE__, __LINE__, ret.front());
     thing_to_convert = ret.front();
-    printf("in file %s, line %i: %f\n",__FILE__, __LINE__, (float)thing_to_convert);
     ret.pop_front();
 }
 
