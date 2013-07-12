@@ -8,7 +8,6 @@
 #include "NullTest.hpp"
 #include "Null.hpp"
 #include "StateGenerator.hpp"
-#include "test_macros.hpp"
 
 NullTest::NullTest() : a(DataGenerator(123))
 {

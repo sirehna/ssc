@@ -10,7 +10,6 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-#include "test_macros.hpp"
 
 Parameter::Parameter() : ptr(new double(0)), nb_of_copies(0)
 {

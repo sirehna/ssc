@@ -8,7 +8,6 @@
 #include "DivideTest.hpp"
 #include "StateGenerator.hpp"
 #include "Divide.hpp"
-#include "test_macros.hpp"
 #include "Serialize.hpp"
 
 DivideTest::DivideTest() : a(DataGenerator(649731)), generate(StateGenerator()), x(generate.state("x")), y(generate.state("y"))
@@ -51,7 +50,6 @@ TEST_F(DivideTest, example)
 TEST_F(DivideTest, derivative)
 {
     Divide d(x,y);
-    COUT(d.diff(y));
 //! [DivideTest example]
 //! [DivideTest expected output]
     auto dv = d.diff(y)->get_lambda();

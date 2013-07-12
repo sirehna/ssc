@@ -7,7 +7,6 @@
 
 #include "ConstantTest.hpp"
 #include "Constant.hpp"
-#include "test_macros.hpp"
 #include "StateGenerator.hpp"
 
 ConstantTest::ConstantTest() :

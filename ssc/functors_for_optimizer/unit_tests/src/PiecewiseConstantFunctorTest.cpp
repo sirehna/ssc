@@ -11,7 +11,6 @@
 #include "Sum.hpp"
 #include "extra_test_assertions.hpp"
 
-#include "test_macros.hpp"
 
 PiecewiseConstantFunctorTest::PiecewiseConstantFunctorTest() : a(DataGenerator(669)),
 generate(StateGenerator())

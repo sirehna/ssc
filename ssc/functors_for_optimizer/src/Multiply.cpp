@@ -14,7 +14,6 @@
 #include "Pow.hpp"
 
 #include "SerializeReversePolish.hpp"
-#include "test_macros.hpp"
 #include "Serialize.hpp"
 
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)

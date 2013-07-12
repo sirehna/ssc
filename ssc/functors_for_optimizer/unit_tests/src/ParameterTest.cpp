@@ -8,7 +8,6 @@
 #include "ParameterTest.hpp"
 #include "Parameter.hpp"
 #include "StateGenerator.hpp"
-#include "test_macros.hpp"
 
 ParameterTest::ParameterTest() : a(DataGenerator(123))
 {

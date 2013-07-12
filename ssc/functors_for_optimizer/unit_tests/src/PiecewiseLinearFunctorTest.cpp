@@ -108,7 +108,7 @@ TEST_F(PiecewiseLinearFunctorTest, first_derivative_should_be_piecewise_constant
         ASSERT_DOUBLE_EQ(-128,df_dx());
     }
 }
-#include "test_macros.hpp"
+
 TEST_F(PiecewiseLinearFunctorTest, second_derivative_should_be_zero)
 {
     auto x = generate.state("x");
