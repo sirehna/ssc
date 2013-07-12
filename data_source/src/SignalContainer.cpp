@@ -7,28 +7,25 @@
 
 #include "SignalContainer.hpp"
 #include <boost/any.hpp>
+#include <algorithm>
 
-SignalContainer::SignalContainer() : signals(Signals())
+SignalContainer::SignalContainer() : signals(Signals()), scalar_convertible_types(ConvertibleTypes()),
+vector_convertible_types(ConvertibleTypes())
 {
 
 }
 
-SignalContainer::TypedSignalName::TypedSignalName(const SignalName& signal_name, const TypeName& type_name) : _signal_name(signal_name),
-                    _type_name(type_name)
-{}
 
-bool SignalContainer::TypedSignalName::operator<(const TypedSignalName& rhs) const
+double get_key(const std::pair<SignalName, double>& kv);
+double get_key(const std::pair<SignalName, double>& kv)
 {
-    const bool is_lower =  ((_signal_name < rhs._signal_name)
-                           || ((_signal_name == rhs._signal_name) && (_type_name < rhs._type_name)));
-    return is_lower;
+    return kv.second;
 }
 
-SignalName SignalContainer::TypedSignalName::get_signal_name() const
+std::vector<double> SignalContainer::to_doubles() const
 {
-    return _signal_name;
-}
-TypeName SignalContainer::TypedSignalName::get_type_name() const
-{
-    return _type_name;
+    const std::map<SignalName, double> s = get_all<double>();
+    std::vector<double> ret(s.size(),0);
+    std::transform(s.begin(), s.end(), ret.begin(), get_key);
+    return ret;
 }
