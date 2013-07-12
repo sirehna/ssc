@@ -37,10 +37,9 @@ ConvertibleTypes::ConvertibleTypes() :
 iter_bool(std::list<ConstSignalIterator>()),
 iter_char(std::list<ConstSignalIterator>()),
 iter_wchar_t(std::list<ConstSignalIterator>()),
-iter_char16_t(std::list<ConstSignalIterator>()),
-iter_char32_t(std::list<ConstSignalIterator>()),
 iter_short(std::list<ConstSignalIterator>()),
 iter_int(std::list<ConstSignalIterator>()),
+iter_size_t(std::list<ConstSignalIterator>()),
 iter_long(std::list<ConstSignalIterator>()),
 iter_float(std::list<ConstSignalIterator>()),
 iter_double(std::list<ConstSignalIterator>()),
@@ -50,3 +49,65 @@ bin(std::list<ConstSignalIterator>())
 
 }
 
+template<> std::list<ConstSignalIterator>& select_list_from_type<bool>(ConvertibleTypes& lists)
+{
+    return lists.iter_bool;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<char>(ConvertibleTypes& lists)
+{
+    return lists.iter_char;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<wchar_t>(ConvertibleTypes& lists)
+{
+    return lists.iter_wchar_t;
+}
+template<> std::list<ConstSignalIterator>& select_list_from_type<short>(ConvertibleTypes& lists)
+{
+    return lists.iter_short;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<int>(ConvertibleTypes& lists)
+{
+    return lists.iter_int;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<size_t>(ConvertibleTypes& lists)
+{
+    return lists.iter_size_t;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<long>(ConvertibleTypes& lists)
+{
+    return lists.iter_long;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<float>(ConvertibleTypes& lists)
+{
+    return lists.iter_float;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<double>(ConvertibleTypes& lists)
+{
+    return lists.iter_double;
+}
+
+template<> std::list<ConstSignalIterator>& select_list_from_type<PhysicalQuantity>(ConvertibleTypes& lists)
+{
+    return lists.iter_phys_qty;
+}
+
+
+
+
+
+DEFINE_TYPE_ACCESSORS(bool)
+DEFINE_TYPE_ACCESSORS(char)
+DEFINE_TYPE_ACCESSORS(wchar_t)
+DEFINE_TYPE_ACCESSORS(short)
+DEFINE_TYPE_ACCESSORS(int)
+DEFINE_TYPE_ACCESSORS(size_t)
+DEFINE_TYPE_ACCESSORS(long)
+DEFINE_TYPE_ACCESSORS(float)
+DEFINE_TYPE_ACCESSORS(double)

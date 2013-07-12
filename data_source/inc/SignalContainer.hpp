@@ -13,8 +13,8 @@
 #include <typeinfo>
 #include <vector>
 #include "Exception.hpp"
-
 #include "SignalContainerTypeLists.hpp"
+
 
 class SignalContainerException : public Exception
 {
@@ -88,7 +88,7 @@ class SignalContainer
          *  \returns Vector containing all doubles in the SignalContainer.
          *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest enclosing_method_example
         */
-        std::vector<double> to_doubles() const;
+        std::list<double> to_doubles() const;
 
 
     private:
@@ -114,6 +114,29 @@ class SignalContainer
             return select_list_from_type<T>(vector_convertible_types);
         }
 
+        template <typename T> void coerce_scalar(std::list<double>& ret) const
+        {
+            for (ConvertibleTypesIterator it  = begin<T>(scalar_convertible_types) ; it != end<T>(scalar_convertible_types) ; ++it)
+            {
+                coerce(ret, boost::any_cast<T>((*it)->second));
+            }
+        }
+
+        template <typename T> void coerce_vector(std::list<double>& ret) const
+        {
+            for (ConvertibleTypesIterator it  = begin<T>(vector_convertible_types) ; it != end<T>(vector_convertible_types) ; ++it)
+            {
+                coerce(ret, boost::any_cast<std::vector<T> >((*it)->second));
+            }
+        }
+
+        template <typename T> void coerce_type(std::list<double>& ret) const
+        {
+            coerce_scalar<T>(ret);
+            coerce_vector<T>(ret);
+        }
+
+
 
         Signals signals;
         ConvertibleTypes scalar_convertible_types;
@@ -121,6 +144,6 @@ class SignalContainer
 };
 
 
-
+template <> void SignalContainer::coerce_type<PhysicalQuantity>(std::list<double>& ret) const;
 
 #endif /* SIGNALCONTAINER_HPP_ */

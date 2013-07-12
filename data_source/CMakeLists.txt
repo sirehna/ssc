@@ -11,6 +11,7 @@ set(SOURCES src/DataSource.cpp
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
+include_directories(${physical_types_INCLUDE_DIRS})
 include_directories(SYSTEM ${boost_INCLUDE_DIRS})
 
 include_directories(${test_macros_SOURCE_DIR})

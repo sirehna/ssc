@@ -6,8 +6,8 @@
  */
 
 #include "SignalContainer.hpp"
-#include <boost/any.hpp>
-#include <algorithm>
+#include "TypeCoercion.hpp"
+#include "PhysicalQuantity.hpp"
 
 SignalContainer::SignalContainer() : signals(Signals()), scalar_convertible_types(ConvertibleTypes()),
 vector_convertible_types(ConvertibleTypes())
@@ -16,16 +16,36 @@ vector_convertible_types(ConvertibleTypes())
 }
 
 
-double get_key(const std::pair<SignalName, double>& kv);
-double get_key(const std::pair<SignalName, double>& kv)
+template <> void SignalContainer::coerce_type<PhysicalQuantity>(std::list<double>& ret) const
 {
-    return kv.second;
+for (ConvertibleTypesIterator it  = scalar_convertible_types.iter_phys_qty.begin() ; it != scalar_convertible_types.iter_phys_qty.end() ; ++it)
+    {
+        boost::any_cast<PhysicalQuantity>((*it)->second).coerce(ret);
+    }
+    for (ConvertibleTypesIterator it  = vector_convertible_types.iter_phys_qty.begin() ; it != vector_convertible_types.iter_phys_qty.end() ; ++it)
+    {
+        std::vector<PhysicalQuantity> v = boost::any_cast<std::vector<PhysicalQuantity> >((*it)->second);
+        for (std::vector<PhysicalQuantity>::const_iterator i = v.begin() ; i != v.end() ; ++i)
+        {
+            i->coerce(ret);
+        }
+    }
 }
 
-std::vector<double> SignalContainer::to_doubles() const
+std::list<double> SignalContainer::to_doubles() const
 {
-    const std::map<SignalName, double> s = get_all<double>();
-    std::vector<double> ret(s.size(),0);
-    std::transform(s.begin(), s.end(), ret.begin(), get_key);
+    std::list<double> ret;
+
+    coerce_type<bool>(ret);
+    coerce_type<char>(ret);
+    coerce_type<wchar_t>(ret);
+    coerce_type<short>(ret);
+    coerce_type<int>(ret);
+    coerce_type<size_t>(ret);
+    coerce_type<long>(ret);
+    coerce_type<float>(ret);
+    coerce_type<double>(ret);
+    coerce_type<PhysicalQuantity>(ret);
+
     return ret;
 }
