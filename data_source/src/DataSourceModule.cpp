@@ -8,7 +8,7 @@
 
 #include "DataSourceModule.hpp"
 
-DataSourceModule::DataSourceModule(const std::tr1::shared_ptr<DataSource>& data_source, const std::string& module_name) : ds(data_source), module_name_(module_name)
+DataSourceModule::DataSourceModule(DataSource* const data_source, const std::string& module_name) : ds(data_source), module_name_(module_name)
 {
 
 }

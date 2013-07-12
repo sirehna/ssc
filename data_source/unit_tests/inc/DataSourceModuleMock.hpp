@@ -28,3 +28,6 @@ class MockDataSourceModuleWithGetName : public MockableDataSourceModule
         MOCK_CONST_METHOD0(get_name, std::string());
         MOCK_CONST_METHOD0(initialize, void());
 };
+
+
+// This mock is

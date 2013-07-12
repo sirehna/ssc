@@ -16,7 +16,7 @@
 #include <set>
 
 static DataGenerator a_(21);
-static std::tr1::shared_ptr<DataSource> ds_ = std::tr1::shared_ptr<DataSource>(new DataSource());
+static DataSource* ds_;
 
 using ::testing::Return;
 using ::testing::NiceMock;
@@ -30,10 +30,12 @@ MockableDataSourceModule::MockableDataSourceModule() : DataSourceModule(ds_, a_.
 
 DataSourceTest::DataSourceTest() : a(DataGenerator(654))
 {
+    ds_ = new DataSource();
 }
 
 DataSourceTest::~DataSourceTest()
 {
+    delete ds_;
 }
 
 void DataSourceTest::SetUp()
@@ -134,4 +136,57 @@ TEST_F(DataSourceTest, should_not_be_able_to_add_two_modules_with_the_same_name)
     ON_CALL(*mock, clone()).WillByDefault(Return(mock));
     ds.add(*mock);
     ASSERT_THROW(ds.add(*mock),DataSourceException);
+}
+
+TEST_F(DataSourceTest, should_be_able_to_set_and_retrieve_a_constant)
+{
+    DataSource ds;
+    for (size_t i = 0 ; i < 10000 ; ++i)
+    {
+        const double d = a.random<double>();
+        ds.set("d", d);
+        ASSERT_DOUBLE_EQ(d, ds.get<double>("d"));
+    }
+}
+
+class TestModule : public DataSourceModule
+{
+    public:
+        TestModule(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)
+        {
+
+        }
+
+        DataSourceModule* clone() const
+        {
+            return new TestModule(*this);
+        }
+
+        void update() const
+        {
+            size_t nb_of_updates = ds->get<size_t>("nb_of_updates");
+            ds->set<size_t>("nb_of_updates", nb_of_updates+1);
+        }
+
+};
+
+TEST_F(DataSourceTest, should_throw_if_attempting_to_retrieve_a_value_not_in_DataSource)
+{
+    DataSource ds;
+    ASSERT_THROW(ds.get<double>(a.random<std::string>()), DataSourceException);
+}
+
+TEST_F(DataSourceTest, should_throw_if_not_all_dependencies_are_met)
+{
+    DataSource ds;
+    ds.add<TestModule>(a.random<std::string>());
+    ASSERT_THROW(ds.get<size_t>("nb_of_updates"), DataSourceException);
+    ds.set<size_t>("nb_of_updates", 0);
+}
+
+TEST_F(DataSourceTest, should_throw_if_two_modules_set_the_same_signal)
+{
+    DataSource ds;
+    ds.add<TestModule>(a.random<std::string>());
+    ASSERT_THROW(ds.add<TestModule>(a.random<std::string>()), DataSourceException);
 }
