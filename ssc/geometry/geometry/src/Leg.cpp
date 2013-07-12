@@ -12,11 +12,10 @@
 #include <GeographicLib/GeodesicLine.hpp>
 #include <sstream>
 #include <cmath>
+#include <algorithm> // std::min, std::max
 
 #define PI 4.*atan(1.)
 #define EPS 1e-6
-#define max(a,b) (a) > (b) ? (a) : (b)
-#define min(a,b) (a) < (b) ? (a) : (b)
 
 class Leg::LegImpl
 {
@@ -83,7 +82,7 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
     {
         THROW("Leg::find_waypoint_at(const double&)", LegException, "received a negative distance");
     }
-    return pimpl->waypoint(max(min(pimpl->length,distance),0));
+    return pimpl->waypoint(std::max(std::min(pimpl->length,distance),0.));
 }
 
 /** \author cec
