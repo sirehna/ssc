@@ -7,7 +7,7 @@
 
 #include "TrapezoidalIntegration.hpp"
 #include <cmath>
-#include "test_macros.hpp"
+
 class TrapezoidalIntegration::Impl
 {
     public:
