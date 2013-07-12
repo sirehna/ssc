@@ -25,7 +25,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            signal2module(FromSignal2Module()),
                            module2dependantmodules(DependantModules()),
                            module2requiredsignals(DependantModules()),
-                           signal2dependantmodules(DependantModules())
+                           signal2dependantmodules(DependantModules()),
+                           is_up_to_date(UpdateState())
 {
 
 }
@@ -55,12 +56,12 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSou
         name2module.insert(std::make_pair(current_module, ModulePtr(module)));
     }
     FromName2Module::iterator it2 = name2module.find(current_module);
+    is_up_to_date[current_module] = false;
     return it2->second;
 }
 
 void append(DependantModules& map, const std::string& key, const std::string& value)
 {
-
     DependantModules::iterator it = map.find(key);
     if (it == map.end())
     {

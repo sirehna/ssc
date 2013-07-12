@@ -22,6 +22,7 @@ typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
 typedef std::tr1::unordered_map<std::string,std::set<std::string> > DependantModules;
+typedef std::tr1::unordered_map<std::string,bool > UpdateState;
 
 
 void append(DependantModules& map, const std::string& key, const std::string& value);
@@ -119,13 +120,30 @@ class DataSource
                 }
                 else
                 {
-                    signal2module[signal_name] = current_module;
-                    update_dependencies();
+                    if (signal_name != "")
+                    {
+                        signal2module[signal_name] = current_module;
+                        update_dependencies();
+                    }
                 }
             }
             else
             {
                 signals.set(signal_name,t);
+                DependantModules::const_iterator it = signal2dependantmodules.find(signal_name);
+                if (it != signal2dependantmodules.end())
+                {
+                    const std::set<std::string> S = it->second;
+                    for (std::set<std::string>::const_iterator it = S.begin() ; it != S.end() ; ++it)
+                    {
+                        is_up_to_date[*it] = false;
+                        const std::set<std::string> S2 = module2dependantmodules[*it];
+                        for (std::set<std::string>::const_iterator it2 = S2.begin() ; it2 != S2.end() ; ++it2)
+                        {
+                            is_up_to_date[*it2] = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -138,39 +156,32 @@ class DataSource
         template <typename T> T get(const std::string& signal_name //<! Name of the signal to create or update
                                     )
         {
-            T ret;
-            try
-            {
-                ret = signals.get<T>(signal_name);
-            }
-            catch(SignalContainerException& e)
-            {
-                if (not(read_only)) // When a module is added, it is quite possible
-                                    // that all its dependencies are not available:
-                                    // we only throw if we're past the module addition
-                {
-                    const FromSignal2Module::const_iterator it = signal2module.find(signal_name);
-                    if (it == signal2module.end())
-                    {
-                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Unable to find signal '") + signal_name + "'");
-                    }
-                    FromName2Module::const_iterator it2 = name2module.find(it->second);
-                    if (it2 == name2module.end())
-                    {
-                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Something's badly wrong: module '") + it->second + "' is not in the module map");
-                    }
-                    it2->second->update();
-                    ret = signals.get<T>(signal_name);
-                }
-            }
             if (read_only && (current_module != ""))
             {
                 append(signal2dependantmodules, signal_name, current_module);
                 append(module2requiredsignals, current_module, signal_name);
                 update_dependencies();
+                return T();
             }
-
-            return ret;
+            else
+            {
+                const FromSignal2Module::const_iterator that_signal = signal2module.find(signal_name);
+                const bool computable = that_signal != signal2module.end();
+                const bool stored = signals.has<T>(signal_name);
+                if (computable)
+                {
+                    const std::string module_name = that_signal->second;
+                    if (not(is_up_to_date[module_name]))
+                    {
+                        name2module[module_name]->update();
+                    }
+                }
+                else if (not(stored))
+                {
+                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Unable to find signal '") + signal_name + "'");
+                }
+            }
+            return signals.get<T>(signal_name);
         }
 
 
@@ -194,9 +205,10 @@ class DataSource
         SignalContainer signals;//!< All signals currently in the DataSource
         std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal
-        DependantModules module2dependantmodules; //! For each module, stores the set of the names of the modules depending on it
-        DependantModules module2requiredsignals; //! For each module, stores the signals it depends on
-        DependantModules signal2dependantmodules; //! For each signal, stores the modules that depend on it
+        DependantModules module2dependantmodules; //!< For each module, stores the set of the names of the modules depending on it
+        DependantModules module2requiredsignals; //!< For each module, stores the signals it depends on
+        DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
+        UpdateState is_up_to_date; //!< For each module, whether it is up to date or not
 };
 
 
