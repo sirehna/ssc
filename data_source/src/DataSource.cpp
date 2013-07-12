@@ -8,18 +8,18 @@
 #include "DataSource.hpp"
 #include "DataSourceException.hpp"
 
-class CycleException : public Exception
+class CycleException : public DataSourceException
 {
     public:
         CycleException(const char* s) :
-                Exception(s)
+            DataSourceException(s)
         {
         }
 };
 
 
 DataSource::DataSource() : name2module(FromName2Module()),
-                           read_only(false),
+                           readonly(false),
                            signals(SignalContainer()),
                            current_module(""),
                            signal2module(FromSignal2Module()),
@@ -28,7 +28,11 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            signal2dependantmodules(DependantModules()),
                            is_up_to_date(UpdateState())
 {
+}
 
+bool DataSource::read_only() const
+{
+    return readonly;
 }
 
 FromName2Module DataSource::get_modules() const
@@ -56,6 +60,7 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSou
     if (module_is_already_in_map)
     {
         std::string s = "A module named '";
+        COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, s + module->get_name() + "' already exists");
     }
     else
@@ -107,11 +112,13 @@ std::set<std::string> DataSource::get_dependencies(const std::string& module_nam
         {
             if (*it2 == module_name)
             {
+                COUT("");
                 THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             const std::set<std::string> S = get_dependencies(*it2,ret);
             if (S.find(module_name) != S.end())
             {
+                COUT("");
                 THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             ret.insert(S.begin(),S.end());
@@ -146,6 +153,7 @@ void DataSource::update_dependencies()
     update_module2dependantmodules();
     if (a_module_depends_on_itself())
     {
+        COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
     }
 }

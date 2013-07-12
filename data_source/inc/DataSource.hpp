@@ -17,6 +17,8 @@
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
 
+
+
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
@@ -55,20 +57,26 @@ class DataSource
         {
             const ModulePtr m = add_module_if_not_already_present_and_return_clone(module.clone());
             m->initialize();
-            const bool read_only_bak = read_only;
-            read_only = true; // We don't want the following call to module.update()
+            const bool read_only_bak = readonly;
+            readonly = true; // We don't want the following call to module.update()
                               // to modify the signals in the DataSource: we just
                               // want to track module dependencies
             try
             {
                 m->update();
+
+            }
+            catch(DataSourceException& e)
+            {
+                throw(e);
             }
             catch(...)
             {
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
             current_module = "";
-            read_only = read_only_bak;
+            readonly = read_only_bak;
+            //set<bool>("read_only",read_only_bak);
         }
 
         /** \author cec
@@ -116,7 +124,7 @@ class DataSource
                                        const T& t //<! Value to add to DataSource
                                        )
         {
-            if (read_only)
+            if (readonly)
             {
                 std::tr1::unordered_map<std::string,std::string>::const_iterator it = signal2module.find(signal_name+typeid(T).name());
                 if ((it != signal2module.end()) && (it->second != "") && (it->second != current_module))
@@ -162,7 +170,7 @@ class DataSource
         template <typename T> T get(const std::string& signal_name //<! Name of the signal to create or update
                                     )
         {
-            if (read_only && (current_module != ""))
+            if (readonly && (current_module != ""))
             {
                 append(signal2dependantmodules, signal_name+typeid(T).name(), current_module);
                 append(module2requiredsignals, current_module, signal_name+typeid(T).name());
@@ -190,6 +198,7 @@ class DataSource
             return signals.get<T>(signal_name+typeid(T).name());
         }
 
+        bool read_only() const;
 
     private:
         /** \author cec
@@ -207,7 +216,7 @@ class DataSource
         void update_dependencies();
 
         FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
-        bool read_only;//!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
+        bool readonly;//!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
         SignalContainer signals;//!< All signals currently in the DataSource
         std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal
