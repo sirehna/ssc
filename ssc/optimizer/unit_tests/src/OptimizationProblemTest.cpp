@@ -15,8 +15,6 @@
 #include "Cos.hpp"
 #include "Sin.hpp"
 
-#include "test_macros.hpp"
-
 #include <cmath>
 #define PI (4.*atan(1.))
 

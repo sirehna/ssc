@@ -11,7 +11,6 @@
 #include "IpoptParameters.hpp"
 #include <sstream>
 #include <iomanip> //std::set_precision
-#include "test_macros.hpp"
 
 InternalIpopt::InternalIpopt(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) :
 problem_(problem),

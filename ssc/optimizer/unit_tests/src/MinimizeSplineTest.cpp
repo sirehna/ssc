@@ -10,7 +10,6 @@
 #define EPS 1E-6
 #include <functional>
 #include "MinimizeSpline.hpp"
-#include "test_macros.hpp"
 
 MinimizeSplineTest::MinimizeSplineTest() : a(DataGenerator(29973))
 {

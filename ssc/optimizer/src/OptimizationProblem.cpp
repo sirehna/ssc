@@ -342,7 +342,6 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     pimpl->states.get_bounds(n, xl, xu);
 }
 
-#include "test_macros.hpp"
 ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb)
 {
     SerializeReversePolish s(os);
