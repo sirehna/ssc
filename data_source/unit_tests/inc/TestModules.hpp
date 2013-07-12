@@ -46,6 +46,12 @@ void ModuleC::update() const
     ds->set<size_t>("C", nb_of_updates+1);
 }
 
+DECLARE_MODULE(ModuleD);
+void ModuleD::update() const
+{
+    ds->get<size_t>("B");
+    ds->set<double>("B", 1);
+}
 
 
 
