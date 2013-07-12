@@ -112,7 +112,7 @@ class DataSource
         {
             if (read_only)
             {
-                std::tr1::unordered_map<std::string,std::string>::const_iterator it = signal2module.find(signal_name);
+                std::tr1::unordered_map<std::string,std::string>::const_iterator it = signal2module.find(signal_name+typeid(T).name());
                 if ((it != signal2module.end()) && (it->second != "") && (it->second != current_module))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Attempting to add module '") + current_module + "' which sets signal '"
@@ -122,15 +122,15 @@ class DataSource
                 {
                     if (signal_name != "")
                     {
-                        signal2module[signal_name] = current_module;
+                        signal2module[signal_name+typeid(T).name()] = current_module;
                         update_dependencies();
                     }
                 }
             }
             else
             {
-                signals.set(signal_name,t);
-                DependantModules::const_iterator it = signal2dependantmodules.find(signal_name);
+                signals.set(signal_name+typeid(T).name(),t);
+                DependantModules::const_iterator it = signal2dependantmodules.find(signal_name+typeid(T).name());
                 if (it != signal2dependantmodules.end())
                 {
                     const std::set<std::string> S = it->second;
@@ -158,16 +158,16 @@ class DataSource
         {
             if (read_only && (current_module != ""))
             {
-                append(signal2dependantmodules, signal_name, current_module);
-                append(module2requiredsignals, current_module, signal_name);
+                append(signal2dependantmodules, signal_name+typeid(T).name(), current_module);
+                append(module2requiredsignals, current_module, signal_name+typeid(T).name());
                 update_dependencies();
                 return T();
             }
             else
             {
-                const FromSignal2Module::const_iterator that_signal = signal2module.find(signal_name);
+                const FromSignal2Module::const_iterator that_signal = signal2module.find(signal_name+typeid(T).name());
                 const bool computable = that_signal != signal2module.end();
-                const bool stored = signals.has<T>(signal_name);
+                const bool stored = signals.has<T>(signal_name+typeid(T).name());
                 if (computable)
                 {
                     const std::string module_name = that_signal->second;
@@ -181,7 +181,7 @@ class DataSource
                     THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Unable to find signal '") + signal_name + "'");
                 }
             }
-            return signals.get<T>(signal_name);
+            return signals.get<T>(signal_name+typeid(T).name());
         }
 
 

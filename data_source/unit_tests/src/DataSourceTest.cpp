@@ -214,3 +214,9 @@ TEST_F(DataSourceTest, data_source_should_not_update_unnecessarily)
     ds.set<size_t>("nb_of_updates", i+1);
     ASSERT_EQ(i+2, ds.get<size_t>("nb_of_updates2"));
 }
+
+TEST_F(DataSourceTest, two_signals_with_same_name_but_different_types_do_not_create_a_circular_dependencies)
+{
+    DataSource ds;
+    ASSERT_NO_THROW(ds.add<ModuleD>("Module D"));
+}
