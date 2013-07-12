@@ -187,4 +187,3 @@ TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
         ASSERT_DOUBLE_EQ(0, fmod(l.azimuth_at(a.random<double>().between(0, d)).get_radian(),PI));
     }
 }
-

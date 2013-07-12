@@ -247,3 +247,22 @@ TEST_F(TrackTest, should_be_able_to_test_that_two_tracks_are_equal)
         ASSERT_NE(track_3, track_2);
     }
 }
+
+TEST_F(TrackTest, should_throw_if_more_than_one_point_at_90_deg_latitude)
+{
+    // The following track was randomly generated
+    const std::vector<LatitudeLongitude> waypoints({LatitudeLongitude(-89.0529,-60.993),
+                                                    LatitudeLongitude(-87.5406,-60.993),
+                                                    LatitudeLongitude(-89.2113,-63.1881),
+                                                    LatitudeLongitude(-88.0267,-60.3258),
+                                                    LatitudeLongitude(-90,-60.3605),
+                                                    LatitudeLongitude(-90,-57.9451),
+                                                    LatitudeLongitude(-90,-56.2937),
+                                                    LatitudeLongitude(-90,-55.5694),
+                                                    LatitudeLongitude(-90,-52.703),
+                                                    LatitudeLongitude(-88.8484,-50.7369),
+                                                    LatitudeLongitude(-86.0397,-52.0722)});
+    ASSERT_THROW(Track t(waypoints), TrackException);
+}
+
+
