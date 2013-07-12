@@ -172,15 +172,106 @@ TEST_F(SignalContainerTest, should_be_able_to_retrieve_all_doubles_in_a_single_l
         ASSERT_DOUBLE_EQ(vd.at(k), s.front());s.pop_front();
     }
 }
-/*
-TEST_F(SignalContainerTest, coercion_should_work_even_if_SignalContainer_contains_non_coercible_types)
+
+TEST_F(SignalContainerTest, should_be_able_to_set_all_coercible_types_using_a_list)
 {
-ASSERT_TRUE(false);
+    SignalContainer signals;
+    const size_t n = a.random<size_t>().no().greater_than(20);
+    const double d1 = a.random<double>();
+    const double d2 = a.random<double>();
+    const std::vector<double> vd = a.random_vector_of<double>().of_size(n);
+    const float f1 = a.random<float>();
+    const float f2 = a.random<float>();
+    const std::vector<float> vf = a.random_vector_of<float>().of_size(n);
+
+    const int i1 = a.random<int>();
+    const int i2 = a.random<int>();
+    const std::vector<int> vi = a.random_vector_of<int>().of_size(n);
+    const size_t s1 = a.random<size_t>();
+    const size_t s2 = a.random<size_t>();
+    const std::vector<size_t> vs = a.random_vector_of<size_t>().of_size(n);
+
+    signals.set("signal1",d1);
+    signals.set("signal3",d2);
+    signals.set("signal2",vd);
+    signals.set("signal5",f1);
+    signals.set("signal7",f2);
+    signals.set("signal4",vf);
+    signals.set("signal6",i1);
+    signals.set("signal9",i2);
+    signals.set("signal8",vi);
+    signals.set("signal10",s1);
+    signals.set("signal11",s2);
+    signals.set("signal12",vs);
+
+    const std::vector<float> ref_ = a.random_vector_of<float>().of_size(4*(2+n));
+    std::vector<double> ref;
+    for (size_t i = 0 ; i < ref_.size() ; ++i) ref.push_back(ref_.at(i));
+    const std::list<double> l(ref.begin(), ref.end());
+
+    signals.from_doubles(l);
+
+    size_t k = 0;
+
+    ASSERT_DOUBLE_EQ((int)ref.at(k++), signals.get<int>("signal6"));
+    ASSERT_DOUBLE_EQ((int)ref.at(k++), signals.get<int>("signal9"));
+    std::vector<int> vvi = signals.get<std::vector<int> >("signal8");
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        ASSERT_DOUBLE_EQ((int)ref.at(k++), vvi.at(i));
+    }
+
+    ASSERT_DOUBLE_EQ((size_t)ref.at(k++), signals.get<size_t>("signal10"));
+    ASSERT_DOUBLE_EQ((size_t)ref.at(k++), signals.get<size_t>("signal11"));
+    std::vector<size_t> vvs = signals.get<std::vector<size_t> >("signal12");
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        ASSERT_DOUBLE_EQ((size_t)ref.at(k++), vvs.at(i));
+    }
+
+COUT("");
+    ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal5"));
+    COUT("");
+    ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal7"));
+    COUT("");
+    std::vector<float> vvf = signals.get<std::vector<float> >("signal4");
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        COUT("");
+        ref.at(k);
+        COUT("");
+        vvf.at(i);
+        COUT("");
+        ASSERT_DOUBLE_EQ((float)ref.at(k++), vvf.at(i));
+    }
+    COUT("");
+    ASSERT_DOUBLE_EQ(ref.at(k++), signals.get<double>("signal1"));
+    COUT("");
+    ASSERT_DOUBLE_EQ(ref.at(k++), signals.get<double>("signal3"));
+    COUT("");
+    std::vector<double> vvd = signals.get<std::vector<double> >("signal2");
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        ASSERT_DOUBLE_EQ(ref.at(k++), vvd.at(i));
+    }COUT("");
 }
 
-TEST_F(SignalContainerTest, can_define_coercion_for_user_defined_types)
+TEST_F(SignalContainerTest, float_coercion_bug)
 {
-    struct T1 {double a;double b;size_t c;};
-ASSERT_TRUE(false);
+    SignalContainer signals;
+    const float f1 = a.random<float>();
+
+    signals.set("signal5",f1);
+
+
+    const std::vector<float> ref_f = a.random_vector_of<float>().of_size(2);
+    std::vector<double> ref;
+    for (size_t i = 0 ; i < ref_f.size() ; ++i) ref.push_back(ref_f.at(i));
+    const std::list<double> l(ref.begin(), ref.end());
+
+    signals.from_doubles(l);
+
+    size_t k = 0;
+
+    ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal5"));
 }
-*/

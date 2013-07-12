@@ -111,3 +111,12 @@ DEFINE_TYPE_ACCESSORS(size_t)
 DEFINE_TYPE_ACCESSORS(long)
 DEFINE_TYPE_ACCESSORS(float)
 DEFINE_TYPE_ACCESSORS(double)
+template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTypes& l)
+{
+    return l.iter_phys_qty.begin();
+}
+
+template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
+{
+    return l.iter_phys_qty.end();
+}

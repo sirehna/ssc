@@ -11,6 +11,11 @@
 
 #include <vector>
 #include <list>
+#include "CoercionException.hpp"
+
+
+#include <cstdio>
+#include "test_macros.hpp"
 
 template<bool B, class T = void>
 struct enable_if {};
@@ -55,6 +60,35 @@ template <typename T> void coerce(std::list<double>& ret, const std::vector<T>& 
     }
 }
 
+void throw_if_list_is_empty(const std::list<double>& l);
+
+template <class T>
+typename enable_if<is_arithmetic<T>::value,void>::type decoerce(std::list<double>& ret, T& thing_to_convert)
+{
+    if (ret.empty())
+    {
+        THROW(__PRETTY_FUNCTION__, CoercionException, "List is empty.");
+    }
+    printf("in file %s, line %i: %f\n",__FILE__, __LINE__, ret.front());
+    thing_to_convert = ret.front();
+    printf("in file %s, line %i: %f\n",__FILE__, __LINE__, (float)thing_to_convert);
+    ret.pop_front();
+}
+
+void decoerce(std::list<double>& ret, bool& thing_to_convert);
+void decoerce(std::list<double>& ret, std::vector<bool>& thing_to_convert);
+
+template <typename T> void decoerce(std::list<double>& ret, std::vector<T>& thing_to_convert)
+{
+    if (ret.size() < thing_to_convert.size())
+    {
+        THROW(__PRETTY_FUNCTION__, CoercionException, "List containing new values should contain at least as many elements as vector to update");
+    }
+    for (typename std::vector<T>::iterator it = thing_to_convert.begin() ; it != thing_to_convert.end() ; ++it)
+    {
+        decoerce(ret, *it);
+    }
+}
 
 
 #endif /* TYPECOERCION_HPP_ */

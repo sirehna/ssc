@@ -15,6 +15,8 @@
 #include "Exception.hpp"
 #include "SignalContainerTypeLists.hpp"
 
+//#include <cstdio>
+//#include "test_macros.hpp"
 
 class SignalContainerException : public Exception
 {
@@ -24,6 +26,8 @@ class SignalContainerException : public Exception
         {
         }
 };
+
+
 
 
 
@@ -90,6 +94,15 @@ class SignalContainer
         */
         std::list<double> to_doubles() const;
 
+        /** \author cec
+         *  \date 18 juin 2013, 14:24:46
+         *  \brief Sets all doubles & vector of doubles from list
+         *  \returns Nothing
+         *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest enclosing_method_example
+        */
+        void from_doubles(std::list<double> l);
+
+
 
     private:
         /** \author cec
@@ -136,7 +149,32 @@ class SignalContainer
             coerce_vector<T>(ret);
         }
 
+        template <typename T> void decoerce_scalar(std::list<double>& ret)
+        {
+            for (ConvertibleTypesIterator it  = begin<T>(scalar_convertible_types) ; it != end<T>(scalar_convertible_types) ; ++it)
+            {
+                T t = boost::any_cast<T>((*it)->second);
 
+                decoerce(ret, t);
+                signals[(*it)->first] = t;
+            }
+        }
+
+        template <typename T> void decoerce_vector(std::list<double>& ret)
+        {
+            for (ConvertibleTypesIterator it  = begin<T>(vector_convertible_types) ; it != end<T>(vector_convertible_types) ; ++it)
+            {
+                std::vector<T> t = boost::any_cast<std::vector<T> >((*it)->second);
+                decoerce(ret, t);
+                signals[(*it)->first] = t;
+            }
+        }
+
+        template <typename T> void decoerce_type(std::list<double>& ret)
+        {
+            decoerce_scalar<T>(ret);
+            decoerce_vector<T>(ret);
+        }
 
         Signals signals;
         ConvertibleTypes scalar_convertible_types;
