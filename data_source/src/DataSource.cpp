@@ -7,6 +7,9 @@
 
 #include "DataSource.hpp"
 #include "DataSourceException.hpp"
+#include <iostream>
+#include <sstream>
+//#include "test_macros.hpp"
 
 class CycleException : public DataSourceException
 {
@@ -24,10 +27,33 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            current_module(""),
                            signal2module(FromSignal2Module()),
                            module2dependantmodules(DependantModules()),
+                           module2requiredmodules(DependantModules()),
                            module2requiredsignals(DependantModules()),
                            signal2dependantmodules(DependantModules()),
                            is_up_to_date(UpdateState())
 {
+}
+
+std::string DataSource::draw() const
+{
+    std::stringstream ss;
+    ss << "DataSource:";
+    ss << "\texported_signals_by_each_module" << std::endl;
+    for (FromSignal2Module::const_iterator it = signal2module.begin() ; it != signal2module.end() ; ++it)
+    {
+        ss << "\t\t" << it->second << " -> [" << it->first << "]" << std::endl;
+    }
+    ss << "\tsignals_required_by_each_module" << std::endl;
+    for (DependantModules::const_iterator it = module2requiredsignals.begin() ; it != module2requiredsignals.end() ; ++it)
+    {
+        ss << "\t\t[ ";
+        for (std::set<std::string>::const_iterator it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
+        {
+            ss << "'" << *it2 << "' ";
+        }
+        ss << "] -> " << it->first << std::endl;
+    }
+    return ss.str();
 }
 
 bool DataSource::read_only() const
@@ -60,7 +86,6 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSou
     if (module_is_already_in_map)
     {
         std::string s = "A module named '";
-        COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, s + module->get_name() + "' already exists");
     }
     else
@@ -84,65 +109,57 @@ void append(DependantModules& map, const std::string& key, const std::string& va
     else it->second.insert(value);
 }
 
-void DataSource::update_module2dependantmodules()
+void DataSource::add_dependencies_and_dependent_modules(const std::set<std::string>& required_signals, const std::string& module_using_signals)
 {
-    DependantModules::const_iterator it = module2requiredsignals.begin();
-    for (;it!=module2requiredsignals.end();++it)
+    std::set<std::string>::const_iterator that_required_signal = required_signals.begin();
+    for (; that_required_signal != required_signals.end(); ++that_required_signal)
     {
-        const std::set<std::string> S = it->second;
-        std::set<std::string>::const_iterator it2 = S.begin();
-        for (;it2!=S.end();++it2)
+        const FromSignal2Module::const_iterator it = signal2module.find(*that_required_signal);
+        if (it != signal2module.end())
         {
-            const FromSignal2Module::const_iterator it3 = signal2module.find(*it2);
-            if (it3 != signal2module.end())
-            {
-                append(module2dependantmodules, it->first, it3->second);
-            }
+            const std::string module_producing_signal = it->second;
+            append(module2requiredmodules, module_using_signals, module_producing_signal);
+            append(module2dependantmodules, module_producing_signal, module_using_signals);
         }
     }
+
 }
 
-std::set<std::string> DataSource::get_dependencies(const std::string& module_name, std::set<std::string>& ret) const
+std::set<std::string> DataSource::get_dependencies(const std::string& ref_module, const std::string& current_module, std::set<std::string>& dependencies) const
 {
-    DependantModules::const_iterator it = module2dependantmodules.find(module_name);
-    if (it != module2dependantmodules.end())
+    DependantModules::const_iterator that_module = module2dependantmodules.find(current_module);
+    if (that_module != module2dependantmodules.end())
     {
-        std::set<std::string> dep = it->second;
-        for (std::set<std::string>::const_iterator it2 = dep.begin() ; it2 != dep.end() ; ++it2)
+        std::set<std::string> dependant_modules = that_module->second;
+        for (std::set<std::string>::const_iterator that_dependant_module = dependant_modules.begin() ; that_dependant_module != dependant_modules.end() ; ++that_dependant_module)
         {
-            if (*it2 == module_name)
+            if (*that_dependant_module == ref_module)
             {
-                COUT("");
-                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + ref_module + std::string("' depends on itself"));
             }
-            const std::set<std::string> S = get_dependencies(*it2,ret);
-            if (S.find(module_name) != S.end())
+            const std::set<std::string> new_dependencies = get_dependencies(ref_module,*that_dependant_module,dependencies);
+            dependencies.insert(new_dependencies.begin(),new_dependencies.end());
+            if (dependencies.find(ref_module) != dependencies.end())
             {
-                COUT("");
-                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Module '") + ref_module + "' depends on itself");
             }
-            ret.insert(S.begin(),S.end());
         }
     }
-    return ret;
+    return dependencies;
+}
+
+std::set<std::string> DataSource::get_dependencies(const std::string& module, std::set<std::string>& dependencies) const
+{
+    return get_dependencies(module,module, dependencies);
 }
 
 bool DataSource::a_module_depends_on_itself()
 {
-    try
+    DependantModules::iterator it = module2dependantmodules.begin();
+    for (;it!= module2dependantmodules.end();++it)
     {
-        DependantModules::iterator it = module2dependantmodules.begin();
-        for (;it!= module2dependantmodules.end();++it)
-        {
-            get_dependencies(it->first,it->second);
-        }
-    }
-    catch (CycleException& e)
-    {
-        THROW(__PRETTY_FUNCTION__, CycleException, e.what());
-
-
-        return true;
+        std::set<std::string>::const_iterator dependent_module = it->second.begin();
+        get_dependencies(it->first,it->second);
     }
     return false;
 }
@@ -150,10 +167,15 @@ bool DataSource::a_module_depends_on_itself()
 
 void DataSource::update_dependencies()
 {
-    update_module2dependantmodules();
+    DependantModules::const_iterator module_requirements_pair = module2requiredsignals.begin();
+    for (;module_requirements_pair!=module2requiredsignals.end();++module_requirements_pair)
+    {
+        const std::set<std::string> required_signals = module_requirements_pair->second;
+        const std::string module_using_signals = module_requirements_pair->first;
+        add_dependencies_and_dependent_modules(required_signals, module_using_signals);
+    }
     if (a_module_depends_on_itself())
     {
-        COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
     }
 }

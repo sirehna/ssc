@@ -17,7 +17,7 @@
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
 
-
+//#include "test_macros.hpp"
 
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
@@ -41,6 +41,14 @@ class DataSource
 {
     public:
         DataSource();
+
+        /** \author cec
+         *  \date 1 juil. 2013, 17:41:30
+         *  \brief draws the DataSource's dependency graph
+         *  \returns String containing the serialization of the DataSource
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest draw_example
+        */
+        std::string draw() const;
 
         /** \author cec
          *  \date 17 juin 2013, 10:52:20
@@ -121,38 +129,45 @@ class DataSource
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_example
         */
         template <typename T> void set(const std::string& signal_name, //<! Name of the signal to create or update
-                                       const T& t //<! Value to add to DataSource
-                                       )
+                                       const T& t)
         {
             if (readonly)
             {
-                std::tr1::unordered_map<std::string,std::string>::const_iterator it = signal2module.find(signal_name+typeid(T).name());
-                if ((it != signal2module.end()) && (it->second != "") && (it->second != current_module))
+                std::tr1::unordered_map<std::string, std::string>::const_iterator it =
+                        signal2module.find(signal_name + typeid(T).name());
+                if ((it != signal2module.end()) && (it->second != "")
+                        && (it->second != current_module))
                 {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Attempting to add module '") + current_module + "' which sets signal '"
-                                                                    + signal_name + "', but module '" + it->second + "' already sets it: need to remove one of them using DataSource::remove.");
+                    THROW(__PRETTY_FUNCTION__, DataSourceException,
+                            std::string("Attempting to add module '")
+                                    + current_module + "' which sets signal '"
+                                    + signal_name + "', but module '"
+                                    + it->second
+                                    + "' already sets it: need to remove one of them using DataSource::remove.");
                 }
-                else
+                else if (signal_name != "")
                 {
-                    if (signal_name != "")
-                    {
-                        signal2module[signal_name+typeid(T).name()] = current_module;
-                        update_dependencies();
-                    }
+                    signal2module[signal_name + typeid(T).name()] =
+                            current_module;
+                    update_dependencies();
                 }
             }
             else
             {
-                signals.set(signal_name+typeid(T).name(),t);
-                DependantModules::const_iterator it = signal2dependantmodules.find(signal_name+typeid(T).name());
+                signals.set(signal_name + typeid(T).name(), t);
+                DependantModules::const_iterator it = signal2dependantmodules
+                        .find(signal_name + typeid(T).name());
                 if (it != signal2dependantmodules.end())
                 {
                     const std::set<std::string> S = it->second;
-                    for (std::set<std::string>::const_iterator it = S.begin() ; it != S.end() ; ++it)
+                    for (std::set<std::string>::const_iterator it = S.begin();
+                            it != S.end(); ++it)
                     {
                         is_up_to_date[*it] = false;
-                        const std::set<std::string> S2 = module2dependantmodules[*it];
-                        for (std::set<std::string>::const_iterator it2 = S2.begin() ; it2 != S2.end() ; ++it2)
+                        const std::set<std::string> S2 =
+                                module2dependantmodules[*it];
+                        for (std::set<std::string>::const_iterator it2 = S2
+                                .begin(); it2 != S2.end(); ++it2)
                         {
                             is_up_to_date[*it2] = false;
                         }
@@ -166,38 +181,41 @@ class DataSource
          *  \brief Retrieves a signal from the SignalContainer
          *  \returns Value of the signal
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_example
-        */
-        template <typename T> T get(const std::string& signal_name //<! Name of the signal to create or update
-                                    )
+         */
+        template<typename T>
+        T get(const std::string& signal_name)
         {
             if (readonly && (current_module != ""))
             {
-                append(signal2dependantmodules, signal_name+typeid(T).name(), current_module);
-                append(module2requiredsignals, current_module, signal_name+typeid(T).name());
+                append(signal2dependantmodules, signal_name + typeid(T).name(),
+                        current_module);
+                append(module2requiredsignals, current_module,
+                        signal_name + typeid(T).name());
                 update_dependencies();
                 return T();
-            }
-            else
+            } else
             {
-                const FromSignal2Module::const_iterator that_signal = signal2module.find(signal_name+typeid(T).name());
+                const FromSignal2Module::const_iterator that_signal =
+                        signal2module.find(signal_name + typeid(T).name());
                 const bool computable = that_signal != signal2module.end();
-                const bool stored = signals.has<T>(signal_name+typeid(T).name());
+                const bool stored = signals.has < T
+                        > (signal_name + typeid(T).name());
                 if (computable)
                 {
                     const std::string module_name = that_signal->second;
-                    if (not(is_up_to_date[module_name]))
+                    if (not (is_up_to_date[module_name]))
                     {
                         name2module[module_name]->update();
                     }
-                }
-                else if (not(stored))
+                } else if (not (stored))
                 {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Unable to find signal '") + signal_name + "'");
+                    THROW(__PRETTY_FUNCTION__, DataSourceException,
+                            std::string("Unable to find signal '") + signal_name
+                                    + "'");
                 }
             }
-            return signals.get<T>(signal_name+typeid(T).name());
+            return signals.get < T > (signal_name + typeid(T).name());
         }
-
         bool read_only() const;
 
     private:
@@ -207,23 +225,23 @@ class DataSource
          *  If it exists, throw an exception. Otherwise, add the module to name2module.
          *  \returns Pointer to the added module.
          *  \snippet /unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
-        */
-        ModulePtr add_module_if_not_already_present_and_return_clone(DataSourceModule const * const module //<! Module to add
-                                              );
-        void update_module2dependantmodules();
+         */
+        ModulePtr add_module_if_not_already_present_and_return_clone(const DataSourceModule* const module);
         std::set<std::string> get_dependencies(const std::string& module_name, std::set<std::string>& ret) const;
+        std::set<std::string> get_dependencies(const std::string& ref_module, const std::string& current_module, std::set<std::string>& dependencies) const;
         bool a_module_depends_on_itself();
         void update_dependencies();
-
+        void add_dependencies_and_dependent_modules(const std::set<std::string>& required_signals, const std::string& module_using_required_signals);
         FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
-        bool readonly;//!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
-        SignalContainer signals;//!< All signals currently in the DataSource
+        bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
+        SignalContainer signals; //!< All signals currently in the DataSource
         std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal
         DependantModules module2dependantmodules; //!< For each module, stores the set of the names of the modules depending on it
+        DependantModules module2requiredmodules; //!< For each module, stores the set of the names of the modules it depends on
         DependantModules module2requiredsignals; //!< For each module, stores the signals it depends on
         DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
-        UpdateState is_up_to_date; //!< For each module, whether it is up to date or not
+        UpdateState is_up_to_date;
 };
 
 

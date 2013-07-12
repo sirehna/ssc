@@ -220,3 +220,31 @@ TEST_F(DataSourceTest, two_signals_with_same_name_but_different_types_do_not_cre
     DataSource ds;
     ASSERT_NO_THROW(ds.add<ModuleD>("Module D"));
 }
+
+DECLARE_MODULE(M1)
+DECLARE_MODULE(M2)
+DECLARE_MODULE(M3)
+
+void M2::update() const
+{
+    ds->get<double>("s1");
+    ds->set<double>("s2", 0);
+}
+
+void M3::update() const
+{
+    ds->get<double>("s2");
+}
+
+void M1::update() const
+{
+    ds->set<double>("s1",0);
+}
+
+TEST_F(DataSourceTest, bug_detected_in_EONAV_for_cyclic_dependency_check)
+{
+    DataSource data_source;
+    data_source.add<M1>("m1");
+    data_source.add<M2>("m2");
+    ASSERT_NO_THROW(data_source.add<M3>("m3"));
+}
