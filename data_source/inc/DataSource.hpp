@@ -143,13 +143,24 @@ class DataSource
             {
                 ret = signals.get<T>(signal_name);
             }
-            catch(Exception& e)
+            catch(SignalContainerException& e)
             {
                 if (not(read_only)) // When a module is added, it is quite possible
                                     // that all its dependencies are not available:
                                     // we only throw if we're past the module addition
                 {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("exception caught: ") + e.what());
+                    const FromSignal2Module::const_iterator it = signal2module.find(signal_name);
+                    if (it == signal2module.end())
+                    {
+                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Unable to find signal '") + signal_name + "'");
+                    }
+                    FromName2Module::const_iterator it2 = name2module.find(it->second);
+                    if (it2 == name2module.end())
+                    {
+                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Something's badly wrong: module '") + it->second + "' is not in the module map");
+                    }
+                    it2->second->update();
+                    ret = signals.get<T>(signal_name);
                 }
             }
             if (read_only && (current_module != ""))
