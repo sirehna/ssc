@@ -128,3 +128,13 @@ bool DataSource::a_module_depends_on_itself()
     }
     return false;
 }
+
+
+void DataSource::update_dependencies()
+{
+    update_module2dependantmodules();
+    if (a_module_depends_on_itself())
+    {
+        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
+    }
+}
