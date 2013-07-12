@@ -9,7 +9,7 @@
 #include "Leg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
-
+#include <algorithm> // std::min, std::max
 #include <cmath>
 
 #define PI 4.*atan(1.)
@@ -103,8 +103,6 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_meridian)
         }
     }
 }
-#define min(a,b) ((a)>(b)?(b):(a))
-#define max(a,b) ((a)<(b)?(b):(a))
 
 TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_the_equator)
 {
@@ -112,7 +110,7 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_the_equator)
     {
         const double longitude1 = a.random<double>().between(-180,180);
         const double delta_longitude = a.random<double>().between(-130,130);
-        const double longitude2 = max(-180,min(longitude1+delta_longitude,180));
+        const double longitude2 = std::max(-180.,std::min(longitude1+delta_longitude,180.));
         const double latitude = 0;//a.random<double>().between(-90,90);
         const LatitudeLongitude point1(latitude,longitude1);
         const LatitudeLongitude point2(latitude,longitude2);
