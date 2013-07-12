@@ -1,0 +1,24 @@
+/**
+@defgroup data_source DataSource
+\brief This module contains the core of the simulator: the DataSource,
+SignalContainer, Parameter & DataSourceModule interface.
+
+\details
+The following concepts are used:
+- Signal: information stored in the DataSource (more precisely in the SignalContainer)
+- Module: class that calculates signals (which we call its outputs) based on the
+values of other signals (which we call its inputs)
+- System: set of related signals and modules. A system is not, as such, represented
+by any single class: it is an abstraction that arises from naming signals as
+belonging to a certain system.
+
+\subsection Types 
+The basic underlying types are:
+- DataSource
+- SignalContainer
+
+\subsection Algorithms
+The implemented algorithms are:
+- <a href="http://en.wikipedia.org/wiki/Forward_chaining">Forward-chaining</a> (simplified Rete algorithm http://en.wikipedia.org/wiki/Rete_algorithm)
+- <a href="http://en.wikipedia.org/wiki/Backward_chaining">Backward-chaining</a>
+*/

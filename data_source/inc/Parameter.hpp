@@ -10,6 +10,14 @@
 
 #include <string>
 
+/** \author: cec
+ *  \ingroup data_source
+ *  \brief Contains all states of a module
+ *  \details It is not of a DataSourceModule's responsibility to store its own
+ *  states: this was done to allow dynamic connections & disconnections of modules
+ *  during the simulation. Therefore, if a module needs internal states, it has
+ *  to declare them as Parameters.
+*/
 template <class T> class Parameter
 {
     public:

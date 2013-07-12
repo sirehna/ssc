@@ -8,7 +8,6 @@
 
 #include "DataSourceModule.hpp"
 
-
 DataSourceModule::DataSourceModule(const std::tr1::shared_ptr<DataSource>& data_source, const std::string& module_name) : ds(data_source), module_name_(module_name)
 {
 
@@ -16,7 +15,6 @@ DataSourceModule::DataSourceModule(const std::tr1::shared_ptr<DataSource>& data_
 
 DataSourceModule::~DataSourceModule()
 {
-
 }
 
 std::string DataSourceModule::get_name() const
@@ -24,3 +22,7 @@ std::string DataSourceModule::get_name() const
     return module_name_;
 }
 
+void DataSourceModule::initialize() const
+{
+
+}
