@@ -7,6 +7,9 @@
 
 #include "TypeCoercionTest.hpp"
 #include "TypeCoercion.hpp"
+#include "CoercionException.hpp"
+
+#include "test_macros.hpp"
 
 TypeCoercionTest::TypeCoercionTest() : a(DataGenerator(1))
 {
@@ -122,3 +125,52 @@ TEST_F(TypeCoercionTest, can_define_coercion_for_non_arithmetic_types)
     ASSERT_DOUBLE_EQ(b_,v.front());v.pop_front();
 }
 
+TEST_F(TypeCoercionTest, can_decoerce_a_scalar)
+{
+    std::list<double> v;
+    double d = 0;
+    ASSERT_THROW(decoerce(v,d),CoercionException);
+    const double ref = a.random<double>();
+    v.push_back(ref);
+    ASSERT_NO_THROW(decoerce(v,d));
+    ASSERT_TRUE(v.empty());
+    ASSERT_DOUBLE_EQ(ref, d);
+}
+
+TEST_F(TypeCoercionTest, can_decoerce_a_vector)
+{
+    std::list<double> L;
+    std::vector<double> v;
+    ASSERT_NO_THROW(decoerce(L,v));
+    const size_t n = a.random<size_t>().no().greater_than(1000);
+    const std::vector<double> ref = a.random_vector_of<double>().of_size(n);
+    L = std::list<double>(ref.begin(), ref.end());
+    ASSERT_NO_THROW(decoerce(L,v));
+    v = a.random_vector_of<double>().of_size(a.random<size_t>().between(n,2*n));
+    ASSERT_THROW(decoerce(L,v),CoercionException);
+    v = std::vector<double>(n,111);
+    ASSERT_NO_THROW(decoerce(L,v));
+    ASSERT_TRUE(L.empty());
+    ASSERT_EQ(n, v.size());
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        ASSERT_DOUBLE_EQ(ref.at(i), v.at(i));
+    }
+}
+
+TEST_F(TypeCoercionTest, coerce_decoerce_floats)
+{
+    std::list<double> v;
+    //for (size_t i = 0 ; i<1000 ; ++i)
+    {
+        /*c:/Documents and Settings/maroff/eclipse_workspace/simulator_sdk/data_source/unit_tests/src/SignalContainerTest.cpp(230): Error: Value of: signals.get<float>("signal5")
+          Actual: -8383272448
+        Expected: (float)ref.at(k++)
+        Which is: -8383272304.9414673*/
+        const float ref = -8383272304.9414673;//a.random<float>();
+        coerce(v, ref);
+        double d = 0;
+        decoerce(v, d);
+        ASSERT_DOUBLE_EQ(ref, d);
+    }
+}

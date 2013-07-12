@@ -9,6 +9,14 @@
 #include "TypeCoercion.hpp"
 #include "PhysicalQuantity.hpp"
 
+void decoerce(std::list<double>& ret, PhysicalQuantity& thing_to_convert);
+void decoerce(std::list<double>& ret, PhysicalQuantity& thing_to_convert)
+{
+    thing_to_convert.decoerce(ret);
+}
+
+
+
 SignalContainer::SignalContainer() : signals(Signals()), scalar_convertible_types(ConvertibleTypes()),
 vector_convertible_types(ConvertibleTypes())
 {
@@ -32,10 +40,11 @@ for (ConvertibleTypesIterator it  = scalar_convertible_types.iter_phys_qty.begin
     }
 }
 
+
+
 std::list<double> SignalContainer::to_doubles() const
 {
     std::list<double> ret;
-
     coerce_type<bool>(ret);
     coerce_type<char>(ret);
     coerce_type<wchar_t>(ret);
@@ -46,6 +55,19 @@ std::list<double> SignalContainer::to_doubles() const
     coerce_type<float>(ret);
     coerce_type<double>(ret);
     coerce_type<PhysicalQuantity>(ret);
-
     return ret;
+}
+
+void SignalContainer::from_doubles(std::list<double> l)
+{
+    decoerce_type<bool>(l);
+    decoerce_type<char>(l);
+    decoerce_type<wchar_t>(l);
+    decoerce_type<short>(l);
+    decoerce_type<int>(l);
+    decoerce_type<size_t>(l);
+    decoerce_type<long>(l);
+    decoerce_type<float>(l);
+    decoerce_type<double>(l);
+    decoerce_type<PhysicalQuantity>(l);
 }
