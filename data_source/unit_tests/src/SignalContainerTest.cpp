@@ -32,7 +32,7 @@ TEST_F(SignalContainerTest, example)
     const std::string s = a.random<std::string>();
     signals.set<std::string>("signal name",s);
     const double d = a.random<double>();
-    signals.set<double>("another signal",d);
+    signals.set("another signal",d);
 //! [SignalContainerTest example]
 //! [SignalContainerTest expected output]
     ASSERT_EQ(s, signals.get<std::string>("signal name"));
@@ -62,11 +62,11 @@ TEST_F(SignalContainerTest, should_be_able_to_retrieve_all_signals_of_a_given_ty
     const std::string s3 = a.random<std::string>();
     const double d1 = a.random<double>();
     const double d2 = a.random<double>();
-    signals.set<std::string>("signal1",s1);
-    signals.set<std::string>("signal2",s2);
-    signals.set<std::string>("signal3",s3);
-    signals.set<double>("signal1",d1);
-    signals.set<double>("signal2",d2);
+    signals.set("signal1",s1);
+    signals.set("signal2",s2);
+    signals.set("signal3",s3);
+    signals.set("signal1",d1);
+    signals.set("signal2",d2);
     std::map<std::string,std::string> string_signals = signals.get_all<std::string>();
     std::map<std::string,double> double_signals = signals.get_all<double>();
     ASSERT_EQ(3, string_signals.size());
