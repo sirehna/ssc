@@ -53,7 +53,7 @@ TEST_F(DataSourceTest, example)
 //! [DataSourceTest expected output]
 }
 
-TEST_F(DataSourceTest, all_mock_modules_should_have_different_names)
+TEST_F(DataSourceTest, all_mock_modules_generated_for_tests_should_have_different_names)
 {
     std::set<std::string> module_names;
     const size_t nb_of_mocks = 1000;
