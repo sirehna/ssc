@@ -1,10 +1,11 @@
 cmake_minimum_required (VERSION 2.8.8)
 project (data_source)
 
-set(SOURCES src/DataSource.cpp)
+set(SOURCES src/DataSource.cpp
+            src/DataSourceModule.cpp)
             
-add_custom_target(${PROJECT_NAME} SOURCES ${SOURCES})
-set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc  CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
+#add_custom_target(${PROJECT_NAME} SOURCES ${SOURCES})
+#set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc  CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
 
 include_directories(inc)
 
