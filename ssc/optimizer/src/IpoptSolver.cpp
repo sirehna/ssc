@@ -15,8 +15,6 @@
 #include "InternalIpopt.hpp"
 #include "IpIpoptApplication.hpp"
 
-#include "test_macros.hpp"
-
 class IpoptSolver::IpoptSolverPimpl
 {
     public:
