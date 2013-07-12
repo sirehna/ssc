@@ -4,8 +4,7 @@ project (${MODULE_UNDER_TEST}_tests)
 
 FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/SimpsonTest.cpp
-              src/AddPointToIntegralTest.cpp) 
-#src/IntegrateTest.cpp)
+              src/QuadPackTest.cpp)
 
 
 # ------8<---------------------------------------------->8-----

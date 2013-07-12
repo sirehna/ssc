@@ -7,7 +7,7 @@
 
 #include "TrapezoidalIntegration.hpp"
 #include <cmath>
-
+#include "test_macros.hpp"
 class TrapezoidalIntegration::Impl
 {
     public:
@@ -18,15 +18,17 @@ class TrapezoidalIntegration::Impl
 
         double integrate(const Function& f, const double& a, const double& b, const double& eps) const
         {
-            const size_t nb_of_evaluations = floor(1./fabs(eps));
-            const double h = (b - a) / nb_of_evaluations;
-            double S = f(a) + f(b);
-            for (size_t i  = 1 ; i < nb_of_evaluations ; ++i)
+            const size_t M = 40;//floor(1./fabs(eps));
+(void)eps;
+            const double h = (b - a) / M;
+            double S = (f(a) + f(b))/2.;
+            for (size_t i  = 1 ; i < M ; ++i)
             {
-                S += 2 * f(a + i * h);
+                S += f(a + i * h);
             }
-            return S * h / 2.;
+            return S* h;
         }
+
 };
 
 
