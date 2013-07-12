@@ -8,12 +8,20 @@
 
 #include "LatitudeLongitude.hpp"
 #include <cmath>
-
+#include <sstream>
 LatitudeLongitude::LatitudeLongitude(const double& latitude, const double& longitude) : lat(latitude), lon(longitude)
 {
-    if ((fabs(latitude)>90) || (fabs(longitude)>180))
+    if (fabs(latitude)>90)
     {
-        THROW("LatitudeLongitude::LatitudeLongitude(const double& latitude, const double& longitude)", LatitudeLongitudeException, "Latitude or longitude out of range");
+        std::stringstream ss;
+        ss << "Latitude |" << latitude << "| > 90 deg";
+        THROW(__PRETTY_FUNCTION__, LatitudeLongitudeException, ss.str());
+    }
+    if (fabs(longitude)>180)
+    {
+        std::stringstream ss;
+        ss << "Longitude |" << longitude << "| > 180 deg";
+        THROW(__PRETTY_FUNCTION__, LatitudeLongitudeException, ss.str());
     }
 }
 
