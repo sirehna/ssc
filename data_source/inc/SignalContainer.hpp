@@ -8,12 +8,13 @@
 #ifndef SIGNALCONTAINER_HPP_
 #define SIGNALCONTAINER_HPP_
 
-#include <boost/any.hpp>
+
 #include <map>
 #include <typeinfo>
-
+#include <vector>
 #include "Exception.hpp"
 
+#include "SignalContainerTypeLists.hpp"
 
 class SignalContainerException : public Exception
 {
@@ -23,9 +24,6 @@ class SignalContainerException : public Exception
         {
         }
 };
-
-typedef std::string SignalName;
-typedef std::string TypeName;
 
 
 
@@ -44,27 +42,14 @@ typedef std::string TypeName;
  */
 class SignalContainer
 {
-    private:
-        class TypedSignalName
-        {
-            public:
-                TypedSignalName(const SignalName& signal_name, const TypeName& type_name);
-                bool operator<(const TypedSignalName& rhs) const;
-                SignalName get_signal_name() const;
-                TypeName get_type_name() const;
-            private:
-                TypedSignalName();
-                SignalName _signal_name;
-                TypeName _type_name;
-
-        };
-        typedef std::map<TypedSignalName, boost::any> Signals;
-        typedef Signals::const_iterator ConstSignalIterator;
     public:
         SignalContainer();
+
         template <typename T> void set(const std::string& signal_name, const T& value)
         {
-            signals[TypedSignalName(signal_name,typeid(T).name())] = value;
+            const TypedSignalName map_name(signal_name,typeid(T).name());
+            signals[map_name] = value;
+            get_iterator_list(value).push_back(signals.find(map_name));
         }
 
         template <typename T> T get(const std::string& signal_name) const
@@ -95,9 +80,47 @@ class SignalContainer
             return ret;
         }
 
+        /** \author cec
+         *  \date 17 juin 2013, 12:23:08
+         *  \brief Retrieves all doubles & vector of doubles in a single vector
+         *  \details Values are returned by signal name. Vectors are stored
+         *  contiguously.
+         *  \returns Vector containing all doubles in the SignalContainer.
+         *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest enclosing_method_example
+        */
+        std::vector<double> to_doubles() const;
+
 
     private:
+        /** \author cec
+         *  \date 18 juin 2013, 10:33:02
+         *  \brief Calls select_list_from_type for all scalars.
+         *  \returns List of iterators taken from scalar_convertible_types
+        */
+        template <typename T> std::list<ConstSignalIterator>& get_iterator_list(const T& val)
+        {
+            (void) val;
+            return select_list_from_type<T>(scalar_convertible_types);
+        }
+
+        /** \author cec
+         *  \date 18 juin 2013, 10:33:02
+         *  \brief Calls select_list_from_type for all vectors.
+         *  \returns List of iterators taken from vector_convertible_types
+        */
+        template <typename T> std::list<ConstSignalIterator>& get_iterator_list(const std::vector<T>& val)
+        {
+            (void) val;
+            return select_list_from_type<T>(vector_convertible_types);
+        }
+
+
         Signals signals;
+        ConvertibleTypes scalar_convertible_types;
+        ConvertibleTypes vector_convertible_types;
 };
+
+
+
 
 #endif /* SIGNALCONTAINER_HPP_ */

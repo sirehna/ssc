@@ -65,8 +65,8 @@ TEST_F(DataSourceTest, all_mock_modules_generated_for_tests_should_have_differen
     const size_t nb_of_mocks = 1000;
     for (size_t i = 0 ; i < nb_of_mocks ; ++i)
     {
-        MockDataSourceModule m;
-        module_names.insert(m.get_name());
+        MockDataSourceModule mock;
+        module_names.insert(mock.get_name());
     }
     ASSERT_EQ(nb_of_mocks, module_names.size());
 }
@@ -84,14 +84,14 @@ TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_module
     // of interest
     // There's a 'new' but no 'delete' because the clone() method will return
     // this pointer, therefore it will be garbage-collected by std::tr1::shared_ptr
-    NiceMock<MockDataSourceModule>* m1 = new NiceMock<MockDataSourceModule>();
-    NiceMock<MockDataSourceModule>* m2 = new NiceMock<MockDataSourceModule>();
+    NiceMock<MockDataSourceModule>* mock_1 = new NiceMock<MockDataSourceModule>();
+    NiceMock<MockDataSourceModule>* mock_2 = new NiceMock<MockDataSourceModule>();
 
-    ON_CALL(*m1, clone()).WillByDefault(Return(m1));
-    ON_CALL(*m2, clone()).WillByDefault(Return(m2));
+    ON_CALL(*mock_1, clone()).WillByDefault(Return(mock_1));
+    ON_CALL(*mock_2, clone()).WillByDefault(Return(mock_2));
     ASSERT_EQ(0,ds.get_modules().size());
-    ds.add(*m1);
-    ds.add(*m2);
+    ds.add(*mock_1);
+    ds.add(*mock_2);
     const FromName2Module modules = ds.get_modules();
     ASSERT_EQ(2,modules.size());
     std::set<std::string> module_names;
@@ -100,8 +100,8 @@ TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_module
     {
         module_names.insert(it->first);
     }
-    expected_module_names.insert(m1->get_name());
-    expected_module_names.insert(m2->get_name());
+    expected_module_names.insert(mock_1->get_name());
+    expected_module_names.insert(mock_2->get_name());
     ASSERT_EQ(expected_module_names, module_names);
 }
 
@@ -116,13 +116,13 @@ TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_modul
     // There's a 'new' but no 'delete' because the clone() method will return
     // this pointer, therefore it will be garbage-collected by std::tr1::shared_ptr
 
-    StrictMock<MockDataSourceModuleWithGetName>* m = new StrictMock<MockDataSourceModuleWithGetName>();
-    ON_CALL(*m, clone()).WillByDefault(Return(m));
-    EXPECT_CALL(*m, clone()).Times(1);
-    EXPECT_CALL(*m, get_name()).Times(1);
-    EXPECT_CALL(*m, initialize()).Times(1);
-    EXPECT_CALL(*m, update()).Times(1);
-    ds.add(*m);
+    StrictMock<MockDataSourceModuleWithGetName>* mock = new StrictMock<MockDataSourceModuleWithGetName>();
+    ON_CALL(*mock, clone()).WillByDefault(Return(mock));
+    EXPECT_CALL(*mock, clone()).Times(1);
+    EXPECT_CALL(*mock, get_name()).Times(1);
+    EXPECT_CALL(*mock, initialize()).Times(1);
+    EXPECT_CALL(*mock, update()).Times(1);
+    ds.add(*mock);
 }
 
 TEST_F(DataSourceTest, should_not_be_able_to_add_two_modules_with_the_same_name)
@@ -130,8 +130,8 @@ TEST_F(DataSourceTest, should_not_be_able_to_add_two_modules_with_the_same_name)
     DataSource ds;
     // Using NiceMock because we only want to specify the behavior of the method
     // of interest
-    NiceMock<MockDataSourceModuleWithGetName>* m = new NiceMock<MockDataSourceModuleWithGetName>();
-    ON_CALL(*m, clone()).WillByDefault(Return(m));
-    ds.add(*m);
-    ASSERT_THROW(ds.add(*m),DataSourceException);
+    NiceMock<MockDataSourceModuleWithGetName>* mock = new NiceMock<MockDataSourceModuleWithGetName>();
+    ON_CALL(*mock, clone()).WillByDefault(Return(mock));
+    ds.add(*mock);
+    ASSERT_THROW(ds.add(*mock),DataSourceException);
 }

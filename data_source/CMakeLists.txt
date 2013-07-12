@@ -3,7 +3,8 @@ project (data_source)
 
 set(SOURCES src/DataSource.cpp
             src/DataSourceModule.cpp
-            src/SignalContainer.cpp)
+            src/SignalContainer.cpp
+            src/SignalContainerTypeLists.cpp)
             
 #add_custom_target(${PROJECT_NAME} SOURCES ${SOURCES})
 #set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc  CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
