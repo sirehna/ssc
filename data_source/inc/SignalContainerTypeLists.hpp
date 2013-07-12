@@ -45,6 +45,19 @@ public:
 typedef std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash> Signals;
 typedef Signals::const_iterator ConstSignalIterator;
 
+#define DECLARE_TYPE_ACCESSORS(t) template <> ConvertibleTypesIterator begin<t>(const ConvertibleTypes& l);\
+                                  template <> ConvertibleTypesIterator end<t>(const ConvertibleTypes& l);
+
+#define DEFINE_TYPE_ACCESSORS(t) template <> ConvertibleTypesIterator begin<t>(const ConvertibleTypes& l)\
+                          {\
+                              return l.iter_ ## t .begin();\
+                          }\
+                            \
+                          template <> ConvertibleTypesIterator end<t>(const ConvertibleTypes& l)\
+                          {\
+                              return l.iter_ ## t .end();\
+                          }
+
 
 
 /** \author: cec
@@ -60,16 +73,39 @@ struct ConvertibleTypes
     std::list<ConstSignalIterator> iter_bool;
     std::list<ConstSignalIterator> iter_char;
     std::list<ConstSignalIterator> iter_wchar_t;
-    std::list<ConstSignalIterator> iter_char16_t;
-    std::list<ConstSignalIterator> iter_char32_t;
     std::list<ConstSignalIterator> iter_short;
     std::list<ConstSignalIterator> iter_int;
+    std::list<ConstSignalIterator> iter_size_t;
     std::list<ConstSignalIterator> iter_long;
     std::list<ConstSignalIterator> iter_float;
     std::list<ConstSignalIterator> iter_double;
     std::list<ConstSignalIterator> iter_phys_qty;
     std::list<ConstSignalIterator> bin;
 };
+
+typedef std::list<ConstSignalIterator>::const_iterator ConvertibleTypesIterator;
+
+template <typename T> ConvertibleTypesIterator begin(const ConvertibleTypes& l)
+{
+    return l.bin.begin();
+}
+
+template <typename T> ConvertibleTypesIterator end(const ConvertibleTypes& l)
+{
+    return l.bin.end();
+}
+
+DECLARE_TYPE_ACCESSORS(bool)
+DECLARE_TYPE_ACCESSORS(char)
+DECLARE_TYPE_ACCESSORS(wchar_t)
+DECLARE_TYPE_ACCESSORS(short)
+DECLARE_TYPE_ACCESSORS(int)
+DECLARE_TYPE_ACCESSORS(size_t)
+DECLARE_TYPE_ACCESSORS(long)
+DECLARE_TYPE_ACCESSORS(float)
+DECLARE_TYPE_ACCESSORS(double)
+DECLARE_TYPE_ACCESSORS(PhysicalQuantity)
+
 
 /** \author cec
  *  \date 18 juin 2013, 10:08:35
@@ -86,17 +122,18 @@ template <typename T> std::list<ConstSignalIterator>& select_list_from_type(Conv
     return lists.bin;
 }
 
-/*
+
 template<> std::list<ConstSignalIterator>& select_list_from_type<bool>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<char>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<wchar_t>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<short>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<int>(ConvertibleTypes& lists);
+template<> std::list<ConstSignalIterator>& select_list_from_type<size_t>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<long>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<float>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<double>(ConvertibleTypes& lists);
 template<> std::list<ConstSignalIterator>& select_list_from_type<PhysicalQuantity>(ConvertibleTypes& lists);
-*/
+
 
 
 #endif  /* SIGNALCONTAINERTYPELISTS_HPP_ */

@@ -110,7 +110,7 @@ TEST_F(SignalContainerTest, should_be_able_to_retrieve_names_of_all_types_in_Sig
     signals.set(a.random<std::string>(),s2);
     signals.set(a.random<std::string>(),vs);
 }
-/*
+
 TEST_F(SignalContainerTest, should_be_able_to_retrieve_all_doubles_in_a_single_list)
 {
     SignalContainer signals;
@@ -141,32 +141,38 @@ TEST_F(SignalContainerTest, should_be_able_to_retrieve_all_doubles_in_a_single_l
     signals.set("signal11",s2);
     signals.set("signal12",vs);
     std::list<double> s = signals.to_doubles();
+
     ASSERT_EQ(4*(2+n), s.size());
-    ASSERT_DOUBLE_EQ(d1, s.front());s.pop_front();
-    for (size_t k = 0 ; k < n ; ++k)
-    {
-        ASSERT_DOUBLE_EQ(vd.at(k), s.front());s.pop_front();
-    }
-    for (size_t k = 0 ; k < n ; ++k)
-    {
-        ASSERT_DOUBLE_EQ(vf.at(k), s.front());s.pop_front();
-    }
-    ASSERT_DOUBLE_EQ(f1, s.front());s.pop_front();
+
     ASSERT_DOUBLE_EQ(i1, s.front());s.pop_front();
-    ASSERT_DOUBLE_EQ(f2, s.front());s.pop_front();
+    ASSERT_DOUBLE_EQ(i2, s.front());s.pop_front();
     for (size_t k = 0 ; k < n ; ++k)
     {
         ASSERT_DOUBLE_EQ(vi.at(k), s.front());s.pop_front();
     }
-    ASSERT_DOUBLE_EQ(i2, s.front());s.pop_front();
+
     ASSERT_DOUBLE_EQ(s1, s.front());s.pop_front();
     ASSERT_DOUBLE_EQ(s2, s.front());s.pop_front();
     for (size_t k = 0 ; k < n ; ++k)
     {
         ASSERT_DOUBLE_EQ(vs.at(k), s.front());s.pop_front();
     }
-}
 
+    ASSERT_DOUBLE_EQ(f1, s.front());s.pop_front();
+    ASSERT_DOUBLE_EQ(f2, s.front());s.pop_front();
+    for (size_t k = 0 ; k < n ; ++k)
+    {
+        ASSERT_DOUBLE_EQ(vf.at(k), s.front());s.pop_front();
+    }
+
+    ASSERT_DOUBLE_EQ(d1, s.front());s.pop_front();
+    ASSERT_DOUBLE_EQ(d2, s.front());s.pop_front();
+    for (size_t k = 0 ; k < n ; ++k)
+    {
+        ASSERT_DOUBLE_EQ(vd.at(k), s.front());s.pop_front();
+    }
+}
+/*
 TEST_F(SignalContainerTest, coercion_should_work_even_if_SignalContainer_contains_non_coercible_types)
 {
 ASSERT_TRUE(false);

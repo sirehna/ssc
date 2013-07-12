@@ -73,12 +73,14 @@ TEST_F(TypeCoercionTest, can_coerce_different_types_to_doubles)
     const size_t v2 = a.random<size_t>();
     const bool v3 = a.random<bool>();
     const std::vector<float> v4 = a.random_vector_of<float>().of_size(4);
+    const short v5 = 7;
     std::list<double> v;
     coerce(v,v1);
     coerce(v,v2);
     coerce(v,v3);
     coerce(v,v4);
-    ASSERT_EQ(9, v.size());
+    coerce(v,v5);
+    ASSERT_EQ(10, v.size());
     ASSERT_DOUBLE_EQ(v1.at(0), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v1.at(1), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v1.at(2), v.front());v.pop_front();
@@ -88,6 +90,7 @@ TEST_F(TypeCoercionTest, can_coerce_different_types_to_doubles)
     ASSERT_DOUBLE_EQ(v4.at(1), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v4.at(2), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v4.at(3), v.front());v.pop_front();
+    ASSERT_DOUBLE_EQ(v5, v.front());v.pop_front();
 }
 
 // Lets define a non-arithmetic type
