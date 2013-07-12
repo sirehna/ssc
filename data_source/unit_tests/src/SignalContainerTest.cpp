@@ -6,8 +6,7 @@
  */
 
 #include "SignalContainerTest.hpp"
-#include <boost/any.hpp>
-
+#include "SignalContainer.hpp"
 #include "test_macros.hpp"
 
 SignalContainerTest::SignalContainerTest() : a(DataGenerator(19))
@@ -29,8 +28,15 @@ void SignalContainerTest::TearDown()
 TEST_F(SignalContainerTest, example)
 {
 //! [SignalContainerTest example]
+    SignalContainer signals;
+    const std::string s = a.random<std::string>();
+    signals.add<std::string>("signal name",s);
+    const double d = a.random<double>();
+    signals.add<double>("another signal",d);
 //! [SignalContainerTest example]
 //! [SignalContainerTest expected output]
+    ASSERT_EQ(s, signals.get<std::string>("signal name"));
+    ASSERT_DOUBLE_EQ(d, signals.get<double>("another signal"));
 //! [SignalContainerTest expected output]
 }
 
