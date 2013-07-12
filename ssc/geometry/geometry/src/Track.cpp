@@ -10,7 +10,6 @@
 #include <sstream>
 #include <cmath>
 
-#include "test_macros.hpp"
 
 class Track::TrackImpl
 {
