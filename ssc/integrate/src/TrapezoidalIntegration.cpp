@@ -18,8 +18,7 @@ class TrapezoidalIntegration::Impl
 
         double integrate(const Function& f, const double& a, const double& b, const double& eps) const
         {
-            const size_t M = 40;//floor(1./fabs(eps));
-(void)eps;
+            const size_t M = floor(1./fabs(eps));
             const double h = (b - a) / M;
             double S = (f(a) + f(b))/2.;
             for (size_t i  = 1 ; i < M ; ++i)
