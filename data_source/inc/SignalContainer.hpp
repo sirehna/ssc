@@ -71,6 +71,11 @@ class SignalContainer
             return boost::any_cast<T>(it->second);
         }
 
+        template <typename T> bool has(const std::string& signal_name) const
+        {
+            return signals.find(TypedSignalName(signal_name,typeid(T).name())) != signals.end();
+        }
+
         template <class T> typename std::map<SignalName, T> get_all() const
         {
             std::map<SignalName, T> ret;

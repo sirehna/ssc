@@ -200,3 +200,17 @@ TEST_F(DataSourceTest, test_module_should_work_properly)
     ds.set<size_t>("nb_of_updates", i);
     ASSERT_EQ(i+1, ds.get<size_t>("nb_of_updates2"));
 }
+
+TEST_F(DataSourceTest, data_source_should_not_update_unnecessarily)
+{
+    DataSource ds;
+    ds.add<TestModule>(a.random<std::string>());
+    const size_t i = a.random<size_t>();
+    ds.set<size_t>("nb_of_updates", i);
+    for (size_t k = 0 ; k < 10000 ; ++k)
+    {
+        ASSERT_EQ(i+1, ds.get<size_t>("nb_of_updates2"));
+    }
+    ds.set<size_t>("nb_of_updates", i+1);
+    ASSERT_EQ(i+2, ds.get<size_t>("nb_of_updates2"));
+}
