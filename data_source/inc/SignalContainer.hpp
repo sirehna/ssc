@@ -24,13 +24,13 @@ class SignalContainerException : public Exception
         }
 };
 
-
 typedef std::string SignalName;
 typedef std::string TypeName;
 
 
 
 /** \author cec
+ * \ingroup data_source
  *  \brief This class was created to store signals of different types using boost::any
  *  \details It has the following responsibilities:
  *  - Store & retrieve signals by name
@@ -42,9 +42,6 @@ typedef std::string TypeName;
  *  \section ex2 Expected output
  *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest expected output
  */
-
-#include "test_macros.hpp"
-
 class SignalContainer
 {
     private:

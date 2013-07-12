@@ -22,11 +22,6 @@ class DataSourceTest : public ::testing::Test
         DataGenerator a;
 };
 
-class MockableDataSourceModule : public DataSourceModule
-{
-    public:
-        MockableDataSourceModule();
-};
 
 
 #endif  /* DATASOURCETEST_HPP_ */
