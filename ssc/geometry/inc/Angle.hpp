@@ -22,6 +22,7 @@
 class Angle
 {
     public:
+        Angle();
         static Angle degree(const double& value_in_degrees);
         static Angle radian(const double& value_in_radians);
         static Angle degree_minute_second(const int& value_in_degrees, const int& value_in_angle_minutes, const int& value_in_angle_seconds);
@@ -38,7 +39,6 @@ class Angle
         bool operator!=(const Angle& angle) const;
 
     private:
-        Angle();
         Angle(const double& value_in_radians);
         double usi_value;
 };
