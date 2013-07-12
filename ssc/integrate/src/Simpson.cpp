@@ -7,7 +7,7 @@
 
 #include "Simpson.hpp"
 #include <cmath>
-
+#include "test_macros.hpp"
 class Simpson::Impl
 {
     public:
@@ -38,7 +38,7 @@ class Simpson::Impl
             const double c = (a + b)/2, h = b - a;
             const double fa = f(a), fb = f(b), fc = f(c);
             const double S = (h/6.)*(fa + 4*fc + fb);
-            return adaptive_simpson(f, a, b, eps, S, fa, fb, fc, 20);
+            return adaptive_simpson(f, a, b, eps, S, fa, fb, fc, 10);
         }
 
 
