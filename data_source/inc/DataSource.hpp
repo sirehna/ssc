@@ -59,7 +59,14 @@ class DataSource
             read_only = true; // We don't want the following call to module.update()
                               // to modify the signals in the DataSource: we just
                               // want to track module dependencies
-            m->update();
+            try
+            {
+                m->update();
+            }
+            catch(...)
+            {
+                // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
+            }
             current_module = "";
             read_only = read_only_bak;
         }
