@@ -91,7 +91,6 @@ void DataSource::update_module2dependantmodules()
             const FromSignal2Module::const_iterator it3 = signal2module.find(*it2);
             if (it3 != signal2module.end())
             {
-                std::cout << "Module '" << it3->first << "' -> signal [" << *it2 << "] -> Module '" << it->first << "'" << std::endl;
                 append(module2dependantmodules, it->first, it3->second);
             }
         }
