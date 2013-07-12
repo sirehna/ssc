@@ -120,11 +120,7 @@ class DataSource
                 else
                 {
                     signal2module[signal_name] = current_module;
-                    update_module2dependantmodules();
-                    if (a_module_depends_on_itself())
-                    {
-                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
-                    }
+                    update_dependencies();
                 }
             }
             else
@@ -160,12 +156,7 @@ class DataSource
             {
                 append(signal2dependantmodules, signal_name, current_module);
                 append(module2requiredsignals, current_module, signal_name);
-                update_module2dependantmodules();
-                if (a_module_depends_on_itself())
-                {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
-                }
-
+                update_dependencies();
             }
 
             return ret;
@@ -185,6 +176,7 @@ class DataSource
         void update_module2dependantmodules();
         std::set<std::string> get_dependencies(const std::string& module_name, std::set<std::string>& ret) const;
         bool a_module_depends_on_itself();
+        void update_dependencies();
 
         FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
         bool read_only;//!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
