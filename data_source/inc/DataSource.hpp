@@ -71,6 +71,7 @@ class DataSource
                               // want to track module dependencies
             try
             {
+                module_being_updated = m->get_name();
                 m->update();
 
             }
@@ -216,13 +217,14 @@ class DataSource
                     const std::string module_name = that_signal->second;
                     if (not (is_up_to_date[module_name]))
                     {
+                        module_being_updated = module_name;
                         name2module[module_name]->update();
                     }
                 } else if (not (stored))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
                             std::string("Unable to find signal '") + signal_name
-                                    + "' required by module '" + current_module + "'");
+                                    + "' required by module '" + module_being_updated + "'");
                 }
             }
             return signals.get < T > (signal_name + typeid(T).name());
@@ -247,6 +249,7 @@ class DataSource
         bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
         SignalContainer signals; //!< All signals currently in the DataSource
         std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
+        std::string module_being_updated; //!< Module currently getting signals from the DataSource (used to track which module is requiring a missing signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal
         DependantModules module2dependantmodules; //!< For each module, stores the set of the names of the modules depending on it
         DependantModules module2requiredmodules; //!< For each module, stores the set of the names of the modules it depends on
