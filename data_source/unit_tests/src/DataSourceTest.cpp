@@ -191,3 +191,12 @@ TEST_F(DataSourceTest, should_throw_if_two_modules_set_the_same_signal)
     ds.add<TestModule>(a.random<std::string>());
     ASSERT_THROW(ds.add<TestModule>(a.random<std::string>()), DataSourceException);
 }
+
+TEST_F(DataSourceTest, test_module_should_work_properly)
+{
+    DataSource ds;
+    ds.add<TestModule>(a.random<std::string>());
+    const size_t i = a.random<size_t>();
+    ds.set<size_t>("nb_of_updates", i);
+    ASSERT_EQ(i+1, ds.get<size_t>("nb_of_updates2"));
+}
