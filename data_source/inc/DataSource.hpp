@@ -10,7 +10,7 @@
 
 #include <tr1/memory>
 #include <string>
-#include <map>
+#include <set>
 #include <tr1/unordered_map>
 
 #include "DataSourceModule.hpp"
@@ -19,7 +19,12 @@
 #include "test_macros.hpp"
 
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
-typedef std::map<std::string,ModulePtr > FromName2Module;
+typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
+typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
+typedef std::tr1::unordered_map<std::string,std::set<std::string> > DependantModules;
+
+
+void append(DependantModules& map, const std::string& key, const std::string& value);
 
 /** \author cec
  *  \brief Simplifies the creation of simulators using forward/reverse chaining.
@@ -70,6 +75,10 @@ class DataSource
         */
         template <typename T> void add(const std::string& module_name)
         {
+            if (module_name == "")
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException, "Module name cannot be empty");
+            }
             const T t(this, module_name);
             add(t);
         }
@@ -111,6 +120,11 @@ class DataSource
                 else
                 {
                     signal2module[signal_name] = current_module;
+                    update_module2dependantmodules();
+                    if (a_module_depends_on_itself())
+                    {
+                        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
+                    }
                 }
             }
             else
@@ -126,7 +140,7 @@ class DataSource
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_example
         */
         template <typename T> T get(const std::string& signal_name //<! Name of the signal to create or update
-                                    ) const
+                                    )
         {
             T ret;
             try
@@ -142,6 +156,18 @@ class DataSource
                     THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("exception caught: ") + e.what());
                 }
             }
+            if (read_only && (current_module != ""))
+            {
+                append(signal2dependantmodules, signal_name, current_module);
+                append(module2requiredsignals, current_module, signal_name);
+                update_module2dependantmodules();
+                if (a_module_depends_on_itself())
+                {
+                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
+                }
+
+            }
+
             return ret;
         }
 
@@ -156,12 +182,20 @@ class DataSource
         */
         ModulePtr add_module_if_not_already_present_and_return_clone(DataSourceModule const * const module //<! Module to add
                                               );
+        void update_module2dependantmodules();
+        std::set<std::string> get_dependencies(const std::string& module_name, std::set<std::string>& ret) const;
+        bool a_module_depends_on_itself();
 
-        FromName2Module name2module;
-        bool read_only;
-        SignalContainer signals;
-        std::string current_module; //<! Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
-        std::tr1::unordered_map<std::string,std::string> signal2module; //!< Used to track if two different modules set the same signal
+        FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
+        bool read_only;//!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
+        SignalContainer signals;//!< All signals currently in the DataSource
+        std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
+        FromSignal2Module signal2module; //!< Tracks which module sets which signal
+        DependantModules module2dependantmodules; //! For each module, stores the set of the names of the modules depending on it
+        DependantModules module2requiredsignals; //! For each module, stores the signals it depends on
+        DependantModules signal2dependantmodules; //! For each signal, stores the modules that depend on it
 };
+
+
 
 #endif /* DATASOURCE_HPP_ */
