@@ -13,7 +13,7 @@
 #include <typeinfo>
 
 #include "Exception.hpp"
-#include "test_macros.hpp"
+
 
 class SignalContainerException : public Exception
 {
@@ -26,9 +26,9 @@ class SignalContainerException : public Exception
 
 
 typedef std::string SignalName;
-typedef std::string TypedSignalName;
-typedef std::map<TypedSignalName, boost::any> Signals;
-typedef Signals::const_iterator ConstSignalIterator;
+typedef std::string TypeName;
+
+
 
 /** \author cec
  *  \brief This class was created to store signals of different types using boost::any
@@ -43,30 +43,61 @@ typedef Signals::const_iterator ConstSignalIterator;
  *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest expected output
  */
 
+#include "test_macros.hpp"
+
 class SignalContainer
 {
+    private:
+        class TypedSignalName
+        {
+            public:
+                TypedSignalName(const SignalName& signal_name, const TypeName& type_name);
+                bool operator<(const TypedSignalName& rhs) const;
+                SignalName get_signal_name() const;
+                TypeName get_type_name() const;
+            private:
+                TypedSignalName();
+                SignalName _signal_name;
+                TypeName _type_name;
+
+        };
+        typedef std::map<TypedSignalName, boost::any> Signals;
+        typedef Signals::const_iterator ConstSignalIterator;
     public:
         SignalContainer();
-        template <typename T> void add(const std::string& signal_name, const T& value)
+        template <typename T> void set(const std::string& signal_name, const T& value)
         {
-            signals[typeid(T).name()+signal_name] = value;
+            signals[TypedSignalName(signal_name,typeid(T).name())] = value;
         }
 
         template <typename T> T get(const std::string& signal_name) const
         {
-            T t;
-            const TypedSignalName name = typeid(T).name()+signal_name;
+            const TypedSignalName name(signal_name,typeid(T).name());
             ConstSignalIterator it = signals.find(name);
             if (it == signals.end())
             {
-                std::string msg = "unable to find '";
-                msg += name;
-                msg += "'";
-                const std::string function_name = std::string(typeid(t).name()) + " SignalContainer::get(const std::string& signal_name) const";
-                THROW(function_name, SignalContainerException, "unable to find signal");
+                std::string msg = "unable to find a signal named '";
+                msg += name.get_signal_name();
+                msg += "' of type '" + name.get_type_name() + "'";
+                const std::string function_name = std::string(typeid(T).name()) + " SignalContainer::get(const std::string& signal_name) const";
+                THROW(function_name, SignalContainerException, msg);
             }
             return boost::any_cast<T>(it->second);
         }
+
+        template <class T> typename std::map<SignalName, T> get_all() const
+        {
+            std::map<SignalName, T> ret;
+            for (ConstSignalIterator it = signals.begin() ; it != signals.end() ; ++it)
+            {
+                if (it->first.get_type_name() == typeid(T).name())
+                {
+                    ret.insert(std::make_pair(it->first.get_signal_name(),boost::any_cast<T>(it->second)));
+                }
+            }
+            return ret;
+        }
+
 
     private:
         Signals signals;
