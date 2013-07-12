@@ -107,6 +107,15 @@ class SignalContainer
         */
         void from_doubles(std::list<double> l);
 
+        /** \author cec
+         *  \date 26 juin 2013, 12:10:22
+         *  \brief Removes all signals from container
+         *  \returns Nothing
+         *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest clear_example
+        */
+        void clear();
+
+
 
 
     private:

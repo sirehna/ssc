@@ -8,6 +8,8 @@
 #include "DataSource.hpp"
 #include "DataSourceException.hpp"
 
+#include "test_macros.hpp"
+
 class CycleException : public Exception
 {
     public:
@@ -39,6 +41,13 @@ FromName2Module DataSource::get_modules() const
 void DataSource::clear()
 {
     name2module.clear();
+    signals.clear();
+    current_module = "";
+    signal2module.clear();
+    module2dependantmodules.clear();
+    module2requiredsignals.clear();
+    signal2dependantmodules.clear();
+    is_up_to_date = false;
 }
 
 ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSourceModule const * const module)
@@ -84,6 +93,7 @@ void DataSource::update_module2dependantmodules()
             const FromSignal2Module::const_iterator it3 = signal2module.find(*it2);
             if (it3 != signal2module.end())
             {
+                std::cout << "Module '" << it3->first << "' -> signal [" << *it2 << "] -> Module '" << it->first << "'" << std::endl;
                 append(module2dependantmodules, it->first, it3->second);
             }
         }
@@ -100,12 +110,14 @@ std::set<std::string> DataSource::get_dependencies(const std::string& module_nam
         {
             if (*it2 == module_name)
             {
-                THROW(__PRETTY_FUNCTION__, CycleException, "Cycle found");
+                COUT(std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             const std::set<std::string> S = get_dependencies(*it2,ret);
             if (S.find(module_name) != S.end())
             {
-                THROW(__PRETTY_FUNCTION__, CycleException, "Cycle found");
+                COUT(std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             ret.insert(S.begin(),S.end());
         }
@@ -125,6 +137,9 @@ bool DataSource::a_module_depends_on_itself()
     }
     catch (CycleException& e)
     {
+        THROW(__PRETTY_FUNCTION__, CycleException, e.what());
+
+
         return true;
     }
     return false;

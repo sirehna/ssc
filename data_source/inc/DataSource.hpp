@@ -16,7 +16,6 @@
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
-#include "test_macros.hpp"
 
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
