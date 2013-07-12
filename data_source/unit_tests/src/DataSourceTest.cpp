@@ -12,6 +12,7 @@
 #include "DataSourceModule.hpp"
 #include "DataSourceModuleMock.hpp"
 #include "DataSourceException.hpp"
+#include "TestModules.hpp"
 
 #include <set>
 
@@ -149,26 +150,25 @@ TEST_F(DataSourceTest, should_be_able_to_set_and_retrieve_a_constant)
     }
 }
 
-class TestModule : public DataSourceModule
+TEST_F(DataSourceTest, a_module_cannot_depend_on_itself)
 {
-    public:
-        TestModule(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)
-        {
+    DataSource ds;
+    ASSERT_THROW(ds.add<ModuleDependingOnItself>(a.random<std::string>()), DataSourceException);
+}
 
-        }
+TEST_F(DataSourceTest, should_throw_if_module_name_is_empty)
+{
+    DataSource ds;
+    ASSERT_THROW(ds.add<TestModule>(""), DataSourceException);
+}
 
-        DataSourceModule* clone() const
-        {
-            return new TestModule(*this);
-        }
-
-        void update() const
-        {
-            size_t nb_of_updates = ds->get<size_t>("nb_of_updates");
-            ds->set<size_t>("nb_of_updates", nb_of_updates+1);
-        }
-
-};
+TEST_F(DataSourceTest, should_throw_if_there_are_any_circular_dependencies)
+{
+    DataSource ds;
+    ds.add<ModuleA>("Module A");
+    ds.add<ModuleB>("Module B");
+    ASSERT_THROW(ds.add<ModuleC>("Module C"), DataSourceException);
+}
 
 TEST_F(DataSourceTest, should_throw_if_attempting_to_retrieve_a_value_not_in_DataSource)
 {
@@ -182,6 +182,7 @@ TEST_F(DataSourceTest, should_throw_if_not_all_dependencies_are_met)
     ds.add<TestModule>(a.random<std::string>());
     ASSERT_THROW(ds.get<size_t>("nb_of_updates"), DataSourceException);
     ds.set<size_t>("nb_of_updates", 0);
+    ASSERT_NO_THROW(ds.get<size_t>("nb_of_updates"));
 }
 
 TEST_F(DataSourceTest, should_throw_if_two_modules_set_the_same_signal)

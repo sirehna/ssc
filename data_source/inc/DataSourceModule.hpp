@@ -100,5 +100,21 @@ class DataSourceModule
         std::string module_name_;
 };
 
+// This macro is meant to simplify the creation of modules: only the update() method needs to be defined to have a functional module
+#define DECLARE_MODULE(module_name) class module_name : public DataSourceModule\
+                                    {\
+                                        public:\
+                                            module_name(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                            {\
+                                            }\
+                                    \
+                                            DataSourceModule* clone() const\
+                                            {\
+                                                return new module_name(*this);\
+                                            }\
+                                    \
+                                            void update() const;\
+                                    };
+
 
 #endif /* MODEL_HPP_ */
