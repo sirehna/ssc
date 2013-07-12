@@ -225,10 +225,21 @@ DECLARE_MODULE(M1)
 DECLARE_MODULE(M2)
 DECLARE_MODULE(M3)
 
+TEST_F(DataSourceTest, can_add_a_module_without_specifying_its_name_but_only_once_per_type)
+{
+    DataSource ds;
+    ASSERT_NO_THROW(ds.add<M1>());
+    ASSERT_THROW(ds.add<M1>(), DataSourceException);
+    ASSERT_EQ(123, ds.get<double>("s1"));
+    ASSERT_NO_THROW(ds.add<M2>());
+    ASSERT_THROW(ds.add<M2>(), DataSourceException);
+    ASSERT_EQ(123, ds.get<double>("s2"));
+}
+
 void M2::update() const
 {
-    ds->get<double>("s1");
-    ds->set<double>("s2", 0);
+    const double s1 = ds->get<double>("s1");
+    ds->set<double>("s2", s1);
 }
 
 void M3::update() const
@@ -238,7 +249,7 @@ void M3::update() const
 
 void M1::update() const
 {
-    ds->set<double>("s1",0);
+    ds->set<double>("s1",123);
 }
 
 TEST_F(DataSourceTest, bug_detected_in_EONAV_for_cyclic_dependency_check)
