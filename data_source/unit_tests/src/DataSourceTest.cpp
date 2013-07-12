@@ -77,8 +77,8 @@ TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_module
     NiceMock<MockDataSourceModule> m1;
     NiceMock<MockDataSourceModule> m2;
 
-    ON_CALL(m1, clone()).WillByDefault(Return(std::tr1::shared_ptr<DataSourceModule>()));
-    ON_CALL(m2, clone()).WillByDefault(Return(std::tr1::shared_ptr<DataSourceModule>()));
+    ON_CALL(m1, clone()).WillByDefault(Return(ModulePtr()));
+    ON_CALL(m2, clone()).WillByDefault(Return(ModulePtr()));
     ASSERT_EQ(0,ds.get_modules().size());
     ds.add(m1);
     ds.add(m2);
@@ -95,3 +95,13 @@ TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_module
     ASSERT_EQ(expected_module_names, module_names);
 }
 
+TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_module)
+{
+    DataSource ds;
+    MockDataSourceModuleWithGetName m;
+    ON_CALL(m, clone()).WillByDefault(Return(ModulePtr()));
+    EXPECT_CALL(m, get_name()).Times(1);
+    EXPECT_CALL(m, clone()).Times(1);
+    EXPECT_CALL(m, set_all(true)).Times(1);
+    ds.add(m);
+}

@@ -19,7 +19,8 @@ class DataSourceModule
         DataSourceModule(const std::tr1::shared_ptr<DataSource>& data_source, const std::string& module_name);
         virtual ~DataSourceModule();
         virtual std::tr1::shared_ptr<DataSourceModule> clone() const = 0;
-        std::string get_name() const;
+        virtual void set_all(const bool& read_only=true) = 0;
+        virtual std::string get_name() const;
 
     protected:
         DataSourceModule();

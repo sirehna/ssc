@@ -29,9 +29,11 @@ class DataSource
 {
     public:
         DataSource();
-        template <class T> void add(const T& module)
+        template <class T> void add(T& module)
         {
             name2module[module.get_name()] = module.clone();
+            const bool read_only = true;
+            module.set_all(read_only);
         }
 
         FromName2Module get_modules() const;
