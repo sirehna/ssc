@@ -10,6 +10,7 @@
 
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
+#include "DataSource.hpp"
 
 class DataSourceTest : public ::testing::Test
 {
@@ -18,8 +19,14 @@ class DataSourceTest : public ::testing::Test
 	    virtual ~DataSourceTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-
+        DataGenerator a;
 };
+
+class MockableDataSourceModule : public DataSourceModule
+{
+    public:
+        MockableDataSourceModule();
+};
+
 
 #endif  /* DATASOURCETEST_HPP_ */
