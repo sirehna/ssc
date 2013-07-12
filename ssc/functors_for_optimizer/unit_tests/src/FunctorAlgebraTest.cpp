@@ -12,7 +12,6 @@
 #include "Pow.hpp"
 #include "Divide.hpp"
 #include "Multiply.hpp"
-#include "test_macros.hpp"
 #include "extra_test_assertions.hpp"
 #include "SerializeReversePolish.hpp"
 

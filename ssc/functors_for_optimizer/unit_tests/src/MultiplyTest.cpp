@@ -10,7 +10,6 @@
 #include "Multiply.hpp"
 
 #include "FunctorAlgebra.hpp"
-#include "test_macros.hpp"
 #include "Serialize.hpp"
 
 MultiplyTest::MultiplyTest() : a(DataGenerator(99)),

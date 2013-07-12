@@ -10,7 +10,6 @@
 
 #define PI 4.*(atan(1.))
 
-#include "test_macros.hpp"
 
 #define X (*x)
 #define X_ (x->get_lambda()())

@@ -8,7 +8,6 @@
 #include "LnTest.hpp"
 #include <cmath>
 #include "Ln.hpp"
-#include "test_macros.hpp"
 
 LnTest::LnTest() : a(DataGenerator(24)), generate(StateGenerator())
 {

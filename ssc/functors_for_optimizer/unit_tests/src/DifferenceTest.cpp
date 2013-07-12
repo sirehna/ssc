@@ -8,7 +8,6 @@
 #include "DifferenceTest.hpp"
 #include "Difference.hpp"
 #include "StateGenerator.hpp"
-#include "test_macros.hpp"
 
 DifferenceTest::DifferenceTest() : a(DataGenerator(121212)), generate(StateGenerator())
 {
