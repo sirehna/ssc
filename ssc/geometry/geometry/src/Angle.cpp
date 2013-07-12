@@ -7,10 +7,15 @@
 
 #include "Angle.hpp"
 #include <cmath>
-#include "test_macros.hpp"
+
 #define PI (4.*atan(1.))
 
 Angle::Angle(const double& value_in_radians) : usi_value(value_in_radians)
+{
+
+}
+
+Angle::Angle() : usi_value(0)
 {
 
 }
