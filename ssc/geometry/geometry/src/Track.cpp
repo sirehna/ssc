@@ -11,6 +11,7 @@
 #include <cmath>
 
 
+#include "test_macros.hpp"
 class Track::TrackImpl
 {
     public:
@@ -26,16 +27,33 @@ class Track::TrackImpl
             {
                 THROW("Track::Track(const std::vector<LongitudeLatitude>&)", TrackException, "Track should contain at least two waypoints");
             }
+            bool previous_point_at_90_deg_latitude = false;
+            bool previous_point_at_minus_90_deg_latitude = false;
             distance_from_start_to_begining_of_leg.push_back(0);
             for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
             {
                 legs.push_back(Leg(waypoints.at(i),waypoints.at(i+1)));
+                check_poles(waypoints.at(i).lat, waypoints.at(i+1).lat, previous_point_at_90_deg_latitude, previous_point_at_minus_90_deg_latitude);
                 const double d = legs.back().length();
                 length += d;
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
             }
             legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
             length += legs.back().length();
+        }
+
+        void check_poles(const double P_lat, const double Q_lat, bool& previous_point_at_90_deg_latitude, bool& previous_point_at_minus_90_deg_latitude) const
+        {
+            if ((previous_point_at_90_deg_latitude || (Q_lat == 90)) && (P_lat == 90))
+            {
+                THROW(__PRETTY_FUNCTION__, TrackException, "Two consecutive points are at 90 deg latitude");
+            }
+            if ((previous_point_at_minus_90_deg_latitude || (Q_lat == -90)) && (P_lat == -90))
+            {
+                THROW(__PRETTY_FUNCTION__, TrackException, "Two consecutive points are at -90 deg latitude");
+            }
+            previous_point_at_minus_90_deg_latitude = (P_lat == -90);
+            previous_point_at_90_deg_latitude = (P_lat == 90);
         }
 
         size_t find_leg_index(const double& distance) const
@@ -259,11 +277,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
 */
 double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLongitude& point) const
 {
-    //COUT(point);
     const std::pair<LatitudeLongitude,size_t> nearest_point = find_closest_point_to(point);
-    //COUT(nearest_point.first);
     const double pos = get_waypoint_position_on_track(nearest_point.second);
-    //COUT(pos);
-    //COUT(Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length());
     return pos + Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
 }
