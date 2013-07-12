@@ -8,8 +8,6 @@
 #include "DataSource.hpp"
 #include "DataSourceException.hpp"
 
-#include "test_macros.hpp"
-
 class CycleException : public Exception
 {
     public:
@@ -47,7 +45,7 @@ void DataSource::clear()
     module2dependantmodules.clear();
     module2requiredsignals.clear();
     signal2dependantmodules.clear();
-    is_up_to_date = false;
+    is_up_to_date.clear();
 }
 
 ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSourceModule const * const module)
@@ -110,13 +108,11 @@ std::set<std::string> DataSource::get_dependencies(const std::string& module_nam
         {
             if (*it2 == module_name)
             {
-                COUT(std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
                 THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             const std::set<std::string> S = get_dependencies(*it2,ret);
             if (S.find(module_name) != S.end())
             {
-                COUT(std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
                 THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + module_name + std::string("' depends on itself"));
             }
             ret.insert(S.begin(),S.end());
