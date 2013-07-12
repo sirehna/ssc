@@ -29,7 +29,7 @@ class DataSource;
 class DataSourceModule
 {
     public:
-        DataSourceModule(const std::tr1::shared_ptr<DataSource>& data_source, const std::string& module_name);
+        DataSourceModule(DataSource* const data_source, const std::string& module_name);
         virtual ~DataSourceModule();
 
         /** \author cec
@@ -76,12 +76,27 @@ class DataSourceModule
         */
         virtual void initialize() const;
 
+        DataSourceModule(const DataSourceModule& rhs) : ds(rhs.ds), module_name_(rhs.module_name_)
+        {
+
+        }
+
+        DataSourceModule& operator=(const DataSourceModule& rhs)
+        {
+            if (&rhs != this)
+            {
+                ds = rhs.ds;
+                module_name_ = rhs.module_name_;
+            }
+            return *this;
+        }
+
 
     protected:
-        DataSourceModule(); // Disabled by making it private & with no implementation
-        std::tr1::shared_ptr<DataSource> ds;
+        DataSource* ds;
 
     private:
+        DataSourceModule(); // Disabled by making it private & with no implementation
         std::string module_name_;
 };
 
