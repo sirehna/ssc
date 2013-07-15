@@ -159,7 +159,7 @@ bool DataSource::a_module_depends_on_itself()
     DependantModules::iterator it = module2dependantmodules.begin();
     for (;it!= module2dependantmodules.end();++it)
     {
-        std::set<std::string>::const_iterator dependent_module = it->second.begin();
+        //std::set<std::string>::const_iterator dependent_module = it->second.begin();
         get_dependencies(it->first,it->second);
     }
     return false;
