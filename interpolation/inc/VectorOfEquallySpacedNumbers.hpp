@@ -8,7 +8,7 @@
 #ifndef VECTOROFEQUALLYSPACEDNUMBERS_HPP_
 #define VECTOROFEQUALLYSPACEDNUMBERS_HPP_
 #include <vector>
-
+#include <cstddef>
 /** \author cec
  *  \brief This class was created to ensure that Splines get equally spaced numbers without having to test at runtime
  *  \details It has the following responsibilities:
