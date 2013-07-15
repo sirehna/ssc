@@ -9,6 +9,7 @@
 #define INTERPOLATOR_HPP_
 
 #include <vector>
+#include <cstddef>
 
 /** \author cec
  *  \ingroup interpolation
