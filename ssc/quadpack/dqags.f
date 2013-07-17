@@ -177,15 +177,12 @@ c
       l2 = limit+l1
       l3 = limit+l2
 c
-c      write(*,*) 'in dqags.f line 180'
       call dqagse(f,obj,a,b,epsabs,epsrel,limit,result,abserr,neval,
      *  ier,work(1),work(l1),work(l2),work(l3),iwork,last)
-c      write(*,*) 'in dqags.f line 183'
 c
 c         call error handler if necessary.
 c
       lvl = 0
 10    if(ier.eq.6) lvl = 1
-c      if(ier.ne.0) call xerror(26habnormal return from dqags,26,ier,lvl)
       return
       end
