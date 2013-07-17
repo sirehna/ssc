@@ -1,5 +1,5 @@
-      subroutine dqagse(f,obj,a,b,epsabs,epsrel,limit,result,abserr,neval,
-     *   ier,alist,blist,rlist,elist,iord,last)
+      subroutine dqagse(f,obj,a,b,epsabs,epsrel,limit,result,abserr,
+     *   neval,ier,alist,blist,rlist,elist,iord,last)
 c***begin prologue  dqagse
 c***date written   800101   (yymmdd)
 c***revision date  830518   (yymmdd)
@@ -238,9 +238,7 @@ c
       uflow = d1mach(1)
       oflow = d1mach(2)
       ierro = 0
-c     write(*,*) 'in dqagse.f line 240'
       call dqk21(f,obj,a,b,result,abserr,defabs,resabs)
-c     write(*,*) 'in dqagse.f line 242'
 c
 c           test on accuracy.
 c
@@ -289,11 +287,8 @@ c
         a2 = b1
         b2 = blist(maxerr)
         erlast = errmax
-c       write(*,*) 'in dqagse.f line 291'
         call dqk21(f,obj,a1,b1,area1,error1,resabs,defab1)
-c       write(*,*) 'in dqagse.f line 293'
         call dqk21(f,obj,a2,b2,area2,error2,resabs,defab2)
-c       write(*,*) 'in dqagse.f line 295'
 c
 c           improve previous approximations to integral
 c           and error and test for accuracy.
