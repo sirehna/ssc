@@ -39,7 +39,7 @@ TEST_F(QuadPackTest, example)
     //! [QuadPackTest example]
 }
 
-TEST_F(QuadPackTest, sinc)
+TEST_F(QuadPackTest, sine_squared_plus_cosine_squared_should_equal_one)
 {
     QuadPack integrator([](double x){return sin(x)*sin(x)+cos(x)*cos(x);});
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -49,4 +49,6 @@ TEST_F(QuadPackTest, sinc)
         ASSERT_DOUBLE_EQ(b_-a_,integrator.integrate(a_,b_));
     }
 }
+
+
 
