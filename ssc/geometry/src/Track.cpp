@@ -11,7 +11,6 @@
 #include <cmath>
 
 
-#include "test_macros.hpp"
 class Track::TrackImpl
 {
     public:
@@ -170,11 +169,11 @@ LatitudeLongitude Track::find_waypoint_on_track(const double& distance //!< Dist
 {
     if (distance>length())
     {
-        THROW("Track::find_waypoint_on_track(const double&)", TrackException, "Point is farther than the last point on track");
+        THROW(__PRETTY_FUNCTION__, TrackException, "Point is farther than the last point on track");
     }
     if (distance<0)
     {
-        THROW("Track::find_waypoint_on_track(const double&)", TrackException, "received a negative distance");
+        THROW(__PRETTY_FUNCTION__, TrackException, "received a negative distance");
     }
     const size_t idx = find_leg_index(distance);
     return pimpl->legs.at(idx).find_waypoint_at(distance-pimpl->distance_from_start_to_begining_of_leg.at(idx));
