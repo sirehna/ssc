@@ -48,9 +48,5 @@ include_directories(SYSTEM ${YAMLCPP_INCLUDE_DIR})
 add_library (${PROJECT_NAME} OBJECT ${SRC})
 
 
-#ADD_DEPENDENCIES(${PROJECT_NAME} googlemock test_macros)
-#ADD_DEPENDENCIES(${PROJECT_NAME} random_data_generator)
-
-
-include_directories(SYSTEM ${GTEST_INCLUDE_DIR})
-include_directories(${random_data_generator_INCLUDE_DIR})
+include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
+include_directories(${random_data_generator_INCLUDE_DIRS})
