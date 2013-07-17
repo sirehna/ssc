@@ -11,12 +11,23 @@
 #define LENW 1601
 #define LENIW 500
 #define MAXP1 21
-#include "test_macros.hpp"
+
+#include "Exception.hpp"
+#include <sstream>
+
+class QuadPackException : public Exception
+{
+    public:
+        QuadPackException(const char* s) : Exception(s)
+        {   
+        }   
+};
+
+
 
 #include <cstdlib>
 extern "C"
 {
-//    #include "cquad.h"
 void dqags_(double f(void*,double*), void*, double*, double*, double*, double*, double*, double*, int*, int*, int*, int*, int* last, int* iwork, double* work);
 }
 
@@ -63,15 +74,18 @@ double QuadPack::integrate(double a, double b, double eps) const
     int lenw = LENW, limit = LIMIT;
     double res = 0;
     dqags_(quadpack_integrand, (void*)(this), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
-/*COUT(res);
-COUT(lenw);
-COUT(limit);
-COUT(epsabs);
-COUT(epsabs);
-COUT(a);
-COUT(b);
-COUT(neval);
-COUT(ier);*/
+    if (ier < 0)
+    {
+        std::stringstream ss;
+        ss << "ier = " << ier << ": possible memory corruption";
+        THROW(__PRETTY_FUNCTION__, QuadPackException, ss.str());
+    }
+    if (ier > 0)
+    {
+        std::stringstream ss;
+        ss << "ier = " << ier;
+        THROW(__PRETTY_FUNCTION__, QuadPackException, ss.str());
+    }
     return res;
 }
 
