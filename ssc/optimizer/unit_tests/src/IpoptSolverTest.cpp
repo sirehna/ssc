@@ -114,7 +114,7 @@ TEST_F(IpoptSolverTest, test_02)
     }
 }
 
-TEST_F(IpoptSolverTest, allocation_problem)
+TEST_F(IpoptSolverTest, DISABLED_allocation_problem)
 {
     const double theta = PI/4.;
     Parameter b1(cos(theta));
