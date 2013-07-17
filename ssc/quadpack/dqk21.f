@@ -53,7 +53,8 @@ c
       double precision a,absc,abserr,b,centr,dabs,dhlgth,dmax1,dmin1,
      *  d1mach,epmach,f,fc,fsum,fval1,fval2,fv1,fv2,hlgth,resabs,resasc,
      *  resg,resk,reskh,result,uflow,wg,wgk,xgk
-      integer j,jtw,jtwm1,obj
+      integer j,jtw,jtwm1
+      integer pointer obj
       external f
 c
       dimension fv1(10),fv2(10),wg(5),wgk(11),xgk(11)
@@ -139,14 +140,19 @@ c           compute the 21-point kronrod approximation to
 c           the integral, and estimate the absolute error.
 c
       resg = 0.0d+00
+c     write(*,*) 'in dqk21.f line 143'
       fc = f(obj,centr)
+c     write(*,*) 'in dqk21.f line 145'
       resk = wgk(11)*fc
       resabs = dabs(resk)
       do 10 j=1,5
         jtw = 2*j
         absc = hlgth*xgk(jtw)
+c     write(*,*) 'in dqk21.f line 151'
         fval1 = f(obj,centr-absc)
+c     write(*,*) 'in dqk21.f line 153'
         fval2 = f(obj,centr+absc)
+c     write(*,*) 'in dqk21.f line 155'
         fv1(jtw) = fval1
         fv2(jtw) = fval2
         fsum = fval1+fval2
@@ -157,8 +163,11 @@ c
       do 15 j = 1,5
         jtwm1 = 2*j-1
         absc = hlgth*xgk(jtwm1)
+c     write(*,*) 'in dqk21.f line 166'
         fval1 = f(obj,centr-absc)
+c     write(*,*) 'in dqk21.f line 168'
         fval2 = f(obj,centr+absc)
+c     write(*,*) 'in dqk21.f line 170'
         fv1(jtwm1) = fval1
         fv2(jtwm1) = fval2
         fsum = fval1+fval2

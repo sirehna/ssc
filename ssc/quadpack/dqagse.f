@@ -152,7 +152,8 @@ c
      *  error1,error2,erro12,errsum,ertest,f,oflow,resabs,reseps,result,
      *  res3la,rlist,rlist2,small,uflow
       integer id,ier,ierro,iord,iroff1,iroff2,iroff3,jupbnd,k,ksgn,
-     *  ktmin,last,limit,maxerr,neval,nres,nrmax,numrl2,obj
+     *  ktmin,last,limit,maxerr,neval,nres,nrmax,numrl2
+      integer pointer obj
       logical extrap,noext
 c
       dimension alist(limit),blist(limit),elist(limit),iord(limit),
@@ -237,9 +238,9 @@ c
       uflow = d1mach(1)
       oflow = d1mach(2)
       ierro = 0
-      write(*,*) 'in dqagse.f line 240'
+c     write(*,*) 'in dqagse.f line 240'
       call dqk21(f,obj,a,b,result,abserr,defabs,resabs)
-      write(*,*) 'in dqagse.f line 242'
+c     write(*,*) 'in dqagse.f line 242'
 c
 c           test on accuracy.
 c
@@ -288,11 +289,11 @@ c
         a2 = b1
         b2 = blist(maxerr)
         erlast = errmax
-        write(*,*) 'in dqagse.f line 291'
+c       write(*,*) 'in dqagse.f line 291'
         call dqk21(f,obj,a1,b1,area1,error1,resabs,defab1)
-        write(*,*) 'in dqagse.f line 293'
+c       write(*,*) 'in dqagse.f line 293'
         call dqk21(f,obj,a2,b2,area2,error2,resabs,defab2)
-        write(*,*) 'in dqagse.f line 295'
+c       write(*,*) 'in dqagse.f line 295'
 c
 c           improve previous approximations to integral
 c           and error and test for accuracy.

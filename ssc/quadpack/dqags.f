@@ -177,10 +177,10 @@ c
       l2 = limit+l1
       l3 = limit+l2
 c
-      write(*,*) 'in dqags.f line 180'
+c      write(*,*) 'in dqags.f line 180'
       call dqagse(f,obj,a,b,epsabs,epsrel,limit,result,abserr,neval,
      *  ier,work(1),work(l1),work(l2),work(l3),iwork,last)
-      write(*,*) 'in dqags.f line 183'
+c      write(*,*) 'in dqags.f line 183'
 c
 c         call error handler if necessary.
 c
