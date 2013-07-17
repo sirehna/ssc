@@ -25,7 +25,7 @@ class Integrator
     public:
         Integrator(const Function& f_);
         virtual ~Integrator();
-        virtual double integrate(const double& a, const double& b, const double& eps=1e-6) const = 0;
+        virtual double integrate(double a, double b, double eps=1e-6) const = 0;
 
     protected:
         Function f;

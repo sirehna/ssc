@@ -29,7 +29,7 @@ class Simpson : public Integrator
 {
     public:
         Simpson(const Function& f);
-        double integrate(const double& a, const double& b, const double& eps=1e-6) const;
+        double integrate(double a, double b, double eps=1e-6) const;
     private:
         class Impl;
         std::tr1::shared_ptr<Impl> pimpl;
