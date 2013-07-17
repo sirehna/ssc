@@ -14,10 +14,10 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Woverloaded-virtual -Wwrite-strings -DGTE
 
 # Include directories
 include_directories(inc)
-include_directories(${test_macros_SOURCE_DIR})
+include_directories(${test_macros_INCLUDE_DIRS})
 include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
 include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(SYSTEM ${GTEST_INCLUDE_DIR})
+include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})
 
