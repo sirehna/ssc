@@ -24,8 +24,15 @@ class QuadPack : public Integrator
 {
     public:
         QuadPack(const Function& f_);
+        ~QuadPack();
+        QuadPack(const QuadPack& rhs);
+        QuadPack& operator=(const QuadPack& rhs);
         double op(double *x);
-        double integrate(const double& a, const double& b, const double& eps=1e-6) const;
+        double integrate(double a, double b, double eps=1e-6) const;
+
+    private:
+        int* iwork;
+        double* work;
 };
 
 

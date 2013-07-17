@@ -16,7 +16,7 @@ class TrapezoidalIntegration::Impl
 
         }
 
-        double integrate(const Function& f, const double& a, const double& b, const double& eps) const
+        double integrate(const Function& f, const double a, const double b, const double eps) const
         {
             const size_t M = floor(1./fabs(eps));
             const double h = (b - a) / M;
@@ -38,7 +38,7 @@ TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : Integrator(f
 }
 
 
-double TrapezoidalIntegration::integrate(const double& a, const double& b, const double& eps) const
+double TrapezoidalIntegration::integrate(double a, double b, double eps) const
 {
     return pimpl->integrate(f,a,b,eps);
 }
