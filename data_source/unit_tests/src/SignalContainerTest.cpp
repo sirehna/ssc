@@ -266,3 +266,13 @@ TEST_F(SignalContainerTest, float_coercion_bug)
 
     ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal5"));
 }
+
+TEST_F(SignalContainerTest, can_remove_a_signal)
+{
+    const std::string name = a.random<std::string>();
+    SignalContainer signals;
+    signals.set(name,a.random<double>()());
+    ASSERT_NO_THROW(signals.get<double>(name));
+    signals.remove<double>(name);
+    ASSERT_THROW(signals.get<double>(name), SignalContainerException);
+}
