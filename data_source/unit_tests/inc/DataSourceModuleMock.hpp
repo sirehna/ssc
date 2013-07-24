@@ -1,4 +1,3 @@
-
 // Defined so we can derive several types of mock
 class MockableDataSourceModule : public DataSourceModule
 {
@@ -7,8 +6,8 @@ class MockableDataSourceModule : public DataSourceModule
 };
 
 // Used when we don't need to track the calls to get_name (because get_name has
-// perfectly suitable default implementation & doesn't usually need to be over-
-// ridden).
+// a perfectly suitable default implementation & doesn't usually need to be
+// overridden).
 class MockDataSourceModule : public MockableDataSourceModule
 {
     public:
@@ -28,6 +27,3 @@ class MockDataSourceModuleWithGetName : public MockableDataSourceModule
         MOCK_CONST_METHOD0(get_name, std::string());
         MOCK_CONST_METHOD0(initialize, void());
 };
-
-
-// This mock is

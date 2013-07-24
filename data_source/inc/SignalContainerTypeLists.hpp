@@ -23,6 +23,7 @@ class TypedSignalName
         TypedSignalName(const SignalName& signal_name, const TypeName& type_name);
         bool operator<(const TypedSignalName& rhs) const;
         bool operator==(const TypedSignalName& rhs) const;
+        bool operator!=(const TypedSignalName& rhs) const;
         SignalName get_signal_name() const;
         TypeName get_type_name() const;
     private:
@@ -49,20 +50,20 @@ typedef Signals::const_iterator ConstSignalIterator;
                                   template <> ConvertibleTypesIterator end<t>(const ConvertibleTypes& l);
 
 #define DEFINE_TYPE_ACCESSORS(t) template <> ConvertibleTypesIterator begin<t>(const ConvertibleTypes& l)\
-                          {\
-                              return l.iter_ ## t .begin();\
-                          }\
-                            \
-                          template <> ConvertibleTypesIterator end<t>(const ConvertibleTypes& l)\
-                          {\
-                              return l.iter_ ## t .end();\
-                          }
+                                  {\
+                                      return l.iter_ ## t .begin();\
+                                  }\
+                                    \
+                                  template <> ConvertibleTypesIterator end<t>(const ConvertibleTypes& l)\
+                                  {\
+                                      return l.iter_ ## t .end();\
+                                  }
 
 
 
 /** \author: cec
  *  \ingroup data_source
- *  \details This structure defines lists to values that are convertible
+ *  \details This structure defines lists of values that are convertible
  *  to doubles. It is used e.g. when calling an integrator (we then need
  *  a list of doubles containing all states of the system). We maintain
  *  two such structures: one for scalar values & one for vectors.
@@ -71,6 +72,8 @@ struct ConvertibleTypes
 {
     ConvertibleTypes();
     void clear();
+    void erase(const TypedSignalName& name);
+    void erase(std::list<ConstSignalIterator>& l, const TypedSignalName& name);
     std::list<ConstSignalIterator> iter_bool;
     std::list<ConstSignalIterator> iter_char;
     std::list<ConstSignalIterator> iter_wchar_t;

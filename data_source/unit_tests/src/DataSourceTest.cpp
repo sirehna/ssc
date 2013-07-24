@@ -118,11 +118,11 @@ TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_modul
     // calls)
     // There's a 'new' but no 'delete' because the clone() method will return
     // this pointer, therefore it will be garbage-collected by std::tr1::shared_ptr
-
-    StrictMock<MockDataSourceModuleWithGetName>* mock = new StrictMock<MockDataSourceModuleWithGetName>();
+//MockDataSourceModuleWithGetName
+    StrictMock<MockDataSourceModule>* mock = new StrictMock<MockDataSourceModule>();
     ON_CALL(*mock, clone()).WillByDefault(Return(mock));
     EXPECT_CALL(*mock, clone()).Times(1);
-    EXPECT_CALL(*mock, get_name()).Times(1);
+    //EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, initialize()).Times(1);
     EXPECT_CALL(*mock, update()).Times(1);
     ds.add(*mock);
@@ -258,4 +258,13 @@ TEST_F(DataSourceTest, bug_detected_in_EONAV_for_cyclic_dependency_check)
     data_source.add<M1>("m1");
     data_source.add<M2>("m2");
     ASSERT_NO_THROW(data_source.add<M3>("m3"));
+}
+
+TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
+{
+    DataSource data_source;
+    data_source.add<M1>();
+    ASSERT_THROW(data_source.add<M1>(),DataSourceException);
+    data_source.remove<M1>();
+    ASSERT_NO_THROW(data_source.add<M1>());
 }

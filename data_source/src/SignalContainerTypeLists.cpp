@@ -23,6 +23,11 @@ bool TypedSignalName::operator==(const TypedSignalName& rhs) const
     return (_signal_name == rhs._signal_name) && (_type_name == rhs._type_name);
 }
 
+bool TypedSignalName::operator!=(const TypedSignalName& rhs) const
+{
+    return not(operator==(rhs));
+}
+
 SignalName TypedSignalName::get_signal_name() const
 {
     return _signal_name;
@@ -62,6 +67,31 @@ void ConvertibleTypes::clear()
     iter_double.clear();
     iter_phys_qty.clear();
     bin.clear();
+}
+
+void ConvertibleTypes::erase(const TypedSignalName& name)
+{
+    erase(iter_bool, name);
+    erase(iter_char, name);
+    erase(iter_wchar_t, name);
+    erase(iter_short, name);
+    erase(iter_int, name);
+    erase(iter_size_t, name);
+    erase(iter_long, name);
+    erase(iter_float, name);
+    erase(iter_double, name);
+    erase(iter_phys_qty, name);
+    erase(bin, name);
+}
+
+void ConvertibleTypes::erase(std::list<ConstSignalIterator>& l, const TypedSignalName& name)
+{
+    std::list<ConstSignalIterator> ret;
+    for (auto it = l.begin() ; it != l.end() ; ++it)
+    {
+        if ((*it)->first != name) ret.push_back(*it);
+    }
+    l = ret;
 }
 
 template<> std::list<ConstSignalIterator>& select_list_from_type<bool>(ConvertibleTypes& lists)
