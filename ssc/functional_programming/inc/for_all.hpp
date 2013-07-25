@@ -35,8 +35,6 @@ template <typename T, typename F> std::vector<T> for_all(const std::vector<T>& v
     if (v1.size() != v2.size())
     {
         THROW(__PRETTY_FUNCTION__, For_all_exception, "v1 & v2 should have the same size.");
-
-
     }
     std::vector<T> ret;
     std::transform(v1.begin(), v1.end(), v2.begin(), std::back_inserter(ret),f);
