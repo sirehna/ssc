@@ -59,4 +59,11 @@ TEST_F(for_allTest, works_with_simplified_syntax)
     ASSERT_EQ(11,ret.at(6));
 }
 
+TEST_F(for_allTest, throws_if_supplied_two_vectors_of_different_lengths)
+{
+    const size_t n = a.random<size_t>();
+    const std::vector<double> v1 = a.random_vector_of<double>().of_size(n);
+    const std::vector<double> v2 = a.random_vector_of<double>().of_size(a.random<size_t>().but_not(n));
+    ASSERT_THROW(for_all(v1,v2,std::plus<double>()), For_all_exception);
+}
 
