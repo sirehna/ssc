@@ -13,4 +13,4 @@ add_library (${PROJECT_NAME} OBJECT ${SRC})
 
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${test_macros_INCLUDE_DIRS})
+include_directories(${exception_handling_INCLUDE_DIRS})
