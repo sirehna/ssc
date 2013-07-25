@@ -280,3 +280,14 @@ double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLo
     const double pos = get_waypoint_position_on_track(nearest_point.second);
     return pos + Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
 }
+
+
+std::ostream& operator<<(std::ostream& os, const Track& bar)
+{
+    const auto waypoints = bar.get_all_waypoints();
+    for(auto that_waypoint = waypoints.begin() ; that_waypoint != waypoints.end() ; ++that_waypoint)
+    {
+        os << *that_waypoint;
+    }
+    return os;
+}
