@@ -80,7 +80,7 @@ double QuadPack::integrate(double a, double b, double eps) const
         ss << "ier = " << ier << ": possible memory corruption";
         THROW(__PRETTY_FUNCTION__, QuadPackException, ss.str());
     }
-    if (ier > 0)
+    if ((ier > 0) && (ier != 2))
     {
         std::stringstream ss;
         ss << "ier = " << ier;
