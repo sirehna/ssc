@@ -93,7 +93,8 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
 */
 Angle Leg::azimuth_at(const double& distance_from_point1) const
 {
-    Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
+    if (distance_from_point1 < EPS) return Angle::degree(pimpl->direction_of_the_geodesic_at_point_1);
+    const Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
     return Angle::degree(l.pimpl->direction_of_the_geodesic_at_point_2);
 }
 
