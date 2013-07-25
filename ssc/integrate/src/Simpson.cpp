@@ -7,7 +7,7 @@
 
 #include "Simpson.hpp"
 #include <cmath>
-#include "test_macros.hpp"
+
 class Simpson::Impl
 {
     public:
