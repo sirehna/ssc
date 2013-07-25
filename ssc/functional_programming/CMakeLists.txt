@@ -1,5 +1,5 @@
-#cmake_minimum_required (VERSION 2.8.8)
-#project (functional_programming)
+cmake_minimum_required (VERSION 2.8.8)
+project (functional_programming)
 
 set(SOURCES src/for_all.cpp)
 
@@ -17,6 +17,8 @@ ADD_DEFINITIONS("-std=gnu++0x")
 
 #add_library(${PROJECT_NAME}_static OBJECT ${SOURCES})
 
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc      CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+
+
 
 add_subdirectory(unit_tests)
