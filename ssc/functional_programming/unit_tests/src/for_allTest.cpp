@@ -29,7 +29,7 @@ TEST_F(for_allTest, can_apply_a_function_to_each_element_in_a_vector)
 //! [for_allTest example]
     const std::vector<double> v({1,3,2,8,7,1,9});
     std::function<double(const double&)> f = [](const double& x)->double{return x+2;};
-    const std::vector<double> ret = for_all(v, f);
+    const auto ret = for_all(v, f);
 //! [for_allTest example]
 //! [for_allTest expected output]
     ASSERT_EQ(v.size(), ret.size());
@@ -46,7 +46,7 @@ TEST_F(for_allTest, can_apply_a_function_to_each_element_in_a_vector)
 TEST_F(for_allTest, works_with_simplified_syntax)
 {
     const std::vector<double> v({1,3,2,8,7,1,9});
-    const std::vector<double> ret = for_all(v, [](const double x){return x+2;});
+    const auto ret = for_all(v, [](const double x){return x+2;});
     ASSERT_EQ(v.size(), ret.size());
     ASSERT_EQ(3, ret.at(0));
     ASSERT_EQ(5,ret.at(1));
@@ -55,6 +55,8 @@ TEST_F(for_allTest, works_with_simplified_syntax)
     ASSERT_EQ(9,ret.at(4));
     ASSERT_EQ(3,ret.at(5));
     ASSERT_EQ(11,ret.at(6));
+
+
 }
 
 TEST_F(for_allTest, throws_if_supplied_two_vectors_of_different_lengths)
