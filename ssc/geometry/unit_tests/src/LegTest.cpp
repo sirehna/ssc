@@ -176,6 +176,12 @@ TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
     //! [LegTest azimuth_at_example]
 }
 
+TEST_F(LegTest, bug_detected_in_NorwegianEpicDataPreProcessorTest)
+{
+    const Leg leg(LatitudeLongitude(0,0),LatitudeLongitude(0,1));
+    ASSERT_DOUBLE_EQ(90, leg.azimuth_at(0).get_degree());
+}
+
 TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
 {
     const LatitudeLongitude P(a.random<double>().between(-90,90), 0);
