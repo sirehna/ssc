@@ -59,4 +59,6 @@ class Track
         std::tr1::shared_ptr<TrackImpl> pimpl;
 };
 
+std::ostream& operator<<(std::ostream& os, const Track& bar);
+
 #endif /* TRACK_HPP_ */
