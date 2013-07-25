@@ -8,8 +8,6 @@
 #include "for_allTest.hpp"
 #include "for_all.hpp"
 
-#include "test_macros.hpp"
-
 for_allTest::for_allTest() : a(DataGenerator(11))
 {
 }
