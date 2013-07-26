@@ -9,7 +9,6 @@
 #include "DataSourceException.hpp"
 #include <iostream>
 #include <sstream>
-//#include "test_macros.hpp"
 
 class CycleException : public DataSourceException
 {

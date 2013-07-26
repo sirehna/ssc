@@ -7,7 +7,6 @@
 
 #include "SignalContainerTest.hpp"
 #include "SignalContainer.hpp"
-#include "test_macros.hpp"
 
 SignalContainerTest::SignalContainerTest() : a(DataGenerator(19))
 {

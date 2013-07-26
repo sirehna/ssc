@@ -17,8 +17,6 @@
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
 
-//#include "test_macros.hpp"
-
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
@@ -106,8 +104,7 @@ class DataSource
             }
             for (auto it = signals_to_remove.begin() ; it != signals_to_remove.end() ; ++it)
             {
-//                signals.remove(*it);
-//                signal2dependantmodules.erase(*it);
+                signal2module.erase(*it);
             }
             module2dependantmodules.erase(module_to_remove);
             module2requiredmodules.erase(module_to_remove);

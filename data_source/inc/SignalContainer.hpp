@@ -15,9 +15,6 @@
 #include "Exception.hpp"
 #include "SignalContainerTypeLists.hpp"
 
-//#include <cstdio>
-//#include "test_macros.hpp"
-
 class SignalContainerException : public Exception
 {
     public:
