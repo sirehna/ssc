@@ -82,22 +82,15 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(const D
 {
     FromName2Module::iterator it = name2module.find(module.get_name());
     const bool module_is_already_in_map = it != name2module.end();
-                COUT(module_is_already_in_map);
     if (module_is_already_in_map)
     {
         std::string s = "A module named '";
-                COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists");
     }
-    COUT("");
     ModulePtr ret(module.clone());
-    COUT("");
     current_module = module.get_name();
-    COUT("");
     name2module.insert(std::make_pair(current_module, ret));
-    COUT("");
     is_up_to_date[current_module] = false;
-    COUT("");
     return ret;
 }
 
