@@ -11,6 +11,15 @@ class MockableDataSourceModule : public DataSourceModule
 class MockDataSourceModule : public MockableDataSourceModule
 {
     public:
+        MockDataSourceModule()
+        {
+
+        }
+        MockDataSourceModule(DataSource* const d, const std::string& s)
+        {
+            (void)d;
+            (void)s;
+        }
         MOCK_CONST_METHOD0(clone, DataSourceModule*());
         MOCK_CONST_METHOD0(update, void());
         MOCK_CONST_METHOD0(initialize, void());

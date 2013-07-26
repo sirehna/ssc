@@ -45,21 +45,20 @@ void DataSourceTest::SetUp()
 void DataSourceTest::TearDown()
 {
 }
-/*
+
 TEST_F(DataSourceTest, example)
 {
 //! [DataSourceTest example]
     std::tr1::shared_ptr<DataSource> ds(new DataSource);
-    MockDataSourceModule m;
-    EXPECT_CALL(m, initialize()).Times(1);
-
-    ds->add<MockDataSourceModule>()
-
+    NiceMock<MockDataSourceModule>* mock = new NiceMock<MockDataSourceModule>();
+    ON_CALL(*mock, clone()).WillByDefault(Return(mock));
+    EXPECT_CALL(*mock, initialize()).Times(1);
+    ds->add(*mock);
 //! [DataSourceTest example]
 //! [DataSourceTest expected output]
 //! [DataSourceTest expected output]
 }
-*/
+
 
 TEST_F(DataSourceTest, all_mock_modules_generated_for_tests_should_have_different_names)
 {
