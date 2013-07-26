@@ -83,9 +83,11 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSou
     current_module = module->get_name();
     FromName2Module::iterator it = name2module.find(current_module);
     const bool module_is_already_in_map = it != name2module.end();
+                COUT("");
     if (module_is_already_in_map)
     {
         std::string s = "A module named '";
+                COUT("");
         THROW(__PRETTY_FUNCTION__, DataSourceException, s + module->get_name() + "' already exists");
     }
     else
