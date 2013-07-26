@@ -16,7 +16,7 @@
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
-
+#include "test_macros.hpp"
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
@@ -61,7 +61,9 @@ class DataSource
         */
         void add(const DataSourceModule& module)
         {
+                COUT("");
             const ModulePtr m = add_module_if_not_already_present_and_return_clone(module.clone());
+                COUT("");
             m->initialize();
             const bool read_only_bak = readonly;
             readonly = true; // We don't want the following call to module.update()
@@ -69,7 +71,9 @@ class DataSource
                               // want to track module dependencies
             try
             {
+                COUT("");
                 module_being_updated = m->get_name();
+                COUT("");
                 m->update();
 
             }
