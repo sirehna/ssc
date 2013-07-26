@@ -78,25 +78,27 @@ void DataSource::clear()
     is_up_to_date.clear();
 }
 
-ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(DataSourceModule const * const module)
+ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(const DataSourceModule& module)
 {
-    current_module = module->get_name();
-    FromName2Module::iterator it = name2module.find(current_module);
+    FromName2Module::iterator it = name2module.find(module.get_name());
     const bool module_is_already_in_map = it != name2module.end();
-                COUT("");
+                COUT(module_is_already_in_map);
     if (module_is_already_in_map)
     {
         std::string s = "A module named '";
                 COUT("");
-        THROW(__PRETTY_FUNCTION__, DataSourceException, s + module->get_name() + "' already exists");
+        THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists");
     }
-    else
-    {
-        name2module.insert(std::make_pair(current_module, ModulePtr(module)));
-    }
-    FromName2Module::iterator it2 = name2module.find(current_module);
+    COUT("");
+    ModulePtr ret(module.clone());
+    COUT("");
+    current_module = module.get_name();
+    COUT("");
+    name2module.insert(std::make_pair(current_module, ret));
+    COUT("");
     is_up_to_date[current_module] = false;
-    return it2->second;
+    COUT("");
+    return ret;
 }
 
 void append(DependantModules& map, const std::string& key, const std::string& value)

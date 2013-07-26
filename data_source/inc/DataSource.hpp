@@ -62,9 +62,10 @@ class DataSource
         void add(const DataSourceModule& module)
         {
                 COUT("");
-            const ModulePtr m = add_module_if_not_already_present_and_return_clone(module.clone());
+            const ModulePtr m = add_module_if_not_already_present_and_return_clone(module);
                 COUT("");
             m->initialize();
+            COUT("");
             const bool read_only_bak = readonly;
             readonly = true; // We don't want the following call to module.update()
                               // to modify the signals in the DataSource: we just
@@ -267,7 +268,7 @@ class DataSource
          *  \returns Pointer to the added module.
          *  \snippet /unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
          */
-        ModulePtr add_module_if_not_already_present_and_return_clone(const DataSourceModule* const module);
+        ModulePtr add_module_if_not_already_present_and_return_clone(const DataSourceModule& module);
         std::set<std::string> get_dependencies(const std::string& module_name, std::set<std::string>& ret) const;
         std::set<std::string> get_dependencies(const std::string& ref_module, const std::string& current_module, std::set<std::string>& dependencies) const;
         bool a_module_depends_on_itself();
