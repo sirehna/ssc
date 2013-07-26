@@ -6,7 +6,6 @@
  */
 
 #include "CubicRunoutSplines.hpp"
-#include "test_macros.hpp"
 
 CubicRunoutSplines::CubicRunoutSplines() : Splines()
 {

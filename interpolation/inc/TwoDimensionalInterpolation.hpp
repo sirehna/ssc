@@ -31,7 +31,6 @@ class TwoDimensionalInterpolationException : public Exception
  *  \section ex2 Expected output
  *  \snippet splines/unit_tests/src/TwoDimensionalSplinesTest.cpp TwoDimensionalSplinesTest expected output
  */
-#include "test_macros.hpp"
 template <typename T> class TwoDimensionalInterpolation
 {
     public:

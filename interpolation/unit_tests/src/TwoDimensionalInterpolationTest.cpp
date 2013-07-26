@@ -9,7 +9,6 @@
 #include "TwoDimensionalInterpolation.hpp"
 #include <vector>
 #include "LinearInterpolation.hpp"
-#include "test_macros.hpp"
 
 TwoDimensionalSplinesTest::TwoDimensionalSplinesTest() : a(DataGenerator(12))
 {

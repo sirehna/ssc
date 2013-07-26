@@ -48,7 +48,6 @@ TEST_F(LinearInterpolationVariableStepTest, example)
 
 //! [LinearInterpolationVariableStepTest expected output]
 }
-#include "test_macros.hpp"
 TEST_F(LinearInterpolationVariableStepTest, should_be_able_to_retrieve_initial_values)
 {
     for (size_t i = 0 ; i < 100 ; ++i)

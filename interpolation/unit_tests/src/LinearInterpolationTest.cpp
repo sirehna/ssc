@@ -6,7 +6,6 @@
  */
 
 #include "LinearInterpolationTest.hpp"
-#include "test_macros.hpp"
 #include "LinearInterpolation.hpp"
 
 LinearInterpolationTest::LinearInterpolationTest() : a(DataGenerator(23))

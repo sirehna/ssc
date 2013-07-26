@@ -7,8 +7,6 @@
 
 #include "Splines.hpp"
 
-#include "test_macros.hpp"
-
 typedef long int integer;
 typedef double doublereal;
 
