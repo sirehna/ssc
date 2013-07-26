@@ -31,6 +31,7 @@ class QuadPack : public Integrator
         double integrate(double a, double b, double eps=1e-6) const;
 
     private:
+        void throw_any_errors(const int error_code) const;
         int* iwork;
         double* work;
 };
