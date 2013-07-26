@@ -9,8 +9,6 @@
 #include "TypeCoercion.hpp"
 #include "CoercionException.hpp"
 
-#include "test_macros.hpp"
-
 TypeCoercionTest::TypeCoercionTest() : a(DataGenerator(1))
 {
 }
