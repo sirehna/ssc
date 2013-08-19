@@ -24,7 +24,8 @@ include_directories(${exception_handling_INCLUDE_DIRS})
 add_library(${PROJECT_NAME}_object OBJECT src/TrapezoidalIntegration.cpp
                                           src/Simpson.cpp
                                           src/Integrator.cpp
-                                          src/QuadPack.cpp)
+                                          src/QuadPack.cpp
+                                          src/AddPointToIntegral.cpp)
 
 set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
 set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
