@@ -5,12 +5,12 @@ set(SRC src/DataSource.cpp
         src/DataSourceModule.cpp
         src/SignalContainer.cpp
         src/SignalContainerTypeLists.cpp
-        src/TypeCoercion.cpp)
+        src/TypeCoercion.cpp
+        src/PhysicalQuantity.cpp)
             
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${physical_types_INCLUDE_DIRS})
 include_directories(SYSTEM ${boost_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
 

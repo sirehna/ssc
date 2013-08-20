@@ -87,7 +87,7 @@ void ConvertibleTypes::erase(const TypedSignalName& name)
 void ConvertibleTypes::erase(std::list<ConstSignalIterator>& l, const TypedSignalName& name)
 {
     std::list<ConstSignalIterator> ret;
-    for (auto it = l.begin() ; it != l.end() ; ++it)
+    for (std::list<ConstSignalIterator>::const_iterator it = l.begin() ; it != l.end() ; ++it)
     {
         if ((*it)->first != name) ret.push_back(*it);
     }
