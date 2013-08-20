@@ -122,6 +122,7 @@ TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_modul
     EXPECT_CALL(*mock, clone()).Times(1);
     //EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, initialize()).Times(1);
+    EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, update()).Times(1);
     ds.add(*mock);
 }
