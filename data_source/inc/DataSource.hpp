@@ -71,7 +71,6 @@ class DataSource
             {
                 module_being_updated = m->get_name();
                 m->update();
-
             }
             catch(DataSourceException& e)
             {
