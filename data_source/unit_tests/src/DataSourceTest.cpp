@@ -116,11 +116,11 @@ TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_modul
     // calls)
     // There's a 'new' but no 'delete' because the clone() method will return
     // this pointer, therefore it will be garbage-collected by std::tr1::shared_ptr
-//MockDataSourceModuleWithGetName
-    StrictMock<MockDataSourceModule>* mock = new StrictMock<MockDataSourceModule>();
+    StrictMock<MockDataSourceModuleWithGetName>* mock = new StrictMock<MockDataSourceModuleWithGetName>();
     ON_CALL(*mock, clone()).WillByDefault(Return(mock));
+    EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, clone()).Times(1);
-    //EXPECT_CALL(*mock, get_name()).Times(1);
+    EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, initialize()).Times(1);
     EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, update()).Times(1);
