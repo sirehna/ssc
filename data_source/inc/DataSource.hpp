@@ -83,7 +83,6 @@ class DataSource
             }
             current_module = "";
             readonly = read_only_bak;
-            //set<bool>("read_only",read_only_bak);
         }
 
         /** \author cec
