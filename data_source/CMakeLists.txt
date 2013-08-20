@@ -9,7 +9,7 @@ set(SRC src/DataSource.cpp
         src/PhysicalQuantity.cpp)
             
 
-include_directories(inc)
+include_directories(inc) # Because of DataSourceModuleMock.hpp
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(SYSTEM ${boost_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
