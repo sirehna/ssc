@@ -209,7 +209,46 @@ class DataSource
                 }
             }
         }
+private:
+        void update_if_necessary(const std::string& module_name)
+        {
+            if (!(is_up_to_date[module_name]))
+            {
+                module_being_updated = module_name;
+                name2module[module_name]->update();
+            }
+        }
 
+        template<typename T>
+        void append_to_maps(const std::string& signal_name)
+        {
+            append(signal2dependantmodules, signal_name + typeid(T).name(),
+                    current_module);
+            append(module2requiredsignals, current_module,
+                    signal_name + typeid(T).name());
+        }
+
+        template<typename T>
+        void update_or_throw(const std::string& signal_name)
+        {
+            const FromSignal2Module::const_iterator that_signal = signal2module
+                    .find(signal_name + typeid(T).name());
+            const bool computable = that_signal != signal2module.end();
+            const bool stored = signals.has < T
+                    > (signal_name + typeid(T).name());
+            if (computable)
+            {
+                const std::string module_name = that_signal->second;
+                update_if_necessary(module_name);
+            } else if (!(stored))
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException,
+                        std::string("Unable to find signal '") + signal_name
+                                + "' required by module '"
+                                + module_being_updated + "'");
+            }
+        }
+public:
         /** \author cec
          *  \date 18 juin 2013, 22:01:33
          *  \brief Retrieves a signal from the SignalContainer
@@ -221,37 +260,19 @@ class DataSource
         {
             if (readonly && (current_module != ""))
             {
-                append(signal2dependantmodules, signal_name + typeid(T).name(),
-                        current_module);
-                append(module2requiredsignals, current_module,
-                        signal_name + typeid(T).name());
+                append_to_maps<T>(signal_name);
                 update_dependencies();
                 return T();
             } else
             {
-                const FromSignal2Module::const_iterator that_signal =
-                        signal2module.find(signal_name + typeid(T).name());
-                const bool computable = that_signal != signal2module.end();
-                const bool stored = signals.has < T
-                        > (signal_name + typeid(T).name());
-                if (computable)
-                {
-                    const std::string module_name = that_signal->second;
-                    if (not (is_up_to_date[module_name]))
-                    {
-                        module_being_updated = module_name;
-                        name2module[module_name]->update();
-                    }
-                } else if (not (stored))
-                {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException,
-                            std::string("Unable to find signal '") + signal_name
-                                    + "' required by module '" + module_being_updated + "'");
-                }
+                update_or_throw<T>(signal_name);
             }
-            return signals.get < T > (signal_name + typeid(T).name());
+            return signals.get<T>(signal_name + typeid(T).name());
         }
         bool read_only() const;
+        void define_derivative(const std::string& state_name, const std::string& derivative_name);
+        std::vector<double> get_derivatives();
+        void set_states(const std::vector<double>& v);
 
     private:
         /** \author cec
