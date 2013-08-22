@@ -220,9 +220,10 @@ TEST_F(DataSourceTest, two_signals_with_same_name_but_different_types_do_not_cre
     ASSERT_NO_THROW(ds.add<ModuleD>("Module D"));
 }
 
-DECLARE_MODULE(M1)
-DECLARE_MODULE(M2)
-DECLARE_MODULE(M3)
+MODULE(M1,ds->set<double>("s1",123))
+MODULE(M2,const double s1 = ds->get<double>("s1");\
+          ds->set<double>("s2", s1))
+MODULE(M3,ds->get<double>("s2"))
 
 TEST_F(DataSourceTest, can_add_a_module_without_specifying_its_name_but_only_once_per_type)
 {
@@ -233,22 +234,6 @@ TEST_F(DataSourceTest, can_add_a_module_without_specifying_its_name_but_only_onc
     ASSERT_NO_THROW(ds.add<M2>());
     ASSERT_THROW(ds.add<M2>(), DataSourceException);
     ASSERT_EQ(123, ds.get<double>("s2"));
-}
-
-void M2::update() const
-{
-    const double s1 = ds->get<double>("s1");
-    ds->set<double>("s2", s1);
-}
-
-void M3::update() const
-{
-    ds->get<double>("s2");
-}
-
-void M1::update() const
-{
-    ds->set<double>("s1",123);
 }
 
 TEST_F(DataSourceTest, bug_detected_in_EONAV_for_cyclic_dependency_check)
@@ -266,4 +251,20 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
     ASSERT_THROW(data_source.add<M1>(),DataSourceException);
     data_source.remove<M1>();
     ASSERT_NO_THROW(data_source.add<M1>());
+}
+
+/*
+ *
+ */
+TEST_F(DataSourceTest, can_declare_and_define_a_module_using_a_macro)
+{
+    MODULE(modulename,const double x1 = ds->get<double>("x1");\
+                      const double x2 = ds->get<double>("x2");\
+                      ds->set<double>("y1",x1+x2);\
+                      ds->set<double>("y2",x1*x2))
+}
+
+TEST_F(DataSourceTest, should_be_able_to_define_a_state_derivative)
+{
+
 }

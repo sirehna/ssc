@@ -116,5 +116,23 @@ class DataSourceModule
                                             void update() const;\
                                     };
 
+#define MODULE(module_name,code) class module_name : public DataSourceModule\
+                                  {\
+                                      public:\
+                                          module_name(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                          {\
+                                          }\
+                                  \
+                                          DataSourceModule* clone() const\
+                                          {\
+                                              return new module_name(*this);\
+                                          }\
+                                          void update() const\
+                                          {\
+                                              code;\
+                                          }\
+                                  \
+                                  };
+
 
 #endif /* MODEL_HPP_ */
