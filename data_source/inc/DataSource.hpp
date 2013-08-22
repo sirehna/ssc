@@ -275,6 +275,7 @@ public:
         void get_derivatives(std::vector<double>& dx_dt);
         void set_states(const std::vector<double>& v);
         std::vector<std::string> get_state_names() const;
+        std::vector<std::string> get_all_signal_names() const;
 
     private:
         /** \author cec

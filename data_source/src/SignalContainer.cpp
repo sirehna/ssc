@@ -78,3 +78,13 @@ void SignalContainer::clear()
     scalar_convertible_types.clear();
     vector_convertible_types.clear();
 }
+
+std::vector<std::string> SignalContainer::get_all_signal_names() const
+{
+    std::vector<std::string> ret;
+    for (ConstSignalIterator it = signals.begin() ; it != signals.end() ; ++it)
+    {
+        ret.push_back(it->first.get_signal_name());
+    }
+    return ret;
+}
