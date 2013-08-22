@@ -35,6 +35,27 @@ DataSource::DataSource() : name2module(FromName2Module()),
 {
 }
 
+DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
+                                                readonly(ds.readonly),
+                                                signals(ds.signals),
+                                                current_module(ds.current_module),
+                                                module_being_updated(ds.module_being_updated),
+                                                signal2module(ds.signal2module),
+                                                module2dependantmodules(ds.module2dependantmodules),
+                                                module2requiredmodules(ds.module2requiredmodules),
+                                                module2requiredsignals(ds.module2requiredsignals),
+                                                signal2dependantmodules(ds.signal2dependantmodules),
+                                                is_up_to_date(ds.is_up_to_date),
+                                                state_names(ds.state_names)
+{
+    // We need to make sure that all modules now refer to the current DataSource
+    FromName2Module::iterator it1 = name2module.begin();
+    for (;it1!=name2module.end();++it1)
+    {
+        it1->second = ModulePtr(it1->second->clone(this));
+    }
+}
+
 std::string DataSource::draw() const
 {
     std::stringstream ss;
@@ -156,7 +177,6 @@ bool DataSource::a_module_depends_on_itself()
     DependantModules::iterator it = module2dependantmodules.begin();
     for (;it!= module2dependantmodules.end();++it)
     {
-        //std::set<std::string>::const_iterator dependent_module = it->second.begin();
         get_dependencies(it->first,it->second);
     }
     return false;
