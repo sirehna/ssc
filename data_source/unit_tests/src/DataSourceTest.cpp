@@ -287,8 +287,6 @@ TEST_F(DataSourceTest, can_retrieve_derivatives)
     DataSource data_source;
     data_source.add<ode>();
     data_source.add<ode2>();
-    const std::vector<double> v = data_source.get_derivatives();
-    ASSERT_TRUE(v.empty());
     data_source.define_derivative("x", "dx_dt");
     data_source.define_derivative("y", "dy_dt");
     data_source.define_derivative("z", "dz_dt");
@@ -296,8 +294,8 @@ TEST_F(DataSourceTest, can_retrieve_derivatives)
     {
         const double x = a.random<double>();
         data_source.set<double>("x",x);
-        const std::vector<double> dx = data_source.get_derivatives();
-        ASSERT_EQ(3, dx.size());
+        std::vector<double> dx(3,0);
+        data_source.get_derivatives(dx);
         ASSERT_DOUBLE_EQ(2*x, dx[0]);
         ASSERT_DOUBLE_EQ(x*x, dx[1]);
         ASSERT_DOUBLE_EQ(sin(x), dx[2]);
@@ -308,8 +306,8 @@ TEST_F(DataSourceTest, can_retrieve_derivatives_out_of_order)
 {
     DataSource data_source;
     data_source.add<ode3>();
-    const std::vector<double> v = data_source.get_derivatives();
-    ASSERT_TRUE(v.empty());
+    std::vector<double> v;
+    ASSERT_NO_THROW(data_source.get_derivatives(v));
     data_source.define_derivative("y", "dy_dt");
     data_source.define_derivative("x", "dx_dt");
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -318,11 +316,35 @@ TEST_F(DataSourceTest, can_retrieve_derivatives_out_of_order)
         const double y = a.random<double>();
         data_source.set<double>("x",x);
         data_source.set<double>("y",y);
-        const std::vector<double> dx = data_source.get_derivatives();
-        ASSERT_EQ(2, dx.size());
+        std::vector<double> dx(2,0);
+        data_source.get_derivatives(dx);
         ASSERT_DOUBLE_EQ(y*x, dx[1]);
         ASSERT_DOUBLE_EQ(sin(x), dx[0]);
     }
+}
+
+TEST_F(DataSourceTest, get_derivatives_should_throw_if_input_vector_is_not_the_right_size)
+{
+    DataSource data_source;
+    data_source.add<ode3>();
+    data_source.define_derivative("x", "dx_dt");
+    data_source.define_derivative("y", "dy_dt");
+    std::vector<double> empty;
+    std::vector<double> one_element(1,0);
+    ASSERT_THROW(data_source.get_derivatives(empty), DataSourceException);
+    ASSERT_THROW(data_source.get_derivatives(one_element), DataSourceException);
+    for (size_t i = 2 ; i < 1002 ; ++i)
+    {
+        std::vector<double> dx_dt(i,0);
+        ASSERT_THROW(data_source.get_derivatives(dx_dt), DataSourceException);
+    }
+}
+
+TEST_F(DataSourceTest, get_derivatives_should_work_even_if_there_are_no_derivatives_to_get)
+{
+    DataSource data_source;
+    std::vector<double> v;
+    ASSERT_NO_THROW(data_source.get_derivatives(v));
 }
 
 TEST_F(DataSourceTest, cant_define_the_same_derivative_twice)
