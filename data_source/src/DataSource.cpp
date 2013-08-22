@@ -283,3 +283,13 @@ std::vector<std::string> DataSource::get_state_names() const
     }
     return ret;
 }
+
+/** \author cec
+ *  \date 22 août 2013, 12:23:32
+ *  \returns All the signals currently in the DataSource
+ *  \snippet /unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::get_all_signal_names_example
+*/
+std::vector<std::string> DataSource::get_all_signal_names() const
+{
+    return signals.get_all_signal_names();
+}
