@@ -225,19 +225,24 @@ void DataSource::define_derivative(const std::string& state_name, const std::str
 
 /** \author cec
  *  \date 21 août 2013, 16:42:17
- *  \brief Retrives the derivaties of all state variables
+ *  \brief Computes the derivaties of all state variables in the DataSource
  *  \returns A vector of doubles containing all the values of the state variables
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_derivatives_example
 */
-std::vector<double> DataSource::get_derivatives()
+void DataSource::get_derivatives(std::vector<double>& dx_dt //<! Vector storing the calculated derivatives (must be the right size)
+                                 )
 {
-    std::vector<std::pair<std::string,std::string> >::const_iterator it = state_names.begin();
-    std::vector<double> ret;
-    for (;it != state_names.end() ; ++it)
+    const size_t n = state_names.size();
+    if (dx_dt.size() != n)
     {
-        ret.push_back(get<double>(it->second));
+        std::stringstream ss;
+        ss << "Invalid size for output vector dx_dt: should be " << n << ", but got " << dx_dt.size();
+        THROW(__PRETTY_FUNCTION__, DataSourceException, ss.str());
     }
-    return ret;
+    for (size_t i=0 ; i<n ; ++i)
+    {
+        dx_dt[i] = get<double>(state_names[i].second);
+    }
 }
 
 /** \author cec
