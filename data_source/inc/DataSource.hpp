@@ -273,6 +273,7 @@ public:
         void define_derivative(const std::string& state_name, const std::string& derivative_name);
         std::vector<double> get_derivatives();
         void set_states(const std::vector<double>& v);
+        std::vector<std::string> get_state_names() const;
 
     private:
         /** \author cec

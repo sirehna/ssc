@@ -374,3 +374,17 @@ TEST_F(DataSourceTest, set_states_should_throw_if_vector_has_incorrect_size)
     }
     ASSERT_THROW(data_source.set_states(x), DataSourceException);
 }
+
+TEST_F(DataSourceTest, can_retrieve_a_list_containing_the_names_of_all_states)
+{
+    //! [DataSourceTest get_state_names_example]
+    DataSource data_source;
+    data_source.add<ode3>();
+    data_source.define_derivative("y", "dy_dt");
+    data_source.define_derivative("x", "dx_dt");
+    const std::vector<std::string> state_names = data_source.get_state_names();
+    ASSERT_EQ(2, state_names.size());
+    ASSERT_EQ("y", state_names[0]);
+    ASSERT_EQ("x", state_names[1]);
+    //! [DataSourceTest get_state_names_example]
+}
