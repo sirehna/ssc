@@ -241,3 +241,20 @@ void DataSource::set_states(const std::vector<double>& v)
         set<double>(state_names.at(i).first, v[i]);
     }
 }
+
+/** \author cec
+ *  \date 22 août 2013, 09:53:53
+ *  \brief Get the names of all the states in the DataSource
+ *  \returns A vector of state names, sorted in the same order as set_states & get_state_derivatives.
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_state_names_example
+*/
+std::vector<std::string> DataSource::get_state_names() const
+{
+    std::vector<std::string> ret;
+    std::vector<std::pair<std::string,std::string> >::const_iterator it;
+    for (it = state_names.begin() ; it != state_names.end() ; ++it)
+    {
+        ret.push_back(it->first);
+    }
+    return ret;
+}
