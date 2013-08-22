@@ -17,7 +17,7 @@ void decoerce(std::list<double>& ret, PhysicalQuantity& thing_to_convert)
 
 
 
-SignalContainer::SignalContainer() : signals(Signals()), scalar_convertible_types(ConvertibleTypes()),
+SignalContainer::SignalContainer() : signals_(Signals()), scalar_convertible_types(ConvertibleTypes()),
 vector_convertible_types(ConvertibleTypes())
 {
 
@@ -74,7 +74,7 @@ void SignalContainer::from_doubles(std::list<double> l)
 
 void SignalContainer::clear()
 {
-    signals.clear();
+    signals_.clear();
     scalar_convertible_types.clear();
     vector_convertible_types.clear();
 }
@@ -82,7 +82,7 @@ void SignalContainer::clear()
 std::vector<std::string> SignalContainer::get_all_signal_names() const
 {
     std::vector<std::string> ret;
-    for (ConstSignalIterator it = signals.begin() ; it != signals.end() ; ++it)
+    for (ConstSignalIterator it = signals_.begin() ; it != signals_.end() ; ++it)
     {
         ret.push_back(it->first.get_signal_name());
     }

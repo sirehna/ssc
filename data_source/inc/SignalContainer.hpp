@@ -49,15 +49,15 @@ class SignalContainer
         template <typename T> void set(const std::string& signal_name, const T& value)
         {
             const TypedSignalName map_name(signal_name,typeid(T).name());
-            signals[map_name] = value;
-            get_iterator_list(value).push_back(signals.find(map_name));
+            signals_[map_name] = value;
+            get_iterator_list(value).push_back(signals_.find(map_name));
         }
 
         template <typename T> T get(const std::string& signal_name) const
         {
             const TypedSignalName name(signal_name,typeid(T).name());
-            ConstSignalIterator it = signals.find(name);
-            if (it == signals.end())
+            ConstSignalIterator it = signals_.find(name);
+            if (it == signals_.end())
             {
                 std::string msg = "unable to find a signal named '";
                 msg += name.get_signal_name();
@@ -70,13 +70,13 @@ class SignalContainer
 
         template <typename T> bool has(const std::string& signal_name) const
         {
-            return signals.find(TypedSignalName(signal_name,typeid(T).name())) != signals.end();
+            return signals_.find(TypedSignalName(signal_name,typeid(T).name())) != signals_.end();
         }
 
         template <class T> typename std::map<SignalName, T> get_all() const
         {
             std::map<SignalName, T> ret;
-            for (ConstSignalIterator it = signals.begin() ; it != signals.end() ; ++it)
+            for (ConstSignalIterator it = signals_.begin() ; it != signals_.end() ; ++it)
             {
                 if (it->first.get_type_name() == typeid(T).name())
                 {
@@ -115,7 +115,7 @@ class SignalContainer
         template <class T> void remove(const std::string& name)
         {
             const TypedSignalName tname(name, typeid(T).name());
-            signals.erase(tname);
+            signals_.erase(tname);
             scalar_convertible_types.erase(tname);
             vector_convertible_types.erase(tname);
         }
@@ -180,7 +180,7 @@ class SignalContainer
                 T t = boost::any_cast<T>((*it)->second);
 
                 decoerce(ret, t);
-                signals[(*it)->first] = t;
+                signals_[(*it)->first] = t;
             }
         }
 
@@ -190,7 +190,7 @@ class SignalContainer
             {
                 std::vector<T> t = boost::any_cast<std::vector<T> >((*it)->second);
                 decoerce(ret, t);
-                signals[(*it)->first] = t;
+                signals_[(*it)->first] = t;
             }
         }
 
@@ -200,7 +200,7 @@ class SignalContainer
             decoerce_vector<T>(ret);
         }
 
-        Signals signals;
+        Signals signals_;
         ConvertibleTypes scalar_convertible_types;
         ConvertibleTypes vector_convertible_types;
 };
