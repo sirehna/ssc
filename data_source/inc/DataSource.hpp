@@ -189,7 +189,7 @@ class DataSource
             }
             else
             {
-                signals.set(signal_name + typeid(T).name(), t);
+                signals_.set(signal_name + typeid(T).name(), t);
                 DependantModules::const_iterator it = signal2dependantmodules
                         .find(signal_name + typeid(T).name());
                 if (it != signal2dependantmodules.end())
@@ -235,7 +235,7 @@ private:
             const FromSignal2Module::const_iterator that_signal = signal2module
                     .find(signal_name + typeid(T).name());
             const bool computable = that_signal != signal2module.end();
-            const bool stored = signals.has < T
+            const bool stored = signals_.has < T
                     > (signal_name + typeid(T).name());
             if (computable)
             {
@@ -268,7 +268,7 @@ public:
             {
                 update_or_throw<T>(signal_name);
             }
-            return signals.get<T>(signal_name + typeid(T).name());
+            return signals_.get<T>(signal_name + typeid(T).name());
         }
         bool read_only() const;
         void define_derivative(const std::string& state_name, const std::string& derivative_name);
@@ -293,7 +293,7 @@ public:
         void add_dependencies_and_dependent_modules(const std::set<std::string>& required_signals, const std::string& module_using_required_signals);
         FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
         bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
-        SignalContainer signals; //!< All signals currently in the DataSource
+        SignalContainer signals_; //!< All signals currently in the DataSource
         std::string current_module; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
         std::string module_being_updated; //!< Module currently getting signals from the DataSource (used to track which module is requiring a missing signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal

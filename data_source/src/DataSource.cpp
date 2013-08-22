@@ -22,7 +22,7 @@ class CycleException : public DataSourceException
 
 DataSource::DataSource() : name2module(FromName2Module()),
                            readonly(false),
-                           signals(SignalContainer()),
+                           signals_(SignalContainer()),
                            current_module(""),
                            module_being_updated(""),
                            signal2module(FromSignal2Module()),
@@ -37,7 +37,7 @@ DataSource::DataSource() : name2module(FromName2Module()),
 
 DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 readonly(ds.readonly),
-                                                signals(ds.signals),
+                                                signals_(ds.signals_),
                                                 current_module(ds.current_module),
                                                 module_being_updated(ds.module_being_updated),
                                                 signal2module(ds.signal2module),
@@ -91,7 +91,7 @@ FromName2Module DataSource::get_modules() const
 void DataSource::clear()
 {
     name2module.clear();
-    signals.clear();
+    signals_.clear();
     current_module = "";
     signal2module.clear();
     module2dependantmodules.clear();
@@ -291,5 +291,5 @@ std::vector<std::string> DataSource::get_state_names() const
 */
 std::vector<std::string> DataSource::get_all_signal_names() const
 {
-    return signals.get_all_signal_names();
+    return signals_.get_all_signal_names();
 }
