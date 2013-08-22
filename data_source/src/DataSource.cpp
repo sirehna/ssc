@@ -30,7 +30,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            module2requiredmodules(DependantModules()),
                            module2requiredsignals(DependantModules()),
                            signal2dependantmodules(DependantModules()),
-                           is_up_to_date(UpdateState())
+                           is_up_to_date(UpdateState()),
+                           state_names(std::vector<std::pair<std::string,std::string> >())
 {
 }
 
@@ -174,5 +175,69 @@ void DataSource::update_dependencies()
     if (a_module_depends_on_itself())
     {
         THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
+    }
+}
+
+/** \author cec
+ *  \date 21 août 2013, 16:34:06
+ *  \brief Registers a derivative: the corresponding variable is added to the
+ *  list of states. The order in which this list is sorted corresponds to the
+ *  order in which successive calls to define_derivative were made.
+ *  \returns Nothing.
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivative_example
+*/
+void DataSource::define_derivative(const std::string& state_name, const std::string& derivative_name)
+{
+    std::vector<std::pair<std::string,std::string> >::const_iterator it = state_names.begin();
+    for (;it != state_names.end() ; ++it)
+    {
+        if (it->first == state_name)
+        {
+            THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Cannot define two variables for the same derivative: derivative of state '" + state_name + "' has already been defined as '" + it->second + "': attempting to define it as " + derivative_name));
+        }
+        if (it->second == derivative_name)
+        {
+            THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("A variable cannot be the derivative of two different states: '" + derivative_name + "' is already the derivative of '" + it->first + ": attempting to define it as the derivative of '" + state_name + "' as well"));
+        }
+    }
+    state_names.push_back(std::make_pair(state_name,derivative_name));
+}
+
+/** \author cec
+ *  \date 21 août 2013, 16:42:17
+ *  \brief Retrives the derivaties of all state variables
+ *  \returns A vector of doubles containing all the values of the state variables
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_derivatives_example
+*/
+std::vector<double> DataSource::get_derivatives()
+{
+    std::vector<std::pair<std::string,std::string> >::const_iterator it = state_names.begin();
+    std::vector<double> ret;
+    for (;it != state_names.end() ; ++it)
+    {
+        ret.push_back(get<double>(it->second));
+    }
+    return ret;
+}
+
+/** \author cec
+ *  \date 21 août 2013, 16:50:03
+ *  \brief Sets the values of the state variables.
+ *  \returns Nothing.
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivatives_example
+*/
+void DataSource::set_states(const std::vector<double>& v)
+{
+    const size_t n = v.size();
+    if (state_names.size() != n)
+    {
+        std::stringstream ss;
+        ss << "Invalid number of values: v has " << n << " elements, but "
+           << state_names.size() << " states were detected.";
+        THROW(__PRETTY_FUNCTION__, DataSourceException, ss.str());
+    }
+    for (size_t i = 0 ; i < n ; ++i)
+    {
+        set<double>(state_names.at(i).first, v[i]);
     }
 }

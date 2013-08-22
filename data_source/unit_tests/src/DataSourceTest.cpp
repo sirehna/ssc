@@ -264,7 +264,113 @@ TEST_F(DataSourceTest, can_declare_and_define_a_module_using_a_macro)
                       ds->set<double>("y2",x1*x2))
 }
 
+MODULE(ode,const double x = ds->get<double>("x");\
+           ds->set<double>("dx_dt",2*x))
+
+MODULE(ode2,const double x = ds->get<double>("x");\
+            ds->set<double>("dy_dt",x*x);\
+            ds->set<double>("dz_dt",sin(x)))
+
+MODULE(ode3,const double x = ds->get<double>("x");\
+            const double y = ds->get<double>("y");\
+            ds->set<double>("dx_dt",x*y);\
+            ds->set<double>("dy_dt",sin(x)))
+
 TEST_F(DataSourceTest, should_be_able_to_define_a_state_derivative)
 {
+    DataSource data_source;
+    data_source.add<ode>();
+    data_source.define_derivative("x", "dx_dt");
+}
 
+TEST_F(DataSourceTest, can_retrieve_derivatives)
+{
+    DataSource data_source;
+    data_source.add<ode>();
+    data_source.add<ode2>();
+    const std::vector<double> v = data_source.get_derivatives();
+    ASSERT_TRUE(v.empty());
+    data_source.define_derivative("x", "dx_dt");
+    data_source.define_derivative("y", "dy_dt");
+    data_source.define_derivative("z", "dz_dt");
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>();
+        data_source.set<double>("x",x);
+        const std::vector<double> dx = data_source.get_derivatives();
+        ASSERT_EQ(3, dx.size());
+        ASSERT_DOUBLE_EQ(2*x, dx[0]);
+        ASSERT_DOUBLE_EQ(x*x, dx[1]);
+        ASSERT_DOUBLE_EQ(sin(x), dx[2]);
+    }
+}
+
+TEST_F(DataSourceTest, can_retrieve_derivatives_out_of_order)
+{
+    DataSource data_source;
+    data_source.add<ode3>();
+    const std::vector<double> v = data_source.get_derivatives();
+    ASSERT_TRUE(v.empty());
+    data_source.define_derivative("y", "dy_dt");
+    data_source.define_derivative("x", "dx_dt");
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>();
+        const double y = a.random<double>();
+        data_source.set<double>("x",x);
+        data_source.set<double>("y",y);
+        const std::vector<double> dx = data_source.get_derivatives();
+        ASSERT_EQ(2, dx.size());
+        ASSERT_DOUBLE_EQ(y*x, dx[1]);
+        ASSERT_DOUBLE_EQ(sin(x), dx[0]);
+    }
+}
+
+TEST_F(DataSourceTest, cant_define_the_same_derivative_twice)
+{
+    DataSource data_source;
+    data_source.add<ode>();
+    const std::string state_name = a.random<std::string>();
+    const std::string derivative_name = a.random<std::string>();
+    data_source.define_derivative(state_name, derivative_name);
+    ASSERT_THROW(data_source.define_derivative(state_name, a.random<std::string>()), DataSourceException);
+    ASSERT_THROW(data_source.define_derivative(a.random<std::string>(), derivative_name), DataSourceException);
+    ASSERT_NO_THROW(data_source.define_derivative(a.random<std::string>(), a.random<std::string>()));
+}
+
+TEST_F(DataSourceTest, cant_add_the_same_derivative_twice)
+{
+    DataSource data_source;
+    const std::string a_name = a.random<std::string>();
+    data_source.define_derivative("x", a_name);
+    ASSERT_THROW(data_source.define_derivative("x", a_name), DataSourceException);
+}
+
+TEST_F(DataSourceTest, can_set_the_states_to_an_arbitrary_value)
+{
+    DataSource data_source;
+    const size_t nb_of_states = a .random<size_t>().between(0,500);
+    const std::vector<double> x = a.random_vector_of<double>().of_size(nb_of_states);
+    const std::vector<std::string> state_names = a.random_vector_of<std::string>().of_size(nb_of_states);
+    for (size_t i = 0 ; i < nb_of_states ; ++i)
+    {
+        data_source.define_derivative(state_names[nb_of_states-i-1], a.random<std::string>());
+    }
+    data_source.set_states(x);
+    for (size_t i = 0 ; i < nb_of_states ; ++i)
+    {
+        ASSERT_DOUBLE_EQ(x[i],data_source.get<double>(state_names[nb_of_states-i-1]));
+    }
+}
+
+TEST_F(DataSourceTest, set_states_should_throw_if_vector_has_incorrect_size)
+{
+    DataSource data_source;
+    const size_t nb_of_states = a .random<size_t>().between(0,500);
+    const std::vector<double> x = a.random_vector_of<double>().of_size(a.random<size_t>().between(0,500).but_not(nb_of_states));
+    for (size_t i = 0 ; i < nb_of_states ; ++i)
+    {
+        data_source.define_derivative(a.random<std::string>(), a.random<std::string>());
+    }
+    ASSERT_THROW(data_source.set_states(x), DataSourceException);
 }
