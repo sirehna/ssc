@@ -21,6 +21,7 @@ class MockDataSourceModule : public MockableDataSourceModule
             (void)s;
         }
         MOCK_CONST_METHOD0(clone, DataSourceModule*());
+        MOCK_CONST_METHOD1(clone, DataSourceModule*(DataSource* const));
         MOCK_CONST_METHOD0(update, void());
         MOCK_CONST_METHOD0(initialize, void());
 };
@@ -32,6 +33,7 @@ class MockDataSourceModuleWithGetName : public MockableDataSourceModule
 {
     public:
         MOCK_CONST_METHOD0(clone, DataSourceModule*());
+        MOCK_CONST_METHOD1(clone, DataSourceModule*(DataSource* const));
         MOCK_CONST_METHOD0(update, void());
         MOCK_CONST_METHOD0(get_name, std::string());
         MOCK_CONST_METHOD0(initialize, void());

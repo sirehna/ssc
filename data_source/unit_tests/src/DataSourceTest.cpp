@@ -22,7 +22,6 @@ using ::testing::Return;
 using ::testing::NiceMock;
 using ::testing::StrictMock;
 using ::testing::InSequence;
-
 MockableDataSourceModule::MockableDataSourceModule() : DataSourceModule(ds_, a_.random<std::string>())
 {
 
@@ -387,4 +386,32 @@ TEST_F(DataSourceTest, can_retrieve_a_list_containing_the_names_of_all_states)
     ASSERT_EQ("y", state_names[0]);
     ASSERT_EQ("x", state_names[1]);
     //! [DataSourceTest get_state_names_example]
+}
+
+TEST_F(DataSourceTest, when_copying_a_data_source_the_references_to_it_should_be_updated_inside_the_modules)
+{
+    // When copying a DataSource, if nothing is done, all the modules will maintain
+    // a pointer to the copied DataSource: we need to update the pointer maintained
+    // by each module to point to the new DataSource. This bug was discovered
+    // when creating DataSourceDerivatives class.
+    DataSource data_source;
+    data_source.add<ode>();
+    DataSource ds(data_source);
+    const double x = a.random<double>();
+    ds.set<double>("x", x);
+    ASSERT_NO_THROW(ds.get<double>("dx_dt"));
+    ASSERT_DOUBLE_EQ(ds.get<double>("dx_dt"), 2*x);
+}
+
+TEST_F(DataSourceTest, a_copied_DataSource_should_be_independant_from_its_copy)
+{
+    DataSource data_source;
+    data_source.add<ode>();
+    DataSource ds(data_source);
+    const double x1 = a.random<double>();
+    const double x2 = a.random<double>();
+    data_source.set<double>("x", x1);
+    ds.set<double>("x", x2);
+    ASSERT_DOUBLE_EQ(data_source.get<double>("dx_dt"), 2*x1);
+    ASSERT_DOUBLE_EQ(ds.get<double>("dx_dt"), 2*x2);
 }

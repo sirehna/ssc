@@ -39,6 +39,7 @@ class DataSource
 {
     public:
         DataSource();
+        DataSource(const DataSource& ds);
 
         /** \author cec
          *  \date 1 juil. 2013, 17:41:30

@@ -41,6 +41,13 @@ class DataSourceModule
          *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
         */
         virtual DataSourceModule* clone() const = 0;
+        /** \author cec
+         *  \date 22 août 2013, 14:18:54
+         *  \brief Clones the module & updates the referenced DataSource
+         *  \returns
+         *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+        */
+        virtual DataSourceModule* clone(DataSource* const data_source) const = 0;
 
         /** \author cec
          *  \date 17 juin 2013, 09:41:57
@@ -81,6 +88,11 @@ class DataSourceModule
 
         }
 
+        DataSourceModule(const DataSourceModule& rhs, DataSource* const data_source) : ds(data_source), module_name_(rhs.module_name_)
+        {
+
+        }
+
         DataSourceModule& operator=(const DataSourceModule& rhs)
         {
             if (&rhs != this)
@@ -101,31 +113,48 @@ class DataSourceModule
 };
 
 // This macro is meant to simplify the creation of modules: only the update() method needs to be defined to have a functional module
-#define DECLARE_MODULE(module_name) class module_name : public DataSourceModule\
+#define DECLARE_MODULE(name__) class name__ : public DataSourceModule\
                                     {\
                                         public:\
-                                            module_name(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                            name__(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                            {\
+                                            }\
+                                    \
+                                            name__(const name__& rhs, DataSource* const data_source) : DataSourceModule(rhs, data_source)\
                                             {\
                                             }\
                                     \
                                             DataSourceModule* clone() const\
                                             {\
-                                                return new module_name(*this);\
+                                                return new name__(*this);\
+                                            }\
+                                    \
+                                            DataSourceModule* clone(DataSource* const data_source) const\
+                                            {\
+                                                return new name__(*this, data_source);\
                                             }\
                                     \
                                             void update() const;\
                                     };
 
-#define MODULE(module_name,code) class module_name : public DataSourceModule\
+#define MODULE(name__,code) class name__ : public DataSourceModule\
                                   {\
                                       public:\
-                                          module_name(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                          name__(DataSource* const data_source, const std::string& module_name) : DataSourceModule(data_source, module_name)\
+                                          {\
+                                          }\
+                                  \
+                                          name__(const name__& rhs, DataSource* const data_source) : DataSourceModule(rhs, data_source)\
                                           {\
                                           }\
                                   \
                                           DataSourceModule* clone() const\
                                           {\
-                                              return new module_name(*this);\
+                                              return new name__(*this);\
+                                          }\
+                                          DataSourceModule* clone(DataSource* const data_source) const\
+                                          {\
+                                              return new name__(*this, data_source);\
                                           }\
                                           void update() const\
                                           {\
