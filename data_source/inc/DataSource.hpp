@@ -299,6 +299,7 @@ public:
         DependantModules module2requiredsignals; //!< For each module, stores the signals it depends on
         DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
         UpdateState is_up_to_date;
+        std::vector<std::pair<std::string,std::string> > state_names;
 };
 
 
