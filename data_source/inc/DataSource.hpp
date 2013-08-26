@@ -16,7 +16,7 @@
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
-#include "test_macros.hpp"
+
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 typedef std::tr1::unordered_map<std::string,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<std::string,std::string> FromSignal2Module;
@@ -240,38 +240,17 @@ private:
         template<typename T>
         void update_or_throw(const std::string& signal_name)
         {
-            COUT(signal_name);
-            COUT(module_setting_signals);
-            COUT(module_requesting_signals);
-            COUT(signal2module.size());
-            if (not(signal2module.empty()))
-            {
-                for (FromSignal2Module::const_iterator it = signal2module.begin()  ; it != signal2module.end() ; ++it)
-                {
-                    COUT(it->first);
-                    COUT(it->second);
-                }
-            }
-            else
-            {
-                COUT("NO SIGNALS!");
-            }
             const FromSignal2Module::const_iterator that_signal = signal2module
                     .find(signal_name + typeid(T).name());
-            COUT(signal_name + typeid(T).name());
             const bool computable = that_signal != signal2module.end();
-            COUT(computable);
             const bool stored = signals_.has < T
                     > (signal_name + typeid(T).name());
             if (computable)
             {
                 const std::string module_name = that_signal->second;
-                COUT(that_signal->first);
-                COUT(module_name);
                 update_if_necessary(module_name);
             } else if (!(stored))
             {
-                COUT("not computable & not stored");
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
                         std::string("Unable to find signal '") + signal_name
                                 + "' required by module '"
@@ -288,34 +267,21 @@ public:
         template<typename T>
         T get(const std::string& signal_name)
         {
-            COUT(signal_name);
-            COUT(module_requesting_signals);
-            COUT(aliases.size());
-            for (std::map<std::string,std::string>::const_iterator it = aliases.begin() ; it != aliases.end() ; ++it)
-            {
-                COUT(it->first);
-                COUT(it->second);
-            }
             std::map<std::string,std::string>::const_iterator it = aliases.find(signal_name);
-            COUT("");
             if (it != aliases.end())
-                {
-                COUT(it->second);
+            {
                 return get<T>(it->second);
-                }
-            COUT("");
+            }
             if (readonly && (module_setting_signals != "DataSource user"))
             {
-                COUT("updating_dependencies");
                 append_to_maps<T>(signal_name);
                 update_dependencies();
                 return T();
-            } else
+            }
+            else
             {
-                COUT(signal_name);
                 update_or_throw<T>(signal_name);
             }
-            COUT("");
             return signals_.get<T>(signal_name + typeid(T).name());
         }
         bool read_only() const;
