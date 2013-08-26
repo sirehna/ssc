@@ -437,3 +437,9 @@ TEST_F(DataSourceTest, a_copied_DataSource_should_be_independant_from_its_copy)
     ASSERT_DOUBLE_EQ(data_source.get<double>("dx_dt"), 2*x1);
     ASSERT_DOUBLE_EQ(ds.get<double>("dx_dt"), 2*x2);
 }
+
+TEST_F(DataSourceTest, cannot_add_a_module_named_DataSource_user)
+{
+    DataSource data_source;
+    ASSERT_THROW(data_source.add<ode>("DataSource user"), DataSourceException);
+}
