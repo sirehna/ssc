@@ -85,6 +85,8 @@ class DataSource
             readonly = read_only_bak;
         }
 
+        void alias(const std::string& name_of_copy, const std::string& copied_signal);
+
         /** \author cec
          *  \date 24 juil. 2013, 15:13:58
          *  \brief Remove a module from a data source (and from the lists of dependencies)
@@ -163,9 +165,12 @@ class DataSource
          *  \returns Nothing
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_example
         */
-        template <typename T> void set(const std::string& signal_name, //<! Name of the signal to create or update
+        template <typename T> void set(std::string signal_name, //<! Name of the signal to create or update
                                        const T& t)
         {
+            std::map<std::string,std::string>::const_iterator it = aliases.find(signal_name);
+            const bool found_alias = it != aliases.end();
+            if (found_alias) signal_name = it->second;
             if (readonly)
             {
                 std::tr1::unordered_map<std::string, std::string>::const_iterator it =
@@ -259,6 +264,8 @@ public:
         template<typename T>
         T get(const std::string& signal_name)
         {
+            std::map<std::string,std::string>::const_iterator it = aliases.find(signal_name);
+            if (it != aliases.end()) return get<T>(it->second);
             if (readonly && (current_module != ""))
             {
                 append_to_maps<T>(signal_name);
@@ -303,6 +310,7 @@ public:
         DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
         UpdateState is_up_to_date;
         std::vector<std::pair<std::string,std::string> > state_names;
+        std::map<std::string,std::string> aliases;
 };
 
 

@@ -31,7 +31,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            module2requiredsignals(DependantModules()),
                            signal2dependantmodules(DependantModules()),
                            is_up_to_date(UpdateState()),
-                           state_names(std::vector<std::pair<std::string,std::string> >())
+                           state_names(std::vector<std::pair<std::string,std::string> >()),
+                           aliases(std::map<std::string,std::string>())
 {
 }
 
@@ -46,7 +47,8 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 module2requiredsignals(ds.module2requiredsignals),
                                                 signal2dependantmodules(ds.signal2dependantmodules),
                                                 is_up_to_date(ds.is_up_to_date),
-                                                state_names(ds.state_names)
+                                                state_names(ds.state_names),
+                                                aliases(ds.aliases)
 {
     // We need to make sure that all modules now refer to the current DataSource
     FromName2Module::iterator it1 = name2module.begin();
@@ -292,4 +294,19 @@ std::vector<std::string> DataSource::get_state_names() const
 std::vector<std::string> DataSource::get_all_signal_names() const
 {
     return signals_.get_all_signal_names();
+}
+
+
+/** \author cec
+ *  \date 23 août 2013, 14:34:30
+ *  \brief This method was created because we sometimes don't know the name
+ *  of a signal from inside a module: therefore, when adding the module, we
+ *  create an alias of the signal name the module is expecting against the name
+ *  of the signal actually in the DataSource.
+ *  \returns Nothing.
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::alias_example
+*/
+void DataSource::alias(const std::string& name_of_copy, const std::string& copied_signal)
+{
+    aliases[name_of_copy] = copied_signal;
 }
