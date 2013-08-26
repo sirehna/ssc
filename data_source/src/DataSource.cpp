@@ -23,8 +23,8 @@ class CycleException : public DataSourceException
 DataSource::DataSource() : name2module(FromName2Module()),
                            readonly(false),
                            signals_(SignalContainer()),
-                           current_module(""),
-                           module_being_updated(""),
+                           module_setting_signals("DataSource user"),
+                           module_requesting_signals("DataSource user"),
                            signal2module(FromSignal2Module()),
                            module2dependantmodules(DependantModules()),
                            module2requiredmodules(DependantModules()),
@@ -39,8 +39,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
 DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 readonly(ds.readonly),
                                                 signals_(ds.signals_),
-                                                current_module(ds.current_module),
-                                                module_being_updated(ds.module_being_updated),
+                                                module_setting_signals(ds.module_setting_signals),
+                                                module_requesting_signals(ds.module_requesting_signals),
                                                 signal2module(ds.signal2module),
                                                 module2dependantmodules(ds.module2dependantmodules),
                                                 module2requiredmodules(ds.module2requiredmodules),
@@ -94,7 +94,7 @@ void DataSource::clear()
 {
     name2module.clear();
     signals_.clear();
-    current_module = "";
+    module_setting_signals = "DataSource user";
     signal2module.clear();
     module2dependantmodules.clear();
     module2requiredsignals.clear();
@@ -112,9 +112,9 @@ ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(const D
         THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists");
     }
     ModulePtr ret(module.clone());
-    current_module = module.get_name();
-    name2module.insert(std::make_pair(current_module, ret));
-    is_up_to_date[current_module] = false;
+    module_setting_signals = module.get_name();
+    name2module.insert(std::make_pair(module_setting_signals, ret));
+    is_up_to_date[module_setting_signals] = false;
     return ret;
 }
 
@@ -196,7 +196,7 @@ void DataSource::update_dependencies()
     }
     if (a_module_depends_on_itself())
     {
-        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + current_module + "' depends on itself (eventually)");
+        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + module_setting_signals + "' depends on itself (eventually)");
     }
 }
 
