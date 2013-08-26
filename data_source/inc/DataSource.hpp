@@ -75,6 +75,7 @@ class DataSource
                 module_requesting_signals = m->get_name();
                 m->update();
                 module_requesting_signals = module_requesting_signals_bak;
+                module_setting_signals = module_setting_signals_bak;
             }
             catch(DataSourceException& e)
             {
@@ -84,7 +85,7 @@ class DataSource
             {
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
-            module_setting_signals = module_setting_signals_bak;
+            //module_setting_signals = module_setting_signals_bak;
             readonly = read_only_bak;
         }
 
@@ -178,7 +179,7 @@ class DataSource
             {
                 std::tr1::unordered_map<std::string, std::string>::const_iterator it =
                         signal2module.find(signal_name + typeid(T).name());
-                if ((it != signal2module.end()) && (it->second != "")
+                if ((it != signal2module.end()) && (it->second != "DataSource user" && (it->second != ""))
                         && (it->second != module_setting_signals))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
@@ -275,12 +276,20 @@ public:
             if (readonly && (module_setting_signals != "DataSource user"))
             {
                 append_to_maps<T>(signal_name);
+                const std::string module_requesting_signals_bak = module_requesting_signals;
+                const std::string module_setting_signals_bak = module_setting_signals;
                 update_dependencies();
+                module_requesting_signals = module_requesting_signals_bak;
+                module_setting_signals = module_setting_signals_bak;
                 return T();
             }
             else
             {
+                const std::string module_requesting_signals_bak = module_requesting_signals;
+                const std::string module_setting_signals_bak = module_setting_signals;
                 update_or_throw<T>(signal_name);
+                module_requesting_signals = module_requesting_signals_bak;
+                module_setting_signals = module_setting_signals_bak;
             }
             return signals_.get<T>(signal_name + typeid(T).name());
         }
