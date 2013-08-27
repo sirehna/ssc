@@ -81,8 +81,13 @@ TEST_F(DataSourceTest, all_mock_modules_generated_for_tests_should_have_differen
 
 TEST_F(DataSourceTest, should_be_able_to_clear_a_datasource_to_empty_it)
 {
-    ds_->clear();
-    ASSERT_EQ(0,ds_->get_modules().size());
+    DataSource ds;
+    ds.add<M1>();
+    ds.add<M2>();
+    ds.add<M3>();
+    ASSERT_EQ(3,ds.get_modules().size());
+    ds.clear();
+    ASSERT_EQ(0,ds.get_modules().size());
 }
 
 TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_modules)
