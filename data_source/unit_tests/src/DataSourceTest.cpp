@@ -454,3 +454,29 @@ TEST_F(DataSourceTest, cannot_add_a_module_named_DataSource_user)
     DataSource data_source;
     ASSERT_THROW(data_source.add<ode>("DataSource user"), DataSourceException);
 }
+
+TEST_F(DataSourceTest, can_force_a_value_computed_by_a_module)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x = a.random<double>();
+        const double another_x = a.random<double>();
+        const double forced_value = a.random<double>();
+        ds.set("x",x);
+        ASSERT_DOUBLE_EQ(2*x, ds.get<double>("y1"));
+        if (i==0)
+        {
+            ASSERT_DOUBLE_EQ(3*x, ds.get<double>("y2"));
+        }
+        else
+        {
+            ASSERT_NE(3*x, ds.get<double>("y2"));
+        }
+        ds.force("y2", forced_value);
+        ds.set("x",another_x);
+        ASSERT_DOUBLE_EQ(2*another_x, ds.get<double>("y1"));
+        ASSERT_DOUBLE_EQ(forced_value, ds.get<double>("y2"));
+    }
+}
