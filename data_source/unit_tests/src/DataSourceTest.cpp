@@ -554,3 +554,16 @@ TEST_F(DataSourceTest, cannot_set_a_value_that_has_been_forced)
     ds.force("y1", a.random<double>()());
     ASSERT_THROW(ds.set("y1", a.random<double>()()), DataSourceException);
 }
+
+TEST_F(DataSourceTest, an_alias_must_be_a_new_name_that_does_not_correspond_to_any_existing_signal)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    ASSERT_THROW(ds.alias<double>("y2", a.random<std::string>()), DataSourceException);
+    ASSERT_THROW(ds.alias<double>("y2", "y1"), DataSourceException);
+    ASSERT_THROW(ds.alias<double>("y2", "y2"), DataSourceException);
+    ds.force("y1", a.random<double>()());
+    ASSERT_THROW(ds.alias<double>("y1", a.random<std::string>()), DataSourceException);
+    ASSERT_THROW(ds.alias<double>("y1", "y1"), DataSourceException);
+    ASSERT_THROW(ds.alias<double>("y1", "y2"), DataSourceException);
+}
