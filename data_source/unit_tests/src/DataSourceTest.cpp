@@ -546,3 +546,11 @@ TEST_F(DataSourceTest, can_force_the_same_value_twice)
     ds.set("x",a.random<double>()());
     ASSERT_DOUBLE_EQ(another_forced_value, ds.get<double>("y1"));
 }
+
+TEST_F(DataSourceTest, cannot_set_a_value_that_has_been_forced)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    ds.force("y1", a.random<double>()());
+    ASSERT_THROW(ds.set("y1", a.random<double>()()), DataSourceException);
+}
