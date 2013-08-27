@@ -74,15 +74,19 @@ class DataSource
             {
                 module_requesting_signals = m->get_name();
                 m->update();
-                module_requesting_signals = module_requesting_signals_bak;
-                module_setting_signals = module_setting_signals_bak;
+                module_requesting_signals = "DataSource user";
+                module_setting_signals = "DataSource user";
             }
             catch(DataSourceException& e)
             {
+                module_requesting_signals = "DataSource user";
+                module_setting_signals = "DataSource user";
                 throw(e);
             }
             catch(...)
             {
+                module_requesting_signals = "DataSource user";
+                module_setting_signals = "DataSource user";
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
             //module_setting_signals = module_setting_signals_bak;
@@ -244,6 +248,7 @@ private:
             if (!(is_up_to_date[module_name]))
             {
                 module_requesting_signals = module_name;
+                module_setting_signals = module_name;
                 name2module[module_name]->update();
             }
         }
@@ -298,7 +303,6 @@ public:
                 const std::string module_requesting_signals_bak = module_requesting_signals;
                 const std::string module_setting_signals_bak = module_setting_signals;
                 update_dependencies();
-                module_requesting_signals = module_requesting_signals_bak;
                 module_setting_signals = module_setting_signals_bak;
                 return T();
             }
