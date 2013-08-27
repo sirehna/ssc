@@ -489,3 +489,13 @@ TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_has_not_been_set_yet
         ASSERT_THROW(ds.force(a.random<std::string>(), a.random<double>()()), DataSourceException);
     }
 }
+
+TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_is_set_manually)
+{
+    DataSource ds;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        ds.set("x", a.random<double>()());
+        ASSERT_THROW(ds.force("x", a.random<double>()()), DataSourceException);
+    }
+}
