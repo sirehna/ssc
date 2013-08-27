@@ -45,6 +45,14 @@ void DataSourceTest::TearDown()
 {
 }
 
+MODULE(M1,ds->set<double>("s1",123))
+MODULE(M2,const double s1 = ds->get<double>("s1");\
+          ds->set<double>("s2", s1))
+MODULE(M3,ds->get<double>("s2"))
+MODULE(OneInputTwoOutputs,const double x = ds->get<double>("x");\
+          ds->set<double>("y1", 2*x);\
+          ds->set<double>("y2", 3*x))
+
 TEST_F(DataSourceTest, example)
 {
 //! [DataSourceTest example]
@@ -219,10 +227,7 @@ TEST_F(DataSourceTest, two_signals_with_same_name_but_different_types_do_not_cre
     ASSERT_NO_THROW(ds.add<ModuleD>("Module D"));
 }
 
-MODULE(M1,ds->set<double>("s1",123))
-MODULE(M2,const double s1 = ds->get<double>("s1");\
-          ds->set<double>("s2", s1))
-MODULE(M3,ds->get<double>("s2"))
+
 
 TEST_F(DataSourceTest, can_add_a_module_without_specifying_its_name_but_only_once_per_type)
 {
