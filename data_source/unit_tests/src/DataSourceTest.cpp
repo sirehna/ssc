@@ -576,3 +576,18 @@ TEST_F(DataSourceTest, cannot_give_the_same_alias_two_different_meanings)
     ASSERT_NO_THROW(ds.alias<int>("x", "y2"));
     ASSERT_THROW(ds.alias<double>("x", "y2"), DataSourceException);
 }
+
+TEST_F(DataSourceTest, can_squash_user_value_with_module)
+{
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        DataSource ds;
+        const double x = a.random<double>();
+        const double y1 = a.random<double>();
+        ds.set("y1", y1);
+        ASSERT_DOUBLE_EQ(y1, ds.get<double>("y1"));
+        ds.add<OneInputTwoOutputs>();
+        ds.set("x", x);
+        ASSERT_DOUBLE_EQ(2*x, ds.get<double>("y1"));
+    }
+}
