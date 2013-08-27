@@ -499,3 +499,17 @@ TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_is_set_manually)
         ASSERT_THROW(ds.force("x", a.random<double>()()), DataSourceException);
     }
 }
+
+TEST_F(DataSourceTest, cannot_set_a_value_computed_by_a_module)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    ds.set("x",a.random<double>()());
+    ds.get<double>("y1");
+    ASSERT_THROW(ds.set("y1", a.random<double>()()), DataSourceException);
+    ASSERT_NO_THROW(ds.get<double>("y1"));
+    ASSERT_THROW(ds.set("y2", a.random<double>()()), DataSourceException);
+    ASSERT_NO_THROW(ds.get<double>("y2"));
+    ASSERT_NO_THROW(ds.set("y3", a.random<double>()()));
+    ASSERT_NO_THROW(ds.get<double>("y3"));
+}
