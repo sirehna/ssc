@@ -526,3 +526,9 @@ TEST_F(DataSourceTest, can_release_a_value_that_has_been_forced)
     ds.set<double>("x",111);
     ASSERT_DOUBLE_EQ(222, ds.get<double>("y1"));
 }
+
+TEST_F(DataSourceTest, cannot_release_a_value_that_has_not_been_forced)
+{
+    DataSource ds;
+    ASSERT_THROW(ds.release<double>(a.random<std::string>()), DataSourceException);
+}
