@@ -480,3 +480,12 @@ TEST_F(DataSourceTest, can_force_a_value_computed_by_a_module)
         ASSERT_DOUBLE_EQ(forced_value, ds.get<double>("y2"));
     }
 }
+
+TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_has_not_been_set_yet)
+{
+    DataSource ds;
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        ASSERT_THROW(ds.force(a.random<std::string>(), a.random<double>()()), DataSourceException);
+    }
+}
