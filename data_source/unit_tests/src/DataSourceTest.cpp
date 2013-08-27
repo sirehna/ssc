@@ -591,3 +591,32 @@ TEST_F(DataSourceTest, can_squash_user_value_with_module)
         ASSERT_DOUBLE_EQ(2*x, ds.get<double>("y1"));
     }
 }
+
+MODULE(M4, const double x = ds->get<double>("x");\
+           size_t *i = ds->get<size_t*>("nb of updates");\
+           ds->set<double>("y1", 2*x);\
+           ds->set<double>("y2", 3*x);\
+           if (not(ds->read_only())) *i = *i+1;\
+           )
+
+MODULE(M5, const double y1 = ds->get<double>("y1");\
+           ds->set<double>("z", 4*y1);\
+           )
+
+TEST_F(DataSourceTest, when_forcing_a_signal_dependencies_should_not_be_updated)
+{
+    DataSource ds;
+    ds.add<M4>();
+    ds.add<M5>();
+    size_t* nb_of_updates = new size_t(0);
+    ds.set("nb of updates", nb_of_updates);
+    ASSERT_EQ(0, *ds.get<size_t*>("nb of updates"));
+    const double x = a.random<double>();
+    ds.set("x", x);
+    ASSERT_DOUBLE_EQ(8*x,ds.get<double>("z"));
+    ASSERT_EQ(1, *ds.get<size_t*>("nb of updates"));
+    const double y1 = a.random<double>();
+    ds.force("y1", y1);
+    ASSERT_DOUBLE_EQ(4*y1,ds.get<double>("z"));
+    ASSERT_EQ(1, *ds.get<size_t*>("nb of updates"));
+}
