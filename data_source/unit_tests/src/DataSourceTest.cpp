@@ -567,3 +567,12 @@ TEST_F(DataSourceTest, an_alias_must_be_a_new_name_that_does_not_correspond_to_a
     ASSERT_THROW(ds.alias<double>("y1", "y1"), DataSourceException);
     ASSERT_THROW(ds.alias<double>("y1", "y2"), DataSourceException);
 }
+
+TEST_F(DataSourceTest, cannot_give_the_same_alias_two_different_meanings)
+{
+    DataSource ds;
+    ds.alias<double>("x", "y1");
+    ASSERT_NO_THROW(ds.alias<double>("x", "y1"));
+    ASSERT_NO_THROW(ds.alias<int>("x", "y2"));
+    ASSERT_THROW(ds.alias<double>("x", "y2"), DataSourceException);
+}
