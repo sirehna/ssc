@@ -532,3 +532,17 @@ TEST_F(DataSourceTest, cannot_release_a_value_that_has_not_been_forced)
     DataSource ds;
     ASSERT_THROW(ds.release<double>(a.random<std::string>()), DataSourceException);
 }
+
+TEST_F(DataSourceTest, can_force_the_same_value_twice)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    const double forced_value = a.random<double>();
+    const double another_forced_value = a.random<double>();
+    ds.force("y1", forced_value);
+    ds.set("x",a.random<double>()());
+    ASSERT_DOUBLE_EQ(forced_value, ds.get<double>("y1"));
+    ds.force("y1", another_forced_value);
+    ds.set("x",a.random<double>()());
+    ASSERT_DOUBLE_EQ(another_forced_value, ds.get<double>("y1"));
+}
