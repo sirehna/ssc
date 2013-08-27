@@ -202,7 +202,8 @@ class DataSource
             {
                 std::tr1::unordered_map<std::string, std::string>::const_iterator it =
                         signal2module.find(signal_name + typeid(T).name());
-                if ((it != signal2module.end()) && (it->second != "DataSource user" && (it->second != ""))
+                if ((it != signal2module.end())
+                        && (it->second != "DataSource user") && (it->second != "")
                         && (it->second != module_setting_signals))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
@@ -242,6 +243,48 @@ class DataSource
                 }
             }
         }
+        /** \author cec
+         *  \date 27 août 2013, 08:53:49
+         *  \brief Override a signal set by a module.
+         *  This works only if the signal has been set by a module, *not* if it
+         *  was set 'manually' by the DataSource user (outside the DataSource).
+         *  All subsequent 'set' operations must be performed by 'force'.
+         *  A 'force' operation can be canceled by DataSource::release.
+         *  \returns Nothing.
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest force_example
+         */
+        template<typename T>
+        void force(const std::string& signal_name, const T& forced_value)
+        {
+            if (!(signal2module.find(signal_name + typeid(T).name())
+                    != signal2module.end()))
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException,
+                        std::string("Attempting to force the value of signal '")
+                                + signal_name + "' (of type '"
+                                + std::string(typeid(T).name())
+                                + "'), which is not set by any module: can only force a value set by a module (otherwise, use DataSource::set).");
+            }
+            forced_values.set < T > (signal_name, forced_value);
+        }
+
+        /** \author cec
+         *  \date 27 août 2013, 09:26:14
+         *  \brief Removes a signal from the list of forced values. This means
+         *  the signal will be computed by the module instead.
+         *  \returns Nothing.
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
+         */
+        template<typename T>
+        void release(const std::string& signal_name)
+        {
+            if (!(forced_values.has<T>(signal_name)))
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Attempting to release '") + signal_name + "' which is not forced.");
+            }
+            forced_values.remove<T>(signal_name);
+        }
+
 private:
         void update_if_necessary(const std::string& module_name)
         {
@@ -296,6 +339,10 @@ public:
             if (it != aliases.end())
             {
                 return get<T>(it->second);
+            }
+            if (forced_values.has<T>(signal_name))
+            {
+                return forced_values.get<T>(signal_name);
             }
             if (readonly && (module_setting_signals != "DataSource user"))
             {
