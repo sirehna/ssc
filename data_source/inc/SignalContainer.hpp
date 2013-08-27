@@ -120,6 +120,8 @@ class SignalContainer
             vector_convertible_types.erase(tname);
         }
 
+        size_t size() const;
+
 
         /** \author cec
          *  \date 22 août 2013, 12:23:32

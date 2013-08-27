@@ -275,3 +275,17 @@ TEST_F(SignalContainerTest, can_remove_a_signal)
     signals.remove<double>(name);
     ASSERT_THROW(signals.get<double>(name), SignalContainerException);
 }
+
+TEST_F(SignalContainerTest, can_get_number_of_signals_in_container)
+{
+    SignalContainer signals;
+    for (size_t nb_of_signals = 0 ; nb_of_signals < 100 ; ++nb_of_signals)
+    {
+        signals.clear();
+        for (size_t j = 0 ; j < nb_of_signals ; ++j)
+        {
+            signals.set(a.random<std::string>(),a.random<double>()());
+        }
+        ASSERT_EQ(nb_of_signals, signals.size());
+    }
+}

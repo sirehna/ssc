@@ -88,3 +88,14 @@ std::vector<std::string> SignalContainer::get_all_signal_names() const
     }
     return ret;
 }
+
+/** \author cec
+ *  \date 27 août 2013, 10:34:20
+ *  \brief Get the number of signals.
+ *  \returns Number of signals in container.
+ *  \snippet data_source/unit_tests/src/SignalContainerTest.cpp SignalContainerTest SignalContainer::size_example
+*/
+size_t SignalContainer::size() const
+{
+    return signals_.size();
+}
