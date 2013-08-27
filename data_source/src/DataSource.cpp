@@ -32,7 +32,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            signal2dependantmodules(DependantModules()),
                            is_up_to_date(UpdateState()),
                            state_names(std::vector<std::pair<std::string,std::string> >()),
-                           aliases(std::map<std::string,std::string>())
+                           aliases(std::map<std::string,std::string>()),
+                           forced_values(SignalContainer())
 {
 }
 
@@ -48,7 +49,8 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 signal2dependantmodules(ds.signal2dependantmodules),
                                                 is_up_to_date(ds.is_up_to_date),
                                                 state_names(ds.state_names),
-                                                aliases(ds.aliases)
+                                                aliases(ds.aliases),
+                                                forced_values(ds.forced_values)
 {
     // We need to make sure that all modules now refer to the current DataSource
     FromName2Module::iterator it1 = name2module.begin();
@@ -100,6 +102,7 @@ void DataSource::clear()
     module2requiredsignals.clear();
     signal2dependantmodules.clear();
     is_up_to_date.clear();
+    forced_values.clear();
 }
 
 /** \author cec
