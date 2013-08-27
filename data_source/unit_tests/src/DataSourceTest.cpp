@@ -260,11 +260,12 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
     ASSERT_THROW(data_source.add<M1>(),DataSourceException);
     data_source.remove<M1>();
     ASSERT_NO_THROW(data_source.add<M1>());
+    ASSERT_THROW(data_source.add<M1>("module name"), DataSourceException);
+    data_source.remove<M1>();
+    ASSERT_THROW(data_source.remove<M1>(), DataSourceException);
+    ASSERT_NO_THROW(data_source.add<M1>());
 }
 
-/*
- *
- */
 TEST_F(DataSourceTest, can_declare_and_define_a_module_using_a_macro)
 {
     MODULE(modulename,const double x1 = ds->get<double>("x1");\
