@@ -513,3 +513,16 @@ TEST_F(DataSourceTest, cannot_set_a_value_computed_by_a_module)
     ASSERT_NO_THROW(ds.set("y3", a.random<double>()()));
     ASSERT_NO_THROW(ds.get<double>("y3"));
 }
+
+TEST_F(DataSourceTest, can_release_a_value_that_has_been_forced)
+{
+    DataSource ds;
+    ds.add<OneInputTwoOutputs>();
+    const double forced_value = a.random<double>();
+    ds.force("y1", forced_value);
+    ds.set("x",a.random<double>()());
+    ASSERT_DOUBLE_EQ(forced_value, ds.get<double>("y1"));
+    ds.release<double>("y1");
+    ds.set<double>("x",111);
+    ASSERT_DOUBLE_EQ(222, ds.get<double>("y1"));
+}
