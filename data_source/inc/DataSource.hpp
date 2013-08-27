@@ -343,6 +343,7 @@ public:
         UpdateState is_up_to_date; //!< For each module, whether it is up-to-date or not
         std::vector<std::pair<std::string,std::string> > state_names;
         std::map<std::string,std::string> aliases;
+        SignalContainer forced_values; //!< All signals that have been forced
 };
 
 
