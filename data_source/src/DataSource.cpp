@@ -102,6 +102,13 @@ void DataSource::clear()
     is_up_to_date.clear();
 }
 
+/** \author cec
+ *  \date 17 juin 2013, 11:00:13
+ *  \details Checks if a module with the same name exists in the DataSource.
+ *  If it exists, throw an exception. Otherwise, add the module to name2module.
+ *  \returns Pointer to the added module.
+ *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
+ */
 ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(const DataSourceModule& module)
 {
     FromName2Module::iterator it = name2module.find(module.get_name());

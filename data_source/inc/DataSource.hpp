@@ -28,7 +28,7 @@ void append(DependantModules& map, const std::string& key, const std::string& va
 
 /** \author cec
  *  \brief Simplifies the creation of simulators using forward/reverse chaining.
- *  \details It provides models with the data they need (which may come from other models)
+ *  \details It provides modules with the data they need (which may come from other modules)
  *  \ingroup data_source
  *  \section ex1 Example
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest example
@@ -320,13 +320,6 @@ public:
         std::vector<std::string> get_all_signal_names() const;
 
     private:
-        /** \author cec
-         *  \date 17 juin 2013, 11:00:13
-         *  \details Checks if a module with the same name exists in the DataSource.
-         *  If it exists, throw an exception. Otherwise, add the module to name2module.
-         *  \returns Pointer to the added module.
-         *  \snippet /unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
-         */
         ModulePtr add_module_if_not_already_present_and_return_clone(const DataSourceModule& module);
         std::set<std::string> get_dependencies(const std::string& module_name, std::set<std::string>& ret) const;
         std::set<std::string> get_dependencies(const std::string& ref_module, const std::string& current_module, std::set<std::string>& dependencies) const;
@@ -334,7 +327,7 @@ public:
         void update_dependencies();
         void add_dependencies_and_dependent_modules(const std::set<std::string>& required_signals, const std::string& module_using_required_signals);
         FromName2Module name2module; //!< Map giving, for each module name, a (smart) pointer to the corresponding module
-        bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used to track dependencies between modules
+        bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used so that the first call to DataSourceModule::update (by DataSource::add) can track dependencies between modules
         SignalContainer signals_; //!< All signals currently in the DataSource
         std::string module_setting_signals; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
         std::string module_requesting_signals; //!< Module currently getting signals from the DataSource (used to track which module is requiring a missing signal)
@@ -343,7 +336,7 @@ public:
         DependantModules module2requiredmodules; //!< For each module, stores the set of the names of the modules it depends on
         DependantModules module2requiredsignals; //!< For each module, stores the signals it depends on
         DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
-        UpdateState is_up_to_date;
+        UpdateState is_up_to_date; //!< For each module, whether it is up-to-date or not
         std::vector<std::pair<std::string,std::string> > state_names;
         std::map<std::string,std::string> aliases;
 };
