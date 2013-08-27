@@ -93,7 +93,31 @@ class DataSource
             readonly = read_only_bak;
         }
 
-        void alias(const std::string& name_of_copy, const std::string& copied_signal);
+        /** \author cec
+         *  \date 23 août 2013, 14:34:30
+         *  \brief This method was created because we sometimes don't know the name
+         *  of a signal from inside a module: therefore, when adding the module, we
+         *  create an alias of the signal name the module is expecting against the name
+         *  of the signal actually in the DataSource.
+         *  \returns Nothing.
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::alias_example
+        */
+        template <typename T>
+        void alias(const std::string& name_of_copy, const std::string& copied_signal)
+        {
+            const std::string signal_name = name_of_copy + typeid(T).name();
+            FromSignal2Module::const_iterator that_signal = signal2module.find(signal_name);
+            if (that_signal != signal2module.end())
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Asked to create alias ")+name_of_copy + " -> " + copied_signal + ", but '" + name_of_copy + "' is already in this DataSource (set by '" + that_signal->second + "')");
+            }
+            const std::map<TypedSignalName,std::string> ::const_iterator it = aliases.find(TypedSignalName(name_of_copy,typeid(T).name()));
+            if ((it != aliases.end()) && (it->second != copied_signal))
+            {
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("'")+name_of_copy+"' is already an alias for '" + it->second);
+            }
+            aliases[TypedSignalName(name_of_copy,typeid(T).name())] = copied_signal;
+        }
 
         /** \author cec
          *  \date 24 juil. 2013, 15:13:58
@@ -186,19 +210,18 @@ class DataSource
         */
         void clear();
 
-        /** \author cec
-         *  \date 18 juin 2013, 21:56:15
-         *  \brief Adds/Updates a signal in the DataSource
-         *  \returns Nothing
-         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_example
-        */
-        template <typename T> void set(std::string signal_name, //<! Name of the signal to create or update
-                                       const T& t)
+    private:
+        template<typename T>
+        void check_signal_is_neither_forced_nor_set_by_another_module(std::string& signal_name)
         {
-            std::map<std::string,std::string>::const_iterator it = aliases.find(signal_name);
-            const bool found_alias = it != aliases.end();
-            if (found_alias) signal_name = it->second;
-            if (readonly)
+            if (forced_values.has<T>(signal_name))
+            {
+                if (module_setting_signals == "DataSource user")
+                {
+                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("'DataSource user' is attempting to set '") + signal_name + "' which has been overridden using DataSource::force");
+                }
+            }
+            else
             {
                 std::tr1::unordered_map<std::string, std::string>::const_iterator it =
                         signal2module.find(signal_name + typeid(T).name());
@@ -207,42 +230,67 @@ class DataSource
                         && (it->second != module_setting_signals))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
-                            std::string("Attempting to add module '")
-                                    + module_setting_signals + "' which sets signal '"
-                                    + signal_name + "', but module '"
-                                    + it->second
-                                    + "' already sets it: need to remove one of them using DataSource::remove.");
-                }
-                else if (signal_name != "")
-                {
-                    signal2module[signal_name + typeid(T).name()] =
-                            module_setting_signals;
-                    update_dependencies();
+                            std::string("'")
+                                    + module_setting_signals
+                                    + "' is attempting to set signal '" + signal_name
+                                    + "', but module '" + it->second
+                                    + "' already sets it. A possible fix may be to use DataSource::remove.");
                 }
             }
-            else
+        }
+
+        template<typename T>
+        void set_all_dependent_modules_out_of_date(const std::string& signal_name)
+        {
+            DependantModules::const_iterator it = signal2dependantmodules.find(signal_name + typeid(T).name());
+            if (it != signal2dependantmodules.end())
             {
-                signals_.set(signal_name + typeid(T).name(), t);
-                DependantModules::const_iterator it = signal2dependantmodules
-                        .find(signal_name + typeid(T).name());
-                if (it != signal2dependantmodules.end())
+                const std::set<std::string> S = it->second;
+                for (std::set<std::string>::const_iterator it = S.begin(); it != S.end(); ++it)
                 {
-                    const std::set<std::string> S = it->second;
-                    for (std::set<std::string>::const_iterator it = S.begin();
-                            it != S.end(); ++it)
+                    is_up_to_date[*it] = false;
+                    const std::set<std::string> S2 = module2dependantmodules[*it];
+                    for (std::set<std::string>::const_iterator it2 = S2.begin(); it2 != S2.end(); ++it2)
                     {
-                        is_up_to_date[*it] = false;
-                        const std::set<std::string> S2 =
-                                module2dependantmodules[*it];
-                        for (std::set<std::string>::const_iterator it2 = S2
-                                .begin(); it2 != S2.end(); ++it2)
-                        {
-                            is_up_to_date[*it2] = false;
-                        }
+                        is_up_to_date[*it2] = false;
                     }
                 }
             }
         }
+
+        template<typename T> void update_dependencies(const std::string& signal_name)
+        {
+            if (signal_name != "")
+            {
+                signal2module[signal_name + typeid(T).name()] = module_setting_signals;
+                update_dependencies();
+            }
+        }
+
+    public:
+        /** \author cec
+         *  \date 18 juin 2013, 21:56:15
+         *  \brief Adds/updates a signal in the DataSource
+         *  \returns Nothing
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_example
+         */
+        template<typename T>
+        void set(std::string signal_name, //<! Name of the signal to create or update
+                const T& t)
+        {
+            std::map<TypedSignalName, std::string>::const_iterator that_alias = aliases.find(TypedSignalName(signal_name,typeid(T).name()));
+            const bool found_alias = that_alias != aliases.end();
+            if (found_alias) signal_name = that_alias->second;
+
+            check_signal_is_neither_forced_nor_set_by_another_module<T>(signal_name);
+            if (readonly) update_dependencies<T>(signal_name);
+            else
+            {
+                signals_.set(signal_name + typeid(T).name(), t);
+                set_all_dependent_modules_out_of_date<T>(signal_name);
+            }
+        }
+
         /** \author cec
          *  \date 27 août 2013, 08:53:49
          *  \brief Override a signal set by a module.
@@ -335,7 +383,7 @@ public:
         template<typename T>
         T get(const std::string& signal_name)
         {
-            std::map<std::string,std::string>::const_iterator it = aliases.find(signal_name);
+            std::map<TypedSignalName,std::string>::const_iterator it = aliases.find(TypedSignalName(signal_name,typeid(T).name()));
             if (it != aliases.end())
             {
                 return get<T>(it->second);
@@ -389,7 +437,7 @@ public:
         DependantModules signal2dependantmodules; //!< For each signal, stores the modules that depend on it
         UpdateState is_up_to_date; //!< For each module, whether it is up-to-date or not
         std::vector<std::pair<std::string,std::string> > state_names;
-        std::map<std::string,std::string> aliases;
+        std::map<TypedSignalName,std::string> aliases; //!< Correspondence between an alias & the name of the original signal
         SignalContainer forced_values; //!< All signals that have been forced
 };
 
