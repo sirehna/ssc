@@ -7,8 +7,6 @@
 
 #include "CSVFileReaderTest.hpp"
 #include "CSVFileReader.hpp"
-#include "test_macros.hpp"
-#include <stdio.h>
 #include <cstdio>
 #include <iostream>
 #include <fstream>
