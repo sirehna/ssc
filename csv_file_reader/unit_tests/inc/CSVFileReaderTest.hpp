@@ -1,5 +1,5 @@
 /*
- * ValidateAgainstCSVTest.hpp
+ * CSVFileReaderTest.hpp
  *
  * \date 8 avr. 2012, 14:10:21
  *  \author cec
@@ -11,11 +11,11 @@
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
 
-class ValidateAgainstCSVTest : public ::testing::Test
+class CSVFileReaderTest : public ::testing::Test
 {
     protected:
-        ValidateAgainstCSVTest();
-	    virtual ~ValidateAgainstCSVTest();
+        CSVFileReaderTest();
+	    virtual ~CSVFileReaderTest();
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
