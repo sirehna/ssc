@@ -57,9 +57,7 @@ CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_c
 	std::ifstream file(filename);
 	if (not (file.good()))
 	{
-		THROW(
-				"ValidateAgainstCSV::ValidateAgainstCSV::ValidateAgainstCSV(const char*, const size_t&)",
-				CSVFileReaderException, "Unable to open CSV file.");
+		THROW(__PRETTY_FUNCTION__,CSVFileReaderException, "Unable to open CSV file.");
 	}
 
 	extract_column_titles(file, expected_nb_of_columns, separator);
@@ -76,7 +74,7 @@ std::vector<double> CSVFileReader::get_line()
 {
 	if (that_line == values.end())
 	{
-		THROW("ValidateAgainstCSV::ValidateAgainstCSV::get_line()", CSVFileReaderException, "No more lines in input CSV file.");
+		THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "No more lines in input CSV file.");
 	}
 	return *(that_line++);
 }
