@@ -4,7 +4,6 @@ project (csv_file_reader)
 set(SRC src/CSVFileReader.cpp)
 
 include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${test_macros_INCLUDE_DIRS})
 include_directories (inc)
 
 add_library (${PROJECT_NAME}_static OBJECT ${SRC})

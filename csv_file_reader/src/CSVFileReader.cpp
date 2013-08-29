@@ -1,8 +1,7 @@
 #include "CSVFileReader.hpp"
-#include <sstream>
-#include <stdlib.h> // For atof
-#include "test_macros.hpp"
+#include <cstdlib> // For atof
 #include <fstream>
+#include <sstream>
 
 const std::vector<std::string> CSVFileReader::convert_line_to_vector_of_strings(const std::string& line, const char& separator) const
 {
