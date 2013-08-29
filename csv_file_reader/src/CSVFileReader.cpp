@@ -27,17 +27,12 @@ const std::vector<double> CSVFileReader::convert_line_to_vector_of_doubles(const
     return ret;
 }
 
-void CSVFileReader::extract_column_titles(std::ifstream& file, const size_t& expected_nb_of_columns, const char& separator)
+void CSVFileReader::extract_column_titles(std::istream& file, const char separator)
 {
 	std::string current_line;
 	getline(file, current_line, '\n');
 	titles = convert_line_to_vector_of_strings(current_line, separator);
-	if (titles.size() != expected_nb_of_columns)
-	{
- 		THROW(
-				"ValidateAgainstCSV::ValidateAgainstCSV::ValidateAgainstCSV(const char*, const size_t&)",
-				CSVFileReaderException, "Invalid number of columns.");
-	}
+
 }
 
 void CSVFileReader::extract_values(std::istream& file, const char separator)
@@ -60,7 +55,11 @@ CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_c
 		THROW(__PRETTY_FUNCTION__,CSVFileReaderException, "Unable to open CSV file.");
 	}
 
-	extract_column_titles(file, expected_nb_of_columns, separator);
+	extract_column_titles(file, separator);
+	if (titles.size() != expected_nb_of_columns)
+    {
+        THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "Invalid number of columns.");
+    }
 	extract_values(file, separator);
 	that_line = values.begin();
 }
