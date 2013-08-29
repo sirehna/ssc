@@ -66,5 +66,29 @@ TEST_F(CSVFileReaderTest, example)
 //! [CSVFileReaderTest expected output]
 }
 
-
-
+TEST_F(CSVFileReaderTest, example_without_opening_file)
+{
+    const std::string contents = "A,B,C\n1,2,3\n4,5,6\n7,8,9";
+    CSVFileReader validator(contents);
+    std::vector<double> current_line;
+    ASSERT_TRUE(validator.has_more_data());
+    current_line = validator.get_line();
+    ASSERT_EQ(3,current_line.size());
+    ASSERT_EQ(1, current_line.at(0));
+    ASSERT_EQ(2, current_line.at(1));
+    ASSERT_EQ(3, current_line.at(2));
+    ASSERT_TRUE(validator.has_more_data());
+    current_line = validator.get_line();
+    ASSERT_EQ(3,current_line.size());
+    ASSERT_EQ(4, current_line.at(0));
+    ASSERT_EQ(5, current_line.at(1));
+    ASSERT_EQ(6, current_line.at(2));
+    ASSERT_TRUE(validator.has_more_data());
+    current_line = validator.get_line();
+    ASSERT_EQ(3,current_line.size());
+    ASSERT_EQ(7, current_line.at(0));
+    ASSERT_EQ(8, current_line.at(1));
+    ASSERT_EQ(9, current_line.at(2));
+    ASSERT_FALSE(validator.has_more_data());
+    ASSERT_THROW(validator.get_line(),CSVFileReaderException);
+}
