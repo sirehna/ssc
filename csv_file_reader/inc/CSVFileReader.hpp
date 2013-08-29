@@ -1,9 +1,7 @@
 #ifndef	VALIDATE_AGAINST_CSV_FILE 
 #define VALIDATE_AGAINST_CSV_FILE
+
 #include "Exception.hpp"
-#include "extra_test_assertions.hpp"
-
-
 
 #include <vector>
 #include <string>
