@@ -92,3 +92,26 @@ TEST_F(CSVFileReaderTest, example_without_opening_file)
     ASSERT_FALSE(validator.has_more_data());
     ASSERT_THROW(validator.get_line(),CSVFileReaderException);
 }
+
+TEST_F(CSVFileReaderTest, can_retrieve_a_map_containing_the_values_by_column)
+{
+    const std::string contents = "A,B,C,D\n1,2,3,5.46\n4,5,6,8.54\n7,8,9,2.3337";
+    const CSVFileReader validator(contents);
+    std::map<std::string,std::vector<double> > map = validator.get_map();
+    ASSERT_EQ(4, map.size());
+    ASSERT_EQ(3, map["A"].size());
+    ASSERT_EQ(3, map["B"].size());
+    ASSERT_EQ(3, map["C"].size());
+    ASSERT_DOUBLE_EQ(1, map["A"][0]);
+    ASSERT_DOUBLE_EQ(2, map["B"][0]);
+    ASSERT_DOUBLE_EQ(3, map["C"][0]);
+    ASSERT_DOUBLE_EQ(5.46, map["D"][0]);
+    ASSERT_DOUBLE_EQ(4, map["A"][1]);
+    ASSERT_DOUBLE_EQ(5, map["B"][1]);
+    ASSERT_DOUBLE_EQ(6, map["C"][1]);
+    ASSERT_DOUBLE_EQ(8.54, map["D"][1]);
+    ASSERT_DOUBLE_EQ(7, map["A"][2]);
+    ASSERT_DOUBLE_EQ(8, map["B"][2]);
+    ASSERT_DOUBLE_EQ(9, map["C"][2]);
+    ASSERT_DOUBLE_EQ(2.3337, map["D"][2]);
+}
