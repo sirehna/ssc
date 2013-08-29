@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-const std::vector<std::string> CSVFileReader::convert_line_to_vector_of_strings(const std::string& line, const char& separator) const
+const std::vector<std::string> CSVFileReader::convert_line_to_vector_of_strings(const std::string& line, const char separator) const
 {
     std::istringstream line_stream(line);
     std::string field;
@@ -18,7 +18,7 @@ const std::vector<std::string> CSVFileReader::convert_line_to_vector_of_strings(
     return values;
 }
 
-const std::vector<double> CSVFileReader::convert_line_to_vector_of_doubles(const std::string& line, const char& separator) const
+const std::vector<double> CSVFileReader::convert_line_to_vector_of_doubles(const std::string& line, const char separator) const
 {
     const std::vector<std::string> values = convert_line_to_vector_of_strings(line, separator);
     std::vector<double> ret;
@@ -40,7 +40,7 @@ void CSVFileReader::extract_column_titles(std::ifstream& file, const size_t& exp
 	}
 }
 
-void CSVFileReader::extract_values(std::ifstream& file, const char& separator)
+void CSVFileReader::extract_values(std::istream& file, const char separator)
 {
 	std::string current_line;
 	while (getline(file, current_line, '\n'))
