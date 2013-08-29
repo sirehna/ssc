@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.8)
 project (yaml_parser)
 
-FILE(GLOB SRC src/YamlParser.cpp)
+set(SRC src/YamlParser.cpp)
 
 include_directories(${test_macros_INCLUDE_DIRS})
 include_directories(inc)
