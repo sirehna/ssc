@@ -1,5 +1,5 @@
 /*
- * ValidateAgainstCSVTest.cpp
+ * CSVFileReaderTest.cpp
  *
  * \date 8 avr. 2012, 14:10:34
  *  \author cec
@@ -11,25 +11,25 @@
 #include <iostream>
 #include <fstream>
 
-ValidateAgainstCSVTest::ValidateAgainstCSVTest() : a(DataGenerator(9487))
+CSVFileReaderTest::CSVFileReaderTest() : a(DataGenerator(9487))
 {
 }
 
-ValidateAgainstCSVTest::~ValidateAgainstCSVTest()
+CSVFileReaderTest::~CSVFileReaderTest()
 {
 }
 
-void ValidateAgainstCSVTest::SetUp()
+void CSVFileReaderTest::SetUp()
 {
 }
 
-void ValidateAgainstCSVTest::TearDown()
+void CSVFileReaderTest::TearDown()
 {
 }
 
-TEST_F(ValidateAgainstCSVTest, example)
+TEST_F(CSVFileReaderTest, example)
 {
-//! [ValidateAgainstCSVTest example]
+//! [CSVFileReaderTest example]
 	char filename [L_tmpnam];
 	tmpnam (filename);
 	std::ofstream file (filename);
@@ -40,8 +40,8 @@ TEST_F(ValidateAgainstCSVTest, example)
 	ASSERT_THROW(CSVFileReader(filename, invalid_nb_of_columns),CSVFileReaderException);
 	CSVFileReader validator(filename, 3);
 	remove (filename);
-//! [ValidateAgainstCSVTest example]
-//! [ValidateAgainstCSVTest expected output]
+//! [CSVFileReaderTest example]
+//! [CSVFileReaderTest expected output]
 	std::vector<double> current_line;
 	ASSERT_TRUE(validator.has_more_data());
 	current_line = validator.get_line();
@@ -63,7 +63,7 @@ TEST_F(ValidateAgainstCSVTest, example)
 	ASSERT_EQ(9, current_line.at(2));
 	ASSERT_FALSE(validator.has_more_data());
 	ASSERT_THROW(validator.get_line(),CSVFileReaderException);
-//! [ValidateAgainstCSVTest expected output]
+//! [CSVFileReaderTest expected output]
 }
 
 
