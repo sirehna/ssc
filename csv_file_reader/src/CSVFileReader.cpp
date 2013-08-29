@@ -64,6 +64,16 @@ CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_c
 	that_line = values.begin();
 }
 
+CSVFileReader::CSVFileReader(const std::string& contents, const char separator) : titles(std::vector<std::string>()),
+        values(std::vector<std::vector<double> >()),
+        that_line(values.begin())
+{
+    std::istringstream ss(contents);
+    extract_column_titles(ss, separator);
+    extract_values(ss, separator);
+    that_line = values.begin();
+}
+
 bool CSVFileReader::has_more_data() const
 {
 	return that_line != values.end();
