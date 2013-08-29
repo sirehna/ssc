@@ -3,6 +3,37 @@
 #include <fstream>
 #include <sstream>
 
+CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_columns, const char separator) : titles(std::vector<std::string>()),
+        values(std::vector<std::vector<double> >()),
+        that_line(values.begin()),
+        map(std::map<std::string,std::vector<double> >())
+{
+    std::ifstream file(filename);
+    if (not (file.good()))
+    {
+        THROW(__PRETTY_FUNCTION__,CSVFileReaderException, "Unable to open CSV file.");
+    }
+
+    extract_column_titles(file, separator);
+    if (titles.size() != expected_nb_of_columns)
+    {
+        THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "Invalid number of columns.");
+    }
+    extract_values(file, separator);
+    that_line = values.begin();
+}
+
+CSVFileReader::CSVFileReader(const std::string& contents, const char separator) : titles(std::vector<std::string>()),
+        values(std::vector<std::vector<double> >()),
+        that_line(values.begin()),
+        map(std::map<std::string,std::vector<double> >())
+{
+    std::istringstream ss(contents);
+    extract_column_titles(ss, separator);
+    extract_values(ss, separator);
+    that_line = values.begin();
+}
+
 const std::vector<std::string> CSVFileReader::convert_line_to_vector_of_strings(const std::string& line, const char separator) const
 {
     std::istringstream line_stream(line);
@@ -32,7 +63,11 @@ void CSVFileReader::extract_column_titles(std::istream& file, const char separat
 	std::string current_line;
 	getline(file, current_line, '\n');
 	titles = convert_line_to_vector_of_strings(current_line, separator);
-
+	std::vector<std::string>::const_iterator it = titles.begin();
+	for (;it != titles.end() ; ++it)
+	{
+	    map[*it] = std::vector<double>();
+	}
 }
 
 void CSVFileReader::extract_values(std::istream& file, const char separator)
@@ -41,37 +76,13 @@ void CSVFileReader::extract_values(std::istream& file, const char separator)
 	while (getline(file, current_line, '\n'))
 	{
 		values.push_back(convert_line_to_vector_of_doubles(current_line, separator));
+		std::vector<std::string>::const_iterator it = titles.begin();
+		size_t i = 0;
+		for (;it != titles.end() ; ++it)
+        {
+            map[*it].push_back(values.back().at(i++));
+        }
 	}
-}
-
-
-CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_columns, const char separator) : titles(std::vector<std::string>()),
-		values(std::vector<std::vector<double> >()),
-		that_line(values.begin())
-{
-	std::ifstream file(filename);
-	if (not (file.good()))
-	{
-		THROW(__PRETTY_FUNCTION__,CSVFileReaderException, "Unable to open CSV file.");
-	}
-
-	extract_column_titles(file, separator);
-	if (titles.size() != expected_nb_of_columns)
-    {
-        THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "Invalid number of columns.");
-    }
-	extract_values(file, separator);
-	that_line = values.begin();
-}
-
-CSVFileReader::CSVFileReader(const std::string& contents, const char separator) : titles(std::vector<std::string>()),
-        values(std::vector<std::vector<double> >()),
-        that_line(values.begin())
-{
-    std::istringstream ss(contents);
-    extract_column_titles(ss, separator);
-    extract_values(ss, separator);
-    that_line = values.begin();
 }
 
 bool CSVFileReader::has_more_data() const
@@ -86,4 +97,9 @@ std::vector<double> CSVFileReader::get_line()
 		THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "No more lines in input CSV file.");
 	}
 	return *(that_line++);
+}
+
+std::map<std::string,std::vector<double> > CSVFileReader::get_map() const
+{
+    return map;
 }
