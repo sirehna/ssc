@@ -6,10 +6,17 @@
  */
 
 #include "SignalContainerTypeLists.hpp"
+#include <ostream>
 
 TypedSignalName::TypedSignalName(const SignalName& signal_name, const TypeName& type_name) : _signal_name(signal_name),
                     _type_name(type_name)
 {}
+
+TypedSignalName::TypedSignalName() : _signal_name(""),
+                    _type_name("")
+{}
+
+
 
 bool TypedSignalName::operator<(const TypedSignalName& rhs) const
 {
@@ -164,4 +171,10 @@ template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTy
 template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
 {
     return l.iter_phys_qty.end();
+}
+
+::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s)
+{
+    os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
+    return os;
 }

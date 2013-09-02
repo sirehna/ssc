@@ -19,12 +19,11 @@ class CycleException : public DataSourceException
         }
 };
 
-
 DataSource::DataSource() : name2module(FromName2Module()),
                            readonly(false),
                            signals_(SignalContainer()),
-                           module_setting_signals("DataSource user"),
-                           module_requesting_signals("DataSource user"),
+                           module_setting_signals("DataSource user",""),
+                           module_requesting_signals("DataSource user",""),
                            signal2module(FromSignal2Module()),
                            module2dependantmodules(DependantModules()),
                            module2requiredmodules(DependantModules()),
@@ -32,7 +31,7 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            signal2dependantmodules(DependantModules()),
                            is_up_to_date(UpdateState()),
                            state_names(std::vector<std::pair<std::string,std::string> >()),
-                           aliases(std::map<TypedSignalName,std::string>()),
+                           aliases(std::map<TypedSignalName,TypedSignalName>()),
                            forced_values(SignalContainer())
 {
 }
@@ -67,17 +66,17 @@ std::string DataSource::draw() const
     ss << "\texported_signals_by_each_module" << std::endl;
     for (FromSignal2Module::const_iterator it = signal2module.begin() ; it != signal2module.end() ; ++it)
     {
-        ss << "\t\t" << it->second << " -> [" << it->first << "]" << std::endl;
+        ss << "\t\t" << it->second.get_signal_name() << " -> [" << it->first.get_signal_name() << "]" << std::endl;
     }
     ss << "\tsignals_required_by_each_module" << std::endl;
     for (DependantModules::const_iterator it = module2requiredsignals.begin() ; it != module2requiredsignals.end() ; ++it)
     {
         ss << "\t\t[ ";
-        for (std::set<std::string>::const_iterator it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
+        for (std::set<TypedSignalName>::const_iterator it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
         {
-            ss << "'" << *it2 << "' ";
+            ss << "'" << it2->get_signal_name() << "' ";
         }
-        ss << "] -> " << it->first << std::endl;
+        ss << "] -> " << it->first.get_signal_name() << std::endl;
     }
     return ss.str();
 }
@@ -96,7 +95,7 @@ void DataSource::clear()
 {
     name2module.clear();
     signals_.clear();
-    module_setting_signals = "DataSource user";
+    module_setting_signals = TypedSignalName("DataSource user","");
     signal2module.clear();
     module2dependantmodules.clear();
     module2requiredsignals.clear();
@@ -105,50 +104,27 @@ void DataSource::clear()
     forced_values.clear();
 }
 
-/** \author cec
- *  \date 17 juin 2013, 11:00:13
- *  \details Checks if a module with the same name exists in the DataSource.
- *  If it exists, throw an exception. Otherwise, add the module to name2module.
- *  \returns Pointer to the added module.
- *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
- */
-ModulePtr DataSource::add_module_if_not_already_present_and_return_clone(const DataSourceModule& module)
-{
-    FromName2Module::iterator it = name2module.find(module.get_name());
-    const bool module_is_already_in_map = it != name2module.end();
-    if (module_is_already_in_map)
-    {
-        std::string s = "A module named '";
-        THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists");
-    }
-    ModulePtr ret(module.clone());
-    module_setting_signals = module.get_name();
-    name2module.insert(std::make_pair(module_setting_signals, ret));
-    is_up_to_date[module_setting_signals] = false;
-    return ret;
-}
-
-void append(DependantModules& map, const std::string& key, const std::string& value)
+void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value)
 {
     DependantModules::iterator it = map.find(key);
     if (it == map.end())
     {
-        std::set<std::string> Value;
+        std::set<TypedModuleName> Value;
         Value.insert(value);
         map[key] = Value;
     }
     else it->second.insert(value);
 }
 
-void DataSource::add_dependencies_and_dependent_modules(const std::set<std::string>& required_signals, const std::string& module_using_signals)
+void DataSource::add_dependencies_and_dependent_modules(const std::set<TypedSignalName>& required_signals, const TypedModuleName& module_using_signals)
 {
-    std::set<std::string>::const_iterator that_required_signal = required_signals.begin();
+    std::set<TypedSignalName>::const_iterator that_required_signal = required_signals.begin();
     for (; that_required_signal != required_signals.end(); ++that_required_signal)
     {
         const FromSignal2Module::const_iterator it = signal2module.find(*that_required_signal);
         if (it != signal2module.end())
         {
-            const std::string module_producing_signal = it->second;
+            const TypedModuleName module_producing_signal = it->second;
             append(module2requiredmodules, module_using_signals, module_producing_signal);
             append(module2dependantmodules, module_producing_signal, module_using_signals);
         }
@@ -156,30 +132,30 @@ void DataSource::add_dependencies_and_dependent_modules(const std::set<std::stri
 
 }
 
-std::set<std::string> DataSource::get_dependencies(const std::string& ref_module, const std::string& current_module, std::set<std::string>& dependencies) const
+std::set<TypedModuleName> DataSource::get_dependencies(const TypedModuleName& ref_module, const TypedModuleName& current_module, std::set<TypedModuleName>& dependencies) const
 {
     DependantModules::const_iterator that_module = module2dependantmodules.find(current_module);
     if (that_module != module2dependantmodules.end())
     {
-        std::set<std::string> dependant_modules = that_module->second;
-        for (std::set<std::string>::const_iterator that_dependant_module = dependant_modules.begin() ; that_dependant_module != dependant_modules.end() ; ++that_dependant_module)
+        std::set<TypedModuleName> dependant_modules = that_module->second;
+        for (std::set<TypedModuleName>::const_iterator that_dependant_module = dependant_modules.begin() ; that_dependant_module != dependant_modules.end() ; ++that_dependant_module)
         {
             if (*that_dependant_module == ref_module)
             {
-                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + ref_module + std::string("' depends on itself"));
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Cycle found: module '") + ref_module.get_signal_name() + std::string("' depends on itself"));
             }
-            const std::set<std::string> new_dependencies = get_dependencies(ref_module,*that_dependant_module,dependencies);
+            const std::set<TypedModuleName> new_dependencies = get_dependencies(ref_module,*that_dependant_module,dependencies);
             dependencies.insert(new_dependencies.begin(),new_dependencies.end());
             if (dependencies.find(ref_module) != dependencies.end())
             {
-                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Module '") + ref_module + "' depends on itself");
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Module '") + ref_module.get_signal_name() + "' depends on itself");
             }
         }
     }
     return dependencies;
 }
 
-std::set<std::string> DataSource::get_dependencies(const std::string& module, std::set<std::string>& dependencies) const
+std::set<TypedModuleName> DataSource::get_dependencies(const TypedModuleName& module, std::set<TypedModuleName>& dependencies) const
 {
     return get_dependencies(module,module, dependencies);
 }
@@ -200,13 +176,13 @@ void DataSource::update_dependencies()
     DependantModules::const_iterator module_requirements_pair = module2requiredsignals.begin();
     for (;module_requirements_pair!=module2requiredsignals.end();++module_requirements_pair)
     {
-        const std::set<std::string> required_signals = module_requirements_pair->second;
-        const std::string module_using_signals = module_requirements_pair->first;
+        const std::set<TypedSignalName> required_signals = module_requirements_pair->second;
+        const TypedSignalName module_using_signals = module_requirements_pair->first;
         add_dependencies_and_dependent_modules(required_signals, module_using_signals);
     }
     if (a_module_depends_on_itself())
     {
-        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + module_setting_signals + "' depends on itself (eventually)");
+        THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Circular dependency: module '") + module_setting_signals.get_signal_name() + "' depends on itself (eventually)");
     }
 }
 

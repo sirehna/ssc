@@ -111,7 +111,7 @@ TEST_F(DataSourceTest, should_be_able_to_add_a_module_and_get_the_list_of_module
     std::set<std::string> expected_module_names;
     for (FromName2Module::const_iterator it = modules.begin() ; it != modules.end() ; ++it)
     {
-        module_names.insert(it->first);
+        module_names.insert(it->first.get_signal_name());
     }
     expected_module_names.insert(mock_1->get_name());
     expected_module_names.insert(mock_2->get_name());
@@ -132,7 +132,7 @@ TEST_F(DataSourceTest, check_that_the_correct_functions_are_called_for_add_modul
     ON_CALL(*mock, clone()).WillByDefault(Return(mock));
     EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, clone()).Times(1);
-    EXPECT_CALL(*mock, get_name()).Times(1);
+    //EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, initialize()).Times(1);
     EXPECT_CALL(*mock, get_name()).Times(1);
     EXPECT_CALL(*mock, update()).Times(1);
