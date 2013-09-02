@@ -62,15 +62,15 @@ class SignalContainer
                 std::string msg = "unable to find a signal named '";
                 msg += name.get_signal_name();
                 msg += "' of type '" + name.get_type_name() + "'";
-                const std::string function_name = std::string(typeid(T).name()) + " SignalContainer::get(const std::string& signal_name) const";
+                const std::string function_name = std::string(typeid(T).name()) + " " + __PRETTY_FUNCTION__;
                 THROW(function_name, SignalContainerException, msg);
             }
             return boost::any_cast<T>(it->second);
         }
 
-        template <typename T> bool has(const std::string& signal_name) const
+        bool has(const TypedSignalName& signal_name) const
         {
-            return signals_.find(TypedSignalName(signal_name,typeid(T).name())) != signals_.end();
+            return signals_.find(signal_name) != signals_.end();
         }
 
         template <class T> typename std::map<SignalName, T> get_all() const

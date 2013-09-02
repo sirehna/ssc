@@ -26,12 +26,31 @@ class TypedSignalName
         bool operator!=(const TypedSignalName& rhs) const;
         SignalName get_signal_name() const;
         TypeName get_type_name() const;
-    private:
         TypedSignalName();
+    private:
         SignalName _signal_name;
         TypeName _type_name;
-
 };
+
+::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s);
+
+
+namespace std
+{
+    namespace tr1
+    {
+        template <>
+        struct hash<TypedSignalName>
+        {
+            std::size_t operator() (const TypedSignalName& c) const
+            {
+               return std::tr1::hash<std::string>()(c.get_signal_name()+c.get_type_name());
+            }
+        };
+    }
+}
+
+typedef TypedSignalName TypedModuleName;
 
 class OwnHash
 {
