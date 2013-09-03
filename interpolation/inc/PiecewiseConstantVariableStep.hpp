@@ -42,13 +42,13 @@ template <class T> class PiecewiseConstantVariableStep
                 std::stringstream ss;
                 ss << "x has size " << n
                    << ", but y has size " << y.size() << ": the two should be equal";
-                THROW("PiecewiseConstantVariableStep::PiecewiseConstantVariableStep(const std::vector<double>&, const std::vector<double>&)", PiecewiseConstantVariableStepException, ss.str());
+                THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
             }
             if (n < 2)
             {
                 std::stringstream ss;
                 ss << "x has size " << x.size() << " but size should be at least 2";
-                THROW("PiecewiseConstantVariableStep::PiecewiseConstantVariableStep(const std::vector<double>&, const std::vector<double>&)", PiecewiseConstantVariableStepException, ss.str());
+                THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
             }
             for (size_t i = 1 ; i < n ; ++i)
             {
@@ -57,7 +57,7 @@ template <class T> class PiecewiseConstantVariableStep
                     std::stringstream ss;
                     ss << "x should be in strictly increasing order: x[" << i-1 << "] = " << x.at(i-1)
                        << ", but x" << "[" << i << "] = " << x.at(i);
-                    THROW("PiecewiseConstantVariableStep::PiecewiseConstantVariableStep(const std::vector<double>&, const std::vector<double>&)", PiecewiseConstantVariableStepException, ss.str());
+                    THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
                 }
             }
         }
