@@ -620,3 +620,27 @@ TEST_F(DataSourceTest, when_forcing_a_signal_dependencies_should_not_be_updated)
     ASSERT_DOUBLE_EQ(4*y1,ds.get<double>("z"));
     ASSERT_EQ(1, *ds.get<size_t*>("nb of updates"));
 }
+
+MODULE(CO2, ds->set<double>("CO2", 123);)
+
+DataSource conf_ds();
+DataSource conf_ds()
+{
+    DataSource ds;
+    ds.add<CO2>("CO2");
+    return ds;
+}
+
+TEST_F(DataSourceTest, crash_if_assignment_operator_is_not_well_defined)
+{
+    /* This bug was discovered in EONAV: originally, the assignment operator was
+     * not defined (the default compiler-generated operator was used) which
+     * meant that the modules were not cloned. This caused a crash in certain
+     * situations.
+    */
+    DataSource ds1;
+    ds1 = conf_ds();
+    ds1.get<double>("CO2");
+    DataSource ds = conf_ds();
+    ASSERT_DOUBLE_EQ(123, ds.get<double>("CO2"));
+}

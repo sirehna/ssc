@@ -59,6 +59,33 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
     }
 }
 
+DataSource& DataSource::operator=(const DataSource& ds)
+{
+    if (this != &ds)
+    {
+        name2module = ds.name2module;
+        readonly = ds.readonly;
+        signals_ = ds.signals_;
+        module_setting_signals = ds.module_setting_signals;
+        module_requesting_signals = ds.module_requesting_signals;
+        signal2module = ds.signal2module;
+        module2dependantmodules = ds.module2dependantmodules;
+        module2requiredmodules = ds.module2requiredmodules;
+        module2requiredsignals = ds.module2requiredsignals;
+        signal2dependantmodules = ds.signal2dependantmodules;
+        is_up_to_date = ds.is_up_to_date;
+        state_names = ds.state_names;
+        aliases = ds.aliases;
+        forced_values = ds.forced_values;
+        FromName2Module::iterator it1 = name2module.begin();
+        for (;it1!=name2module.end();++it1)
+        {
+            it1->second = ModulePtr(it1->second->clone(this));
+        }
+    }
+    return *this;
+}
+
 std::string DataSource::draw() const
 {
     std::stringstream ss;
