@@ -42,14 +42,15 @@ class Track
         virtual ~Track();
         Track(const std::vector<LatitudeLongitude>& waypoints);
         double length() const;
-        LatitudeLongitude find_waypoint_on_track(const double& distance_from_start_of_track) const;
-        size_t find_leg_index(const double& distance_from_start_of_track) const;
-        double get_waypoint_position_on_track(const size_t& waypoint_idx) const;
+        LatitudeLongitude find_waypoint_on_track(const double distance_from_start_of_track) const;
+        size_t find_leg_index(const double distance_from_start_of_track) const;
+        double get_waypoint_position_on_track(const size_t waypoint_idx) const;
         std::vector<LatitudeLongitude> get_all_waypoints() const;
-        std::pair<Track,Track> split_at(const double& distance_from_start_of_track) const;
+        std::pair<Track,Track> split_at(const double distance_from_start_of_track) const;
         bool operator==(const Track& rhs) const;
         bool operator!=(const Track& rhs) const;
-        Angle azimuth_at(const double& distance_from_point1) const;
+        Angle azimuth_at(const double distance_from_point1) const;
+        std::vector<Angle> get_azimuth_of_all_waypoints() const;
         std::pair<LatitudeLongitude, size_t> find_closest_point_to(const LatitudeLongitude& point) const;
         double distance_from_beginning_of_track_to_closest_point(const LatitudeLongitude& point) const;
 

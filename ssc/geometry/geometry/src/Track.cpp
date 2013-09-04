@@ -20,7 +20,8 @@ class Track::TrackImpl
         legs(std::vector<Leg>()),
         length(0),
         nb_of_legs(waypoints_.size()-1),
-        waypoints(waypoints_)
+        waypoints(waypoints_),
+        direction_at_waypoint(std::vector<Angle>())
         {
             if (waypoints.size() < 2)
             {
@@ -36,12 +37,17 @@ class Track::TrackImpl
                 const double d = legs.back().length();
                 length += d;
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
+                direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             }
             legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
+            direction_at_waypoint.push_back(legs.back().azimuth_at(0));
+            direction_at_waypoint.push_back(legs.back().azimuth_at(legs.back().length()));
             length += legs.back().length();
+
+
         }
 
-        void check_poles(const double P_lat, const double Q_lat, bool& previous_point_at_90_deg_latitude, bool& previous_point_at_minus_90_deg_latitude) const
+        void check_poles(const double P_lat, const double Q_lat, bool& previous_point_at_90_deg_latitude, bool previous_point_at_minus_90_deg_latitude) const
         {
             if ((previous_point_at_90_deg_latitude || (Q_lat == 90)) && (P_lat == 90))
             {
@@ -55,7 +61,7 @@ class Track::TrackImpl
             previous_point_at_90_deg_latitude = (P_lat == 90);
         }
 
-        size_t find_leg_index(const double& distance) const
+        size_t find_leg_index(const double distance) const
         {
             for (size_t i = 1 ; i < nb_of_legs ; ++i)
             {
@@ -69,6 +75,7 @@ class Track::TrackImpl
         double length;
         size_t nb_of_legs;
         std::vector<LatitudeLongitude> waypoints;
+        std::vector<Angle> direction_at_waypoint;
 
     private:
         TrackImpl();
@@ -97,7 +104,7 @@ std::vector<LatitudeLongitude> Track::get_all_waypoints() const
  *  \returns Pair of tracks
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest split_at_example
 */
-std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_track) const
+std::pair<Track,Track> Track::split_at(const double distance_from_start_of_track) const
 {
     if ((distance_from_start_of_track<=0) || (distance_from_start_of_track>=length()))
     {
@@ -130,15 +137,26 @@ std::pair<Track,Track> Track::split_at(const double& distance_from_start_of_trac
 
 /** \author cec
  *  \date 27 mai 2013, 15:01:34
- *  \brief
+ *  \brief Direction of the tangent to the track at a point at a given distance from the beginning of the track
  *  \returns
  *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest Track::azimuth_at_example
 */
-Angle Track::azimuth_at(const double& distance_from_point1) const
+Angle Track::azimuth_at(const double distance_from_start_of_leg) const
 {
-    const size_t idx = find_leg_index(distance_from_point1);
-    const double d = distance_from_point1-pimpl->distance_from_start_to_begining_of_leg.at(idx);
+    const size_t idx = find_leg_index(distance_from_start_of_leg);
+    const double d = distance_from_start_of_leg-pimpl->distance_from_start_to_begining_of_leg.at(idx);
     return pimpl->legs.at(idx).azimuth_at(d);
+}
+
+/** \author cec
+ *  \date 4 sept. 2013, 11:08:32
+ *  \brief Returns the direction of the tangent vector at each waypoint
+ *  \returns Vector of directions (in Angle)
+ *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest Track::get_azimuth_of_all_waypoints_example
+*/
+std::vector<Angle> Track::get_azimuth_of_all_waypoints() const
+{
+    return pimpl->direction_at_waypoint;
 }
 
 /** \author cec
@@ -164,7 +182,7 @@ Track::~Track()
  *  \returns Longitude & latitude of point at given distance from start of track
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_waypoint_on_track_example
  */
-LatitudeLongitude Track::find_waypoint_on_track(const double& distance //!< Distance (measured on the track) from first waypoint (in meters)
+LatitudeLongitude Track::find_waypoint_on_track(const double distance //!< Distance (measured on the track) from first waypoint (in meters)
                                                ) const
 {
     if (distance>length())
@@ -185,7 +203,7 @@ LatitudeLongitude Track::find_waypoint_on_track(const double& distance //!< Dist
  *  \returns Index of point just before the point at 'distance' from first waypoint (start of track)
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest find_leg_index_example
  */
-size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Distance from first waypoint (in meters)
+size_t Track::find_leg_index(const double distance_from_start_of_track //!< Distance from first waypoint (in meters)
                              ) const
 {
     if (distance_from_start_of_track<0)
@@ -202,7 +220,7 @@ size_t Track::find_leg_index(const double& distance_from_start_of_track //!< Dis
  *  \returns Distance from first waypoint (in meters)
  *  \snippet /unit_tests/src/TrackTest.cpp TrackTest distance_from_start_example
  */
-double Track::get_waypoint_position_on_track(const size_t& waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
+double Track::get_waypoint_position_on_track(const size_t waypoint_idx //!< Index of the waypoint of which we wish to calculate the position
                                   ) const
 {
     if (waypoint_idx < pimpl->nb_of_legs) return pimpl->distance_from_start_to_begining_of_leg.at(waypoint_idx);
