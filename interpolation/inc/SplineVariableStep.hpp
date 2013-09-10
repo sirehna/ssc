@@ -8,7 +8,21 @@
 #ifndef SPLINEVARIABLESTEP_HPP_
 #define SPLINEVARIABLESTEP_HPP_
 
-#include "Interpolator.hpp"
+#include "VariableStepInterpolation.hpp"
+#include <vector>
+#include <tr1/memory>
+
+#include "Exception.hpp"
+
+class SplineVariableStepException : public Exception
+{
+    public:
+        SplineVariableStepException(const char* s) :
+                Exception(s)
+        {
+        }
+};
+
 
 /** \author cec
  *  \ingroup interpolation
@@ -19,7 +33,7 @@
  *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest expected output
  */
 
-class SplineVariableStep : public Interpolator
+class SplineVariableStep : public VariableStepInterpolation
 {
     public:
         SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
@@ -28,7 +42,9 @@ class SplineVariableStep : public Interpolator
         SplineVariableStep();
         double get_f() const;
         double get_df(const size_t derivative_order) const;
-        void update_coefficients_if_necessary(const double x0);
+
+        class Impl;
+        std::tr1::shared_ptr<Impl> pimpl;
 };
 
 #endif /* SPLINEVARIABLESTEP_HPP_ */

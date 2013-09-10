@@ -11,6 +11,7 @@
 #include <vector>
 #include <sstream>
 #include "Exception.hpp"
+#include "VariableStepInterpolation.hpp"
 
 class PiecewiseConstantVariableStepException : public Exception
 {
@@ -32,69 +33,58 @@ class PiecewiseConstantVariableStepException : public Exception
  *  \snippet interpolation/unit_tests/src/PiecewiseConstantVariableStepTest.cpp PiecewiseConstantVariableStepTest expected output
  */
 
-template <class T> class PiecewiseConstantVariableStep
+template <class T> class PiecewiseConstantVariableStep: public VariableStepInterpolation
 {
     public:
-        PiecewiseConstantVariableStep(const std::vector<double>& x, const typename std::vector<T>& y) : n(x.size()),x_(x),y_(y),val(T())
+        PiecewiseConstantVariableStep(const std::vector<double>& x, const typename std::vector<T>& y) :
+            VariableStepInterpolation(x),
+        y_(y),val(T())
         {
+            const size_t n = x.size();
             if (y.size() != n)
             {
                 std::stringstream ss;
                 ss << "x has size " << n
-                   << ", but y has size " << y.size() << ": the two should be equal";
+                   << ", but y has size " << y.size() << ": they should be the same size";
                 THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
             }
-            if (n < 2)
+            if (x.size() < 2)
             {
                 std::stringstream ss;
-                ss << "x has size " << x.size() << " but size should be at least 2";
+                ss << "x has size " << n << " but size should be at least 2";
                 THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
-            }
-            for (size_t i = 1 ; i < n ; ++i)
-            {
-                if (x.at(i)<=x.at(i-1))
-                {
-                    std::stringstream ss;
-                    ss << "x should be in strictly increasing order: x[" << i-1 << "] = " << x.at(i-1)
-                       << ", but x" << "[" << i << "] = " << x.at(i);
-                    THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
-                }
             }
         }
 
-        T f() const
+        using Interpolator::f;
+        T f(const double x0)
         {
-            return val;
+            update_coefficients_if_necessary(x0);
+            return y_[idx];
         }
 
-        void set_computed_value(const double& x0)
+        using Interpolator::df;
+        T df(const double x0, const size_t derivative_order)
         {
-            if ((x0 < x_.front()) || (x0 > x_.back()))
-            {
-                std::stringstream ss;
-                ss << "x0 should be within [" << x_.front() << "," << x_.back() << "] but received x0 = " << x0;
-                THROW("PiecewiseConstantVariableStep::set_computed_value(const double&)", PiecewiseConstantVariableStepException, ss.str());
-            }
-            bool set = false;
-            for (size_t i = 1 ; i < n ; ++i)
-            {
-                if (x0 < x_.at(i))
-                {
-                    val = y_.at(i-1);
-                    set = true;
-                    break;
-                }
-            }
-            if (not(set))
-            {
-                val = y_.at(n-1);
-            }
+            (void) x0;
+            (void) derivative_order;
+            return T();
         }
 
     private:
         PiecewiseConstantVariableStep();
-        size_t n;
-        std::vector<double> x_;
+
+        double get_f() const
+        {
+            return 0;
+        }
+
+        double get_df(const size_t derivative_order) const
+        {
+            (void) derivative_order;
+            return 0;
+        }
+
         std::vector<T> y_;
         T val;
 };

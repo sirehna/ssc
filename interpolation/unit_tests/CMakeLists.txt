@@ -10,7 +10,8 @@ FILE(GLOB SRC src/SplinesTest.cpp
               src/LinearInterpolationVariableStepTest.cpp
               src/PiecewiseConstantVariableStepTest.cpp
               src/random_increasing_vector.cpp
-              src/SplineVariableStepTest.cpp)
+              src/SplineVariableStepTest.cpp
+              src/IndexFinderTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
