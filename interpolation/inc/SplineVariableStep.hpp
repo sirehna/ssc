@@ -19,8 +19,16 @@
  *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest expected output
  */
 
-class SplineVariableStep
+class SplineVariableStep : public Interpolator
 {
+    public:
+        SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
+
+    private:
+        SplineVariableStep();
+        double get_f() const;
+        double get_df(const size_t derivative_order) const;
+        void update_coefficients_if_necessary(const double x0);
 };
 
 #endif /* SPLINEVARIABLESTEP_HPP_ */
