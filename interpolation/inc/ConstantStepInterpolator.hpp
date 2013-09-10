@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <cstddef>
+#include "Interpolator.hpp"
 
 /** \author cec
  *  \ingroup interpolation
@@ -21,14 +22,12 @@
  *  \snippet interpolation/unit_tests/src/InterpolatorTest.cpp InterpolatorTest expected output
  */
 
-class ConstantStepInterpolator
+class ConstantStepInterpolator : public Interpolator
 {
     public:
         ConstantStepInterpolator();
-        virtual ~ConstantStepInterpolator() {}
+        virtual ~ConstantStepInterpolator();
         ConstantStepInterpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
-        double f(const double x0);
-        double df(const double x0, const size_t derivative_order=1);
 
     protected:
         virtual void update_coefficients_if_necessary(const double x0);

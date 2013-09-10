@@ -15,6 +15,11 @@ xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0), 
 
 }
 
+ConstantStepInterpolator::~ConstantStepInterpolator()
+{
+
+}
+
 ConstantStepInterpolator::ConstantStepInterpolator(const double& xmin_,
         const double& xmax_,
         const std::vector<double>& y_) : xmin(xmin_), xmax(xmax_), y(y_), n(y.size()), delta(0), idx(0), val_sat(xmin)
@@ -49,16 +54,3 @@ void ConstantStepInterpolator::update_coefficients_if_necessary(const double val
         coefficients_have_been_computed_for_interval[idx] = true;
     }
 }
-
-double ConstantStepInterpolator::f(const double x)
-{
-    update_coefficients_if_necessary(x);
-    return get_f();
-}
-
-double ConstantStepInterpolator::df(const double x, const size_t derivative_order)
-{
-    update_coefficients_if_necessary(x);
-    return get_df(derivative_order);
-}
-
