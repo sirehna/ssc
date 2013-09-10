@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "ParabolicCoefficients.hpp"
-#include "Interpolator.hpp"
+#include "ConstantStepInterpolator.hpp"
 #include <functional>
 
 
@@ -43,7 +43,7 @@ struct CubicCoefficients
  *  \section ex2 Expected output
  *  \snippet splines/unit_tests/src/SplinesTest.cpp SplinesTest expected output
  */
-class Splines : public Interpolator
+class Splines : public ConstantStepInterpolator
 {
 	public:
 		Splines();

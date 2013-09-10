@@ -38,7 +38,7 @@ Splines::Splines() :
 }
 
 Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y) :
-        Interpolator(xmin_,xmax_,y),
+        ConstantStepInterpolator(xmin_,xmax_,y),
 		M(std::vector<double>()),
 		h(VectorOfEquallySpacedNumbers(xmin_,xmax_,y.size()).get_delta()),
 		n(y.size()),
@@ -78,7 +78,7 @@ CubicCoefficients Splines::compute_cubic_coeff_for_x0(const double& x0)
 
 void Splines::find_index_of_interval_containing(const double val)
 {
-    Interpolator::find_index_of_interval_containing(val);
+    ConstantStepInterpolator::find_index_of_interval_containing(val);
     const double xi = xmin + (xmax-xmin)*double(idx)/double(n-1);
     x_xi = val-xi;
 }

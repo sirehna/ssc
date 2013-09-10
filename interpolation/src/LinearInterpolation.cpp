@@ -11,7 +11,7 @@
 
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
-        const std::vector<double>& y_) : Interpolator(xmin_,xmax_,y_),
+        const std::vector<double>& y_) : ConstantStepInterpolator(xmin_,xmax_,y_),
         x0(std::vector<double>(n-1,0)),
         x1(std::vector<double>(n-1,0)),
         y0(std::vector<double>(n-1,0)),

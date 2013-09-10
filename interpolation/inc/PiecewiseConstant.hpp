@@ -9,7 +9,7 @@
 #define PIECEWISECONSTANT_HPP_
 
 #include <vector>
-#include "Interpolator.hpp"
+#include "ConstantStepInterpolator.hpp"
 
 
 
@@ -23,7 +23,7 @@
  *  \snippet interpolation/unit_tests/src/PiecewiseConstantTest.cpp PiecewiseConstantTest expected output
  */
 
-class PiecewiseConstant : public Interpolator
+class PiecewiseConstant : public ConstantStepInterpolator
 {
     public:
         PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_);

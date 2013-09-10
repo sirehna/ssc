@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <tr1/memory>
-#include "Interpolator.hpp"
+#include "ConstantStepInterpolator.hpp"
 
 /** \author cec
  *  \brief This class was created to
@@ -21,7 +21,7 @@
  *  \section ex2 Expected output
  *  \snippet interpolation/unit_tests/src/LinearInterpolationVariableStepTest.cpp LinearInterpolationVariableStepTest expected output
  */
-class LinearInterpolationVariableStep : public Interpolator
+class LinearInterpolationVariableStep : public ConstantStepInterpolator
 {
     public:
         LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y);

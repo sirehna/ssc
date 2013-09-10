@@ -102,7 +102,7 @@ void LinearInterpolationVariableStep::find_index_of_interval_containing(const do
 
 
 LinearInterpolationVariableStep::LinearInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y) :
-        Interpolator(0,1,y),pimpl(new LinearInterpolationVariableStepImpl(x,y))
+        ConstantStepInterpolator(0,1,y),pimpl(new LinearInterpolationVariableStepImpl(x,y))
 {
     xmin = x.front();
     xmax = x.back();

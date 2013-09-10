@@ -8,7 +8,7 @@
 #ifndef LINEARINTERPOLATION_HPP_
 #define LINEARINTERPOLATION_HPP_
 #include <vector>
-#include "Interpolator.hpp"
+#include "ConstantStepInterpolator.hpp"
 
 
 
@@ -23,7 +23,7 @@
  *  \snippet interpolation/unit_tests/src/LinearInterpolationTest.cpp LinearInterpolationTest expected output
  */
 
-class LinearInterpolation : public Interpolator
+class LinearInterpolation : public ConstantStepInterpolator
 {
     public:
         LinearInterpolation(const double& xmin_, const double& xmax_, const std::vector<double>& y_);

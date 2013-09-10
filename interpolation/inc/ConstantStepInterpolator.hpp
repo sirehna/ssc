@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#ifndef INTERPOLATOR_HPP_
-#define INTERPOLATOR_HPP_
+#ifndef CONSTANTSTEPINTERPOLATOR_HPP_
+#define CONSTANTSTEPINTERPOLATOR_HPP_
 
 #include <vector>
 #include <cstddef>
@@ -21,12 +21,12 @@
  *  \snippet interpolation/unit_tests/src/InterpolatorTest.cpp InterpolatorTest expected output
  */
 
-class Interpolator
+class ConstantStepInterpolator
 {
     public:
-        Interpolator();
-        virtual ~Interpolator() {}
-        Interpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
+        ConstantStepInterpolator();
+        virtual ~ConstantStepInterpolator() {}
+        ConstantStepInterpolator(const double& xmin_, const double& xmax_, const std::vector<double>& y);
         double f(const double x0);
         double df(const double x0, const size_t derivative_order=1);
 
@@ -49,4 +49,4 @@ class Interpolator
         std::vector<bool> coefficients_have_been_computed_for_interval;
 };
 
-#endif /* INTERPOLATOR_HPP_ */
+#endif /* CONSTANTSTEPINTERPOLATOR_HPP_ */
