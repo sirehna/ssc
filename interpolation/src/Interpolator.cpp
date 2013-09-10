@@ -6,7 +6,7 @@
  */
 
 #include "Interpolator.hpp"
-
+#include "test_macros.hpp"
 Interpolator::Interpolator()
 {
 

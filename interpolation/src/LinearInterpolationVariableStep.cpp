@@ -21,6 +21,16 @@ class Linear
         {
         }
 
+        Linear& operator=(const Linear& rhs)
+        {
+            if (this != &rhs)
+            {
+                slope = rhs.slope;
+                intersection_with_origin = rhs.intersection_with_origin;
+            }
+            return *this;
+        }
+
         double slope;
         double intersection_with_origin;
 };
@@ -51,8 +61,7 @@ class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
 
         void set_computed_value(const double x0, const size_t i)
         {
-            coeff_computer.set_computed_value(x0);
-            coeffs[i] = coeff_computer.f();
+            coeffs[i] = coeff_computer.f(x0);
         }
 
         double get_val(const size_t i) const

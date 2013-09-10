@@ -11,6 +11,7 @@
 #include "InterpolatorException.hpp"
 #include "random_increasing_vector.hpp"
 #include "extra_test_assertions.hpp"
+#include "IndexFinder.hpp"
 
 #define EPS 1e-4
 
@@ -73,7 +74,9 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_zero_if_y
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < n ; ++i)
         {
+            //COUT("");
             ASSERT_DOUBLE_EQ(0, interpolate.df(a.random<double>().between(x.front(),x.back())));
+//            COUT("");
         }
     }
 }
@@ -169,9 +172,9 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_x_is_not_in_strictly
         ASSERT_NO_THROW(LinearInterpolationVariableStep(x,y));
         const size_t idx = a.random<size_t>().between(1,n-1);
         x.at(idx) = x.at(idx-1);
-        ASSERT_THROW(LinearInterpolationVariableStep(x,y), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(LinearInterpolationVariableStep(x,y), IndexFinderException);
         x.at(idx) = x.at(idx-1)-1;
-        ASSERT_THROW(LinearInterpolationVariableStep(x,y), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(LinearInterpolationVariableStep(x,y), IndexFinderException);
     }
 }
 
@@ -189,8 +192,8 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_retrieving_an_x_outs
         const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         LinearInterpolationVariableStep interpolate(x,y);
-        ASSERT_THROW(interpolate.f(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
-        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
-        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back()),2), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(interpolate.f(a.random<double>().outside(x.front(),x.back())), IndexFinderException);
+        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back())), IndexFinderException);
+        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back()),2), IndexFinderException);
     }
 }

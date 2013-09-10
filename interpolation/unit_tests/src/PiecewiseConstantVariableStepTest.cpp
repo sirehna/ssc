@@ -8,6 +8,7 @@
 #include "PiecewiseConstantVariableStepTest.hpp"
 #include "PiecewiseConstantVariableStep.hpp"
 #include "random_increasing_vector.hpp"
+#include "IndexFinder.hpp"
 
 PiecewiseConstantVariableStepTest::PiecewiseConstantVariableStepTest() : a(DataGenerator(7631))
 {
@@ -31,10 +32,9 @@ TEST_F(PiecewiseConstantVariableStepTest, example)
     const std::vector<double> x = {2,5,7,7.5,11,13};
     const std::vector<double> y = {2,2,5,4  ,8 ,7};
     PiecewiseConstantVariableStep<double> interpolate(x,y);
-    interpolate.set_computed_value(7.5);
 //! [PiecewiseConstantVariableStepTest example]
 //! [PiecewiseConstantVariableStepTest expected output]
-    ASSERT_DOUBLE_EQ(4, interpolate.f());
+    ASSERT_DOUBLE_EQ(4, interpolate.f(7.5));
 //! [PiecewiseConstantVariableStepTest expected output]
 }
 
@@ -49,8 +49,7 @@ TEST_F(PiecewiseConstantVariableStepTest, should_be_able_to_retrieve_initial_val
         PiecewiseConstantVariableStep<double> interpolate(x,y);
         for (size_t i = 0 ; i < n ; ++i)
         {
-            interpolate.set_computed_value(x.at(i));
-            ASSERT_DOUBLE_EQ(y.at(i), interpolate.f());
+            ASSERT_DOUBLE_EQ(y.at(i), interpolate.f(x.at(i)));
         }
     }
 }
@@ -77,9 +76,9 @@ TEST_F(PiecewiseConstantVariableStepTest, should_throw_if_x_is_not_in_strictly_i
         ASSERT_NO_THROW(PiecewiseConstantVariableStep<double>(x,y));
         const size_t idx = a.random<size_t>().between(1,n-1);
         x.at(idx) = x.at(idx-1);
-        ASSERT_THROW(PiecewiseConstantVariableStep<double>(x,y), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(PiecewiseConstantVariableStep<double>(x,y), IndexFinderException);
         x.at(idx) = x.at(idx-1)-1;
-        ASSERT_THROW(PiecewiseConstantVariableStep<double>(x,y), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(PiecewiseConstantVariableStep<double>(x,y), IndexFinderException);
     }
 }
 
@@ -97,7 +96,7 @@ TEST_F(PiecewiseConstantVariableStepTest, should_throw_if_querying_an_x_outside_
         const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
         const std::vector<double> y = a.random_vector_of<double>().of_size(n);
         PiecewiseConstantVariableStep<double> interpolate(x,y);
-        ASSERT_THROW(interpolate.set_computed_value(a.random<double>().outside(x.front(),x.back())), PiecewiseConstantVariableStepException);
+        ASSERT_THROW(interpolate.f(a.random<double>().outside(x.front(),x.back())), IndexFinderException);
     }
 }
 
