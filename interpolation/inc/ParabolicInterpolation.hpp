@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "ParabolicCoefficients.hpp"
-#include "Interpolator.hpp"
+#include "ConstantStepInterpolator.hpp"
 
 /** \author cec
  *  \brief This class was created to
@@ -25,7 +25,7 @@
 
 
 
-class ParabolicInterpolation : public Interpolator
+class ParabolicInterpolation : public ConstantStepInterpolator
 {
     public:
         ParabolicInterpolation(const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs);

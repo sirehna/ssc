@@ -10,7 +10,7 @@
 #include <cmath>
 
 PiecewiseConstant::PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_) :
-Interpolator(xmin_,xmax_,y_)
+ConstantStepInterpolator(xmin_,xmax_,y_)
 {
     if (n < 2)
     {
