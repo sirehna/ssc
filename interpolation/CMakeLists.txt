@@ -13,7 +13,8 @@ FILE(GLOB SRC src/Splines.cpp
               src/ParabolicCoefficients.cpp
               src/LinearInterpolationVariableStep.cpp
               src/ConstantStepInterpolator.cpp
-              src/Interpolator.cpp)
+              src/Interpolator.cpp
+              src/SplineVariableStep.cpp)
 
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
