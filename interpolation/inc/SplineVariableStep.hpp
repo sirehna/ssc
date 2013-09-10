@@ -8,6 +8,8 @@
 #ifndef SPLINEVARIABLESTEP_HPP_
 #define SPLINEVARIABLESTEP_HPP_
 
+#include "Interpolator.hpp"
+
 /** \author cec
  *  \ingroup interpolation
  *  \brief Performs a cubic spline interpolation for non-equidistant abscissae
