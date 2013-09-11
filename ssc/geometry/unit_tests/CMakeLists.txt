@@ -9,7 +9,8 @@ FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/LatitudeLongitudeTest.cpp
               src/AngleTest.cpp
               src/TrackTest.cpp
-              src/LegTest.cpp)
+              src/LegTest.cpp
+              src/TrackGenerator.cpp)
 # ------8<---------------------------------------------->8-----
 
 
