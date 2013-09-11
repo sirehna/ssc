@@ -27,6 +27,7 @@ TEST_F(PowTest, should_be_able_to_define_x_power_something)
         const double exp = a.random<double>().between(-5,5);
         const auto x2 = Pow(x,exp);
         ASSERT_EQ(pow(x->get_lambda()(),exp), x2.get_lambda()());
+        generate.reset();
     }
 }
 
