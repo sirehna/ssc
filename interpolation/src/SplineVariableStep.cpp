@@ -30,6 +30,11 @@ extern "C"
 class VectorsAreTheRightSize
 {
     public:
+        VectorsAreTheRightSize()
+        {
+
+        }
+
         VectorsAreTheRightSize(const std::vector<double>& x, const std::vector<double>& y)
         {
             if (x.empty())
@@ -93,6 +98,16 @@ std::vector<Coeff> get_coeffs(const std::vector<double>& x, const std::vector<do
 class SplineVariableStep::Impl
 {
     public:
+        Impl() : check_that(VectorsAreTheRightSize()),
+                 n(0),
+                 x(std::vector<double>()),
+                 y(std::vector<double>()),
+                 h(std::vector<double>()),
+                 coeffs(std::vector<Coeff>()),
+                 xleft(std::vector<double>())
+        {
+        }
+
         Impl(const std::vector<double>& x_, const std::vector<double>& y_) : check_that(VectorsAreTheRightSize(x_,y_)),
                                                                              n(x_.size()),
                                                                              x(std::vector<double>()),
@@ -148,6 +163,11 @@ std::vector<double> sort(std::vector<double> v)
 {
     std::sort(v.begin(), v.end());
     return v;
+}
+
+SplineVariableStep::SplineVariableStep() : VariableStepInterpolation(std::vector<double>()), pimpl(std::tr1::shared_ptr<Impl>(new Impl()))
+{
+
 }
 
 SplineVariableStep::SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y) :

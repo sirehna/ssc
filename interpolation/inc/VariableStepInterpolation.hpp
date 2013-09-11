@@ -26,11 +26,11 @@ class IndexFinder;
 class VariableStepInterpolation : public Interpolator
 {
     public:
+        VariableStepInterpolation();
         virtual ~VariableStepInterpolation();
         VariableStepInterpolation(const std::vector<double>& x);
 
     protected:
-        VariableStepInterpolation();
         size_t get_index(const double x0_) const;
         virtual double get_f() const = 0;
         virtual double get_df(const size_t derivative_order) const = 0;

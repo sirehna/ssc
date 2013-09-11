@@ -36,6 +36,10 @@ class PiecewiseConstantVariableStepException : public Exception
 template <class T> class PiecewiseConstantVariableStep: public VariableStepInterpolation
 {
     public:
+        PiecewiseConstantVariableStep() : y_(std::vector<T>()), val(T())
+        {
+        }
+
         PiecewiseConstantVariableStep(const std::vector<double>& x, const typename std::vector<T>& y) :
             VariableStepInterpolation(x),
         y_(y),val(T())
@@ -72,8 +76,6 @@ template <class T> class PiecewiseConstantVariableStep: public VariableStepInter
         }
 
     private:
-        PiecewiseConstantVariableStep();
-
         double get_f() const
         {
             return 0;
