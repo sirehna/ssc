@@ -36,10 +36,10 @@ class SplineVariableStepException : public Exception
 class SplineVariableStep : public VariableStepInterpolation
 {
     public:
+        SplineVariableStep();
         SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
 
     private:
-        SplineVariableStep();
         double get_f() const;
         double get_df(const size_t derivative_order) const;
 

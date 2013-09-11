@@ -8,6 +8,11 @@
 #include "VariableStepInterpolation.hpp"
 #include "IndexFinder.hpp"
 
+VariableStepInterpolation::VariableStepInterpolation() : index(std::tr1::shared_ptr<IndexFinder>(new IndexFinder(std::vector<double>()))), idx(0), x0(0)
+{
+
+}
+
 VariableStepInterpolation::~VariableStepInterpolation()
 {
 }
