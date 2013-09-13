@@ -7,6 +7,7 @@
 
 #include "Track.hpp"
 #include "Leg.hpp"
+#include "IndexFinder.hpp"
 #include <sstream>
 #include <cmath>
 
@@ -21,7 +22,8 @@ class Track::TrackImpl
         length(0),
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
-        direction_at_waypoint(std::vector<Angle>())
+        direction_at_waypoint(std::vector<Angle>()),
+        index(new IndexFinder(distance_from_start_to_begining_of_leg))
         {
             if (waypoints.size() < 2)
             {
@@ -39,6 +41,7 @@ class Track::TrackImpl
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
                 direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             }
+            *index = IndexFinder(distance_from_start_to_begining_of_leg);
             legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
             direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             direction_at_waypoint.push_back(legs.back().azimuth_at(legs.back().length()));
@@ -63,11 +66,12 @@ class Track::TrackImpl
 
         size_t find_leg_index(const double distance) const
         {
-            for (size_t i = 1 ; i < nb_of_legs ; ++i)
+            return index->compute(distance);
+            /*for (size_t i = 1 ; i < nb_of_legs ; ++i)
             {
                 if (distance<=distance_from_start_to_begining_of_leg.at(i)) return i-1;
             }
-            return nb_of_legs-1;
+            return nb_of_legs-1;*/
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
@@ -79,6 +83,7 @@ class Track::TrackImpl
 
     private:
         TrackImpl();
+        std::tr1::shared_ptr<IndexFinder> index;
 };
 
 Track::Track(const std::vector<LatitudeLongitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
