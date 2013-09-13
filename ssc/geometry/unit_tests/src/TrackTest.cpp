@@ -52,7 +52,7 @@ TEST_F(TrackTest, should_throw_if_track_has_fewer_than_two_points)
     ASSERT_THROW(Track track(only_one_longitude_latitude), TrackException);
     for (size_t i = 2 ; i < 100 ; ++i)
     {
-        const std::vector<LatitudeLongitude> waypoints(i,a.random<LatitudeLongitude>());
+        const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(i);
         ASSERT_NO_THROW(Track track(waypoints));
     }
 }
