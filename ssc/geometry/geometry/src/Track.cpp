@@ -11,7 +11,6 @@
 #include <sstream>
 #include <cmath>
 
-
 class Track::TrackImpl
 {
     public:
@@ -27,7 +26,7 @@ class Track::TrackImpl
         {
             if (waypoints.size() < 2)
             {
-                THROW("Track::Track(const std::vector<LongitudeLatitude>&)", TrackException, "Track should contain at least two waypoints");
+                THROW(__PRETTY_FUNCTION__, TrackException, "Track should contain at least two waypoints");
             }
             bool previous_point_at_90_deg_latitude = false;
             bool previous_point_at_minus_90_deg_latitude = false;
@@ -67,11 +66,6 @@ class Track::TrackImpl
         size_t find_leg_index(const double distance) const
         {
             return index->compute(distance);
-            /*for (size_t i = 1 ; i < nb_of_legs ; ++i)
-            {
-                if (distance<=distance_from_start_to_begining_of_leg.at(i)) return i-1;
-            }
-            return nb_of_legs-1;*/
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
@@ -89,7 +83,6 @@ class Track::TrackImpl
 Track::Track(const std::vector<LatitudeLongitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
              ) : pimpl(new Track::TrackImpl(waypoints))
 {
-
 }
 
 /** \author cec
@@ -213,7 +206,7 @@ size_t Track::find_leg_index(const double distance_from_start_of_track //!< Dist
 {
     if (distance_from_start_of_track<0)
     {
-        THROW("Track::find_leg_index(const double&)", TrackException, "Distance from start of track can't be negative");
+        THROW(__PRETTY_FUNCTION__, TrackException, "Distance from start of track can't be negative");
     }
     return pimpl->find_leg_index(distance_from_start_of_track);
 }
