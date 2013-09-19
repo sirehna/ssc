@@ -22,7 +22,7 @@ class Track::TrackImpl
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
         direction_at_waypoint(std::vector<Angle>()),
-        index(new IndexFinder(distance_from_start_to_begining_of_leg))
+        index(new IndexFinder(distance_from_start_to_begining_of_leg, false))
         {
             if (waypoints.size() < 2)
             {
@@ -40,7 +40,7 @@ class Track::TrackImpl
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
                 direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             }
-            *index = IndexFinder(distance_from_start_to_begining_of_leg);
+            *index = IndexFinder(distance_from_start_to_begining_of_leg, false);
             legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
             direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             direction_at_waypoint.push_back(legs.back().azimuth_at(legs.back().length()));
