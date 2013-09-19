@@ -40,8 +40,8 @@ template <class T> class PiecewiseConstantVariableStep: public VariableStepInter
         {
         }
 
-        PiecewiseConstantVariableStep(const std::vector<double>& x, const typename std::vector<T>& y) :
-            VariableStepInterpolation(x),
+        PiecewiseConstantVariableStep(const std::vector<double>& x, const typename std::vector<T>& y, const bool allow_queries_outside_bounds = false) :
+            VariableStepInterpolation(x, allow_queries_outside_bounds),
         y_(y),val(T())
         {
             const size_t n = x.size();

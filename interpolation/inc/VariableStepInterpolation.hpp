@@ -28,7 +28,7 @@ class VariableStepInterpolation : public Interpolator
     public:
         VariableStepInterpolation();
         virtual ~VariableStepInterpolation();
-        VariableStepInterpolation(const std::vector<double>& x);
+        VariableStepInterpolation(const std::vector<double>& x, const bool allow_queries_outside_bounds = false);
 
     protected:
         size_t get_index(const double x0_) const;
