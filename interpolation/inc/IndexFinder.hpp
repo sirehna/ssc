@@ -35,7 +35,7 @@ class IndexFinderException : public Exception
 class IndexFinder
 {
     public:
-        IndexFinder(const std::vector<double>& x);
+        IndexFinder(const std::vector<double>& x, const bool throw_if_outside_bounds_=true);
         size_t compute(const double x0);
 
     private:
@@ -48,12 +48,15 @@ class IndexFinder
         size_t bisection (const int ilo, const int ihi, const double x);
         size_t increase_ihi_to_capture_x(int& ilo, int& ihi, const double x);
         size_t decrease_ilo_to_capture_x(int& ilo, int& ihi, const double x);
+        void check_x_is_strictly_increasing(const std::vector<double>& x);
 
         int n;
         std::vector<double> x_;
         double xmin;
         double xmax;
         int idx_low;
+    public:
+        bool throw_if_outside_bounds;
 };
 
 #endif /* INDEXFINDER_HPP_ */
