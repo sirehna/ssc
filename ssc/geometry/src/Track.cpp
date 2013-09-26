@@ -37,6 +37,12 @@ class Track::TrackImpl
                 check_poles(waypoints.at(i).lat, waypoints.at(i+1).lat, previous_point_at_90_deg_latitude, previous_point_at_minus_90_deg_latitude);
                 const double d = legs.back().length();
                 length += d;
+                if (d < 1E-8)
+                {
+                    std::stringstream ss;
+                    ss << "Two identical consecutive waypoints detected (index " << i+1 << ", starting at 1): " << waypoints.at(i) << " & " << waypoints.at(i+1);
+                    THROW(__PRETTY_FUNCTION__, TrackException, ss.str());
+                }
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
                 direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             }
