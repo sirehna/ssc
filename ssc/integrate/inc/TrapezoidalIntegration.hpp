@@ -27,6 +27,7 @@ class TrapezoidalIntegration : public Integrator
     public:
         TrapezoidalIntegration(const Function& f);
         double integrate(double a, double b, double eps=1e-6) const;
+        double integrate_n_steps(double a, double b, size_t n) const;
 
     private:
         class Impl;
