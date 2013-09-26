@@ -27,7 +27,7 @@ class Leg::LegImpl
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
         }
 
-        LatitudeLongitude waypoint(const double& distance_from_point1) const
+        LatitudeLongitude waypoint(const double distance_from_point1) const
         {
             LatitudeLongitude ret(0,0);
             geod.Direct(point_1.lat, point_1.lon, direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
@@ -65,7 +65,7 @@ double Leg::length() const
  *  \section ex1 Example
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest find_waypoint_at_example
  */
-LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance from first waypoint (in meters)
+LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from first waypoint (in meters)
                                        ) const
 {
     if (distance>(pimpl->length+EPS))
@@ -73,7 +73,7 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
         std::stringstream ss;
         ss << "Asked to find waypoint at d = "
            << distance
-           << " m from start of track but length of track is only "
+           << " m from start of track but track is only "
            << pimpl->length
            << " m long (distance - length = " << distance - pimpl->length << " m)";
         THROW("Leg::find_waypoint_at(const double&)", LegException, ss.str());
@@ -91,7 +91,7 @@ LatitudeLongitude Leg::find_waypoint_at(const double& distance //!< Distance fro
  *  \returns Heading on geodesic for point at a given distance from first point in leg
  *  \snippet geometry/unit_tests/src/Test.cpp LegTest azimuth_at_example
 */
-Angle Leg::azimuth_at(const double& distance_from_point1) const
+Angle Leg::azimuth_at(const double distance_from_point1) const
 {
     if (distance_from_point1 < EPS) return Angle::degree(pimpl->direction_of_the_geodesic_at_point_1);
     const Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
