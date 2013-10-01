@@ -15,7 +15,7 @@
 #include "Exception.hpp"
 #include <sstream>
 #include <iostream>
-
+#include <cassert>
 class QuadPackException : public Exception
 {
     public:
