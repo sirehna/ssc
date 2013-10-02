@@ -79,11 +79,12 @@ TEST_F(SplineVariableStepTest, should_throw_if_the_same_point_is_defined_twice)
 
 TEST_F(SplineVariableStepTest, should_throw_if_requesting_a_point_outside_bounds)
 {
+    std::cout.precision(20);
     for (size_t i = 0 ;i < 100 ; ++i)
     {
         const double a_ = a.random<double>();
         const double b_ = a.random<double>().greater_than(a_);
-        const size_t n = a.random<size_t>().between(1,1000);
+        const size_t n = a.random<size_t>().between(2,1000);
         auto v1 = a.random_vector_of<double>().between(a_,b_).of_size(n)();
         v1.front() = a_;
         v1.back() = b_;
@@ -92,6 +93,7 @@ TEST_F(SplineVariableStepTest, should_throw_if_requesting_a_point_outside_bounds
         const double x_inside = a.random<double>().between(a_,b_);
         const double x_outside = a.random<double>().outside(a_,b_);
         ASSERT_THROW(S.f(x_outside),IndexFinderException);
+        S.f(x_inside);
         ASSERT_NO_THROW(S.f(x_inside));
     }
 }
