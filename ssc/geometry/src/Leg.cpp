@@ -73,14 +73,14 @@ LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from
         std::stringstream ss;
         ss << "Asked to find waypoint at d = "
            << distance
-           << " m from start of track but track is only "
+           << " m from start of leg but leg is only "
            << pimpl->length
            << " m long (distance - length = " << distance - pimpl->length << " m)";
-        THROW("Leg::find_waypoint_at(const double&)", LegException, ss.str());
+        THROW(__PRETTY_FUNCTION__, LegException, ss.str());
     }
     if (distance<(-EPS))
     {
-        THROW("Leg::find_waypoint_at(const double&)", LegException, "received a negative distance");
+        THROW(__PRETTY_FUNCTION__, LegException, "received a negative distance");
     }
     return pimpl->waypoint(std::max(std::min(pimpl->length,distance),0.));
 }
