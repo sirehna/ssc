@@ -8,6 +8,7 @@
 #include "Track.hpp"
 #include "Leg.hpp"
 #include "IndexFinder.hpp"
+
 #include <sstream>
 #include <cmath>
 
