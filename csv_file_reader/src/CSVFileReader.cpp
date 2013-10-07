@@ -2,6 +2,8 @@
 #include <cstdlib> // For atof
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <functional>
 
 CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_columns, const char separator) : titles(std::vector<std::string>()),
         values(std::vector<std::vector<double> >()),
@@ -75,13 +77,18 @@ void CSVFileReader::extract_values(std::istream& file, const char separator)
 	std::string current_line;
 	while (getline(file, current_line, '\n'))
 	{
-		values.push_back(convert_line_to_vector_of_doubles(current_line, separator));
-		std::vector<std::string>::const_iterator it = titles.begin();
-		size_t i = 0;
-		for (;it != titles.end() ; ++it)
-        {
-            map[*it].push_back(values.back().at(i++));
-        }
+	    std::string nospace = current_line;
+	    nospace.erase( std::remove_if( nospace.begin(), nospace.end(), ::isspace), nospace.end() );
+	    if (not(nospace.empty()))
+	    {
+            values.push_back(convert_line_to_vector_of_doubles(current_line, separator));
+            std::vector<std::string>::const_iterator it = titles.begin();
+            size_t i = 0;
+            for (;it != titles.end() ; ++it)
+            {
+                map[*it].push_back(values.back().at(i++));
+            }
+	    }
 	}
 }
 
