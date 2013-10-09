@@ -52,5 +52,11 @@ TEST_F(CumulateTest, example)
 //! [CumulateTest expected output]
 }
 
-
-
+TEST_F(CumulateTest, zero_outside_bounds)
+{
+//! [CumulateTest example]
+    Cumulate c;
+    c.add(1,1);
+    c.add(2,2);
+    ASSERT_DOUBLE_EQ(0, c.integrate(0,1));
+}
