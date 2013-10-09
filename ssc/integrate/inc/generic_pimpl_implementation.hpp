@@ -8,18 +8,23 @@
 #ifndef GENERIC_PIMPL_IMPLEMENTATION_HPP_
 #define GENERIC_PIMPL_IMPLEMENTATION_HPP_
 
-#include <memory>
+#include <utility>
 
 template<typename T>
-class pimpl {
-private:
-    std::unique_ptr<T> m;
-public:
-    pimpl();
-    template<typename ...Args> pimpl( Args&& ... );
-    ~pimpl();
-    T* operator->();
-    T& operator*();
-};
+Pimpl<T>::Pimpl() : m{ new T{} } { }
+
+template<typename T>
+template<typename ...Args>
+Pimpl<T>::Pimpl( Args&& ...args )
+    : m{ new T{ std::forward<Args>(args)... } } { }
+
+template<typename T>
+Pimpl<T>::~Pimpl() { }
+
+template<typename T>
+T* Pimpl<T>::operator->() { return m.get(); }
+
+template<typename T>
+T& Pimpl<T>::operator*() { return *m.get(); }
 
 #endif /* GENERIC_PIMPL_IMPLEMENTATION_HPP_ */
