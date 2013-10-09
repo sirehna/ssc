@@ -86,8 +86,8 @@ std::vector<Coeff> get_coeffs(const std::vector<double>& x, const std::vector<do
         coeff.d = c[4*i + 3];
         ret.push_back(coeff);
     }
-    delete tau;
-    delete c;
+    delete[] tau;
+    delete[] c;
     delete n;
     delete ibcbeg;
     delete ibcend;
