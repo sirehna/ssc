@@ -139,12 +139,6 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 
 TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
 {
-    /*const std::vector<double> y = {1.0000,0.9397,0.7660,0.5000,0.1736,-0.1736,-0.5000,-0.7660,-0.9397,-1.0000};
-    const NaturalSplines spline1(0, 1,y);
-    auto coeffs = spline1.get_parabolic_coefficients();
-
-    ASSERT_EQ(y.size()-1, coeffs.size());*/
-
     NaturalSplines s(0,3,{0,1,4,3});
     ASSERT_DOUBLE_EQ(0,s.f(0));
     ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f(0.25));
@@ -179,4 +173,27 @@ TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
     ASSERT_DOUBLE_EQ(2*(-3.6),coeffs2.at(2).b);
     ASSERT_DOUBLE_EQ(1.4,coeffs2.at(2).c);
 
+}
+
+TEST_F(SplinesTest, should_be_able_to_compute_position_of_minimum)
+{
+    for (size_t i = 0 ; i < 100 ; ++i)
+    {
+        const double xmin = a.random<double>();
+        const double xmax = a.random<double>().greater_than(xmin);
+        const double xmid = (xmin+xmax)/2.;
+        const double ymin = a.random<double>().no().greater_than(0);
+        NaturalSplines s(xmin,xmax,{5,4,3,2,1,ymin,1,2,3,4,5});
+        const auto minimum = s.find_position_and_value_of_minimum();
+        ASSERT_SMALL_RELATIVE_ERROR(xmid, minimum.first, EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(ymin, minimum.second, EPS);
+    }
+}
+
+TEST_F(SplinesTest, bug_in_min_computation)
+{
+    const double xmin = -9.101;
+    const double xmax = -xmin;
+    NaturalSplines s(xmin,xmax,{1481633085564.5,1086836315872.4,786986140477.4,582082559379.5,472125572578.9,457115180075.4,537051381869.0,711934177959.80126953,981763568347.75585938,1346539553032.8674316,1806262132015.1352539});
+    ASSERT_SMALL_RELATIVE_ERROR(0, s.find_position_and_value_of_minimum().first, EPS);
 }
