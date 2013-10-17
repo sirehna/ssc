@@ -23,7 +23,7 @@ extern "C"
 #include <cstdio>
 #include "VectorOfEquallySpacedNumbers.hpp"
 
-
+#include "test_macros.hpp"
 
 Splines::Splines() :
 				M(std::vector<double>()),
@@ -37,7 +37,7 @@ Splines::Splines() :
 {
 }
 
-Splines::Splines(const double& xmin_, const double& xmax_, const std::vector<double>& y) :
+Splines::Splines(const double xmin_, const double xmax_, const std::vector<double>& y) :
         ConstantStepInterpolator(xmin_,xmax_,y),
 		M(std::vector<double>()),
 		h(VectorOfEquallySpacedNumbers(xmin_,xmax_,y.size()).get_delta()),
@@ -107,6 +107,36 @@ std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients()
         auto coeff = compute_cubic_coeff_for_x0(xmin+(i+0.5)*h);
         ret.push_back(ParabolicCoefficients(3*coeff.a,2*coeff.b,coeff.c));
     }
+    return ret;
+}
+
+std::pair<double,double> Splines::find_position_and_value_of_minimum(const ParabolicCoefficients& c, const double x0, const double x1)
+{
+    const double xmin = x0-c.b/(2*c.a);
+    const double ymin = f(xmin);
+    const double y0 = f(x0);
+    const double y1 = f(x1);
+    if ((xmin < x0) || (xmin > x1) || (ymin>y0) || (ymin>y1))
+    {
+        return (y0<y1) ? std::make_pair(x0,y0) : std::make_pair(x1,y1);
+    }
+
+    return std::make_pair(xmin,ymin);
+}
+
+std::pair<double,double> Splines::find_position_and_value_of_minimum()
+{
+    const auto coeffs = get_parabolic_coefficients();
+    const size_t n = coeffs.size();
+    if (n==0) return std::pair<double,double>();
+    std::pair<double,double> ret = find_position_and_value_of_minimum(coeffs.front(), xmin, xmin+h);
+
+    for (size_t i = 1 ; i < n ; ++i)
+    {
+        const auto pos_min = find_position_and_value_of_minimum(coeffs.at(i), xmin+i*h, xmin+(i+1)*h);
+        if (pos_min.second < ret.second) ret = pos_min;
+    }
+
     return ret;
 }
 
