@@ -5,7 +5,6 @@
  *  \author cec
  */
 
-//#include <vector>
 #include <list>
 
 #include "Cumulate.hpp"
