@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <cmath>
+
 #define PI (4.*atan(1.))
 IpoptSolverTest::IpoptSolverTest() : a(DataGenerator(56)),
                                      generate(StateGenerator()),
@@ -114,8 +115,9 @@ TEST_F(IpoptSolverTest, test_02)
     }
 }
 
-TEST_F(IpoptSolverTest, DISABLED_allocation_problem)
+TEST_F(IpoptSolverTest, maroff_allocation_problem_does_not_converge)
 {
+    // Constraints are non-convex!
     const double theta = PI/4.;
     Parameter b1(cos(theta));
     Parameter b2(sin(theta));
@@ -133,7 +135,35 @@ TEST_F(IpoptSolverTest, DISABLED_allocation_problem)
 
     const auto result = optimize.solve(x0);
 
-    ASSERT_SMALL_RELATIVE_ERROR(cos(theta),result.constraint_values.at(0),eps);
-    ASSERT_SMALL_RELATIVE_ERROR(sin(theta),result.constraint_values.at(1),eps);
+    ASSERT_GT(fabs(cos(theta)-result.constraint_values.at(0)),eps);
+    ASSERT_GT(fabs(sin(theta)-result.constraint_values.at(1)),eps);
+}
+
+TEST_F(IpoptSolverTest, new_allocation_problem_converges)
+{
+    const double theta = PI/4.;
+    Parameter b1(cos(theta));
+    Parameter b2(sin(theta));
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    const double p = 1000; // Penalty factor
+    pb->minimize((pow(x1,3)+pow(x2,3))/2
+                +p*pow((pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4))-b1,2)/2
+                +p*pow((pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4))-b2,2)/2)
+       .bound_state(0,x1,1)
+       .bound_state(0,x2,1)
+       .bound_state(0,x3,PI)
+       .bound_state(0,x4,PI);
+    IpoptSolver optimize(pb);
+    const std::vector<double> x0({0.5,0.5,PI/2,PI/2});
+    const double eps = 1e-3;
+    auto result = optimize.solve(x0);
+
+    const double x1_ = result.state_values["x1"];
+    const double x2_ = result.state_values["x2"];
+    const double x3_ = result.state_values["x3"];
+    const double x4_ = result.state_values["x4"];
+
+    ASSERT_SMALL_RELATIVE_ERROR(cos(theta),x1_*x1_*cos(x3_)+x2_*x2_*cos(x4_),eps);
+    ASSERT_SMALL_RELATIVE_ERROR(sin(theta),x1_*x1_*sin(x3_)+x2_*x2_*sin(x4_),eps);
 }
 
