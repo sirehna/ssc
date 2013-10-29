@@ -37,7 +37,7 @@ class LatitudeLongitudeException : public Exception
 class LatitudeLongitude
 {
     public:
-        LatitudeLongitude(const double& latitude_in_degrees, const double& longitude_in_degrees);
+        LatitudeLongitude(const double latitude_in_degrees, const double longitude_in_degrees);
         double lat;
         double lon;
         LatitudeLongitude antipode() const;
