@@ -9,7 +9,7 @@
 #include "LatitudeLongitude.hpp"
 #include <cmath>
 #include <sstream>
-LatitudeLongitude::LatitudeLongitude(const double& latitude, const double& longitude) : lat(latitude), lon(longitude)
+LatitudeLongitude::LatitudeLongitude(const double latitude, const double longitude) : lat(latitude), lon(longitude)
 {
     if (fabs(latitude)>90)
     {
