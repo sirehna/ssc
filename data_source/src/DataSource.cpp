@@ -7,6 +7,8 @@
 
 #include "DataSource.hpp"
 #include "DataSourceException.hpp"
+#include "DataSourceSerializer.hpp"
+
 #include <iostream>
 #include <sstream>
 
@@ -86,21 +88,6 @@ DataSource& DataSource::operator=(const DataSource& ds)
     return *this;
 }
 
-struct DSModuleDraw
-{
-    DSModuleDraw() : inputs(std::set<std::string>()),outputs(std::set<std::string>()), type(""){}
-    std::set<std::string> inputs;
-    std::set<std::string> outputs;
-    std::string type;
-};
-
-struct DSSignalDraw
-{
-    DSSignalDraw() : created_by(""),used_by(std::set<std::string>()),type(""){}
-    std::string created_by;
-    std::set<std::string> used_by;
-    std::string type;
-};
 
 std::string serialize(const std::set<std::string>& s);
 std::string serialize(const std::set<std::string>& s)
@@ -121,44 +108,14 @@ std::string serialize(const std::set<std::string>& s)
     return ss.str();
 }
 
-std::string DataSource::draw() const
+std::string DataSource::draw(const bool yaml) const
 {
     std::stringstream ss;
-    std::map<std::string, DSModuleDraw> mmod;
-    std::map<std::string, DSSignalDraw> ssig;
-    for (FromSignal2Module::const_iterator it = signal2module.begin() ; it != signal2module.end() ; ++it)
-    {
-        mmod[it->second.get_signal_name()].outputs.insert(it->first.get_signal_name());
-        ssig[it->first.get_signal_name()].created_by = it->second.get_signal_name();
-        ssig[it->first.get_signal_name()].type = it->first.get_type_name();
-        mmod[it->second.get_signal_name()].type = it->second.get_type_name();
-    }
-    for (DependantModules::const_iterator it = module2requiredsignals.begin() ; it != module2requiredsignals.end() ; ++it)
-    {
-        for (std::set<TypedSignalName>::const_iterator it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
-        {
-            mmod[it->first.get_signal_name()].inputs.insert(it2->get_signal_name());
-            ssig[it2->get_signal_name()].used_by.insert(it->first.get_signal_name());
-            ssig[it2->get_signal_name()].type = it2->get_type_name();
-        }
-    }
-    ss << "data_source:" << std::endl;
-    ss << "    modules:" << std::endl;
-    for(std::map<std::string, DSModuleDraw>::const_iterator it = mmod.begin() ; it!= mmod.end() ; ++it)
-    {
-        ss << "      - name: " << it->first << std::endl;
-        ss << "        type: " << it->second.type << std::endl;
-        ss << "        inputs: " << serialize(it->second.inputs);
-        ss << "        outputs: " << serialize(it->second.outputs);
-    }
-    ss << "    signals:" << std::endl;
-    for(std::map<std::string, DSSignalDraw>::const_iterator it = ssig.begin() ; it!= ssig.end() ; ++it)
-    {
-        ss << "      - name: " << it->first << std::endl;
-        ss << "        type: " << it->second.type << std::endl;
-        ss << "        created_by: " << it->second.created_by << std::endl;
-        ss << "        used_by: " << serialize(it->second.used_by);
-    }
+    DataSourceSerializer serialize(signal2module, module2requiredsignals);
+
+    if (yaml)  ss << serialize.get_yaml();
+    else       ss << serialize.get_graph();
+
     return ss.str();
 }
 
