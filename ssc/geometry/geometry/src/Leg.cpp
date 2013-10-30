@@ -14,6 +14,8 @@
 #include <cmath>
 #include <algorithm> // std::min, std::max
 
+#include "test_macros.hpp"
+
 #define PI 4.*atan(1.)
 #define EPS 1e-6
 
@@ -33,6 +35,20 @@ class Leg::LegImpl
             geod.Direct(point_1.lat, point_1.lon, direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
             return ret;
         }
+
+        Angle azimuth_at(const double distance_from_point1) const
+        {
+            double lat2 = 0;
+            double lon2 = 0;
+            double azi2 = 0;
+            double m12 = 0;
+            double M12 = 0;
+            double M21 = 0;
+            double S12 = 0;
+            geod.Direct(point_1.lat,point_1.lon,direction_of_the_geodesic_at_point_1, distance_from_point1, lat2, lon2, azi2,m12, M12, M21, S12);
+            return Angle::degree(azi2);
+        }
+
         LatitudeLongitude point_1;
         LatitudeLongitude point_2;
         double length;
@@ -93,9 +109,7 @@ LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from
 */
 Angle Leg::azimuth_at(const double distance_from_point1) const
 {
-    if (distance_from_point1 < EPS) return Angle::degree(pimpl->direction_of_the_geodesic_at_point_1);
-    const Leg l(pimpl->point_1, find_waypoint_at(distance_from_point1));
-    return Angle::degree(l.pimpl->direction_of_the_geodesic_at_point_2);
+    return pimpl->azimuth_at(distance_from_point1);
 }
 
 /** \author cec
