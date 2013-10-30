@@ -5,12 +5,8 @@
  *  \author cec
  */
 
-#include "Splines.hpp"
-
 typedef long int integer;
 typedef double doublereal;
-
-#include "SplinesException.hpp"
 
 extern "C"
 {
@@ -21,9 +17,10 @@ extern "C"
 
 #include <cmath>
 #include <cstdio>
-#include "VectorOfEquallySpacedNumbers.hpp"
 
-#include "test_macros.hpp"
+#include "Splines.hpp"
+#include "SplinesException.hpp"
+#include "VectorOfEquallySpacedNumbers.hpp"
 
 Splines::Splines() :
 				M(std::vector<double>()),
@@ -110,30 +107,78 @@ std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients()
     return ret;
 }
 
-std::pair<double,double> Splines::find_position_and_value_of_minimum(const ParabolicCoefficients& c, const double x0, const double x1)
+std::pair<double,double> Splines::find_position_and_value_of_minimum(const size_t i)//const ParabolicCoefficients& c, const double x0, const double x1)
 {
-    const double xmin = x0-c.b/(2*c.a);
-    const double ymin = f(xmin);
-    const double y0 = f(x0);
-    const double y1 = f(x1);
-    if ((xmin < x0) || (xmin > x1) || (ymin>y0) || (ymin>y1))
+    const double l = xmin + i*h;
+    const double u = l + h;
+    compute_coefficients_for_ith_interval(xmin + (i+0.5)*h,i);
+
+    const double delta = b[i]*b[i]-3*a[i]*c[i];
+    double xmin = u+h; // outside bounds by default
+    double ymin = 123456;
+    if (delta>0)
     {
-        return (y0<y1) ? std::make_pair(x0,y0) : std::make_pair(x1,y1);
+        const double sqrt_delta = sqrt(delta);
+        const double x1 = l+(-b[i]-sqrt_delta)/(3.*a[i]);
+        const double x2 = l+(-b[i]+sqrt_delta)/(3.*a[i]);
+        double y1 = 0;
+        double y2 = 0;
+        if ((x1 >= l) && (x1 <= u))
+        {
+            y1 = f(x1);
+            if ((x2 >= l) && (x2 <= u))
+            {
+                y2 = f(x2);
+                if (y1 < y2)
+                {
+                    xmin = x1;
+                    ymin = y1;
+                }
+                else
+                {
+                    xmin = x2;
+                    ymin = y2;
+                }
+            }
+            else
+            {
+                xmin = x1;
+                ymin = y1;
+            }
+        }
+        else
+        {
+            if ((x2 >= l) && (x2 <= u))
+            {
+                y2 = f(x2);
+                xmin = x2;
+                ymin = y2;
+            }
+        }
+    }
+    if (delta==0)
+    {
+        xmin = l+(-b[i])/(3.*a[i]);
+        ymin = f(xmin);
     }
 
+    const bool xmin_outside_bounds = (xmin < l) || (xmin > u);
+    if (xmin_outside_bounds)
+    {
+        const double yl = f(l);
+        const double yu = f(u);
+        return (yl<yu) ? std::make_pair(l,yl) : std::make_pair(u,yu);
+    }
     return std::make_pair(xmin,ymin);
 }
 
 std::pair<double,double> Splines::find_position_and_value_of_minimum()
 {
-    const auto coeffs = get_parabolic_coefficients();
-    const size_t n = coeffs.size();
     if (n==0) return std::pair<double,double>();
-    std::pair<double,double> ret = find_position_and_value_of_minimum(coeffs.front(), xmin, xmin+h);
-
-    for (size_t i = 1 ; i < n ; ++i)
+    std::pair<double,double> ret = find_position_and_value_of_minimum(0);
+    for (size_t i = 1 ; i < (n-1) ; ++i)
     {
-        const auto pos_min = find_position_and_value_of_minimum(coeffs.at(i), xmin+i*h, xmin+(i+1)*h);
+        const auto pos_min = find_position_and_value_of_minimum(i);
         if (pos_min.second < ret.second) ret = pos_min;
     }
 
