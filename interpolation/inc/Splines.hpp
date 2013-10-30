@@ -65,7 +65,7 @@ class Splines : public ConstantStepInterpolator
         double get_df(const size_t derivative_order) const;
         void compute_coefficients_for_ith_interval(const double x0, const size_t i);
         void find_index_of_interval_containing(const double val);
-        std::pair<double,double> find_position_and_value_of_minimum(const ParabolicCoefficients& c, const double x0, const double x1);
+        std::pair<double,double> find_position_and_value_of_minimum(const size_t i);//const ParabolicCoefficients& c, const double x0, const double x1);
 
 	protected:
 		size_t n;
