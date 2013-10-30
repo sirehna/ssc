@@ -644,3 +644,36 @@ TEST_F(DataSourceTest, crash_if_assignment_operator_is_not_well_defined)
     DataSource ds = conf_ds();
     ASSERT_DOUBLE_EQ(123, ds.get<double>("CO2"));
 }
+
+TEST_F(DataSourceTest, serialization)
+{
+    DataSource data_source;
+    data_source.add<M1>("m1");
+    data_source.add<M2>("m2");
+    data_source.add<M3>("m3");
+    std::stringstream expected;
+    expected << "data_source:" << std::endl
+             << "    modules:" << std::endl
+             << "      - name: m1" << std::endl
+             << "        type: " << typeid(M1).name() << std::endl
+             << "        inputs: []" << std::endl
+             << "        outputs: [s1]" << std::endl
+             << "      - name: m2" << std::endl
+             << "        type: " << typeid(M2).name() << std::endl
+             << "        inputs: [s1]" << std::endl
+             << "        outputs: [s2]" << std::endl
+             << "      - name: m3" << std::endl
+             << "        type: " << typeid(M3).name() << std::endl
+             << "        inputs: [s2]" << std::endl
+             << "        outputs: []" << std::endl
+             << "    signals:" << std::endl
+             << "      - name: s1" << std::endl
+             << "        type: " << typeid(double).name() << std::endl
+             << "        created_by: m1" << std::endl
+             << "        used_by: [m2]" << std::endl
+             << "      - name: s2" << std::endl
+             << "        type: " << typeid(double).name() << std::endl
+             << "        created_by: m2" << std::endl
+             << "        used_by: [m3]" << std::endl;
+    ASSERT_EQ(expected.str(), data_source.draw());
+}

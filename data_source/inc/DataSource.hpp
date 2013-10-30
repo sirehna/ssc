@@ -48,7 +48,7 @@ class DataSource
          *  \returns String containing the serialization of the DataSource
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest draw_example
         */
-        std::string draw() const;
+        std::string draw(const bool yaml=true) const;
 
         /** \author cec
          *  \date 17 juin 2013, 10:52:20

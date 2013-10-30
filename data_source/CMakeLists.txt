@@ -6,7 +6,8 @@ set(SRC src/DataSource.cpp
         src/SignalContainer.cpp
         src/SignalContainerTypeLists.cpp
         src/TypeCoercion.cpp
-        src/PhysicalQuantity.cpp)
+        src/PhysicalQuantity.cpp
+        src/DataSourceSerializer.cpp)
             
 
 include_directories(inc) # Because of DataSourceModuleMock.hpp
