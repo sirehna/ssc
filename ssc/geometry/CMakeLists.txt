@@ -16,7 +16,7 @@ set(SOURCES src/PointInPolygon.cpp
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${test_macros_SOURCE_DIR})
-include_directories(SYSTEM ${boost_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(SYSTEM ${geographiclib_INCLUDE_DIRS})
 include_directories(${interpolation_INCLUDE_DIRS})
 
