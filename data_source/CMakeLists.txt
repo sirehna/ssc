@@ -12,7 +12,7 @@ set(SRC src/DataSource.cpp
 
 include_directories(inc) # Because of DataSourceModuleMock.hpp
 include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(SYSTEM ${boost_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME}_static STATIC ${SRC})
