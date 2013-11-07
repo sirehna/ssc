@@ -418,7 +418,7 @@ TEST_F(PointInGeographicalPolygonTest, bug)
     const PointInGeographicalPolygon eca_geo(zone);
     const LatitudeLongitude p_in(30,-80);
     const LatitudeLongitude p_out_ko(25.9556,-78.1239);
-    const LatitudeLongitude p_out_ok(25.956,-78.1239);
+    const LatitudeLongitude p_out_ok(25.95,-78.1239);
 
     ASSERT_TRUE(eca_car.is_in_polygon(p_in));
     ASSERT_FALSE(eca_car.is_in_polygon(p_out_ok));
