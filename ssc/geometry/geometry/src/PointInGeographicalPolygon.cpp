@@ -7,9 +7,9 @@
 
 #include "PointInGeographicalPolygon.hpp"
 #include "PointInPolygonPimpl.hpp"
+#include "test_macros.hpp"
 
 typedef boost::geometry::model::ll::point<boost::geometry::degree> Point;
-//typedef boost::geometry::model::ll::point<boost::geometry::cs::geographic<boost::geometry::degree> > Point;
 
 
 template <> boost::geometry::model::ll::point<boost::geometry::degree> convert_to(const double& longitude, const double& latitude)

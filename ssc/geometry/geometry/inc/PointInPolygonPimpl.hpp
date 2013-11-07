@@ -44,19 +44,19 @@ class PointInPolygon::PointInPolygonPimpl
 template<typename PointType> class Pimpl : public PointInPolygon::PointInPolygonPimpl
 {
     public:
-        Pimpl(const std::vector<LatitudeLongitude>& eca_zone) : polygon(boost::geometry::model::polygon<PointType>())
+        Pimpl(const std::vector<LatitudeLongitude>& points) : polygon(boost::geometry::model::polygon<PointType>())
         {
-            if (eca_zone.size() < 3)
+            if (points.size() < 3)
             {
-                THROW("PointInPolygonPimpl(const std::vector<LatitudeLongitude>&)", PointInPolygonException, "Need at least three points in polygon");
+                THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Need at least three points in polygon");
             }
             const double eps = 1E-15;
-            bool polygon_is_closed = (fabs(eca_zone.front().lat-eca_zone.back().lat)<eps)&&(fabs(eca_zone.front().lon-eca_zone.back().lon)<eps);
+            bool polygon_is_closed = (fabs(points.front().lat-points.back().lat)<eps)&&(fabs(points.front().lon-points.back().lon)<eps);
             if (not(polygon_is_closed))
             {
-                THROW("PointInPolygonPimpl(const std::vector<LatitudeLongitude>&)", PointInPolygonException, "Polygon should be closed");
+                THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Polygon should be closed");
             }
-            for (auto it = eca_zone.begin() ; it != eca_zone.end() ; ++it)
+            for (auto it = points.begin() ; it != points.end() ; ++it)
             {
 
                 const PointType p = convert_to<PointType>(it->lon, it->lat);
