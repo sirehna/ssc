@@ -11,18 +11,24 @@
 #include <tr1/memory>
 #include <string>
 #include <set>
-#include <tr1/unordered_map>
+#include <map>
+//#include <tr1/unordered_map>
 
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
 
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
+/*
 typedef std::tr1::unordered_map<TypedModuleName,ModulePtr > FromName2Module;
 typedef std::tr1::unordered_map<TypedSignalName,TypedModuleName> FromSignal2Module;
 typedef std::tr1::unordered_map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
 typedef std::tr1::unordered_map<TypedModuleName,bool > UpdateState;
-
+*/
+typedef std::map<TypedModuleName,ModulePtr > FromName2Module;
+typedef std::map<TypedSignalName,TypedModuleName> FromSignal2Module;
+typedef std::map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
+typedef std::map<TypedModuleName,bool > UpdateState;
 
 void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value);
 
