@@ -11,7 +11,8 @@
 #include <boost/any.hpp>
 #include <string>
 #include <list>
-#include <tr1/unordered_map>
+//#include <tr1/unordered_map>
+#include <map>
 
 typedef std::string SignalName;
 typedef std::string TypeName;
@@ -34,7 +35,7 @@ class TypedSignalName
 
 ::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s);
 
-
+/*
 namespace std
 {
     namespace tr1
@@ -48,10 +49,10 @@ namespace std
             }
         };
     }
-}
+}*/
 
 typedef TypedSignalName TypedModuleName;
-
+/*
 class OwnHash
 {
 public:
@@ -59,10 +60,11 @@ public:
     {
        return std::tr1::hash<std::string>()(c.get_signal_name()+c.get_type_name());
     }
-};
+};*/
 
 
-typedef std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash> Signals;
+//typedef std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash> Signals;
+typedef std::map<TypedSignalName, boost::any> Signals;
 typedef Signals::const_iterator ConstSignalIterator;
 
 #define DECLARE_TYPE_ACCESSORS(t) template <> ConvertibleTypesIterator begin<t>(const ConvertibleTypes& l);\
