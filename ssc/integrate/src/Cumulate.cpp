@@ -5,6 +5,7 @@
  *  \author cec
  */
 
+<<<<<<< HEAD
 #include <list>
 
 #include "Cumulate.hpp"
@@ -84,3 +85,7 @@ double Cumulate::integrate(const double a, const double b)
 {
     return pimpl->integrate(a,b);
 }
+=======
+#include "../inc/Cumulate.hpp"
+
+>>>>>>> Stubbed 'Cumulate' class
