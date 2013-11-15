@@ -1,9 +1,7 @@
 # ------8<---[LINES TO MODIFY WHEN CHANGING MODULE]----->8-----
 set(MODULE_UNDER_TEST optimizer)
 project (${MODULE_UNDER_TEST}_tests)
-FILE(GLOB SRC src/OptimizationProblemTest.cpp
-              src/IpoptSolverTest.cpp
-              src/MinimizeSplineTest.cpp)
+FILE(GLOB SRC src/OptimizationProblemTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories
