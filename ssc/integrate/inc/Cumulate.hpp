@@ -8,7 +8,6 @@
 #ifndef CUMULATE_HPP_
 #define CUMULATE_HPP_
 
-<<<<<<< HEAD
 #include "generic_pimpl.hpp"
 
 /** \author cec
@@ -35,20 +34,6 @@ class Cumulate
     private:
         class Impl;
         Pimpl<Impl> pimpl;
-=======
-/** \author cec
- *  \ingroup MODULE_NAME
- *  \brief Responsibility
- *  \details 
- *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/CumulateTest.cpp CumulateTest example
- *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/CumulateTest.cpp CumulateTest expected output
- */
-
-class Cumulate
-{
->>>>>>> Stubbed 'Cumulate' class
 };
 
 #endif /* CUMULATE_HPP_ */
