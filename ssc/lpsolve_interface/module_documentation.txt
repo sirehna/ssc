@@ -1,0 +1,41 @@
+/**
+@defgroup optimize_speed Speed optimization
+\brief Provides tools to compute an optimal speed given certain waypoints: start & end times
+are fixed, but there can be intermediate points (with no specified dates).
+
+
+\subsection external_types External types
+These types constitute the API of the module.
+- OptimizeSpeedOnTrack: this is the entry point (highest level functionality)
+- SpeedRetriever: this is the type returned when optimizing speed. It allows us to retrieve the speed at any instant & any point on the Track
+- SplitInTwo: subclass of SplitTrackOptimally used for testing purposes (always splits a track in two subtracks of equal length)
+- SplitTrackOptimally: Generic interface to split tracks in two subtracks of equal duration, according to a certain criterion
+- Time: wrapper around double but checks value is positive at construction
+- TrackTime: Subclass of Track adding departure & arrival time information
+- Weather: stores weather information for the environmental models
+- WeatherModule: interface describing how the weather data is to be retrieved
+
+\subsection internal_types Internal types
+These types are not exposed in the API.
+- SpeedAtWayPoint: stores a position & a speed information together
+- SpeedAtWayPointExtractor: facilitates the creation of OptimalSpeedRetriever objects
+- TrackToSpeedRetriever: converts a vector of Track to a SpeedRetriever
+<<<<<<< HEAD
+- ShipModel: calculates the ship's propulsion power given thruster states
+- Allocator: calculates thruster states given certain weather conditions, a ship speed & a heading
+- TrackCost: computes the cost (CO, NOx, etc.) on a track at a given time or on the whole track
+=======
+>>>>>>> 180c3181376bc25444a58a88b4641a6c91b2c050
+
+\subsection algorithms Algorithms
+The route is given (eg. by a dedicated routing software or by the mission preparation
+module). We only optimize the speed without taking into account the route/speed
+coupling. This makes the resolution much easier but it is necessarily an approximate
+solution. It also allows us to separate the implementation in two independent modules
+(optimize trajectory & optimize speed).
+
+\image html strategie_1.svg
+\image latex strategie_1.png
+
+
+*/
