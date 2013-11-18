@@ -7,9 +7,6 @@
 
 #include "CumulateTest.hpp"
 #include "Cumulate.hpp"
-#include "CumulateException.hpp"
-
-#include "test_macros.hpp"
 
 CumulateTest::CumulateTest() : a(DataGenerator(22))
 {
@@ -32,7 +29,7 @@ TEST_F(CumulateTest, example)
 //! [CumulateTest example]
     Cumulate c;
     c.add(1,1);
-    ASSERT_THROW(c.integrate(a.random<double>(),a.random<double>()),CumulateException);
+    ASSERT_DOUBLE_EQ(0,c.integrate(a.random<double>(),a.random<double>()));
     c.add(2,2);
     ASSERT_DOUBLE_EQ(1.5, c.integrate(1,2));
     c.add(3,2);
@@ -59,4 +56,14 @@ TEST_F(CumulateTest, zero_outside_bounds)
     c.add(1,1);
     c.add(2,2);
     ASSERT_DOUBLE_EQ(0, c.integrate(0,1));
+}
+
+TEST_F(CumulateTest, bug_detected_in_CumulateModule)
+{
+    Cumulate c;
+    c.add(0,0);
+    c.add(1,1);
+    c.add(2,4);
+    c.add(1.5,2.25);
+    ASSERT_DOUBLE_EQ(1.3125, c.integrate(0,1.5));
 }
