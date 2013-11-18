@@ -6,9 +6,17 @@
  */
 
 #include "CumulateTest.hpp"
+<<<<<<< HEAD
 #include "Cumulate.hpp"
 
 CumulateTest::CumulateTest() : a(DataGenerator(22))
+=======
+
+
+#include "test_macros.hpp"
+
+CumulateTest::CumulateTest() : a(DataGenerator(TODO))
+>>>>>>> Stubbed 'Cumulate' class
 {
 }
 
@@ -27,6 +35,7 @@ void CumulateTest::TearDown()
 TEST_F(CumulateTest, example)
 {
 //! [CumulateTest example]
+<<<<<<< HEAD
     Cumulate c;
     c.add(1,1);
     ASSERT_DOUBLE_EQ(0,c.integrate(a.random<double>(),a.random<double>()));
@@ -44,11 +53,14 @@ TEST_F(CumulateTest, example)
     }
     c.add(2.5,80);
     ASSERT_DOUBLE_EQ(42.5, c.integrate(1,3));
+=======
+>>>>>>> Stubbed 'Cumulate' class
 //! [CumulateTest example]
 //! [CumulateTest expected output]
 //! [CumulateTest expected output]
 }
 
+<<<<<<< HEAD
 TEST_F(CumulateTest, zero_outside_bounds)
 {
 //! [CumulateTest example]
@@ -67,3 +79,7 @@ TEST_F(CumulateTest, bug_detected_in_CumulateModule)
     c.add(1.5,2.25);
     ASSERT_DOUBLE_EQ(1.3125, c.integrate(0,1.5));
 }
+=======
+
+
+>>>>>>> Stubbed 'Cumulate' class
