@@ -6,17 +6,12 @@
  */
 
 #include "CumulateTest.hpp"
-<<<<<<< HEAD
 #include "Cumulate.hpp"
-
-CumulateTest::CumulateTest() : a(DataGenerator(22))
-=======
-
+#include "CumulateException.hpp"
 
 #include "test_macros.hpp"
 
-CumulateTest::CumulateTest() : a(DataGenerator(TODO))
->>>>>>> Stubbed 'Cumulate' class
+CumulateTest::CumulateTest() : a(DataGenerator(22))
 {
 }
 
@@ -35,10 +30,9 @@ void CumulateTest::TearDown()
 TEST_F(CumulateTest, example)
 {
 //! [CumulateTest example]
-<<<<<<< HEAD
     Cumulate c;
     c.add(1,1);
-    ASSERT_DOUBLE_EQ(0,c.integrate(a.random<double>(),a.random<double>()));
+    ASSERT_THROW(c.integrate(a.random<double>(),a.random<double>()),CumulateException);
     c.add(2,2);
     ASSERT_DOUBLE_EQ(1.5, c.integrate(1,2));
     c.add(3,2);
@@ -53,33 +47,10 @@ TEST_F(CumulateTest, example)
     }
     c.add(2.5,80);
     ASSERT_DOUBLE_EQ(42.5, c.integrate(1,3));
-=======
->>>>>>> Stubbed 'Cumulate' class
 //! [CumulateTest example]
 //! [CumulateTest expected output]
 //! [CumulateTest expected output]
 }
 
-<<<<<<< HEAD
-TEST_F(CumulateTest, zero_outside_bounds)
-{
-//! [CumulateTest example]
-    Cumulate c;
-    c.add(1,1);
-    c.add(2,2);
-    ASSERT_DOUBLE_EQ(0, c.integrate(0,1));
-}
-
-TEST_F(CumulateTest, bug_detected_in_CumulateModule)
-{
-    Cumulate c;
-    c.add(0,0);
-    c.add(1,1);
-    c.add(2,4);
-    c.add(1.5,2.25);
-    ASSERT_DOUBLE_EQ(1.3125, c.integrate(0,1.5));
-}
-=======
 
 
->>>>>>> Stubbed 'Cumulate' class
