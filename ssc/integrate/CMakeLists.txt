@@ -7,7 +7,7 @@ ADD_DEFINITIONS("-std=gnu++0x")
 include_directories(inc)
 include_directories(${test_macros_SOURCE_DIR})
 include_directories(${exception_handling_INCLUDE_DIRS})
-
+include_directories(${pimpl_idiom_INCLUDE_DIRS})
 
 
 add_library(${PROJECT_NAME}_object OBJECT src/TrapezoidalIntegration.cpp
