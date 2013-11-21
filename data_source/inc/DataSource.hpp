@@ -327,6 +327,23 @@ class DataSource
         }
 
         /** \author cec
+         *  \date 21 nov. 2013, 15:44:12
+         *  \brief
+         *  \returns
+         *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
+        */
+        template<typename T>
+                void unset(std::string signal_name //<! Name of the signal to remove
+                           )
+        {
+            std::map<TypedSignalName, TypedSignalName>::iterator that_alias = aliases.find(typify<T>(signal_name));
+            const bool found_alias = that_alias != aliases.end();
+            if (found_alias) aliases.erase(that_alias);
+            signals_.remove<T>(signal_name);
+            set_all_dependent_modules_out_of_date<T>(signal_name);
+        }
+
+        /** \author cec
          *  \date 27 août 2013, 08:53:49
          *  \brief Override a signal set by a module.
          *  This works only if the signal has been set by a module, *not* if it

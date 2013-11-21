@@ -266,6 +266,15 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
     ASSERT_NO_THROW(data_source.add<M1>());
 }
 
+TEST_F(DataSourceTest, should_be_able_to_remove_a_signal)
+{
+    DataSource data_source;
+    data_source.set<double>("t", 123);
+    ASSERT_NO_THROW(data_source.get<double>("t"));
+    data_source.unset<double>("t");
+    ASSERT_THROW(data_source.get<double>("t"), DataSourceException);
+}
+
 TEST_F(DataSourceTest, can_declare_and_define_a_module_using_a_macro)
 {
     MODULE(modulename,const double x1 = ds->get<double>("x1");\
