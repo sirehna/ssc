@@ -71,6 +71,8 @@ class OptimizationProblem
         friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
         void reset_state_bounds();
         bool is_a_minimization_problem() const;
+        std::vector<size_t> get_index_of_binary_variables() const;
+        std::vector<size_t> get_index_of_integer_variables() const;
 
     private:
         void check_state_for_bound_setting(const StatePtr& state) const;
