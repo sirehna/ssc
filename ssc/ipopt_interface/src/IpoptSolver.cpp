@@ -14,6 +14,7 @@
 #include "State.hpp"
 #include "InternalIpopt.hpp"
 #include "IpIpoptApplication.hpp"
+#include "IpoptSolverException.hpp"
 
 class IpoptSolver::IpoptSolverPimpl
 {
@@ -22,8 +23,17 @@ class IpoptSolver::IpoptSolverPimpl
         IpoptSolverPimpl(const std::tr1::shared_ptr<OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
                                                                app(IpoptApplicationFactory())
         {
+            if (problem->has_binary_variables())
+            {
+                THROW(__PRETTY_FUNCTION__, IpoptSolverException, "There are binary (0/1) variables in the optimization problem: solver Ipopt can only be used on continuous problems");
+            }
+            if (problem->has_integer_variables())
+            {
+                THROW(__PRETTY_FUNCTION__, IpoptSolverException, "There are integer variables in the optimization problem: solver Ipopt can only be used on continuous problems");
+            }
             app->Options()->SetNumericValue("tol", parameters.tolerance);
             app->Options()->SetNumericValue("bound_relax_factor", parameters.bound_relaxation_factor);
+            app->Options()->SetNumericValue("obj_scaling_factor", problem->is_a_minimization_problem() ? 1 : -1);
             app->Options()->SetStringValue("mu_strategy", parameters.mu_strategy);
 
             if (not(parameters.check_first_derivative||parameters.check_second_derivative))
