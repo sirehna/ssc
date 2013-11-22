@@ -70,6 +70,7 @@ class OptimizationProblem
         void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
         friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
         void reset_state_bounds();
+        void clear_constraints();
         bool is_a_minimization_problem() const;
         std::vector<size_t> get_index_of_binary_variables() const;
         std::vector<size_t> get_index_of_integer_variables() const;

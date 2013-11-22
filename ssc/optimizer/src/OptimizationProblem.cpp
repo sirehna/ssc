@@ -267,6 +267,11 @@ class OptimizationProblem::OptimizationProblem_pimpl
             states.clear_bounds();
         }
 
+        void reset_constraints()
+        {
+            constraints  = MinMaxList<NodePtr>();
+        }
+
         std::vector<size_t> get_binary_variables() const
         {
             return binary_var_idx;
@@ -394,6 +399,11 @@ OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound
 void OptimizationProblem::reset_state_bounds()
 {
     pimpl->reset_state_bounds();
+}
+
+void OptimizationProblem::clear_constraints()
+{
+    pimpl->reset_constraints();
 }
 
 StateList OptimizationProblem::get_states() const
