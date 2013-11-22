@@ -22,9 +22,9 @@ class OptimizationProblem;
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet optimizer/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest example
+ *  \snippet ipopt_interface/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest example
  *  \section ex2 Expected output
- *  \snippet optimizer/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest expected output
+ *  \snippet ipopt_interface/unit_tests/src/IpoptSolverTest.cpp IpoptSolverTest expected output
  */
 
 class IpoptSolver
