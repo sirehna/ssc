@@ -477,3 +477,69 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
         ASSERT_SMALL_RELATIVE_ERROR(X2*X2*cos(X4), dg2_dx4(), eps);
     }
 }
+
+TEST_F(OptimizationProblemTest, can_define_integer_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .integer(x1)
+           .integer(x2)
+           .integer(x3)
+           .integer(x4);
+    ASSERT_TRUE(problem.has_integer_variables());
+    ASSERT_FALSE(problem.has_continuous_variables());
+}
+
+TEST_F(OptimizationProblemTest, can_define_binary_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .binary(x1)
+           .binary(x2);
+    ASSERT_TRUE(problem.has_binary_variables());
+    ASSERT_FALSE(problem.has_integer_variables());
+}
+
+TEST_F(OptimizationProblemTest, cannot_set_bounds_on_binary_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .binary(x1);
+    ASSERT_THROW(problem.bound_state(1,x1), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(x1,2), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(1,x1,2), OptimizationProblemException);
+    problem.bound_state(1,x2);
+    ASSERT_THROW(problem.binary(x2), OptimizationProblemException);
+}
+
+TEST_F(OptimizationProblemTest, cannot_set_bounds_on_integer_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .integer(x1);
+    ASSERT_THROW(problem.bound_state(1,x1), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(x1,2), OptimizationProblemException);
+    ASSERT_THROW(problem.bound_state(1,x1,2), OptimizationProblemException);
+    problem.bound_state(1,x2);
+    ASSERT_THROW(problem.integer(x2), OptimizationProblemException);
+}
+
+TEST_F(OptimizationProblemTest, a_variable_cannot_be_both_binary_and_integer)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .binary(x1)
+           .integer(x2);
+    ASSERT_THROW(problem.integer(x1), OptimizationProblemException);
+    ASSERT_THROW(problem.binary(x2), OptimizationProblemException);
+}

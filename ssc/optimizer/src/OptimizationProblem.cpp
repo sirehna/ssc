@@ -162,6 +162,8 @@ template <> void MinMaxList<StatePtr>::add_to_val(const StatePtr& v)
     append(val, v);
 }
 
+enum class VariableType {CONTINUOUS, INTEGER, BINARY};
+
 class OptimizationProblem::OptimizationProblem_pimpl
 {
     public:
@@ -169,7 +171,9 @@ class OptimizationProblem::OptimizationProblem_pimpl
                                       constraints(MinMaxList<NodePtr>()),
                                       states(MinMaxList<StatePtr>()),
                                       sigma_f(Parameter(2)),
-                                      lambda(std::vector<Parameter>())
+                                      lambda(std::vector<Parameter>()),
+                                      minimize(false),
+                                      variable_types(std::map<std::string,VariableType>())
         {
 
         }
@@ -190,7 +194,53 @@ class OptimizationProblem::OptimizationProblem_pimpl
             for (auto it = s.begin() ; it != s.end() ; ++it)
             {
                 states.add_to_val(*it);
+                variable_types[(*it)->get_name()] = VariableType::CONTINUOUS;
             }
+        }
+
+        void binary(const StatePtr& state)
+        {
+            if (states.bounds_already_set(state))
+            {
+                std::stringstream ss;
+                ss << "Bounds for state '" << state->get_name() << "' were already set"
+                   << ", therefore it is considered continuous. It cannot now be declared binary.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
+            if (variable_types[state->get_name()] == VariableType::INTEGER)
+            {
+                std::stringstream ss;
+                ss << "State '" << state->get_name() << "' was declared integer. It cannot now be declare binary.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
+            variable_types[state->get_name()] = VariableType::BINARY;
+        }
+
+        void integer(const StatePtr& state)
+        {
+            if (states.bounds_already_set(state))
+            {
+                std::stringstream ss;
+                ss << "Bounds for state '" << state->get_name() << "' were already set"
+                   << ", therefore it is considered continuous. It cannot now be declared integer.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
+            if (variable_types[state->get_name()] == VariableType::BINARY)
+            {
+                std::stringstream ss;
+                ss << "State '" << state->get_name() << "' was declared binary. It cannot now be declare integer.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
+            variable_types[state->get_name()] = VariableType::INTEGER;
+        }
+
+        bool do_we_have(const VariableType& v) const
+        {
+            for (auto it = variable_types.begin() ; it != variable_types.end() ; ++it)
+            {
+                if (it->second == v) return true;
+            }
+            return false;
         }
 
         void reset_state_bounds()
@@ -203,6 +253,8 @@ class OptimizationProblem::OptimizationProblem_pimpl
         MinMaxList<StatePtr> states;
         Parameter sigma_f;
         std::vector<Parameter> lambda;
+        bool minimize;
+        std::map<std::string,VariableType> variable_types;
 };
 
 OptimizationProblem::OptimizationProblem() : pimpl(new OptimizationProblem_pimpl())
@@ -218,6 +270,15 @@ OptimizationProblem& OptimizationProblem::minimize(const NodePtr& objective_func
 {
     pimpl->objective_function = objective_function;
     pimpl->register_states();
+    pimpl->minimize = true;
+    return *this;
+}
+
+OptimizationProblem& OptimizationProblem::maximize(const NodePtr& objective_function)
+{
+    pimpl->objective_function = objective_function;
+    pimpl->register_states();
+    pimpl->minimize = false;
     return *this;
 }
 
@@ -245,8 +306,27 @@ OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, 
     return *this;
 }
 
-OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state, const Parameter& max_bound)
+void OptimizationProblem::check_state_for_bound_setting(const StatePtr& state) const
 {
+    if (pimpl->variable_types[state->get_name()] != VariableType::CONTINUOUS)
+    {
+        std::stringstream ss;
+        ss << "State '" << state->get_name() << "' is not continuous (it was declared ";
+        switch(pimpl->variable_types[state->get_name()])
+        {
+            case VariableType::CONTINUOUS:
+                ss << "continuous";
+                break;
+            case VariableType::INTEGER:
+                ss << "integer";
+                break;
+            case VariableType::BINARY:
+                ss << "binary";
+                break;
+        }
+        ss << ")";
+        THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+    }
     if (not(pimpl->states.has(state)))
     {
         std::stringstream ss;
@@ -257,37 +337,24 @@ OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound
     {
         THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "Attempting to set bounds to the same state twice.");
     }
+}
+
+OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state, const Parameter& max_bound)
+{
+    check_state_for_bound_setting(state);
     pimpl->states.push_back(min_bound, state, max_bound);
     return *this;
 }
 
 OptimizationProblem& OptimizationProblem::bound_state(const StatePtr& state, const Parameter& max_bound)
 {
-    if (not(pimpl->states.has(state)))
-    {
-        std::stringstream ss;
-        ss << "State '" << state->get_name() << "' is not present in this optimization problem.";
-        THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
-    }
-    if (pimpl->states.bounds_already_set(state))
-    {
-        THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "Attempting to set bounds to the same state twice.");
-    }
+    check_state_for_bound_setting(state);
     pimpl->states.push_back(state, Parameter(max_bound));
     return *this;
 }
 OptimizationProblem& OptimizationProblem::bound_state(const Parameter& min_bound, const StatePtr& state)
 {
-    if (not(pimpl->states.has(state)))
-    {
-        std::stringstream ss;
-        ss << "State '" << state->get_name() << "' is not present in this optimization problem.";
-        THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
-    }
-    if (pimpl->states.bounds_already_set(state))
-    {
-        THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "Attempting to set bounds to the same state twice.");
-    }
+    check_state_for_bound_setting(state);
     pimpl->states.push_back(min_bound, state);
     return *this;
 }
@@ -350,7 +417,14 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
 ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb)
 {
     SerializeReversePolish s(os);
-    os << "min ";
+    if (pb.is_a_minimization_problem())
+    {
+        os << "min ";
+    }
+    else
+    {
+        os << "max ";
+    }
     pb.pimpl->objective_function->accept(s);
     os << std::endl;
 
@@ -392,9 +466,42 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     pb.get_state_bounds(n, xl, xu);
     for (size_t i = 0 ; i < n ; ++i)
     {
-        os << xl[i] << " < " << *(l.at(i)) << " < " << xu[i] << std::endl;
+        const auto x = l.back()/l.back()->get_multiplicative_factor();
+        os << xl[i] << " < " << *(x) << " < " << xu[i] << std::endl;
     }
     delete[] xl;
     delete[] xu;
     return os;
+}
+
+bool OptimizationProblem::is_a_minimization_problem() const
+{
+    return pimpl->minimize;
+}
+
+bool OptimizationProblem::has_binary_variables() const
+{
+    return pimpl->do_we_have(VariableType::BINARY);
+}
+
+bool OptimizationProblem::has_integer_variables() const
+{
+    return pimpl->do_we_have(VariableType::INTEGER);
+}
+
+bool OptimizationProblem::has_continuous_variables() const
+{
+    return pimpl->do_we_have(VariableType::CONTINUOUS);
+}
+
+OptimizationProblem& OptimizationProblem::binary(const StatePtr& state)
+{
+    pimpl->binary(state);
+    return *this;
+}
+
+OptimizationProblem& OptimizationProblem::integer(const StatePtr& state)
+{
+    pimpl->integer(state);
+    return *this;
 }
