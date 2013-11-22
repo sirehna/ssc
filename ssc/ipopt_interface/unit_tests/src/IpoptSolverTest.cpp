@@ -7,6 +7,7 @@
 
 #include "IpoptSolverTest.hpp"
 #include "IpoptSolver.hpp"
+#include "IpoptSolverException.hpp"
 #include "OptimizationProblem.hpp"
 #include "OptimizationResult.hpp"
 
@@ -167,3 +168,42 @@ TEST_F(IpoptSolverTest, new_allocation_problem_converges)
     ASSERT_SMALL_RELATIVE_ERROR(sin(theta),x1_*x1_*sin(x3_)+x2_*x2_*sin(x4_),eps);
 }
 
+TEST_F(IpoptSolverTest, can_solve_a_maximization_problem)
+{
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    pb->maximize(143*x1+60*x2)
+      .subject_to(120*x1 + 210*x2, 15000)
+      .subject_to(110*x1 + 30*x2, 4000)
+      .subject_to(x1 + x2, 75 )
+      .bound_state(0,x1)
+      .bound_state(0,x2);
+    IpoptSolver optimize(pb);
+    const std::vector<double> x0(2,0);
+    auto res = optimize.solve(x0);
+    ASSERT_DOUBLE_EQ(6315.625, res.value_of_the_objective_function);
+    ASSERT_EQ(2, res.state_values.size());
+    ASSERT_DOUBLE_EQ(21.875, res.state_values["x1"]);
+    ASSERT_DOUBLE_EQ(53.125, res.state_values["x2"]);
+}
+
+TEST_F(IpoptSolverTest, cannot_use_ipopt_when_there_are_binary_variables)
+{
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    pb->maximize(143*x1+60*x2)
+      .subject_to(120*x1 + 210*x2, 15000)
+      .subject_to(110*x1 + 30*x2, 4000)
+      .subject_to(x1 + x2, 75 )
+      .binary(x1);
+    ASSERT_THROW(IpoptSolver s(pb), IpoptSolverException);
+}
+
+TEST_F(IpoptSolverTest, cannot_use_ipopt_when_there_are_integer_variables)
+{
+    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    pb->maximize(143*x1+60*x2)
+      .subject_to(120*x1 + 210*x2, 15000)
+      .subject_to(110*x1 + 30*x2, 4000)
+      .subject_to(x1 + x2, 75 )
+      .integer(x2);
+    ASSERT_THROW(IpoptSolver s(pb), IpoptSolverException);
+}
