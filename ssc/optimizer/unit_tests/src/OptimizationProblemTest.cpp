@@ -94,20 +94,20 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
 
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraint_bounds)
 {
-    double g_l[2];
-    double g_u[2];
+    std::vector<double> g_l(2);
+    std::vector<double> g_u(2);
     OptimizationProblem hs71;
     hs71.minimize(x1*x4*(x1+x2+x3)+x3)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40);
-    hs71.get_constraint_bounds(2, g_l, g_u);
+    hs71.get_constraint_bounds(2, &g_l[0], &g_u[0]);
     ASSERT_EQ(25, g_l[0]);
     ASSERT_EQ(40, g_l[1]);
     ASSERT_EQ(INFTY, g_u[0]);
     ASSERT_EQ(40, g_u[1]);
 }
 
-TEST_F(OptimizationProblemTest, method_to_retrieve_constraint_bounds_should_throw_if_any_pointers_are_null)
+TEST_F(OptimizationProblemTest, method_to_retrieve_constraint_bounds_should_throw_if_any_pointer_is_null)
 {
     double g_l[2];
     double g_u[2];
@@ -568,4 +568,13 @@ TEST_F(OptimizationProblemTest, can_retrieve_indexes_of_integer_variables)
     const auto idx_of_integer_variables = problem.get_index_of_integer_variables();
     ASSERT_EQ(1, idx_of_integer_variables.size());
     ASSERT_EQ(1, idx_of_integer_variables.at(0));
+}
+
+TEST_F(OptimizationProblemTest, can_reset_cosntraints)
+{
+    OptimizationProblem problem;
+    problem.subject_to(25,x1*x3);
+    ASSERT_THROW(problem.subject_to(x1*x3,25), OptimizationProblemException);
+    problem.clear_constraints();
+    ASSERT_NO_THROW(problem.subject_to(x1*x3,25));
 }
