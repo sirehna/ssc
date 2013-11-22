@@ -44,12 +44,19 @@ class OptimizationProblem
         OptimizationProblem();
         virtual ~OptimizationProblem();
         OptimizationProblem& minimize(const NodePtr& objective_function);
+        OptimizationProblem& maximize(const NodePtr& objective_function);
         OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint);
         OptimizationProblem& subject_to(const Parameter& min_bound, const NodePtr& constraint, const Parameter& max_bound);
         OptimizationProblem& subject_to(const NodePtr& constraint, const Parameter& max_bound);
         OptimizationProblem& bound_state(const Parameter& min_bound, const StatePtr& state, const Parameter& max_bound);
         OptimizationProblem& bound_state(const StatePtr& state, const Parameter& max_bound);
         OptimizationProblem& bound_state(const Parameter& min_bound, const StatePtr& state);
+        OptimizationProblem& binary(const StatePtr& state);
+        OptimizationProblem& integer(const StatePtr& state);
+
+        bool has_binary_variables() const;
+        bool has_integer_variables() const;
+        bool has_continuous_variables() const;
 
         StateList get_states() const;
         std::function<double()> get_objective_function() const;
@@ -63,8 +70,10 @@ class OptimizationProblem
         void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
         friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
         void reset_state_bounds();
+        bool is_a_minimization_problem() const;
 
     private:
+        void check_state_for_bound_setting(const StatePtr& state) const;
         class OptimizationProblem_pimpl;
         std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
 };
