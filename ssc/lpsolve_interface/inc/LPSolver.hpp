@@ -14,6 +14,13 @@
 
 class OptimizationProblem;
 
+
+struct LPSolverParameters
+{
+	LPSolverParameters() : verbose_level(0){}
+	size_t verbose_level;
+};
+
 /** \author cec
  *  \ingroup lp_solve_interface
  *  \brief Responsibility
@@ -26,7 +33,7 @@ class OptimizationProblem;
 class LPSolver
 {
     public:
-        LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem);
+        LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const LPSolverParameters& par = LPSolverParameters());
         LPSolver();
         ~LPSolver();
         LPSolver(const LPSolver& rhs);

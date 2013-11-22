@@ -16,7 +16,7 @@
 class LPSolver::Impl
 {
     public:
-        Impl() : pb(new OptimizationProblem()), nb_ob_states(0), nb_of_constraints(0), colno(NULL), row(NULL), lp(NULL)
+        Impl() : pb(new OptimizationProblem()), nb_ob_states(0), nb_of_constraints(0), colno(NULL), row(NULL), lp(NULL), par(LPSolverParameters())
         {
 
         }
@@ -26,7 +26,8 @@ class LPSolver::Impl
                                 nb_of_constraints(pb->get_constraints().size()),
                                 colno(new int[nb_ob_states]),
                                 row(new double[nb_ob_states]), lp(
-                        make_lp(0, nb_ob_states))
+                        make_lp(0, nb_ob_states)),
+                        par(rhs.par)
         {
         }
 
@@ -47,6 +48,7 @@ class LPSolver::Impl
                 colno = new int[nb_ob_states];
                 row = new REAL[nb_ob_states];
                 lp = make_lp(0, nb_ob_states);
+                par = rhs.par;
             }
             return *this;
         }
@@ -62,11 +64,12 @@ class LPSolver::Impl
             if (row)
                 delete[] row;
         }
-        Impl(const std::tr1::shared_ptr<OptimizationProblem>& problem) :
+        Impl(const std::tr1::shared_ptr<OptimizationProblem>& problem, const LPSolverParameters& par_) :
                 pb(problem), nb_ob_states(pb->get_states().size()), nb_of_constraints(
                         pb->get_constraints().size()), colno(
                         new int[nb_ob_states]), row(new double[nb_ob_states]), lp(
-                        make_lp(0, nb_ob_states))
+                        make_lp(0, nb_ob_states)),
+                        par(par_)
         {
         }
 
@@ -82,7 +85,7 @@ class LPSolver::Impl
 
         OptimizationResult get_result()
         {
-            set_verbose(lp, 0);
+            set_verbose(lp, par.verbose_level);
             const int ierr = ::solve(lp);
             OptimizationResult res;
             res.converged = (ierr == OPTIMAL);
@@ -126,10 +129,12 @@ class LPSolver::Impl
             size_t i = 1;
             for (auto it = states.begin(); it != states.end(); ++it)
             {
-                char* c = new char[(*it)->get_name().length()];
-                strcpy(c, (*it)->get_name().c_str());
-                set_col_name(lp, i++, c);
-                delete[] c;
+            	const std::string str = (*it)->get_name();
+            	char * writable = new char[str.size() + 1];
+            	std::copy(str.begin(), str.end(), writable);
+            	writable[str.size()] = '\0';
+                set_col_name(lp, i++, writable);
+                delete[] writable;
             }
         }
 
@@ -185,9 +190,10 @@ class LPSolver::Impl
         int* colno;
         double*row;
         lprec* lp;
+        LPSolverParameters par;
 };
 
-LPSolver::LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem) : pimpl(new Impl(problem))
+LPSolver::LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const LPSolverParameters& par) : pimpl(new Impl(problem,par))
 {
 
 }
