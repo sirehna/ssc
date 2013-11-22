@@ -11,7 +11,8 @@
 #include "LPSolverException.hpp"
 #include "FunctionMatrix.hpp"
 #include "State.hpp"
-
+#include "Grad.hpp"
+#include "test_macros.hpp"
 class LPSolver::Impl
 {
     public:
@@ -24,22 +25,25 @@ class LPSolver::Impl
                                 nb_ob_states(pb->get_states().size()),
                                 nb_of_constraints(pb->get_constraints().size()),
                                 colno(new int[nb_ob_states]),
-                                row(new REAL[nb_ob_states]),
-                                lp(make_lp(0, nb_ob_states))
+                                row(new double[nb_ob_states]), lp(
+                        make_lp(0, nb_ob_states))
         {
-
         }
 
-        Impl& operator=(const Impl& rhs)
+        Impl& operator =(const Impl& rhs)
         {
             if (&rhs != this)
             {
-                pb = std::shared_ptr<OptimizationProblem>(new OptimizationProblem(*rhs.pb));
+                pb = std::tr1::shared_ptr < OptimizationProblem
+                        > (new OptimizationProblem(*rhs.pb));
                 nb_ob_states = pb->get_states().size();
                 nb_of_constraints = pb->get_constraints().size();
-                if (lp) delete_lp(lp);
-                if (colno) delete[] colno;
-                if (row) delete[] row;
+                if (lp)
+                    delete_lp(lp);
+                if (colno)
+                    delete[] colno;
+                if (row)
+                    delete[] row;
                 colno = new int[nb_ob_states];
                 row = new REAL[nb_ob_states];
                 lp = make_lp(0, nb_ob_states);
@@ -49,71 +53,141 @@ class LPSolver::Impl
 
         ~Impl()
         {
-            if (lp) delete_lp(lp);
-            if (colno) delete[] colno;
-            if (row) delete[] row;
+            if (lp)
+                delete_lp(lp);
+
+            if (colno)
+                delete[] colno;
+
+            if (row)
+                delete[] row;
         }
-        Impl(const std::shared_ptr<OptimizationProblem>& problem) : pb(problem),
-                                                                    nb_ob_states(pb->get_states().size()),
-                                                                    nb_of_constraints(pb->get_constraints().size()),
-                                                                    colno(new int[nb_ob_states]),
-                                                                    row(new REAL[nb_ob_states]),
-                                                                    lp(make_lp(0, nb_ob_states))
+        Impl(const std::tr1::shared_ptr<OptimizationProblem>& problem) :
+                pb(problem), nb_ob_states(pb->get_states().size()), nb_of_constraints(
+                        pb->get_constraints().size()), colno(
+                        new int[nb_ob_states]), row(new double[nb_ob_states]), lp(
+                        make_lp(0, nb_ob_states))
         {
         }
 
-        OptimizationResult solve()
+        StateList initialize_states(const std::vector<double>& x0)
         {
-            set_state_names(pb->get_states());
-            add_constraints();
-            return OptimizationResult();
+            const auto states = pb->get_states();
+            for (size_t i = 0; i < nb_ob_states; ++i)
+            {
+                *states.at(i) = x0.at(i);
+            }
+            return states;
+        }
+
+        OptimizationResult get_result()
+        {
+            set_verbose(lp, 0);
+            const int ierr = ::solve(lp);
+            OptimizationResult res;
+            res.converged = (ierr == OPTIMAL);
+            get_variables(lp, row);
+            for (size_t i = 0; i < nb_ob_states; ++i)
+            {
+                res.state_values[get_col_name(lp, i + 1)] = row[i];
+            }
+            res.nb_of_iterations = get_total_iter(lp);
+            res.value_of_the_objective_function = get_objective(lp);
+            res.total_time_needed_for_optimization = time_elapsed(lp);
+            return res;
+        }
+
+        void set_binary_and_integer_states()
+        {
+            const auto idx_bin = pb->get_index_of_binary_variables();
+            const auto idx_int = pb->get_index_of_binary_variables();
+            for (auto it = idx_bin.begin() ; it != idx_bin.end() ; ++it)
+            {
+                set_binary(lp, *it+1, TRUE);
+            }
+            for (auto it = idx_int.begin() ; it != idx_int.end() ; ++it)
+            {
+                set_int(lp, *it+1, TRUE);
+            }
+        }
+
+        OptimizationResult solve(const std::vector<double>& x0)
+        {
+            const auto states = initialize_states(x0);
+            set_state_names(states);
+            set_binary_and_integer_states();
+            if (nb_of_constraints) set_constraints();
+            set_objective_function();
+            return get_result();
         }
 
         void set_state_names(const std::vector<StatePtr>& states)
         {
             size_t i = 1;
-            for (auto it = states.begin() ; it != states.end() ; ++it)
+            for (auto it = states.begin(); it != states.end(); ++it)
             {
                 char* c = new char[(*it)->get_name().length()];
                 strcpy(c, (*it)->get_name().c_str());
                 set_col_name(lp, i++, c);
-                delete[]c;
+                delete[] c;
             }
         }
 
-        void add_constraints()
+        void set_objective_function()
+        {
+            const Grad grad_f = pb->get_grad_objective_function();
+            const size_t n = grad_f.index.size();
+            for (size_t k = 0; k < n; ++k)
+            {
+                colno[k] = grad_f.index.at(k) + 1;
+                row[k] = grad_f.values.at(k)();
+            }
+            set_obj_fnex(lp, n, row, colno);
+            if (!(pb->is_a_minimization_problem()))
+                set_maxim(lp);
+        }
+        void set_constraints()
         {
             std::vector<double> gl(nb_of_constraints), gu(nb_of_constraints);
             pb->get_constraint_bounds(nb_of_constraints, &gl[0], &gu[0]);
             const FunctionMatrix M = pb->get_constraint_jacobian();
             set_add_rowmode(lp, TRUE);
             const size_t n = M.values.size();
-            size_t k = 0;
-            for (size_t i = 0 ; i < nb_of_constraints ; ++i)
+            int previous_row = -1;
+            size_t p = 0;
+            for (size_t k = 0; k < n; ++k)
             {
-                size_t p = 0;
-                for (size_t j = 0 ; j < nb_ob_states ; ++j)
+                const auto i = (int) M.row_index[k];
+                const auto j = (int) M.col_index[k];
+                if (i != previous_row)
                 {
-                    if ((k < n) && (M.row_index[k] == i) && (M.col_index[k] == j))
+                    if (previous_row > -1)
                     {
-                        colno[p] = M.col_index[k]+1;
-                        row[p++] = M.values[k]();
+                        add_constraintex(lp, p, row, colno, LE,
+                                gu[previous_row]);
                     }
+                    p = 0;
                 }
-                add_constraintex(lp, p, row, colno, LE, gu[i]);
+                colno[p] = j + 1;
+                row[p++] = M.values[k]();
+                previous_row = i;
             }
+            if (p)
+                add_constraintex(lp, p, row, colno, LE, gu[M.row_index[n - 1]]);
+
+            set_add_rowmode(lp, FALSE);
         }
 
     private:
-        std::shared_ptr<OptimizationProblem> pb;
+        std::tr1::shared_ptr<OptimizationProblem> pb;
         size_t nb_ob_states;
         size_t nb_of_constraints;
-        int *colno;
-        REAL *row;
+        int* colno;
+        double*row;
         lprec* lp;
 };
 
-LPSolver::LPSolver(const std::shared_ptr<OptimizationProblem>& problem) : pimpl(new Impl(problem))
+LPSolver::LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem) : pimpl(new Impl(problem))
 {
 
 }
@@ -142,7 +216,7 @@ LPSolver& LPSolver::operator=(const LPSolver& rhs)
     return *this;
 }
 
-OptimizationResult LPSolver::solve()
+OptimizationResult LPSolver::solve(const std::vector<double>& x0)
 {
-    return pimpl->solve();
+    return pimpl->solve(x0);
 }

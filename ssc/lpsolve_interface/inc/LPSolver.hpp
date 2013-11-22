@@ -8,6 +8,7 @@
 #ifndef LPSOLVER_HPP_
 #define LPSOLVER_HPP_
 
+#include <tr1/memory>
 #include <memory>
 #include "OptimizationResult.hpp"
 
@@ -25,12 +26,12 @@ class OptimizationProblem;
 class LPSolver
 {
     public:
-        LPSolver(const std::shared_ptr<OptimizationProblem>& problem);
+        LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem);
         LPSolver();
         ~LPSolver();
         LPSolver(const LPSolver& rhs);
         LPSolver& operator=(const LPSolver& rhs);
-        OptimizationResult solve();
+        OptimizationResult solve(const std::vector<double>& x0);
 
     private:
         class Impl;
