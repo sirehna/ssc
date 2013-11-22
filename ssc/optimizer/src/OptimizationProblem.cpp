@@ -16,6 +16,19 @@
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
 
+template <class T> std::string get_string(const T& t)
+{
+    std::stringstream ss;
+    Serialize v(ss);
+    t->accept(v);
+    return ss.str();
+}
+template <> std::string get_string(const StatePtr& t);
+template <> std::string get_string(const StatePtr& t)
+{
+    return t->get_name();
+}
+
 template <class T> class MinMaxList
 {
     public:
@@ -38,7 +51,7 @@ template <class T> class MinMaxList
             const bool already_present = bounds_already_set(v);
             if (already_present)
             {
-                THROW("add_to_val(const T&)", OptimizationProblemException, "Attempting to specify bounds for the same constraint twice");
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "Attempting to specify bounds for the same constraint twice");
             }
             val.push_back(v);
         }
@@ -76,15 +89,15 @@ template <class T> class MinMaxList
         {
             if (l == NULL)
             {
-                THROW("OptimizationProblem::OptimizationProblem_pimpl::get_bounds(double* const, double* const)", OptimizationProblemException, "l == NULL");
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "l == NULL");
             }
             if (u == NULL)
             {
-                THROW("OptimizationProblem::OptimizationProblem_pimpl::get_bounds(double* const, double* const)", OptimizationProblemException, "u == NULL");
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "u == NULL");
             }
             if (n!= val.size())
             {
-                THROW("get_bounds(const size_t&, double* const, double* const)", OptimizationProblemException, "Invalid size");
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, "Invalid size");
             }
             size_t i = 0;
             for (auto v = val.begin() ; v != val.end() ; ++v)
@@ -96,14 +109,6 @@ template <class T> class MinMaxList
                 l[i]   = found_value_in_min_map ? (it_min->second).get_lambda()() : get_min_bound();
                 u[i++] = found_value_in_max_map ? (it_max->second).get_lambda()() : get_max_bound();
             }
-        }
-
-        std::string get_string(const T& t) const
-        {
-            std::stringstream ss;
-            Serialize v(ss);
-            t->accept(v);
-            return ss.str();
         }
 
         bool bounds_already_set(const T& t) const
@@ -346,7 +351,6 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
 {
     SerializeReversePolish s(os);
     os << "min ";
-    //os << *(pb.pimpl->objective_function);
     pb.pimpl->objective_function->accept(s);
     os << std::endl;
 
@@ -358,15 +362,15 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     const size_t n = l.size();
     for (size_t i = 0 ; i < ((n-1)>n?0:(n-1)) ; ++i)
     {
-        os << *(l.at(i));
-        //l.at(i)->accept(s);
+        const auto x = l.at(i)/l.at(i)->get_multiplicative_factor();
+        os << *(x);
         os << ",";
 
     }
     if (not(l.empty()))
     {
-        os << *(l.back());
-        //l.back()->accept(s);
+        const auto x = l.back()/l.back()->get_multiplicative_factor();
+        os << *(x);
         os << ")" << std::endl;
     }
     auto constraints = pb.pimpl->get_constraints();
@@ -378,7 +382,6 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     {
         os << "subject to ";
         os << gl[i] << " < ";
-        //os << *(constraints.at(i));
         constraints.at(i)->accept(s);
         os << " < " << gu[i] << std::endl;
     }
