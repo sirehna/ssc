@@ -543,3 +543,29 @@ TEST_F(OptimizationProblemTest, a_variable_cannot_be_both_binary_and_integer)
     ASSERT_THROW(problem.integer(x1), OptimizationProblemException);
     ASSERT_THROW(problem.binary(x2), OptimizationProblemException);
 }
+
+TEST_F(OptimizationProblemTest, can_retrieve_indexes_of_binary_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .binary(x1)
+           .integer(x2);
+    const auto idx_of_binary_variables = problem.get_index_of_binary_variables();
+    ASSERT_EQ(1, idx_of_binary_variables.size());
+    ASSERT_EQ(0, idx_of_binary_variables.at(0));
+}
+
+TEST_F(OptimizationProblemTest, can_retrieve_indexes_of_integer_variables)
+{
+    OptimizationProblem problem;
+    problem.minimize(x1*x4)
+           .subject_to(25,x1*x3)
+           .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
+           .binary(x1)
+           .integer(x2);
+    const auto idx_of_integer_variables = problem.get_index_of_integer_variables();
+    ASSERT_EQ(1, idx_of_integer_variables.size());
+    ASSERT_EQ(1, idx_of_integer_variables.at(0));
+}

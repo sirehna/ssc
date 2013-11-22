@@ -173,7 +173,10 @@ class OptimizationProblem::OptimizationProblem_pimpl
                                       sigma_f(Parameter(2)),
                                       lambda(std::vector<Parameter>()),
                                       minimize(false),
-                                      variable_types(std::map<std::string,VariableType>())
+                                      variable_types(std::map<std::string,VariableType>()),
+                                      index(std::map<std::string,size_t>()),
+                                      binary_var_idx(std::vector<size_t>()),
+                                      integer_var_idx(std::vector<size_t>())
         {
 
         }
@@ -191,10 +194,12 @@ class OptimizationProblem::OptimizationProblem_pimpl
         void register_states()
         {
             auto s = ::get_states(objective_function, constraints.get_vals());
+            size_t k = 0;
             for (auto it = s.begin() ; it != s.end() ; ++it)
             {
                 states.add_to_val(*it);
                 variable_types[(*it)->get_name()] = VariableType::CONTINUOUS;
+                index[(*it)->get_name()] = k++;
             }
         }
 
@@ -207,6 +212,12 @@ class OptimizationProblem::OptimizationProblem_pimpl
                    << ", therefore it is considered continuous. It cannot now be declared binary.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
+            if (variable_types[state->get_name()] == VariableType::BINARY)
+            {
+                std::stringstream ss;
+                ss << "State '" << state->get_name() << "' was already declared binary: don't declare it twice.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
             if (variable_types[state->get_name()] == VariableType::INTEGER)
             {
                 std::stringstream ss;
@@ -214,6 +225,7 @@ class OptimizationProblem::OptimizationProblem_pimpl
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
             variable_types[state->get_name()] = VariableType::BINARY;
+            binary_var_idx.push_back(index[state->get_name()]);
         }
 
         void integer(const StatePtr& state)
@@ -225,6 +237,12 @@ class OptimizationProblem::OptimizationProblem_pimpl
                    << ", therefore it is considered continuous. It cannot now be declared integer.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
+            if (variable_types[state->get_name()] == VariableType::INTEGER)
+            {
+                std::stringstream ss;
+                ss << "State '" << state->get_name() << "' was already declared integer: don't declare it twice.";
+                THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
+            }
             if (variable_types[state->get_name()] == VariableType::BINARY)
             {
                 std::stringstream ss;
@@ -232,6 +250,7 @@ class OptimizationProblem::OptimizationProblem_pimpl
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
             variable_types[state->get_name()] = VariableType::INTEGER;
+            integer_var_idx.push_back(index[state->get_name()]);
         }
 
         bool do_we_have(const VariableType& v) const
@@ -248,6 +267,16 @@ class OptimizationProblem::OptimizationProblem_pimpl
             states.clear_bounds();
         }
 
+        std::vector<size_t> get_binary_variables() const
+        {
+            return binary_var_idx;
+        }
+
+        std::vector<size_t> get_integer_variables() const
+        {
+            return integer_var_idx;
+        }
+
         NodePtr objective_function;
         MinMaxList<NodePtr> constraints;
         MinMaxList<StatePtr> states;
@@ -255,6 +284,9 @@ class OptimizationProblem::OptimizationProblem_pimpl
         std::vector<Parameter> lambda;
         bool minimize;
         std::map<std::string,VariableType> variable_types;
+        std::map<std::string,size_t> index;
+        std::vector<size_t> binary_var_idx;
+        std::vector<size_t> integer_var_idx;
 };
 
 OptimizationProblem::OptimizationProblem() : pimpl(new OptimizationProblem_pimpl())
@@ -504,4 +536,14 @@ OptimizationProblem& OptimizationProblem::integer(const StatePtr& state)
 {
     pimpl->integer(state);
     return *this;
+}
+
+std::vector<size_t> OptimizationProblem::get_index_of_binary_variables() const
+{
+    return pimpl->get_binary_variables();
+}
+
+std::vector<size_t> OptimizationProblem::get_index_of_integer_variables() const
+{
+    return pimpl->get_integer_variables();
 }
