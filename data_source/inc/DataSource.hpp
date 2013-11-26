@@ -11,24 +11,29 @@
 #include <tr1/memory>
 #include <string>
 #include <set>
-#include <map>
-//#include <tr1/unordered_map>
 
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
 #include "DataSourceException.hpp"
+#include "almost_equal.hpp"
 
 typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
-/*
-typedef std::tr1::unordered_map<TypedModuleName,ModulePtr > FromName2Module;
-typedef std::tr1::unordered_map<TypedSignalName,TypedModuleName> FromSignal2Module;
-typedef std::tr1::unordered_map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
-typedef std::tr1::unordered_map<TypedModuleName,bool > UpdateState;
-*/
-typedef std::map<TypedModuleName,ModulePtr > FromName2Module;
-typedef std::map<TypedSignalName,TypedModuleName> FromSignal2Module;
-typedef std::map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
-typedef std::map<TypedModuleName,bool > UpdateState;
+
+#define USE_HASH_MAPS 1
+
+#if USE_HASH_MAPS
+    #include <tr1/unordered_map>
+    typedef std::tr1::unordered_map<TypedModuleName,ModulePtr > FromName2Module;
+    typedef std::tr1::unordered_map<TypedSignalName,TypedModuleName> FromSignal2Module;
+    typedef std::tr1::unordered_map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
+    typedef std::tr1::unordered_map<TypedModuleName,bool > UpdateState;
+#else
+    #include <map>
+    typedef std::map<TypedModuleName,ModulePtr > FromName2Module;
+    typedef std::map<TypedSignalName,TypedModuleName> FromSignal2Module;
+    typedef std::map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
+    typedef std::map<TypedModuleName,bool > UpdateState;
+#endif
 
 void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value);
 
@@ -321,8 +326,20 @@ class DataSource
             if (readonly) update_dependencies<T>(signal_name);
             else
             {
-                signals_.set(signal_name, t);
-                set_all_dependent_modules_out_of_date<T>(signal_name);
+                if (signals_.has(typify<T>(signal_name)))
+                {
+                    const T old_t = signals_.get<T>(signal_name);
+                    if (not(almost_equal(old_t,t)))
+                    {
+                        signals_.set(signal_name, t);
+                        set_all_dependent_modules_out_of_date<T>(signal_name);
+                    }
+                }
+                else
+                {
+                    signals_.set(signal_name, t);
+                    set_all_dependent_modules_out_of_date<T>(signal_name);
+                }
             }
         }
 
@@ -366,6 +383,7 @@ class DataSource
                                 + "'), which is not set by any module: can only force a value set by a module (otherwise, use DataSource::set).");
             }
             forced_values.set<T>(signal_name, forced_value);
+            set_all_dependent_modules_out_of_date<T>(signal_name);
         }
 
         /** \author cec
@@ -393,6 +411,7 @@ private:
                 module_requesting_signals = module_name;
                 module_setting_signals = module_name;
                 name2module[module_name]->update();
+                is_up_to_date[module_name] = true;
             }
         }
 
