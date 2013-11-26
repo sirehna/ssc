@@ -322,6 +322,33 @@ TEST_F(DataSourceTest, can_retrieve_derivatives)
     }
 }
 
+TEST_F(DataSourceTest, bug_detected_when_fixing_uptodate_module_map_error)
+{
+    DataSource data_source;
+    data_source.add<ode>();
+    data_source.add<ode2>();
+    data_source.define_derivative("x", "dx_dt");
+    data_source.define_derivative("y", "dy_dt");
+    data_source.define_derivative("z", "dz_dt");
+
+    double x = 1;
+    data_source.set<double>("x",x);
+    std::vector<double> dx(3,0);
+    data_source.get_derivatives(dx);
+    ASSERT_DOUBLE_EQ(2*x, dx[0]);
+    ASSERT_DOUBLE_EQ(x*x, dx[1]);
+    ASSERT_DOUBLE_EQ(sin(x), dx[2]);
+
+    x = 2;
+    data_source.set<double>("x",x);
+    dx = std::vector<double>(3,0);
+    data_source.get_derivatives(dx);
+    ASSERT_DOUBLE_EQ(2*x, dx[0]);
+    ASSERT_DOUBLE_EQ(x*x, dx[1]);
+    ASSERT_DOUBLE_EQ(sin(x), dx[2]);
+}
+
+
 TEST_F(DataSourceTest, can_retrieve_derivatives_out_of_order)
 {
     DataSource data_source;
@@ -685,4 +712,27 @@ TEST_F(DataSourceTest, serialization)
              << "        created_by: m2" << std::endl
              << "        used_by: [m3]" << std::endl;
     ASSERT_EQ(expected.str(), data_source.draw());
+}
+
+MODULE(VarUp, const double x = ds->get<double>("x");\
+              const DataGenerator *rng = ds->get<DataGenerator*>("rng");\
+              (void)x;\
+              double y = 0;\
+              if (rng) y = rng->random<double>();\
+              ds->set("y",y);\
+)
+
+
+TEST_F(DataSourceTest, should_not_update_dependencies_if_setting_signal_to_its_current_value)
+{
+    DataSource ds;
+    DataGenerator *rng = new DataGenerator(1);
+    ds.set<DataGenerator*>("rng",rng);
+    ds.add<VarUp>("VarUp");
+    const double x0 = a.random<double>()();
+    ds.set("x", x0);
+    const double old_y = ds.get<double>("y");
+    ds.set("x", x0);
+    const double new_y = ds.get<double>("y");
+    ASSERT_DOUBLE_EQ(old_y, new_y);
 }
