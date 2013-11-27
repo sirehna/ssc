@@ -9,7 +9,6 @@
 #include "OptimizationProblem.hpp"
 #include "lp_lib.h"
 #include "LPSolverException.hpp"
-<<<<<<< HEAD
 #include "FunctionMatrix.hpp"
 #include "State.hpp"
 #include "Grad.hpp"
@@ -18,19 +17,11 @@ class LPSolver::Impl
 {
     public:
         Impl() : pb(new OptimizationProblem()), nb_ob_states(0), nb_of_constraints(0), colno(NULL), row(NULL), lp(NULL), par(LPSolverParameters())
-=======
-
-class LPSolver::Impl
-{
-    public:
-        Impl() : pb(new OptimizationProblem()), Ncol(0), colno(NULL), row(NULL), lp(NULL)
->>>>>>> Stubbed lpsolve_interface
         {
 
         }
 
         Impl(const Impl& rhs) : pb(new OptimizationProblem(*rhs.pb)),
-<<<<<<< HEAD
                                 nb_ob_states(pb->get_states().size()),
                                 nb_of_constraints(pb->get_constraints().size()),
                                 colno(new int[nb_ob_states]),
@@ -58,35 +49,12 @@ class LPSolver::Impl
                 row = new REAL[nb_ob_states];
                 lp = make_lp(0, nb_ob_states);
                 par = rhs.par;
-=======
-                                Ncol(pb->get_states().size()),
-                                colno(new int[Ncol]),
-                                row(new REAL[Ncol]),
-                                lp(make_lp(0, Ncol))
-        {
-
-        }
-
-        Impl& operator=(const Impl& rhs)
-        {
-            if (&rhs != this)
-            {
-                pb = std::shared_ptr<OptimizationProblem>(new OptimizationProblem(*rhs.pb));
-                Ncol = pb->get_states().size();
-                if (lp) delete_lp(lp);
-                if (colno) delete[] colno;
-                if (row) delete[] row;
-                colno = new int[Ncol];
-                row = new REAL[Ncol];
-                lp = make_lp(0, Ncol);
->>>>>>> Stubbed lpsolve_interface
             }
             return *this;
         }
 
         ~Impl()
         {
-<<<<<<< HEAD
             if (lp)
                 delete_lp(lp);
 
@@ -226,34 +194,6 @@ class LPSolver::Impl
 };
 
 LPSolver::LPSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const LPSolverParameters& par) : pimpl(new Impl(problem,par))
-=======
-            if (lp) delete_lp(lp);
-            if (colno) delete[] colno;
-            if (row) delete[] row;
-        }
-        Impl(const std::shared_ptr<OptimizationProblem>& problem) : pb(problem),
-                                                                    Ncol(pb->get_states().size()),
-                                                                    colno(new int[Ncol]),
-                                                                    row(new REAL[Ncol]),
-                                                                    lp(make_lp(0, Ncol))
-        {
-        }
-
-        OptimizationResult solve()
-        {
-            return OptimizationResult();
-        }
-
-    private:
-        std::shared_ptr<OptimizationProblem> pb;
-        int Ncol;
-        int *colno;
-        REAL *row;
-        lprec* lp;
-};
-
-LPSolver::LPSolver(const std::shared_ptr<OptimizationProblem>& problem) : pimpl(new Impl(problem))
->>>>>>> Stubbed lpsolve_interface
 {
 
 }
@@ -282,13 +222,7 @@ LPSolver& LPSolver::operator=(const LPSolver& rhs)
     return *this;
 }
 
-<<<<<<< HEAD
 OptimizationResult LPSolver::solve(const std::vector<double>& x0)
 {
     return pimpl->solve(x0);
-=======
-OptimizationResult LPSolver::solve()
-{
-    return pimpl->solve();
->>>>>>> Stubbed lpsolve_interface
 }
