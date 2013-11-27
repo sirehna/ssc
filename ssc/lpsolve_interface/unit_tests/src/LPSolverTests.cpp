@@ -34,27 +34,17 @@ TEST_F(LPSolverTests, example)
     StateGenerator generate;
     auto x = generate.state("x");
     auto y = generate.state("y");
-<<<<<<< HEAD
     std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
     pb->maximize(143*x+60*y)
-=======
-    std::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
-    pb->minimize((-1)*(143*x+60*y))
->>>>>>> Stubbed lpsolve_interface
       .subject_to(120*x + 210*y, 15000)
       .subject_to(110*x + 30*y, 4000)
       .subject_to(x + y, 75 )
       .bound_state(0,x)
       .bound_state(0,y);
-<<<<<<< HEAD
-=======
-    std::cout << *pb << std::endl;
->>>>>>> Stubbed lpsolve_interface
 //! [LPSolverTests example]
 //! [LPSolverTests expected output]
     LPSolver solver(pb);
 
-<<<<<<< HEAD
     auto res = solver.solve({0,0});
 
     ASSERT_DOUBLE_EQ(6315.625, res.value_of_the_objective_function);
@@ -98,16 +88,3 @@ TEST_F(LPSolverTests, can_solve_binary_problems)
     ASSERT_EQ(1,res.state_values["x"]);
     ASSERT_EQ(0,res.state_values["y"]);
 }
-=======
-    auto res = solver.solve();
-/*
-    ASSERT_DOUBLE_EQ(6315.625, res.value_of_the_objective_function);
-    ASSERT_EQ(2, res.state_values.size());
-    ASSERT_DOUBLE_EQ(21.875, res.state_values["x"]);
-    ASSERT_DOUBLE_EQ(53.125, res.state_values["y"]);*/
-//! [LPSolverTests expected output]
-}
-
-
-
->>>>>>> Stubbed lpsolve_interface
