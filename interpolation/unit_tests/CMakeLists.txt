@@ -21,6 +21,6 @@ include_directories (inc)
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 include_directories(${random_data_generator_INCLUDE_DIRS})
 
-add_library (${PROJECT_NAME} OBJECT ${SRC})
+add_library(${PROJECT_NAME} OBJECT ${SRC})
 
 
