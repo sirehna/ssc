@@ -33,6 +33,6 @@ include_directories (inc)
 # Use -std=gnu++0x instead.
 ADD_DEFINITIONS("-std=gnu++0x")
 
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc  CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
 add_library (${PROJECT_NAME}_object OBJECT ${SRC})
 add_subdirectory(unit_tests)
