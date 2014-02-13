@@ -107,7 +107,7 @@ class DataSource
         }
 
         /** \author cec
-         *  \date 23 août 2013, 14:34:30
+         *  \date 23 aoÃ»t 2013, 14:34:30
          *  \brief This method was created because we sometimes don't know the name
          *  of a signal from inside a module: therefore, when adding the module, we
          *  create an alias of the signal name the module is expecting against the name
@@ -361,7 +361,7 @@ class DataSource
         }
 
         /** \author cec
-         *  \date 27 août 2013, 08:53:49
+         *  \date 27 aoÃ»t 2013, 08:53:49
          *  \brief Override a signal set by a module.
          *  This works only if the signal has been set by a module, *not* if it
          *  was set 'manually' by the DataSource user (outside the DataSource).
@@ -387,7 +387,7 @@ class DataSource
         }
 
         /** \author cec
-         *  \date 27 août 2013, 09:26:14
+         *  \date 27 aoÃ»t 2013, 09:26:14
          *  \brief Removes a signal from the list of forced values. This means
          *  the signal will be computed by the module instead.
          *  \returns Nothing.

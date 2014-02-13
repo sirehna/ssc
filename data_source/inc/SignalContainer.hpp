@@ -125,7 +125,7 @@ class SignalContainer
 
 
         /** \author cec
-         *  \date 22 août 2013, 12:23:32
+         *  \date 22 aoÃ»t 2013, 12:23:32
          *  \returns All the signals currently in the SignalContainer
         */
         std::vector<std::string> get_all_signal_names() const;

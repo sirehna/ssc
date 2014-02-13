@@ -52,7 +52,6 @@ TypeName TypedSignalName::get_type_name() const
     return _type_name;
 }
 
-
 ConvertibleTypes::ConvertibleTypes() :
 iter_bool(std::list<ConstSignalIterator>()),
 iter_char(std::list<ConstSignalIterator>()),
