@@ -14,6 +14,7 @@
 #include <vector>
 #include "Exception.hpp"
 #include "SignalContainerTypeLists.hpp"
+#include "TypeCoercion.hpp"
 
 class SignalContainerException : public Exception
 {
