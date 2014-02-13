@@ -266,6 +266,13 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
     ASSERT_NO_THROW(data_source.add<M1>());
 }
 
+TEST_F(DataSourceTest, error_detected_by_valgrind_in_data_source_unset)
+{
+	DataSource data_source;
+	data_source.set<double>("t", 123);
+	data_source.unset<double>("t");
+}
+
 TEST_F(DataSourceTest, should_be_able_to_remove_a_signal)
 {
     DataSource data_source;
