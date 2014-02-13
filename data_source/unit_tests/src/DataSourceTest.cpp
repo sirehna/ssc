@@ -651,8 +651,8 @@ TEST_F(DataSourceTest, when_forcing_a_signal_dependencies_should_not_be_updated)
     DataSource ds;
     ds.add<M4>();
     ds.add<M5>();
-    size_t* nb_of_updates = new size_t(0);
-    ds.set("nb of updates", nb_of_updates);
+    std::tr1::shared_ptr<size_t> nb_of_updates(new size_t(0));
+    ds.set("nb of updates", nb_of_updates.get());
     ASSERT_EQ(0, *ds.get<size_t*>("nb of updates"));
     const double x = a.random<double>();
     ds.set("x", x);
@@ -733,8 +733,8 @@ MODULE(VarUp, const double x = ds->get<double>("x");\
 TEST_F(DataSourceTest, should_not_update_dependencies_if_setting_signal_to_its_current_value)
 {
     DataSource ds;
-    DataGenerator *rng = new DataGenerator(1);
-    ds.set<DataGenerator*>("rng",rng);
+    std::tr1::shared_ptr<DataGenerator> rng(new DataGenerator(1));
+    ds.set<DataGenerator*>("rng",rng.get());
     ds.add<VarUp>("VarUp");
     const double x0 = a.random<double>()();
     ds.set("x", x0);
