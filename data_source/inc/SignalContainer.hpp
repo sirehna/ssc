@@ -137,9 +137,8 @@ class SignalContainer
          *  \brief Calls select_list_from_type for all scalars.
          *  \returns List of iterators taken from scalar_convertible_types
         */
-        template <typename T> std::list<ConstSignalIterator>& get_iterator_list(const T& val)
+        template <typename T> std::list<ConstSignalIterator>& get_iterator_list(const T& )
         {
-            (void) val;
             return select_list_from_type<T>(scalar_convertible_types);
         }
 
