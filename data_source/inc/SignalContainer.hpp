@@ -116,9 +116,9 @@ class SignalContainer
         template <class T> void remove(const std::string& name)
         {
             const TypedSignalName tname(name, typeid(T).name());
-            signals_.erase(tname);
             scalar_convertible_types.erase(tname);
             vector_convertible_types.erase(tname);
+            signals_.erase(tname);
         }
 
         size_t size() const;
