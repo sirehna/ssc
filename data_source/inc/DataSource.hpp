@@ -350,7 +350,7 @@ class DataSource
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest enclosing_method_example
         */
         template<typename T>
-                void unset(std::string signal_name //<! Name of the signal to remove
+                void unset(const std::string& signal_name //<! Name of the signal to remove
                            )
         {
             std::map<TypedSignalName, TypedSignalName>::iterator that_alias = aliases.find(typify<T>(signal_name));
