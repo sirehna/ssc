@@ -5,6 +5,7 @@ set(SRC src/YamlParser.cpp)
 
 include_directories(${test_macros_INCLUDE_DIRS})
 include_directories(inc)
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(SYSTEM ${YAML_CPP_INCLUDE_DIRS})
 
 # Using C++ 2011
