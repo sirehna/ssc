@@ -35,6 +35,10 @@ typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
     typedef std::map<TypedModuleName,bool > UpdateState;
 #endif
 
+#define MAKE(ns,x,T) namespace x {typedef T _type;static const std::string _name = #ns "_" #x;}
+#define DEFINE(ns,x, T) namespace ns {MAKE(ns,x,T)}
+#define GET(x) ds->get<x::_type>(x::_name)
+
 void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value);
 
 /** \author cec
