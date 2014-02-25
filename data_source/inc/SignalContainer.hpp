@@ -47,6 +47,11 @@ class SignalContainer
     public:
         SignalContainer();
 
+        Signals get_all_signals() const
+        {
+            return signals_;
+        }
+
         template <typename T> void set(const std::string& signal_name, const T& value)
         {
             const TypedSignalName map_name(signal_name,typeid(T).name());
