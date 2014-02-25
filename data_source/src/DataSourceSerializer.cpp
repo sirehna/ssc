@@ -30,7 +30,8 @@ std::string DataSourceSerializer::serialize(const std::set<std::string>& s) cons
 }
 
 DataSourceSerializer::DataSourceSerializer(const FromSignal2Module& signal2module,
-                                           const DependantModules& dependant_modules) : modules(std::map<std::string, DSModuleDraw>()),
+                                           const DependantModules& dependant_modules,
+                                           const SignalContainer& all_signals) : modules(std::map<std::string, DSModuleDraw>()),
                                                                                         signals(std::map<std::string, DSSignalDraw>()),
                                                                                         connexions(std::vector<Connexion>())
 {
@@ -57,6 +58,23 @@ DataSourceSerializer::DataSourceSerializer(const FromSignal2Module& signal2modul
         std::stringstream ss;
         ss << "M" << i++;
         it->second.name_in_graph = ss.str();
+    }
+    const Signals s = all_signals.get_all_signals();
+    for (Signals::const_iterator it = s.begin() ; it != s.end() ; ++it)
+    {
+        const SignalName signal_name = it->first.get_signal_name();
+        std::map<std::string, DSSignalDraw>::const_iterator found = signals.find(signal_name);
+        if (found != signals.end())
+        {
+            if (found->second.type != it->first.get_type_name())
+            {
+                signals[it->first.get_signal_name()].type = it->first.get_type_name();
+            }
+        }
+        else
+        {
+            signals[it->first.get_signal_name()].type = it->first.get_type_name();
+        }
     }
 }
 
