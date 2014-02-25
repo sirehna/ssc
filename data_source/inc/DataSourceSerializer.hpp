@@ -54,7 +54,8 @@ class DataSourceSerializer
 {
     public:
         DataSourceSerializer(const FromSignal2Module& signal2module,
-                             const DependantModules& dependant_modules);
+                             const DependantModules& dependant_modules,
+                             const SignalContainer& all_signals);
 
         std::string get_graph() const;
         std::string get_yaml() const;
