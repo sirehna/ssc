@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#ifndef DATASOURCESERIALIZER_HPP_
-#define DATASOURCESERIALIZER_HPP_
+#ifndef DATASOURCEDRAWER_HPP_
+#define DATASOURCEDRAWER_HPP_
 
 #include <set>
 #include <string>
@@ -68,4 +68,4 @@ class DataSourceDrawer
         std::vector<Connexion> connexions;
 };
 
-#endif /* DATASOURCESERIALIZER_HPP_ */
+#endif /* DATASOURCEDRAWER_HPP_ */
