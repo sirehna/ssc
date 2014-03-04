@@ -110,7 +110,6 @@ class DataSource
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
             modules.push_back(typify<T>(module.get_name()));
-            //module_setting_signals = module_setting_signals_bak;
             readonly = read_only_bak;
         }
 
