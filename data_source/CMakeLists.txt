@@ -8,7 +8,8 @@ set(SRC src/DataSource.cpp
         src/TypeCoercion.cpp
         src/PhysicalQuantity.cpp
         src/DataSourceDrawer.cpp
-        src/almost_equal.cpp)
+        src/almost_equal.cpp
+        src/DataSourceSerializer.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
