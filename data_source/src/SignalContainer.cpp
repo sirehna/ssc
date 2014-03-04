@@ -23,6 +23,11 @@ vector_convertible_types(ConvertibleTypes())
 
 }
 
+Signals SignalContainer::get_all_signals() const
+{
+    return signals_;
+}
+
 template <> void SignalContainer::coerce_type<PhysicalQuantity>(std::list<double>& ret) const
 {
 for (ConvertibleTypesIterator it  = scalar_convertible_types.iter_phys_qty.begin() ; it != scalar_convertible_types.iter_phys_qty.end() ; ++it)

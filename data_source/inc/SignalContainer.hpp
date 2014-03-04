@@ -25,10 +25,6 @@ class SignalContainerException : public Exception
         }
 };
 
-
-
-
-
 /** \author cec
  * \ingroup data_source
  *  \brief This class was created to store signals of different types using boost::any
@@ -47,10 +43,7 @@ class SignalContainer
     public:
         SignalContainer();
 
-        Signals get_all_signals() const
-        {
-            return signals_;
-        }
+        Signals get_all_signals() const;
 
         template <typename T> void set(const std::string& signal_name, const T& value)
         {
