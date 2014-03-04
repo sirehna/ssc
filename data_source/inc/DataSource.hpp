@@ -228,7 +228,7 @@ class DataSource
 
         /** \author cec
          *  \date 17 juin 2013, 10:41:56
-         *  \brief Removes all modules from a DataSource.
+         *  \brief Removes all modules & all signals from a DataSource.
          *  \returns Nothing
          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::clear_example
         */
