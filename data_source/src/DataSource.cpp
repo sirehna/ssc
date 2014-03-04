@@ -91,26 +91,6 @@ DataSource& DataSource::operator=(const DataSource& ds)
     return *this;
 }
 
-
-std::string serialize(const std::set<std::string>& s);
-std::string serialize(const std::set<std::string>& s)
-{
-    std::stringstream ss;
-    size_t n = s.size();
-    size_t i = 0;
-    ss << "[";
-    for (std::set<std::string>::const_iterator it = s.begin() ; it != s.end() ; ++it)
-    {
-        ss << *it;
-        if (i++ != (n-1))
-        {
-            ss << ", ";
-        }
-    }
-    ss << "]" << std::endl;
-    return ss.str();
-}
-
 std::string DataSource::draw(const bool yaml) const
 {
     std::stringstream ss;
