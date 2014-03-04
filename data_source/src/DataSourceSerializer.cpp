@@ -11,7 +11,7 @@
 #include <map>
 #include <boost/algorithm/string.hpp>
 #include "test_macros.hpp"
-std::string DataSourceSerializer::serialize(const std::set<std::string>& s) const
+std::string DataSourceDrawer::serialize(const std::set<std::string>& s) const
 {
     std::stringstream ss;
     size_t n = s.size();
@@ -29,7 +29,7 @@ std::string DataSourceSerializer::serialize(const std::set<std::string>& s) cons
     return ss.str();
 }
 
-DataSourceSerializer::DataSourceSerializer(const FromSignal2Module& signal2module,
+DataSourceDrawer::DataSourceDrawer(const FromSignal2Module& signal2module,
                                            const DependantModules& dependant_modules,
                                            const SignalContainer& all_signals) : modules(std::map<std::string, DSModuleDraw>()),
                                                                                         signals(std::map<std::string, DSSignalDraw>()),
@@ -96,7 +96,7 @@ std::string escape(std::string data)
     return data;
 }
 
-std::string DataSourceSerializer::get_graph() const
+std::string DataSourceDrawer::get_graph() const
 {
     std::stringstream ss;
     ss << "digraph data_source {" << std::endl;
@@ -136,7 +136,7 @@ std::string DataSourceSerializer::get_graph() const
     return ss.str();
 }
 
-std::string DataSourceSerializer::get_yaml() const
+std::string DataSourceDrawer::get_yaml() const
 {
     std::stringstream ss;
     ss << "data_source:" << std::endl;

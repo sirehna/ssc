@@ -111,7 +111,7 @@ std::string serialize(const std::set<std::string>& s)
 std::string DataSource::draw(const bool yaml) const
 {
     std::stringstream ss;
-    DataSourceSerializer serialize(signal2module, module2requiredsignals, signals_);
+    DataSourceDrawer serialize(signal2module, module2requiredsignals, signals_);
 
     if (yaml)  ss << serialize.get_yaml();
     else       ss << serialize.get_graph();

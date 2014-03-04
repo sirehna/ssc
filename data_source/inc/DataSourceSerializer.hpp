@@ -50,10 +50,10 @@ struct Connexion
  *  \snippet data_source/unit_tests/src/DataSourceSerializerTest.cpp DataSourceSerializerTest expected output
  */
 
-class DataSourceSerializer
+class DataSourceDrawer
 {
     public:
-        DataSourceSerializer(const FromSignal2Module& signal2module,
+        DataSourceDrawer(const FromSignal2Module& signal2module,
                              const DependantModules& dependant_modules,
                              const SignalContainer& all_signals);
 
@@ -62,7 +62,7 @@ class DataSourceSerializer
 
     private:
         std::string serialize(const std::set<std::string>& s) const;
-        DataSourceSerializer();
+        DataSourceDrawer();
         std::map<std::string, DSModuleDraw> modules;
         std::map<std::string, DSSignalDraw> signals;
         std::vector<Connexion> connexions;
