@@ -7,7 +7,7 @@ set(SRC src/DataSource.cpp
         src/SignalContainerTypeLists.cpp
         src/TypeCoercion.cpp
         src/PhysicalQuantity.cpp
-        src/DataSourceSerializer.cpp
+        src/DataSourceDrawer.cpp
         src/almost_equal.cpp)
 
 include_directories(inc)
