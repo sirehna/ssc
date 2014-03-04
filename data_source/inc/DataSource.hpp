@@ -498,6 +498,7 @@ public:
         std::vector<std::string> get_state_names() const;
         std::vector<std::string> get_all_signal_names() const;
         std::list<TypedModuleName> get_module_list() const;
+        std::list<std::pair<TypedSignalName, boost::any> > get_signals() const;
 
     private:
         template <typename T> TypedSignalName typify(const std::string& signal_name) const
