@@ -34,7 +34,8 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            is_up_to_date(UpdateState()),
                            state_names(std::vector<std::pair<std::string,std::string> >()),
                            aliases(std::map<TypedSignalName,TypedSignalName>()),
-                           forced_values(SignalContainer())
+                           forced_values(SignalContainer()),
+                           modules(std::vector<TypedModuleName>())
 {
 }
 
@@ -51,7 +52,8 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 is_up_to_date(ds.is_up_to_date),
                                                 state_names(ds.state_names),
                                                 aliases(ds.aliases),
-                                                forced_values(ds.forced_values)
+                                                forced_values(ds.forced_values),
+                                                modules(std::vector<TypedModuleName>())
 {
     // We need to make sure that all modules now refer to the current DataSource
     FromName2Module::iterator it1 = name2module.begin();
@@ -79,6 +81,7 @@ DataSource& DataSource::operator=(const DataSource& ds)
         state_names = ds.state_names;
         aliases = ds.aliases;
         forced_values = ds.forced_values;
+        modules = ds.modules;
         FromName2Module::iterator it1 = name2module.begin();
         for (;it1!=name2module.end();++it1)
         {
@@ -319,3 +322,16 @@ std::vector<std::string> DataSource::get_all_signal_names() const
 {
     return signals_.get_all_signal_names();
 }
+
+std::list<TypedModuleName> DataSource::get_module_list() const
+{
+    std::list<TypedModuleName> ret;
+    FromName2Module::const_iterator it = name2module.begin();
+    for (;it!=name2module.end() ; ++it)
+    {
+        ret.push_back(it->first);
+    }
+    ret.sort();
+    return ret;
+}
+

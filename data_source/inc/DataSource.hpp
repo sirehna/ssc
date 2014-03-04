@@ -109,6 +109,7 @@ class DataSource
                 module_setting_signals = data_source_user;
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
+            modules.push_back(typify<T>(module.get_name()));
             //module_setting_signals = module_setting_signals_bak;
             readonly = read_only_bak;
         }
@@ -496,6 +497,7 @@ public:
         void set_states(const std::vector<double>& v);
         std::vector<std::string> get_state_names() const;
         std::vector<std::string> get_all_signal_names() const;
+        std::list<TypedModuleName> get_module_list() const;
 
     private:
         template <typename T> TypedSignalName typify(const std::string& signal_name) const
@@ -522,6 +524,7 @@ public:
         std::vector<std::pair<std::string,std::string> > state_names;
         std::map<TypedSignalName,TypedSignalName> aliases; //!< Correspondence between an alias & the name of the original signal
         SignalContainer forced_values; //!< All signals that have been forced
+        std::vector<TypedModuleName> modules;
 };
 
 
