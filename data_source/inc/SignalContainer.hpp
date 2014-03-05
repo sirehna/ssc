@@ -45,6 +45,21 @@ class SignalContainer
 
         Signals get_all_signals() const;
 
+        std::vector<TypedSignalName> get_closest_match(const TypedSignalName& name) const
+        {
+            std::vector<TypedSignalName> ret;
+            ConstSignalIterator it = signals_.begin();
+            for (;it!=signals_.end();++it)
+            {
+                const TypedSignalName s = it->first;
+                if ((s.get_signal_name() == name.get_signal_name()) or (s.get_type_name() == name.get_type_name()))
+                {
+                    ret.push_back(s);
+                }
+            }
+            return ret;
+        }
+
         template <typename T> void set(const std::string& signal_name, const T& value)
         {
             const TypedSignalName map_name(signal_name,typeid(T).name());
