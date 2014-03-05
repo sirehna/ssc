@@ -712,12 +712,12 @@ TEST_F(DataSourceTest, serialization)
              << "    signals:" << std::endl
              << "      - name: s1" << std::endl
              << "        type: " << typeid(double).name() << std::endl
-             << "        created_by: m1" << std::endl
-             << "        used_by: [m2]" << std::endl
+             << "        created by: m1" << std::endl
+             << "        used by: [m2]" << std::endl
              << "      - name: s2" << std::endl
              << "        type: " << typeid(double).name() << std::endl
-             << "        created_by: m2" << std::endl
-             << "        used_by: [m3]" << std::endl;
+             << "        created by: m2" << std::endl
+             << "        used by: [m3]" << std::endl;
     ASSERT_EQ(expected.str(), data_source.draw());
 }
 
@@ -731,8 +731,8 @@ TEST_F(DataSourceTest, signals_not_set_or_got_by_any_module_should_still_be_outp
 			 << "    signals:" << std::endl
 			 << "      - name: s" << std::endl
 			 << "        type: " << typeid(double).name() << std::endl
-			 << "        created_by: " << std::endl
-			 << "        used_by: []" << std::endl;
+			 << "        created by: DataSource user" << std::endl
+			 << "        used by: []" << std::endl;
 	ASSERT_EQ(expected.str(), data_source.draw());
 }
 
