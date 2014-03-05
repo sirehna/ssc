@@ -11,6 +11,7 @@
 #include <tr1/memory>
 #include <string>
 #include <set>
+#include <sstream>
 
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
@@ -445,10 +446,27 @@ private:
                 update_if_necessary(module_name);
             } else if (!(stored))
             {
+                const std::vector<TypedSignalName> closest_match = signals_.get_closest_match(typed_name);
+                std::stringstream ss;
+                if (not(closest_match.empty()))
+                {
+                    ss << " Closest match: '"
+                       << closest_match.front().get_signal_name() << "' (of type '" << closest_match.front().get_type_name() << "')";
+                }
+                else
+                {
+                    ss << " None of the signals have the right type or the right name";
+                }
+                for (size_t i = 1 ; i < closest_match.size() ; ++i)
+                {
+                    ss << ", '" << closest_match.at(i).get_signal_name()
+                       << "' (of type '" << closest_match.at(i).get_type_name() << "')";
+                }
+                if (not(closest_match.empty())) ss << ".";
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
                         std::string("Unable to find signal '") + signal_name
-                                + "' required by module '"
-                                + module_requesting_signals.get_signal_name() + "'");
+                                + "' (of type '" + typed_name.get_type_name() + "') requested by module '"
+                                + module_requesting_signals.get_signal_name() + "'." + ss.str());
             }
         }
 public:
