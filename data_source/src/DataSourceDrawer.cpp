@@ -153,8 +153,11 @@ std::string DataSourceDrawer::get_yaml() const
     {
         ss << "      - name: " << it->first << std::endl;
         ss << "        type: " << it->second.type << std::endl;
-        ss << "        created_by: " << it->second.created_by << std::endl;
-        ss << "        used_by: " << serialize(it->second.used_by);
+        ss << "        created by: ";
+        if (it->second.created_by.empty()) ss << "DataSource user";
+        else ss << it->second.created_by;
+        ss << std::endl;
+        ss << "        used by: " << serialize(it->second.used_by);
     }
     return ss.str();
 }
