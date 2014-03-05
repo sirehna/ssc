@@ -41,7 +41,7 @@ typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
 #define PTR_GET(x) ds->get<x::_type>(x::_name)
 #define PTR_SET(x,val) ds->set<x::_type>(x::_name,val)
 #define GET(ds,x) ds.get<x::_type>(x::_name)
-#define SET(ds,x,val) ds.set(x::_name,val)
+#define SET(ds,x,val) ds.set<x::_type>(x::_name,val)
 
 void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value);
 
