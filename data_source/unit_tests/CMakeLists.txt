@@ -3,7 +3,8 @@ set(MODULE_UNDER_TEST data_source)
 project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/DataSourceTest.cpp
               src/SignalContainerTest.cpp
-              src/TypeCoercionTest.cpp)
+              src/TypeCoercionTest.cpp
+              src/almost_equalTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories

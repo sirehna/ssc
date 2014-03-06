@@ -8,15 +8,21 @@
 #ifndef ALMOST_EQUAL_HPP_
 #define ALMOST_EQUAL_HPP_
 
+#include <string>
+#include <vector>
+
 template <class T>
-bool almost_equal(const T& t1, const T& t2)
+bool almost_equal(const T& , const T& )
 {
-        (void) t1;
-        (void) t2;
     return false;
 }
 
 template <> bool almost_equal(const double& t1, const double& t2);
+template <> bool almost_equal(const float& t1, const float& t2);
+template <> bool almost_equal(const int& t1, const int& t2);
+template <> bool almost_equal(const size_t& t1, const size_t& t2);
+template <> bool almost_equal(const std::string& t1, const std::string& t2);
+template <> bool almost_equal(const std::vector<double>& t1, const std::vector<double>& t2);
 
 
 #endif /* ALMOST_EQUAL_HPP_ */

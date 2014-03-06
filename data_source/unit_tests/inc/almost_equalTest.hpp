@@ -15,10 +15,14 @@ class almost_equalTest : public ::testing::Test
 {
     protected:
         almost_equalTest();
-	    virtual ~almost_equalTest();
+        virtual ~almost_equalTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        DataGenerator a;
+        double very_slightly_less_than(const double x) const;
+        double very_slightly_greater_than(const double x) const;
+        double slightly_less_than(const double x) const;
+        double slightly_greater_than(const double x) const;
 
 };
 
