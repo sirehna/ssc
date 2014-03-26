@@ -4,10 +4,9 @@ set(SRC src/TextFileReader.cpp)
 
 include_directories(${test_macros_INCLUDE_DIRS})
 
-
 add_library(${PROJECT_NAME}_static OBJECT ${SRC})
 
-include_directories (inc)
+include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
 
 # Using C++ 2011
@@ -16,6 +15,6 @@ include_directories(${exception_handling_INCLUDE_DIRS})
 # Use -std=gnu++0x instead.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
+set(${PROJECT_NAME}_INCLUDE_DIRS  ${${PROJECT_NAME}_SOURCE_DIR}/inc CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
 
 add_subdirectory(unit_tests)
