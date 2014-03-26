@@ -21,8 +21,8 @@ class almost_equalTest : public ::testing::Test
         DataGenerator a;
         double very_slightly_less_than(const double x) const;
         double very_slightly_greater_than(const double x) const;
-        double slightly_less_than(const double x) const;
-        double slightly_greater_than(const double x) const;
+        double slightly_less_than(double x) const;
+        double slightly_greater_than(double x) const;
 
 };
 

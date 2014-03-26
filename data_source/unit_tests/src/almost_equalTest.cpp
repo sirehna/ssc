@@ -6,9 +6,11 @@
  */
 
 #include <cmath>
+#include <limits>
+
 #include "almost_equalTest.hpp"
 #include "almost_equal.hpp"
-#include "test_macros.hpp"
+
 almost_equalTest::almost_equalTest() : a(DataGenerator(7214222))
 {
 }
@@ -27,10 +29,15 @@ void almost_equalTest::TearDown()
 
 TEST_F(almost_equalTest, can_get_a_number_close_to_another)
 {
+    std::cout << std::setprecision(20);
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double x = a.random<double>().between(-1000,1000);
         ASSERT_LT(x,very_slightly_greater_than(x));
+        /*COUT(x);
+        COUT(very_slightly_less_than(x));
+        COUT(very_slightly_less_than(x)-x);*/
+
         ASSERT_LT(very_slightly_less_than(x),x);
         ASSERT_DOUBLE_EQ(x,very_slightly_less_than(x));
         ASSERT_DOUBLE_EQ(x,very_slightly_greater_than(x));
@@ -69,22 +76,22 @@ TEST_F(almost_equalTest, example)
 
 double almost_equalTest::very_slightly_less_than(const double x) const
 {
-    return nextafter(x,x-1);
+    return nextafter(x,-std::numeric_limits<double>::max());
 }
 
 double almost_equalTest::very_slightly_greater_than(const double x) const
 {
-    return nextafter(x,x+1);
+    return nextafter(x,std::numeric_limits<double>::max());
 }
 
-double almost_equalTest::slightly_less_than(const double x) const
+double almost_equalTest::slightly_less_than(double x) const
 {
-    const size_t n = 8;
-    return (n+1)*very_slightly_less_than(x) - n*x;
+    for (size_t i = 0 ; i < 5 ; ++i) x = very_slightly_less_than(x);
+    return x;
 }
 
-double almost_equalTest::slightly_greater_than(const double x) const
+double almost_equalTest::slightly_greater_than(double x) const
 {
-    const size_t n = 8;
-    return (n+1)*very_slightly_greater_than(x) - n*x;
+    for (size_t i = 0 ; i < 5 ; ++i) x = very_slightly_greater_than(x);
+    return x;
 }
