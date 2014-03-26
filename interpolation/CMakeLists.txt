@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.8.8)
-project (interpolation)
+project(interpolation)
 
-enable_language (Fortran)
-set (CMAKE_Fortran_FLAGS_RELEASE "-funroll-all-loops -fno-f2c -O3 -m32 -g3 -pedantic -pedantic-errors -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
-set (CMAKE_Fortran_FLAGS_DEBUG   "-fno-f2c -O0 -g3 -m32 -pedantic -pedantic-errors -pedantic -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
+enable_language(Fortran)
+set(CMAKE_Fortran_FLAGS_RELEASE "-funroll-all-loops -fno-f2c -O3 -pedantic -pedantic-errors -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
+set(CMAKE_Fortran_FLAGS_DEBUG   "-fno-f2c -O0 -g3 -pedantic -pedantic-errors -pedantic -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
 
 FILE(GLOB SRC src/Splines.cpp
               src/NaturalSplines.cpp
