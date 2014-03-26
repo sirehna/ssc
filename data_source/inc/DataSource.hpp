@@ -514,6 +514,7 @@ public:
         void get_derivatives(std::vector<double>& dx_dt);
         void set_states(const std::vector<double>& v);
         std::vector<std::string> get_state_names() const;
+        std::vector<double> get_states();
         std::vector<std::string> get_all_signal_names() const;
         std::list<TypedModuleName> get_module_list() const;
         std::list<std::pair<TypedSignalName, boost::any> > get_signals() const;

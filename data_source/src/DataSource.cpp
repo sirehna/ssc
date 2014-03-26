@@ -294,6 +294,22 @@ std::vector<std::string> DataSource::get_state_names() const
 }
 
 /** \author cec
+ *  \date 25 mars 2014, 18:24
+ *  \brief Get the current value of all states
+ *  \returns A vector of state state values, sorted in the same order as set_states & get_state_derivatives.
+*/
+std::vector<double> DataSource::get_states()
+{
+    std::vector<double> ret;
+    std::vector<std::pair<std::string,std::string> >::const_iterator it;
+    for (it = state_names.begin() ; it != state_names.end() ; ++it)
+    {
+        ret.push_back(get<double>(it->first));
+    }
+    return ret;
+}
+
+/** \author cec
  *  \date 22 août 2013, 12:23:32
  *  \returns All the signals currently in the DataSource
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::get_all_signal_names_example
