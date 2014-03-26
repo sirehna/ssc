@@ -37,6 +37,8 @@ TEST_F(TextFileReaderTest, example)
 //! [TextFileReaderTest example]
 	char filename1 [L_tmpnam];
 	char filename2 [L_tmpnam];
+	tmpnam (filename1);
+	tmpnam (filename2);
 	std::ofstream file1 (filename1);
 	const std::string contents_file1 = a.random<std::string>();
 	const std::string contents_file2 = a.random<std::string>();
@@ -60,6 +62,7 @@ TEST_F(TextFileReaderTest, example)
 TEST_F(TextFileReaderTest, should_represent_newlines_correctly)
 {
 	char filename [L_tmpnam];
+	tmpnam (filename);
 	std::ofstream file (filename);
 	const std::string contents_file = a.random<std::string>()()
 			                         + std::string("\n")
