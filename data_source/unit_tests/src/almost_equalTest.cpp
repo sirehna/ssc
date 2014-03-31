@@ -33,14 +33,14 @@ TEST_F(almost_equalTest, can_get_a_number_close_to_another)
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double x = a.random<double>().between(-1000,1000);
-        ASSERT_LT(x,very_slightly_greater_than(x));
+        ASSERT_LT(x,one_ULP_more(x));
         /*COUT(x);
         COUT(very_slightly_less_than(x));
         COUT(very_slightly_less_than(x)-x);*/
 
-        ASSERT_LT(very_slightly_less_than(x),x);
-        ASSERT_DOUBLE_EQ(x,very_slightly_less_than(x));
-        ASSERT_DOUBLE_EQ(x,very_slightly_greater_than(x));
+        ASSERT_LT(one_ULP_less(x),x);
+        ASSERT_DOUBLE_EQ(x,one_ULP_less(x));
+        ASSERT_DOUBLE_EQ(x,one_ULP_more(x));
     }
 }
 
@@ -49,8 +49,8 @@ TEST_F(almost_equalTest, can_get_a_number_not_too_close_to_another)
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double x = a.random<double>().between(-1000,1000);
-        ASSERT_LT(x,slightly_greater_than(x));
-        ASSERT_LT(slightly_less_than(x),x);
+        ASSERT_LT(x,five_ULP_more(x));
+        ASSERT_LT(five_ULP_less(x),x);
     }
 }
 
@@ -61,37 +61,37 @@ TEST_F(almost_equalTest, example)
     {
         const double x = a.random<double>().between(-1000,1000);
         ASSERT_TRUE(almost_equal(x,x));
-        ASSERT_TRUE(almost_equal(x,very_slightly_greater_than(x)));
-        ASSERT_DOUBLE_EQ(very_slightly_greater_than(x),x);
-        ASSERT_FALSE(almost_equal(slightly_greater_than(x),x));
-        ASSERT_DOUBLE_EQ(very_slightly_less_than(x),x);
-        ASSERT_FALSE(almost_equal(slightly_less_than(x),x));
-        ASSERT_TRUE(almost_equal(x,very_slightly_less_than(x)));
-        ASSERT_FALSE(almost_equal(slightly_less_than(x),x));
+        ASSERT_TRUE(almost_equal(x,one_ULP_more(x)));
+        ASSERT_DOUBLE_EQ(one_ULP_more(x),x);
+        ASSERT_FALSE(almost_equal(five_ULP_more(x),x));
+        ASSERT_DOUBLE_EQ(one_ULP_less(x),x);
+        ASSERT_FALSE(almost_equal(five_ULP_less(x),x));
+        ASSERT_TRUE(almost_equal(x,one_ULP_less(x)));
+        ASSERT_FALSE(almost_equal(five_ULP_less(x),x));
     }
 //! [almost_equalTest example]
 //! [almost_equalTest expected output]
 //! [almost_equalTest expected output]
 }
 
-double almost_equalTest::very_slightly_less_than(const double x) const
+double almost_equalTest::one_ULP_less(const double x) const
 {
     return nextafter(x,-std::numeric_limits<double>::max());
 }
 
-double almost_equalTest::very_slightly_greater_than(const double x) const
+double almost_equalTest::one_ULP_more(const double x) const
 {
     return nextafter(x,std::numeric_limits<double>::max());
 }
 
-double almost_equalTest::slightly_less_than(double x) const
+double almost_equalTest::five_ULP_less(double x) const
 {
-    for (size_t i = 0 ; i < 5 ; ++i) x = very_slightly_less_than(x);
+    for (size_t i = 0 ; i < 5 ; ++i) x = one_ULP_less(x);
     return x;
 }
 
-double almost_equalTest::slightly_greater_than(double x) const
+double almost_equalTest::five_ULP_more(double x) const
 {
-    for (size_t i = 0 ; i < 5 ; ++i) x = very_slightly_greater_than(x);
+    for (size_t i = 0 ; i < 5 ; ++i) x = one_ULP_more(x);
     return x;
 }
