@@ -19,10 +19,10 @@ class almost_equalTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         DataGenerator a;
-        double very_slightly_less_than(const double x) const;
-        double very_slightly_greater_than(const double x) const;
-        double slightly_less_than(double x) const;
-        double slightly_greater_than(double x) const;
+        double one_ULP_less(const double x) const;
+        double one_ULP_more(const double x) const;
+        double five_ULP_less(double x) const;
+        double five_ULP_more(double x) const;
 
 };
 
