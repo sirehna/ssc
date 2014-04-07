@@ -1,5 +1,5 @@
 /*
- * Kinematics.hpp
+ * kinematics.hpp
  *
  *  Created on: 1 avr. 2014
  *      Author: maroff
