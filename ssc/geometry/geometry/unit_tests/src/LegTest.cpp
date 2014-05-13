@@ -6,7 +6,7 @@
  */
 
 #include "LegTest.hpp"
-#include "Leg.hpp"
+#include "ShortestPathLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
 #include <algorithm> // std::min, std::max
