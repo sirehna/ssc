@@ -19,7 +19,7 @@
 #define PI 4.*atan(1.)
 #define EPS 1e-6
 
-class Leg::LegImpl
+class ShortestPathLeg::LegImpl
 {
     public:
         LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
@@ -58,7 +58,7 @@ class Leg::LegImpl
         Geometry::GreatCircle geodesic;
 };
 
-Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
+ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
 {
 
 }
@@ -69,7 +69,7 @@ Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pim
  *  \returns Length in meters between point1 and point2, on a geodesic on the WGS84
  *  \snippet /unit_tests/src/LegTest.cpp LegTest length_example
 */
-double Leg::length() const
+double ShortestPathLeg::length() const
 {
     return pimpl->length;
 }
@@ -81,7 +81,7 @@ double Leg::length() const
  *  \section ex1 Example
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest find_waypoint_at_example
  */
-LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from first waypoint (in meters)
+LatitudeLongitude ShortestPathLeg::find_waypoint_at(const double distance //!< Distance from first waypoint (in meters)
                                        ) const
 {
     if (distance>(pimpl->length+EPS))
@@ -107,7 +107,7 @@ LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from
  *  \returns Heading on geodesic for point at a given distance from first point in leg
  *  \snippet geometry/unit_tests/src/Test.cpp LegTest azimuth_at_example
 */
-Angle Leg::azimuth_at(const double distance_from_point1) const
+Angle ShortestPathLeg::azimuth_at(const double distance_from_point1) const
 {
     return pimpl->azimuth_at(distance_from_point1);
 }
@@ -118,7 +118,7 @@ Angle Leg::azimuth_at(const double distance_from_point1) const
  *  \returns
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest Leg::find_closest_point_to_example
 */
-LatitudeLongitude Leg::find_closest_point_to(const LatitudeLongitude& point) const
+LatitudeLongitude ShortestPathLeg::find_closest_point_to(const LatitudeLongitude& point) const
 {
     return pimpl->geodesic.nearestPointTo(point);
 
