@@ -32,17 +32,17 @@ class LegException : public Exception
  *  \section ex2 Expected output
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest expected output
  */
-class Leg
+class ShortestPathLeg
 {
     public:
-        Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
+        ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         double length() const;
         LatitudeLongitude find_waypoint_at(const double distance_from_point1) const;
         Angle azimuth_at(const double distance_from_point1) const;
         LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const;
 
     private:
-        Leg();
+        ShortestPathLeg();
         class LegImpl;
         std::tr1::shared_ptr<LegImpl> pimpl;
 };
