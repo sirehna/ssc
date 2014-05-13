@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "LegTest.hpp"
+#include "ShortestPathLegTest.hpp"
 #include "ShortestPathLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
