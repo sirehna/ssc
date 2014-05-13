@@ -9,7 +9,7 @@
 #include "Track.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
-#include "Leg.hpp"
+#include "ShortestPathLeg.hpp"
 
 TrackTest::TrackTest() : a(DataGenerator(557))
 {
