@@ -11,11 +11,11 @@
 #include "gtest/gtest.h"
 #include "DataGenerator.hpp"
 
-class LegTest : public ::testing::Test
+class ShortestPathLegTest : public ::testing::Test
 {
     protected:
-        LegTest();
-	    virtual ~LegTest();
+        ShortestPathLegTest();
+	    virtual ~ShortestPathLegTest();
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;

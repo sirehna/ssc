@@ -14,23 +14,23 @@
 
 #define PI 4.*atan(1.)
 
-LegTest::LegTest() : a(DataGenerator(8796))
+ShortestPathLegTest::ShortestPathLegTest() : a(DataGenerator(8796))
 {
 }
 
-LegTest::~LegTest()
+ShortestPathLegTest::~ShortestPathLegTest()
 {
 }
 
-void LegTest::SetUp()
+void ShortestPathLegTest::SetUp()
 {
 }
 
-void LegTest::TearDown()
+void ShortestPathLegTest::TearDown()
 {
 }
 
-TEST_F(LegTest, example)
+TEST_F(ShortestPathLegTest, example)
 {
 //! [LegTest example]
     // Start by defining the two points composing the leg
@@ -46,7 +46,7 @@ TEST_F(LegTest, example)
 //! [LegTest expected output]
 }
 
-TEST_F(LegTest, should_be_able_to_compute_the_distance_between_two_points)
+TEST_F(ShortestPathLegTest, should_be_able_to_compute_the_distance_between_two_points)
 {
 //! [LegTest length_example]
     // Define a series of points on the globe
@@ -67,7 +67,7 @@ TEST_F(LegTest, should_be_able_to_compute_the_distance_between_two_points)
 //! [LegTest length_example]
 }
 
-TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
+TEST_F(ShortestPathLegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
 {
     for (size_t i = 0 ; i < 200 ; ++i)
     {
@@ -84,7 +84,7 @@ TEST_F(LegTest, should_throw_if_attempting_to_find_a_point_outside_the_leg)
     }
 }
 
-TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_meridian)
+TEST_F(ShortestPathLegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_meridian)
 {
     for (size_t i = 0 ; i < 200 ; ++i)
     {
@@ -104,7 +104,7 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_meridian)
     }
 }
 
-TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_the_equator)
+TEST_F(ShortestPathLegTest, should_be_able_to_find_a_waypoint_on_the_equator)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
@@ -125,7 +125,7 @@ TEST_F(LegTest, should_be_able_to_find_a_waypoint_on_the_equator)
     }
 }
 
-TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_always_be_less_than_leg_length)
+TEST_F(ShortestPathLegTest, distance_from_start_to_intermediate_waypoint_should_always_be_less_than_leg_length)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
@@ -139,7 +139,7 @@ TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_always_be_le
     }
 }
 
-TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_correspond_to_the_input)
+TEST_F(ShortestPathLegTest, distance_from_start_to_intermediate_waypoint_should_correspond_to_the_input)
 {
     const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -154,7 +154,7 @@ TEST_F(LegTest, distance_from_start_to_intermediate_waypoint_should_correspond_t
     }
 }
 
-TEST_F(LegTest, distance_between_miami_and_WP1_on_Norwegian_Epic_cruise_should_be_calculated_properly)
+TEST_F(ShortestPathLegTest, distance_between_miami_and_WP1_on_Norwegian_Epic_cruise_should_be_calculated_properly)
 {
     const LatitudeLongitude miami(25.7744,80.1637);
     const LatitudeLongitude wpA(26.1802,79.099);
@@ -162,7 +162,7 @@ TEST_F(LegTest, distance_between_miami_and_WP1_on_Norwegian_Epic_cruise_should_b
 }
 
 
-TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
+TEST_F(ShortestPathLegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
 {
     //! [LegTest azimuth_at_example]
     const LatitudeLongitude P(0, a.random<double>().between(-180,180));
@@ -176,13 +176,13 @@ TEST_F(LegTest, can_calculate_heading_on_leg_on_equator_for_any_point_on_leg)
     //! [LegTest azimuth_at_example]
 }
 
-TEST_F(LegTest, bug_detected_in_NorwegianEpicDataPreProcessorTest)
+TEST_F(ShortestPathLegTest, bug_detected_in_NorwegianEpicDataPreProcessorTest)
 {
     const ShortestPathLeg leg(LatitudeLongitude(0,0),LatitudeLongitude(0,1));
     ASSERT_DOUBLE_EQ(90, leg.azimuth_at(0).get_degree());
 }
 
-TEST_F(LegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
+TEST_F(ShortestPathLegTest, can_calculate_heading_on_leg_on_meridian_for_any_point_on_leg)
 {
     const LatitudeLongitude P(a.random<double>().between(-90,90), 0);
     const LatitudeLongitude Q(a.random<double>().between(-90,90), 0);
