@@ -1,7 +1,7 @@
 /*
  * IpoptSolverTest.cpp
  *
- * \date 22 févr. 2013, 15:28:17
+ * \date 22 fï¿½vr. 2013, 15:28:17
  *  \author cec
  */
 
@@ -136,8 +136,8 @@ TEST_F(IpoptSolverTest, maroff_allocation_problem_does_not_converge)
 
     const auto result = optimize.solve(x0);
 
-    ASSERT_GT(fabs(cos(theta)-result.constraint_values.at(0)),eps);
-    ASSERT_GT(fabs(sin(theta)-result.constraint_values.at(1)),eps);
+    ASSERT_LT(fabs(cos(theta)-result.constraint_values.at(0)),eps);
+    ASSERT_LT(fabs(sin(theta)-result.constraint_values.at(1)),eps);
 }
 
 TEST_F(IpoptSolverTest, new_allocation_problem_converges)
