@@ -18,7 +18,7 @@ class Track::TrackImpl
         TrackImpl(const std::vector<LatitudeLongitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
                      ) :
         distance_from_start_to_begining_of_leg(std::vector<double>()),
-        legs(std::vector<Leg>()),
+        legs(std::vector<ShortestPathLeg>()),
         length(0),
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
@@ -34,7 +34,7 @@ class Track::TrackImpl
             distance_from_start_to_begining_of_leg.push_back(0);
             for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
             {
-                legs.push_back(Leg(waypoints.at(i),waypoints.at(i+1)));
+                legs.push_back(ShortestPathLeg(waypoints.at(i),waypoints.at(i+1)));
                 check_poles(waypoints.at(i).lat, waypoints.at(i+1).lat, previous_point_at_90_deg_latitude, previous_point_at_minus_90_deg_latitude);
                 const double d = legs.back().length();
                 length += d;
@@ -48,7 +48,7 @@ class Track::TrackImpl
                 direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             }
             *index = IndexFinder(distance_from_start_to_begining_of_leg, false);
-            legs.push_back(Leg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
+            legs.push_back(ShortestPathLeg(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)));
             direction_at_waypoint.push_back(legs.back().azimuth_at(0));
             direction_at_waypoint.push_back(legs.back().azimuth_at(legs.back().length()));
             length += legs.back().length();
@@ -76,7 +76,7 @@ class Track::TrackImpl
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
-        std::vector<Leg> legs;
+        std::vector<ShortestPathLeg> legs;
         double length;
         size_t nb_of_legs;
         std::vector<LatitudeLongitude> waypoints;
@@ -280,7 +280,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
     for (auto that_leg = pimpl->legs.begin() ; that_leg != pimpl->legs.end() ; ++that_leg)
     {
         LatitudeLongitude p = that_leg->find_closest_point_to(point);
-        const double d = Leg(p,point).length();
+        const double d = ShortestPathLeg(p,point).length();
         if (d<smallest_distance)
         {
             nearest_point = p;
@@ -301,7 +301,7 @@ double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLo
 {
     const std::pair<LatitudeLongitude,size_t> nearest_point = find_closest_point_to(point);
     const double pos = get_waypoint_position_on_track(nearest_point.second);
-    return pos + Leg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
+    return pos + ShortestPathLeg(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
 }
 
 
