@@ -6,7 +6,7 @@
  */
 
 #include "Track.hpp"
-#include "Leg.hpp"
+#include "ShortestPathLeg.hpp"
 #include "IndexFinder.hpp"
 
 #include <sstream>
