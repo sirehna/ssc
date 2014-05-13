@@ -83,4 +83,40 @@ void loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
                        double& s12,         //!< Calculated arc length between P1 and P2 (in metres)
                        double& az12         //!< Calculated loxodrome azimuth (in radians)
                        );
+
+/**  \author cec
+  *  \date May 13, 2014, 10:54:09 AM
+  *  \brief Computes coordinates of a point at a given distance of another.
+  *  \details Given latitude and longitude of a point P1, the azimuth az12 of a
+  *           loxodrome P1P2 and an arc length s12 along that loxodrome curve,
+  *           computes the latitude and longitude of P2 at distance s12 of P1
+  *           along the loxodrome.
+  *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest loxodrome_direct_example
+  */
+void loxodrome_direct(const double f,      //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
+                      const double a,      //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
+                      const double lat_P1, //!< Latitude of P1 (in radians)
+                      const double lon_P1, //!< Longitude of P1 (in radians)
+                      double& lat_P2,      //!< Calculated latitude of P2 (in radians)
+                      double& lon_P2,      //!< Calculated longitude of P2 (in radians)
+                      const double s12,    //!< Arc length between P1 and P2 (in metres)
+                      const double az12    //!< Loxodrome azimuth (in radians)
+        );
+
+/**  \author cec
+  *  \date May 13, 2014, 10:54:09 AM
+  *  \brief Solves the direct loxodrome problem on the WGS84.
+  *  \details Given latitude and longitude of a point P1, the azimuth az12 of a
+  *           loxodrome P1P2 and an arc length s12 along that loxodrome curve,
+  *           computes the latitude and longitude of P2 at distance s12 of P1
+  *           along the loxodrome.
+  *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest loxodrome_direct_example
+  */
+void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
+                      const double lon_P1, //!< Longitude of P1 (in radians)
+                      double& lat_P2,      //!< Calculated latitude of P2 (in radians)
+                      double& lon_P2,      //!< Calculated longitude of P2 (in radians)
+                      const double s12,    //!< Arc length between P1 and P2 (in metres)
+                      const double az12    //!< Loxodrome azimuth (in radians)
+        );
 #endif /* LOXODROME_ON_ELLIPSOID_HPP_ */
