@@ -7,7 +7,7 @@ set(SOURCES src/PointInPolygon.cpp
             src/LatitudeLongitude.cpp
             src/Angle.cpp
             src/Track.cpp
-            src/Leg.cpp
+            src/ShortestPathLeg.cpp
             src/GreatCircle.cpp
             src/Vector3D.cpp
             src/Geometry.cpp
