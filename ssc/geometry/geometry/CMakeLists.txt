@@ -11,7 +11,8 @@ set(SOURCES src/PointInPolygon.cpp
             src/GreatCircle.cpp
             src/Vector3D.cpp
             src/Geometry.cpp
-            src/Angle.cxx)
+            src/Angle.cxx
+            src/loxodrome_on_ellipsoid.cpp)
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
