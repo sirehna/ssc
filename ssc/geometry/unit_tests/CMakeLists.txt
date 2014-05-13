@@ -10,7 +10,8 @@ FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/AngleTest.cpp
               src/TrackTest.cpp
               src/LegTest.cpp
-              src/TrackGenerator.cpp)
+              src/TrackGenerator.cpp
+              src/loxodrome_on_ellipsoidTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 
