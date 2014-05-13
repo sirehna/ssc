@@ -78,5 +78,43 @@ TEST_F(loxodrome_on_ellipsoidTest, loxodrome_distance)
     //! [loxodrome_on_ellipsoidTest inverse_example]
 }
 
+TEST_F(loxodrome_on_ellipsoidTest, direct_problem_of_the_loxodrome_on_the_ellipsoid)
+{
+    //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
+    double s12 = 176497.829952;
+    double az12 = (116  + 26/60. + 8.400701/3600)*RAD;
+    double lat = 0;
+    double lon = 0;
+    loxodrome_direct(inverse_flattening,
+                     semi_major_axis,
+                     latitude_of_Murray_Spring, longitude_of_Murray_Spring,
+                     lat, lon,
+                     s12, az12);
+    ASSERT_NEAR(latitude_of_Wauka_1978, lat, EPS);
+    ASSERT_NEAR(longitude_of_Wauka_1978, lon, EPS);
+    //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
+}
 
-
+TEST_F(loxodrome_on_ellipsoidTest, direct_problem_of_the_loxodrome_on_the_ellipsoid_for_big_distances)
+{
+    //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
+    double expected_lat = 0;
+    double expected_lon = 0;
+    double s12 = 0;
+    double az12 = 0;
+    loxodrome_inverse(inverse_flattening,
+                      semi_major_axis,
+                      latitude_of_Murray_Spring, longitude_of_Murray_Spring,
+                      expected_lat, expected_lon,
+                      s12, az12);
+    double lat = 0;
+    double lon = 0;
+    loxodrome_direct(inverse_flattening,
+                     semi_major_axis,
+                     latitude_of_Murray_Spring, longitude_of_Murray_Spring,
+                     lat, lon,
+                     s12, az12);
+    ASSERT_NEAR(expected_lat, lat, EPS);
+    ASSERT_NEAR(expected_lon, lon, EPS);
+    //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
+}
