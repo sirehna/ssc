@@ -30,42 +30,69 @@ double isometric_latitude(const double e,  //!< Excentricity of the ellipsoid (i
     return log(tan(QUARTER_PI + phi/2.)*pow((1-e*sin(phi))/(1+e*sin(phi)),e/2.));
 }
 
+void powers_of_e(const double f, double e[10]);
+void powers_of_e(const double f, double e[10])
+{
+    e[2]  = f*(2-f);
+    e[4]  = e[2]*e[2];
+    e[6]  = e[4]*e[2];
+    e[8]  = e[4]*e[4];
+    e[10] = e[6]*e[4];
+}
+
+void taylor_series_coefficients(const double e[11],
+                                double coeffs[13]);
+void taylor_series_coefficients(const double e[11],
+                                double coeffs[13])
+{
+    // Generated with MAPLE using the following code:
+        /*
+        sinlist := n -> [phi,seq(sin(2*k*phi),k=1..n)];
+        f:=N->(x->eval(convert(taylor((1-e^2*t^2)^(-3/2),t=0,N),polynom),t=x));
+        F:=N->collect(combine(expand((1-e^2)*integrate(f(N)(sin(t)),t=0..phi))),sinlist(N));
+        get_coeff:=(N,idx)->convert(taylor(sort(map(x->coeff(F(N+2),x),sinlist(N+2)[2..])[idx],e,ascending),e=0,N+1),polynom);
+        get_const_coeff:=N->sort(eval(F(N),phi=Pi)/Pi,e,ascending);
+
+        CodeGeneration:-C(codegen:-horner(get_const_coeff(12),e), resultname=A0);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,1),e), resultname=A2);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,2),e), resultname=A4);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,3),e), resultname=A6);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,4),e), resultname=A8);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,5),e), resultname=A10);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,6),e), resultname=A12);
+        */
+
+    coeffs[0]  = 0.1e1 + (-0.1e1 / 0.4e1 + (-0.3e1 / 0.64e2 + (-0.5e1 / 0.256e3 + (-0.175e3 / 0.16384e5 + (-0.441e3 / 0.65536e5 - 0.43659e5 / 0.65536e5 * e[2]) * e[2]) * e[2]) * e[2]) * e[2]) * e[2];
+    coeffs[2]  = (-0.3e1 / 0.8e1 + (-0.3e1 / 0.32e2 + (-0.45e2 / 0.1024e4 + (-0.105e3 / 0.4096e4 + (-0.2205e4 / 0.131072e6 - 0.6237e4 / 0.524288e6 * e[2]) * e[2]) * e[2]) * e[2]) * e[2]) * e[2];
+    coeffs[4]  = (0.15e2 / 0.256e3 + (0.45e2 / 0.1024e4 + (0.525e3 / 0.16384e5 + (0.1575e4 / 0.65536e5 + 0.155925e6 / 0.8388608e7 * e[2]) * e[2]) * e[2]) * e[2]) * e[4];
+    coeffs[6]  = (-0.35e2 / 0.3072e4 + (-0.175e3 / 0.12288e5 + (-0.3675e4 / 0.262144e6 - 0.13475e5 / 0.1048576e7 * e[2]) * e[2]) * e[2]) * e[6];
+    coeffs[8]  = (0.315e3 / 0.131072e6 + (0.2205e4 / 0.524288e6 + 0.43659e5 / 0.8388608e7 * e[2]) * e[2]) * e[8];
+    coeffs[10] = (-0.693e3 / 0.1310720e7 - 0.6237e4 / 0.5242880e7 * e[2]) * e[10];
+    coeffs[12] = 0.1001e4 / 0.8388608e7 * e[10]*e[2];
+}
+
+double series_expansion(const double a, const double A[13], const double phi);
+double series_expansion(const double a, const double A[13], const double phi)
+{
+    return a*(A[0]*phi + A[2]*sin(2*phi) + A[4]*sin(4*phi) + A[6]*sin(6*phi) + A[8]*sin(8*phi) + A[10]*sin(10*phi) + A[12]*sin(12*phi));
+}
+
+double derivative_series_expansion(const double a, const double A[13], const double phi);
+double derivative_series_expansion(const double a, const double A[13], const double phi)
+{
+    return a*(A[0] + 2*A[2]*cos(2*phi) + 4*A[4]*cos(4*phi) + 6*A[6]*cos(6*phi) + 8*A[8]*cos(8*phi) + 10*A[10]*cos(10*phi) + 12*A[12]*cos(12*phi));
+}
+
 double meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                          const double a,  //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                          const double phi //!< Latitude of the point (in radians)
                          )
 {
-    const double e2 = f*(2-f);
-    const double e4  = e2*e2;
-    const double e6  = e4*e2;
-    const double e8  = e4*e4;
-    const double e10 = e6*e4;
-
-    // Generated with MAPLE using the following code:
-    /*
-    sinlist := n -> [phi,seq(sin(2*k*phi),k=1..n)];
-    f:=N->(x->eval(convert(taylor((1-e^2*t^2)^(-3/2),t=0,N),polynom),t=x));
-    F:=N->collect(combine(expand((1-e^2)*integrate(f(N)(sin(t)),t=0..phi))),sinlist(N));
-    get_coeff:=(N,idx)->convert(taylor(sort(map(x->coeff(F(N+2),x),sinlist(N+2)[2..])[idx],e,ascending),e=0,N+1),polynom);
-    get_const_coeff:=N->sort(eval(F(N),phi=Pi)/Pi,e,ascending);
-
-    CodeGeneration:-C(codegen:-horner(get_const_coeff(12),e), resultname=A0);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,1),e), resultname=A2);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,2),e), resultname=A4);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,3),e), resultname=A6);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,4),e), resultname=A8);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,5),e), resultname=A10);
-    CodeGeneration:-C(codegen:-horner(get_coeff(12,6),e), resultname=A12);
-    */
-    const double A0  = 0.1e1 + (-0.1e1 / 0.4e1 + (-0.3e1 / 0.64e2 + (-0.5e1 / 0.256e3 + (-0.175e3 / 0.16384e5 + (-0.441e3 / 0.65536e5 - 0.43659e5 / 0.65536e5 * e2) * e2) * e2) * e2) * e2) * e2;
-    const double A2  = (-0.3e1 / 0.8e1 + (-0.3e1 / 0.32e2 + (-0.45e2 / 0.1024e4 + (-0.105e3 / 0.4096e4 + (-0.2205e4 / 0.131072e6 - 0.6237e4 / 0.524288e6 * e2) * e2) * e2) * e2) * e2) * e2;
-    const double A4  = (0.15e2 / 0.256e3 + (0.45e2 / 0.1024e4 + (0.525e3 / 0.16384e5 + (0.1575e4 / 0.65536e5 + 0.155925e6 / 0.8388608e7 * e2) * e2) * e2) * e2) * e4;
-    const double A6  = (-0.35e2 / 0.3072e4 + (-0.175e3 / 0.12288e5 + (-0.3675e4 / 0.262144e6 - 0.13475e5 / 0.1048576e7 * e2) * e2) * e2) * e6;
-    const double A8  = (0.315e3 / 0.131072e6 + (0.2205e4 / 0.524288e6 + 0.43659e5 / 0.8388608e7 * e2) * e2) * e8;
-    const double A10 = (-0.693e3 / 0.1310720e7 - 0.6237e4 / 0.5242880e7 * e2) * e10;
-    const double A12 = 0.1001e4 / 0.8388608e7 * e10*e2;
-
-    return a*(A0*phi + A2*sin(2*phi) + A4*sin(4*phi) + A6*sin(6*phi) + A8*sin(8*phi) + A10*sin(10*phi) + A12*sin(12*phi));
+    double e[11];
+    double A[13];
+    powers_of_e(f, e);
+    taylor_series_coefficients(e,A);
+    return series_expansion(a, A, phi);
 }
 
 void loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
