@@ -123,3 +123,60 @@ void loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
 {
     loxodrome_inverse(298.257223563, 6378137, lat_P1, lon_P1, lat_P2, lon_P2, s12, az12);
 }
+
+double next_newton_raphson_value(const double m, const double a, const double A[13], const double previous_phi);
+double next_newton_raphson_value(const double m, const double a, const double A[13], const double previous_phi)
+{
+    return previous_phi - (series_expansion(a, A, previous_phi) - m)/derivative_series_expansion(a, A, previous_phi);
+}
+
+double newton_raphson(const double m, const double a, const double A[13], const double initial_phi, const double eps, const int maxiter);
+double newton_raphson(const double m, const double a, const double A[13], const double initial_phi, const double eps, const int maxiter)
+{
+    double phi = initial_phi;
+    double next_phi = initial_phi;
+    for (int i = 0 ; i < maxiter ; ++i)
+    {
+        next_phi = next_newton_raphson_value(m, a, A, phi);
+        if (fabs(phi-next_phi)<eps) return next_phi;
+        phi = next_phi;
+    }
+    return next_phi;
+}
+
+void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
+                      const double a,      //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
+                      const double lat_P1, //!< Latitude of P1 (in radians)
+                      const double lon_P1, //!< Longitude of P1 (in radians)
+                      double& lat_P2,      //!< Calculated latitude of P2 (in radians)
+                      double& lon_P2,      //!< Calculated longitude of P2 (in radians)
+                      const double s12,    //!< Arc length between P1 and P2 (in metres)
+                      const double az12    //!< Loxodrome azimuth (in radians)
+        )
+{
+    const double f = 1./f_inv;
+    const double m1 = meridian_distance(f, a, lat_P1);
+    const double m2 = s12*cos(az12) + m1;
+    double e[11];
+    double A[13];
+    powers_of_e(f, e);
+    taylor_series_coefficients(e,A);
+    const double eps = 1E-12;
+    const int max_nb_of_newton_raphson_iterations = 5;
+    lat_P2 = newton_raphson(m2, a, A, lat_P1, eps, max_nb_of_newton_raphson_iterations);
+    const double e1 = sqrt(e[2]);
+    const double q1 = isometric_latitude(e1, lat_P1);
+    const double q2 = isometric_latitude(e1, lat_P2);
+    lon_P2 = lon_P1 + (q2-q1) * tan(az12);
+}
+
+void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
+                      const double lon_P1, //!< Longitude of P1 (in radians)
+                      double& lat_P2,      //!< Calculated latitude of P2 (in radians)
+                      double& lon_P2,      //!< Calculated longitude of P2 (in radians)
+                      const double s12,    //!< Arc length between P1 and P2 (in metres)
+                      const double az12    //!< Loxodrome azimuth (in radians)
+        )
+{
+    loxodrome_direct(298.257223563, 6378137, lat_P1, lon_P1, lat_P2, lon_P2, s12, az12);
+}
