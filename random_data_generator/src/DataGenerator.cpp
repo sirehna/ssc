@@ -1,6 +1,7 @@
 #include "DataGenerator.hpp"
 #include "sir_rand.h"
 #include <iostream>
+#include <math.h> // And *not* cmath: otherwise isnan won't work
 
 #define MAX_RAND_INT 2147483647
 
@@ -171,11 +172,14 @@ int DataGenerator::get_random_number() const
 
 template <> double TypedScalarDataGenerator<double>::get() const
 {
-
+    if (isnan(min_bound))                                         return NAN;
+    if (isnan(max_bound))                                         return NAN;
+    if (isnan(forbidden_min))                                     return NAN;
+    if (isnan(forbidden_max))                                     return NAN;
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
     const double a = random_double(min_bound, max_bound);
-    if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
-    else                                                         return get();
+    if (outside_forbidden_zone(forbidden_min, a, forbidden_max))  return a;
+    else                                                          return get();
 }
 
 template <> double TypedScalarDataGenerator<double>::operator()()
@@ -223,26 +227,14 @@ template <> std::string TypedScalarDataGenerator<std::string>::get() const
 {
     return random_string();
 }
-/*
-template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
-{
-    return vector_of_random_doubles(size, min_bound, max_bound);
-}*/
-
-
-
 
 template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
         {
                     std::vector<double> ret;
                     ret.reserve(size);
-                    TypedScalarDataGenerator<double> r(DataGenerator(random<size_t>()));// = random<double>();
+                    TypedScalarDataGenerator<double> r(DataGenerator(random<size_t>()));
                                 r.between(min_bound, max_bound);
-                                 //.outside(forbidden_min,forbidden_max);
-                                /*COUT(min_bound);
-                                COUT(max_bound);
-                                COUT(forbidden_min);
-                                COUT(forbidden_max);*/
+
                                 for (size_t i = 0 ; i < size ; ++i)
                                 {
                                     ret.push_back(r());

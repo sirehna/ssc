@@ -1,5 +1,6 @@
 #include "random_data_generator_tests.hpp"
 #include <set>
+#include <math.h> // And *not* cmath: otherwise isnan won't work
 
 #define NB_OF_TRIALS 10000
 
@@ -195,33 +196,11 @@ TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
     }
 }
 
-
-
-
-/*
-TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_outside_an_interval)
+TEST_F(DataGeneratorTests, crash_detected_in_EONAV_when_one_of_the_interval_bounds_is_nan)
 {
-    const size_t nb_of_trials = 100;
-    std::set<double> generated_numbers;
-    for (size_t i = 0 ; i < nb_of_trials ; ++i)
-    {
-        const size_t n = a.random<size_t>().between(2,20);
-        const std::vector<double> v1 = a.random_vector_of<double>().of_size(n).outside(2.1,2.9).but().between(2,3);
-        const std::vector<double> v2 = a.random_vector_of<double>().of_size(n).between(2,3).but().outside(2.1,2.9);
-        ASSERT_EQ(n, v1.size());
-        ASSERT_EQ(n, v2.size());
-        for (std::vector<double>::const_iterator it = v1.begin() ; it != v1.end() ; ++it)
-        {
-            ASSERT_LT(*it, 3);
-            ASSERT_GT(*it, 2);
-            ASSERT_FALSE((*it>=2.1)&&(*it<=2.9));
-        }
-        for (std::vector<double>::const_iterator it = v2.begin() ; it != v2.end() ; ++it)
-        {
-            ASSERT_LT(*it, 3);
-            ASSERT_GT(*it, 2);
-            ASSERT_FALSE((*it>=2.1)&&(*it<=2.9));
-        }
-    }
+    const double x = a.random<double>();
+    ASSERT_TRUE(isnan(a.random<double>().between(x,NAN)()));
+    ASSERT_TRUE(isnan(a.random<double>().between(NAN,x)()));
+    ASSERT_TRUE(isnan(a.random<double>().outside(x,NAN)()));
+    ASSERT_TRUE(isnan(a.random<double>().outside(NAN,x)()));
 }
-*/
