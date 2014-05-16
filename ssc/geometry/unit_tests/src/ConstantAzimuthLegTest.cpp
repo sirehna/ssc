@@ -65,3 +65,10 @@ TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_a_waypoint_on_a_leg_on_a_m
         }
     }
 }
+
+TEST_F(ConstantAzimuthLegTest, can_compute_distance_of_two_points_on_equator)
+{
+    const LatitudeLongitude A(LatitudeLongitude(0,1));
+    const LatitudeLongitude B(LatitudeLongitude(0,2));
+    ASSERT_LT(0,distance<ConstantAzimuthLeg>(A,B));
+}
