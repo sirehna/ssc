@@ -64,17 +64,6 @@ LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) c
 }
 
 /** \author cec
- *  \date 9 avr. 2013, 17:02:49
- *  \brief Length of the leg
- *  \returns Length in meters between point1 and point2, on a geodesic on the WGS84
- *  \snippet /unit_tests/src/LegTest.cpp LegTest length_example
-*/
-double ShortestPathLeg::length() const
-{
-    return pimpl->length;
-}
-
-/** \author cec
  *  \date 27 mai 2013, 12:24:45
  *  \brief Calculates the heading of a point on a geodesic
  *  \returns Heading on geodesic for point at a given distance from first point in leg

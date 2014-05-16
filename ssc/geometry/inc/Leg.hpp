@@ -38,11 +38,12 @@ class Leg
         Leg();
         virtual ~Leg();
         Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
-        virtual double length() const = 0;
+        double length() const;
         virtual Angle azimuth_at(const double distance_from_point1) const = 0;
         virtual LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const = 0;
         LatitudeLongitude find_waypoint_at(const double distance //!< Distance from first waypoint (in meters)
                                                ) const;
+
     protected:
         double length_;
 
