@@ -9,6 +9,7 @@
 #define LOXODROME_ON_ELLIPSOIDTEST_HPP_
 
 #include "gtest/gtest.h"
+#include "DataGenerator.hpp"
 
 class loxodrome_on_ellipsoidTest : public ::testing::Test
 {
