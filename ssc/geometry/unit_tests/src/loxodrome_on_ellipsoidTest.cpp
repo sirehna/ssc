@@ -115,8 +115,10 @@ TEST_F(loxodrome_on_ellipsoidTest, direct_problem_of_the_loxodrome_on_the_ellips
                      latitude_of_Murray_Spring, longitude_of_Murray_Spring,
                      lat, lon,
                      s12, az12);
-    ASSERT_NEAR(expected_lat, lat, EPS);
-    ASSERT_NEAR(expected_lon, lon, EPS);
+    ASSERT_NEAR(cos(expected_lat), cos(lat), EPS);
+    ASSERT_NEAR(sin(expected_lat), sin(lat), EPS);
+    ASSERT_NEAR(cos(expected_lon), cos(lon), EPS);
+    ASSERT_NEAR(sin(expected_lon), sin(lon), EPS);
     //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
 }
 #include "test_macros.hpp"

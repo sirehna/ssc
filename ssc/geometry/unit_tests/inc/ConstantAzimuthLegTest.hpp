@@ -19,7 +19,6 @@ class ConstantAzimuthLegTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 		DataGenerator a;
-
 };
 
 #endif  /* CONSTANTAZIMUTHLEGTEST_HPP_ */
