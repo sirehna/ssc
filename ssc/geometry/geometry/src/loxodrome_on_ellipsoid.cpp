@@ -5,8 +5,9 @@
  *      Author: cady
  */
 
-#include "loxodrome_on_ellipsoid.hpp"
 #include <cmath>
+#include <boost/math/tools/roots.hpp>
+#include "loxodrome_on_ellipsoid.hpp"
 
 #define QUARTER_PI atan(1.)
 #define PI (4.*QUARTER_PI)
@@ -83,6 +84,12 @@ double derivative_series_expansion(const double a, const double A[13], const dou
     return a*(A[0] + 2*A[2]*cos(2*phi) + 4*A[4]*cos(4*phi) + 6*A[6]*cos(6*phi) + 8*A[8]*cos(8*phi) + 10*A[10]*cos(10*phi) + 12*A[12]*cos(12*phi));
 }
 
+double second_derivative_series_expansion(const double a, const double A[13], const double phi);
+double second_derivative_series_expansion(const double a, const double A[13], const double phi)
+{
+    return -a*(4*A[2]*sin(2*phi) + 16*A[4]*sin(4*phi) + 36*A[6]*sin(6*phi) + 64*A[8]*sin(8*phi) + 100*A[10]*sin(10*phi) + 144*A[12]*sin(12*phi));
+}
+
 double meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                          const double a,  //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                          const double phi //!< Latitude of the point (in radians)
@@ -124,24 +131,42 @@ void loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
     loxodrome_inverse(298.257223563, 6378137, lat_P1, lon_P1, lat_P2, lon_P2, s12, az12);
 }
 
-double next_newton_raphson_value(const double m, const double a, const double A[13], const double previous_phi);
-double next_newton_raphson_value(const double m, const double a, const double A[13], const double previous_phi)
+struct latitude_functor
 {
-    return previous_phi - (series_expansion(a, A, previous_phi) - m)/derivative_series_expansion(a, A, previous_phi);
-}
+   latitude_functor(const double& m_, const double& a_, const double*&  A_) : m(m_), a(a_), A(A_) {}
+   latitude_functor(const latitude_functor& rhs) : m(rhs.m), a(rhs.a), A(rhs.A) {}
+   latitude_functor& operator=(const latitude_functor& rhs)
+   {
+       if (this != &rhs)
+       {
+           m = rhs.m;
+           a = rhs.a;
+       }
+       return *this;
+   }
+   ~latitude_functor(){}
 
-double newton_raphson(const double m, const double a, const double A[13], const double initial_phi, const double eps, const int maxiter);
-double newton_raphson(const double m, const double a, const double A[13], const double initial_phi, const double eps, const int maxiter)
+   std::tuple<double, double, double> operator()(const double phi)
+   {
+      double val = series_expansion(a, A, phi) - m;
+      double der = derivative_series_expansion(a, A, phi);
+      double second_der = second_derivative_series_expansion(a, A, phi);
+      return std::make_tuple(val, der, second_der);
+   }
+
+   private:
+       double m;
+       double a;
+       const double* A;
+};
+
+double halley(const double m, const double a, const double A[13], const double initial_phi, const int digits);
+double halley(const double m, const double a, const double A[13], const double initial_phi, const int digits)
 {
-    double phi = initial_phi;
-    double next_phi = initial_phi;
-    for (int i = 0 ; i < maxiter ; ++i)
-    {
-        next_phi = next_newton_raphson_value(m, a, A, phi);
-        if (fabs(phi-next_phi)<eps) return next_phi;
-        phi = next_phi;
-    }
-    return next_phi;
+   double min = -PI/2;
+   double max = -min;
+   double guess = initial_phi;
+   return boost::math::tools::halley_iterate(latitude_functor(m,a,A), guess, min, max, digits);
 }
 
 void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
@@ -161,9 +186,7 @@ void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298
     double A[13];
     powers_of_e(f, e);
     taylor_series_coefficients(e,A);
-    const double eps = 1E-12;
-    const int max_nb_of_newton_raphson_iterations = 5;
-    lat_P2 = newton_raphson(m2, a, A, lat_P1, eps, max_nb_of_newton_raphson_iterations);
+    lat_P2 = halley(m2, a, A, lat_P1, std::numeric_limits<double>::digits / 2);
     const double e1 = sqrt(e[2]);
     const double q1 = isometric_latitude(e1, lat_P1);
     const double q2 = isometric_latitude(e1, lat_P2);
