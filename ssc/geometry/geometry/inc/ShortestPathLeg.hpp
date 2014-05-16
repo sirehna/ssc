@@ -5,22 +5,11 @@
  *  \author cec
  */
 
-#ifndef LEG_HPP_
-#define LEG_HPP_
+#ifndef SHORTEST_PATH_LEG_HPP_
+#define SHORTEST_PATH_LEG_HPP_
 
-#include "LatitudeLongitude.hpp"
 #include <tr1/memory>
-#include "Exception.hpp"
-#include "Angle.hpp"
-
-class LegException : public Exception
-{
-    public:
-        LegException(const char* s) :
-                Exception(s)
-        {
-        }
-};
+#include "Leg.hpp"
 
 /** \author cec
  *  \ingroup geometry
@@ -47,4 +36,4 @@ class ShortestPathLeg
         std::tr1::shared_ptr<LegImpl> pimpl;
 };
 
-#endif /* LEG_HPP_ */
+#endif /* SHORTEST_PATH_LEG_HPP_ */
