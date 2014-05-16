@@ -29,19 +29,6 @@ class ShortestPathLeg::LegImpl
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
         }
 
-        Angle azimuth_at(const double distance_from_point1) const
-        {
-            double lat2 = 0;
-            double lon2 = 0;
-            double azi2 = 0;
-            double m12 = 0;
-            double M12 = 0;
-            double M21 = 0;
-            double S12 = 0;
-            geod.Direct(point_1.lat,point_1.lon,direction_of_the_geodesic_at_point_1, distance_from_point1, lat2, lon2, azi2,m12, M12, M21, S12);
-            return Angle::degree(azi2);
-        }
-
         LatitudeLongitude point_1;
         LatitudeLongitude point_2;
         const GeographicLib::Geodesic& geod;
@@ -69,7 +56,15 @@ LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) c
 */
 Angle ShortestPathLeg::azimuth_at(const double distance_from_point1) const
 {
-    return pimpl->azimuth_at(distance_from_point1);
+    double lat2 = 0;
+    double lon2 = 0;
+    double azi2 = 0;
+    double m12 = 0;
+    double M12 = 0;
+    double M21 = 0;
+    double S12 = 0;
+    pimpl->geod.Direct(pimpl->point_1.lat,pimpl->point_1.lon,pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, lat2, lon2, azi2,m12, M12, M21, S12);
+    return Angle::degree(azi2);
 }
 
 /** \author cec
