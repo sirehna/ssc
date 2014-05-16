@@ -121,21 +121,17 @@ TEST_F(loxodrome_on_ellipsoidTest, direct_problem_of_the_loxodrome_on_the_ellips
     ASSERT_NEAR(sin(expected_lon), sin(lon), EPS);
     //! [loxodrome_on_ellipsoidTest loxodrome_direct_example]
 }
-#include "test_macros.hpp"
+
 TEST_F(loxodrome_on_ellipsoidTest, can_convert_isometric_latitude_to_latitude)
 {
-    //for (size_t i = 0 ; i < 100 ; ++i)
-    {
-        const double phi = -0.4;//1;//a.random<double>().between(-PI/2,PI/2);
-        ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    }
     double phi;
-    phi = 0;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = 1;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = -1;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = 0.4;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = -0.4;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = -1.4;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
-    phi = 1.4;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = -0.4;      ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = 0;         ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = 1;         ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = -1;        ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = 0.4;       ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = -0.4;      ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = -1.4;      ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
+    phi = 1.4;       ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), EPS);
     phi = PI/2.-1E-3;ASSERT_NEAR(phi, convert_isometric_latitude_to_latitude(isometric_latitude(phi)), 1E-3);
 }
