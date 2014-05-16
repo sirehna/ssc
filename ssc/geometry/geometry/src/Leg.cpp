@@ -45,3 +45,14 @@ LatitudeLongitude Leg::find_waypoint_at(const double distance //!< Distance from
     }
     return waypoint(std::max(std::min(length_,distance),0.));
 }
+
+/** \author cec
+ *  \date 9 avr. 2013, 17:02:49
+ *  \brief Length of the leg
+ *  \returns Length in meters between point1 and point2, on a geodesic on the WGS84
+ *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest length_example
+*/
+double Leg::length() const
+{
+    return length_;
+}
