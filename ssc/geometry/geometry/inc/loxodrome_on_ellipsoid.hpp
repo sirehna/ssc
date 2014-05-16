@@ -130,4 +130,26 @@ void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
                       const double s12,    //!< Arc length between P1 and P2 (in metres)
                       const double az12    //!< Loxodrome azimuth (in radians)
         );
+
+/**  \author cec
+  *  \date May 15, 2014, 10:28:00 AM
+  *  \brief Calculates the latitude corresponding to an isometric latitude
+  *  \details Solves the equation q(phi) = q0 for phi.
+  *  \returns Latitude (in radians)
+  *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest convert_isometric_latitude_to_latitude_example
+  */
+double convert_isometric_latitude_to_latitude(const double e,  //!< Excentricity of the ellipsoid (in metres)
+                                              const double q   //!< Isometric latitude to convert (in radians)
+                                              );
+
+/**  \author cec
+  *  \date May 15, 2014, 10:28:00 AM
+  *  \brief Calculates the latitude corresponding to an isometric latitude on the WGS84
+  *  \details Solves the equation q(phi) = q0 for phi, on the WGS84.
+  *  \returns Latitude (in radians)
+  *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest convert_isometric_latitude_to_latitude_example
+  */
+double convert_isometric_latitude_to_latitude(const double q   //!< Isometric latitude to convert (in radians)
+                                              );
+
 #endif /* LOXODROME_ON_ELLIPSOID_HPP_ */
