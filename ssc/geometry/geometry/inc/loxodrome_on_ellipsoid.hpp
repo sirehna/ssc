@@ -35,6 +35,17 @@ double isometric_latitude(const double e,  //!< Excentricity of the ellipsoid (i
                          );
 
 /**  \author cec
+  *  \date May 15, 2014, 11:47:15 AM
+  *  \brief Computes the isometric latitude on the WGS84.
+  *  \details Equal increments of the isometric latitude give rise to equal
+  *           distance displacements along the meridians on an ellipsoid.
+  *  \returns Isometric latitude (in radians)
+  *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest isometric_latitude_example
+  */
+double isometric_latitude(const double phi //!< Latitude of the point under consideration (in radians)
+                         );
+
+/**  \author cec
   *  \date May 13, 2014, 8:55:58 AM
   *  \brief Computes the meridian distance to a point on an ellipsoid.
   *  \details Length of the arc of the meridian on an ellipsoid to a point in
