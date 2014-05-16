@@ -8,7 +8,8 @@
 #include "ConstantAzimuthLeg.hpp"
 #include "ShortestPathLeg.hpp"
 #include "loxodrome_on_ellipsoid.hpp"
-#include <cmath>
+
+#include "min_search_golden_section.hpp"
 
 #define PI (4.*atan(1.))
 #define RAD (PI/180.)
@@ -36,9 +37,31 @@ Angle ConstantAzimuthLeg::azimuth_at(const double ) const
     return Angle::radian(az12);
 }
 
-LatitudeLongitude ConstantAzimuthLeg::find_closest_point_to(const LatitudeLongitude& point) const
+class ClosestPointFunctor
 {
-    return point;
+    public:
+        ClosestPointFunctor(const double lat, const double lon, const double az, const LatitudeLongitude& M_) : lat_A(lat), lon_A(lon), azAB(az), M(M_){}
+        double operator()(const double d) const
+        {
+            double lat, lon;
+            loxodrome_direct(lat_A, lon_A, lat, lon, d, azAB);
+            return distance<ShortestPathLeg>(M,LatitudeLongitude(lat*DEG,lon*DEG));
+        }
+
+    private:
+        double lat_A;
+        double lon_A;
+        double azAB;
+        LatitudeLongitude M;
+};
+
+LatitudeLongitude ConstantAzimuthLeg::find_closest_point_to(const LatitudeLongitude& M) const
+{
+    const ClosestPointFunctor f(latitude_point_1_in_radians,longitude_point_1_in_radians, az12, M);
+    const double d = min_search_golden_section(f, 0, length_, 1E-10);
+    double lat, lon;
+    loxodrome_direct(latitude_point_1_in_radians,longitude_point_1_in_radians, lat, lon, d, az12);
+    return LatitudeLongitude(lat*DEG,lon*DEG);
 }
 
 LatitudeLongitude ConstantAzimuthLeg::waypoint(const double distance_from_point1) const
