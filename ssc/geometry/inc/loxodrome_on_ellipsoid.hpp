@@ -15,7 +15,7 @@
   *  \returns Azimuth of the loxodrome (in radians).
   *  \snippet geometry/unit_tests/src/loxodrome_on_ellipsoidTest.cpp loxodrome_on_ellipsoidTest azimuth_of_loxodrome_example
   */
-double azimuth_of_loxodrome(const double e,  //!< Excentricity of the ellipsoid (in meters)
+double azimuth_of_loxodrome(const double e,      //!< Excentricity of the ellipsoid (in meters)
                             const double lat_P1, //!< Latitude of P1 (in radians)
                             const double lon_P1, //!< Longitude of P1 (in radians)
                             const double lat_P2, //!< Latitude of P2 (in radians)

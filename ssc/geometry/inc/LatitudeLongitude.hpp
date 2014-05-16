@@ -27,7 +27,7 @@ class LatitudeLongitudeException : public Exception
  *  \brief Stores latitude and longitude information
  *  \details It has the following responsibilities:
  *  - Store geographical coordinates in degrees
- *  - Check that the coordinates are within the (-180°,180°) range at construction
+ *  - Check that the coordinates are within the (-180 deg,180 deg) range at construction
  *  \section ex1 Example
  *  \snippet geometry/unit_tests/src/LongitudeLatitudeTest.cpp LongitudeLatitudeTest example
  *  \section ex2 Expected output
