@@ -53,7 +53,7 @@ class ShortestPathLeg::LegImpl
 
 ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
 {
-
+    length_ = pimpl->length;
 }
 
 LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) const
@@ -72,33 +72,6 @@ LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) c
 double ShortestPathLeg::length() const
 {
     return pimpl->length;
-}
-
-/** \author cec
- *  \date 9 avr. 2013, 15:38:04
- *  \brief Find a waypoint on the leg, at a given distance from the first point
- *  \returns Point at given distance from start of leg
- *  \section ex1 Example
- *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest find_waypoint_at_example
- */
-LatitudeLongitude ShortestPathLeg::find_waypoint_at(const double distance //!< Distance from first waypoint (in meters)
-                                       ) const
-{
-    if (distance>(pimpl->length+EPS))
-    {
-        std::stringstream ss;
-        ss << "Asked to find waypoint at d = "
-           << distance
-           << " m from start of leg but leg is only "
-           << pimpl->length
-           << " m long (distance - length = " << distance - pimpl->length << " m)";
-        THROW(__PRETTY_FUNCTION__, LegException, ss.str());
-    }
-    if (distance<(-EPS))
-    {
-        THROW(__PRETTY_FUNCTION__, LegException, "received a negative distance");
-    }
-    return waypoint(std::max(std::min(pimpl->length,distance),0.));
 }
 
 /** \author cec

@@ -26,7 +26,6 @@ class ShortestPathLeg : public Leg
     public:
         ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         double length() const;
-        LatitudeLongitude find_waypoint_at(const double distance_from_point1) const;
         Angle azimuth_at(const double distance_from_point1) const;
         LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const;
 
