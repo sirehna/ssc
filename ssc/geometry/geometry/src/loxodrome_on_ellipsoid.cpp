@@ -120,10 +120,22 @@ void loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellip
             )
 {
     const double f = 1./f_inv;
-    az12 = azimuth_of_loxodrome(sqrt(f*(2.-f)), lat_P1, lon_P1, lat_P2, lon_P2);
+    const double e = sqrt(f*(2.-f));
+    az12 = azimuth_of_loxodrome(e, lat_P1, lon_P1, lat_P2, lon_P2);
+    // If the points are at the same latitude, the loxodrome never crosses the equator
+    // hence the meridian distance is 0 & so is cos(az12): therefore we must use
+    // another formula.
+    if (fabs(lat_P2-lat_P1)<1E-10)
+    {
+        const double sin_phi0 = sin(lat_P1);
+        const double nu = a/(1-e*e*sin_phi0*sin_phi0);
+        s12 = nu*fabs((lon_P2-lon_P1)*cos(lat_P1));
+        return;
+    }
+
     const double m1 = meridian_distance(f, a, lat_P1);
     const double m2 = meridian_distance(f, a, lat_P2);
-    s12 = (m2-m1)/cos(az12);
+    s12 = fabs((m2-m1)/cos(az12));
 }
 
 
@@ -364,7 +376,22 @@ void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298
                       const double az12    //!< Loxodrome azimuth (in radians)
         )
 {
+    // If the points are at the same latitude, the loxodrome never crosses the equator
+    // hence the meridian distance is 0 & so is cos(az12): therefore we must use
+    // another formula.
     const double f = 1./f_inv;
+    if ((fabs(az12-PI/2)<1E-10) or (fabs(az12+PI/2)<1E-10) or (fabs(az12-1.5*PI)<1E-10) or (fabs(az12+1.5*PI)<1E-10))
+    {
+        const double e = sqrt(f*(2.-f));
+        const double sin_phi0 = sin(lat_P1);
+        const double nu = a/(1-e*e*sin_phi0*sin_phi0);
+        double sign = 1;
+        if ((fabs(az12+PI/2)<1E-10) or (fabs(az12+1.5*PI)<1E-10)) sign = -1;
+        lat_P2 = lat_P1;
+        lon_P2 = lon_P1 + sign*s12/nu*fabs(cos(lat_P1));
+        lon_P2 = wrap_minus_minus_alpha_and_alpha(lon_P2,PI);
+        return;
+    }
     const double m1 = meridian_distance(f, a, lat_P1);
     const double m2 = s12*cos(az12) + m1;
     double e[11];
@@ -372,10 +399,12 @@ void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298
     powers_of_e(f, e);
     taylor_series_coefficients(e,A);
     lat_P2 = halley(m2, a, A, lat_P1, std::numeric_limits<double>::digits / 2);
+    lat_P2 = wrap_minus_minus_alpha_and_alpha(lat_P2,PI/2);
     const double e1 = sqrt(e[2]);
     const double q1 = isometric_latitude(e1, lat_P1);
     const double q2 = isometric_latitude(e1, lat_P2);
     lon_P2 = lon_P1 + (q2-q1) * tan(az12);
+    lon_P2 = wrap_minus_minus_alpha_and_alpha(lon_P2,PI);
 }
 
 void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
@@ -388,3 +417,4 @@ void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
 {
     loxodrome_direct(298.257223563, 6378137, lat_P1, lon_P1, lat_P2, lon_P2, s12, az12);
 }
+
