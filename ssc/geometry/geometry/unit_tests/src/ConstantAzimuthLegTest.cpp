@@ -7,6 +7,7 @@
 
 #include "ConstantAzimuthLegTest.hpp"
 #include "ConstantAzimuthLeg.hpp"
+#include "LatitudeLongitudeGenerators.hpp"
 
 #define EPS 1E-6
 
@@ -71,4 +72,51 @@ TEST_F(ConstantAzimuthLegTest, can_compute_distance_of_two_points_on_equator)
     const LatitudeLongitude A(LatitudeLongitude(0,1));
     const LatitudeLongitude B(LatitudeLongitude(0,2));
     ASSERT_LT(0,distance<ConstantAzimuthLeg>(A,B));
+}
+
+TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_closest_waypoint_on_equator)
+{
+    for (size_t i = 0 ; i < 50 ; ++i)
+    {
+        LatitudeLongitude A(a.random<LatitudeLongitude>());A.lat = 0;
+        LatitudeLongitude B(a.random<LatitudeLongitude>());B.lat = 0;
+        LatitudeLongitude M(a.random<LatitudeLongitude>());
+        M.lon = a.random<double>().between(std::min(A.lon,B.lon), std::max(A.lon,B.lon));
+
+        const ConstantAzimuthLeg leg = ConstantAzimuthLeg::build(A, B);
+        const LatitudeLongitude P = leg.find_closest_point_to(M);
+        ASSERT_GT(distance<ConstantAzimuthLeg>(P,M),EPS);
+        ASSERT_NEAR(0, P.lat, EPS);
+    }
+}
+
+TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_closest_waypoint_on_meridian)
+{
+    const double lon = a.random<double>().between(-100,100);
+    LatitudeLongitude A(a.random<LatitudeLongitude>());A.lon = lon;
+    LatitudeLongitude B(a.random<LatitudeLongitude>());B.lon = lon;
+    LatitudeLongitude M(a.random<double>().between(std::min(A.lat,B.lat), std::max(A.lat,B.lat)),a.random<double>().between(lon-50,lon+50));
+
+    const ConstantAzimuthLeg leg = ConstantAzimuthLeg::build(A, B);
+    const LatitudeLongitude P = leg.find_closest_point_to(M);
+
+    ASSERT_GT(distance<ConstantAzimuthLeg>(P,M),EPS);
+    ASSERT_NEAR(lon, P.lon, EPS);
+
+    ASSERT_LT(std::min(A.lat,B.lat), P.lat);
+    ASSERT_LT(P.lat, std::max(A.lat,B.lat));
+}
+
+TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_closest_waypoint_on_any_parallel)
+{
+    LatitudeLongitude A(a.random<LatitudeLongitude>());
+    LatitudeLongitude B(a.random<LatitudeLongitude>());B.lat = A.lat;
+    LatitudeLongitude M(a.random<LatitudeLongitude>());
+    M.lon = a.random<double>().between(std::min(A.lon,B.lon), std::max(A.lon,B.lon));
+
+    const ConstantAzimuthLeg leg = ConstantAzimuthLeg::build(A, B);
+    const LatitudeLongitude P = leg.find_closest_point_to(M);
+
+    ASSERT_GT(distance<ConstantAzimuthLeg>(P,M),EPS);
+    ASSERT_NEAR(A.lat, P.lat, EPS);
 }
