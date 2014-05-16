@@ -32,6 +32,7 @@ class ShortestPathLeg : public Leg
 
     private:
         ShortestPathLeg();
+        LatitudeLongitude waypoint(const double distance_from_point1) const;
         class LegImpl;
         std::tr1::shared_ptr<LegImpl> pimpl;
 };
