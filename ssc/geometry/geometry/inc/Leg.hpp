@@ -35,7 +35,6 @@ class LegException : public Exception
 class Leg
 {
     public:
-        Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
         virtual ~Leg();
         double length() const;
         virtual Angle azimuth_at(const double distance_from_point1) const = 0;
@@ -44,9 +43,10 @@ class Leg
                                                ) const;
 
     protected:
-        double length_;
+        Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2, const double length_);
         LatitudeLongitude point_1;
         LatitudeLongitude point_2;
+        double length_;
 
     private:
         virtual LatitudeLongitude waypoint(const double distance_from_point1) const = 0;
