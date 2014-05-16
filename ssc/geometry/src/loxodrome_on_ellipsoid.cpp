@@ -31,6 +31,12 @@ double isometric_latitude(const double e,  //!< Excentricity of the ellipsoid (i
     return log(tan(QUARTER_PI + phi/2.)*pow((1-e*sin(phi))/(1+e*sin(phi)),e/2.));
 }
 
+double isometric_latitude(const double phi //!< Latitude of the point under consideration (in radians)
+                         )
+{
+    return isometric_latitude(0.0818191908426214943348024517538,phi);
+}
+
 void powers_of_e(const double f, double e[10]);
 void powers_of_e(const double f, double e[10])
 {
