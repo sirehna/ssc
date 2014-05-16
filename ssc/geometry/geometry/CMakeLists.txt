@@ -13,7 +13,9 @@ set(SOURCES src/PointInPolygon.cpp
             src/Geometry.cpp
             src/Angle.cxx
             src/Leg.cpp
-            src/loxodrome_on_ellipsoid.cpp)
+            src/loxodrome_on_ellipsoid.cpp
+            src/ConstantAzimuthLeg.cpp
+            )
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
