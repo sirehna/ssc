@@ -22,7 +22,7 @@
 class ShortestPathLeg::LegImpl
 {
     public:
-        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : point_1(point1),point_2(point2),length(0),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
+        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2, double& length) : point_1(point1),point_2(point2),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
         geodesic(Geometry::GreatCircle(point1,point2))
         {
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, length);
@@ -44,16 +44,14 @@ class ShortestPathLeg::LegImpl
 
         LatitudeLongitude point_1;
         LatitudeLongitude point_2;
-        double length;
         const GeographicLib::Geodesic& geod;
         double direction_of_the_geodesic_at_point_1;
         double direction_of_the_geodesic_at_point_2;
         Geometry::GreatCircle geodesic;
 };
 
-ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
+ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2,length_))
 {
-    length_ = pimpl->length;
 }
 
 LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) const
