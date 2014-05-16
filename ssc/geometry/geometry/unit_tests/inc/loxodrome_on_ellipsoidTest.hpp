@@ -19,6 +19,8 @@ class loxodrome_on_ellipsoidTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 
+
+        DataGenerator a;
 		double latitude_of_Murray_Spring;
         double longitude_of_Murray_Spring;
         double latitude_of_Wauka_1978;
