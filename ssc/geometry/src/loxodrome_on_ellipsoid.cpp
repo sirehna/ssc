@@ -345,6 +345,15 @@ double convert_isometric_latitude_to_latitude(const double q   //!< Isometric la
     return convert_isometric_latitude_to_latitude(0.0818191908426214943348024517538,q);
 }
 
+double wrap_minus_minus_alpha_and_alpha(double angle, const double alpha);
+double wrap_minus_minus_alpha_and_alpha(double angle, const double alpha)
+{
+    double two_alpha = 2.0 * alpha;
+    angle = angle - two_alpha * floor( angle / two_alpha );
+    if (angle>alpha) angle = angle - two_alpha;
+    return angle;
+}
+
 void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                       const double a,      //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                       const double lat_P1, //!< Latitude of P1 (in radians)
