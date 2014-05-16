@@ -7,8 +7,6 @@
 
 #include <cmath>
 #include <boost/math/tools/roots.hpp>
-#include <boost/math/special_functions/ellint_3.hpp>
-
 #include "loxodrome_on_ellipsoid.hpp"
 
 #define QUARTER_PI atan(1.)
@@ -40,14 +38,75 @@ double isometric_latitude(const double phi //!< Latitude of the point under cons
     return isometric_latitude(0.0818191908426214943348024517538,phi);
 }
 
+void powers_of_e(const double f, double e[10]);
+void powers_of_e(const double f, double e[10])
+{
+    e[2]  = f*(2-f);
+    e[4]  = e[2]*e[2];
+    e[6]  = e[4]*e[2];
+    e[8]  = e[4]*e[4];
+    e[10] = e[6]*e[4];
+}
+
+void taylor_series_coefficients(const double e[11],
+                                double coeffs[13]);
+void taylor_series_coefficients(const double e[11],
+                                double coeffs[13])
+{
+    // Generated with MAPLE using the following code:
+        /*
+        sinlist := n -> [phi,seq(sin(2*k*phi),k=1..n)];
+        f:=N->(x->eval(convert(taylor((1-e^2*t^2)^(-3/2),t=0,N),polynom),t=x));
+        F:=N->collect(combine(expand((1-e^2)*integrate(f(N)(sin(t)),t=0..phi))),sinlist(N));
+        get_coeff:=(N,idx)->convert(taylor(sort(map(x->coeff(F(N+2),x),sinlist(N+2)[2..])[idx],e,ascending),e=0,N+1),polynom);
+        get_const_coeff:=N->sort(eval(F(N),phi=Pi)/Pi,e,ascending);
+
+        CodeGeneration:-C(codegen:-horner(get_const_coeff(12),e), resultname=A0);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,1),e), resultname=A2);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,2),e), resultname=A4);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,3),e), resultname=A6);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,4),e), resultname=A8);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,5),e), resultname=A10);
+        CodeGeneration:-C(codegen:-horner(get_coeff(12,6),e), resultname=A12);
+        */
+
+    coeffs[0]  = 0.1e1 + (-0.1e1 / 0.4e1 + (-0.3e1 / 0.64e2 + (-0.5e1 / 0.256e3 + (-0.175e3 / 0.16384e5 + (-0.441e3 / 0.65536e5 - 0.43659e5 / 0.65536e5 * e[2]) * e[2]) * e[2]) * e[2]) * e[2]) * e[2];
+    coeffs[2]  = (-0.3e1 / 0.8e1 + (-0.3e1 / 0.32e2 + (-0.45e2 / 0.1024e4 + (-0.105e3 / 0.4096e4 + (-0.2205e4 / 0.131072e6 - 0.6237e4 / 0.524288e6 * e[2]) * e[2]) * e[2]) * e[2]) * e[2]) * e[2];
+    coeffs[4]  = (0.15e2 / 0.256e3 + (0.45e2 / 0.1024e4 + (0.525e3 / 0.16384e5 + (0.1575e4 / 0.65536e5 + 0.155925e6 / 0.8388608e7 * e[2]) * e[2]) * e[2]) * e[2]) * e[4];
+    coeffs[6]  = (-0.35e2 / 0.3072e4 + (-0.175e3 / 0.12288e5 + (-0.3675e4 / 0.262144e6 - 0.13475e5 / 0.1048576e7 * e[2]) * e[2]) * e[2]) * e[6];
+    coeffs[8]  = (0.315e3 / 0.131072e6 + (0.2205e4 / 0.524288e6 + 0.43659e5 / 0.8388608e7 * e[2]) * e[2]) * e[8];
+    coeffs[10] = (-0.693e3 / 0.1310720e7 - 0.6237e4 / 0.5242880e7 * e[2]) * e[10];
+    coeffs[12] = 0.1001e4 / 0.8388608e7 * e[10]*e[2];
+}
+
+double series_expansion(const double a, const double A[13], const double phi);
+double series_expansion(const double a, const double A[13], const double phi)
+{
+    return a*(A[0]*phi + A[2]*sin(2*phi) + A[4]*sin(4*phi) + A[6]*sin(6*phi) + A[8]*sin(8*phi) + A[10]*sin(10*phi) + A[12]*sin(12*phi));
+}
+
+double derivative_series_expansion(const double a, const double A[13], const double phi);
+double derivative_series_expansion(const double a, const double A[13], const double phi)
+{
+    return a*(A[0] + 2*A[2]*cos(2*phi) + 4*A[4]*cos(4*phi) + 6*A[6]*cos(6*phi) + 8*A[8]*cos(8*phi) + 10*A[10]*cos(10*phi) + 12*A[12]*cos(12*phi));
+}
+
+double second_derivative_series_expansion(const double a, const double A[13], const double phi);
+double second_derivative_series_expansion(const double a, const double A[13], const double phi)
+{
+    return -a*(4*A[2]*sin(2*phi) + 16*A[4]*sin(4*phi) + 36*A[6]*sin(6*phi) + 64*A[8]*sin(8*phi) + 100*A[10]*sin(10*phi) + 144*A[12]*sin(12*phi));
+}
+
 double meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                          const double a,  //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                          const double phi //!< Latitude of the point (in radians)
                          )
 {
-    const double e2 = f*(2-f);
-    const double e = sqrt(e2);
-    return a*(1-e2)*boost::math::ellint_3(e,e2,phi);
+    double e[11];
+    double A[13];
+    powers_of_e(f, e);
+    taylor_series_coefficients(e,A);
+    return series_expansion(a, A, phi);
 }
 
 void loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
@@ -93,37 +152,40 @@ void loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
 
 struct latitude_functor
 {
-   latitude_functor(const double& m_, const double& e_, const double& a_) : m(m_), e(e_), e2(e*e), a(a_) {}
+   latitude_functor(const double& m_, const double& a_, const double*&  A_) : m(m_), a(a_), A(A_) {}
+   latitude_functor(const latitude_functor& rhs) : m(rhs.m), a(rhs.a), A(rhs.A) {}
+   latitude_functor& operator=(const latitude_functor& rhs)
+   {
+       if (this != &rhs)
+       {
+           m = rhs.m;
+           a = rhs.a;
+       }
+       return *this;
+   }
+   ~latitude_functor(){}
 
    std::tuple<double, double, double> operator()(const double phi) // Whatever you do, don't #include <tr1/tuple> as it won't compile...
    {
-
-      double val = a*(1-e2)*boost::math::ellint_3(e,e2,phi) - m;
-      double der = a*(1-e*e)/pow(1-e*e*sin(phi)*sin(phi),1.5);
-
-      const double t1 = e * e;
-      const double t4 = sin(phi);
-      const double t5 = t4 * t4;
-      const double t7 = 1 - t1 * t5;
-      const double t8 = t7 * t7;
-      const double second_der = 3 * a * (1 - t1) / sqrt(t7) / t8 * t1 * t4 * cos(phi);
+      double val = series_expansion(a, A, phi) - m;
+      double der = derivative_series_expansion(a, A, phi);
+      double second_der = second_derivative_series_expansion(a, A, phi);
       return std::make_tuple(val, der, second_der);
    }
 
    private:
        double m;
-       double e;
-       double e2;
        double a;
+       const double* A;
 };
 
-double halley(const double m, const double a, const double e, const double initial_phi, const int digits);
-double halley(const double m, const double a, const double e, const double initial_phi, const int digits)
+double halley(const double m, const double a, const double A[13], const double initial_phi, const int digits);
+double halley(const double m, const double a, const double A[13], const double initial_phi, const int digits)
 {
    double min = -PI/2;
    double max = -min;
    double guess = initial_phi;
-   return boost::math::tools::halley_iterate(latitude_functor(m,e,a), guess, min, max, digits);
+   return boost::math::tools::halley_iterate(latitude_functor(m,a,A), guess, min, max, digits);
 }
 
 struct cbrt_functor
@@ -261,6 +323,14 @@ struct isometric_latitude_functor
    {
       const double val = isometric_latitude(e,phi) - q;
       const double der = ((0.500000000000000000000000000000e0 + 0.500000000000000000000000000000e0 * pow(tan(QUARTER_PI + 0.500000000000000000000000000000e0 * phi), 0.2e1)) * pow((0.1e1 - e * sin(phi)) / (0.1e1 + e * sin(phi)), 0.500000000000000000000000000000e0 * e) + 0.500000000000000000000000000000e0 * tan(QUARTER_PI + 0.500000000000000000000000000000e0 * phi) * pow((0.1e1 - e * sin(phi)) / (0.1e1 + e * sin(phi)), 0.500000000000000000000000000000e0 * e) * e * (-e * cos(phi) / (0.1e1 + e * sin(phi)) - (0.1e1 - e * sin(phi)) * pow(0.1e1 + e * sin(phi), -0.2e1) * e * cos(phi)) / (0.1e1 - e * sin(phi)) * (0.1e1 + e * sin(phi))) / tan(QUARTER_PI + 0.500000000000000000000000000000e0 * phi) / pow((0.1e1 - e * sin(phi)) / (0.1e1 + e * sin(phi)), 0.500000000000000000000000000000e0 * e);
+
+      /*const double x_ = 1. - e * sin(phi);
+      const double x = 1. + e * sin(phi);
+      const double t = tan(QUARTER_PI + 0.5 * phi);
+      const double p = pow(x_/x, 0.5 * e);
+      const double x2 = x*x;
+      const double t2 = t*t;
+      const double der = ((0.5 + 0.5 * t2) * p + 0.5 * t * p * e * (-e * cos(phi) / x - x_/x2 * e * cos(phi)) / x_ * x) / t / p;*/
       return std::make_tuple(val, der);
    }
 
@@ -324,11 +394,15 @@ void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298
     }
     const double m1 = meridian_distance(f, a, lat_P1);
     const double m2 = s12*cos(az12) + m1;
-    const double e = sqrt(f*(2.-f));
-    lat_P2 = halley(m2, a, e, lat_P1, std::numeric_limits<double>::digits / 2);
+    double e[11];
+    double A[13];
+    powers_of_e(f, e);
+    taylor_series_coefficients(e,A);
+    lat_P2 = halley(m2, a, A, lat_P1, std::numeric_limits<double>::digits / 2);
     lat_P2 = wrap_minus_minus_alpha_and_alpha(lat_P2,PI/2);
-    const double q1 = isometric_latitude(e, lat_P1);
-    const double q2 = isometric_latitude(e, lat_P2);
+    const double e1 = sqrt(e[2]);
+    const double q1 = isometric_latitude(e1, lat_P1);
+    const double q2 = isometric_latitude(e1, lat_P2);
     lon_P2 = lon_P1 + (q2-q1) * tan(az12);
     lon_P2 = wrap_minus_minus_alpha_and_alpha(lon_P2,PI);
 }
