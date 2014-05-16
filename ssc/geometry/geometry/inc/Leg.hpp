@@ -52,5 +52,9 @@ class Leg
         virtual LatitudeLongitude waypoint(const double distance_from_point1) const = 0;
 };
 
+template <typename T> double distance(const LatitudeLongitude& A, const LatitudeLongitude& B)
+{
+    return T::build(A,B).length();
+}
 
 #endif /* LEG_HPP_ */
