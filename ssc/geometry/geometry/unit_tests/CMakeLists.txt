@@ -13,6 +13,7 @@ FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/TrackGenerator.cpp
               src/loxodrome_on_ellipsoidTest.cpp
               src/ConstantAzimuthLegTest.cpp
+              src/epsilon_algorithm_test.cpp
               )
 # ------8<---------------------------------------------->8-----
 
