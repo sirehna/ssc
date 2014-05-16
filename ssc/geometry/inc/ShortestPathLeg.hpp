@@ -21,7 +21,7 @@
  *  \section ex2 Expected output
  *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest expected output
  */
-class ShortestPathLeg
+class ShortestPathLeg : public Leg
 {
     public:
         ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
