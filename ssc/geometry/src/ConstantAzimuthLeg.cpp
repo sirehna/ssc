@@ -6,6 +6,7 @@
  */
 
 #include "ConstantAzimuthLeg.hpp"
+#include "ShortestPathLeg.hpp"
 #include "loxodrome_on_ellipsoid.hpp"
 #include <cmath>
 
@@ -23,6 +24,10 @@ ConstantAzimuthLeg ConstantAzimuthLeg::build(const LatitudeLongitude& point1, co
     double L = 0;
     double az12 = 0;
     loxodrome_inverse(point1.lat*RAD, point1.lon*RAD, point2.lat*RAD, point2.lon*RAD, L, az12);
+    if ((fabs(az12-PI/2)<1E-10) or (fabs(az12+PI/2)<1E-10) or (fabs(az12+1.5*PI)<1E-10))
+    {
+        L = distance<ShortestPathLeg>(point1,point2);
+    }
     return ConstantAzimuthLeg(point1,point2,L,az12);
 }
 
