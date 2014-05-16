@@ -11,7 +11,9 @@ FILE(GLOB SRC src/PointInCartesianPolygonTest.cpp
               src/TrackTest.cpp
               src/ShortestPathLegTest.cpp
               src/TrackGenerator.cpp
-              src/loxodrome_on_ellipsoidTest.cpp)
+              src/loxodrome_on_ellipsoidTest.cpp
+              src/ConstantAzimuthLegTest.cpp
+              )
 # ------8<---------------------------------------------->8-----
 
 
