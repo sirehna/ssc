@@ -29,13 +29,6 @@ class ShortestPathLeg::LegImpl
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
         }
 
-        LatitudeLongitude waypoint(const double distance_from_point1) const
-        {
-            LatitudeLongitude ret(0,0);
-            geod.Direct(point_1.lat, point_1.lon, direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
-            return ret;
-        }
-
         Angle azimuth_at(const double distance_from_point1) const
         {
             double lat2 = 0;
@@ -61,6 +54,13 @@ class ShortestPathLeg::LegImpl
 ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2))
 {
 
+}
+
+LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) const
+{
+    LatitudeLongitude ret(0,0);
+    pimpl->geod.Direct(pimpl->point_1.lat, pimpl->point_1.lon, pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
+    return ret;
 }
 
 /** \author cec
@@ -98,7 +98,7 @@ LatitudeLongitude ShortestPathLeg::find_waypoint_at(const double distance //!< D
     {
         THROW(__PRETTY_FUNCTION__, LegException, "received a negative distance");
     }
-    return pimpl->waypoint(std::max(std::min(pimpl->length,distance),0.));
+    return waypoint(std::max(std::min(pimpl->length,distance),0.));
 }
 
 /** \author cec
