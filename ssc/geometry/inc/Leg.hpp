@@ -43,6 +43,8 @@ class Leg
         virtual Angle azimuth_at(const double distance_from_point1) const = 0;
         virtual LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const = 0;
 
+    private:
+        virtual LatitudeLongitude waypoint(const double distance_from_point1) const = 0;
 };
 
 
