@@ -22,29 +22,27 @@
 class ShortestPathLeg::LegImpl
 {
     public:
-        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2, double& length) : point_1(point1),point_2(point2),geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
+        LegImpl(const LatitudeLongitude& point1, const LatitudeLongitude& point2, double& length) : geod(GeographicLib::Geodesic::WGS84),direction_of_the_geodesic_at_point_1(0),direction_of_the_geodesic_at_point_2(0),
         geodesic(Geometry::GreatCircle(point1,point2))
         {
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, length);
             geod.Inverse(point1.lat, point1.lon, point2.lat, point2.lon, direction_of_the_geodesic_at_point_1, direction_of_the_geodesic_at_point_2);
         }
 
-        LatitudeLongitude point_1;
-        LatitudeLongitude point_2;
         const GeographicLib::Geodesic& geod;
         double direction_of_the_geodesic_at_point_1;
         double direction_of_the_geodesic_at_point_2;
         Geometry::GreatCircle geodesic;
 };
 
-ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : pimpl(new LegImpl(point1,point2,length_))
+ShortestPathLeg::ShortestPathLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : Leg(point1,point2), pimpl(new LegImpl(point1,point2,length_))
 {
 }
 
 LatitudeLongitude ShortestPathLeg::waypoint(const double distance_from_point1) const
 {
     LatitudeLongitude ret(0,0);
-    pimpl->geod.Direct(pimpl->point_1.lat, pimpl->point_1.lon, pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
+    pimpl->geod.Direct(point_1.lat, point_1.lon, pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, ret.lat, ret.lon);
     return ret;
 }
 
@@ -63,7 +61,7 @@ Angle ShortestPathLeg::azimuth_at(const double distance_from_point1) const
     double M12 = 0;
     double M21 = 0;
     double S12 = 0;
-    pimpl->geod.Direct(pimpl->point_1.lat,pimpl->point_1.lon,pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, lat2, lon2, azi2,m12, M12, M21, S12);
+    pimpl->geod.Direct(point_1.lat,point_1.lon,pimpl->direction_of_the_geodesic_at_point_1, distance_from_point1, lat2, lon2, azi2,m12, M12, M21, S12);
     return Angle::degree(azi2);
 }
 

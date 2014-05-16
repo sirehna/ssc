@@ -10,9 +10,8 @@
 
 #define EPS 1e-6
 
-Leg::Leg() : length_(0)
+Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2) : length_(0), point_1(point1), point_2(point2)
 {
-
 }
 
 Leg::~Leg()
