@@ -22,9 +22,17 @@
 class ConstantAzimuthLeg : public Leg
 {
     public:
-        ConstantAzimuthLeg();
+        ConstantAzimuthLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2, const double L, const double az12);
+        static ConstantAzimuthLeg build(const LatitudeLongitude& point1, const LatitudeLongitude& point2);
+        Angle azimuth_at(const double distance_from_point1) const;
+        LatitudeLongitude find_closest_point_to(const LatitudeLongitude& point) const;
 
     private:
+        ConstantAzimuthLeg();
+        LatitudeLongitude waypoint(const double distance_from_point1) const;
+        double az12;
+        double latitude_point_1_in_radians;
+        double longitude_point_1_in_radians;
 };
 
 #endif /* CONSTANTAZIMUTHLEG_HPP_ */
