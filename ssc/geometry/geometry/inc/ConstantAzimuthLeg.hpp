@@ -30,6 +30,7 @@ class ConstantAzimuthLeg : public Leg
     private:
         ConstantAzimuthLeg();
         LatitudeLongitude waypoint(const double distance_from_point1) const;
+
         double az12;
         double latitude_point_1_in_radians;
         double longitude_point_1_in_radians;
