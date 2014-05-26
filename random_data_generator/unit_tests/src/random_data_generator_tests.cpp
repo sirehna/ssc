@@ -204,3 +204,11 @@ TEST_F(DataGeneratorTests, crash_detected_in_EONAV_when_one_of_the_interval_boun
     ASSERT_TRUE(isnan(a.random<double>().outside(x,NAN)()));
     ASSERT_TRUE(isnan(a.random<double>().outside(NAN,x)()));
 }
+
+TEST_F(DataGeneratorTests, bug_in_greater_than_detected_in_EONAV)
+{
+    std::vector<double> vector_of_doubles;
+    const size_t N = vector_of_doubles.max_size();
+    const size_t generated = a.random<size_t>().greater_than(N);
+    ASSERT_LT(N, generated);
+}
