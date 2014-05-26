@@ -236,5 +236,5 @@ template<> size_t get_min_bound<size_t>()
 
 template<> size_t get_max_bound<size_t>()
 {
-    return 1e7;
+    return (size_t)-1;
 }
