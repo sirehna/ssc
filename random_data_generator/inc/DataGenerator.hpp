@@ -42,12 +42,6 @@ class DataGenerator
     protected:
         bool negated;
         bool random_bool() const;
-		int    random_int() const;
-		size_t random_size_t() const;
-		float  random_float() const;
-		long   random_long() const;
-		short  random_short() const;
-		double random_double() const;
         const std::vector<size_t>      vector_of_random_size_ts(const size_t& n, const size_t& a, const size_t& b) const;
         const std::vector<double>      vector_of_random_doubles(const size_t& n, const double& a, const double& b) const;
 
