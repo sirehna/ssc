@@ -24,36 +24,6 @@ DataGenerator& DataGenerator::no()
     return *this;
 }
 
-double DataGenerator::random_double() const
-{
-    return random_double(-1e6,1e6);
-}
-
-int DataGenerator::random_int() const
-{
-    return random_int(-1e6,1e6);
-}
-
-size_t DataGenerator::random_size_t() const
-{
-    return random_size_t(0,1e4);
-}
-
-float DataGenerator::random_float() const
-{
-    return random_float(-1e6,1e6);
-}
-
-long DataGenerator::random_long() const
-{
-    return random_long(-1e3,1e3);
-}
-
-short DataGenerator::random_short() const
-{
-    return random_short(-1e2,1e2);
-}
-
 double DataGenerator::random_double(const double& a, const double& b) const
 {
     const double r = sir_rand_u01();
