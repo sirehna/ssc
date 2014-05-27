@@ -61,9 +61,10 @@ TEST_F(for_allTest, works_with_simplified_syntax)
 
 TEST_F(for_allTest, throws_if_supplied_two_vectors_of_different_lengths)
 {
-    const size_t n = a.random<size_t>().no().greater_than(10000);
-    const std::vector<double> v1 = a.random_vector_of<double>().of_size(n);
-    const std::vector<double> v2 = a.random_vector_of<double>().of_size(a.random<size_t>().but_not(n));
+    const size_t n1 = a.random<size_t>().no().greater_than(10000);
+    const std::vector<double> v1 = a.random_vector_of<double>().of_size(n1);
+    const size_t n2 = a.random<size_t>().no().greater_than(10000).but_not(n1);
+    const std::vector<double> v2 = a.random_vector_of<double>().of_size(n2);
     ASSERT_THROW(for_all(v1,v2,std::plus<double>()), For_all_exception);
 }
 
