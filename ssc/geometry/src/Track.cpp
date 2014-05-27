@@ -302,7 +302,8 @@ double Track::distance_from_beginning_of_track_to_closest_point(const LatitudeLo
 {
     const std::pair<LatitudeLongitude,size_t> nearest_point = find_closest_point_to(point);
     const double pos = get_waypoint_position_on_track(nearest_point.second);
-    return pos + ShortestPathLeg::build(pimpl->waypoints.at(nearest_point.second),nearest_point.first).length();
+    const LatitudeLongitude nearest_waypoint = pimpl->waypoints.at(nearest_point.second);
+    return pos + distance<ShortestPathLeg>(nearest_waypoint,nearest_point.first);
 }
 
 
