@@ -42,7 +42,7 @@ template <typename F> double min_search_golden_section(const F& f, double a, dou
 
     //if (tolerance <= 0.0) tolerance = sqrt(DBL_EPSILON) * (b - a);
 
-    // Loop by exluding segments from current endpoints a, b
+    // Loop by excluding segments from current endpoints a, b
     // to current internal points x1, x2 and then calculating
     // a new internal point until the length of the interval
     // is less than or equal to the tolerance.
