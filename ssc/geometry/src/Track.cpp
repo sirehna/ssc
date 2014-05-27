@@ -8,22 +8,21 @@
 #include "Track.hpp"
 #include "ShortestPathLeg.hpp"
 #include "IndexFinder.hpp"
+#include "LegChain.hpp"
 
 #include <sstream>
 #include <cmath>
 #include <tr1/memory>
 
 typedef std::tr1::shared_ptr<Leg> LegPtr;
-typedef std::vector<LegPtr> LegChain;
-typedef std::tr1::shared_ptr<LegChain> LegChainPtr;
 
 class Track::TrackImpl
 {
     public:
-        TrackImpl(const std::vector<LatitudeLongitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-                     ) :
+        TrackImpl(const std::vector<LatitudeLongitude>& waypoints_, //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+                  LegChain* legchain) :
         distance_from_start_to_begining_of_leg(std::vector<double>()),
-        legs(LegChain()),
+        legs(std::tr1::shared_ptr<LegChain>(legchain)),
         length(0),
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
@@ -39,7 +38,7 @@ class Track::TrackImpl
             distance_from_start_to_begining_of_leg.push_back(0);
             for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
             {
-                legs->push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(i),waypoints.at(i+1)))));
+                legs->push_back(waypoints.at(i),waypoints.at(i+1));
                 check_poles(waypoints.at(i).lat, waypoints.at(i+1).lat, previous_point_at_90_deg_latitude, previous_point_at_minus_90_deg_latitude);
                 const double d = legs->back()->length();
                 length += d;
@@ -53,7 +52,7 @@ class Track::TrackImpl
                 direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
             }
             *index = IndexFinder(distance_from_start_to_begining_of_leg, false);
-            legs->push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)))));
+            legs->push_back(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs));
             direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
             direction_at_waypoint.push_back(legs->back()->azimuth_at(legs->back()->length()));
             length += legs->back()->length();
@@ -81,7 +80,7 @@ class Track::TrackImpl
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
-        LegChainPtr legs;
+        std::tr1::shared_ptr<LegChain> legs;
         double length;
         size_t nb_of_legs;
         std::vector<LatitudeLongitude> waypoints;
@@ -92,8 +91,8 @@ class Track::TrackImpl
         std::tr1::shared_ptr<IndexFinder> index;
 };
 
-Track::Track(const std::vector<LatitudeLongitude>& waypoints //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
-             ) : pimpl(new Track::TrackImpl(waypoints))
+Track::Track(const std::vector<LatitudeLongitude>& waypoints, //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
+             LegChain* legchain) : pimpl(new Track::TrackImpl(waypoints, legchain))
 {
 }
 
@@ -142,7 +141,7 @@ std::pair<Track,Track> Track::split_at(const double distance_from_start_of_track
     }
     waypoints_on_first_subtrack.push_back(common_point_to_two_subtracks);
     waypoints_on_second_subtrack.push_back(waypoints.back());
-    return std::make_pair(Track(waypoints_on_first_subtrack), Track(waypoints_on_second_subtrack));
+    return std::make_pair(Track(waypoints_on_first_subtrack, pimpl->legs->make_new()), Track(waypoints_on_second_subtrack,pimpl->legs->make_new()));
 }
 
 /** \author cec

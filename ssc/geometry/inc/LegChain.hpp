@@ -34,6 +34,9 @@ class LegChain
         LegPtr back() const;
         LegPtr at(const size_t i) const;
         std::pair<LatitudeLongitude, size_t> find_closest_point_to(const LatitudeLongitude& point) const;
+        virtual LegChain* make_new() const = 0;
+        std::vector<LegPtr>::const_iterator begin() const;
+        std::vector<LegPtr>::const_iterator end() const;
 
     private:
         virtual LegPtr make_new(const LatitudeLongitude& waypoint1,const LatitudeLongitude& waypoint2) const = 0;

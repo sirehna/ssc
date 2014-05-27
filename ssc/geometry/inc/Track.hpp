@@ -14,6 +14,8 @@
 #include "Exception.hpp"
 #include "Angle.hpp"
 
+class LegChain;
+
 class TrackException : public Exception
 {
     public:
@@ -39,7 +41,7 @@ class Track
 {
     public:
         virtual ~Track();
-        Track(const std::vector<LatitudeLongitude>& waypoints);
+        Track(const std::vector<LatitudeLongitude>& waypoints, LegChain* legchain);
         double length() const;
         LatitudeLongitude find_waypoint_on_track(const double distance_from_start_of_track) const;
         size_t find_leg_index(const double distance_from_start_of_track) const;
