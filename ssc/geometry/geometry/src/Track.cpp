@@ -12,13 +12,15 @@
 #include <sstream>
 #include <cmath>
 
+typedef std::vector<ShortestPathLeg> LegChain;
+
 class Track::TrackImpl
 {
     public:
         TrackImpl(const std::vector<LatitudeLongitude>& waypoints_//!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84
                      ) :
         distance_from_start_to_begining_of_leg(std::vector<double>()),
-        legs(std::vector<ShortestPathLeg>()),
+        legs(LegChain()),
         length(0),
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
@@ -76,7 +78,7 @@ class Track::TrackImpl
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
-        std::vector<ShortestPathLeg> legs;
+        LegChain legs;
         double length;
         size_t nb_of_legs;
         std::vector<LatitudeLongitude> waypoints;
