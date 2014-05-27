@@ -25,6 +25,7 @@ class ConstantAzimuthLegChain : public LegChain
     private:
         LegPtr make_new(const LatitudeLongitude& waypoint1,const LatitudeLongitude& waypoint2) const;
         double distance(const LatitudeLongitude& waypoint1,const LatitudeLongitude& waypoint2) const;
+        LegChain* make_new() const;
 };
 
 #endif /* CONSTANTAZIMUTHLEGCHAIN_HPP_ */

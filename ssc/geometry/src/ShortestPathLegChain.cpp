@@ -19,3 +19,8 @@ double ShortestPathLegChain::distance(const LatitudeLongitude& waypoint1,const L
     ShortestPathLeg leg(ShortestPathLeg::build(waypoint1,waypoint2));
     return leg.length();
 }
+
+LegChain* ShortestPathLegChain::make_new() const
+{
+    return new ShortestPathLegChain();
+}

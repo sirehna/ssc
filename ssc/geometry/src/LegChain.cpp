@@ -46,3 +46,13 @@ std::pair<LatitudeLongitude, size_t> LegChain::find_closest_point_to(const Latit
     }
     return std::make_pair(nearest_point,idx);
 }
+
+std::vector<LegPtr>::const_iterator LegChain::begin() const
+{
+    return legs.begin();
+}
+
+std::vector<LegPtr>::const_iterator LegChain::end() const
+{
+    return legs.end();
+}
