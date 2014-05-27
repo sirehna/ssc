@@ -23,7 +23,6 @@ class TrackException : public Exception
         }
 };
 
-
 /** \author cec
  *  \ingroup geometry
  *  \brief A track is a list of waypoints connected together by geodesics.
