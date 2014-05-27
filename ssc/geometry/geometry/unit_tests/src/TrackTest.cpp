@@ -10,6 +10,7 @@
 #include "LatitudeLongitudeGenerators.hpp"
 #include "extra_test_assertions.hpp"
 #include "ShortestPathLeg.hpp"
+#include "ShortestPathLegChain.hpp"
 
 TrackTest::TrackTest() : a(DataGenerator(557))
 {
@@ -36,7 +37,7 @@ TEST_F(TrackTest, example)
                       chicago(41.85,-87.65),
                       los_angeles(34.0522,-118.2428);
     // Declare track
-    Track track({boston, houston, chicago, los_angeles});
+    Track track({boston, houston, chicago, los_angeles}, new ShortestPathLegChain());
 //! [TrackTest example]
 //! [TrackTest expected output]
     // Calculate track length
@@ -48,12 +49,12 @@ TEST_F(TrackTest, should_throw_if_track_has_fewer_than_two_points)
 {
     const std::vector<LatitudeLongitude> empty;
     const std::vector<LatitudeLongitude> only_one_longitude_latitude(1,a.random<LatitudeLongitude>());
-    ASSERT_THROW(Track track(empty), TrackException);
-    ASSERT_THROW(Track track(only_one_longitude_latitude), TrackException);
+    ASSERT_THROW(Track track(empty, new ShortestPathLegChain()), TrackException);
+    ASSERT_THROW(Track track(only_one_longitude_latitude, new ShortestPathLegChain()), TrackException);
     for (size_t i = 2 ; i < 100 ; ++i)
     {
         const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(i);
-        ASSERT_NO_THROW(Track track(waypoints));
+        ASSERT_NO_THROW(Track track(waypoints, new ShortestPathLegChain()));
     }
 }
 
@@ -66,7 +67,7 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_of_a_gi
             chicago(41.85,-87.65),
             los_angeles(34.0522,-118.2428);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles});
+    const Track track({boston, houston, chicago, los_angeles}, new ShortestPathLegChain());
     // The distances of each waypoint from the start of the leg are then given by distance_from_start
     ASSERT_DOUBLE_EQ(0, track.get_waypoint_position_on_track(0));
     ASSERT_DOUBLE_EQ(2583009.0737499665, track.get_waypoint_position_on_track(1));
@@ -82,7 +83,7 @@ TEST_F(TrackTest, should_be_able_to_find_leg_index_from_distance_on_track)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(waypoints);
+        const Track track(waypoints, new ShortestPathLegChain());
         const size_t leg_index = a.random<size_t>().between(0,nb_of_waypoints-2);
         const double position_of_first_point = track.get_waypoint_position_on_track(leg_index);
         const double position_of_second_point = track.get_waypoint_position_on_track(leg_index+1);
@@ -112,7 +113,7 @@ TEST_F(TrackTest, leg_index_example)
                       chicago(41.85,-87.65),
                       los_angeles(34.0522,-118.2428);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles});
+    const Track track({boston, houston, chicago, los_angeles}, new ShortestPathLegChain());
     // For any point between waypoints 2 & 3, the returned index should be 1 because they are on the second leg (indexes start at 0)
     for (size_t i = 0 ; i < 100 ; ++i)
     {
@@ -130,7 +131,7 @@ TEST_F(TrackTest, should_be_able_to_find_a_waypoint_on_track)
                       chicago(41.85,-87.65),
                       los_angeles(34.0522,-118.2428);
     // Construct the track
-    const Track track({boston, houston, chicago, los_angeles});
+    const Track track({boston, houston, chicago, los_angeles}, new ShortestPathLegChain());
 
     // In this particular case, we are attempting to find the second point on the track (special case)
     const double eps = 1e-6;
@@ -157,7 +158,7 @@ TEST_F(TrackTest, should_be_able_to_retrieve_index_of_last_point)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(waypoints);
+        const Track track(waypoints, new ShortestPathLegChain());
         ASSERT_NO_THROW(track.find_leg_index(track.length()));
     }
 }
@@ -168,7 +169,7 @@ TEST_F(TrackTest, should_be_able_to_retrieve_waypoints)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
+        const Track track(expected_waypoints, new ShortestPathLegChain());
         const std::vector<LatitudeLongitude> waypoints = track.get_all_waypoints();
         ASSERT_EQ(expected_waypoints.size(), waypoints.size());
         const size_t n = expected_waypoints.size();
@@ -188,7 +189,7 @@ TEST_F(TrackTest, should_be_able_to_split_track_at_a_given_length)
         //! [TrackTest split_at_example]
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
+        const Track track(expected_waypoints, new ShortestPathLegChain());
         const double L = track.length();
         const auto subtracks = track.split_at(L/2.);
         ASSERT_SMALL_RELATIVE_ERROR(subtracks.first.length(), subtracks.second.length(), eps);
@@ -210,7 +211,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_zero_or_less)
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
+        const Track track(expected_waypoints, new ShortestPathLegChain());
         ASSERT_THROW(track.split_at(0), TrackException);
         ASSERT_THROW(track.split_at(a.random<double>().no().greater_than(0)), TrackException);
     }
@@ -222,7 +223,7 @@ TEST_F(TrackTest, should_throw_if_split_length_is_greater_than_or_equal_to_track
     {
         const size_t nb_of_waypoints = a.random<size_t>().between(2, 10);
         const std::vector<LatitudeLongitude> expected_waypoints = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
-        const Track track(expected_waypoints);
+        const Track track(expected_waypoints, new ShortestPathLegChain());
         ASSERT_THROW(track.split_at(track.length()), TrackException);
         ASSERT_THROW(track.split_at(a.random<double>().greater_than(track.length())), TrackException);
     }
@@ -236,9 +237,9 @@ TEST_F(TrackTest, should_be_able_to_test_that_two_tracks_are_equal)
         const std::vector<LatitudeLongitude> waypoints_track_1 = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const std::vector<LatitudeLongitude> waypoints_track_2 = a.random_vector_of<LatitudeLongitude>().of_size(nb_of_waypoints);
         const std::vector<LatitudeLongitude> waypoints_track_3 = a.random_vector_of<LatitudeLongitude>().of_size(a.random<size_t>().between(2, 10).but_not(nb_of_waypoints));
-        const Track track_1(waypoints_track_1);
-        const Track track_2(waypoints_track_2);
-        const Track track_3(waypoints_track_3);
+        const Track track_1(waypoints_track_1, new ShortestPathLegChain());
+        const Track track_2(waypoints_track_2, new ShortestPathLegChain());
+        const Track track_3(waypoints_track_3, new ShortestPathLegChain());
         ASSERT_EQ(track_1, track_1);
         ASSERT_EQ(track_2, track_2);
         ASSERT_EQ(track_3, track_3);
@@ -262,7 +263,7 @@ TEST_F(TrackTest, should_throw_if_more_than_one_point_at_90_deg_latitude)
                                                     LatitudeLongitude(-90,-52.703),
                                                     LatitudeLongitude(-88.8484,-50.7369),
                                                     LatitudeLongitude(-86.0397,-52.0722)});
-    ASSERT_THROW(Track t(waypoints), TrackException);
+    ASSERT_THROW(Track t(waypoints, new ShortestPathLegChain()), TrackException);
 }
 
 
