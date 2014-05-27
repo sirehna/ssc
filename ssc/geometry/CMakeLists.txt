@@ -16,6 +16,9 @@ set(SOURCES src/PointInPolygon.cpp
             src/loxodrome_on_ellipsoid.cpp
             src/ConstantAzimuthLeg.cpp
             src/epsilon_algorithm.cpp
+            src/LegChain.cpp
+            src/ShortestPathLegChain.cpp
+            src/ConstantAzimuthLegChain.cpp
             )
 
 include_directories(inc)
