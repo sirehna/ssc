@@ -15,6 +15,7 @@
 
 typedef std::tr1::shared_ptr<Leg> LegPtr;
 typedef std::vector<LegPtr> LegChain;
+typedef std::tr1::shared_ptr<LegChain> LegChainPtr;
 
 class Track::TrackImpl
 {
@@ -38,9 +39,9 @@ class Track::TrackImpl
             distance_from_start_to_begining_of_leg.push_back(0);
             for (size_t i = 0 ; i < nb_of_legs-1 ; ++i)
             {
-                legs.push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(i),waypoints.at(i+1)))));
+                legs->push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(i),waypoints.at(i+1)))));
                 check_poles(waypoints.at(i).lat, waypoints.at(i+1).lat, previous_point_at_90_deg_latitude, previous_point_at_minus_90_deg_latitude);
-                const double d = legs.back()->length();
+                const double d = legs->back()->length();
                 length += d;
                 if (d < 1E-8)
                 {
@@ -49,13 +50,13 @@ class Track::TrackImpl
                     THROW(__PRETTY_FUNCTION__, TrackException, ss.str());
                 }
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
-                direction_at_waypoint.push_back(legs.back()->azimuth_at(0));
+                direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
             }
             *index = IndexFinder(distance_from_start_to_begining_of_leg, false);
-            legs.push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)))));
-            direction_at_waypoint.push_back(legs.back()->azimuth_at(0));
-            direction_at_waypoint.push_back(legs.back()->azimuth_at(legs.back()->length()));
-            length += legs.back()->length();
+            legs->push_back(LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs)))));
+            direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
+            direction_at_waypoint.push_back(legs->back()->azimuth_at(legs->back()->length()));
+            length += legs->back()->length();
 
 
         }
@@ -80,7 +81,7 @@ class Track::TrackImpl
         }
 
         std::vector<double> distance_from_start_to_begining_of_leg;
-        LegChain legs;
+        LegChainPtr legs;
         double length;
         size_t nb_of_legs;
         std::vector<LatitudeLongitude> waypoints;
@@ -154,7 +155,7 @@ Angle Track::azimuth_at(const double distance_from_start_of_leg) const
 {
     const size_t idx = find_leg_index(distance_from_start_of_leg);
     const double d = distance_from_start_of_leg-pimpl->distance_from_start_to_begining_of_leg.at(idx);
-    return pimpl->legs.at(idx)->azimuth_at(d);
+    return pimpl->legs->at(idx)->azimuth_at(d);
 }
 
 /** \author cec
@@ -203,7 +204,7 @@ LatitudeLongitude Track::find_waypoint_on_track(const double distance //!< Dista
         THROW(__PRETTY_FUNCTION__, TrackException, "received a negative distance");
     }
     const size_t idx = find_leg_index(distance);
-    return pimpl->legs.at(idx)->find_waypoint_at(distance-pimpl->distance_from_start_to_begining_of_leg.at(idx));
+    return pimpl->legs->at(idx)->find_waypoint_at(distance-pimpl->distance_from_start_to_begining_of_leg.at(idx));
 }
 
 /** \author cec
@@ -282,7 +283,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
     LatitudeLongitude nearest_point = pimpl->waypoints.front();
     double smallest_distance = 1e3*pimpl->length;
     size_t idx = 0;
-    for (auto that_leg = pimpl->legs.begin() ; that_leg != pimpl->legs.end() ; ++that_leg)
+    for (auto that_leg = pimpl->legs->begin() ; that_leg != pimpl->legs->end() ; ++that_leg)
     {
         LatitudeLongitude p = (*that_leg)->find_closest_point_to(point);
         const double d = distance<ShortestPathLeg>(p,point);
@@ -290,7 +291,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
         {
             nearest_point = p;
             smallest_distance = d;
-            idx = that_leg-pimpl->legs.begin();
+            idx = that_leg-pimpl->legs->begin();
         }
     }
     return std::make_pair(nearest_point,idx);
