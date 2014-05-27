@@ -269,8 +269,9 @@ bool Track::operator!=(const Track& rhs) const
 /** \author cec
  *  \date 27 mai 2013, 17:07:35
  *  \brief Projects a point on a geodesic
- *  \returns
- *  \snippet /unit_tests/src/TrackTest.cpp TrackTest Track::find_closest_point_to_example
+ *  \returns The closest point on the track & the index of the first waypoint
+ *           of the leg containing that closest point.
+ *  \snippet geometry/unit_tests/src/TrackTest.cpp TrackTest Track::find_closest_point_to_example
 */
 std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const LatitudeLongitude& point) const
 {
