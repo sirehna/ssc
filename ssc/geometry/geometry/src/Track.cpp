@@ -281,7 +281,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
     for (auto that_leg = pimpl->legs.begin() ; that_leg != pimpl->legs.end() ; ++that_leg)
     {
         LatitudeLongitude p = that_leg->find_closest_point_to(point);
-        const double d = ShortestPathLeg::build(p,point).length();
+        const double d = distance<ShortestPathLeg>(p,point);
         if (d<smallest_distance)
         {
             nearest_point = p;
