@@ -18,3 +18,8 @@ double ConstantAzimuthLegChain::distance(const LatitudeLongitude& waypoint1,cons
     ConstantAzimuthLeg leg(ConstantAzimuthLeg::build(waypoint1,waypoint2));
     return leg.length();
 }
+
+LegChain* ConstantAzimuthLegChain::make_new() const
+{
+    return new ConstantAzimuthLegChain();
+}
