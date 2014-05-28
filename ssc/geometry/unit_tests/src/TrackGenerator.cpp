@@ -8,7 +8,7 @@ template <> Track get_max_bound() {return Track({LatitudeLongitude(0,0),Latitude
 
 template <> Track TypedScalarDataGenerator<Track>::get() const
 {
-    const size_t n = random<size_t>().between(2,20);
+    const size_t n = random<size_t>().between(2,10);
     return Track(random_vector_of<LatitudeLongitude>().of_size(n), new ShortestPathLegChain());
 }
 
