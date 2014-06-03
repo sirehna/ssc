@@ -40,7 +40,7 @@ ConstantStepInterpolator::ConstantStepInterpolator(const double& xmin_,
 void ConstantStepInterpolator::find_index_of_interval_containing(const double val)
 {
     val_sat = std::max(xmin,std::min(xmax,val));
-    idx = (n==1) ? 0 : floor((val_sat-xmin)/(xmax-xmin)*(n-1));
+    idx = (n==1) ? 0 : (size_t)floor((val_sat-xmin)/(xmax-xmin)*(n-1));
     idx = std::min(idx,n-2);
 }
 
