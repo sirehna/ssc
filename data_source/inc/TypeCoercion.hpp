@@ -47,7 +47,7 @@ DECLARE_ARITHMETIC_TYPE(size_t);
 template <class T>
 typename enable_if<is_arithmetic<T>::value,void>::type coerce(std::list<double>& ret, const T thing_to_convert)
 {
-    ret.push_back(thing_to_convert);
+    ret.push_back((double)thing_to_convert);
 }
 
 template <typename T> void coerce(std::list<double>& ret, const std::vector<T>& thing_to_convert)

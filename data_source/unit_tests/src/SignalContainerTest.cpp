@@ -220,8 +220,8 @@ TEST_F(SignalContainerTest, should_be_able_to_set_all_coercible_types_using_a_li
         ASSERT_DOUBLE_EQ((int)ref.at(k++), vvi.at(i));
     }
 
-    ASSERT_DOUBLE_EQ((size_t)ref.at(k++), signals.get<size_t>("signal10"));
-    ASSERT_DOUBLE_EQ((size_t)ref.at(k++), signals.get<size_t>("signal11"));
+    ASSERT_EQ((size_t)ref.at(k++), signals.get<size_t>("signal10"));
+    ASSERT_EQ((size_t)ref.at(k++), signals.get<size_t>("signal11"));
     std::vector<size_t> vvs = signals.get<std::vector<size_t> >("signal12");
     for (size_t i = 0 ; i < n ; ++i)
     {
