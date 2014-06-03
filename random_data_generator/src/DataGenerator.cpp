@@ -15,7 +15,7 @@ template <typename T> bool outside_forbidden_zone(const T& forbidden_min, const 
 
 DataGenerator::DataGenerator(const size_t& seed) : negated(false)
 {
-    srand(seed);
+    srand((unsigned int)(seed));
 }
 
 DataGenerator& DataGenerator::no()

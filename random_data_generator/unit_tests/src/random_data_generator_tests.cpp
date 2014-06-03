@@ -199,10 +199,10 @@ TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
 TEST_F(DataGeneratorTests, crash_detected_in_EONAV_when_one_of_the_interval_bounds_is_nan)
 {
     const double x = a.random<double>();
-    ASSERT_TRUE(isnan(a.random<double>().between(x,NAN)()));
-    ASSERT_TRUE(isnan(a.random<double>().between(NAN,x)()));
-    ASSERT_TRUE(isnan(a.random<double>().outside(x,NAN)()));
-    ASSERT_TRUE(isnan(a.random<double>().outside(NAN,x)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().between(x,NAN)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().between(NAN,x)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().outside(x,NAN)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().outside(NAN,x)()));
 }
 
 TEST_F(DataGeneratorTests, bug_in_greater_than_detected_in_EONAV)

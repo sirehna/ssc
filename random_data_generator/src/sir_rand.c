@@ -1,6 +1,6 @@
 /*
  *  PSEUDO RANDOM NUMBER GENERATOR
- *  
+ *
  *  Based on G. Marsaglia KISS
  */
 
@@ -68,7 +68,7 @@ double sir_rand_ui64_to_double ( unsigned long u, unsigned long v)
 	From: "George Marsaglia" <g...@stat.fsu.edu>
 	Newsgroups: sci.math
 	Message-ID: <e7CcnWxczriWssCjXTWc3A@comcast.com>
-	
+
 	The KISS RNG uses four seeds, x, y, z, c,
 	with 0<=x<2^32, 0<y<2^32, 0<=z<2^32, 0<=c<698769069
 	except that the two pairs
@@ -163,7 +163,7 @@ sir_rand_setseed (int put)
 
 	/* We put it after scrambling the bytes, to paper around users who
 	provide seeds with quality only in the lower or upper part.  */
-	sir_rand_scramble_seed ((unsigned char *) sir_rand_seed, seed, sizeof sir_rand_seed);
+	sir_rand_scramble_seed((unsigned char *) sir_rand_seed, seed, int(sizeof(sir_rand_seed)));
 }
 
 
