@@ -112,7 +112,7 @@ TEST_F(VectorOfEquallySpacedNumbersTest, should_have_a_method_to_get_difference_
 	const double max_bound = a.random<double>().greater_than(min_bound).but_not().greater_than(1e5);
 	const size_t nb_of_values = a.random<size_t>().no().greater_than(1e4);
 	VectorOfEquallySpacedNumbers v(min_bound, max_bound, nb_of_values);
-	ASSERT_NEAR((max_bound-min_bound)/(nb_of_values-1),v.get_delta(), eps);
+	ASSERT_NEAR((max_bound-min_bound)/(double(nb_of_values)-1),v.get_delta(), eps);
 }
 
 TEST_F(VectorOfEquallySpacedNumbersTest, should_have_a_method_to_get_the_number_of_values_in_vector)

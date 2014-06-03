@@ -63,7 +63,7 @@ std::vector<Coeff> get_coeffs(const std::vector<double>& x, const std::vector<do
 {
     (void) y;
     std::vector<Coeff> ret;
-    integer *n = new integer(x.size());
+    integer *n = new integer(integer(x.size()));
     doublereal *tau = new doublereal[*n];
     doublereal *c = new doublereal[4*(*n)];
     integer *ibcbeg = new integer(0);
@@ -93,7 +93,6 @@ std::vector<Coeff> get_coeffs(const std::vector<double>& x, const std::vector<do
     delete ibcend;
     return ret;
 }
-
 
 class SplineVariableStep::Impl
 {

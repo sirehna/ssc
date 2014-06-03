@@ -101,7 +101,7 @@ std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients()
     std::vector<ParabolicCoefficients> ret;
     for (size_t i = 0 ; i < n-1 ; ++i)
     {
-        auto coeff = compute_cubic_coeff_for_x0(xmin+(i+0.5)*h);
+        auto coeff = compute_cubic_coeff_for_x0(xmin+(double(i)+0.5)*h);
         ret.push_back(ParabolicCoefficients(3*coeff.a,2*coeff.b,coeff.c));
     }
     return ret;
@@ -109,9 +109,9 @@ std::vector<ParabolicCoefficients> Splines::get_parabolic_coefficients()
 
 std::pair<double,double> Splines::find_position_and_value_of_minimum(const size_t i)//const ParabolicCoefficients& c, const double x0, const double x1)
 {
-    const double l = xmin + i*h;
+    const double l = xmin + double(i)*h;
     const double u = l + h;
-    compute_coefficients_for_ith_interval(xmin + (i+0.5)*h,i);
+    compute_coefficients_for_ith_interval(xmin + (double(i)+0.5)*h,i);
 
     const double delta = b[i]*b[i]-3*a[i]*c[i];
     double xmin = u+h; // outside bounds by default
@@ -191,7 +191,7 @@ std::vector<double> Splines::compute_second_derivative() const
 	if (n==3) return {0,3./2./h/h*(y[0]-2.*y[1]+y[2]),0};
 	integer *n_ = new integer;
 	integer *nrhs = new integer;
-	*n_ = n-2;
+	*n_ = (integer)n-2;
 	*nrhs = 1;
 	doublereal *dl = new doublereal[*n_];
 	doublereal *d__ = new doublereal[*n_+2];

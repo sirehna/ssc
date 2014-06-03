@@ -1,7 +1,7 @@
 /*
  * ParabolicInterpolation.cpp
  *
- * \date 19 févr. 2013, 09:56:40
+ * \date 19 fï¿½vr. 2013, 09:56:40
  *  \author cec
  */
 
@@ -32,13 +32,13 @@ void ParabolicInterpolation::compute_coefficients_for_ith_interval(const double 
 
 double ParabolicInterpolation::get_f() const
 {
-    double x_xi = val_sat - (xmin + delta*idx);
+    double x_xi = val_sat - (xmin + delta*double(idx));
     return coeffs_.at(idx).a*x_xi*x_xi+coeffs_.at(idx).b*x_xi+coeffs_.at(idx).c;
 }
 
 double ParabolicInterpolation::get_df(const size_t derivative_order) const
 {
-    double x_xi = val_sat - (xmin + delta*idx);
+    double x_xi = val_sat - (xmin + delta*double(idx));
     if (derivative_order==0) return get_f();
     if (derivative_order==1) return 2*coeffs_.at(idx).a*x_xi+coeffs_.at(idx).b;
     if (derivative_order==2) return 2*coeffs_.at(idx).a;

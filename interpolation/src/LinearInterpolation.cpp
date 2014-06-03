@@ -24,7 +24,7 @@ void LinearInterpolation::compute_coefficients_for_ith_interval(const double val
 {
     (void) i;
     (void) val;
-    x0[idx] = xmin + idx*delta;
+    x0[idx] = xmin + double(idx)*delta;
     x1[idx] = x0[idx] + delta;
     y0[idx] = y.at(idx);
     y1[idx] = (n==1) ? y0[idx] : y.at(idx+1);
