@@ -37,7 +37,7 @@ delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 	{
         for (size_t i = 0 ; i < _nb_of_values ; ++i)
         {
-            vec.push_back(_min_bound*(_nb_of_values-1)+i*(_max_bound-_min_bound));
+            vec.push_back(_min_bound*(double(_nb_of_values)-1)+double(i)*(_max_bound-_min_bound));
             vec.back() /= double(_nb_of_values-1);
         }
 	}
@@ -83,5 +83,5 @@ double VectorOfEquallySpacedNumbers::at(const size_t& i) const
 	{
 		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "Index out of range");
 	}
-	return (_min_bound*(_nb_of_values-1)+i*(_max_bound-_min_bound))/double(_nb_of_values-1);
+	return (_min_bound*(double(_nb_of_values)-1)+double(i)*double(_max_bound-_min_bound))/double(_nb_of_values-1);
 }

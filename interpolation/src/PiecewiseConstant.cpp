@@ -1,7 +1,7 @@
 /*
  * PiecewiseConstant.cpp
  *
- * \date 18 févr. 2013, 13:07:18
+ * \date 18 fï¿½vr. 2013, 13:07:18
  *  \author cec
  */
 
@@ -20,7 +20,7 @@ ConstantStepInterpolator(xmin_,xmax_,y_)
 
 void PiecewiseConstant::update_coefficients_if_necessary(const double val)
 {
-    idx = std::max(0,(int)std::min(floor((val-xmin)/(xmax-xmin)*n),(double)n-1));
+    idx = std::max(0,(int)std::min(floor((val-xmin)/(xmax-xmin)*double(n)),(double)n-1));
 }
 
 void PiecewiseConstant::compute_coefficients_for_ith_interval(const double x0, const size_t i)

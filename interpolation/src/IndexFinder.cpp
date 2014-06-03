@@ -23,7 +23,7 @@ void IndexFinder::check_x_is_strictly_increasing(const std::vector<double>& x)
     }
 }
 
-IndexFinder::IndexFinder(const std::vector<double>& x, const bool throw_if_outside_bounds_) : n(x.size()),
+IndexFinder::IndexFinder(const std::vector<double>& x, const bool throw_if_outside_bounds_) : n(int(x.size())),
                                                                                              x_(x),
                                                                                              xmin(0),
                                                                                              xmax(0),
@@ -112,7 +112,7 @@ size_t IndexFinder::increase_ihi_to_capture_x(int& ilo, int& ihi, const double x
     }
     if (x >= xmax)
     {
-        int left = greater_than_max(ilo);
+        int left = int(greater_than_max(ilo));
         adjust_left(left);
         return left;
     }

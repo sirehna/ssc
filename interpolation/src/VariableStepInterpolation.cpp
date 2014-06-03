@@ -24,6 +24,6 @@ VariableStepInterpolation::VariableStepInterpolation(const std::vector<double>& 
 void VariableStepInterpolation::update_coefficients_if_necessary(const double x0_)
 {
     x0 = x0_;
-    idx = index->compute(x0);
+    idx = int(index->compute(x0));
 }
 
