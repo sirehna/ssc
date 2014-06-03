@@ -67,7 +67,7 @@ typename enable_if<is_arithmetic<T>::value,void>::type decoerce(std::list<double
     {
         THROW(__PRETTY_FUNCTION__, CoercionException, "List is empty.");
     }
-    thing_to_convert = ret.front();
+    thing_to_convert = (T)ret.front();
     ret.pop_front();
 }
 

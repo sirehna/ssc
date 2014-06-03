@@ -165,7 +165,7 @@ TEST_F(TypeCoercionTest, coerce_decoerce_floats)
           Actual: -8383272448
         Expected: (float)ref.at(k++)
         Which is: -8383272304.9414673*/
-        const float ref = -8383272304.9414673;//a.random<float>();
+        const float ref = (float)-8383272304.9414673;//a.random<float>();
         coerce(v, ref);
         double d = 0;
         decoerce(v, d);
