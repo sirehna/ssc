@@ -72,7 +72,7 @@ long DataGenerator::random_long(const long& a, const long& b) const
 
 short DataGenerator::random_short(const short& a, const short& b) const
 {
-    return a + static_cast<short>(floor(sir_rand_u01()*double(b-a)+0.5));
+    return (short)(a + floor(sir_rand_u01()*(double(b)-double(a))+0.5));
 }
 
 bool DataGenerator::random_bool() const
@@ -182,7 +182,7 @@ template <> int TypedScalarDataGenerator<int>::get() const
 {
 
     if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
-    const int a = random_double(min_bound, max_bound);
+    const int a = (int)random_double(min_bound, max_bound);
     if (outside_forbidden_zone(forbidden_min, a, forbidden_max)) return a;
     else                                                         return get();
 }
