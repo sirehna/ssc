@@ -1,5 +1,5 @@
-// TODO - handle non ASCII characters ° µ centered dot, cross, divide... accents ?
-// - find a syntax for absolute temperature (maybe +K, +°C, +°F)
+// TODO - handle non ASCII characters ï¿½ ï¿½ centered dot, cross, divide... accents ?
+// - find a syntax for absolute temperature (maybe +K, +ï¿½C, +ï¿½F)
 //   in this case we need function convertUsi(double value ,string unit)
 // - complete and test the units
 
@@ -189,7 +189,7 @@ DecodeUnit::UnitDecoder::RightParToken *DecodeUnit::UnitDecoder::scan_rightParen
 
 DecodeUnit::UnitDecoder::OperationToken *DecodeUnit::UnitDecoder::scan_operation()
 {
-	DecodeUnit::UnitDecoder::OperationToken *token=new DecodeUnit::UnitDecoder::OperationToken(m_next_char);
+	DecodeUnit::UnitDecoder::OperationToken *token=new DecodeUnit::UnitDecoder::OperationToken((char)m_next_char);
 	advance();
 	return token;
 }
@@ -197,7 +197,7 @@ DecodeUnit::UnitDecoder::OperationToken *DecodeUnit::UnitDecoder::scan_operation
 DecodeUnit::UnitDecoder::WordToken *DecodeUnit::UnitDecoder::scan_percent()
 {
 	std::ostringstream tmp("");
-	tmp.put(m_next_char);
+	tmp.put((char)m_next_char);
 	advance();
 	DecodeUnit::UnitDecoder::WordToken *token=new DecodeUnit::UnitDecoder::WordToken(tmp.str());
 	return token;
@@ -206,7 +206,7 @@ DecodeUnit::UnitDecoder::WordToken *DecodeUnit::UnitDecoder::scan_word()
 {
 	std::ostringstream tmp("");
 	do {
-		tmp.put(m_next_char);
+		tmp.put((char)m_next_char);
 		advance();
 	} while(m_next_char != -1 && (m_char_table[m_next_char]==k_letter || m_char_table[m_next_char] == k_underscore));
 	DecodeUnit::UnitDecoder::WordToken *token=new DecodeUnit::UnitDecoder::WordToken(tmp.str());
@@ -217,27 +217,27 @@ DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan_digit()
 {
 	std::ostringstream str("");
 	do {
-		str.put(m_next_char);
+		str.put((char)m_next_char);
 		advance();
 	} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
 	if(m_next_char=='.') {
-		str.put(m_next_char);
+		str.put((char)m_next_char);
 		advance();
 		do {
-			str.put(m_next_char);
+			str.put((char)m_next_char);
 			advance();
 		} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
 		if(m_next_char=='e') {
-			str.put(m_next_char);
+			str.put((char)m_next_char);
 			advance();
 			if(m_next_char=='-' || m_next_char=='+' ) {
-				str.put(m_next_char);
+				str.put((char)m_next_char);
 				advance();
 			}
 			if( m_next_char == -1 || (m_char_table[m_next_char]!=k_digit) )
 				throw std::string("expected exponent integer");
 			do {
-				str.put(m_next_char);
+				str.put((char)m_next_char);
 				advance();
 			} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
 		}
