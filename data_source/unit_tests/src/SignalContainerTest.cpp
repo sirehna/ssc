@@ -150,11 +150,11 @@ TEST_F(SignalContainerTest, should_be_able_to_retrieve_all_doubles_in_a_single_l
         ASSERT_DOUBLE_EQ(vi.at(k), s.front());s.pop_front();
     }
 
-    ASSERT_DOUBLE_EQ(s1, s.front());s.pop_front();
-    ASSERT_DOUBLE_EQ(s2, s.front());s.pop_front();
+    ASSERT_EQ(s1, s.front());s.pop_front();
+    ASSERT_EQ(s2, s.front());s.pop_front();
     for (size_t k = 0 ; k < n ; ++k)
     {
-        ASSERT_DOUBLE_EQ(vs.at(k), s.front());s.pop_front();
+        ASSERT_EQ(vs.at(k), s.front());s.pop_front();
     }
 
     ASSERT_DOUBLE_EQ(f1, s.front());s.pop_front();
@@ -225,7 +225,7 @@ TEST_F(SignalContainerTest, should_be_able_to_set_all_coercible_types_using_a_li
     std::vector<size_t> vvs = signals.get<std::vector<size_t> >("signal12");
     for (size_t i = 0 ; i < n ; ++i)
     {
-        ASSERT_DOUBLE_EQ((size_t)ref.at(k++), vvs.at(i));
+        ASSERT_EQ((size_t)ref.at(k++), vvs.at(i));
     }
 
     ASSERT_DOUBLE_EQ((float)ref.at(k++), signals.get<float>("signal5"));
