@@ -85,7 +85,7 @@ TEST_F(TypeCoercionTest, can_coerce_different_types_to_doubles)
     ASSERT_DOUBLE_EQ(v1.at(0), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v1.at(1), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v1.at(2), v.front());v.pop_front();
-    ASSERT_DOUBLE_EQ(v2, v.front());v.pop_front();
+    ASSERT_EQ(v2, v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v3, v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v4.at(0), v.front());v.pop_front();
     ASSERT_DOUBLE_EQ(v4.at(1), v.front());v.pop_front();
