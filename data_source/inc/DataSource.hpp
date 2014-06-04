@@ -63,17 +63,17 @@ class DataSource
         DataSource& operator=(const DataSource& ds);
 
         /**  \author cec
-		  *  \date Apr 28, 2014, 1:59:54 PM
-		  *  \brief Checks if DataSource has a given signal
-		  *  \details Avoids having to write a try/catch block
-		  *  \returns true if the signal was found, false otherwise
-		  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest has_example
-		  */
-		template <typename T> bool has(const std::string& in //!< Signal to test
-				) const
-		{
-			return signals_.has(typify<T>(in));
-		}
+          *  \date Apr 28, 2014, 1:59:54 PM
+          *  \brief Checks if DataSource has a given signal
+          *  \details Avoids having to write a try/catch block
+          *  \returns true if the signal was found, false otherwise
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest has_example
+          */
+        template <typename T> bool has(const std::string& in //!< Signal to test
+                ) const
+        {
+            return signals_.has(typify<T>(in));
+        }
 
 
         /** \author cec
@@ -560,7 +560,5 @@ public:
         SignalContainer forced_values; //!< All signals that have been forced
         std::vector<TypedModuleName> modules;
 };
-
-
 
 #endif /* DATASOURCE_HPP_ */
