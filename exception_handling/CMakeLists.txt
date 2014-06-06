@@ -1,9 +1,10 @@
-cmake_minimum_required (VERSION 2.6)
-project (exception_handling)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(exception_handling)
 FILE(GLOB SRC src/Exception.cpp)
 
-include_directories(inc)
+INCLUDE_DIRECTORIES(inc)
 
-add_library (${PROJECT_NAME}_object OBJECT ${SRC})
+ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
+ADD_LIBRARY(${PROJECT_NAME}_static STATIC ${SRC})
 
-set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
+SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
