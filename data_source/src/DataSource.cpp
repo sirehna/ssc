@@ -12,6 +12,8 @@
 #include <iostream>
 #include <sstream>
 
+const std::string DataSource::default_setter = "Unregistered DataSource user";
+
 class CycleException : public DataSourceException
 {
     public:
@@ -25,7 +27,6 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            readonly(false),
                            signals_(SignalContainer()),
                            module_setting_signals("DataSource user",""),
-                           module_requesting_signals("DataSource user",""),
                            signal2module(FromSignal2Module()),
                            module2dependantmodules(DependantModules()),
                            module2requiredmodules(DependantModules()),
@@ -35,7 +36,9 @@ DataSource::DataSource() : name2module(FromName2Module()),
                            state_names(std::vector<std::pair<std::string,std::string> >()),
                            aliases(std::map<TypedSignalName,TypedSignalName>()),
                            forced_values(SignalContainer()),
-                           modules(std::vector<TypedModuleName>())
+                           modules(std::vector<TypedModuleName>()),
+                           call_stack(std::stack<TypedSignalName>()),
+                           in_module(false)
 {
 }
 
@@ -43,7 +46,6 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 readonly(ds.readonly),
                                                 signals_(ds.signals_),
                                                 module_setting_signals(ds.module_setting_signals),
-                                                module_requesting_signals(ds.module_requesting_signals),
                                                 signal2module(ds.signal2module),
                                                 module2dependantmodules(ds.module2dependantmodules),
                                                 module2requiredmodules(ds.module2requiredmodules),
@@ -53,7 +55,9 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
                                                 state_names(ds.state_names),
                                                 aliases(ds.aliases),
                                                 forced_values(ds.forced_values),
-                                                modules(std::vector<TypedModuleName>())
+                                                modules(std::vector<TypedModuleName>()),
+                                                call_stack(ds.call_stack),
+                                                in_module(false)
 {
     // We need to make sure that all modules now refer to the current DataSource
     FromName2Module::iterator it1 = name2module.begin();
@@ -71,7 +75,6 @@ DataSource& DataSource::operator=(const DataSource& ds)
         readonly = ds.readonly;
         signals_ = ds.signals_;
         module_setting_signals = ds.module_setting_signals;
-        module_requesting_signals = ds.module_requesting_signals;
         signal2module = ds.signal2module;
         module2dependantmodules = ds.module2dependantmodules;
         module2requiredmodules = ds.module2requiredmodules;
@@ -87,6 +90,8 @@ DataSource& DataSource::operator=(const DataSource& ds)
         {
             it1->second = ModulePtr(it1->second->clone(this));
         }
+        call_stack = ds.call_stack;
+        in_module = ds.in_module;
     }
     return *this;
 }
@@ -208,7 +213,7 @@ void DataSource::update_dependencies()
 }
 
 /** \author cec
- *  \date 21 août 2013, 16:34:06
+ *  \date 21 aoï¿½t 2013, 16:34:06
  *  \brief Registers a derivative: the corresponding variable is added to the
  *  list of states. The order in which this list is sorted corresponds to the
  *  order in which successive calls to define_derivative were made.
@@ -233,8 +238,8 @@ void DataSource::define_derivative(const std::string& state_name, const std::str
 }
 
 /** \author cec
- *  \date 21 août 2013, 16:42:17
- *  \brief Computes the derivaties of all state variables in the DataSource
+ *  \date 21 aoï¿½t 2013, 16:42:17
+ *  \brief Computes the derivatives of all state variables in the DataSource
  *  \returns A vector of doubles containing all the values of the state variables
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_derivatives_example
 */
@@ -255,7 +260,7 @@ void DataSource::get_derivatives(std::vector<double>& dx_dt //<! Vector storing 
 }
 
 /** \author cec
- *  \date 21 août 2013, 16:50:03
+ *  \date 21 aoï¿½t 2013, 16:50:03
  *  \brief Sets the values of the state variables.
  *  \returns Nothing.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivatives_example
@@ -277,7 +282,7 @@ void DataSource::set_states(const std::vector<double>& v)
 }
 
 /** \author cec
- *  \date 22 août 2013, 09:53:53
+ *  \date 22 aoï¿½t 2013, 09:53:53
  *  \brief Get the names of all the states in the DataSource
  *  \returns A vector of state names, sorted in the same order as set_states & get_state_derivatives.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_state_names_example
@@ -310,7 +315,7 @@ std::vector<double> DataSource::get_states()
 }
 
 /** \author cec
- *  \date 22 août 2013, 12:23:32
+ *  \date 22 aoï¿½t 2013, 12:23:32
  *  \returns All the signals currently in the DataSource
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::get_all_signal_names_example
 */
@@ -348,4 +353,56 @@ std::list<std::pair<TypedSignalName, boost::any> > DataSource::get_signals() con
     }
     ret.sort();
     return ret;
+}
+
+std::string DataSource::who_am_i() const
+{
+    if (call_stack.empty()) return default_setter;
+                            return call_stack.top().get_signal_name() + " (of type " + call_stack.top().get_type_name() + ")";
+}
+
+TypedSignalName DataSource::me() const
+{
+    if (call_stack.empty()) return TypedSignalName(default_setter, "unknown");
+                            return call_stack.top();
+}
+
+void DataSource::check_in(const TypedSignalName& caller)
+{
+    call_stack.push(caller);
+}
+
+void DataSource::check_in(const std::string& caller)
+{
+    check_in(TypedSignalName(caller, "unknown"));
+}
+
+void DataSource::check_out()
+{
+    if (not(call_stack.empty())) call_stack.pop();
+}
+
+std::string DataSource::unwind_call_stack()
+{
+    std::stringstream ss;
+    ss << std::endl << "---[CALL STACK]---" << std::endl;
+    if (call_stack.empty()) ss << "by " << default_setter;
+    bool first = true;
+    while (not(call_stack.empty()))
+    {
+        const TypedSignalName name = call_stack.top();
+        call_stack.pop();
+        if (first)
+        {
+            ss << "X  ";
+            first = false;
+        }
+        else if (call_stack.empty())
+            ss << "V  ";
+        else
+            ss << "|  ";
+        ss << name << std::endl;
+    }
+    ss << "------------------" << std::endl;
+    return ss.str();
 }
