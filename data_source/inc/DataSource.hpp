@@ -285,9 +285,11 @@ class DataSource
             else
             {
                 FromSignal2Module::const_iterator it = signal2module.find(typify<T>(signal_name));
+                const bool is_up_to_date_contains_module_name = (it != signal2module.end()) and (is_up_to_date.find(it->second)!=is_up_to_date.end());
                 if ((it != signal2module.end())
                         && (it->second.get_signal_name() != "")
-                        && (it->second != me()))
+                        && (it->second != me())
+                        && is_up_to_date_contains_module_name)
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
                                       "\nAttempt to set signal '" + signal_name
@@ -321,7 +323,7 @@ class DataSource
         {
             if (signal_name != "")
             {
-                signal2module[typify<T>(signal_name)] = call_stack.top();// module_setting_signals;
+                signal2module[typify<T>(signal_name)] = me();// module_setting_signals;
                 update_dependencies();
             }
         }
@@ -358,6 +360,7 @@ class DataSource
                 {
                     signals_.set(signal_name, t);
                     set_all_dependent_modules_out_of_date<T>(signal_name);
+                    signal2module[typify<T>(signal_name)] = me();
                 }
             }
         }
@@ -425,7 +428,8 @@ class DataSource
 private:
         void update_if_necessary(const TypedSignalName& module_name)
         {
-            if (!(is_up_to_date[module_name]))
+            const bool is_up_to_date_contains_module_name = (is_up_to_date.find(module_name)!=is_up_to_date.end());
+            if (is_up_to_date_contains_module_name && not(is_up_to_date[module_name]))
             {
                 const bool in_module_back = in_module;
                 module_setting_signals = module_name;
