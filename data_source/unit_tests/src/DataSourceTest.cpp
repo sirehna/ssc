@@ -495,7 +495,7 @@ TEST_F(DataSourceTest, a_copied_DataSource_should_be_independant_from_its_copy)
 TEST_F(DataSourceTest, cannot_add_a_module_named_DataSource_user)
 {
     DataSource data_source;
-    ASSERT_THROW(data_source.add<ode>("DataSource user"), DataSourceException);
+    ASSERT_THROW(data_source.add<ode>("Unregistered DataSource user"), DataSourceException);
 }
 
 TEST_F(DataSourceTest, can_force_a_value_computed_by_a_module)
@@ -593,9 +593,11 @@ TEST_F(DataSourceTest, can_force_the_same_value_twice)
 TEST_F(DataSourceTest, cannot_set_a_value_that_has_been_forced)
 {
     DataSource ds;
+    ds.check_in(__PRETTY_FUNCTION__);
     ds.add<OneInputTwoOutputs>();
     ds.force("y1", a.random<double>()());
     ASSERT_THROW(ds.set("y1", a.random<double>()()), DataSourceException);
+    ds.check_out();
 }
 
 TEST_F(DataSourceTest, an_alias_must_be_a_new_name_that_does_not_correspond_to_any_existing_signal)
@@ -757,4 +759,14 @@ TEST_F(DataSourceTest, should_not_update_dependencies_if_setting_signal_to_its_c
     ds.set("x", x0);
     const double new_y = ds.get<double>("y");
     ASSERT_DOUBLE_EQ(old_y, new_y);
+}
+
+TEST_F(DataSourceTest, can_check_in_a_DataSource_user)
+{
+    DataSource ds;
+    ASSERT_EQ("Unregistered DataSource user", ds.who_am_i());
+    ds.check_in("me");
+    ASSERT_EQ("me (of type unknown)", ds.who_am_i());
+    ds.check_out();
+    ASSERT_EQ("Unregistered DataSource user", ds.who_am_i());
 }

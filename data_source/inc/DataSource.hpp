@@ -12,6 +12,7 @@
 #include <string>
 #include <set>
 #include <sstream>
+#include <stack>
 
 #include "DataSourceModule.hpp"
 #include "SignalContainer.hpp"
@@ -100,29 +101,25 @@ class DataSource
             const ModulePtr m = add_module_if_not_already_present_and_return_clone(module);
             m->initialize();
             const bool read_only_bak = readonly;
-            const TypedModuleName module_requesting_signals_bak = module_requesting_signals;
             const TypedModuleName module_setting_signals_bak = module_setting_signals;
             readonly = true; // We don't want the following call to module.update()
                               // to modify the signals in the DataSource: we just
                               // want to track module dependencies
-            const TypedModuleName data_source_user = typify<T>("DataSource user");
+            const bool in_module_back = in_module;
             try
             {
-                module_requesting_signals = typify<T>(m->get_name());
+                check_in(typify<T>(m->get_name()));
+                in_module = true;
                 m->update();
-                module_requesting_signals = data_source_user;
-                module_setting_signals = data_source_user;
+                in_module = in_module_back;
+                check_out();
             }
             catch(DataSourceException& e)
             {
-                module_requesting_signals = data_source_user;
-                module_setting_signals = data_source_user;
                 throw(e);
             }
             catch(...)
             {
-                module_requesting_signals = data_source_user;
-                module_setting_signals = data_source_user;
                 // It's OK for m->update() to throw at this stage because we just want to retrieve its dependencies
             }
             modules.push_back(typify<T>(module.get_name()));
@@ -144,12 +141,12 @@ class DataSource
             FromSignal2Module::const_iterator that_signal = signal2module.find(typify<T>(name_of_copy));
             if (that_signal != signal2module.end())
             {
-                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Asked to create alias ")+name_of_copy + " -> " + copied_signal + ", but '" + name_of_copy + "' is already in this DataSource (set by '" + that_signal->second.get_signal_name() + "')");
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("\nAsked to create alias ")+name_of_copy + " -> " + copied_signal + ", but '" + name_of_copy + "' is already in this DataSource (set by '" + that_signal->second.get_signal_name() + "')");
             }
             const std::map<TypedSignalName,TypedSignalName>::const_iterator it = aliases.find(typify<T>(name_of_copy));
             if ((it != aliases.end()) && (it->second != typify<T>(copied_signal)))
             {
-                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("'")+name_of_copy+"' is already an alias for '" + it->second.get_signal_name());
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("\n'")+name_of_copy+"' is already an alias for '" + it->second.get_signal_name());
             }
             aliases[typify<T>(name_of_copy)] = typify<T>(copied_signal);
         }
@@ -179,7 +176,7 @@ class DataSource
             if (name2module.find(typed_module_to_remove) == name2module.end())
             {
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
-                        std::string("Attempting to remove module '")
+                        std::string("\nAttempting to remove module '")
                                 + module_to_remove
                                 + "' which is not in this DataSource.");
             }
@@ -211,13 +208,13 @@ class DataSource
         */
         template <typename T> void add(const std::string& module_name)
         {
-            if (module_name == "DataSource user")
+            if (module_name == default_setter)
             {
-                THROW(__PRETTY_FUNCTION__, DataSourceException, "Cannot name a module 'DataSource user' because it is a reserved name (used to track the signals not set by a module (i.e. 'outside' the DataSource)");
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("\nCannot name a module '") + default_setter + "' because it is a reserved name (used to track the signals not set by a module (i.e. 'outside' the DataSource)" + unwind_call_stack());
             }
             if (module_name == "")
             {
-                THROW(__PRETTY_FUNCTION__, DataSourceException, "Module name cannot be empty");
+                THROW(__PRETTY_FUNCTION__, DataSourceException, "\nModule name cannot be empty" + unwind_call_stack());
             }
             const T t(this, module_name);
             add(t);
@@ -265,8 +262,8 @@ class DataSource
             const bool module_is_already_in_map = it != name2module.end();
             if (module_is_already_in_map)
             {
-                std::string s = "A module named '";
-                THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists");
+                std::string s = "\nA module named '";
+                THROW(__PRETTY_FUNCTION__, DataSourceException, s + module.get_name() + "' already exists" + unwind_call_stack());
             }
             ModulePtr ret(module.clone());
             module_setting_signals = module_name;
@@ -280,24 +277,23 @@ class DataSource
         {
             if (forced_values.has(typify<T>(signal_name)))
             {
-                if (module_setting_signals.get_signal_name() == "DataSource user")
+                if (not(in_module))
                 {
-                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("'DataSource user' is attempting to set '") + signal_name + "' which has been overridden using DataSource::force");
+                    THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("\nAttempting to set '") + signal_name + "' which has been overridden using DataSource::force" + unwind_call_stack());
                 }
             }
             else
             {
                 FromSignal2Module::const_iterator it = signal2module.find(typify<T>(signal_name));
                 if ((it != signal2module.end())
-                        && (it->second.get_signal_name() != "DataSource user") && (it->second.get_signal_name() != "")
-                        && (it->second != module_setting_signals))
+                        && (it->second.get_signal_name() != "")
+                        && (it->second != me()))
                 {
                     THROW(__PRETTY_FUNCTION__, DataSourceException,
-                            std::string("'")
-                                    + module_setting_signals.get_signal_name()
-                                    + "' is attempting to set signal '" + signal_name
+                                      "\nAttempt to set signal '" + signal_name
                                     + "', but module '" + it->second.get_signal_name()
-                                    + "' already sets it. A possible fix may be to use DataSource::remove.");
+                                    + "' already sets it. A possible fix may be to use DataSource::remove: "
+                                    + unwind_call_stack());
                 }
             }
         }
@@ -325,7 +321,7 @@ class DataSource
         {
             if (signal_name != "")
             {
-                signal2module[typify<T>(signal_name)] = module_setting_signals;
+                signal2module[typify<T>(signal_name)] = call_stack.top();// module_setting_signals;
                 update_dependencies();
             }
         }
@@ -387,7 +383,7 @@ class DataSource
          *  \date 27 août 2013, 08:53:49
          *  \brief Override a signal set by a module.
          *  This works only if the signal has been set by a module, *not* if it
-         *  was set 'manually' by the DataSource user (outside the DataSource).
+         *  was set 'manually' by the default_setter (outside the DataSource).
          *  All subsequent 'set' operations must be performed by 'force'.
          *  A 'force' operation can be canceled by DataSource::release.
          *  \returns Nothing.
@@ -400,10 +396,10 @@ class DataSource
                     != signal2module.end()))
             {
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
-                        std::string("Attempting to force the value of signal '")
+                        std::string("\nAttempting to force the value of signal '")
                                 + signal_name + "' (of type '"
                                 + std::string(typeid(T).name())
-                                + "'), which is not set by any module: can only force a value set by a module (otherwise, use DataSource::set).");
+                                + "'), which is not set by any module: can only force a value set by a module (otherwise, use DataSource::set). " + unwind_call_stack());
             }
             forced_values.set<T>(signal_name, forced_value);
             set_all_dependent_modules_out_of_date<T>(signal_name);
@@ -421,7 +417,7 @@ class DataSource
         {
             if (!(forced_values.has(typify<T>(signal_name))))
             {
-                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("Attempting to release '") + signal_name + "' which is not forced.");
+                THROW(__PRETTY_FUNCTION__, DataSourceException, std::string("\nAttempting to release '") + signal_name + "' which is not forced. " + unwind_call_stack());
             }
             forced_values.remove<T>(signal_name);
         }
@@ -431,9 +427,13 @@ private:
         {
             if (!(is_up_to_date[module_name]))
             {
-                module_requesting_signals = module_name;
+                const bool in_module_back = in_module;
                 module_setting_signals = module_name;
+                check_in(module_name);
+                in_module = true;
                 name2module[module_name]->update();
+                in_module = in_module_back;
+                check_out();
                 is_up_to_date[module_name] = true;
             }
         }
@@ -479,9 +479,8 @@ private:
                 }
                 if (not(closest_match.empty())) ss << ".";
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
-                        std::string("Unable to find signal '") + signal_name
-                                + "' (of type '" + typed_name.get_type_name() + "') requested by module '"
-                                + module_requesting_signals.get_signal_name() + "'." + ss.str());
+                        std::string("\nUnable to find signal '") + signal_name
+                                + "' (of type '" + typed_name.get_type_name() + "') " + unwind_call_stack());
             }
         }
 public:
@@ -503,22 +502,18 @@ public:
             {
                 return forced_values.get<T>(signal_name);
             }
-            if (readonly && (module_setting_signals != typify<T>("DataSource user")))
+            if (readonly && (module_setting_signals != typify<T>(default_setter)))
             {
                 append_to_maps<T>(signal_name);
-                const TypedSignalName module_requesting_signals_bak = module_requesting_signals;
                 const TypedSignalName module_setting_signals_bak = module_setting_signals;
                 update_dependencies();
                 module_setting_signals = module_setting_signals_bak;
-                module_requesting_signals = module_requesting_signals_bak;
                 return T();
             }
             else
             {
-                const TypedSignalName module_requesting_signals_bak = module_requesting_signals;
                 const TypedSignalName module_setting_signals_bak = module_setting_signals;
                 update_or_throw<T>(signal_name);
-                module_requesting_signals = module_requesting_signals_bak;
                 module_setting_signals = module_setting_signals_bak;
             }
             return signals_.get<T>(signal_name);
@@ -533,11 +528,47 @@ public:
         std::list<TypedModuleName> get_module_list() const;
         std::list<std::pair<TypedSignalName, boost::any> > get_signals() const;
 
+        /**  \author cec
+          *  \date Jun 12, 2014, 9:24:26 AM
+          *  \brief Returns the name of the module currently setting signals in the DataSource
+          *  \returns Top of the call stack
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest who_am_i_example
+          */
+        std::string who_am_i() const;
+        TypedSignalName me() const;
+
+        /**  \author cec
+          *  \date Jun 12, 2014, 9:24:26 AM
+          *  \brief Register caller in DataSource
+          *  \details All get/set calls are now supposed to originate from the caller.
+          *  Adds it to the call stack.
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest who_am_i_example
+          */
+        void check_in(const std::string& caller);
+
+        /**  \author cec
+          *  \date Jun 12, 2014, 9:24:26 AM
+          *  \brief Register caller in DataSource (module version)
+          *  \details All get/set calls are now supposed to originate from the caller.
+          *  Adds it to the call stack.
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest who_am_i_example
+          */
+        void check_in(const TypedSignalName& caller);
+
+        /**  \author cec
+          *  \date Jun 12, 2014, 9:24:26 AM
+          *  \brief Removes last caller from the call stack (pop)
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest who_am_i_example
+          */
+        void check_out();
+
     private:
         template <typename T> TypedSignalName typify(const std::string& signal_name) const
         {
             return TypedSignalName(signal_name, typeid(T).name());
         }
+
+        std::string unwind_call_stack();
 
         std::set<TypedModuleName> get_dependencies(const TypedModuleName& module_name, std::set<TypedModuleName>& ret) const;
         std::set<TypedModuleName> get_dependencies(const TypedModuleName& ref_module, const TypedModuleName& current_module, std::set<TypedModuleName>& dependencies) const;
@@ -548,7 +579,6 @@ public:
         bool readonly; //!< If this flag is set to true, DataSource::set will not modify the state of the DataSource. This is used so that the first call to DataSourceModule::update (by DataSource::add) can track dependencies between modules
         SignalContainer signals_; //!< All signals currently in the DataSource
         TypedModuleName module_setting_signals; //!< Module currently adding signals to the DataSource (used to track if two different modules set the same signal)
-        TypedSignalName module_requesting_signals; //!< Module currently getting signals from the DataSource (used to track which module is requiring a missing signal)
         FromSignal2Module signal2module; //!< Tracks which module sets which signal
         DependantModules module2dependantmodules; //!< For each module, stores the set of the names of the modules depending on it
         DependantModules module2requiredmodules; //!< For each module, stores the set of the names of the modules it depends on
@@ -558,7 +588,10 @@ public:
         std::vector<std::pair<std::string,std::string> > state_names;
         std::map<TypedSignalName,TypedSignalName> aliases; //!< Correspondence between an alias & the name of the original signal
         SignalContainer forced_values; //!< All signals that have been forced
-        std::vector<TypedModuleName> modules;
+        std::vector<TypedModuleName> modules; //!< All modules in DataSource
+        std::stack<TypedSignalName> call_stack; //!< Names of modules in call stack (M1 called M2 called...)
+        static const std::string default_setter; //!< Default name of the DataSource user
+        bool in_module; //!< True if the current setter is a DataSourceModule
 };
 
 #endif /* DATASOURCE_HPP_ */
