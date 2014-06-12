@@ -37,8 +37,10 @@ DataSourceDrawer::DataSourceDrawer(const FromSignal2Module& signal2module,
 {
     for (FromSignal2Module::const_iterator it = signal2module.begin() ; it != signal2module.end() ; ++it)
     {
+        std::stringstream ss;
+        ss << it->second;
         modules[it->second.get_signal_name()].outputs.insert(it->first.get_signal_name());
-        signals[it->first.get_signal_name()].created_by = it->second.get_signal_name();
+        signals[it->first.get_signal_name()].created_by = ss.str();
         signals[it->first.get_signal_name()].type = it->first.get_type_name();
         modules[it->second.get_signal_name()].type = it->second.get_type_name();
     }
@@ -87,10 +89,10 @@ std::string escape(std::string data)
     //replace_all(data, "\'", "&apos;");
     replace_all(data, "<",  "&lt;");
     replace_all(data, ">",  "&gt;");
-    replace_all(data, "é",  "e");
-    replace_all(data, "è",  "e");
-    replace_all(data, "à",  "a");
-    replace_all(data, "ê",  "e");
+    replace_all(data, "ï¿½",  "e");
+    replace_all(data, "ï¿½",  "e");
+    replace_all(data, "ï¿½",  "a");
+    replace_all(data, "ï¿½",  "e");
 
 
     return data;
@@ -154,8 +156,9 @@ std::string DataSourceDrawer::get_yaml() const
         ss << "      - name: " << it->first << std::endl;
         ss << "        type: " << it->second.type << std::endl;
         ss << "        created by: ";
-        if (it->second.created_by.empty()) ss << "DataSource user";
-        else ss << it->second.created_by;
+        //if (it->second.created_by.empty()) ss << "DataSource user";
+        //else
+            ss << it->second.created_by;
         ss << std::endl;
         ss << "        used by: " << serialize(it->second.used_by);
     }
