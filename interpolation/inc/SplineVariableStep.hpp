@@ -10,7 +10,8 @@
 
 #include "VariableStepInterpolation.hpp"
 #include <vector>
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 
 #include "Exception.hpp"
 
@@ -44,7 +45,7 @@ class SplineVariableStep : public VariableStepInterpolation
         double get_df(const size_t derivative_order) const;
 
         class Impl;
-        std::tr1::shared_ptr<Impl> pimpl;
+        TR1(shared_ptr)<Impl> pimpl;
 };
 
 #endif /* SPLINEVARIABLESTEP_HPP_ */

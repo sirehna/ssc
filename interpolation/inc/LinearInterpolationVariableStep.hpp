@@ -9,7 +9,8 @@
 #define LINEARINTERPOLATIONVARIABLESTEP_HPP_
 
 #include <vector>
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 #include "ConstantStepInterpolator.hpp"
 
 /** \author cec
@@ -33,7 +34,7 @@ class LinearInterpolationVariableStep : public ConstantStepInterpolator
         double get_df(const size_t derivative_order) const;
         void find_index_of_interval_containing(const double val);
         class LinearInterpolationVariableStepImpl;
-        std::tr1::shared_ptr<LinearInterpolationVariableStepImpl> pimpl;
+        TR1(shared_ptr)<LinearInterpolationVariableStepImpl> pimpl;
 };
 
 #endif /* LINEARINTERPOLATIONVARIABLESTEP_HPP_ */
