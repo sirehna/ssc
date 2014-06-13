@@ -279,7 +279,7 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_signal)
     data_source.set<double>("t", 123);
     ASSERT_NO_THROW(data_source.get<double>("t"));
     data_source.unset<double>("t");
-    ASSERT_THROW(data_source.get<double>("t"), DataSourceException);
+    ASSERT_THROW(data_source.get<double>("t"), SignalContainerException);
 }
 
 TEST_F(DataSourceTest, can_declare_and_define_a_module_using_a_macro)
