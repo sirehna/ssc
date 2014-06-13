@@ -138,7 +138,7 @@ void DecodeUnit::UnitDecoder::advance()
 DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan()
 {
 	while (m_next_char != -1 ) {
-		switch(m_char_table[m_next_char])
+		switch(m_char_table[(size_t)m_next_char])
 		{
 		case k_separator :
 			advance();
@@ -208,7 +208,7 @@ DecodeUnit::UnitDecoder::WordToken *DecodeUnit::UnitDecoder::scan_word()
 	do {
 		tmp.put((char)m_next_char);
 		advance();
-	} while(m_next_char != -1 && (m_char_table[m_next_char]==k_letter || m_char_table[m_next_char] == k_underscore));
+	} while(m_next_char != -1 && (m_char_table[(size_t)m_next_char]==k_letter || m_char_table[(size_t)m_next_char] == k_underscore));
 	DecodeUnit::UnitDecoder::WordToken *token=new DecodeUnit::UnitDecoder::WordToken(tmp.str());
 	return token;
 }
@@ -219,14 +219,14 @@ DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan_digit()
 	do {
 		str.put((char)m_next_char);
 		advance();
-	} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
+	} while(m_next_char != -1 && (m_char_table[(size_t)m_next_char]==k_digit));
 	if(m_next_char=='.') {
 		str.put((char)m_next_char);
 		advance();
 		do {
 			str.put((char)m_next_char);
 			advance();
-		} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
+		} while(m_next_char != -1 && (m_char_table[(size_t)m_next_char]==k_digit));
 		if(m_next_char=='e') {
 			str.put((char)m_next_char);
 			advance();
@@ -234,12 +234,12 @@ DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan_digit()
 				str.put((char)m_next_char);
 				advance();
 			}
-			if( m_next_char == -1 || (m_char_table[m_next_char]!=k_digit) )
+			if( m_next_char == -1 || (m_char_table[(size_t)m_next_char]!=k_digit) )
 				throw std::string("expected exponent integer");
 			do {
 				str.put((char)m_next_char);
 				advance();
-			} while(m_next_char != -1 && (m_char_table[m_next_char]==k_digit));
+			} while(m_next_char != -1 && (m_char_table[(size_t)m_next_char]==k_digit));
 		}
 		std::istringstream interp(str.str());
 		double dval;
@@ -293,7 +293,6 @@ double DecodeUnit::UnitDecoder::decode()
 // the main function dealing with unit grammar...
 double DecodeUnit::UnitDecoder::decode_expression()
 {
-	int i;
 	double val=0;
 
 	// 1) accumulate tokens
@@ -376,14 +375,14 @@ double DecodeUnit::UnitDecoder::decode_expression()
 		}
 
 		// 3) delete tokens
-		for(i=0;i<(int)tokens.size();i++) {
+		for(size_t i=0;i<tokens.size();i++) {
 			delete tokens[i];
 			tokens[i]=NULL;
 		}
 
 	} catch( const std::string mess ) {
 		// delete tokens
-		for(i=0;i<(int)tokens.size();i++) {
+		for(size_t i=0;i<tokens.size();i++) {
 			delete tokens[i];
 			tokens[i]=NULL;
 		}
@@ -397,14 +396,14 @@ double DecodeUnit::UnitDecoder::decode_expression()
 double DecodeUnit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,int tbeg,int tend,bool imp)
 {
 	if(tend-tbeg==1) {
-		if(isIntToken(tokens[tbeg])) {
-			return static_cast<double> (tokens[tbeg]->int_value());
-		} else if(isDblToken(tokens[tbeg])) {
-			return tokens[tbeg]->double_value();
-		} else if (isWordToken(tokens[tbeg])) {
-			return decode_word(tokens[tbeg]);
+		if(isIntToken(tokens[(size_t)tbeg])) {
+			return static_cast<double> (tokens[(size_t)tbeg]->int_value());
+		} else if(isDblToken(tokens[(size_t)tbeg])) {
+			return tokens[(size_t)tbeg]->double_value();
+		} else if (isWordToken(tokens[(size_t)tbeg])) {
+			return decode_word(tokens[(size_t)tbeg]);
 		} else {
-			throw std::string("unexpected token") + tokens[tbeg]->description();
+			throw std::string("unexpected token") + tokens[(size_t)tbeg]->description();
 		}
 	}
 	else {
@@ -413,22 +412,22 @@ double DecodeUnit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,i
 		int iprec = (int)tokens.size();
 		for(int i=tend;i>tbeg;) {
 		    i--;
-			if(isOpToken(tokens[i],'*') || isOpToken(tokens[i],'/') ) {
+			if(isOpToken(tokens[(size_t)i],'*') || isOpToken(tokens[(size_t)i],'/') ) {
 				if(i==tbeg || i==tend-1) {
 					throw std::string("unexpected */ position");
 				} else {
 					double left=decode_expression(tokens,tbeg,i,false);
 					double right=decode_expression(tokens,i+1,tend,false);
-					return (isOpToken(tokens[i],'*'))? left*right : left/right;
+					return (isOpToken(tokens[(size_t)i],'*'))? left*right : left/right;
 				}
-			} else if(isOpToken(tokens[i],'^') ) {
+			} else if(isOpToken(tokens[(size_t)i],'^') ) {
 				if(i==tbeg || i==tend-1) {
 					throw std::string("unexpected ^ position");
 				} else if(hprec < 2) {
 					hprec = 2;
 					iprec = i;
 				}
-			} else if(isOpToken(tokens[i],'-') ) {
+			} else if(isOpToken(tokens[(size_t)i],'-') ) {
 				if(i==tend-1) {
 					throw std::string("unexpected - position");
 				} else if(hprec < 1) {
@@ -462,33 +461,33 @@ double DecodeUnit::UnitDecoder::decode_implicit_op_expression(std::vector<Token 
 	if(tend-tbeg<1) {
 		return 1.0;
 	}
-	if(isIntToken(tokens[tbeg])) {
-		return tokens[tbeg]->int_value() * decode_implicit_op_expression(tokens,tbeg+1,tend);
-	} else if(isDblToken(tokens[tbeg])) {
-		return tokens[tbeg]->double_value() * decode_implicit_op_expression(tokens,tbeg+1,tend);
-	} else if(isWordToken(tokens[tbeg])) {
-		double val=decode_word(tokens[tbeg]);
+	if(isIntToken(tokens[(size_t)tbeg])) {
+		return tokens[(size_t)tbeg]->int_value() * decode_implicit_op_expression(tokens,tbeg+1,tend);
+	} else if(isDblToken(tokens[(size_t)tbeg])) {
+		return tokens[(size_t)tbeg]->double_value() * decode_implicit_op_expression(tokens,tbeg+1,tend);
+	} else if(isWordToken(tokens[(size_t)tbeg])) {
+		double val=decode_word(tokens[(size_t)tbeg]);
 		if(tend-tbeg == 1) {
 			return val;
 		} else {
-			if(isIntToken(tokens[tbeg+1])) {
-				return pow(val,tokens[tbeg+1]->int_value())
+			if(isIntToken(tokens[(size_t)tbeg+1])) {
+				return pow(val,tokens[(size_t)tbeg+1]->int_value())
 					* decode_implicit_op_expression(tokens,tbeg+2,tend);
-			} else if(isDblToken(tokens[tbeg+1])) {
+			} else if(isDblToken(tokens[(size_t)tbeg+1])) {
 				// QUESTIONNABLE : RAISED TO A NON INTEGER POWER ?
-				return pow(val,tokens[tbeg+1]->double_value())
+				return pow(val,tokens[(size_t)tbeg+1]->double_value())
 					* decode_implicit_op_expression(tokens,tbeg+2,tend);
-			} else if(isOpToken(tokens[tbeg+1],'-') && (tend-tbeg > 2) && isIntToken(tokens[tbeg+2])) {
-				return (1.0 / pow(val,tokens[tbeg+2]->int_value()))
+			} else if(isOpToken(tokens[(size_t)tbeg+1],'-') && (tend-tbeg > 2) && isIntToken(tokens[(size_t)tbeg+2])) {
+				return (1.0 / pow(val,tokens[(size_t)tbeg+2]->int_value()))
 					* decode_implicit_op_expression(tokens,tbeg+3,tend);
-			} else if(isWordToken(tokens[tbeg+1])) {
+			} else if(isWordToken(tokens[(size_t)tbeg+1])) {
 				return val * decode_implicit_op_expression(tokens,tbeg+1,tend);
 			} else {
-				throw std::string("unexpected token") + tokens[tbeg+1]->description();
+				throw std::string("unexpected token") + tokens[(size_t)tbeg+1]->description();
 			}
 		}
 	} else {
-		throw std::string("unexpected token") + tokens[tbeg]->description();
+		throw std::string("unexpected token") + tokens[(size_t)tbeg]->description();
 	}
 	return 0;
 }
@@ -547,9 +546,9 @@ std::vector<DecodeUnit::UnitDecoder::e_char_type> DecodeUnit::UnitDecoder::init_
 {
 	std::vector<UnitDecoder::e_char_type> table(256,k_unknown);
 	int c;
-	for(c='0';c<='9';c++) table[c]=k_digit;
-	for(c='a';c<='z';c++) table[c]=k_letter;
-	for(c='A';c<='Z';c++) table[c]=k_letter;
+	for(c='0';c<='9';c++) table[(size_t)c]=k_digit;
+	for(c='a';c<='z';c++) table[(size_t)c]=k_letter;
+	for(c='A';c<='Z';c++) table[(size_t)c]=k_letter;
 	table['*']=k_star;
 	table['/']=k_slash;
 	table['^']=k_caret;
