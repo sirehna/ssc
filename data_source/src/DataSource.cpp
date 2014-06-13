@@ -345,8 +345,8 @@ bool operator<(const std::pair<TypedSignalName, boost::any>& lhs, const std::pai
 std::list<std::pair<TypedSignalName, boost::any> > DataSource::get_signals() const
 {
     std::list<std::pair<TypedSignalName, boost::any> > ret;
-    std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash> in = signals_.get_all_signals();
-    std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash>::const_iterator it = in.begin();
+    TR1(unordered_map)<TypedSignalName, boost::any, OwnHash> in = signals_.get_all_signals();
+    TR1(unordered_map)<TypedSignalName, boost::any, OwnHash>::const_iterator it = in.begin();
     for (;it!=in.end();++it)
     {
         ret.push_back(std::make_pair(it->first,it->second));

@@ -8,7 +8,7 @@
 #ifndef MODEL_HPP_
 #define MODEL_HPP_
 
-#include <tr1/memory>
+#include "tr1_macros.hpp"
 #include <string>
 
 class DataSource;
@@ -37,7 +37,7 @@ class DataSourceModule
          *  \brief Clones the current module
          *  \details This method is called by the DataSource when adding a
          *  module so we can have a container with pointers to each module.
-         *  \returns Typically, std::tr1::shared_ptr<DataSourceModule>(new DataSourceModule(*this));
+         *  \returns Typically, std::shared_ptr<DataSourceModule>(new DataSourceModule(*this));
          *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
         */
         virtual DataSourceModule* clone() const = 0;
