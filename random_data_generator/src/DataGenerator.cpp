@@ -86,7 +86,7 @@ char DataGenerator::random_char() const
             "0123456789"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "abcdefghijklmnopqrstuvwxyz";
-    const size_t random_index = get_random_number() % (sizeof(alphanum)/sizeof(char) - 1);
+    const size_t random_index = (size_t)get_random_number() % (sizeof(alphanum)/sizeof(char) - 1);
     return alphanum[random_index];
 }
 
