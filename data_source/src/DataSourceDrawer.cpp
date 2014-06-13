@@ -38,18 +38,30 @@ DataSourceDrawer::DataSourceDrawer(const FromSignal2Module& signal2module,
     for (FromSignal2Module::const_iterator it = signal2module.begin() ; it != signal2module.end() ; ++it)
     {
         std::stringstream ss;
-        ss << it->second;
-        modules[it->second.get_signal_name()].outputs.insert(it->first.get_signal_name());
+        if (it->second.get_type_name() != "unknown")
+        {
+            modules[it->second.get_signal_name()].outputs.insert(it->first.get_signal_name());
+            modules[it->second.get_signal_name()].type = it->second.get_type_name();
+            ss << it->second.get_signal_name();
+        }
+        else
+        {
+            ss << it->second;
+        }
+
         signals[it->first.get_signal_name()].created_by = ss.str();
         signals[it->first.get_signal_name()].type = it->first.get_type_name();
-        modules[it->second.get_signal_name()].type = it->second.get_type_name();
+
     }
     for (DependantModules::const_iterator it = dependant_modules.begin() ; it != dependant_modules.end() ; ++it)
     {
         for (std::set<TypedSignalName>::const_iterator it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
         {
-            modules[it->first.get_signal_name()].inputs.insert(it2->get_signal_name());
-            modules[it->first.get_signal_name()].type = it->first.get_type_name();
+            if (it->first.get_type_name() != "unknown")
+            {
+                modules[it->first.get_signal_name()].inputs.insert(it2->get_signal_name());
+                modules[it->first.get_signal_name()].type = it->first.get_type_name();
+            }
             signals[it2->get_signal_name()].used_by.insert(it->first.get_signal_name());
             signals[it2->get_signal_name()].type = it2->get_type_name();
         }
