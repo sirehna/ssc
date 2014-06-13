@@ -8,7 +8,8 @@
 #ifndef DATASOURCE_HPP_
 #define DATASOURCE_HPP_
 
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 #include <string>
 #include <set>
 #include <sstream>
@@ -19,16 +20,16 @@
 #include "DataSourceException.hpp"
 #include "almost_equal.hpp"
 
-typedef std::tr1::shared_ptr<const DataSourceModule> ModulePtr;
+typedef TR1(shared_ptr)<const DataSourceModule> ModulePtr;
 
 #define USE_HASH_MAPS 1
 
 #if USE_HASH_MAPS
     #include <tr1/unordered_map>
-    typedef std::tr1::unordered_map<TypedModuleName,ModulePtr > FromName2Module;
-    typedef std::tr1::unordered_map<TypedSignalName,TypedModuleName> FromSignal2Module;
-    typedef std::tr1::unordered_map<TypedModuleName,std::set<TypedModuleName> > DependantModules;
-    typedef std::tr1::unordered_map<TypedModuleName,bool > UpdateState;
+    typedef TR1(unordered_map)<TypedModuleName,ModulePtr > FromName2Module;
+    typedef TR1(unordered_map)<TypedSignalName,TypedModuleName> FromSignal2Module;
+    typedef TR1(unordered_map)<TypedModuleName,std::set<TypedModuleName> > DependantModules;
+    typedef TR1(unordered_map)<TypedModuleName,bool > UpdateState;
 #else
     #include <map>
     typedef std::map<TypedModuleName,ModulePtr > FromName2Module;

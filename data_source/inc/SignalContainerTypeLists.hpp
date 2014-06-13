@@ -11,7 +11,10 @@
 #include <boost/any.hpp>
 #include <string>
 #include <list>
-#include <tr1/unordered_map>
+
+#include "tr1_macros.hpp"
+#include TR1INC(unordered_map)
+
 //#include <map>
 
 typedef std::string SignalName;
@@ -39,17 +42,21 @@ class TypedSignalName
 
 namespace std
 {
+#if TR1NAMESPACE
     namespace tr1
     {
+#endif
         template <>
         struct hash<TypedSignalName>
         {
             std::size_t operator() (const TypedSignalName& c) const
             {
-               return std::tr1::hash<std::string>()(c.get_signal_name()+c.get_type_name());
+               return TR1(hash)<std::string>()(c.get_signal_name()+c.get_type_name());
             }
         };
+#if TR1NAMESPACE
     }
+#endif
 }
 
 typedef TypedSignalName TypedModuleName;
@@ -59,12 +66,12 @@ class OwnHash
 public:
     std::size_t operator() (const TypedSignalName& c) const
     {
-       return std::tr1::hash<std::string>()(c.get_signal_name()+c.get_type_name());
+       return TR1(hash)<std::string>()(c.get_signal_name()+c.get_type_name());
     }
 };
 
 
-typedef std::tr1::unordered_map<TypedSignalName, boost::any, OwnHash> Signals;
+typedef TR1(unordered_map)<TypedSignalName, boost::any, OwnHash> Signals;
 //typedef std::map<TypedSignalName, boost::any> Signals;
 typedef Signals::const_iterator ConstSignalIterator;
 
