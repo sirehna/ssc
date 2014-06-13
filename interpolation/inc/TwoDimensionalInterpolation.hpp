@@ -5,7 +5,8 @@
  *  \author cec
  */
 #include <vector>
-#include "smart_pointers_macros.hpp"
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 
 class ParabolicRunoutSplines;
 #ifndef TWODIMENSIONALSPLINES_HPP_
