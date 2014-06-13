@@ -1,7 +1,7 @@
 /*
  * CoercionException.hpp
  *
- * \date 18 juin 2013, 14:37:43
+ * \date 18 june 2013, 14:37:43
  *  \author cec
  */
 

@@ -42,7 +42,7 @@ class DataSourceModule
         */
         virtual DataSourceModule* clone() const = 0;
         /** \author cec
-         *  \date 22 août 2013, 14:18:54
+         *  \date 22 aug 2013, 14:18:54
          *  \brief Clones the module & updates the referenced DataSource
          *  \returns
          *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
