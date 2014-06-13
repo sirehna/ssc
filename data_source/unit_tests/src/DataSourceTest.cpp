@@ -733,7 +733,7 @@ TEST_F(DataSourceTest, signals_not_set_or_got_by_any_module_should_still_be_outp
 			 << "    signals:" << std::endl
 			 << "      - name: s" << std::endl
 			 << "        type: " << typeid(double).name() << std::endl
-			 << "        created by: DataSource user" << std::endl
+			 << "        created by: " << DataSource::default_setter << "(:unknown)" << std::endl
 			 << "        used by: []" << std::endl;
 	ASSERT_EQ(expected.str(), data_source.draw());
 }
