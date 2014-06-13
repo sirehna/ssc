@@ -396,8 +396,9 @@ class DataSource
         template<typename T>
         void force(const std::string& signal_name, const T& forced_value)
         {
-            if (!(signal2module.find(typify<T>(signal_name))
-                    != signal2module.end()))
+            FromSignal2Module::const_iterator it = signal2module.find(typify<T>(signal_name));
+            const bool signal_set_by_module = it==signal2module.end() ? false : it->second.get_type_name()!="unknown";
+            if (not(signal_set_by_module))
             {
                 THROW(__PRETTY_FUNCTION__, DataSourceException,
                         std::string("\nAttempting to force the value of signal '")
