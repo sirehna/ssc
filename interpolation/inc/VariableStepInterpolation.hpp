@@ -9,7 +9,8 @@
 #define VARIABLESTEPINTERPOLATION_HPP_
 
 #include "Interpolator.hpp"
-#include <tr1/memory> // std::tr1::shared_ptr
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 #include <vector>
 
 /** \author cec
@@ -37,7 +38,7 @@ class VariableStepInterpolation : public Interpolator
         virtual void update_coefficients_if_necessary(const double x0);
 
     private:
-        std::tr1::shared_ptr<IndexFinder> index;
+        TR1(shared_ptr)<IndexFinder> index;
 
     protected:
         int idx;

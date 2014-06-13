@@ -5,7 +5,7 @@
  *  \author cec
  */
 #include <vector>
-#include <tr1/memory>
+#include "smart_pointers_macros.hpp"
 
 class ParabolicRunoutSplines;
 #ifndef TWODIMENSIONALSPLINES_HPP_
@@ -34,7 +34,7 @@ class TwoDimensionalInterpolationException : public Exception
 template <typename T> class TwoDimensionalInterpolation
 {
     public:
-        TwoDimensionalInterpolation(const double& xmin_, const double& xmax_, const double& ymin_, const double& ymax_, const std::vector<std::vector<double> >& val) : interpolators(std::vector<std::tr1::shared_ptr<T> >()),
+        TwoDimensionalInterpolation(const double& xmin_, const double& xmax_, const double& ymin_, const double& ymax_, const std::vector<std::vector<double> >& val) : interpolators(std::vector<TR1(shared_ptr)<T> >()),
         xmin(xmin_),
         xmax(xmax_)
         {
@@ -53,7 +53,7 @@ template <typename T> class TwoDimensionalInterpolation
                 {
                     THROW(__PRETTY_FUNCTION__, TwoDimensionalInterpolationException, "At least one vector in val has fewer than 2 elements");
                 }
-                interpolators.push_back(std::tr1::shared_ptr<T>(new T(ymin_, ymax_, *it)));
+                interpolators.push_back(TR1(shared_ptr)<T>(new T(ymin_, ymax_, *it)));
             }
         }
 
@@ -69,7 +69,7 @@ template <typename T> class TwoDimensionalInterpolation
         }
     private:
         TwoDimensionalInterpolation();
-        std::vector<std::tr1::shared_ptr<T> > interpolators;
+        std::vector<TR1(shared_ptr)<T> > interpolators;
         double xmin;
         double xmax;
 };
