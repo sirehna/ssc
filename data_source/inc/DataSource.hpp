@@ -567,6 +567,8 @@ public:
           */
         void check_out();
 
+        static const std::string default_setter; //!< Default name of the DataSource user
+
     private:
         template <typename T> TypedSignalName typify(const std::string& signal_name) const
         {
@@ -595,7 +597,6 @@ public:
         SignalContainer forced_values; //!< All signals that have been forced
         std::vector<TypedModuleName> modules; //!< All modules in DataSource
         std::stack<TypedSignalName> call_stack; //!< Names of modules in call stack (M1 called M2 called...)
-        static const std::string default_setter; //!< Default name of the DataSource user
         bool in_module; //!< True if the current setter is a DataSourceModule
 };
 
