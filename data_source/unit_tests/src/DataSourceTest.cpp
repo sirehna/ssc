@@ -15,6 +15,8 @@
 
 #include <set>
 
+#define NB_OF_TRIALS 100
+
 static DataGenerator a_(21);
 static DataSource* ds_;
 
@@ -70,7 +72,7 @@ TEST_F(DataSourceTest, example)
 TEST_F(DataSourceTest, all_mock_modules_generated_for_tests_should_have_different_names)
 {
     std::set<std::string> module_names;
-    const size_t nb_of_mocks = 1000;
+    const size_t nb_of_mocks = NB_OF_TRIALS;
     for (size_t i = 0 ; i < nb_of_mocks ; ++i)
     {
         MockDataSourceModule mock;
@@ -153,7 +155,7 @@ TEST_F(DataSourceTest, should_not_be_able_to_add_two_modules_with_the_same_name)
 TEST_F(DataSourceTest, should_be_able_to_set_and_retrieve_a_constant)
 {
     DataSource ds;
-    for (size_t i = 0 ; i < 10000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double d = a.random<double>();
         ds.set("d", d);
@@ -218,7 +220,7 @@ TEST_F(DataSourceTest, data_source_should_not_update_unnecessarily)
     ds.add<TestModule>(a.random<std::string>());
     const size_t i = a.random<size_t>();
     ds.set<size_t>("nb_of_updates", i);
-    for (size_t k = 0 ; k < 10000 ; ++k)
+    for (size_t k = 0 ; k < NB_OF_TRIALS ; ++k)
     {
         ASSERT_EQ(i+1, ds.get<size_t>("nb_of_updates2"));
     }
@@ -317,7 +319,7 @@ TEST_F(DataSourceTest, can_retrieve_derivatives)
     data_source.define_derivative("x", "dx_dt");
     data_source.define_derivative("y", "dy_dt");
     data_source.define_derivative("z", "dz_dt");
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double x = a.random<double>();
         data_source.set<double>("x",x);
@@ -364,7 +366,7 @@ TEST_F(DataSourceTest, can_retrieve_derivatives_out_of_order)
     ASSERT_NO_THROW(data_source.get_derivatives(v));
     data_source.define_derivative("y", "dy_dt");
     data_source.define_derivative("x", "dx_dt");
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double x = a.random<double>();
         const double y = a.random<double>();
@@ -387,7 +389,7 @@ TEST_F(DataSourceTest, get_derivatives_should_throw_if_input_vector_is_not_the_r
     std::vector<double> one_element(1,0);
     ASSERT_THROW(data_source.get_derivatives(empty), DataSourceException);
     ASSERT_THROW(data_source.get_derivatives(one_element), DataSourceException);
-    for (size_t i = 2 ; i < 1002 ; ++i)
+    for (size_t i = 2 ; i < NB_OF_TRIALS ; ++i)
     {
         std::vector<double> dx_dt(i,0);
         ASSERT_THROW(data_source.get_derivatives(dx_dt), DataSourceException);
@@ -424,7 +426,7 @@ TEST_F(DataSourceTest, cant_add_the_same_derivative_twice)
 TEST_F(DataSourceTest, can_set_the_states_to_an_arbitrary_value)
 {
     DataSource data_source;
-    const size_t nb_of_states = a .random<size_t>().between(0,500);
+    const size_t nb_of_states = a .random<size_t>().between(0,NB_OF_TRIALS);
     const std::vector<double> x = a.random_vector_of<double>().of_size(nb_of_states);
     const std::vector<std::string> state_names = a.random_vector_of<std::string>().of_size(nb_of_states);
     for (size_t i = 0 ; i < nb_of_states ; ++i)
@@ -441,7 +443,7 @@ TEST_F(DataSourceTest, can_set_the_states_to_an_arbitrary_value)
 TEST_F(DataSourceTest, set_states_should_throw_if_vector_has_incorrect_size)
 {
     DataSource data_source;
-    const size_t nb_of_states = a .random<size_t>().between(0,500);
+    const size_t nb_of_states = a .random<size_t>().between(0,NB_OF_TRIALS);
     const std::vector<double> x = a.random_vector_of<double>().of_size(a.random<size_t>().between(0,500).but_not(nb_of_states));
     for (size_t i = 0 ; i < nb_of_states ; ++i)
     {
@@ -502,7 +504,7 @@ TEST_F(DataSourceTest, can_force_a_value_computed_by_a_module)
 {
     DataSource ds;
     ds.add<OneInputTwoOutputs>();
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double x = a.random<double>();
         const double another_x = a.random<double>();
@@ -527,7 +529,7 @@ TEST_F(DataSourceTest, can_force_a_value_computed_by_a_module)
 TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_has_not_been_set_yet)
 {
     DataSource ds;
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         ASSERT_THROW(ds.force(a.random<std::string>(), a.random<double>()()), DataSourceException);
     }
@@ -536,7 +538,7 @@ TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_has_not_been_set_yet
 TEST_F(DataSourceTest, should_throw_if_forcing_a_value_that_is_set_manually)
 {
     DataSource ds;
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         ds.set("x", a.random<double>()());
         ASSERT_THROW(ds.force("x", a.random<double>()()), DataSourceException);
@@ -624,7 +626,7 @@ TEST_F(DataSourceTest, cannot_give_the_same_alias_two_different_meanings)
 
 TEST_F(DataSourceTest, can_squash_user_value_with_module)
 {
-    for (size_t i = 0 ; i < 1000 ; ++i)
+    for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         DataSource ds;
         const double x = a.random<double>();
