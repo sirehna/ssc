@@ -162,7 +162,10 @@ namespace DecodeUnit {
 			std::vector<e_char_type> m_char_table;       // classification of characters
 			                                             // (for lexical scanner)
 			std::map<std::string,double> m_known_units;  // dictionary of knows units
+			static bool char_table_is_initialized;
+			static bool known_units_are_initialized;
 
+			void lazy_initialization();
 			void advance(); // read one character
 			DecodeUnit::UnitDecoder::Token *scan();  // scan one token
 			DecodeUnit::UnitDecoder::LeftParToken   *scan_leftParenthesis();

@@ -10,6 +10,10 @@
 // NOTE : if i use #include <cmath>, then functions are either
 // in std namespace or global namespace, according to the machine and compiler...
 
+
+bool DecodeUnit::UnitDecoder::char_table_is_initialized = false;
+bool DecodeUnit::UnitDecoder::known_units_are_initialized = false;
+
 double DecodeUnit::decodeUnit( std::string unit )
 {
 	double val;
@@ -106,6 +110,29 @@ DecodeUnit::UnitDecoder::UnitDecoder(std::string unit)
   m_char_table(k_char_table) ,
   m_known_units(k_known_units)
 {
+    lazy_initialization();
+}
+
+void DecodeUnit::UnitDecoder::lazy_initialization()
+{
+    if (k_char_table.empty())
+    {
+        k_char_table = init_char_table();
+    }
+    if (k_known_units.empty())
+    {
+        k_known_units = init_known_units();
+    }
+    if (not(char_table_is_initialized))
+    {
+        m_char_table=k_char_table;
+        char_table_is_initialized = true;
+    }
+    if (not(known_units_are_initialized))
+    {
+        m_known_units=k_known_units;
+        known_units_are_initialized = true;
+    }
 }
 
 DecodeUnit::UnitDecoder::UnitDecoder(std::string unit , std::map<std::string,double> &known_units)
