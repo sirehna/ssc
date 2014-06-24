@@ -23,7 +23,7 @@ double DecodeUnit::decodeUnit( std::string unit )
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
 #endif
-	} catch (const std::string message) {
+	} catch (const std::string& message) {
 		std::cout << message << std::endl;
 		val = 0.0;
 	}
@@ -39,7 +39,7 @@ double DecodeUnit::decodeUnit( std::string unit , std::map<std::string,double> &
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
 #endif
-	} catch (const std::string message) {
+	} catch (const std::string& message) {
 		val = 0.0;
 #ifndef NDEBUG
 		std::cout << "Known units:" << std::endl;
