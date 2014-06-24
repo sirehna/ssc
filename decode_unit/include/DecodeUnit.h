@@ -41,7 +41,7 @@
 //
 // Limitations:
 // -----------
-// So far, only ASCII characters are handled... no °, no µ, no accent.
+// So far, only ASCII characters are handled... no ï¿½, no ï¿½, no accent.
 // No way to convert absolute temperatures.
 // No way to convert rad/s into Hz nor into second
 // (could be used for specifying a filter pulsation/frequency/period).

@@ -17,7 +17,7 @@ double DecodeUnit::decodeUnit( std::string unit )
 		DecodeUnit::UnitDecoder decoder( unit );
 		val=decoder.decode();
 #ifndef NDEBUG
-		std::cout << "Succesfull decoding : " << unit << " -> " << val << std::endl;
+		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
 #endif
 	} catch (const std::string message) {
 		std::cout << message << std::endl;
@@ -33,7 +33,7 @@ double DecodeUnit::decodeUnit( std::string unit , std::map<std::string,double> &
 		DecodeUnit::UnitDecoder decoder( unit , known_units );
 		val=decoder.decode();
 #ifndef NDEBUG
-		std::cout << "Succesfull decoding : " << unit << " -> " << val << std::endl;
+		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
 #endif
 	} catch (const std::string message) {
 		val = 0.0;
@@ -768,7 +768,6 @@ std::map<std::string,double> DecodeUnit::UnitDecoder::init_known_units()
 
 	extend_with_short_metric_prefix(units, "Hz" , decodeUnit("1.0/s" , units) );
 	extend_with_long_metric_prefix(units, "Hertz" , decodeUnit("1.0/s" , units) );
-
 	extend_with_short_metric_prefix(units, "N" , decodeUnit("kg*m/s^2" , units) );
 	extend_with_long_metric_prefix(units, "Newton" , decodeUnit("kg*m/s^2" , units) );
 	
