@@ -163,7 +163,6 @@ namespace DecodeUnit {
 			                                             // (for lexical scanner)
 			std::map<std::string,double> m_known_units;  // dictionary of knows units
 
-		private :
 			void advance(); // read one character
 			DecodeUnit::UnitDecoder::Token *scan();  // scan one token
 			DecodeUnit::UnitDecoder::LeftParToken   *scan_leftParenthesis();
