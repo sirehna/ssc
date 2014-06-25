@@ -64,7 +64,6 @@
 #include <vector>
 
 namespace DecodeUnit {
-
 	class UnitDecoder {
 
 	public:
@@ -162,10 +161,7 @@ namespace DecodeUnit {
 			std::vector<e_char_type> m_char_table;       // classification of characters
 			                                             // (for lexical scanner)
 			std::map<std::string,double> m_known_units;  // dictionary of knows units
-			static bool char_table_is_initialized;
-			static bool known_units_are_initialized;
 
-			void lazy_initialization();
 			void advance(); // read one character
 			DecodeUnit::UnitDecoder::Token *scan();  // scan one token
 			DecodeUnit::UnitDecoder::LeftParToken   *scan_leftParenthesis();
@@ -190,13 +186,14 @@ namespace DecodeUnit {
 			//STATIC VARIABLES AND INITIALIZER FUNCTIONS
 
 			// classification of characters
-			static std::vector<e_char_type> k_char_table;
+//			static std::vector<e_char_type> k_char_table;
 
 			// known units and conversion factors
-			static std::map<std::string,double> k_known_units;
+//			static std::map<std::string,double> k_known_units;
 
-			static std::vector<e_char_type> init_char_table();
-			static std::map<std::string,double> init_known_units();
+            static std::map<std::string,double> get_base_units_for_bootstrapping();
+			static std::vector<e_char_type> get_char_table();
+			static std::map<std::string,double> get_known_units();
 			static void extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit );
 			static void extend_with_long_metric_prefix(std::map<std::string,double> &units, std::string unit );
 			static void extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit , double value );
