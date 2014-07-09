@@ -1,7 +1,7 @@
 /*
  * Difference.cpp
  *
- * \date 1 févr. 2013, 09:22:47
+ * \date 1 fï¿½vr. 2013, 09:22:47
  *  \author cec
  */
 
@@ -16,9 +16,12 @@ Difference::Difference(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 
 void Difference::update_lambda()
 {
-    set_value([this]()->double
+    const auto n1__ = n1_;
+    const auto n2__ = n2_;
+    const auto factor_ = factor;
+    set_value([n1__,n2__,factor_]()->double
     {
-        return get_factor()*(n1_->get_lambda()()-n2_->get_lambda()());
+        return factor_*(n1__->get_lambda()()-n2__->get_lambda()());
     });
 }
 
@@ -49,7 +52,7 @@ bool Difference::equals(const Node& rhs) const
 
 bool Difference::equals_derived(const Difference& rhs) const
 {
-    return ((*n1_ == *rhs.n1_) and (*n2_ == *rhs.n2_));
+    return ((*n1_ == *rhs.n1_) && (*n2_ == *rhs.n2_));
 }
 
 std::string Difference::get_type() const
@@ -64,6 +67,6 @@ NodePtr Difference::simplify() const
 
 bool Difference::is_constant() const
 {
-    return is_null() or (n1_->is_constant() and n2_->is_constant());
+    return is_null() || (n1_->is_constant() && n2_->is_constant());
 }
 

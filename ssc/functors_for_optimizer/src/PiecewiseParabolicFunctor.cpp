@@ -1,7 +1,7 @@
 /*
  * PiecewiseParabolicFunctor.cpp
  *
- * \date 19 févr. 2013, 14:44:08
+ * \date 19 fï¿½vr. 2013, 14:44:08
  *  \author cec
  */
 
@@ -11,7 +11,7 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<ParabolicCoefficients>& coeffs) :
+PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs) :
 Unary(state_),
 f(new ParabolicInterpolation(xmin,xmax,coeffs)),
 xmin_(xmin),
@@ -30,9 +30,11 @@ state(state_)
 
 void PiecewiseParabolicFunctor::update_lambda()
 {
-    auto func = [this]()->double
+    const auto f_ = f;
+    const auto state_ = state;
+    auto func = [f_,state_]()->double
         {
-            return f->f(state->get_lambda()());
+            return f_->f(state_->get_lambda()());
         };
     set_value(func);
 }

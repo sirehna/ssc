@@ -1,7 +1,7 @@
 /*
  * Ln.cpp
  *
- * \date 1 févr. 2013, 12:32:08
+ * \date 1 fï¿½vr. 2013, 12:32:08
  *  \author cec
  */
 
@@ -17,7 +17,9 @@ Ln::Ln(const NodePtr& n_) : Unary(n_)
 
 void Ln::update_lambda()
 {
-    set_value([this]()->double {return get_factor()*log(n->get_lambda()());});
+    const auto factor_ = factor;
+    const auto n_ = n;
+    set_value([factor_,n_]()->double {return factor_*log(n_->get_lambda()());});
 }
 
 std::string Ln::get_operator_name() const

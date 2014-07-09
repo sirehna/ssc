@@ -25,7 +25,7 @@ class State;
 class SplineFunctor : public Unary
 {
     public:
-        SplineFunctor(const StatePtr& state, const double xmin, const double xmax, const std::vector<double>& y_values);
+        SplineFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<double>& y_values);
         NodePtr diff(const StatePtr& state) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;

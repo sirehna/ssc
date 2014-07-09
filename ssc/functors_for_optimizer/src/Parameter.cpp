@@ -11,17 +11,19 @@
 #include "NodeVisitor.hpp"
 
 
-Parameter::Parameter() : ptr(new double(0))
+Parameter::Parameter() : ptr(new double(0)), nb_of_copies(0)
 {
     update_lambda();
 }
 
 void Parameter::update_lambda()
 {
-    set_value([this]()->double {return get_factor()*(*ptr);});
+    const auto ptr_ = ptr;
+    const auto factor_ = factor;
+    set_value([ptr_,factor_]()->double {return factor_*(*ptr_);});
 }
 
-Parameter::Parameter(const double& val) : ptr(new double(val))
+Parameter::Parameter(const double& val) : ptr(new double(val)), nb_of_copies(0)
 {
     update_lambda();
 }
@@ -30,8 +32,9 @@ Parameter::~Parameter()
 {
 }
 
-Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr)
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr), nb_of_copies(rhs.nb_of_copies)
 {
+    nb_of_copies++;
     update_lambda();
 }
 
@@ -42,6 +45,7 @@ Parameter& Parameter::operator=(const Parameter& rhs)
     {
         ptr = rhs.ptr;
         factor = rhs.factor;
+        nb_of_copies = rhs.nb_of_copies;
         update_lambda();
     }
     return *this;
@@ -52,6 +56,7 @@ Parameter& Parameter::operator=(const double& rhs)
     *ptr = rhs;
     factor = 1;
     update_lambda();
+    //COUT(get_lambda()());
     return *this;
 }
 
@@ -70,6 +75,12 @@ bool Parameter::operator!=(const Parameter& rhs) const
 {
     return not(*this==rhs);
 }
+
+/*
+double& operator*(const Parameter& s)
+{
+    return *s.ptr;
+}*/
 
 void Parameter::accept(NodeVisitor& v) const
 {

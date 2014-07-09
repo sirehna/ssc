@@ -1,7 +1,7 @@
 /*
  * Sin.cpp
  *
- * \date 1 févr. 2013, 14:24:01
+ * \date 1 fï¿½vr. 2013, 14:24:01
  *  \author cec
  */
 
@@ -23,7 +23,9 @@ Sin::Sin(const NodePtr& n_) : Unary(n_)
 
 void Sin::update_lambda()
 {
-    set_value([this]()->double {return get_factor()*sin(n->get_lambda()());});
+    const auto n_ = n;
+    const auto factor_ = factor;
+    set_value([n_,factor_]()->double {return factor_*sin(n_->get_lambda()());});
 }
 
 std::string Sin::get_operator_name() const
