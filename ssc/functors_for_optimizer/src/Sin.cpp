@@ -23,7 +23,7 @@ Sin::Sin(const NodePtr& n_) : Unary(n_)
 
 void Sin::update_lambda()
 {
-    set_value([n,factor]()->double {return factor*sin(n->get_lambda()());});
+    set_value([this]()->double {return get_factor()*sin(n->get_lambda()());});
 }
 
 std::string Sin::get_operator_name() const

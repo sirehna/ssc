@@ -33,22 +33,22 @@ void Multiply::common_build()
     }
     else
     {
-        set_value([factor,sons]()->double
+        set_value([this]()->double
                   {
                       double ret = 1;
                       for (auto son = sons.begin() ; son != sons.end() ; ++son)
                       {
                           ret *= (*son)->get_lambda()();
                       }
-                      return factor*ret;
+                      return get_factor()*ret;
                    });
     }
 }
 
 void Multiply::remove_ones_and_zeros()
 {
-    auto equal_to_one = [](NodePtr node)->bool{return node->equals_one();};
-    auto equal_to_zero = [](NodePtr node)->bool{return node->is_null();};
+    const auto equal_to_one = [](NodePtr node)->bool{return node->equals_one();};
+    const auto equal_to_zero = [](NodePtr node)->bool{return node->is_null();};
     if (std::any_of(sons.begin(), sons.end(), equal_to_zero)) sons.clear();
     auto new_end = std::remove_if (sons.begin(), sons.end(), equal_to_one );
     sons.erase(new_end,sons.end());
@@ -61,7 +61,7 @@ Multiply::Multiply(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 
 bool Multiply::null_or_one(const NodePtr& node) const
 {
-    return node->is_null() || (node == 1);
+    return node->is_null() or (node == 1);
 }
 
 NodePtr Multiply::diff(const StatePtr& state) const

@@ -12,7 +12,7 @@
 #include "State.hpp"
 
 
-PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) :
 Unary(state_),
 f(new PiecewiseConstant(xmin,xmax,y_values)),
 state(state_)
@@ -22,7 +22,7 @@ state(state_)
 
 void PiecewiseConstantFunctor::update_lambda()
 {
-    auto func = [f,state]()->double
+    auto func = [this]()->double
         {
             return f->f(state->get_lambda()());
         };

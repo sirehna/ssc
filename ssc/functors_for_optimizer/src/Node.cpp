@@ -21,7 +21,7 @@
 #include "Sum.hpp"
 
 
-Node::Node() : factor(1), value([factor]()->double{return factor;})
+Node::Node() : factor(1), value([this]()->double{return factor;})
 {
 
 }
@@ -31,7 +31,7 @@ std::function<double()> Node::get_lambda() const
     return value;
 }
 
-void Node::multiply_by(const double& k)
+void Node::multiply_by(const double k)
 {
     factor *= k;
     update_lambda();

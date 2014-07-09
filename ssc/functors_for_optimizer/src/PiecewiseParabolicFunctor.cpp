@@ -11,7 +11,7 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs) :
+PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<ParabolicCoefficients>& coeffs) :
 Unary(state_),
 f(new ParabolicInterpolation(xmin,xmax,coeffs)),
 xmin_(xmin),
@@ -30,7 +30,7 @@ state(state_)
 
 void PiecewiseParabolicFunctor::update_lambda()
 {
-    auto func = [f,state]()->double
+    auto func = [this]()->double
         {
             return f->f(state->get_lambda()());
         };

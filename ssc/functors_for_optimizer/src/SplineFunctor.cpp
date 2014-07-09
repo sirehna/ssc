@@ -15,7 +15,7 @@
 class SplineFunctor::Impl
 {
     public:
-        Impl(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
+        Impl(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
                 xmin_(xmin),
                 xmax_(xmax),
                 dy(std::vector<ParabolicCoefficients>()),
@@ -30,7 +30,7 @@ class SplineFunctor::Impl
         std::tr1::shared_ptr<State> state;
 };
 
-SplineFunctor::SplineFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+SplineFunctor::SplineFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) :
 Unary(state_),
 pimpl(new Impl(state_, xmin, xmax, y_values))
 {
@@ -39,7 +39,7 @@ pimpl(new Impl(state_, xmin, xmax, y_values))
 
 void SplineFunctor::update_lambda()
 {
-    auto func = [pimpl]()->double
+    auto func = [this]()->double
         {
             return pimpl->f->f(pimpl->state->get_lambda()());
         };

@@ -26,7 +26,7 @@ typedef std::tr1::shared_ptr<Constant> ConstantPtr;
 class Constant : public Nullary
 {
     public:
-        Constant(const double& v);
+        Constant(const double v);
         NodePtr diff(const StatePtr& state) const;
         bool operator==(const Constant& rhs) const;
         bool operator!=(const Constant& rhs) const;

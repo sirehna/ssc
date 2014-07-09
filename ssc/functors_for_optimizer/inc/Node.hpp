@@ -34,7 +34,7 @@ class Node
         virtual ~Node() {}
         std::function<double()> get_lambda() const;
         virtual NodePtr diff(const StatePtr& state) const = 0;
-        void multiply_by(const double& k);
+        void multiply_by(const double k);
         virtual void accept(NodeVisitor& v) const = 0;
         virtual NodePtr clone() const  = 0;
         virtual bool is_null() const = 0;
@@ -63,6 +63,7 @@ class Node
         double get_multiplicative_factor() const;
         virtual bool must_parenthesize() const;
         virtual void update_lambda() = 0;
+        inline double get_factor() const {return factor;}
 
     protected:
         double factor;
