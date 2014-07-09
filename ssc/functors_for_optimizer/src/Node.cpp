@@ -21,7 +21,7 @@
 #include "Sum.hpp"
 
 
-Node::Node() : factor(1), value([factor]()->double{return factor;})
+Node::Node() : factor(1), value([](){return 0.;})
 {
     const auto factor_ = factor;
     value = [factor_]()->double{return factor_;};
