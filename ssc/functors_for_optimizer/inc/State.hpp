@@ -11,7 +11,6 @@ class State : public Parameter
 {
     public:
       State(const std::string& name_, const size_t& index_);
-      //State(const State& rhs);
       NodePtr diff(const StatePtr& state) const;
       std::string get_name() const;
       size_t get_index() const;
@@ -24,8 +23,8 @@ class State : public Parameter
       using Parameter::equals_derived;
       bool equals_derived(const State& rhs) const;
       std::string get_type() const;
-      void update_lambda();
-      State& operator=(const double& a);
+      //void update_lambda();
+      State& operator=(const double a);
 
 
     private:

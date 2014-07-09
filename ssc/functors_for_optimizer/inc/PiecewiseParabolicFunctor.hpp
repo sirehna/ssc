@@ -26,7 +26,7 @@ class State;
 class PiecewiseParabolicFunctor : public Unary
 {
     public:
-        PiecewiseParabolicFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs);
+        PiecewiseParabolicFunctor(const StatePtr& state, const double xmin, const double xmax, const std::vector<ParabolicCoefficients>& coeffs);
         NodePtr diff(const StatePtr& state) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;

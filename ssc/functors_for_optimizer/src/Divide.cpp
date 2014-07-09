@@ -20,14 +20,14 @@ Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 
 void Divide::update_lambda()
 {
-    set_value([n1_,n2_,factor]()->double{return factor*(n1_->get_lambda()()/n2_->get_lambda()());});
+    set_value([this]()->double{return get_factor()*(n1_->get_lambda()()/n2_->get_lambda()());});
 }
 
 NodePtr Divide::diff(const StatePtr& state) const
 {
-    auto n2_dn1dstate = ((n1_->diff(state))*n2_);
-    auto n1_dn2dstate = ((n2_->diff(state))*n1_);
-    auto n2_n2 = (n2_*n2_);
+    const auto n2_dn1dstate = ((n1_->diff(state))*n2_);
+    const auto n1_dn2dstate = ((n2_->diff(state))*n1_);
+    const auto n2_n2 = (n2_*n2_);
 
     if (n2_dn1dstate->is_null())
     {
@@ -86,6 +86,6 @@ bool Divide::must_parenthesize() const
 
 bool Divide::is_constant() const
 {
-    return (n1_->is_constant() && n2_->is_constant());
+    return (n1_->is_constant() and n2_->is_constant());
 }
 

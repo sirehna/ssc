@@ -11,7 +11,7 @@
 #include "State.hpp"
 #include "PiecewiseConstantFunctor.hpp"
 
-PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) :
 Unary(state_),
 f(new LinearInterpolation(xmin,xmax,y_values)),
 xmin_(xmin),
@@ -30,7 +30,7 @@ state(state_)
 
 void PiecewiseLinearFunctor::update_lambda()
 {
-    auto func = [f,state]()->double
+    auto func = [this]()->double
         {
             return f->f(state->get_lambda()());
         };

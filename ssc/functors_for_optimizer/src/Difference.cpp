@@ -16,9 +16,9 @@ Difference::Difference(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 
 void Difference::update_lambda()
 {
-    set_value([n1_,n2_,factor]()->double
+    set_value([this]()->double
     {
-        return factor*(n1_->get_lambda()()-n2_->get_lambda()());
+        return get_factor()*(n1_->get_lambda()()-n2_->get_lambda()());
     });
 }
 
@@ -49,7 +49,7 @@ bool Difference::equals(const Node& rhs) const
 
 bool Difference::equals_derived(const Difference& rhs) const
 {
-    return ((*n1_ == *rhs.n1_) && (*n2_ == *rhs.n2_));
+    return ((*n1_ == *rhs.n1_) and (*n2_ == *rhs.n2_));
 }
 
 std::string Difference::get_type() const
@@ -64,6 +64,6 @@ NodePtr Difference::simplify() const
 
 bool Difference::is_constant() const
 {
-    return is_null() || (n1_->is_constant() && n2_->is_constant());
+    return is_null() or (n1_->is_constant() and n2_->is_constant());
 }
 

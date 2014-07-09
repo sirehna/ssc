@@ -17,7 +17,7 @@ Ln::Ln(const NodePtr& n_) : Unary(n_)
 
 void Ln::update_lambda()
 {
-    set_value([factor,n]()->double {return factor*log(n->get_lambda()());});
+    set_value([this]()->double {return get_factor()*log(n->get_lambda()());});
 }
 
 std::string Ln::get_operator_name() const

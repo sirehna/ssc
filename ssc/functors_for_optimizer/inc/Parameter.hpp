@@ -43,9 +43,6 @@ class Parameter : public Nullary
 
     protected:
         std::tr1::shared_ptr<double> ptr;
-        //friend double& operator*(const Parameter& s);
-        int nb_of_copies;
-
 };
 
 typedef std::tr1::shared_ptr<Parameter> ParameterPtr;

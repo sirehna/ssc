@@ -23,7 +23,7 @@ Cos::Cos(const NodePtr& n_) : Unary(n_)
 
 void Cos::update_lambda()
 {
-    set_value([factor,n]()->double {return factor*cos(n->get_lambda()());});
+    set_value([this]()->double {return get_factor()*cos(n->get_lambda()());});
 }
 
 std::string Cos::get_operator_name() const
