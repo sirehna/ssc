@@ -1,7 +1,7 @@
 /*
  * CubicSplineFunctor.cpp
  *
- * \date 19 févr. 2013, 09:39:25
+ * \date 19 fï¿½vr. 2013, 09:39:25
  *  \author cec
  */
 
@@ -15,7 +15,7 @@
 class SplineFunctor::Impl
 {
     public:
-        Impl(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
+        Impl(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
                 xmin_(xmin),
                 xmax_(xmax),
                 dy(std::vector<ParabolicCoefficients>()),
@@ -30,7 +30,7 @@ class SplineFunctor::Impl
         std::tr1::shared_ptr<State> state;
 };
 
-SplineFunctor::SplineFunctor(const StatePtr& state_, const double xmin, const double xmax, const std::vector<double>& y_values) :
+SplineFunctor::SplineFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state_),
 pimpl(new Impl(state_, xmin, xmax, y_values))
 {
@@ -39,9 +39,10 @@ pimpl(new Impl(state_, xmin, xmax, y_values))
 
 void SplineFunctor::update_lambda()
 {
-    auto func = [this]()->double
+    const auto pimpl_ = pimpl;
+    auto func = [pimpl_]()->double
         {
-            return pimpl->f->f(pimpl->state->get_lambda()());
+            return pimpl_->f->f(pimpl_->state->get_lambda()());
         };
     set_value(func);
     pimpl->dy = pimpl->f->get_parabolic_coefficients();

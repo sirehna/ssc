@@ -1,7 +1,7 @@
 /*
  * Cos.cpp
  *
- * \date 1 févr. 2013, 14:40:27
+ * \date 1 fï¿½vr. 2013, 14:40:27
  *  \author cec
  */
 
@@ -23,7 +23,9 @@ Cos::Cos(const NodePtr& n_) : Unary(n_)
 
 void Cos::update_lambda()
 {
-    set_value([this]()->double {return get_factor()*cos(n->get_lambda()());});
+    const auto factor_ = factor;
+    const auto n_ = n;
+    set_value([factor_,n_]()->double {return factor_*cos(n_->get_lambda()());});
 }
 
 std::string Cos::get_operator_name() const

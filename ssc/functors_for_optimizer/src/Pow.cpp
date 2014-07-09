@@ -23,8 +23,11 @@ Pow::Pow(const NodePtr& n1, const double& n2) : Binary(n1,NodePtr(new Constant(n
 
 std::function<double()> Pow::get_pow_fun() const
 {
-    return [this]()->double{
-        return get_factor()*(pow(n1_->get_lambda()(),n2_->get_lambda()()));};
+    const auto n1__ = n1_;
+    const auto n2__ = n2_;
+    const auto factor_ = factor;
+    return [n1__,n2__,factor_]()->double{
+        return factor_*(pow(n1__->get_lambda()(),n2__->get_lambda()()));};
 }
 
 NodePtr Pow::diff(const StatePtr& state) const
@@ -80,7 +83,7 @@ bool Pow::equals(const Node& rhs) const
 
 bool Pow::equals_derived(const Pow& rhs) const
 {
-    return ((*n1_==*rhs.n1_) and (*n2_==*rhs.n2_));
+    return ((*n1_==*rhs.n1_)&&(*n2_==*rhs.n2_));
 }
 
 std::string Pow::get_type() const
@@ -90,7 +93,7 @@ std::string Pow::get_type() const
 
 NodePtr Pow::simplify() const
 {
-    if ((n1_->get_type() == "Constant") and (n2_->get_type() == "Constant"))
+    if ((n1_->get_type() == "Constant") && (n2_->get_type() == "Constant"))
     {
         return NodePtr(new Constant(get_lambda()()));
     }
@@ -106,6 +109,6 @@ void Pow::update_lambda()
 
 bool Pow::is_constant() const
 {
-    return (n2_->is_null() or (n1_->is_constant() and n2_->is_constant()) or n1_->equals_one());
+    return (n2_->is_null() || (n1_->is_constant() && n2_->is_constant()) || n1_->equals_one());
 }
 

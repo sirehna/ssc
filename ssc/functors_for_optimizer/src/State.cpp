@@ -16,17 +16,18 @@ State::State(const std::string& name_, const size_t& index_) : Parameter(0),
 }
 
 
-//void State::update_lambda()
-//{
-//    value = [this,ptr]() -> double {return get_factor()*(*ptr);};
-//}
-
-State& State::operator=(const double a)
+void State::update_lambda()
 {
-    Parameter::operator=(a);
-    //*ptr = a;
-    //factor = 1;
-    //update_lambda();
+    const auto factor_ = factor;
+    const auto ptr_ = ptr;
+    value = [factor_,ptr_]() -> double {return factor_*(*ptr_);};
+}
+
+State& State::operator=(const double& a)
+{
+    *ptr = a;
+    factor = 1;
+    update_lambda();
     return *this;
 }
 

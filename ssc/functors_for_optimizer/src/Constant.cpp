@@ -1,7 +1,7 @@
 /*
  * Constant.cpp
  *
- * \date 5 févr. 2013, 11:22:54
+ * \date 5 fï¿½vr. 2013, 11:22:54
  *  \author cec
  */
 
@@ -11,7 +11,7 @@
 #include "NodeVisitor.hpp"
 #include "N_ary.hpp"
 
-Constant::Constant(const double v) : val(v)
+Constant::Constant(const double& v) : val(v)
 {
     update_lambda();
 }
@@ -74,7 +74,9 @@ bool Constant::is_negative() const
 
 void Constant::update_lambda()
 {
-    set_value([this]()->double {return get_factor()*val;});
+    const auto factor_ = factor;
+    const auto val_ = val;
+    set_value([factor_,val_]()->double {return factor_*val_;});
 }
 
 bool Constant::is_constant() const

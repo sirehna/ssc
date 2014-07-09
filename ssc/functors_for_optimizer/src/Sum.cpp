@@ -32,14 +32,16 @@ void Sum::common_build()
     }
     else
     {
-        set_value([this]()->double
+        const auto sons_ = sons;
+        const auto factor_ = factor;
+        set_value([sons_,factor_]()->double
                       {
                           double ret = 0;
-                          for (auto son = sons.begin() ; son != sons.end() ; ++son)
+                          for (auto son = sons_.begin() ; son != sons_.end() ; ++son)
                           {
                               ret += (*son)->get_lambda()();
                           }
-                          return get_factor()*ret;
+                          return factor_*ret;
                        });
     }
 }
@@ -79,7 +81,7 @@ NodePtr Sum::clone() const
 bool Sum::is_null() const
 {
     if (sons.empty()) return true;
-    const auto is_not_null = [](NodePtr son)->double{return not(son->is_null());};
+    auto is_not_null = [](NodePtr son)->double{return not(son->is_null());};
     if (std::any_of(sons.begin(), sons.end(), is_not_null)) return false;
                                                             return true;
 }
