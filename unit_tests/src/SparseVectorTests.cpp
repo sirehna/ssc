@@ -20,9 +20,9 @@ TEST_F(SparseVectorTests, should_be_able_to_set_and_retrieve_an_element)
 {
     SparseVector A(3);
     const size_t idx1 = a.random<size_t>();
-    const size_t idx2 = a.random<size_t>().between(idx1, idx1+a.random<size_t>());
-    const size_t idx3 = a.random<size_t>().between(idx2, idx2+a.random<size_t>());
-    const size_t idx4 = a.random<size_t>().between(idx3, idx3+a.random<size_t>());
+    const size_t idx2 = a.random<size_t>().between(idx1, get_max_bound<size_t>());
+    const size_t idx3 = a.random<size_t>().between(idx2, get_max_bound<size_t>());
+    const size_t idx4 = a.random<size_t>().between(idx3, get_max_bound<size_t>());
     const double val1 = a.random<double>();
     const double val2 = a.random<double>();
     const double val3 = a.random<double>();
