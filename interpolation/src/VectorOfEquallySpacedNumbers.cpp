@@ -9,7 +9,6 @@
 #include "VectorOfEquallySpacedNumbersException.hpp"
 #include <sstream>
 
-
 VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double& min_bound, const double& max_bound, const size_t& nb_of_values) :
 _min_bound(min_bound),
 _max_bound(max_bound),
@@ -32,9 +31,9 @@ delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 	{
 		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "too many elements");
 	}
-	vec.reserve(_nb_of_values);
 	if (_nb_of_values>1)
 	{
+        vec.reserve(_nb_of_values);
         for (size_t i = 0 ; i < _nb_of_values ; ++i)
         {
             vec.push_back(_min_bound*(double(_nb_of_values)-1)+double(i)*(_max_bound-_min_bound));
@@ -47,6 +46,7 @@ delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 	    {
 	        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "If there is only one value, min & max need to be equal");
 	    }
+	    delta = 0;
 	    vec.push_back(min_bound);
 	}
 }
