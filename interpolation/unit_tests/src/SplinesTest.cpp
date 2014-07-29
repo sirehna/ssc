@@ -88,7 +88,6 @@ TEST_F(SplinesTest, constructor_should_throw_an_exception_if_there_are_fewer_tha
 	ASSERT_THROW(NaturalSplines(0, 1,an_empty_vector),InterpolatorException);
 	ASSERT_THROW(NaturalSplines(0, 1,a_vector_with_one_element),VectorOfEquallySpacedNumbersException);
 	NaturalSplines(0, 0,a_vector_with_one_element);
-	//ASSERT_NO_THROW(NaturalSplines(0, 0,a_vector_with_one_element));
 }
 
 TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)
