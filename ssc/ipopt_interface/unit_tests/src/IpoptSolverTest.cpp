@@ -136,8 +136,10 @@ TEST_F(IpoptSolverTest, maroff_allocation_problem_does_not_converge)
 
     const auto result = optimize.solve(x0);
 
-    ASSERT_LT(fabs(cos(theta)-result.constraint_values.at(0)),eps);
-    ASSERT_LT(fabs(sin(theta)-result.constraint_values.at(1)),eps);
+    const bool converged = (fabs(cos(theta)-result.constraint_values.at(0)) < eps)
+                       and (fabs(sin(theta)-result.constraint_values.at(1)) < eps);
+
+    ASSERT_FALSE(converged);
 }
 
 TEST_F(IpoptSolverTest, new_allocation_problem_converges)
