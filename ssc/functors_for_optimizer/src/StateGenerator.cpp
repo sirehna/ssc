@@ -1,5 +1,9 @@
 #include "StateGenerator.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
 
 StateGenerator::StateGenerator() : current_index(0), names(std::set<std::string>())
 {

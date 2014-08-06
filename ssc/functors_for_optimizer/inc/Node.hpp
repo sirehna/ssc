@@ -1,8 +1,9 @@
 #ifndef __NODEHPP__
 #define __NODEHPP__
 
+#include "tr1_macros.hpp"
 #include <functional>
-#include <tr1/memory>
+#include TR1INC(memory)
 #include <map>
 #include <vector>
 

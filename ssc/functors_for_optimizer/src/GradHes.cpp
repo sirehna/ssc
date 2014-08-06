@@ -14,6 +14,11 @@
 #include "Multiply.hpp"
 #include "Sum.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 StateList get_states(const NodePtr& objective_function, const std::vector<NodePtr>& constraints)
 {
     StateGetter retrieve_states;

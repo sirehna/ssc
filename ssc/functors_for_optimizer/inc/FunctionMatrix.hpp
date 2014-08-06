@@ -18,7 +18,8 @@
  *  \snippet MODULE_NAME/unit_tests/src/HesTest.cpp HesTest expected output
  */
 #include <vector>
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 #include <functional>
 class Node;
 typedef std::tr1::shared_ptr<Node> NodePtr;

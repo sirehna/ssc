@@ -10,7 +10,9 @@
 
 #include "NodeVisitor.hpp"
 #include <sstream>
-#include <tr1/memory>
+
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 
 /** \author cec
  *  \brief This class was created to

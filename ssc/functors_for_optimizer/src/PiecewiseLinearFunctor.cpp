@@ -42,7 +42,10 @@ void PiecewiseLinearFunctor::update_lambda()
 NodePtr PiecewiseLinearFunctor::diff(const StatePtr& state) const
 {
     if (dy.size() > 1) return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, dy));
-    return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, {dy.front(),dy.front()}));
+    std::vector<double> y(2,0);
+    y[0] = dy.front();
+    y[1] = dy.back();
+    return NodePtr(new PiecewiseConstantFunctor(state, xmin_, xmax_, y));
 }
 
 void PiecewiseLinearFunctor::accept(NodeVisitor& v) const

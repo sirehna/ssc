@@ -35,7 +35,9 @@ TEST_F(SplineFunctorTest, example)
 {
 //! [SplineFunctorTest example]
     auto x = generate.state("x");
-    SplineFunctor functor(x, 0, 10, {3,6,5,8,7,4,5,6,9,72,-56});
+    std::vector<double> v;
+    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);v.push_back(-56);
+    SplineFunctor functor(x, 0, 10, v);
     const auto f = functor.get_lambda();
 //! [SplineFunctorTest example]
 //! [SplineFunctorTest expected output]
@@ -49,7 +51,9 @@ TEST_F(SplineFunctorTest, example)
 TEST_F(SplineFunctorTest, value_should_be_computed_properly)
 {
     auto x = generate.state("x");
-    SplineFunctor pl(x, 0, 10, {2,4,6,1,8,7,9,10,1,4,6});
+    std::vector<double> v;
+    v.push_back(2);v.push_back(4);v.push_back(6);v.push_back(1);v.push_back(8);v.push_back(7);v.push_back(9);v.push_back(10);v.push_back(1);v.push_back(4);v.push_back(6);
+    SplineFunctor pl(x, 0, 10, v);
     const auto f = pl.get_lambda();
     *x = 0.3;
     ASSERT_DOUBLE_EQ(2.3876418091940046, f());
@@ -64,7 +68,9 @@ TEST_F(SplineFunctorTest, value_should_be_computed_properly)
 TEST_F(SplineFunctorTest, first_derivative_should_be_piecewise_parabolic)
 {
     auto x = generate.state("x");
-    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    std::vector<double> v;
+    v.push_back(0);v.push_back(1);v.push_back(4);v.push_back(3);
+    SplineFunctor pl(x, 0, 3, v);
     const auto df_dx = pl.diff(x)->get_lambda();
     const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -88,7 +94,9 @@ TEST_F(SplineFunctorTest, first_derivative_should_be_piecewise_parabolic)
 TEST_F(SplineFunctorTest, second_derivative_should_be_piecewise_linear)
 {
     auto x = generate.state("x");
-    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    std::vector<double> v;
+    v.push_back(0);v.push_back(1);v.push_back(4);v.push_back(3);
+    SplineFunctor pl(x, 0, 3, v);
     const auto d2f_dx2 = pl.diff(x)->diff(x)->get_lambda();
     const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -111,7 +119,9 @@ TEST_F(SplineFunctorTest, second_derivative_should_be_piecewise_linear)
 TEST_F(SplineFunctorTest, third_derivative_should_be_piecewise_constant)
 {
     auto x = generate.state("x");
-    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    std::vector<double> v;
+    v.push_back(0);v.push_back(1);v.push_back(4);v.push_back(3);
+    SplineFunctor pl(x, 0, 3, v);
     const auto d3f_dx3 = pl.diff(x)->diff(x)->diff(x)->get_lambda();
     const double eps = 1e-10;
     for (size_t i = 0 ; i < 1000 ; ++i)
@@ -122,7 +132,7 @@ TEST_F(SplineFunctorTest, third_derivative_should_be_piecewise_constant)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         X = a.random<double>().between(1,2);
-        ASSERT_SMALL_RELATIVE_ERROR(-2*3*2,d3f_dx3(),eps);
+        ASSERT_SMALL_RELATIVE_ERROR(-2*3*2.,d3f_dx3(),eps);
     }
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
@@ -134,7 +144,9 @@ TEST_F(SplineFunctorTest, third_derivative_should_be_piecewise_constant)
 TEST_F(SplineFunctorTest, fourth_derivative_should_be_zero)
 {
     auto x = generate.state("x");
-    SplineFunctor pl(x, 0, 3, {0,1,4,3});
+    std::vector<double> v;
+    v.push_back(0);v.push_back(1);v.push_back(4);v.push_back(3);
+    SplineFunctor pl(x, 0, 3, v);
     const auto d4f_dx4 = pl.diff(x)->diff(x)->diff(x)->diff(x)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
@@ -146,7 +158,9 @@ TEST_F(SplineFunctorTest, fourth_derivative_should_be_zero)
 TEST_F(SplineFunctorTest, should_be_able_to_use_spline_as_regular_functor)
 {
     auto x = generate.state("x");
-    const SplineFunctor pl(x, 0, 10, {3,6,5,8,7,4,5,6,9,72,-56});
+    std::vector<double> v;
+    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);v.push_back(-56);
+    const SplineFunctor pl(x, 0, 10, v);
     const auto F = 2*x+pl;
     const auto f = F->get_lambda();
     *x = 0;

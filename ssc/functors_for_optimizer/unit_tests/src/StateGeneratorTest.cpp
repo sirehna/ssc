@@ -1,6 +1,9 @@
 #include "StateGeneratorTest.hpp"
 #include "StateGenerator.hpp"
-#include <tr1/memory>
+
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
+
 typedef std::tr1::shared_ptr<State> StateShrdPtr;
 
 StateGeneratorTest::StateGeneratorTest() : a(DataGenerator(171429))

@@ -16,6 +16,11 @@
 #include "SerializeReversePolish.hpp"
 #include "Serialize.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 Multiply::Multiply(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();
