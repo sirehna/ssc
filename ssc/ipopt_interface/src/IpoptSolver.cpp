@@ -16,6 +16,11 @@
 #include "IpIpoptApplication.hpp"
 #include "IpoptSolverException.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 class IpoptSolver::IpoptSolverPimpl
 {
     public:

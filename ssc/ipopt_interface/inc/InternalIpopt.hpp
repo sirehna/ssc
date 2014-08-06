@@ -36,7 +36,7 @@
 
 using namespace Ipopt;
 
-class OptimizationResult;
+struct OptimizationResult;
 class IpoptParameters;
 class InternalIpopt : public TNLP
 {
