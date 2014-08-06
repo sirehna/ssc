@@ -16,6 +16,11 @@
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 template <class T> std::string get_string(const T& t)
 {
     std::stringstream ss;
@@ -162,7 +167,16 @@ template <> void MinMaxList<StatePtr>::add_to_val(const StatePtr& v)
     append(val, v);
 }
 
+
+#if defined(_MSC_VER)
+typedef enum VariableType {CONTINUOUS, INTEGER, BINARY};
+#else
 enum class VariableType {CONTINUOUS, INTEGER, BINARY};
+#define CONTINUOUS VariableType::CONTINUOUS
+#define INTEGER VariableType::INTEGER
+#define BINARY VariableType::BINARY
+#endif
+
 
 class OptimizationProblem::OptimizationProblem_pimpl
 {
@@ -198,7 +212,7 @@ class OptimizationProblem::OptimizationProblem_pimpl
             for (auto it = s.begin() ; it != s.end() ; ++it)
             {
                 states.add_to_val(*it);
-                variable_types[(*it)->get_name()] = VariableType::CONTINUOUS;
+                variable_types[(*it)->get_name()] = CONTINUOUS;
                 index[(*it)->get_name()] = k++;
             }
         }
@@ -212,19 +226,19 @@ class OptimizationProblem::OptimizationProblem_pimpl
                    << ", therefore it is considered continuous. It cannot now be declared binary.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            if (variable_types[state->get_name()] == VariableType::BINARY)
+            if (variable_types[state->get_name()] == BINARY)
             {
                 std::stringstream ss;
                 ss << "State '" << state->get_name() << "' was already declared binary: don't declare it twice.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            if (variable_types[state->get_name()] == VariableType::INTEGER)
+            if (variable_types[state->get_name()] == INTEGER)
             {
                 std::stringstream ss;
                 ss << "State '" << state->get_name() << "' was declared integer. It cannot now be declare binary.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            variable_types[state->get_name()] = VariableType::BINARY;
+            variable_types[state->get_name()] = BINARY;
             binary_var_idx.push_back(index[state->get_name()]);
         }
 
@@ -237,19 +251,19 @@ class OptimizationProblem::OptimizationProblem_pimpl
                    << ", therefore it is considered continuous. It cannot now be declared integer.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            if (variable_types[state->get_name()] == VariableType::INTEGER)
+            if (variable_types[state->get_name()] == INTEGER)
             {
                 std::stringstream ss;
                 ss << "State '" << state->get_name() << "' was already declared integer: don't declare it twice.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            if (variable_types[state->get_name()] == VariableType::BINARY)
+            if (variable_types[state->get_name()] == BINARY)
             {
                 std::stringstream ss;
                 ss << "State '" << state->get_name() << "' was declared binary. It cannot now be declare integer.";
                 THROW(__PRETTY_FUNCTION__, OptimizationProblemException, ss.str());
             }
-            variable_types[state->get_name()] = VariableType::INTEGER;
+            variable_types[state->get_name()] = INTEGER;
             integer_var_idx.push_back(index[state->get_name()]);
         }
 
@@ -345,19 +359,19 @@ OptimizationProblem& OptimizationProblem::subject_to(const NodePtr& constraint, 
 
 void OptimizationProblem::check_state_for_bound_setting(const StatePtr& state) const
 {
-    if (pimpl->variable_types[state->get_name()] != VariableType::CONTINUOUS)
+    if (pimpl->variable_types[state->get_name()] != CONTINUOUS)
     {
         std::stringstream ss;
         ss << "State '" << state->get_name() << "' is not continuous (it was declared ";
         switch(pimpl->variable_types[state->get_name()])
         {
-            case VariableType::CONTINUOUS:
+            case CONTINUOUS:
                 ss << "continuous";
                 break;
-            case VariableType::INTEGER:
+            case INTEGER:
                 ss << "integer";
                 break;
-            case VariableType::BINARY:
+            case BINARY:
                 ss << "binary";
                 break;
         }
@@ -523,17 +537,17 @@ bool OptimizationProblem::is_a_minimization_problem() const
 
 bool OptimizationProblem::has_binary_variables() const
 {
-    return pimpl->do_we_have(VariableType::BINARY);
+    return pimpl->do_we_have(BINARY);
 }
 
 bool OptimizationProblem::has_integer_variables() const
 {
-    return pimpl->do_we_have(VariableType::INTEGER);
+    return pimpl->do_we_have(INTEGER);
 }
 
 bool OptimizationProblem::has_continuous_variables() const
 {
-    return pimpl->do_we_have(VariableType::CONTINUOUS);
+    return pimpl->do_we_have(CONTINUOUS);
 }
 
 OptimizationProblem& OptimizationProblem::binary(const StatePtr& state)
