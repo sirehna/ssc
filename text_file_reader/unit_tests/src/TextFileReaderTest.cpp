@@ -14,6 +14,12 @@
 #include <iostream>
 #include <fstream>
 
+#if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
+#define TMPNAM(x,n) tmpnam_s(x,n)
+#else
+#define TMPNAM(x,n) char* c##x = tmpnam(x);(void)c##x;
+#endif
+
 TextFileReaderTest::TextFileReaderTest() : a(DataGenerator(718293))
 {
 }
@@ -37,10 +43,8 @@ TEST_F(TextFileReaderTest, example)
 //! [TextFileReaderTest example]
     char filename1 [L_tmpnam];
     char filename2 [L_tmpnam];
-    char* c1 = tmpnam (filename1);
-    char* c2 = tmpnam (filename2);
-    (void)c1;
-    (void)c2;
+    TMPNAM(filename1,L_tmpnam);
+    TMPNAM(filename2,L_tmpnam);
     std::ofstream file1 (filename1);
     const std::string contents_file1 = a.random<std::string>();
     const std::string contents_file2 = a.random<std::string>();
@@ -64,8 +68,7 @@ TEST_F(TextFileReaderTest, example)
 TEST_F(TextFileReaderTest, should_represent_newlines_correctly)
 {
     char filename [L_tmpnam];
-    char* c = tmpnam (filename);
-    (void) c;
+    TMPNAM(filename,L_tmpnam);
     std::ofstream file (filename);
     const std::string contents_file = a.random<std::string>()()
                                              + std::string("\n")
