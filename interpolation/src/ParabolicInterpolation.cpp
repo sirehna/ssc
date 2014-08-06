@@ -11,6 +11,10 @@
 #define max(a,b) (a)>(b)?a:b
 #include <math.h>
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 ParabolicInterpolation::ParabolicInterpolation(const double& xmin_,
         const double& xmax_,
         const std::vector<ParabolicCoefficients>& coeffs) : ConstantStepInterpolator(xmin_,xmax_,std::vector<double>(coeffs.size()+1,0)), coeffs_(coeffs)

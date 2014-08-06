@@ -8,6 +8,10 @@
 typedef long int integer;
 typedef double doublereal;
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 extern "C"
 {
     int dgtsv_(integer *n, integer *nrhs, doublereal *dl,
@@ -187,8 +191,13 @@ std::pair<double,double> Splines::find_position_and_value_of_minimum()
 
 std::vector<double> Splines::compute_second_derivative() const
 {
-	if (n==2) return {0,0};
-	if (n==3) return {0,3./2./h/h*(y[0]-2.*y[1]+y[2]),0};
+	if (n==2) return std::vector<double>(2,0);
+	if (n==3)
+    {
+        std::vector<double> ret(3,0);
+        ret[1] = 3./2./h/h*(y[0]-2.*y[1]+y[2]);
+        return ret;
+    }
 	integer *n_ = new integer;
 	integer *nrhs = new integer;
 	*n_ = (integer)n-2;

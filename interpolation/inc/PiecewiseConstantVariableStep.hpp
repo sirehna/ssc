@@ -13,6 +13,10 @@
 #include "Exception.hpp"
 #include "VariableStepInterpolation.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 class PiecewiseConstantVariableStepException : public Exception
 {
     public:
