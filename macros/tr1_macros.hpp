@@ -35,7 +35,7 @@
     #define TR1NAMESPACE 1
 #elif defined(_MSC_VER)
     /* Microsoft Visual Studio. --------------------------------- */
-    #define TR1INC(x) <tr1/x>
+    #define TR1INC(x) <x>
     #define TR1(x) std::tr1::x
     #define TR1NAMESPACE 1
 #elif defined(__PGI)
