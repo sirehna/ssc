@@ -8,7 +8,7 @@ set_source_files_properties(src/sir_rand.c PROPERTIES LANGUAGE CXX ) # Force the
 
 include_directories(inc)
 
-add_library (${PROJECT_NAME}_static STATIC ${SRC})
+add_library (${PROJECT_NAME}_object OBJECT ${SRC})
 
 set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc   CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
 
