@@ -173,7 +173,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_betwee
     {
         const double lower_bound = a.random<double>();
         const double upper_bound = a.random<double>().greater_than(lower_bound);
-        std::vector<double> v = a.random_vector_of<double>().between(lower_bound,upper_bound)();
+        std::vector<double> v = a.random_vector_of<double>().between(lower_bound,upper_bound);
         for (std::vector<double>::const_iterator it = v.begin() ; it != v.end() ; ++it)
         {
             ASSERT_LE(*it, upper_bound);
