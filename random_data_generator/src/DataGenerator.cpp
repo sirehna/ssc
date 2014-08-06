@@ -2,11 +2,19 @@
 #include "sir_rand.h"
 #include <iostream>
 #include <math.h> // And *not* cmath: otherwise isnan won't work
+#include <cstddef> // size_t
 
 #define MAX_RAND_INT 2147483647
 
 #define MIN(a,b) (a<b) ? a : b;
 #define MAX(a,b) (a>b) ? a : b;
+
+#if defined(_MSC_VER)
+    /* Microsoft Visual Studio. --------------------------------- */
+    #include <float.h> // _isnan
+    #define isnan _isnan
+    #define NAN 0x7F800001
+#endif
 
 template <typename T> bool outside_forbidden_zone(const T& forbidden_min, const T& value_to_test, const T& forbidden_max)
 {
@@ -29,7 +37,7 @@ double DataGenerator::random_double(const double& a, const double& b) const
     const double r = sir_rand_u01();
     return (b-a)*r + a;
 }
-
+/*
 template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::between(const double& t1, const double& t2)
 {
     min_bound = t1;
@@ -48,7 +56,7 @@ template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::
                 min_bound = t;
             }
             return *this;
-        }
+        }*/
 
 int DataGenerator::random_int(const int& a, const int& b) const
 {
@@ -196,27 +204,6 @@ template <> bool TypedScalarDataGenerator<bool>::get() const
 template <> std::string TypedScalarDataGenerator<std::string>::get() const
 {
     return random_string();
-}
-
-template <> std::vector<double> TypedVectorDataGenerator<double>::get() const
-        {
-                    std::vector<double> ret;
-                    ret.reserve(size);
-                    TypedScalarDataGenerator<double> r(DataGenerator(random<size_t>()));
-                                r.between(min_bound, max_bound);
-
-                                for (size_t i = 0 ; i < size ; ++i)
-                                {
-                                    ret.push_back(r());
-                                    r.between(min_bound, max_bound);
-                                }
-                    return ret;
-                }
-
-
-template <> std::vector<size_t> TypedVectorDataGenerator<size_t>::get() const
-{
-    return vector_of_random_size_ts(size, min_bound, max_bound);
 }
 
 template<> double get_min_bound<double>()

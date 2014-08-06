@@ -11,6 +11,10 @@
 #include <vector>
 #include <set>
 
+#if defined(_MSC_VER)
+    /* Microsoft Visual Studio. --------------------------------- */
+    #define not !
+#endif
 
 template <class C> class TypedScalarDataGenerator;
 template <class C> class TypedVectorDataGenerator;
@@ -80,7 +84,21 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
         {
         }
 
-        T operator()()
+        T operator()(void)
+        {
+            #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
+            return msvc_bullshit();
+            #else
+            T tmp = get();
+            min_bound = get_min_bound<T>();
+            max_bound = get_max_bound<T>();
+            negated = false;
+            return tmp;
+            #endif
+            
+        }
+        #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
+        T msvc_bullshit()
         {
             T tmp = get();
             min_bound = get_min_bound<T>();
@@ -88,10 +106,15 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
             negated = false;
             return tmp;
         }
+        #endif
 
         operator T()
 		{
-        	return this->operator()();
+            #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
+            return msvc_bullshit();
+            #else
+            return this->operator()();
+            #endif
 		}
 
         TypedScalarDataGenerator& greater_than(const T& t)
@@ -181,9 +204,29 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
             return *this;
         }
 
-        std::vector<T> operator()()
+    private:
+        
+        std::vector<T> get_vector() const
+            {
+                std::vector<T> ret;
+                ret.reserve(size);
+                TypedScalarDataGenerator<T> r = random<T>();                
+                r.between(min_bound, max_bound)
+                 .outside(forbidden_min,forbidden_max);
+                for (size_t i = 0 ; i < size ; ++i)
+                {
+                    #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
+                    ret.push_back(random<T>().msvc_bullshit());
+                    #else
+                    ret.push_back(random<T>()());
+                    #endif
+                }
+                return ret;
+            }
+    public:
+        std::vector<T> get_impl()
         {
-            std::vector<T> tmp = get();
+            std::vector<T> tmp = get_vector();
             negated = false;
             min_bound = get_min_bound<T>();
             max_bound = get_max_bound<T>();
@@ -192,10 +235,10 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
 
         operator std::vector<T>()
 		{
-			return this->operator()();
+			return get_impl();
 		}
 
-        TypedVectorDataGenerator& greater_than(const T& t)
+        TypedVectorDataGenerator<T>& greater_than(const T& t)
         {
             if (negated)
             {
@@ -237,19 +280,6 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
         }
 
     private:
-        std::vector<T> get() const
-        {
-            std::vector<T> ret;
-            ret.reserve(size);
-            TypedScalarDataGenerator<T> r = random<T>();
-            r.between(min_bound, max_bound)
-             .outside(forbidden_min,forbidden_max);
-            for (size_t i = 0 ; i < size ; ++i)
-            {
-                ret.push_back(random<T>()());
-            }
-            return ret;
-        }
         size_t size;
         T min_bound;
         T max_bound;
@@ -258,13 +288,6 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
 };
 
 template <> double TypedScalarDataGenerator<double>::operator()();
-
-template <> std::vector<double> TypedVectorDataGenerator<double>::get() const;
-template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::between(const double& t1, const double& t2);
-template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::greater_than(const double& t);
-
-
-template <> std::vector<size_t> TypedVectorDataGenerator<size_t>::get() const;
 
 template <class T> class TypedSetDataGenerator : public DataGenerator
 {
