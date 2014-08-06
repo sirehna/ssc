@@ -58,14 +58,18 @@ TEST_F(IpoptSolverTest, example)
     IpoptParameters ipopt_parameters;
     ipopt_parameters.print_level = 5;
     IpoptSolver optimize(hs71,ipopt_parameters);
-    const std::vector<double> x0({1,5,5,1});
+    std::vector<double> x0(4,0);
+    x0[0] = 1;
+    x0[1] = 5;
+    x0[2] = 5;
+    x0[3] = 1;
     auto result = optimize.solve(x0);
 //! [IpoptSolverTest example]
 //! [IpoptSolverTest expected output]
     const double eps = 1e-6;
 
     ASSERT_EQ(4, result.state_values.size());
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x1"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1.,result.state_values["x1"],eps);
     ASSERT_SMALL_RELATIVE_ERROR(4.74299963,result.state_values["x2"],eps);
     ASSERT_SMALL_RELATIVE_ERROR(3.82114998,result.state_values["x3"],eps);
     ASSERT_SMALL_RELATIVE_ERROR(1.37940829,result.state_values["x4"],eps);
@@ -79,12 +83,14 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
     IpoptParameters ipopt_parameters;
     ipopt_parameters.print_level = 5;
     IpoptSolver optimize(rosenbrock, ipopt_parameters);
-
-    auto result = optimize.solve({5,3});
+    std::vector<double> x0(2,0);
+    x0[0] = 5;
+    x0[1] = 3;
+    auto result = optimize.solve(x0);
     ASSERT_EQ(2, result.state_values.size());
     const double eps = 1e-6;
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x1"],eps);
-    ASSERT_SMALL_RELATIVE_ERROR(1,result.state_values["x2"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1.,result.state_values["x1"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(1.,result.state_values["x2"],eps);
 }
 
 TEST_F(IpoptSolverTest, test_01)
@@ -93,11 +99,11 @@ TEST_F(IpoptSolverTest, test_01)
     Parameter c0(2);
     pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
-    const std::vector<double> x0({1});
+    const std::vector<double> x0(1,1);
     const double eps = 1e-3;
     c0 = 2;
     auto result = optimize.solve(x0);
-    ASSERT_SMALL_RELATIVE_ERROR(sqrt(2),result.state_values["x1"],eps);
+    ASSERT_SMALL_RELATIVE_ERROR(sqrt(2.),result.state_values["x1"],eps);
 }
 
 TEST_F(IpoptSolverTest, test_02)
@@ -106,7 +112,7 @@ TEST_F(IpoptSolverTest, test_02)
     Parameter c0(2);
     pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
-    const std::vector<double> x0({1});
+    const std::vector<double> x0(1,1);
     const double eps = 1e-3;
     for (size_t i = 0 ; i < 20 ; ++i)
     {
@@ -131,7 +137,11 @@ TEST_F(IpoptSolverTest, maroff_allocation_problem_does_not_converge)
        .bound_state(0,x3,PI)
        .bound_state(0,x4,PI);
     IpoptSolver optimize(pb);
-    const std::vector<double> x0({0.5,0.5,PI/2,PI/2});
+    std::vector<double> x0(4,0);
+    x0[0] = 0.5;
+    x0[1] = 0.5;
+    x0[2] = PI/2;
+    x0[3] = PI/2;
     const double eps = 1e-3;
 
     const auto result = optimize.solve(x0);
@@ -157,7 +167,11 @@ TEST_F(IpoptSolverTest, new_allocation_problem_converges)
        .bound_state(0,x3,PI)
        .bound_state(0,x4,PI);
     IpoptSolver optimize(pb);
-    const std::vector<double> x0({0.5,0.5,PI/2,PI/2});
+    std::vector<double> x0(4,0);
+    x0[0] = 0.5;
+    x0[1] = 0.5;
+    x0[2] = PI/2;
+    x0[3] = PI/2;
     const double eps = 1e-3;
     auto result = optimize.solve(x0);
 

@@ -8,11 +8,12 @@
 #ifndef IPOPTSOLVER_HPP_
 #define IPOPTSOLVER_HPP_
 
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 #include <vector>
 #include "IpoptParameters.hpp"
 
-class OptimizationResult;
+struct OptimizationResult;
 class OptimizationProblem;
 
 
@@ -35,7 +36,7 @@ class IpoptSolver
         OptimizationResult solve(const std::vector<double>& starting_point);
 
     private:
-        struct IpoptSolverPimpl;
+        class IpoptSolverPimpl;
         std::tr1::shared_ptr<IpoptSolverPimpl> pimpl;
 };
 
