@@ -29,8 +29,10 @@ void PiecewiseConstantVariableStepTest::TearDown()
 TEST_F(PiecewiseConstantVariableStepTest, example)
 {
 //! [PiecewiseConstantVariableStepTest example]
-    const std::vector<double> x = {2,5,7,7.5,11,13};
-    const std::vector<double> y = {2,2,5,4  ,8 ,7};
+    std::vector<double> x;
+    x.push_back(2);x.push_back(5);x.push_back(7);x.push_back(7.5);x.push_back(11);x.push_back(13);
+    std::vector<double> y;
+    y.push_back(2);y.push_back(2);y.push_back(5);y.push_back(4); y.push_back(8);y.push_back(7);
     PiecewiseConstantVariableStep<double> interpolate(x,y);
 //! [PiecewiseConstantVariableStepTest example]
 //! [PiecewiseConstantVariableStepTest expected output]

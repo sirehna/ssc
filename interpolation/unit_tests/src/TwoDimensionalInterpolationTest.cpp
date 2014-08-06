@@ -30,16 +30,27 @@ TEST_F(TwoDimensionalSplinesTest, example)
 {
 //! [TwoDimensionalSplinesTest example]
     std::vector<std::vector<double> > M;
-    M.push_back({2,5,10,17,26,37,50,65,82,101});
-    M.push_back({5,8,13,20,29,40,53,68,85,104});
-    M.push_back({10,13,18,25,34,45,58,73,90,109});
-    M.push_back({17,20,25,32,41,52,65,80,97,116});
-    M.push_back({26,29,34,41,50,61,74,89,106,125});
-    M.push_back({37,40,45,52,61,72,85,100,117,136});
-    M.push_back({50,53,58,65,74,85,98,113,130,149});
-    M.push_back({65,68,73,80,89,100,113,128,145,164});
-    M.push_back({82,85,90,97,106,117,130,145,162,181});
-    M.push_back({101,104,109,116,125,136,149,164,181,200});
+    std::vector<double> v;
+    v.push_back(2);v.push_back(5);v.push_back(10);v.push_back(17);v.push_back(26);v.push_back(37);v.push_back(50);v.push_back(65);v.push_back(82);v.push_back(101);
+    M.push_back(v);v.clear();
+    v.push_back(5);v.push_back(8);v.push_back(13);v.push_back(20);v.push_back(29);v.push_back(40);v.push_back(53);v.push_back(68);v.push_back(85);v.push_back(104);
+    M.push_back(v);v.clear();
+    v.push_back(10);v.push_back(13);v.push_back(18);v.push_back(25);v.push_back(34);v.push_back(45);v.push_back(58);v.push_back(73);v.push_back(90);v.push_back(109);
+    M.push_back(v);v.clear();
+    v.push_back(17);v.push_back(20);v.push_back(25);v.push_back(32);v.push_back(41);v.push_back(52);v.push_back(65);v.push_back(80);v.push_back(97);v.push_back(116);
+    M.push_back(v);v.clear();
+    v.push_back(26);v.push_back(29);v.push_back(34);v.push_back(41);v.push_back(50);v.push_back(61);v.push_back(74);v.push_back(89);v.push_back(106);v.push_back(125);
+    M.push_back(v);v.clear();
+    v.push_back(37);v.push_back(40);v.push_back(45);v.push_back(52);v.push_back(61);v.push_back(72);v.push_back(85);v.push_back(100);v.push_back(117);v.push_back(136);
+    M.push_back(v);v.clear();
+    v.push_back(50);v.push_back(53);v.push_back(58);v.push_back(65);v.push_back(74);v.push_back(85);v.push_back(98);v.push_back(113);v.push_back(130);v.push_back(149);
+    M.push_back(v);v.clear();
+    v.push_back(65);v.push_back(68);v.push_back(73);v.push_back(80);v.push_back(89);v.push_back(100);v.push_back(113);v.push_back(128);v.push_back(145);v.push_back(164);
+    M.push_back(v);v.clear();
+    v.push_back(82);v.push_back(85);v.push_back(90);v.push_back(97);v.push_back(106);v.push_back(117);v.push_back(130);v.push_back(145);v.push_back(162);v.push_back(181);
+    M.push_back(v);v.clear();
+    v.push_back(101);v.push_back(104);v.push_back(109);v.push_back(116);v.push_back(125);v.push_back(136);v.push_back(149);v.push_back(164);v.push_back(181);v.push_back(200);
+    M.push_back(v);
 //! [TwoDimensionalSplinesTest example]
 //! [TwoDimensionalSplinesTest expected output]
 
@@ -98,16 +109,27 @@ TEST_F(TwoDimensionalSplinesTest, should_work_like_matlabs_griddedInterpolant)
 {
 //! [TwoDimensionalSplinesTest example]
     std::vector<std::vector<double> > M;
-    M.push_back({3,4,5,6,7,8,9,10,11,12});
-    M.push_back({5,6,7,8,9,10,11,12,13,14});
-    M.push_back({7,8,9,10,11,12,13,14,15,16});
-    M.push_back({9,10,11,12,13,14,15,16,17,18});
-    M.push_back({11,12,13,14,15,16,17,18,19,20});
-    M.push_back({13,14,15,16,17,18,19,20,21,22});
-    M.push_back({15,16,17,18,19,20,21,22,23,24});
-    M.push_back({17,18,19,20,21,22,23,24,25,26});
-    M.push_back({19,20,21,22,23,24,25,26,27,28});
-    M.push_back({21,22,23,24,25,26,27,28,29,30});
+    std::vector<double> v;
+    v.push_back(3);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(7);v.push_back(8);v.push_back(9);v.push_back(10);v.push_back(11);v.push_back(12);
+    M.push_back(v);v.clear();
+    v.push_back(5);v.push_back(6);v.push_back(7);v.push_back(8);v.push_back(9);v.push_back(10);v.push_back(11);v.push_back(12);v.push_back(13);v.push_back(14);
+    M.push_back(v);v.clear();
+    v.push_back(7);v.push_back(8);v.push_back(9);v.push_back(10);v.push_back(11);v.push_back(12);v.push_back(13);v.push_back(14);v.push_back(15);v.push_back(16);
+    M.push_back(v);v.clear();
+    v.push_back(9);v.push_back(10);v.push_back(11);v.push_back(12);v.push_back(13);v.push_back(14);v.push_back(15);v.push_back(16);v.push_back(17);v.push_back(18);
+    M.push_back(v);v.clear();
+    v.push_back(11);v.push_back(12);v.push_back(13);v.push_back(14);v.push_back(15);v.push_back(16);v.push_back(17);v.push_back(18);v.push_back(19);v.push_back(20);
+    M.push_back(v);v.clear();
+    v.push_back(13);v.push_back(14);v.push_back(15);v.push_back(16);v.push_back(17);v.push_back(18);v.push_back(19);v.push_back(20);v.push_back(21);v.push_back(22);
+    M.push_back(v);v.clear();
+    v.push_back(15);v.push_back(16);v.push_back(17);v.push_back(18);v.push_back(19);v.push_back(20);v.push_back(21);v.push_back(22);v.push_back(23);v.push_back(24);
+    M.push_back(v);v.clear();
+    v.push_back(17);v.push_back(18);v.push_back(19);v.push_back(20);v.push_back(21);v.push_back(22);v.push_back(23);v.push_back(24);v.push_back(25);v.push_back(26);
+    M.push_back(v);v.clear();
+    v.push_back(19);v.push_back(20);v.push_back(21);v.push_back(22);v.push_back(23);v.push_back(24);v.push_back(25);v.push_back(26);v.push_back(27);v.push_back(28);
+    M.push_back(v);v.clear();
+    v.push_back(21);v.push_back(22);v.push_back(23);v.push_back(24);v.push_back(25);v.push_back(26);v.push_back(27);v.push_back(28);v.push_back(29);v.push_back(30);
+    M.push_back(v);v.clear();
 //! [TwoDimensionalSplinesTest example]
 //! [TwoDimensionalSplinesTest expected output]
     TwoDimensionalInterpolation<LinearInterpolation> spline(1,10,1,10,M);
@@ -124,16 +146,17 @@ TEST_F(TwoDimensionalSplinesTest, should_work_for_asymetric_bounds)
 {
 //! [TwoDimensionalSplinesTest example]
     std::vector<std::vector<double> > M;
-    M.push_back({883,969,1059,1153,1251,1353,1459,1569,1683,1801});
-    M.push_back({886,972,1062,1156,1254,1356,1462,1572,1686,1804});
-    M.push_back({891,977,1067,1161,1259,1361,1467,1577,1691,1809});
-    M.push_back({898,984,1074,1168,1266,1368,1474,1584,1698,1816});
-    M.push_back({907,993,1083,1177,1275,1377,1483,1593,1707,1825});
-    M.push_back({918,1004,1094,1188,1286,1388,1494,1604,1718,1836});
-    M.push_back({931,1017,1107,1201,1299,1401,1507,1617,1731,1849});
-    M.push_back({946,1032,1122,1216,1314,1416,1522,1632,1746,1864});
-    M.push_back({963,1049,1139,1233,1331,1433,1539,1649,1763,1881});
-    M.push_back({982,1068,1158,1252,1350,1452,1558,1668,1782,1900});
+    std::vector<double> v;
+    v.push_back(883);v.push_back(969);v.push_back(1059);v.push_back(1153);v.push_back(1251);v.push_back(1353);v.push_back(1459);v.push_back(1569);v.push_back(1683);v.push_back(1801);M.push_back(v);v.clear();
+    v.push_back(886);v.push_back(972);v.push_back(1062);v.push_back(1156);v.push_back(1254);v.push_back(1356);v.push_back(1462);v.push_back(1572);v.push_back(1686);v.push_back(1804);M.push_back(v);v.clear();
+    v.push_back(891);v.push_back(977);v.push_back(1067);v.push_back(1161);v.push_back(1259);v.push_back(1361);v.push_back(1467);v.push_back(1577);v.push_back(1691);v.push_back(1809);M.push_back(v);v.clear();
+    v.push_back(898);v.push_back(984);v.push_back(1074);v.push_back(1168);v.push_back(1266);v.push_back(1368);v.push_back(1474);v.push_back(1584);v.push_back(1698);v.push_back(1816);M.push_back(v);v.clear();
+    v.push_back(907);v.push_back(993);v.push_back(1083);v.push_back(1177);v.push_back(1275);v.push_back(1377);v.push_back(1483);v.push_back(1593);v.push_back(1707);v.push_back(1825);M.push_back(v);v.clear();
+    v.push_back(918);v.push_back(1004);v.push_back(1094);v.push_back(1188);v.push_back(1286);v.push_back(1388);v.push_back(1494);v.push_back(1604);v.push_back(1718);v.push_back(1836);M.push_back(v);v.clear();
+    v.push_back(931);v.push_back(1017);v.push_back(1107);v.push_back(1201);v.push_back(1299);v.push_back(1401);v.push_back(1507);v.push_back(1617);v.push_back(1731);v.push_back(1849);M.push_back(v);v.clear();
+    v.push_back(946);v.push_back(1032);v.push_back(1122);v.push_back(1216);v.push_back(1314);v.push_back(1416);v.push_back(1522);v.push_back(1632);v.push_back(1746);v.push_back(1864);M.push_back(v);v.clear();
+    v.push_back(963);v.push_back(1049);v.push_back(1139);v.push_back(1233);v.push_back(1331);v.push_back(1433);v.push_back(1539);v.push_back(1649);v.push_back(1763);v.push_back(1881);M.push_back(v);v.clear();
+    v.push_back(982);v.push_back(1068);v.push_back(1158);v.push_back(1252);v.push_back(1350);v.push_back(1452);v.push_back(1558);v.push_back(1668);v.push_back(1782);v.push_back(1900);M.push_back(v);v.clear();
     TwoDimensionalInterpolation<LinearInterpolation> spline(1,10,21,30,M);
     ASSERT_DOUBLE_EQ(883, spline.f(1,21));
     ASSERT_DOUBLE_EQ(886, spline.f(2,21));

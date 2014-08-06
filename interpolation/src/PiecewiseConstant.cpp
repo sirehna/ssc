@@ -9,6 +9,10 @@
 #include "PiecewiseConstantException.hpp"
 #include <cmath>
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 PiecewiseConstant::PiecewiseConstant(const double& xmin_, const double& xmax_, const std::vector<double>& y_) :
 ConstantStepInterpolator(xmin_,xmax_,y_)
 {

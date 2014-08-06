@@ -8,6 +8,10 @@
 #include "IndexFinder.hpp"
 #include <sstream>
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 void IndexFinder::check_x_is_strictly_increasing(const std::vector<double>& x)
 {
     for (int i = 1; i < n; ++i)

@@ -8,6 +8,11 @@
 #include "tr1_macros.hpp"
 #include TR1INC(memory)
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 class ParabolicRunoutSplines;
 #ifndef TWODIMENSIONALSPLINES_HPP_
 #define TWODIMENSIONALSPLINES_HPP_

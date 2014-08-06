@@ -42,7 +42,11 @@ void SplinesTest::TearDown()
 TEST_F(SplinesTest, example)
 {
 //! [SplineTest example]
-	const std::vector<double> y = {0,9,36,81};
+	std::vector<double> y(4,0);
+    y[0] = 0;
+    y[1] = 9;
+    y[2] = 36;
+    y[3] = 81;
 	NaturalSplines spline(0,9,y);
 //! [SplineTest example]
 //! [SplineTest expected output]
@@ -69,7 +73,14 @@ TEST_F(SplinesTest, value_at_the_interpolation_points_should_be_the_same_as_that
 TEST_F(SplinesTest, interpolated_value_should_lie_between_the_value_of_the_spline_at_the_surrounding_knots)
 {
 	const VectorOfEquallySpacedNumbers x(10,16,7);
-	const std::vector<double> y = {12,23,34,45,56,67,78};
+	std::vector<double> y(7,0);
+    y[0] = 12;
+    y[1] = 23;
+    y[2] = 34;
+    y[3] = 45;
+    y[4] = 56;
+    y[5] = 67;
+    y[6] = 78;
 	NaturalSplines spline(x.get_min(),x.get_max(),y);
 	for (size_t i = 0 ; i < x.size()-1 ; ++i)
 	{
@@ -100,7 +111,11 @@ TEST_F(SplinesTest, should_be_able_to_build_an_empty_spline)
 
 TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
 {
-	const std::vector<double> y = {0,9,36,81};
+	std::vector<double> y(4,0);
+    y[0] = 0;
+    y[1] = 9;
+    y[2] = 36;
+    y[3] = 81;
 	NaturalSplines spline(0,9,y);
 	ASSERT_EQ(9,spline.f(3));
 	NaturalSplines empty;
@@ -110,21 +125,39 @@ TEST_F(SplinesTest, should_be_able_to_assign_a_spline)
 
 TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_greater_than_max_bound)
 {
-	const std::vector<double> y = {0,9,36,81};
+	std::vector<double> y(4,0);
+    y[0] = 0;
+    y[1] = 9;
+    y[2] = 36;
+    y[3] = 81;
 	NaturalSplines spline(0,4,y);
 	ASSERT_NO_THROW(spline.f(a.random<double>().greater_than(123456789)));
 }
 
 TEST_F(SplinesTest, bug1_index_is_incorrect_when_value_is_much_lower_than_min_bound)
 {
-	const std::vector<double> y = {0,9,36,81};
+	std::vector<double> y(4,0);
+    y[0] = 0;
+    y[1] = 9;
+    y[2] = 36;
+    y[3] = 81;
 	NaturalSplines spline(0,4,y);
 	ASSERT_NO_THROW(spline.f(a.random<double>().no().greater_than(-123456789)));
 }
 
 TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 {
-    const std::vector<double> y = {1.0000,0.9397,0.7660,0.5000,0.1736,-0.1736,-0.5000,-0.7660,-0.9397,-1.0000};
+    std::vector<double> y(10,0);
+    y[0] = 1.0000;
+    y[1] = 0.9397;
+    y[2] = 0.7660;
+    y[3] = 0.5000;
+    y[4] = 0.1736;
+    y[5] = -0.1736;
+    y[6] = -0.5000;
+    y[7] = -0.7660;
+    y[8] = -0.9397;
+    y[9] = -1.0000;
     const double x0 = -1e-16;
     const double xmin = -PI;
     const double xmax = 0;
@@ -137,7 +170,12 @@ TEST_F(SplinesTest, bug_2_range_check_exception_with_certain_inputs)
 
 TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
 {
-    NaturalSplines s(0,3,{0,1,4,3});
+    std::vector<double> v(4,0);
+    v[0] = 0;
+    v[1] = 1;
+    v[2] = 4;
+    v[3] = 3;
+    NaturalSplines s(0,3,v);
     ASSERT_DOUBLE_EQ(0,s.f(0));
     ASSERT_DOUBLE_EQ(0.6250000000e-1,s.f(0.25));
     ASSERT_DOUBLE_EQ(0.2,s.f(0.5));
@@ -181,7 +219,19 @@ TEST_F(SplinesTest, should_be_able_to_compute_position_of_minimum)
         const double xmax = a.random<double>().greater_than(xmin);
         const double xmid = (xmin+xmax)/2.;
         const double ymin = a.random<double>().between(-1000,0);
-        NaturalSplines s(xmin,xmax,{5,4,3,2,1,ymin,1,2,3,4,5});
+        std::vector<double> y(11,0);
+        y[0] = 5;
+        y[1] = 4;
+        y[2] = 3;
+        y[3] = 2;
+        y[4] = 1;
+        y[5] = ymin;
+        y[6] = 1;
+        y[7] = 2;
+        y[8] = 3;
+        y[9] = 4;
+        y[10] = 5;
+        NaturalSplines s(xmin,xmax,y);
         const auto minimum = s.find_position_and_value_of_minimum();
         ASSERT_SMALL_RELATIVE_ERROR(xmid, minimum.first, EPS);
         ASSERT_SMALL_RELATIVE_ERROR(ymin, minimum.second, EPS);
@@ -192,13 +242,36 @@ TEST_F(SplinesTest, bug_in_min_computation)
 {
     const double xmin = -9.101;
     const double xmax = -xmin;
-    NaturalSplines s(xmin,xmax,{1481633085564.5,1086836315872.4,786986140477.4,582082559379.5,472125572578.9,457115180075.4,537051381869.0,711934177959.80126953,981763568347.75585938,1346539553032.8674316,1806262132015.1352539});
+    std::vector<double> v(11);
+    v[0] = 1481633085564.5;
+    v[1] = 1086836315872.4;
+    v[2] = 786986140477.4;
+    v[3] = 582082559379.5;
+    v[4] = 472125572578.9;
+    v[5] = 457115180075.4;
+    v[6] = 537051381869.0;
+    v[7] = 711934177959.80126953;
+    v[8] = 981763568347.75585938;
+    v[9] = 1346539553032.8674316;
+    v[10] = 1806262132015.1352539;
+    NaturalSplines s(xmin,xmax,v);
     ASSERT_SMALL_RELATIVE_ERROR(-0.62150157748417023, s.find_position_and_value_of_minimum().first, EPS);
 }
 
 TEST_F(SplinesTest, bug2_in_min_computation)
 {
-    const std::vector<double> y = {15.11546161820128418, 11.570972870142302246, 9.1584638137532995605, 7.8779344490342663574, 7.7293847759852185059, 8.7128147946061462402, 10.828224504897049561, 14.075613906857929688, 18.45498300048878418, 23.966331785789619141, 30.60966026276043457};
+    std::vector<double> y(11,0);
+    y[0] = 15.11546161820128418;
+    y[1] = 11.570972870142302246;
+    y[2] = 9.1584638137532995605;
+    y[3] = 7.8779344490342663574;
+    y[4] = 7.7293847759852185059;
+    y[5] = 8.7128147946061462402;
+    y[6] = 10.828224504897049561;
+    y[7] = 14.075613906857929688;
+    y[8] = 18.45498300048878418;
+    y[9] = 23.966331785789619141;
+    y[10] = 30.60966026276043457;
     const double xmin = -9.1099999999999905498;
     const double xmax = -xmin;
     NaturalSplines s(xmin,xmax,y);
