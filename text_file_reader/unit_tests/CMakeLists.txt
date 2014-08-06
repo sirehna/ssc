@@ -15,5 +15,3 @@ include_directories(${validate_using_csv_files_INCLUDE_DIRS})
 add_library(${PROJECT_NAME} OBJECT ${SRC})
 
 ADD_DEFINITIONS("-DPATH_TO_ACCEPTANCE_TESTS=${PATH_TO_ACCEPTANCE_TESTS}")
-
-ADD_DEPENDENCIES(${PROJECT_NAME} googlemock)
