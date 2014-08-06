@@ -9,7 +9,7 @@
     #define NAN 0x7F800001
 #endif
 
-#define NB_OF_TRIALS 10000
+#define NB_OF_TRIALS 100
 
 void DataGeneratorTests::SetUp()
 {
@@ -58,8 +58,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_greater_than_a_val
     for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double lower_bound = a.random<double>();
-        const double x = a.random<double>().greater_than(lower_bound);
-        ASSERT_GE(x, lower_bound);
+        ASSERT_GE(a.random<double>().greater_than(lower_bound)(), lower_bound);
     }
 }
 
@@ -69,8 +68,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_no_greater_than_a_
     for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const double upper_bound = a.random<double>();
-        const double x = a.random<double>().no().greater_than(upper_bound);
-        ASSERT_LE(x, upper_bound);
+        ASSERT_LE(a.random<double>().no().greater_than(upper_bound)(), upper_bound);
     }
 }
 
@@ -111,8 +109,8 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_doubles_between_two_values
     {
         const double lower_bound = a.random<double>();
         const double upper_bound = a.random<double>().greater_than(lower_bound);
-        ASSERT_LE((double)a.random<double>().between(lower_bound,upper_bound), upper_bound);
-        ASSERT_GE((double)a.random<double>().between(lower_bound,upper_bound), lower_bound);
+        ASSERT_LE(a.random<double>().between(lower_bound,upper_bound)(), upper_bound);
+        ASSERT_GE(a.random<double>().between(lower_bound,upper_bound)(), lower_bound);
     }
 }
 
@@ -141,7 +139,7 @@ TEST_F(DataGeneratorTests, should_return_zero_if_forbidden_interval_matches_allo
     {
         const double min_bound = a.random<double>();
         const double max_bound = a.random<double>().greater_than(min_bound);
-        ASSERT_EQ((double)a.random<double>().between(min_bound,max_bound).but().outside(min_bound,max_bound),0);
+        ASSERT_EQ(a.random<double>().between(min_bound,max_bound).but().outside(min_bound,max_bound)(),0);
     }
 }
 
@@ -175,7 +173,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_betwee
     {
         const double lower_bound = a.random<double>();
         const double upper_bound = a.random<double>().greater_than(lower_bound);
-        std::vector<double> v = a.random_vector_of<double>().between(lower_bound,upper_bound);
+        std::vector<double> v = a.random_vector_of<double>().between(lower_bound,upper_bound)();
         for (std::vector<double>::const_iterator it = v.begin() ; it != v.end() ; ++it)
         {
             ASSERT_LE(*it, upper_bound);
@@ -189,8 +187,8 @@ TEST_F(DataGeneratorTests, bug_detected_in_PiecewiseConstantTest)
     for (size_t i = 0 ; i < NB_OF_TRIALS ; ++i)
     {
         const size_t random_double_between_2_and_1000 = a.random<size_t>().greater_than(1).but().no().greater_than(1000);
-        ASSERT_LE(random_double_between_2_and_1000, 1000.);
-        ASSERT_GT(random_double_between_2_and_1000, 1.);
+        ASSERT_LE(random_double_between_2_and_1000, 1000);
+        ASSERT_GT(random_double_between_2_and_1000, 1);
     }
 }
 
@@ -208,10 +206,10 @@ TEST_F(DataGeneratorTests, bug_detected_in_EONAV)
 TEST_F(DataGeneratorTests, crash_detected_in_EONAV_when_one_of_the_interval_bounds_is_nan)
 {
     const double x = a.random<double>();
-    ASSERT_GE(isnan((float)(double)a.random<double>().between(x,NAN)),0);
-    ASSERT_GE(isnan((float)(double)a.random<double>().between(NAN,x)),0);
-    ASSERT_GE(isnan((float)(double)a.random<double>().outside(x,NAN)),0);
-    ASSERT_GE(isnan((float)(double)a.random<double>().outside(NAN,x)),0);
+    ASSERT_TRUE(isnan((float)a.random<double>().between(x,NAN)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().between(NAN,x)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().outside(x,NAN)()));
+    ASSERT_TRUE(isnan((float)a.random<double>().outside(NAN,x)()));
 }
 
 TEST_F(DataGeneratorTests, bug_in_greater_than_detected_in_EONAV)
