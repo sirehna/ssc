@@ -10,6 +10,10 @@
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
 
 Parameter::Parameter() : ptr(new double(0)), nb_of_copies(0)
 {

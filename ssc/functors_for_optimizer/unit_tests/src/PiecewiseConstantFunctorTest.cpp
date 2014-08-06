@@ -33,7 +33,9 @@ TEST_F(PiecewiseConstantFunctorTest, example)
 {
 //! [PiecewiseConstantFunctor example]
     auto x = generate.state("x");
-    PiecewiseConstantFunctor pc(x, 0, 10, {3,6,5,8,7,4,5,6,9,72});
+    std::vector<double> v;
+    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);
+    PiecewiseConstantFunctor pc(x, 0, 10, v);
     const auto f = pc.get_lambda();
 //! [PiecewiseConstantFunctor example]
 //! [PiecewiseConstantFunctor expected output]
@@ -70,8 +72,9 @@ TEST_F(PiecewiseConstantFunctorTest, should_be_able_to_use_piecewise_as_regular_
 {
     auto x = generate.state("x");
     #define X (x->get_lambda()())
-
-    PiecewiseConstantFunctor pc(x, 0, 10, {3,6,5,8,7,4,5,6,9,72});
+    std::vector<double> v;
+    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);
+    PiecewiseConstantFunctor pc(x, 0, 10, v);
     const auto F = 2*x+pc;
     const auto f = F->get_lambda();
     *x = a.random<double>().between(0,1);

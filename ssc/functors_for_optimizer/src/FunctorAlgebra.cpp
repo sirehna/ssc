@@ -16,6 +16,10 @@
 #include "Null.hpp"
 #include "Constant.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
 
 Mult operator*(const Node& n1, const Node& n2)
 {

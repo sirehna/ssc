@@ -10,8 +10,15 @@
 #include "Constant.hpp"
 #include <algorithm>
 
-N_ary::N_ary(const NodePtr& n1, const NodePtr& n2) : sons({n1,n2})
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
+N_ary::N_ary(const NodePtr& n1, const NodePtr& n2) : sons(std::vector<NodePtr>())
 {
+    sons.push_back(n1);
+    sons.push_back(n2);
 }
 
 N_ary::N_ary(const std::vector<NodePtr>& nodes) : sons(nodes)

@@ -11,6 +11,11 @@
 #include "FunctorAlgebra.hpp"
 #include "Constant.hpp"
 
+#if defined(_MSC_VER)
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#define not !
+#endif
+
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();

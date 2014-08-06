@@ -8,7 +8,8 @@
 #ifndef FUNCTORALGEBRA_HPP_
 #define FUNCTORALGEBRA_HPP_
 
-#include <tr1/memory>
+#include "tr1_macros.hpp"
+#include TR1INC(memory)
 
 #include "Exception.hpp"
 
