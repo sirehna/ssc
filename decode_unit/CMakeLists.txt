@@ -6,4 +6,5 @@ include_directories(include)
 add_definitions(-DNDEBUG)
 
 add_library(${PROJECT_NAME}_static STATIC ${SRC})
+add_library(${PROJECT_NAME}_object OBJECT ${SRC})
 set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/include CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
