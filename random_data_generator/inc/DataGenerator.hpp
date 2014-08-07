@@ -180,7 +180,7 @@ template <class T> class TypedScalarDataGenerator : public DataGenerator
         T get() const;
 
 
-
+public:
         T min_bound;
         T max_bound;
         T forbidden_min;
@@ -211,14 +211,14 @@ template <class T> class TypedVectorDataGenerator : public DataGenerator
                 std::vector<T> ret;
                 ret.reserve(size);
                 TypedScalarDataGenerator<T> r = random<T>();                
-                r.between(min_bound, max_bound)
-                 .outside(forbidden_min,forbidden_max);
                 for (size_t i = 0 ; i < size ; ++i)
                 {
+                    r.between(min_bound, max_bound)
+                     .outside(forbidden_min,forbidden_max);
                     #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
                     ret.push_back(random<T>().msvc_bullshit());
                     #else
-                    ret.push_back(random<T>()());
+                    ret.push_back((T)r);
                     #endif
                 }
                 return ret;

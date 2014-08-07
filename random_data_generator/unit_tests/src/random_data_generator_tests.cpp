@@ -79,7 +79,7 @@ TEST_F(DataGeneratorTests, should_be_able_to_generate_a_vector_of_doubles_greate
     {
         const double lower_bound = a.random<double>();
         const size_t n = a.random<size_t>().no().greater_than(20);
-        const std::vector<double> v = a.random_vector_of<double>().of_size(n).greater_than(lower_bound);
+        std::vector<double> v = (std::vector<double>)a.random_vector_of<double>().of_size(n).greater_than(lower_bound);
         for (std::vector<double>::const_iterator it = v.begin() ; it != v.end() ; ++it)
         {
             ASSERT_GE(*it, lower_bound);
