@@ -43,6 +43,8 @@ double DecodeUnit::decodeUnit( std::string unit , std::map<std::string,double> &
 		for( std::map<std::string,double>::iterator it = known_units.begin(); it != known_units.end() ; it++)
 			std::cout << it->first << " -> " << it->second << std::endl;
 		std::cout << "Failed decoding :" << unit << " with message : " << message << std::endl;
+#else
+        (void)message;
 #endif
 	}
 	return val;
