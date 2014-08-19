@@ -90,9 +90,7 @@ TEST_F(LinearInterpolationVariableStepTest, first_derivative_should_be_zero_if_y
         LinearInterpolationVariableStep interpolate(x,y);
         for (size_t i = 0 ; i < n ; ++i)
         {
-            //COUT("");
             ASSERT_DOUBLE_EQ(0, interpolate.df(a.random<double>().between(x.front(),x.back())));
-//            COUT("");
         }
     }
 }

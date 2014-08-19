@@ -130,20 +130,12 @@ size_t IndexFinder::decrease_ilo_to_capture_x(int& ilo, int& ihi, const double x
     int istep = 1;
     while (ilo > 0)
     {
-        //COUT(ilo);
         ihi = ilo;
         ilo = std::max(0,ihi - istep);
-        //COUT(ilo);
-        //COUT(ihi);
         if (x >= x_[ilo])           return bisection(ilo, ihi, x);
         istep = istep*2;
-        //COUT(ilo);
-        //COUT(ihi);
     }
-    //COUT("");
     ilo = 0;
     if (x < xmin)                 return lower_than_min(ilo);
-    //COUT(ilo);
-    //COUT(ihi);
     return bisection(ilo, ihi, x);
 }
