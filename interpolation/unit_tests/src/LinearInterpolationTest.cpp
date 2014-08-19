@@ -93,7 +93,7 @@ TEST_F(LinearInterpolationTest, d2f_should_work_properly)
 TEST_F(LinearInterpolationTest, bug_detected_in_EONAV_PiecewiseLinearFunctor)
 {
     std::vector<double> v;
-    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);v.push_back(56);
+    v.push_back(3);v.push_back(6);v.push_back(5);v.push_back(8);v.push_back(7);v.push_back(4);v.push_back(5);v.push_back(6);v.push_back(9);v.push_back(72);v.push_back(-56);
     LinearInterpolation pl(0, 10, v);
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
