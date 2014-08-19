@@ -190,12 +190,7 @@ NodePtr operator+(const NodePtr& n, const double& d)
 NodePtr operator-(const double& d, const NodePtr& n)
 {
     auto n_ = n->clone();
-    //COUT(*n);
-    //COUT(*n_);
-    //COUT(d);
     n_->multiply_by(-1);
-    //COUT(*n_);
-    //COUT(*(n_+d));
     return n_+d;
 }
 
@@ -206,13 +201,10 @@ NodePtr operator-(const NodePtr& n, const double& d)
 
 NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
 {
-    ////COUT(*n1);
-    ////COUT(*n2);
     auto n2_ = n2->clone();
     n2_->multiply_by(-1);
     n2_->update_lambda();
     Sum* ret = new Sum(n1,n2_);
-    //COUT(*ret);
     return NodePtr(ret);
 }
 

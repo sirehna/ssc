@@ -111,7 +111,6 @@ std::vector<NodePtr> Sum::factorize_operands() const
 NodePtr Sum::simplify() const
 {
     std::vector<NodePtr> ret = factorize_operands();
-    //ret = group_constants_together(ret, [](const double& a, const double& b)->double{////COUT(a);////COUT(b);return a+b;});
     return NodePtr(new Sum(ret));
 }
 

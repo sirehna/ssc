@@ -60,7 +60,6 @@ Parameter& Parameter::operator=(const double& rhs)
     *ptr = rhs;
     factor = 1;
     update_lambda();
-    //COUT(get_lambda()());
     return *this;
 }
 
