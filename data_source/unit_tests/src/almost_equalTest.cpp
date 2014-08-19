@@ -34,10 +34,6 @@ TEST_F(almost_equalTest, can_get_a_number_close_to_another)
     {
         const double x = a.random<double>().between(-1000,1000);
         ASSERT_LT(x,one_ULP_more(x));
-        /*COUT(x);
-        COUT(very_slightly_less_than(x));
-        COUT(very_slightly_less_than(x)-x);*/
-
         ASSERT_LT(one_ULP_less(x),x);
         ASSERT_DOUBLE_EQ(x,one_ULP_less(x));
         ASSERT_DOUBLE_EQ(x,one_ULP_more(x));
