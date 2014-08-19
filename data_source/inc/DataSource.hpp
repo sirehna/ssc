@@ -570,6 +570,14 @@ public:
 
         static const std::string default_setter; //!< Default name of the DataSource user
 
+        /**  \returns A map containing all signals of a given type
+          *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_all_example
+          */
+        template <typename T> typename std::map<std::string,T> get_all() const
+        {
+            return signals_.get_all<T>();
+        }
+
     private:
         template <typename T> TypedSignalName typify(const std::string& signal_name) const
         {

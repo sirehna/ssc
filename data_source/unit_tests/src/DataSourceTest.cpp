@@ -772,3 +772,29 @@ TEST_F(DataSourceTest, can_check_in_a_DataSource_user)
     ds.check_out();
     ASSERT_EQ("Unregistered DataSource user", ds.who_am_i());
 }
+
+TEST_F(DataSourceTest, can_get_all_signals_of_a_given_type)
+{
+    //! [DataSourceTest get_all_example]
+    DataSource ds;
+    ds.set<double>("foo", 123);
+    ds.set<int>("bar", 456);
+    ds.set<int>("bak", 457);
+    ds.set<std::string>("baz", "789");
+
+    std::map<std::string,double> value_of_double = ds.get_all<double>();
+    std::map<std::string,int> value_of_int = ds.get_all<int>();
+    std::map<std::string,std::string> value_of_string = ds.get_all<std::string>();
+    std::map<std::string,float> value_of_float = ds.get_all<float>();
+
+    ASSERT_TRUE(value_of_float.empty());
+    ASSERT_EQ(1, value_of_double.size());
+    ASSERT_EQ(2, value_of_int.size());
+    ASSERT_EQ(1, value_of_string.size());
+
+    ASSERT_DOUBLE_EQ(123, value_of_double["foo"]);
+    ASSERT_EQ(456, value_of_int["bar"]);
+    ASSERT_EQ(457, value_of_int["bak"]);
+    ASSERT_EQ("789", value_of_string["baz"]);
+    //! [DataSourceTest get_all_example]
+}
