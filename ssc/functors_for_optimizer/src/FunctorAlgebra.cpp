@@ -1,7 +1,7 @@
 /*
  * FunctorAlgebra.cpp
  *
- * \date 1 févr. 2013, 15:29:58
+ * \date 1 fï¿½vr. 2013, 15:29:58
  *  \author cec
  */
 
