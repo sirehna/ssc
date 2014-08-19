@@ -29,8 +29,8 @@ TEST_F(IndexFinderTest, example)
 {
 //! [IndexFinderTest example]
     std::vector<double> x;
-    IndexFinder index(x);
     x.push_back(1);x.push_back(1.1);x.push_back(2);x.push_back(20);x.push_back(20.01);x.push_back(30);x.push_back(40);
+    IndexFinder index(x);
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         ASSERT_THROW(index.compute(a.random<double>().no().greater_than(1)), IndexFinderException);
