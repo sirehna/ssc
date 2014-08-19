@@ -122,7 +122,7 @@ TEST_F(IpoptSolverTest, test_02)
     }
 }
 
-TEST_F(IpoptSolverTest, maroff_allocation_problem_does_not_converge)
+TEST_F(IpoptSolverTest, DISABLED_old_maroff_allocation_problem_does_not_converge)
 {
     // Constraints are non-convex!
     const double theta = PI/4.;
