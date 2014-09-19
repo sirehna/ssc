@@ -4,7 +4,7 @@ set(SRC src/TextFileReader.cpp)
 
 include_directories(${test_macros_INCLUDE_DIRS})
 
-add_library(${PROJECT_NAME}_static OBJECT ${SRC})
+add_library(${PROJECT_NAME}_object OBJECT ${SRC})
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
