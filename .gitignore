@@ -1,0 +1,6 @@
+debug/
+eigen/
+gcovr/
+gmock/
+release/
+yaml-cpp/
