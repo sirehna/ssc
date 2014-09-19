@@ -6,6 +6,15 @@ set(${PROJECT_NAME}_MINOR_VERSION 0)
 set(${PROJECT_NAME}_PATCH_VERSION 0)
 set(${PROJECT_NAME}_VERSION
   ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_VERSION})
+set(${PROJECT_NAME}_VERSION_STR
+  ${${PROJECT_NAME}_MAJOR_VERSION}-${${PROJECT_NAME}_MINOR_VERSION}-${${PROJECT_NAME}_PATCH_VERSION})
+
+#############################################################################
+# CMake utilities
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+#############################################################################
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeMacros.cmake)
 
 set(ssc_MAJOR_VERSION "${${PROJECT_NAME}_MAJOR_VERSION}")
 set(ssc_MINOR_VERSION "${${PROJECT_NAME}_MINOR_VERSION}")
@@ -35,10 +44,6 @@ ELSE()
 ENDIF()
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
 
-#############################################################################
-# Compilation configuration
-SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-#############################################################################
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
@@ -106,22 +111,17 @@ ADD_SUBDIRECTORY(solver)
 ADD_SUBDIRECTORY(kinematics)
 ADD_SUBDIRECTORY(csv_file_reader)
 
-ADD_LIBRARY(${PROJECT_NAME} SHARED $<TARGET_OBJECTS:text_file_reader_static>
-                                   $<TARGET_OBJECTS:csv_file_reader_object>)
+# Define libraries
+add_libs(random_data_generator)
+add_libs(exception_handling)
+add_libs(yaml_parser)
+add_libs(decode_unit)
+add_libs(text_file_reader)
+add_libs(data_source)
+add_libs(kinematics)
+add_libs(interpolation)
+add_libs(csv_file_reader)
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}
-        kinematics_static
-        yaml_parser_static
-        yaml-cpp
-        decode_unit_static
-        data_source_static
-        exception_handling_static
-        gfortran                    # static
-        )
-
-INSTALL(TARGETS ${PROJECT_NAME}
-        RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
-        LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY})
 
 #############################################################################
 # Testing part
@@ -134,27 +134,32 @@ ENDIF(BUILD_TESTING)
 SET(TEST_EXE run_all_tests)
 
 ADD_EXECUTABLE(${TEST_EXE}
+        $<TARGET_OBJECTS:random_data_generator_tests>
         $<TARGET_OBJECTS:data_source_tests>
         $<TARGET_OBJECTS:solver_tests>
-        $<TARGET_OBJECTS:random_data_generator_tests>
         $<TARGET_OBJECTS:text_file_reader_tests>
         $<TARGET_OBJECTS:kinematics_tests>
         $<TARGET_OBJECTS:numeric_tests>
         $<TARGET_OBJECTS:csv_file_reader_tests>
+        $<TARGET_OBJECTS:interpolation_tests>
         )
 
-SET(LINK_FLAGS ${LINK_FLAGS} "-Wl,-whole-archive")
+#SET(LINK_FLAGS ${LINK_FLAGS} "-Wl,-whole-archive")
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
-        gtest gtest_main                 # static
-        gmock gmock_main                 # static
-        random_data_generator_static     # static
-        ${PROJECT_NAME}
+        gtest gtest_main
+        gmock gmock_main
+        ${random_data_generator}_shared
+        ${exception_handling}_shared
+        ${yaml_parser}_shared
+        ${decode_unit}_shared
+        ${text_file_reader}_shared
+        ${data_source}_shared
+        ${kinematics}_shared
+        ${csv_file_reader}_shared
+        ${interpolation}_shared
+        lapack
         )
-
-ADD_TEST(NAME ${PROJECT_NAME}_TEST_001
-         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-         COMMAND ${TEST_EXE} --gtest_output=xml:test_output.xml)
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
