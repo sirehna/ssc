@@ -4,7 +4,6 @@ project (solver)
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
-include_directories(${data_source_INCLUDE_DIRS})
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
