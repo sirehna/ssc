@@ -27,6 +27,91 @@ MACRO(MACRO_SVNVERSION SVNVERSION_RESULT)
     ENDIF()
 ENDMACRO(MACRO_SVNVERSION)
 
+function(_Boost_COMPILER_DUMPVERSION _OUTPUT_VERSION)
+
+  exec_program(${CMAKE_CXX_COMPILER}
+    ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+    OUTPUT_VARIABLE _boost_COMPILER_VERSION
+  )
+  string(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1\\2"
+    _boost_COMPILER_VERSION ${_boost_COMPILER_VERSION})
+
+  set(${_OUTPUT_VERSION} ${_boost_COMPILER_VERSION} PARENT_SCOPE)
+endfunction()
+
+function(GET_BUILD_TYPE_STR DBG_STR)
+    if (CMAKE_BUILD_TYPE MATCHES Debug)
+        set(${DBG_STR} debug PARENT_SCOPE)
+    else()
+        set(${DBG_STR} release PARENT_SCOPE)
+    endif()
+endfunction()
+
+function(ARCHITECTURE ARCHSTR)
+    # Test 32/64 bits
+    if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+       set(${ARCHSTR} "64bits" PARENT_SCOPE)
+    else("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+       set(${ARCHSTR} "32bits" PARENT_SCOPE)
+    endif()
+endfunction()
+
+# Guesses Boost's compiler prefix used in built library names
+# Returns the guess by setting the variable pointed to by _ret
+function(GUESS_COMPILER_PREFIX _ret)
+  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel"
+      OR "${CMAKE_CXX_COMPILER}" MATCHES "icl"
+      OR "${CMAKE_CXX_COMPILER}" MATCHES "icpc")
+    if(WIN32)
+      set (_boost_COMPILER "iw")
+    else()
+      set (_boost_COMPILER "il")
+    endif()
+  elseif (MSVC12)
+    set(_boost_COMPILER "vc120")
+  elseif (MSVC11)
+    set(_boost_COMPILER "vc110")
+  elseif (MSVC10)
+    set(_boost_COMPILER "vc100")
+  elseif (MSVC90)
+    set(_boost_COMPILER "vc90")
+  elseif (MSVC80)
+    set(_boost_COMPILER "vc80")
+  elseif (MSVC71)
+    set(_boost_COMPILER "vc71")
+  elseif (MSVC70) # Good luck!
+    set(_boost_COMPILER "vc7") # yes, this is correct
+  elseif (MSVC60) # Good luck!
+    set(_boost_COMPILER "vc6") # yes, this is correct
+  elseif (BORLAND)
+    set(_boost_COMPILER "bcb")
+  elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "SunPro")
+    set(_boost_COMPILER "sw")
+  elseif (MINGW)
+      _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION)
+      set(_boost_COMPILER "mgw${_boost_COMPILER_VERSION}")
+  elseif (UNIX)
+    if (CMAKE_COMPILER_IS_GNUCXX)
+        _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION)
+        # Determine which version of GCC we have.
+      set(_boost_COMPILER "gcc-${_boost_COMPILER_VERSION}")
+    endif ()
+  else()
+    # TODO at least Boost_DEBUG here?
+    set(_boost_COMPILER "")
+  endif()
+  set(${_ret} ${_boost_COMPILER} PARENT_SCOPE)
+endfunction()
+
+
+function(GET_LIBNAME LIBNAME VERSIONSTR OUT)
+_Boost_COMPILER_DUMPVERSION(test)
+    GUESS_COMPILER_PREFIX(COMPILERSTR)
+    GET_BUILD_TYPE_STR(DBG_STR)
+    ARCHITECTURE(ARCHSTR)
+    set(SYSTEM ${CMAKE_SYSTEM_NAME}-${ARCHSTR})
+    set(${OUT} ${LIBNAME}-${SYSTEM}-${COMPILERSTR}-${DBG_STR}-${VERSIONSTR} PARENT_SCOPE)
+endfunction()
 
 #At the end of this script snippet, the CMake variable PROCESSOR_COUNT has a
 #value appropriate for passing to make's -j for parallel builds.
@@ -66,3 +151,23 @@ MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
     ENDIF()
 ENDMACRO(MACRO_GET_NUMBER_OF_PROCESSORS)
 
+MACRO(add_libs name)
+    GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
+    ADD_LIBRARY(${${name}}_static STATIC
+                $<TARGET_OBJECTS:${name}_object>
+                )
+    foreach(f ${ARGN})
+        TARGET_LINK_LIBRARIES(${name}_static $f)
+    endforeach()
+    ADD_LIBRARY(${${name}}_shared SHARED
+                $<TARGET_OBJECTS:${name}_object>
+                )
+    foreach(f ${ARGN})
+        TARGET_LINK_LIBRARIES(${name}_shared $f)
+    endforeach()
+    INSTALL(TARGETS ${${name}}_static ${${name}}_shared
+            RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
+            LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+            ARCHIVE DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+    )
+ENDMACRO()
