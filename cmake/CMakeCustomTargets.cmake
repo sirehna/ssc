@@ -12,8 +12,8 @@ ENDIF()
 IF(DOXYGEN_FOUND)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/DoxygenLayout.in ${CMAKE_CURRENT_BINARY_DIR}/DoxygenLayout.xml @ONLY)
-    FILE(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev")
-    FILE(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/html")
+    FILE(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/doc")
+    FILE(MAKE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/doc/html")
     ADD_CUSTOM_TARGET(test_results
         COMMAND ./${TEST_EXE} --gtest_output=xml:test_output.xml
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -21,89 +21,46 @@ IF(DOXYGEN_FOUND)
         DEPENDS ${TEST_EXE}
     )
 
-    IF (WIN32)
-    FIND_PACKAGE(XmlTransform)
-    ADD_CUSTOM_TARGET(functionalities
-        COMMAND ${XMLTRANSFORM_EXECUTABLE} -s:test_output.xml -xsl:${CMAKE_CURRENT_SOURCE_DIR}/get_specifications.xml -o:list_of_functionalities.html
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/list_of_functionalities.html ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/html
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating list of functionalities from GTest's output XML" VERBATIM
-        DEPENDS test_results
-    )
-    ENDIF()
-
     IF(PANDOC)
         ADD_CUSTOM_TARGET(doc_dev_guide
-            ${PANDOC} dev_guide.md -o html/dev_guide.html
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev
+            ${PANDOC} overview.md -o html/overview.html
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/doc
             COMMENT "Generating the developper guide" VERBATIM
         )
     ELSE()
         MESSAGE(STATUS "Program PANDOC not found -> Developer documentation will be uncomplete")
     ENDIF()
 
-    IF (WIN32)
-        ADD_CUSTOM_TARGET(doc_dev
-            ${DOXYGEN_EXECUTABLE} Doxyfile
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-            DEPENDS functionalities
-            )
-    ELSE()
-        ADD_CUSTOM_TARGET(doc_dev
-            ${DOXYGEN_EXECUTABLE} Doxyfile
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Generating API documentation with Doxygen" VERBATIM
-            )
-    ENDIF()
+    ADD_CUSTOM_TARGET(doc_dev
+                      ${DOXYGEN_EXECUTABLE} Doxyfile
+                      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                      COMMENT "Generating API documentation with Doxygen" VERBATIM
+                     )
     IF(PANDOC)
         ADD_DEPENDENCIES(doc_dev doc_dev_guide)
     ENDIF()
 
-    FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/../images_for_documentation/*.svg")
+    FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/images_for_documentation/*.svg")
     FOREACH(f ${files})
-        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/html)
+        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/doc/html)
     ENDFOREACH()
 
-    FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/../images_for_documentation/*.png")
+    FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/images_for_documentation/*.png")
     FOREACH(f ${files})
-        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/latex)
+        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/doc/latex)
     ENDFOREACH()
 
     FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/*.js")
     FOREACH(f ${files})
-        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/html)
+        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/doc/html)
     ENDFOREACH()
 
     FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/*.css")
     FOREACH(f ${files})
-        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/html)
+        FILE(COPY ${f} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/doc/html)
     ENDFOREACH()
-
-    IF(WIN32)
-        FILE(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/../doc_dev/doc_developer.bat "\"html/index.html\"\n")
-    ENDIF()
 ELSE()
     MESSAGE("Doxygen not found.")
-ENDIF()
-
-IF(PANDOC)
-    FOREACH(f fr)
-        ADD_CUSTOM_COMMAND(
-            OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/../doc_user/user_guide_${f}.html
-            COMMAND ${PANDOC} -s user_guide_${f}.md -o user_guide_${f}.html
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../doc_user)
-        LIST(APPEND DOC_USER_INSTALL_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../doc_user/user_guide_${f}.html)
-    ENDFOREACH()
-    ADD_CUSTOM_TARGET(doc_user ALL DEPENDS ${DOC_USER_INSTALL_FILES})
-    INSTALL(FILES ${DOC_USER_INSTALL_FILES} DESTINATION doc)
-
-    FILE(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/../doc_user/images/*.svg")
-    FOREACH(f ${files})
-        INSTALL(FILES ${f} DESTINATION doc/images)
-    ENDFOREACH()
-ELSE()
-    MESSAGE(STATUS "Program PANDOC not found -> No user documentation will be generated")
 ENDIF()
 
 ADD_CUSTOM_TARGET(
