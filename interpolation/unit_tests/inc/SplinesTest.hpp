@@ -15,10 +15,10 @@ class SplinesTest : public ::testing::Test
 {
     protected:
         SplinesTest();
-	    virtual ~SplinesTest();
+        virtual ~SplinesTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

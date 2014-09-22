@@ -18,7 +18,7 @@ class almost_equalTest : public ::testing::Test
         virtual ~almost_equalTest();
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
         double one_ULP_less(const double x) const;
         double one_ULP_more(const double x) const;
         double five_ULP_less(double x) const;

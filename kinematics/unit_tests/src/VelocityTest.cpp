@@ -14,7 +14,7 @@
 
 using namespace ssc::kinematics;
 
-VelocityTest::VelocityTest() : a(DataGenerator(7779))
+VelocityTest::VelocityTest() : a(ssc::random_data_generator::DataGenerator(7779))
 {
 }
 

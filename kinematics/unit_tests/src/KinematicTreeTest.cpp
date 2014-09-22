@@ -12,7 +12,7 @@
 
 using namespace ssc::kinematics;
 
-KinematicTreeTest::KinematicTreeTest() : a(DataGenerator(78784))
+KinematicTreeTest::KinematicTreeTest() : a(ssc::random_data_generator::DataGenerator(78784))
 {
 }
 

@@ -15,7 +15,7 @@
 
 using namespace ssc::kinematics;
 
-rotation_matrix_builders_Test::rotation_matrix_builders_Test() : a(DataGenerator(545))
+rotation_matrix_builders_Test::rotation_matrix_builders_Test() : a(ssc::random_data_generator::DataGenerator(545))
 {
 }
 

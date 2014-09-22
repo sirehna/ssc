@@ -11,7 +11,7 @@
 
 using namespace ssc::interpolation;
 
-IndexFinderTest::IndexFinderTest() : a(DataGenerator(112233))
+IndexFinderTest::IndexFinderTest() : a(ssc::random_data_generator::DataGenerator(112233))
 {
 }
 

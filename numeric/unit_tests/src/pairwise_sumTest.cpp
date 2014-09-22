@@ -10,7 +10,7 @@
 
 using namespace ssc::numeric;
 
-pairwise_sumTest::pairwise_sumTest() : a(DataGenerator(451212))
+pairwise_sumTest::pairwise_sumTest() : a(ssc::random_data_generator::DataGenerator(451212))
 {
 }
 

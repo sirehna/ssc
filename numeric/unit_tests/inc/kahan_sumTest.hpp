@@ -15,10 +15,10 @@ class kahan_sumTest : public ::testing::Test
 {
     protected:
         kahan_sumTest();
-	    virtual ~kahan_sumTest();
+        virtual ~kahan_sumTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

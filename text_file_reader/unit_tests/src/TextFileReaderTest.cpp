@@ -20,7 +20,7 @@
 #define TMPNAM(x,n) char* c##x = tmpnam(x);(void)c##x;
 #endif
 
-TextFileReaderTest::TextFileReaderTest() : a(DataGenerator(718293))
+TextFileReaderTest::TextFileReaderTest() : a(ssc::random_data_generator::DataGenerator(718293))
 {
 }
 

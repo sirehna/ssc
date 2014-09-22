@@ -15,10 +15,10 @@ class LinearInterpolationTest : public ::testing::Test
 {
     protected:
         LinearInterpolationTest();
-	    virtual ~LinearInterpolationTest();
+        virtual ~LinearInterpolationTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

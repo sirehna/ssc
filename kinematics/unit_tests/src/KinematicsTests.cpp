@@ -15,7 +15,7 @@
 
 using namespace ssc::kinematics;
 
-KinematicsTests::KinematicsTests() : a(DataGenerator(122))
+KinematicsTests::KinematicsTests() : a(ssc::random_data_generator::DataGenerator(122))
 {
 }
 

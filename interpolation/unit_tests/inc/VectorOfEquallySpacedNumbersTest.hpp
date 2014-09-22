@@ -15,11 +15,11 @@ class VectorOfEquallySpacedNumbersTest : public ::testing::Test
 {
     protected:
         VectorOfEquallySpacedNumbersTest();
-	    virtual ~VectorOfEquallySpacedNumbersTest();
+        virtual ~VectorOfEquallySpacedNumbersTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		const double eps;
+        ssc::random_data_generator::DataGenerator a;
+        const double eps;
 
 };
 

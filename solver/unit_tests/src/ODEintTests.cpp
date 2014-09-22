@@ -19,7 +19,7 @@
 
 #include <sstream>
 
-ODEintTests::ODEintTests() : a(DataGenerator(452251321))
+ODEintTests::ODEintTests() : a(ssc::random_data_generator::DataGenerator(452251321))
 {
 }
 

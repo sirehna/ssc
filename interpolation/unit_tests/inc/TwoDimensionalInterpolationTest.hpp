@@ -15,10 +15,10 @@ class TwoDimensionalSplinesTest : public ::testing::Test
 {
     protected:
         TwoDimensionalSplinesTest();
-	    virtual ~TwoDimensionalSplinesTest();
+        virtual ~TwoDimensionalSplinesTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

@@ -10,7 +10,7 @@
 
 using namespace ssc::interpolation;
 
-LinearInterpolationTest::LinearInterpolationTest() : a(DataGenerator(23))
+LinearInterpolationTest::LinearInterpolationTest() : a(ssc::random_data_generator::DataGenerator(23))
 {
 }
 

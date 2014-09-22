@@ -21,11 +21,18 @@
 
 using namespace ssc::interpolation;
 
-template<> VectorOfEquallySpacedNumbers get_min_bound<VectorOfEquallySpacedNumbers>();
-template<> VectorOfEquallySpacedNumbers get_max_bound<VectorOfEquallySpacedNumbers>();
+namespace ssc
+{
+    namespace random_data_generator
+    {
+        template<> VectorOfEquallySpacedNumbers get_min_bound<VectorOfEquallySpacedNumbers>();
+        template<> VectorOfEquallySpacedNumbers get_max_bound<VectorOfEquallySpacedNumbers>();
+    }
+}
 
 
-SplinesTest::SplinesTest() : a(DataGenerator(316497))
+
+SplinesTest::SplinesTest() : a(ssc::random_data_generator::DataGenerator(316497))
 {
 }
 

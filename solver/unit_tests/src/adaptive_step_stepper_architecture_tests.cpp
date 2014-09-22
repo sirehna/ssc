@@ -18,7 +18,7 @@ using ::testing::_;
 #define ODEINT_SUCCESS boost::numeric::odeint::success
 #define ODEINT_FAIL boost::numeric::odeint::fail
 
-adaptive_step_stepper_architecture_tests::adaptive_step_stepper_architecture_tests() : a(DataGenerator(7444445))
+adaptive_step_stepper_architecture_tests::adaptive_step_stepper_architecture_tests() : a(ssc::random_data_generator::DataGenerator(7444445))
 {
 }
 

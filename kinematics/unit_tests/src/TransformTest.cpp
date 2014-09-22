@@ -19,7 +19,7 @@
 
 using namespace ssc::kinematics;
 
-TransformTest::TransformTest() : a(DataGenerator(1215))
+TransformTest::TransformTest() : a(ssc::random_data_generator::DataGenerator(1215))
 {
 }
 

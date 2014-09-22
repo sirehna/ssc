@@ -12,7 +12,7 @@
 
 using namespace ssc::kinematics;
 
-coriolis_and_centripetalTest::coriolis_and_centripetalTest() : a(DataGenerator(45455))
+coriolis_and_centripetalTest::coriolis_and_centripetalTest() : a(ssc::random_data_generator::DataGenerator(45455))
 {
 }
 

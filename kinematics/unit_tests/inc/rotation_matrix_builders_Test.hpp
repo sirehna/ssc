@@ -11,7 +11,7 @@ class rotation_matrix_builders_Test : public ::testing::Test
         virtual ~rotation_matrix_builders_Test();
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

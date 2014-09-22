@@ -13,7 +13,7 @@
 
 using namespace ssc::csv_file_reader;
 
-CSVFileReaderTest::CSVFileReaderTest() : a(DataGenerator(9487))
+CSVFileReaderTest::CSVFileReaderTest() : a(ssc::random_data_generator::DataGenerator(9487))
 {
 }
 

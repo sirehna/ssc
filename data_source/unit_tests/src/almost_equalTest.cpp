@@ -11,7 +11,7 @@
 #include "almost_equalTest.hpp"
 #include "almost_equal.hpp"
 
-almost_equalTest::almost_equalTest() : a(DataGenerator(7214222))
+almost_equalTest::almost_equalTest() : a(ssc::random_data_generator::DataGenerator(7214222))
 {
 }
 

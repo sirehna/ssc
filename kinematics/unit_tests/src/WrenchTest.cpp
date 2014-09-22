@@ -19,7 +19,7 @@
 
 using namespace ssc::kinematics;
 
-WrenchTest::WrenchTest() : a(DataGenerator(1215))
+WrenchTest::WrenchTest() : a(ssc::random_data_generator::DataGenerator(1215))
 {
 }
 

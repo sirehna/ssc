@@ -12,7 +12,7 @@ class TransformTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 };
 
 #endif  /* TRANSFORMTEST_HPP_ */

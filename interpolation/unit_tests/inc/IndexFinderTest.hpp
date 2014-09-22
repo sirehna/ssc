@@ -15,10 +15,10 @@ class IndexFinderTest : public ::testing::Test
 {
     protected:
         IndexFinderTest();
-	    virtual ~IndexFinderTest();
+        virtual ~IndexFinderTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

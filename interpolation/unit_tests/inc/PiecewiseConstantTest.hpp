@@ -1,7 +1,7 @@
 /*
  * PiecewiseConstantTest.hpp
  *
- * \date 18 févr. 2013, 12:59:14
+ * \date 18 fï¿½vr. 2013, 12:59:14
  *  \author cec
  */
 
@@ -15,10 +15,10 @@ class PiecewiseConstantTest : public ::testing::Test
 {
     protected:
         PiecewiseConstantTest();
-	    virtual ~PiecewiseConstantTest();
+        virtual ~PiecewiseConstantTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

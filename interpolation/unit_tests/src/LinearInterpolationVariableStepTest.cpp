@@ -17,7 +17,7 @@
 
 using namespace ssc::interpolation;
 
-LinearInterpolationVariableStepTest::LinearInterpolationVariableStepTest() : a(DataGenerator(12))
+LinearInterpolationVariableStepTest::LinearInterpolationVariableStepTest() : a(ssc::random_data_generator::DataGenerator(12))
 {
 }
 
