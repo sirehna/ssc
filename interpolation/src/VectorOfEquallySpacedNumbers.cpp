@@ -5,9 +5,10 @@
  *  \author cec
  */
 
-#include "VectorOfEquallySpacedNumbers.hpp"
-#include "VectorOfEquallySpacedNumbersException.hpp"
 #include <sstream>
+
+#include "interpolation/VectorOfEquallySpacedNumbers.hpp"
+#include "interpolation/VectorOfEquallySpacedNumbersException.hpp"
 
 using namespace ssc::interpolation;
 

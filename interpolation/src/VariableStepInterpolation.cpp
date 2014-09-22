@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "VariableStepInterpolation.hpp"
-#include "IndexFinder.hpp"
+#include "interpolation/VariableStepInterpolation.hpp"
+#include "interpolation/IndexFinder.hpp"
 
 using namespace ssc::interpolation;
 

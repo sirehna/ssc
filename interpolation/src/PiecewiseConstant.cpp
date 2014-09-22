@@ -5,9 +5,10 @@
  *  \author cec
  */
 
-#include "PiecewiseConstant.hpp"
-#include "PiecewiseConstantException.hpp"
 #include <cmath>
+
+#include "interpolation/PiecewiseConstant.hpp"
+#include "interpolation/PiecewiseConstantException.hpp"
 
 using namespace ssc::interpolation;
 

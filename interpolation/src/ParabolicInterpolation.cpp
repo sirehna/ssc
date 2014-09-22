@@ -5,11 +5,12 @@
  *  \author cec
  */
 
-#include "ParabolicInterpolation.hpp"
-#include "ParabolicInterpolationException.hpp"
+#include <cmath>
+
+#include "interpolation/ParabolicInterpolation.hpp"
+#include "interpolation/ParabolicInterpolationException.hpp"
 #define min(a,b) (a)>(b)?b:a
 #define max(a,b) (a)>(b)?a:b
-#include <math.h>
 
 using namespace ssc::interpolation;
 

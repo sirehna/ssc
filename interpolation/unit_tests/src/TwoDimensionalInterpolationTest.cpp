@@ -5,10 +5,11 @@
  *  \author cec
  */
 
-#include "TwoDimensionalInterpolationTest.hpp"
-#include "TwoDimensionalInterpolation.hpp"
 #include <vector>
-#include "LinearInterpolation.hpp"
+
+#include "TwoDimensionalInterpolationTest.hpp"
+#include "interpolation/TwoDimensionalInterpolation.hpp"
+#include "interpolation/LinearInterpolation.hpp"
 
 using namespace ssc::interpolation;
 

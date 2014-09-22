@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "ParabolicCoefficients.hpp"
+#include "interpolation/ParabolicCoefficients.hpp"
 
 using namespace ssc::interpolation;
 

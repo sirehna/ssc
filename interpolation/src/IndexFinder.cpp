@@ -5,8 +5,9 @@
  *  \author cec
  */
 
-#include "IndexFinder.hpp"
 #include <sstream>
+
+#include "interpolation/IndexFinder.hpp"
 
 using namespace ssc::interpolation;
 

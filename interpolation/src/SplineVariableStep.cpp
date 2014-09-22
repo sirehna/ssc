@@ -5,20 +5,19 @@
  *  \author cec
  */
 
-#include "SplineVariableStep.hpp"
 #include <sstream>
 #include <list>
 #include <algorithm> //std::sort
-#include "PiecewiseConstantVariableStep.hpp"
-#include "test_macros.hpp"
+
+#include "interpolation/PiecewiseConstantVariableStep.hpp"
+#include "interpolation/SplineVariableStep.hpp"
+#include "interpolation/SplinesException.hpp"
 
 using namespace ssc::interpolation;
 
 typedef long int integer;
 typedef float real;
 typedef double doublereal;
-
-#include "SplinesException.hpp"
 
 extern "C"
 {

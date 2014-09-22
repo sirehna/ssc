@@ -10,11 +10,11 @@
 
 #include "SplinesTest.hpp"
 #include "extra_test_assertions.hpp"
-#include "NaturalSplines.hpp"
-#include "VectorOfEquallySpacedNumbers.hpp"
-#include "VectorOfEquallySpacedNumbersException.hpp"
-#include "InterpolatorException.hpp"
-#include "SplinesException.hpp"
+#include "interpolation/NaturalSplines.hpp"
+#include "interpolation/VectorOfEquallySpacedNumbers.hpp"
+#include "interpolation/VectorOfEquallySpacedNumbersException.hpp"
+#include "interpolation/InterpolatorException.hpp"
+#include "interpolation/SplinesException.hpp"
 
 #define PI 4.*atan(1.)
 #define EPS 1E-10

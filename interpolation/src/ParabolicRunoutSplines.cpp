@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "ParabolicRunoutSplines.hpp"
+#include "interpolation/ParabolicRunoutSplines.hpp"
 
 using namespace ssc::interpolation;
 

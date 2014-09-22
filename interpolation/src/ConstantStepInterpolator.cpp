@@ -5,9 +5,10 @@
  *  \author cec
  */
 
-#include "ConstantStepInterpolator.hpp"
-#include "InterpolatorException.hpp"
 #include <cmath>
+
+#include "interpolation/ConstantStepInterpolator.hpp"
+#include "interpolation/InterpolatorException.hpp"
 
 using namespace ssc::interpolation;
 
