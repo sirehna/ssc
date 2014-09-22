@@ -5,13 +5,12 @@
  *  \author cec
  */
 
-#include "DataSource.hpp"
-#include "DataSourceException.hpp"
-#include "DataSourceDrawer.hpp"
-
 #include <iostream>
 #include <sstream>
 
+#include "data_source/DataSource.hpp"
+#include "data_source/DataSourceException.hpp"
+#include "data_source/DataSourceDrawer.hpp"
 
 const std::string ssc::data_source::DataSource::default_setter = "Unregistered DataSource user";
 

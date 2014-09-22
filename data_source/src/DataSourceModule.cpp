@@ -6,7 +6,7 @@
  */
 
 
-#include "DataSourceModule.hpp"
+#include "data_source/DataSourceModule.hpp"
 
 using namespace ssc::data_source;
 

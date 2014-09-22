@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "TypeCoercion.hpp"
+#include "data_source/TypeCoercion.hpp"
 
 
 using namespace ssc::data_source;

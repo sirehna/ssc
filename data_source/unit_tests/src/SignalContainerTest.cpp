@@ -6,7 +6,7 @@
  */
 
 #include "SignalContainerTest.hpp"
-#include "SignalContainer.hpp"
+#include "data_source/SignalContainer.hpp"
 
 using namespace ssc::data_source;
 

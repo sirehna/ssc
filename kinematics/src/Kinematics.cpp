@@ -1,6 +1,6 @@
 #include "Kinematics.hpp"
 #include "KinematicsException.hpp"
-#include "DataSource.hpp"
+#include "data_source/DataSource.hpp"
 #include "Transform.hpp"
 #include "KinematicTree.hpp"
 

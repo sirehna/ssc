@@ -12,7 +12,8 @@
 #include <cstddef>
 #include <vector>
 #include <list>
-#include "CoercionException.hpp"
+
+#include "data_source/CoercionException.hpp"
 
 
 

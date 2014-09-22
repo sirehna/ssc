@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "SignalContainer.hpp"
-#include "TypeCoercion.hpp"
-#include "PhysicalQuantity.hpp"
+#include "data_source/SignalContainer.hpp"
+#include "data_source/TypeCoercion.hpp"
+#include "data_source/PhysicalQuantity.hpp"
 
 using namespace ssc::data_source;
 

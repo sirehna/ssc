@@ -12,7 +12,7 @@
 #include <string>
 #include <map>
 
-#include "DataSource.hpp"
+#include "data_source/DataSource.hpp"
 
 namespace ssc
 {
