@@ -5,9 +5,10 @@
  *  \author cec
  */
 
-#include "YamlParser.hpp"
 #include <sstream>
 #include "yaml.h"
+
+#include "yaml_parser/YamlParser.hpp"
 
 using namespace ssc::yaml_parser;
 
