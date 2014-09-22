@@ -22,9 +22,9 @@ extern "C"
 #include <cmath>
 #include <cstdio>
 
-#include "Splines.hpp"
-#include "SplinesException.hpp"
-#include "VectorOfEquallySpacedNumbers.hpp"
+#include "interpolation/Splines.hpp"
+#include "interpolation/SplinesException.hpp"
+#include "interpolation/VectorOfEquallySpacedNumbers.hpp"
 
 using namespace ssc::interpolation;
 

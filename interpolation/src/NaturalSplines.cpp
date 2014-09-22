@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "NaturalSplines.hpp"
+#include "interpolation/NaturalSplines.hpp"
 
 using namespace ssc::interpolation;
 

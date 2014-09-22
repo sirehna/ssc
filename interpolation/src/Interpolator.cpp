@@ -5,21 +5,18 @@
  *  \author cec
  */
 
-#include "Interpolator.hpp"
-#include "test_macros.hpp"
+#include "interpolation/Interpolator.hpp"
 
 using namespace ssc::interpolation;
 
 Interpolator::Interpolator()
 {
-
 }
 
 Interpolator::~Interpolator()
 {
 
 }
-
 
 double Interpolator::f(const double x)
 {

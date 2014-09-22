@@ -5,10 +5,10 @@
  *  \author cec
  */
 
-#include "LinearInterpolationVariableStep.hpp"
-#include "PiecewiseConstantVariableStep.hpp"
-
 #include <cmath>
+
+#include "interpolation/LinearInterpolationVariableStep.hpp"
+#include "interpolation/PiecewiseConstantVariableStep.hpp"
 
 using namespace ssc::interpolation;
 

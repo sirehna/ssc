@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "CubicRunoutSplines.hpp"
+#include "interpolation/CubicRunoutSplines.hpp"
 
 using namespace ssc::interpolation;
 

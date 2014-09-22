@@ -6,8 +6,7 @@
  */
 
 #include "IndexFinderTest.hpp"
-#include "IndexFinder.hpp"
-#include "test_macros.hpp"
+#include "interpolation/IndexFinder.hpp"
 
 using namespace ssc::interpolation;
 

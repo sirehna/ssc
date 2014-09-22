@@ -6,9 +6,8 @@
  */
 
 #include "SplineVariableStepTest.hpp"
-#include "SplineVariableStep.hpp"
-#include "IndexFinder.hpp"
-#include "test_macros.hpp"
+#include "interpolation/SplineVariableStep.hpp"
+#include "interpolation/IndexFinder.hpp"
 
 #define EPS 1E-10
 

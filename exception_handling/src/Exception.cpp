@@ -1,7 +1,6 @@
 #include "Exception.hpp"
 #include <sstream>
 #include <cstring>
-#include "ConvertNumericToString.hpp"
 
 Exception::Exception(const char* message_):
                                message(message_)

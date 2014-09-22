@@ -6,12 +6,12 @@
  */
 
 #include "LinearInterpolationVariableStepTest.hpp"
-#include "LinearInterpolationVariableStep.hpp"
-#include "PiecewiseConstantVariableStep.hpp"
-#include "InterpolatorException.hpp"
+#include "interpolation/LinearInterpolationVariableStep.hpp"
+#include "interpolation/PiecewiseConstantVariableStep.hpp"
+#include "interpolation/InterpolatorException.hpp"
 #include "random_increasing_vector.hpp"
 #include "extra_test_assertions.hpp"
-#include "IndexFinder.hpp"
+#include "interpolation/IndexFinder.hpp"
 
 #define EPS 3e-3
 

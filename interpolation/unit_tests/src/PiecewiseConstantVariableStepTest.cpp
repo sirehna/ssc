@@ -6,9 +6,9 @@
  */
 
 #include "PiecewiseConstantVariableStepTest.hpp"
-#include "PiecewiseConstantVariableStep.hpp"
+#include "interpolation/PiecewiseConstantVariableStep.hpp"
 #include "random_increasing_vector.hpp"
-#include "IndexFinder.hpp"
+#include "interpolation/IndexFinder.hpp"
 
 using namespace ssc::interpolation;
 
