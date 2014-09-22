@@ -16,28 +16,36 @@
 
 using namespace ssc::kinematics;
 
-template <> RotationMatrix TypedScalarDataGenerator<RotationMatrix>::get() const
+namespace ssc
 {
-    double lambda1 = random<double>().between(-1,1);
-    double lambda2 = random<double>().between(-1,1);
-    double lambda3 = random<double>().between(-1,1);
-    const double D = sqrt(lambda1*lambda1+lambda2*lambda2+lambda3*lambda3);
-    lambda1 = lambda1/D;
-    lambda2 = lambda2/D;
-    lambda3 = lambda3/D;
-    const double beta = random<double>().between(-PI,PI);
-    return rot(lambda1, lambda2, lambda3, beta);
+    namespace random_data_generator
+    {
+        template <> RotationMatrix ssc::random_data_generator::TypedScalarDataGenerator<RotationMatrix>::get() const
+        {
+            double lambda1 = random<double>().between(-1,1);
+            double lambda2 = random<double>().between(-1,1);
+            double lambda3 = random<double>().between(-1,1);
+            const double D = sqrt(lambda1*lambda1+lambda2*lambda2+lambda3*lambda3);
+            lambda1 = lambda1/D;
+            lambda2 = lambda2/D;
+            lambda3 = lambda3/D;
+            const double beta = random<double>().between(-PI,PI);
+            return rot(lambda1, lambda2, lambda3, beta);
+        }
+
+        template <> Point TypedScalarDataGenerator<Point>::get() const
+        {
+            const double x = random<double>().between(-10,10);
+            const double y = random<double>().between(-10,10);
+            const double z = random<double>().between(-10,10);
+            return Point(random<std::string>(), x, y, z);
+        }
+
+
+    }
 }
 
-template <> Point TypedScalarDataGenerator<Point>::get() const
-{
-    const double x = random<double>().between(-10,10);
-    const double y = random<double>().between(-10,10);
-    const double z = random<double>().between(-10,10);
-    return Point(random<std::string>(), x, y, z);
-}
-
-Point random_point_in_frame(const DataGenerator& a, const std::string& frame)
+Point random_point_in_frame(const ssc::random_data_generator::DataGenerator& a, const std::string& frame)
 {
     const double x = a.random<double>().between(-10,10);
     const double y = a.random<double>().between(-10,10);
@@ -45,17 +53,17 @@ Point random_point_in_frame(const DataGenerator& a, const std::string& frame)
     return Point(frame, x, y, z);
 }
 
-Point random_point(const DataGenerator& a)
+Point random_point(const ssc::random_data_generator::DataGenerator& a)
 {
     return random_point_in_frame(a, a.random<std::string>());
 }
 
-PointMatrix random_point_matrix(const DataGenerator& a)
+PointMatrix random_point_matrix(const ssc::random_data_generator::DataGenerator& a)
 {
     return random_point_matrix_in_frame(a, a.random<std::string>());
 }
 
-PointMatrix random_point_matrix_in_frame(const DataGenerator& a, const std::string& frame)
+PointMatrix random_point_matrix_in_frame(const ssc::random_data_generator::DataGenerator& a, const std::string& frame)
 {
     PointMatrix p(frame, 100);
     for (size_t i=0;i<100;++i)
@@ -67,7 +75,7 @@ PointMatrix random_point_matrix_in_frame(const DataGenerator& a, const std::stri
     return p;
 }
 
-Transform random_transform(const DataGenerator& a, const std::string& from_frame, const std::string& to_frame)
+Transform random_transform(const ssc::random_data_generator::DataGenerator& a, const std::string& from_frame, const std::string& to_frame)
 {
     const RotationMatrix R = a.random<RotationMatrix>();
     return Transform(random_point_in_frame(a, from_frame), R, to_frame);

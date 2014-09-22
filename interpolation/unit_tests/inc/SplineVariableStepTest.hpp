@@ -15,10 +15,10 @@ class SplineVariableStepTest : public ::testing::Test
 {
     protected:
         SplineVariableStepTest();
-	    virtual ~SplineVariableStepTest();
+        virtual ~SplineVariableStepTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

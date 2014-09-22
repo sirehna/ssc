@@ -12,7 +12,7 @@
 
 using namespace ssc::interpolation;
 
-PiecewiseConstantTest::PiecewiseConstantTest() : a(DataGenerator(22338888))
+PiecewiseConstantTest::PiecewiseConstantTest() : a(ssc::random_data_generator::DataGenerator(22338888))
 {
 }
 

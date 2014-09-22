@@ -15,10 +15,10 @@ class CSVFileReaderTest : public ::testing::Test
 {
     protected:
         CSVFileReaderTest();
-	    virtual ~CSVFileReaderTest();
+        virtual ~CSVFileReaderTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

@@ -11,7 +11,7 @@
 
 using namespace ssc::data_source;
 
-TypeCoercionTest::TypeCoercionTest() : a(DataGenerator(1))
+TypeCoercionTest::TypeCoercionTest() : a(ssc::random_data_generator::DataGenerator(1))
 {
 }
 

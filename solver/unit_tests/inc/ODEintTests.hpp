@@ -8,10 +8,10 @@ class ODEintTests : public ::testing::Test
 {
     protected:
         ODEintTests();
-	    virtual ~ODEintTests();
+        virtual ~ODEintTests();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

@@ -12,7 +12,7 @@
 
 using namespace ssc::interpolation;
 
-ParabolicInterpolationTest::ParabolicInterpolationTest() : a(DataGenerator(77))
+ParabolicInterpolationTest::ParabolicInterpolationTest() : a(ssc::random_data_generator::DataGenerator(77))
 {
 }
 
@@ -28,22 +28,27 @@ void ParabolicInterpolationTest::TearDown()
 {
 }
 
-template <> ParabolicCoefficients TypedScalarDataGenerator<ParabolicCoefficients>::get() const
+namespace ssc
 {
-    ParabolicCoefficients ret(random<double>(),random<double>(),random<double>());
-    return ret;
-}
+    namespace random_data_generator
+    {
+        template <> ParabolicCoefficients ssc::random_data_generator::TypedScalarDataGenerator<ParabolicCoefficients>::get() const
+        {
+            ParabolicCoefficients ret(random<double>(),random<double>(),random<double>());
+            return ret;
+        }
 
-template<> ParabolicCoefficients get_max_bound<ParabolicCoefficients>()
-{
-    return ParabolicCoefficients(0,0,0);
-}
+        template<> ParabolicCoefficients get_max_bound<ParabolicCoefficients>()
+        {
+            return ParabolicCoefficients(0,0,0);
+        }
 
-template<> ParabolicCoefficients get_min_bound<ParabolicCoefficients>()
-{
-    return ParabolicCoefficients(0,0,0);
+        template<> ParabolicCoefficients get_min_bound<ParabolicCoefficients>()
+        {
+            return ParabolicCoefficients(0,0,0);
+        }
+    }
 }
-
 
 TEST_F(ParabolicInterpolationTest, example)
 {

@@ -12,7 +12,7 @@
 
 using namespace ssc::interpolation;
 
-TwoDimensionalSplinesTest::TwoDimensionalSplinesTest() : a(DataGenerator(12))
+TwoDimensionalSplinesTest::TwoDimensionalSplinesTest() : a(ssc::random_data_generator::DataGenerator(12))
 {
 }
 

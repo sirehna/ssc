@@ -15,10 +15,10 @@ class TypeCoercionTest : public ::testing::Test
 {
     protected:
         TypeCoercionTest();
-	    virtual ~TypeCoercionTest();
+        virtual ~TypeCoercionTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

@@ -10,7 +10,7 @@
 
 using namespace ssc::data_source;
 
-SignalContainerTest::SignalContainerTest() : a(DataGenerator(19))
+SignalContainerTest::SignalContainerTest() : a(ssc::random_data_generator::DataGenerator(19))
 {
 }
 

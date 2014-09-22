@@ -7,11 +7,11 @@
 class DataGeneratorTests : public ::testing::Test
 {
     protected:
-        DataGeneratorTests() : a(DataGenerator(95442))
+        DataGeneratorTests() : a(ssc::random_data_generator::DataGenerator(95442))
                                 {}
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

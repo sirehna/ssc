@@ -11,7 +11,7 @@ class constant_step_stepper_architecture_tests : public ::testing::Test
         virtual ~constant_step_stepper_architecture_tests();
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

@@ -19,7 +19,7 @@ using namespace ssc::data_source;
 
 #define NB_OF_TRIALS 100
 
-static DataGenerator a_(21);
+static ssc::random_data_generator::DataGenerator a_(21);
 static DataSource* ds_;
 
 using ::testing::Return;
@@ -31,7 +31,7 @@ MockableDataSourceModule::MockableDataSourceModule() : DataSourceModule(ds_, a_.
 
 }
 
-DataSourceTest::DataSourceTest() : a(DataGenerator(654))
+DataSourceTest::DataSourceTest() : a(ssc::random_data_generator::DataGenerator(654))
 {
     ds_ = new DataSource();
 }
@@ -743,7 +743,7 @@ TEST_F(DataSourceTest, signals_not_set_or_got_by_any_module_should_still_be_outp
 }
 
 MODULE(VarUp, const double x = ds->get<double>("x");\
-              const DataGenerator *rng = ds->get<DataGenerator*>("rng");\
+              const ssc::random_data_generator::DataGenerator *rng = ds->get<ssc::random_data_generator::DataGenerator*>("rng");\
               (void)x;\
               double y = 0;\
               if (rng) y = rng->random<double>();\
@@ -754,8 +754,8 @@ MODULE(VarUp, const double x = ds->get<double>("x");\
 TEST_F(DataSourceTest, should_not_update_dependencies_if_setting_signal_to_its_current_value)
 {
     DataSource ds;
-    std::tr1::shared_ptr<DataGenerator> rng(new DataGenerator(1));
-    ds.set<DataGenerator*>("rng",rng.get());
+    std::tr1::shared_ptr<ssc::random_data_generator::DataGenerator> rng(new ssc::random_data_generator::DataGenerator(1));
+    ds.set<ssc::random_data_generator::DataGenerator*>("rng",rng.get());
     ds.add<VarUp>("VarUp");
     const double x0 = a.random<double>()();
     ds.set("x", x0);

@@ -13,7 +13,7 @@
 
 using namespace ssc::numeric;
 
-kahan_sumTest::kahan_sumTest() : a(DataGenerator(54212))
+kahan_sumTest::kahan_sumTest() : a(ssc::random_data_generator::DataGenerator(54212))
 {
 }
 

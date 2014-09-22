@@ -14,7 +14,7 @@
 
 using namespace ssc::interpolation;
 
-SplineVariableStepTest::SplineVariableStepTest() : a(DataGenerator(7777777))
+SplineVariableStepTest::SplineVariableStepTest() : a(ssc::random_data_generator::DataGenerator(7777777))
 {
 }
 

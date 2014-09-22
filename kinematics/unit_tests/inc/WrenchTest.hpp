@@ -15,10 +15,10 @@ class WrenchTest : public ::testing::Test
 {
     protected:
         WrenchTest();
-	    virtual ~WrenchTest();
+        virtual ~WrenchTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

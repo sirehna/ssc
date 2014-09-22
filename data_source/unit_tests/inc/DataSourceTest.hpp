@@ -15,10 +15,10 @@ class DataSourceTest : public ::testing::Test
 {
     protected:
         DataSourceTest();
-	    virtual ~DataSourceTest();
+        virtual ~DataSourceTest();
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 };
 
 

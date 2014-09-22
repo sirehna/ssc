@@ -15,10 +15,10 @@ class PiecewiseConstantVariableStepTest : public ::testing::Test
 {
     protected:
         PiecewiseConstantVariableStepTest();
-	    virtual ~PiecewiseConstantVariableStepTest();
+        virtual ~PiecewiseConstantVariableStepTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 
