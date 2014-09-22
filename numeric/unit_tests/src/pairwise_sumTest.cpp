@@ -6,7 +6,8 @@
  */
 
 #include "pairwise_sumTest.hpp"
-#include "pairwise_sum.hpp"
+
+#include "numeric/pairwise_sum.hpp"
 
 using namespace ssc::numeric;
 

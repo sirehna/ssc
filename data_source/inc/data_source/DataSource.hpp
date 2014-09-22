@@ -18,7 +18,7 @@
 #include "data_source/DataSourceModule.hpp"
 #include "data_source/SignalContainer.hpp"
 #include "data_source/DataSourceException.hpp"
-#include "almost_equal.hpp"
+#include "numeric/almost_equal.hpp"
 
 #define MAKE(ns,x,T) namespace x {typedef T _type;static const std::string _name = #ns "_" #x;}
 #define DEFINE(ns,x, T) namespace ns {MAKE(ns,x,T)}

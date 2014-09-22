@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include "kinematics/Kinematics.hpp"
-#include "almost_equal.hpp"
+#include "numeric/almost_equal.hpp"
 #include "transform_double_equal.hpp"
 #include "kinematics/Transform.hpp"
 

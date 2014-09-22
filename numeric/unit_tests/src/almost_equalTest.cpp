@@ -9,7 +9,8 @@
 #include <limits>
 
 #include "almost_equalTest.hpp"
-#include "almost_equal.hpp"
+
+#include "numeric/almost_equal.hpp"
 
 almost_equalTest::almost_equalTest() : a(ssc::random_data_generator::DataGenerator(7214222))
 {
