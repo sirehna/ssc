@@ -8,6 +8,8 @@
 #include "LinearInterpolationTest.hpp"
 #include "LinearInterpolation.hpp"
 
+using namespace ssc::interpolation;
+
 LinearInterpolationTest::LinearInterpolationTest() : a(DataGenerator(23))
 {
 }

@@ -8,6 +8,8 @@
 #include "IndexFinder.hpp"
 #include <sstream>
 
+using namespace ssc::interpolation;
+
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif

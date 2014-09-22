@@ -10,14 +10,19 @@
 
 #include "Exception.hpp"
 
-class PiecewiseConstantException : public Exception
+namespace ssc
 {
-    public:
-        PiecewiseConstantException(const char* s) :
-                Exception(s)
+    namespace interpolation
+    {
+        class PiecewiseConstantException : public Exception
         {
-        }
-};
-
+            public:
+                PiecewiseConstantException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 #endif  /* PIECEWISECONSTANTEXCEPTION_HPP_ */

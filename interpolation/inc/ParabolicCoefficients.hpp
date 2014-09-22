@@ -1,24 +1,29 @@
 /*
  * ParabolicCoefficients.hpp
  *
- * \date 19 févr. 2013, 11:20:00
+ * \date 19 fï¿½vr. 2013, 11:20:00
  *  \author cec
  */
 
 #ifndef PARABOLICCOEFFICIENTS_HPP_
 #define PARABOLICCOEFFICIENTS_HPP_
 
-
-struct ParabolicCoefficients
+namespace ssc
 {
-    public:
-        ParabolicCoefficients(const double& a_, const double& b_, const double& c_);
-        double a;
-        double b;
-        double c;
+    namespace interpolation
+    {
+        struct ParabolicCoefficients
+        {
+            public:
+                ParabolicCoefficients(const double& a_, const double& b_, const double& c_);
+                double a;
+                double b;
+                double c;
 
-    private:
-        ParabolicCoefficients();
-};
+            private:
+                ParabolicCoefficients();
+        };
+    }
+}
 
 #endif /* PARABOLICCOEFFICIENTS_HPP_ */

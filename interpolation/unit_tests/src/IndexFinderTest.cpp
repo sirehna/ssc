@@ -9,6 +9,8 @@
 #include "IndexFinder.hpp"
 #include "test_macros.hpp"
 
+using namespace ssc::interpolation;
+
 IndexFinderTest::IndexFinderTest() : a(DataGenerator(112233))
 {
 }

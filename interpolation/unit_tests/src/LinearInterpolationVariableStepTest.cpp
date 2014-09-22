@@ -15,6 +15,7 @@
 
 #define EPS 3e-3
 
+using namespace ssc::interpolation;
 
 LinearInterpolationVariableStepTest::LinearInterpolationVariableStepTest() : a(DataGenerator(12))
 {

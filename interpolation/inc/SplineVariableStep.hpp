@@ -15,37 +15,43 @@
 
 #include "Exception.hpp"
 
-class SplineVariableStepException : public Exception
+namespace ssc
 {
-    public:
-        SplineVariableStepException(const char* s) :
-                Exception(s)
+    namespace interpolation
+    {
+        class SplineVariableStepException : public Exception
         {
-        }
-};
+            public:
+                SplineVariableStepException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
 
 
-/** \author cec
- *  \ingroup interpolation
- *  \brief Performs a cubic spline interpolation for non-equidistant abscissae
- *  \section ex1 Example
- *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest example
- *  \section ex2 Expected output
- *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest expected output
- */
+        /** \author cec
+         *  \ingroup interpolation
+         *  \brief Performs a cubic spline interpolation for non-equidistant abscissae
+         *  \section ex1 Example
+         *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest example
+         *  \section ex2 Expected output
+         *  \snippet interpolation/unit_tests/src/SplineVariableStepTest.cpp SplineVariableStepTest expected output
+         */
 
-class SplineVariableStep : public VariableStepInterpolation
-{
-    public:
-        SplineVariableStep();
-        SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
+        class SplineVariableStep : public VariableStepInterpolation
+        {
+            public:
+                SplineVariableStep();
+                SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
 
-    private:
-        double get_f() const;
-        double get_df(const size_t derivative_order) const;
+            private:
+                double get_f() const;
+                double get_df(const size_t derivative_order) const;
 
-        class Impl;
-        TR1(shared_ptr)<Impl> pimpl;
-};
+                class Impl;
+                TR1(shared_ptr)<Impl> pimpl;
+        };
+    }
+}
 
 #endif /* SPLINEVARIABLESTEP_HPP_ */

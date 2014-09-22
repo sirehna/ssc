@@ -1,10 +1,16 @@
 #include "Exception.hpp"
 
-class InterpolatorException : public Exception
+namespace ssc
 {
-    public:
-        InterpolatorException(const char* s) :
-                Exception(s)
+    namespace interpolation
+    {
+        class InterpolatorException : public Exception
         {
-        }
-};
+            public:
+                InterpolatorException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}

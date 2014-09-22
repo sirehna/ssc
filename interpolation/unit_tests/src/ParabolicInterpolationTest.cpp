@@ -1,7 +1,7 @@
 /*
  * ParabolicInterpolationTest.cpp
  *
- * \date 19 févr. 2013, 09:56:08
+ * \date 19 fï¿½vr. 2013, 09:56:08
  *  \author cec
  */
 
@@ -9,6 +9,8 @@
 #include "ParabolicInterpolation.hpp"
 #include "ParabolicInterpolationException.hpp"
 #include "InterpolatorException.hpp"
+
+using namespace ssc::interpolation;
 
 ParabolicInterpolationTest::ParabolicInterpolationTest() : a(DataGenerator(77))
 {

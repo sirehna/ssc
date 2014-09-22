@@ -12,6 +12,8 @@
 #include "PiecewiseConstantVariableStep.hpp"
 #include "test_macros.hpp"
 
+using namespace ssc::interpolation;
+
 typedef long int integer;
 typedef float real;
 typedef double doublereal;

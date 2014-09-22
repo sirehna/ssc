@@ -26,6 +26,8 @@ extern "C"
 #include "SplinesException.hpp"
 #include "VectorOfEquallySpacedNumbers.hpp"
 
+using namespace ssc::interpolation;
+
 Splines::Splines() :
 				M(std::vector<double>()),
 				h(0),

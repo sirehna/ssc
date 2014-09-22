@@ -7,6 +7,9 @@
 
 #include "Interpolator.hpp"
 #include "test_macros.hpp"
+
+using namespace ssc::interpolation;
+
 Interpolator::Interpolator()
 {
 

@@ -19,6 +19,8 @@
 #define PI 4.*atan(1.)
 #define EPS 1E-10
 
+using namespace ssc::interpolation;
+
 template<> VectorOfEquallySpacedNumbers get_min_bound<VectorOfEquallySpacedNumbers>();
 template<> VectorOfEquallySpacedNumbers get_max_bound<VectorOfEquallySpacedNumbers>();
 
