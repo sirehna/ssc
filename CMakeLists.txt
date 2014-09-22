@@ -123,6 +123,7 @@ add_libs(data_source)
 add_libs(kinematics)
 add_libs(interpolation)
 add_libs(csv_file_reader)
+add_libs(numeric)
 
 
 #############################################################################
@@ -160,6 +161,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         ${kinematics}_shared
         ${csv_file_reader}_shared
         ${interpolation}_shared
+        ${numeric}_shared
         lapack
         )
 
