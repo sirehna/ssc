@@ -6,7 +6,7 @@
  */
 
 #include "random_increasing_vector.hpp"
-#include "DataGenerator.hpp"
+#include "random_data_generator/DataGenerator.hpp"
 
 std::vector<double> a_random_vector_of_doubles_in_increasing_order_of_size(const ssc::random_data_generator::DataGenerator& a, const size_t& n)
 {

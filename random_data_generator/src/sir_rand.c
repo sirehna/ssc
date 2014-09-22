@@ -44,7 +44,8 @@
 
 #include <math.h>
 #include <string.h>
-#include "sir_rand.h"
+
+#include "random_data_generator/sir_rand.h"
 
 
 /* convert integer on 64 bits into a double in the range of [0,1).
