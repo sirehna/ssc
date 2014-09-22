@@ -12,7 +12,9 @@
 
 #include <iostream>
 
-bool double_equal(const kinematics::Transform& t1, const kinematics::Transform& t2, const double eps)
+using namespace ssc::kinematics;
+
+bool double_equal(const Transform& t1, const Transform& t2, const double eps)
 {
     if (t1.get_from_frame() != t2.get_from_frame())
     {

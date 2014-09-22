@@ -5,6 +5,7 @@
 #include "KinematicTree.hpp"
 
 using namespace ssc::data_source;
+using namespace ssc::kinematics;
 
 std::string make_transform_name(const std::string& from_frame, const std::string& to_frame);
 std::string make_transform_name(const std::string& from_frame, const std::string& to_frame)
@@ -42,7 +43,7 @@ class InverseTransformComputer : public DataSourceModule
 
         void update() const
         {
-            const kinematics::Transform t = ds->get<kinematics::Transform>(name_of_direct_transform);
+            const Transform t = ds->get<Transform>(name_of_direct_transform);
             ds->set(name_of_inverse_transform, t.inverse());
         }
 
@@ -73,12 +74,12 @@ class CompositeTransformComputer : public DataSourceModule
 
         void update() const
         {
-            kinematics::Transform t = ds->get<kinematics::Transform>(make_transform_name(transforms.front()));
+            Transform t = ds->get<Transform>(make_transform_name(transforms.front()));
             const std::string name_of_transform = make_transform_name(transforms.front().first,transforms.back().second);
 
             for (size_t i = 1 ; i < transforms.size() ; ++i)
             {
-                t = ds->get<kinematics::Transform>(make_transform_name(transforms[i])) * t;
+                t = ds->get<Transform>(make_transform_name(transforms[i])) * t;
             }
             ds->set(name_of_transform, t);
         }
@@ -107,7 +108,7 @@ class Kinematics::Impl
         {
         }
 
-        void add(const kinematics::Transform& t)
+        void add(const Transform& t)
         {
             const std::string direct_transform = make_transform_name(t.get_from_frame(), t.get_to_frame());
             const bool need_to_add_modules = not(ds.has<kinematics::Transform>(direct_transform));
@@ -153,12 +154,12 @@ class Kinematics::Impl
 
 };
 
-void Kinematics::add(const kinematics::Transform& t)
+void Kinematics::add(const Transform& t)
 {
     pimpl->add(t);
 }
 
-kinematics::Transform Kinematics::get(const std::string& from_frame, const std::string& to_frame)
+Transform Kinematics::get(const std::string& from_frame, const std::string& to_frame)
 {
     return pimpl->get(from_frame, to_frame);
 }

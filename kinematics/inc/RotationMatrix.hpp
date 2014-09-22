@@ -9,6 +9,13 @@
 #define ROTATIONMATRIX_HPP_
 
 #include <Eigen/Dense>
-typedef Eigen::Matrix<double, 3, 3> RotationMatrix;
+
+namespace ssc
+{
+    namespace kinematics
+    {
+        typedef Eigen::Matrix<double, 3, 3> RotationMatrix;
+    }
+}
 
 #endif /* ROTATIONMATRIX_HPP_ */

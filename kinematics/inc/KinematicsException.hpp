@@ -10,14 +10,19 @@
 
 #include "Exception.hpp"
 
-class KinematicsException: public Exception
+namespace ssc
 {
-    public:
-        KinematicsException(const char* s) :
-                Exception(s)
+    namespace kinematics
+    {
+        class KinematicsException: public Exception
         {
-        }
-};
-
+            public:
+                KinematicsException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 #endif /* KINEMATICSEXCEPTION_HPP_ */

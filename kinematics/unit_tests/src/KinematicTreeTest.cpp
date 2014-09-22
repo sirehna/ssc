@@ -10,6 +10,8 @@
 #include "KinematicTree.hpp"
 #include "test_macros.hpp"
 
+using namespace ssc::kinematics;
+
 KinematicTreeTest::KinematicTreeTest() : a(DataGenerator(78784))
 {
 }

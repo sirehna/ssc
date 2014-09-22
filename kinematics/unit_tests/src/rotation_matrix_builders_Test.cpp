@@ -13,6 +13,8 @@
 
 #define EPS (1E-10)
 
+using namespace ssc::kinematics;
+
 rotation_matrix_builders_Test::rotation_matrix_builders_Test() : a(DataGenerator(545))
 {
 }
@@ -33,7 +35,6 @@ void rotation_matrix_builders_Test::TearDown()
 
 TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_x_axis)
 {
-    using namespace kinematics;
     const RotationMatrix R = rot(1,0,0,PI/3);
     ASSERT_DOUBLE_EQ(1, R(0,0));
     ASSERT_DOUBLE_EQ(0, R(1,0));
@@ -48,7 +49,6 @@ TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_x_axis)
 
 TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_y_axis)
 {
-    using namespace kinematics;
     const RotationMatrix R = rot(0,1,0,PI/3);
     ASSERT_DOUBLE_EQ(0.5, R(0,0));
     ASSERT_DOUBLE_EQ(0, R(1,0));
@@ -63,7 +63,6 @@ TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_y_axis)
 
 TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_z_axis)
 {
-    using namespace kinematics;
     const RotationMatrix R = rot(0,0,1,PI/3);
     ASSERT_DOUBLE_EQ(0.5, R(0,0));
     ASSERT_DOUBLE_EQ(sqrt(3)/2, R(1,0));
@@ -79,7 +78,6 @@ TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_z_axis)
 TEST_F(rotation_matrix_builders_Test, example)
 {
 //! [rotation_matrix_builders_Test example]
-    using namespace kinematics;
     const EulerAngles angles(PI/3, PI/4, PI/6);
     //const EulerAngles angles(PI/2,0,0);
     const RotationMatrix R = rotation_matrix<INTRINSIC, CHANGING_ANGLE_ORDER, CARDAN, 3, 2, 1>(angles);
@@ -93,7 +91,6 @@ TEST_F(rotation_matrix_builders_Test, example)
 
 TEST_F(rotation_matrix_builders_Test, matrix_to_euler)
 {
-    using namespace kinematics;
     for (size_t i = 0 ; i < 10 ; ++i)
     {
         const double phi = a.random<double>().between(-PI,PI);

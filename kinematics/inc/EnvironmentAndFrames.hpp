@@ -11,18 +11,24 @@
 #include "tr1_macros.hpp"
 #include TR1INC(memory)
 
-class Kinematics;
-typedef TR1(shared_ptr)<Kinematics> KinematicsPtr;
-class SurfaceElevationInterface;
-typedef TR1(shared_ptr)<SurfaceElevationInterface> WaveModelPtr;
-
-struct EnvironmentAndFrames
+namespace ssc
 {
-    EnvironmentAndFrames();
-    WaveModelPtr w;
-    KinematicsPtr k;
-    double rho;
-    double g;
-};
+    namespace kinematics
+    {
+        class Kinematics;
+        typedef TR1(shared_ptr)<Kinematics> KinematicsPtr;
+        class SurfaceElevationInterface;
+        typedef TR1(shared_ptr)<SurfaceElevationInterface> WaveModelPtr;
+
+        struct EnvironmentAndFrames
+        {
+            EnvironmentAndFrames();
+            WaveModelPtr w;
+            KinematicsPtr k;
+            double rho;
+            double g;
+        };
+    }
+}
 
 #endif /* ENVIRONMENTANDFRAMES_HPP_ */

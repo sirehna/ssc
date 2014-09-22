@@ -8,11 +8,13 @@
 #ifndef TRANSFORM_DOUBLE_EQUAL_HPP_
 #define TRANSFORM_DOUBLE_EQUAL_HPP_
 
-namespace kinematics
+namespace ssc
 {
-	class Transform;
+    namespace kinematics
+    {
+        class Transform;
+    }
 }
-
-bool double_equal(const kinematics::Transform& t1, const kinematics::Transform& t2, const double eps=0);
+bool double_equal(const ssc::kinematics::Transform& t1, const ssc::kinematics::Transform& t2, const double eps=0);
 
 #endif  /* TRANSFORM_DOUBLE_EQUAL_HPP_ */

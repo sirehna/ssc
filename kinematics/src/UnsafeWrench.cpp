@@ -7,6 +7,8 @@
 
 #include "UnsafeWrench.hpp"
 
+using namespace ssc::kinematics;
+
 UnsafeWrench::UnsafeWrench() : Wrench()
 {
 }

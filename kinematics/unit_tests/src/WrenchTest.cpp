@@ -17,6 +17,7 @@
 #define PI (4.*atan(1.))
 #define EPS 1E-13
 
+using namespace ssc::kinematics;
 
 WrenchTest::WrenchTest() : a(DataGenerator(1215))
 {
@@ -79,8 +80,8 @@ TEST_F(WrenchTest, can_project_wrench_in_a_different_frame_and_change_reference_
 	wA.N() = 3;
 
 	const double beta = a.random<double>().between(-PI,PI);
-	const RotationMatrix R = kinematics::rot(0,0,1, beta);
-	const kinematics::Transform T(B, R, frame_B);
+	const RotationMatrix R = rot(0,0,1, beta);
+	const Transform T(B, R, frame_B);
 	const Wrench wB = wA.change_ref_point_then_change_frame(T);
 
 	ASSERT_SMALL_RELATIVE_ERROR(11*cos(beta)+20*sin(beta), wB.X(), EPS);
@@ -106,8 +107,8 @@ TEST_F(WrenchTest, can_project_wrench_in_a_different_frame_but_keep_same_referen
 	wA.N() = 3;
 
 	const double beta = a.random<double>().between(-PI,PI);
-	const RotationMatrix R = kinematics::rot(0,0,1, beta);
-	const kinematics::Transform T(B, R, frame_B);
+	const RotationMatrix R = rot(0,0,1, beta);
+	const Transform T(B, R, frame_B);
 	const Wrench wB = wA.change_frame_but_keep_ref_point(T);
 
 	ASSERT_SMALL_RELATIVE_ERROR(11*cos(beta)+20*sin(beta), wB.X(), EPS);
@@ -123,7 +124,7 @@ TEST_F(WrenchTest, cannot_project_wrench_if_frames_dont_match)
 	for (size_t i = 0 ; i < 20 ; ++i)
 	{
 		const Wrench w(random_point(a));
-		const kinematics::Transform T = random_transform(a, a.random<std::string>(), a.random<std::string>());
+		const Transform T = random_transform(a, a.random<std::string>(), a.random<std::string>());
 		ASSERT_THROW(w.change_ref_point_then_change_frame(T), KinematicsException);
 		ASSERT_THROW(w.change_frame_but_keep_ref_point(T), KinematicsException);
 	}

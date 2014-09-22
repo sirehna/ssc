@@ -12,6 +12,8 @@
 
 #define EPS 1E-13
 
+using namespace ssc::kinematics;
+
 VelocityTest::VelocityTest() : a(DataGenerator(7779))
 {
 }
