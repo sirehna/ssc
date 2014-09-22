@@ -14,6 +14,7 @@ using ::testing::StrictMock;
 using ::testing::NiceMock;
 using ::testing::InSequence;
 using ::testing::_;
+using namespace ssc::solver;
 
 constant_step_stepper_architecture_tests::constant_step_stepper_architecture_tests() : a(ssc::random_data_generator::DataGenerator(12212))
 {

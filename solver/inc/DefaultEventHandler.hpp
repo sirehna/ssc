@@ -8,23 +8,27 @@
 #ifndef DEFAULTEVENTHANDLER_HPP_
 #define DEFAULTEVENTHANDLER_HPP_
 
-class DefaultEventHandler
+namespace ssc
 {
-    public:
-        bool detected_state_events() const
+    namespace solver
+    {
+        class DefaultEventHandler
         {
-            return false;
-        }
+            public:
+                bool detected_state_events() const
+                {
+                    return false;
+                }
 
-        void locate_event()
-        {
-        }
+                void locate_event()
+                {
+                }
 
-        void run_event_actions()
-        {
-        }
-};
-
-
+                void run_event_actions()
+                {
+                }
+        };
+    }
+}
 
 #endif /* DEFAULTEVENTHANDLER_HPP_ */

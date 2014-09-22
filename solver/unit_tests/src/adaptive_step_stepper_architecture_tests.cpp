@@ -14,6 +14,7 @@ using ::testing::StrictMock;
 using ::testing::NiceMock;
 using ::testing::InSequence;
 using ::testing::_;
+using namespace ssc::solver;
 
 #define ODEINT_SUCCESS boost::numeric::odeint::success
 #define ODEINT_FAIL boost::numeric::odeint::fail
