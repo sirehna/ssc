@@ -1,9 +1,10 @@
-#include "CSVFileReader.hpp"
 #include <cstdlib> // For atof
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <functional>
+
+#include "csv_file_reader/CSVFileReader.hpp"
 
 using namespace ssc::csv_file_reader;
 
