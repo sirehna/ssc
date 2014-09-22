@@ -8,4 +8,6 @@ yaml-cpp/
 buildDebug32/
 install/
 installDebug32/
+.project
+.cproject
 
