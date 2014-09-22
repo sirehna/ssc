@@ -1,13 +1,15 @@
 /*
  * YamlParser.cpp
  *
- * \date 27 août 2012, 13:04:19
+ * \date 27 aoï¿½t 2012, 13:04:19
  *  \author cec
  */
 
 #include "YamlParser.hpp"
 #include <sstream>
 #include "yaml.h"
+
+using namespace ssc::yaml_parser;
 
 YamlParser::YamlParser(const std::string& contents_to_parse) : contents(contents_to_parse)
 {
