@@ -1,6 +1,8 @@
 #include "PointMatrix.hpp"
 #include "Point.hpp"
 
+using namespace ssc::kinematics;
+
 PointMatrix::PointMatrix() : m(Matrix3Xd()), frame("")
 {
 }
@@ -46,12 +48,12 @@ PointMatrix PointMatrix::operator+(const Point& P) const
     return PointMatrix(M, frame);
 }
 
-PointMatrix operator+(const Point& P, const PointMatrix& M)
+PointMatrix ssc::kinematics::operator+(const Point& P, const PointMatrix& M)
 {
     return M+P;
 }
 
-void swap(PointMatrix& one, PointMatrix& the_other)
+void ssc::kinematics::swap(PointMatrix& one, PointMatrix& the_other)
 {
     one.swap(the_other);
 }

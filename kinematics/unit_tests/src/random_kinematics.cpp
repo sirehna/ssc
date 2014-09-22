@@ -14,6 +14,8 @@
 
 #define PI (4.*atan(1.))
 
+using namespace ssc::kinematics;
+
 template <> RotationMatrix TypedScalarDataGenerator<RotationMatrix>::get() const
 {
     double lambda1 = random<double>().between(-1,1);
@@ -24,7 +26,7 @@ template <> RotationMatrix TypedScalarDataGenerator<RotationMatrix>::get() const
     lambda2 = lambda2/D;
     lambda3 = lambda3/D;
     const double beta = random<double>().between(-PI,PI);
-    return kinematics::rot(lambda1, lambda2, lambda3, beta);
+    return rot(lambda1, lambda2, lambda3, beta);
 }
 
 template <> Point TypedScalarDataGenerator<Point>::get() const
@@ -65,9 +67,9 @@ PointMatrix random_point_matrix_in_frame(const DataGenerator& a, const std::stri
     return p;
 }
 
-kinematics::Transform random_transform(const DataGenerator& a, const std::string& from_frame, const std::string& to_frame)
+Transform random_transform(const DataGenerator& a, const std::string& from_frame, const std::string& to_frame)
 {
     const RotationMatrix R = a.random<RotationMatrix>();
-    return kinematics::Transform(random_point_in_frame(a, from_frame), R, to_frame);
+    return Transform(random_point_in_frame(a, from_frame), R, to_frame);
 }
 

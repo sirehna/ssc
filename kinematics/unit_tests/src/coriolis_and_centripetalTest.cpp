@@ -10,6 +10,8 @@
 
 #define EPS 1E-13
 
+using namespace ssc::kinematics;
+
 coriolis_and_centripetalTest::coriolis_and_centripetalTest() : a(DataGenerator(45455))
 {
 }

@@ -13,6 +13,8 @@
 
 #define EPS 1E-13
 
+using namespace ssc::kinematics;
+
 KinematicsTests::KinematicsTests() : a(DataGenerator(122))
 {
 }
@@ -31,26 +33,26 @@ void KinematicsTests::TearDown()
 
 TEST_F(KinematicsTests, can_add_a_transform_to_a_kinematics_object)
 {
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
     const auto bTa = random_transform(a, a.random<std::string>(), a.random<std::string>());
     k.add(bTa);
 }
 
 TEST_F(KinematicsTests, can_retrieve_a_transform)
 {
-	Kinematics k;
-	const std::string from_frame = a.random<std::string>();
-	const std::string to_frame = a.random<std::string>();
-	const auto bTa = random_transform(a, from_frame, to_frame);
-	k.add(bTa);
-	const auto transform = k.get(from_frame, to_frame);
-	ASSERT_TRUE(double_equal(transform, bTa));
+    ssc::kinematics::Kinematics k;
+    const std::string from_frame = a.random<std::string>();
+    const std::string to_frame = a.random<std::string>();
+    const auto bTa = random_transform(a, from_frame, to_frame);
+    k.add(bTa);
+    const auto transform = k.get(from_frame, to_frame);
+    ASSERT_TRUE(double_equal(transform, bTa));
 }
 
 TEST_F(KinematicsTests, can_retrieve_inverse_transform)
 {
     //! [KinematicsTests get_example]
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
     const std::string from_frame = a.random<std::string>();
     const std::string to_frame = a.random<std::string>();
     const auto bTa = random_transform(a, from_frame, to_frame);
@@ -58,20 +60,20 @@ TEST_F(KinematicsTests, can_retrieve_inverse_transform)
     const auto aTb = k.get(to_frame, from_frame);
     //! [KinematicsTests get_example]
     //! [KinematicsTests get_example output]
-    ASSERT_TRUE(double_equal(kinematics::identity(from_frame), aTb*bTa, EPS));
-    ASSERT_TRUE(double_equal(kinematics::identity(to_frame), bTa*aTb, EPS));
+    ASSERT_TRUE(double_equal(identity(from_frame), aTb*bTa, EPS));
+    ASSERT_TRUE(double_equal(identity(to_frame), bTa*aTb, EPS));
     //! [KinematicsTests get_example output]
 }
 
 TEST_F(KinematicsTests, throws_if_transform_is_not_computable)
 {
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
     ASSERT_THROW(k.get(a.random<std::string>(),a.random<std::string>()), KinematicsException);
 }
 
 TEST_F(KinematicsTests, can_compute_a_transformation_if_necessary_and_feasible)
 {
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
 
     const auto bTa = random_transform(a, "A", "B");
     const auto cTa = random_transform(a, "A", "C");
@@ -100,16 +102,16 @@ TEST_F(KinematicsTests, can_compute_a_transformation_if_necessary_and_feasible)
 
 TEST_F(KinematicsTests, can_compute_identity)
 {
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
     const auto bTa = random_transform(a, "A", "B");
     k.add(bTa);
     const auto aTa = k.get("A", "A");
-    ASSERT_TRUE(double_equal(kinematics::identity("A"), aTa, EPS));
+    ASSERT_TRUE(double_equal(identity("A"), aTa, EPS));
 }
 
 TEST_F(KinematicsTests, can_add_same_transform_several_times)
 {
-    Kinematics k;
+    ssc::kinematics::Kinematics k;
     const auto bTa = random_transform(a, "A", "B");
     k.add(bTa);
     k.add(bTa);

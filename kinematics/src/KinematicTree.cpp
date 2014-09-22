@@ -14,6 +14,8 @@
 #include <map>
 #include <algorithm> // std::reverse
 
+using namespace ssc::kinematics;
+
 typedef float Weight;
 typedef boost::property<boost::edge_weight_t, Weight> WeightProperty;
 typedef boost::property<boost::vertex_name_t, std::string> NameProperty;

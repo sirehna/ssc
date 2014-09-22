@@ -8,6 +8,7 @@
 #include "EnvironmentAndFrames.hpp"
 #include "Kinematics.hpp"
 
+using namespace ssc::kinematics;
 
 EnvironmentAndFrames::EnvironmentAndFrames() : w(WaveModelPtr()),
                                                k(KinematicsPtr(new Kinematics())),

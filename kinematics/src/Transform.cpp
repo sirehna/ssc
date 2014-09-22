@@ -1,7 +1,7 @@
 #include "Transform.hpp"
 #include "KinematicsException.hpp"
 
-using namespace kinematics;
+using namespace ssc::kinematics;
 
 Transform::Transform() : t(Point()), r(RotationMatrix(Eigen::MatrixXd::Identity(3,3))), to_frame("")
 {
@@ -90,7 +90,7 @@ RotationMatrix Transform::get_rot() const
     return r;
 }
 
-std::ostream& kinematics::operator<<(std::ostream& os, const Transform& T)
+std::ostream& ssc::kinematics::operator<<(std::ostream& os, const Transform& T)
 {
     os << "(" << T.get_from_frame() << " -> " << T.get_to_frame() << "):" << std::endl
        << "R = " << std::endl << T.r << std::endl
@@ -98,12 +98,12 @@ std::ostream& kinematics::operator<<(std::ostream& os, const Transform& T)
     return os;
 }
 
-kinematics::Transform kinematics::identity(const std::string& frame)
+Transform ssc::kinematics::identity(const std::string& frame)
 {
     return kinematics::Transform(Point(frame,0,0,0), frame);
 }
 
-void kinematics::Transform::swap()
+void Transform::swap()
 {
     const auto from_frame = t.get_frame();
     t = Point(to_frame, t.x(), t.y(), t.z());

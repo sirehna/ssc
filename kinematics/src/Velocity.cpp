@@ -1,6 +1,8 @@
 #include "Velocity.hpp"
 #include "KinematicsException.hpp"
 
+using namespace ssc::kinematics;
+
 Velocity::Velocity(const Point& p_, const AngularVelocityVector& w) : P(p_), vP(p_.get_frame(), Eigen::Vector3d(0,0,0)), omega(w)
 {
     if (p_.get_frame() != w.get_frame())
@@ -63,7 +65,7 @@ void Velocity::swap(Velocity& other)
     swap(omega, other.omega);
 }
 
-void swap(Velocity& a, Velocity& b) // provide non-member for ADL
+void ssc::kinematics::swap(Velocity& a, Velocity& b) // provide non-member for ADL
 {
     a.swap(b);
 }

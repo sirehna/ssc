@@ -1,5 +1,7 @@
 #include "EulerAngles.hpp"
 
+using namespace ssc::kinematics;
+
 EulerAngles::EulerAngles() : phi(0), theta(0), psi(0)
 {
 }

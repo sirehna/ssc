@@ -1,5 +1,7 @@
 #include "Point.hpp"
 
+using namespace ssc::kinematics;
+
 Point::Point() : v(0,0,0), frame("")
 {
 }
@@ -28,7 +30,7 @@ void Point::swap(Point& other)
     swap(frame, other.frame);
 }
 
-void swap(Point& a, Point& b)
+void ssc::kinematics::swap(Point& a, Point& b)
 {
     a.swap(b);
 }
@@ -54,7 +56,7 @@ Point Point::operator+(const Point& P) const
     return Point(frame, x() + P.x(), y() + P.y(), z() + P.z());
 }
 
-std::ostream& operator<<(std::ostream& os, const Point& P)
+std::ostream& ssc::kinematics::operator<<(std::ostream& os, const Point& P)
 {
     os << "[" << P.v.transpose() << "] [in " << P.get_frame() << "]";
     return os;

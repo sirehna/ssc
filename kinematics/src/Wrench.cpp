@@ -12,6 +12,8 @@
 
 #include <sstream>
 
+using namespace ssc::kinematics;
+
 bool equal(const Point& P, const Point& Q);
 bool equal(const Point& P, const Point& Q)
 {
@@ -151,12 +153,12 @@ Wrench Wrench::operator*(const double lambda) const
     return Wrench(P, lambda*force, lambda*torque);
 }
 
-Wrench operator*(const double lambda, const Wrench& w)
+Wrench ssc::kinematics::operator*(const double lambda, const Wrench& w)
 {
     return w*lambda;
 }
 
-std::ostream& operator<<(std::ostream& os, const Wrench& w)
+std::ostream& ssc::kinematics::operator<<(std::ostream& os, const Wrench& w)
 {
     os << "force: [" << w.force.transpose() << "], torque: [" << w.torque.transpose() << "], point: " << w.get_point();
     return os;

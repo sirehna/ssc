@@ -17,6 +17,8 @@
 
 #define EPS 1E-13
 
+using namespace ssc::kinematics;
+
 TransformTest::TransformTest() : a(DataGenerator(1215))
 {
 }
@@ -40,7 +42,7 @@ TEST_F(TransformTest, can_translate_a_point)
     {
         const Point P1 = random_point(a);
         const Point P2 = random_point_in_frame(a, P1.get_frame());
-        const kinematics::Transform T(P1, a.random<std::string>());
+        const Transform T(P1, a.random<std::string>());
         const Point Q = T*P2;
 
         ASSERT_SMALL_RELATIVE_ERROR(P1.x()+P2.x(),Q.x(),EPS);
@@ -59,8 +61,8 @@ TEST_F(TransformTest, can_compose_two_translations)
         const std::string middle_frame = a.random<std::string>();
         const Point P1 = random_point(a);
         const Point P2 = random_point_in_frame(a, middle_frame);
-        const kinematics::Transform T1(P1,middle_frame);
-        const kinematics::Transform T2(P2,a.random<std::string>());
+        const Transform T1(P1,middle_frame);
+        const Transform T2(P2,a.random<std::string>());
         const Point Q = T2*T1*P1;
 
         ASSERT_SMALL_RELATIVE_ERROR(2*P1.x()+P2.x(),Q.x(),EPS);
@@ -76,8 +78,8 @@ TEST_F(TransformTest, can_compose_two_translations_for_a_point_matrix)
         const std::string middle_frame = a.random<std::string>();
         const Point P1 = random_point(a);
         const Point P2 = random_point_in_frame(a, middle_frame);
-        const kinematics::Transform T1(P1,middle_frame);
-        const kinematics::Transform T2(P2,a.random<std::string>());
+        const Transform T1(P1,middle_frame);
+        const Transform T2(P2,a.random<std::string>());
         const PointMatrix PC1 = random_point_matrix_in_frame(a, P1.get_frame());
         const PointMatrix Q = T2*T1*PC1;
         ASSERT_EQ(T2.get_to_frame(),Q.get_frame());
@@ -102,11 +104,11 @@ TEST_F(TransformTest, can_compose_two_translations_and_two_rotations)
         const std::string C = a.random<std::string>();
         const Point P = random_point_in_frame(a, A);
         const Point ta = random_point_in_frame(a, A);
-        const auto Ra = kinematics::rot(1,0,0,beta);
+        const auto Ra = rot(1,0,0,beta);
         const Point tb = random_point_in_frame(a, B);
-        const auto Rb = kinematics::rot(0,1,0,beta);
-        const kinematics::Transform bTa(ta,Ra,B);
-        const kinematics::Transform cTb(tb,Rb,C);
+        const auto Rb = rot(0,1,0,beta);
+        const Transform bTa(ta,Ra,B);
+        const Transform cTb(tb,Rb,C);
         const Point Pc = cTb*bTa*P;
         ASSERT_EQ(C, Pc.get_frame());
         ASSERT_SMALL_RELATIVE_ERROR((P.x()+ta.x())/2.0+(3.0*P.y()+sqrt(3.0)*P.z())/4.0+sqrt(3.0)*ta.z()/2.0+tb.x(),Pc.x(),EPS);
@@ -120,9 +122,9 @@ TEST_F(TransformTest, can_rotate_a_point)
     for (size_t i = 0 ; i < 20 ; ++i)
     {
         const double beta = a.random<double>().between(-PI,PI);
-        const RotationMatrix R = kinematics::rot(0,0,1, beta);
+        const RotationMatrix R = rot(0,0,1, beta);
         const Point P = random_point(a);
-        const kinematics::Transform T(R, P.get_frame(), a.random<std::string>());
+        const Transform T(R, P.get_frame(), a.random<std::string>());
         const Point Q = T*P;
 
         ASSERT_SMALL_RELATIVE_ERROR(cos(beta)*P.x()-sin(beta)*P.y(),Q.x(),EPS);
@@ -137,12 +139,12 @@ TEST_F(TransformTest, can_compose_two_rotations)
     {
         const double beta1 = a.random<double>().between(-PI,PI);
         const double beta2 = a.random<double>().between(-PI,PI);
-        const RotationMatrix R1 = kinematics::rot(0,0,1, beta1);
-        const RotationMatrix R2 = kinematics::rot(0,0,1, beta2);
+        const RotationMatrix R1 = rot(0,0,1, beta1);
+        const RotationMatrix R2 = rot(0,0,1, beta2);
         const Point P = random_point(a);
         const std::string middle_frame = a.random<std::string>();
-        const kinematics::Transform T1(R1, P.get_frame(), middle_frame);
-        const kinematics::Transform T2(R2, middle_frame, a.random<std::string>());
+        const Transform T1(R1, P.get_frame(), middle_frame);
+        const Transform T2(R2, middle_frame, a.random<std::string>());
         const Point Q = T2*T1*P;
 
         ASSERT_SMALL_RELATIVE_ERROR(cos(beta1+beta2)*P.x()-sin(beta1+beta2)*P.y(),Q.x(),EPS);
@@ -158,8 +160,8 @@ TEST_F(TransformTest, can_rotate_and_translate_a_point)
         const Point O = random_point(a);
         const Point P = random_point_in_frame(a, O.get_frame());
         const double beta = a.random<double>().between(-PI,PI);
-        const RotationMatrix R = kinematics::rot(0,0,1, beta);
-        const kinematics::Transform T(O,R,a.random<std::string>());
+        const RotationMatrix R = rot(0,0,1, beta);
+        const Transform T(O,R,a.random<std::string>());
         const Point Q = T*P;
 
         ASSERT_SMALL_RELATIVE_ERROR(O.x()+cos(beta)*P.x()-sin(beta)*P.y(),Q.x(),EPS);
@@ -177,8 +179,8 @@ TEST_F(TransformTest, should_throw_if_applying_transform_to_a_point_in_wrong_fra
         const Point P1 = random_point_in_frame(a, F1);
         const Point P2 = random_point_in_frame(a, F2);
         const RotationMatrix R = a.random<RotationMatrix>();
-        const kinematics::Transform T1(P1,R,a.random<std::string>());
-        const kinematics::Transform T2(P2,R,a.random<std::string>());
+        const Transform T1(P1,R,a.random<std::string>());
+        const Transform T2(P2,R,a.random<std::string>());
         ASSERT_NO_THROW(T1*P1);
         ASSERT_THROW(T1*P2, KinematicsException);
         ASSERT_NO_THROW(T2*P2);
@@ -195,8 +197,8 @@ TEST_F(TransformTest, should_throw_if_composing_transforms_in_wrong_frame)
         const Point O1 = random_point_in_frame(a, F1);
         const Point O2 = random_point_in_frame(a, F2);
         const RotationMatrix R = a.random<RotationMatrix>();
-        const kinematics::Transform T1(O1,R,F2);
-        const kinematics::Transform T2(O2,R,a.random<std::string>());
+        const Transform T1(O1,R,F2);
+        const Transform T2(O2,R,a.random<std::string>());
         ASSERT_NO_THROW(T2*T1);
         ASSERT_THROW(T1*T1, KinematicsException);
         ASSERT_THROW(T1*T2, KinematicsException);
@@ -214,8 +216,8 @@ TEST_F(TransformTest, should_throw_if_transforming_velocity_from_wrong_frame)
         const Point Q = random_point_in_frame(a, F2);
         const AngularVelocityVector w = random_point_in_frame(a, F1);
         const RotationMatrix R = a.random<RotationMatrix>();
-        const kinematics::Transform T_same(P,R,a.random<std::string>());
-        const kinematics::Transform T_different(Q,R,a.random<std::string>());
+        const Transform T_same(P,R,a.random<std::string>());
+        const Transform T_different(Q,R,a.random<std::string>());
         const Velocity V(P, w);
         ASSERT_NO_THROW(T_same*V);
         ASSERT_THROW(T_different*V, KinematicsException);
@@ -231,8 +233,8 @@ TEST_F(TransformTest, can_project_velocity_in_another_frame)
     const AngularVelocityVector w(F1, 7, 1, 89);
     const TranslationVelocityVector t(F1, 10,11,12);
     const Point Q(F1, 5,2,7);
-    const RotationMatrix R = kinematics::rot(1,0,0, beta);
-    const kinematics::Transform T(Q,R,F2);
+    const RotationMatrix R = rot(1,0,0, beta);
+    const Transform T(Q,R,F2);
     const Velocity V1(P, t, w);
     const Velocity V2 = T*V1;
 
@@ -253,7 +255,7 @@ TEST_F(TransformTest, can_compute_the_inverse_transform)
         const Point Pa = random_point_in_frame(a, frame_a);
         const Point Pb = random_point_in_frame(a, frame_b);
         const auto bTa = random_transform(a, frame_a, frame_b);
-        const kinematics::Transform aTb = bTa.inverse();
+        const Transform aTb = bTa.inverse();
         ASSERT_SMALL_RELATIVE_ERROR(Pa.x(),((aTb*bTa)*Pa).x(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(Pa.y(),((aTb*bTa)*Pa).y(),EPS);
         ASSERT_SMALL_RELATIVE_ERROR(Pa.z(),((aTb*bTa)*Pa).z(),EPS);
