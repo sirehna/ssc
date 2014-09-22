@@ -7,7 +7,8 @@
 
 
 
-#include "PhysicalQuantity.hpp"
+#include "data_source/PhysicalQuantity.hpp"
+
 #include "Exception.hpp"
 
 using namespace ssc::data_source;

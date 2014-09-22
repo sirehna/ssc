@@ -8,7 +8,7 @@
 #ifndef TESTMODULES_HPP_
 #define TESTMODULES_HPP_
 
-#include "DataSourceModule.hpp"
+#include "data_source/DataSourceModule.hpp"
 
 
 DECLARE_MODULE(ModuleDependingOnItself);

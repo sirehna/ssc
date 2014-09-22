@@ -6,11 +6,11 @@
  */
 
 #include "DataSourceTest.hpp"
-#include "DataSource.hpp"
+#include "data_source/DataSource.hpp"
 #include "gmock/gmock.h"
-#include "DataSourceModule.hpp"
+#include "data_source/DataSourceModule.hpp"
 #include "DataSourceModuleMock.hpp"
-#include "DataSourceException.hpp"
+#include "data_source/DataSourceException.hpp"
 #include "TestModules.hpp"
 
 #include <set>

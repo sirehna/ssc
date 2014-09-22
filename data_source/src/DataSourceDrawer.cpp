@@ -5,12 +5,11 @@
  *  \author cec
  */
 
-#include "DataSourceDrawer.hpp"
-
 #include <sstream>
 #include <map>
 #include <boost/algorithm/string.hpp>
-#include "test_macros.hpp"
+
+#include "data_source/DataSourceDrawer.hpp"
 
 using namespace ssc::data_source;
 

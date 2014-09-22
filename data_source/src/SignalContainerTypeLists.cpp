@@ -5,8 +5,9 @@
  *  \author cec
  */
 
-#include "SignalContainerTypeLists.hpp"
 #include <ostream>
+
+#include "data_source/SignalContainerTypeLists.hpp"
 
 using namespace ssc::data_source;
 

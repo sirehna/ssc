@@ -13,8 +13,8 @@
 #include <typeinfo>
 #include <vector>
 #include "Exception.hpp"
-#include "SignalContainerTypeLists.hpp"
-#include "TypeCoercion.hpp"
+#include "data_source/SignalContainerTypeLists.hpp"
+#include "data_source/TypeCoercion.hpp"
 
 namespace ssc
 {

@@ -6,8 +6,8 @@
  */
 
 #include "TypeCoercionTest.hpp"
-#include "TypeCoercion.hpp"
-#include "CoercionException.hpp"
+#include "data_source/TypeCoercion.hpp"
+#include "data_source/CoercionException.hpp"
 
 using namespace ssc::data_source;
 
