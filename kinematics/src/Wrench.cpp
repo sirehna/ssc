@@ -7,7 +7,7 @@
 
 #include "Wrench.hpp"
 #include "KinematicsException.hpp"
-#include "data_source/almost_equal.hpp"
+#include "almost_equal.hpp"
 #include "Transform.hpp"
 
 #include <sstream>

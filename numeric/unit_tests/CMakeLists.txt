@@ -3,6 +3,7 @@ set(MODULE_UNDER_TEST numeric)
 project(${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/kahan_sumTest.cpp
               src/pairwise_sumTest.cpp
+              src/almost_equalTest.cpp
               )
 # ------8<---------------------------------------------->8-----
 

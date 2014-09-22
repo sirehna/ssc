@@ -6,7 +6,7 @@
  */
 
 #include "Kinematics.hpp"
-#include "data_source/almost_equal.hpp"
+#include "almost_equal.hpp"
 #include "transform_double_equal.hpp"
 #include "Transform.hpp"
 

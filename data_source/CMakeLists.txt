@@ -8,14 +8,13 @@ set(SRC src/DataSource.cpp
         src/TypeCoercion.cpp
         src/PhysicalQuantity.cpp
         src/DataSourceDrawer.cpp
-        src/almost_equal.cpp
         )
 
 include_directories(inc)
 include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(${test_macros_INCLUDE_DIRS})
-include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
+include_directories(${numeric_INCLUDE_DIRS})
 
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
 set(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc CACHE PATH "Path to ${PROJECT_NAME}'s include directory")
