@@ -5,9 +5,11 @@
  *  \author cec
  */
 
-#include "almost_equal.hpp"
-#include "gtest/internal/gtest-internal.h"
 #include <cmath>
+
+#include "gtest/internal/gtest-internal.h"
+
+#include "numeric/almost_equal.hpp"
 
 template <> bool almost_equal(const double& t1, const double& t2, const double eps)
 {

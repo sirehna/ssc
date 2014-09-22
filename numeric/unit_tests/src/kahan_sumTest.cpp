@@ -5,11 +5,12 @@
  *      Author: cady
  */
 
-#include "kahan_sumTest.hpp"
-#include "kahan_sum.hpp"
-
 #include <functional> // std::plus
 #include <numeric>    // std::accumulate
+
+#include "kahan_sumTest.hpp"
+
+#include "numeric/kahan_sum.hpp"
 
 using namespace ssc::numeric;
 
