@@ -1,8 +1,10 @@
-#include "DataGenerator.hpp"
-#include "sir_rand.h"
 #include <iostream>
 #include <math.h> // And *not* cmath: otherwise isnan won't work
 #include <cstddef> // size_t
+
+
+#include "random_data_generator/DataGenerator.hpp"
+#include "random_data_generator/sir_rand.h"
 
 #define MAX_RAND_INT 2147483647
 

@@ -2,7 +2,7 @@
 #define ROTATION_MATRIX_BUILDERS_TEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "random_data_generator/DataGenerator.hpp"
 
 class rotation_matrix_builders_Test : public ::testing::Test
 {

@@ -9,7 +9,7 @@
 #define LINEARINTERPOLATIONVARIABLESTEPTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "random_data_generator/DataGenerator.hpp"
 
 class LinearInterpolationVariableStepTest : public ::testing::Test
 {
