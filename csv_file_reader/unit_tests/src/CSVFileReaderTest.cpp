@@ -5,11 +5,12 @@
  *  \author cec
  */
 
-#include "CSVFileReaderTest.hpp"
-#include "CSVFileReader.hpp"
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+
+#include "CSVFileReaderTest.hpp"
+#include "csv_file_reader/CSVFileReader.hpp"
 
 using namespace ssc::csv_file_reader;
 
