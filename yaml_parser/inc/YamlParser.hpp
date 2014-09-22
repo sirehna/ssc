@@ -1,7 +1,7 @@
 /*
  * YamlParser.hpp
  *
- * \date 27 août 2012, 13:05:23
+ * \date 27 aoï¿½t 2012, 13:05:23
  *  \author cec
  */
 
@@ -15,18 +15,23 @@ namespace YAML
     class Node;
 }
 
-class YamlParser
+namespace ssc
 {
-	public:
-	virtual ~YamlParser() {}
-	YamlParser(const std::string& contents_to_parse);
+    namespace yaml_parser
+    {
+        class YamlParser
+        {
+            public:
+            virtual ~YamlParser() {}
+            YamlParser(const std::string& contents_to_parse);
 
 
-	protected:
-	    YAML::Node& convert_stream_to_yaml_node(const std::string& input_data, YAML::Node& node) const;
-		YamlParser();
-		const std::string contents;
-};
-
+            protected:
+                YAML::Node& convert_stream_to_yaml_node(const std::string& input_data, YAML::Node& node) const;
+                YamlParser();
+                const std::string contents;
+        };
+    }
+}
 
 #endif /* YAMLPARSER_HPP_ */
