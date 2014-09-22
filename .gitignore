@@ -4,3 +4,8 @@ gcovr/
 gmock/
 release/
 yaml-cpp/
+*.swp
+buildDebug32/
+install/
+installDebug32/
+
