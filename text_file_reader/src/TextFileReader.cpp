@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "TextFileReader.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "test_macros.hpp"
+
+#include "text_file_reader/TextFileReader.hpp"
 #include "exception_handling/Exception.hpp"
 
 using namespace ssc::text_file_reader;
@@ -34,7 +34,6 @@ contents("")
 		if (current_input_file.fail())
 		{
 			std::string error = std::string("Unable to open input file '") + *that_filename + std::string("'");
-			COUT(error);
 			THROW("TextFileReader::TextFileReader::TextFileReader(const std::vector<std::string>&)", TextFileReaderException, "Unable to open input file");
 		}
 		std::string current_line;

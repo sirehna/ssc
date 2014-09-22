@@ -5,14 +5,12 @@
  *  \author cec
  */
 
-#include "TextFileReaderTest.hpp"
-#include "TextFileReader.hpp"
-
-#include "test_macros.hpp"
-#include <stdio.h>
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+
+#include "TextFileReaderTest.hpp"
+#include "text_file_reader/TextFileReader.hpp"
 
 using namespace ssc::text_file_reader;
 
