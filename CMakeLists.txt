@@ -91,8 +91,10 @@ SET(eigen_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/eigen)
 ADD_DEFINITIONS(-DEIGEN_DONT_VECTORIZE) # Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
 ADD_DEFINITIONS(-DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
 
-if (${CMAKE_BUILD_TYPE} EQUAL Release)
-    ADD_DEFINITIONS(-DEIGEN_NO_DEBUG)
+if (${CMAKE_BUILD_TYPE})
+    if (${CMAKE_BUILD_TYPE} EQUAL Release)
+        ADD_DEFINITIONS(-DEIGEN_NO_DEBUG)
+    ENDIF()
 ENDIF()
 
 #############################################################################
