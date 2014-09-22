@@ -8,7 +8,7 @@
 #ifndef KINEMATICSEXCEPTION_HPP_
 #define KINEMATICSEXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

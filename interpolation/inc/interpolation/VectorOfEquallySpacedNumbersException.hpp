@@ -8,7 +8,7 @@
 #ifndef VECTOROFEQUALLYSPACEDNUMBEREXCEPTION_HPP_
 #define VECTOROFEQUALLYSPACEDNUMBEREXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

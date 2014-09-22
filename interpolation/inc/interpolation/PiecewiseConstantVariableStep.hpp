@@ -10,7 +10,8 @@
 
 #include <vector>
 #include <sstream>
-#include "Exception.hpp"
+
+#include "exception_handling/Exception.hpp"
 #include "VariableStepInterpolation.hpp"
 
 #if defined(_MSC_VER)

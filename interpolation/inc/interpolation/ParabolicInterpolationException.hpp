@@ -8,7 +8,7 @@
 #ifndef PARABOLICINTERPOLATIONEXCEPTION_HPP_
 #define PARABOLICINTERPOLATIONEXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

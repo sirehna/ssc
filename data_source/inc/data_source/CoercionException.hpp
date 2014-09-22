@@ -8,7 +8,7 @@
 #ifndef COERCIONEXCEPTION_HPP_
 #define COERCIONEXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

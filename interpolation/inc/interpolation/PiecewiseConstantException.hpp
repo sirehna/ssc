@@ -8,7 +8,7 @@
 #ifndef PIECEWISECONSTANTEXCEPTION_HPP_
 #define PIECEWISECONSTANTEXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

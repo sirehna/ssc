@@ -17,7 +17,7 @@ class ParabolicRunoutSplines;
 #ifndef TWODIMENSIONALSPLINES_HPP_
 #define TWODIMENSIONALSPLINES_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {
