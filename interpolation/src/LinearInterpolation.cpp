@@ -9,6 +9,8 @@
 #include "LinearInterpolation.hpp"
 #include <cmath>
 
+using namespace ssc::interpolation;
+
 LinearInterpolation::LinearInterpolation(const double& xmin_,
         const double& xmax_,
         const std::vector<double>& y_) : ConstantStepInterpolator(xmin_,xmax_,y_),

@@ -10,6 +10,8 @@
 #include <vector>
 #include "LinearInterpolation.hpp"
 
+using namespace ssc::interpolation;
+
 TwoDimensionalSplinesTest::TwoDimensionalSplinesTest() : a(DataGenerator(12))
 {
 }

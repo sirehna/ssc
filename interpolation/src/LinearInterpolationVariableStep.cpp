@@ -10,6 +10,8 @@
 
 #include <cmath>
 
+using namespace ssc::interpolation;
+
 class Linear
 {
     public:
@@ -35,21 +37,29 @@ class Linear
         double intersection_with_origin;
 };
 
-std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y);
-std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y)
+namespace ssc
 {
-    const size_t n = x.size();
-    std::vector<Linear> ret;
-    PiecewiseConstantVariableStep<double>(x,y); // Checks if x is in strictly increasing order & that x & y have same size
-    for (size_t i = 0 ; i < n-1 ; ++i)
+    namespace interpolation
     {
-        const double a = (y.at(i+1) - y.at(i)) / (x.at(i+1) - x.at(i));
-        const double b = y.at(i) - a*x.at(i);
-        ret.push_back(Linear(a,b));
+        std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y);
+        std::vector<Linear> compute_linear_coefficients(const std::vector<double>& x, const std::vector<double>& y)
+        {
+            const size_t n = x.size();
+            std::vector<Linear> ret;
+            PiecewiseConstantVariableStep<double>(x,y); // Checks if x is in strictly increasing order & that x & y have same size
+            for (size_t i = 0 ; i < n-1 ; ++i)
+            {
+                const double a = (y.at(i+1) - y.at(i)) / (x.at(i+1) - x.at(i));
+                const double b = y.at(i) - a*x.at(i);
+                ret.push_back(Linear(a,b));
+            }
+            ret.push_back(ret.back());
+            return ret;
+        }
     }
-    ret.push_back(ret.back());
-    return ret;
 }
+
+
 
 class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
 {

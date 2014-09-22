@@ -13,36 +13,43 @@
 #include TR1INC(memory)
 #include <vector>
 
-/** \author cec
- *  \ingroup interpolation
- *  \brief Responsibility
- *  \details 
- *  \section ex1 Example
- *  \snippet interpolation/unit_tests/src/VariableStepInterpolationTest.cpp VariableStepInterpolationTest example
- *  \section ex2 Expected output
- *  \snippet interpolation/unit_tests/src/VariableStepInterpolationTest.cpp VariableStepInterpolationTest expected output
- */
 
-class IndexFinder;
-class VariableStepInterpolation : public Interpolator
+namespace ssc
 {
-    public:
-        VariableStepInterpolation();
-        virtual ~VariableStepInterpolation();
-        VariableStepInterpolation(const std::vector<double>& x, const bool allow_queries_outside_bounds = false);
+    namespace interpolation
+    {
+        /** \author cec
+         *  \ingroup interpolation
+         *  \brief Responsibility
+         *  \details
+         *  \section ex1 Example
+         *  \snippet interpolation/unit_tests/src/VariableStepInterpolationTest.cpp VariableStepInterpolationTest example
+         *  \section ex2 Expected output
+         *  \snippet interpolation/unit_tests/src/VariableStepInterpolationTest.cpp VariableStepInterpolationTest expected output
+         */
 
-    protected:
-        size_t get_index(const double x0_) const;
-        virtual double get_f() const = 0;
-        virtual double get_df(const size_t derivative_order) const = 0;
-        virtual void update_coefficients_if_necessary(const double x0);
+        class IndexFinder;
+        class VariableStepInterpolation : public Interpolator
+        {
+            public:
+                VariableStepInterpolation();
+                virtual ~VariableStepInterpolation();
+                VariableStepInterpolation(const std::vector<double>& x, const bool allow_queries_outside_bounds = false);
 
-    private:
-        TR1(shared_ptr)<IndexFinder> index;
+            protected:
+                size_t get_index(const double x0_) const;
+                virtual double get_f() const = 0;
+                virtual double get_df(const size_t derivative_order) const = 0;
+                virtual void update_coefficients_if_necessary(const double x0);
 
-    protected:
-        int idx;
-        double x0;
-};
+            private:
+                TR1(shared_ptr)<IndexFinder> index;
+
+            protected:
+                int idx;
+                double x0;
+        };
+    }
+}
 
 #endif /* VARIABLESTEPINTERPOLATION_HPP_ */

@@ -11,6 +11,8 @@
 #define max(a,b) (a)>(b)?a:b
 #include <math.h>
 
+using namespace ssc::interpolation;
+
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif

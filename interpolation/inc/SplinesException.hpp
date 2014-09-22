@@ -10,14 +10,19 @@
 
 #include "Exception.hpp"
 
-class SplinesException : public Exception
+namespace ssc
 {
-    public:
-        SplinesException(const char* s) :
-                Exception(s)
+    namespace interpolation
+    {
+        class SplinesException : public Exception
         {
-        }
-};
-
+            public:
+                SplinesException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 #endif  /* SPLINESEXCEPTION_HPP_ */

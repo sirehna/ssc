@@ -10,6 +10,8 @@
 #include "random_increasing_vector.hpp"
 #include "IndexFinder.hpp"
 
+using namespace ssc::interpolation;
+
 PiecewiseConstantVariableStepTest::PiecewiseConstantVariableStepTest() : a(DataGenerator(7631))
 {
 }

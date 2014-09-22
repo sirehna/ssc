@@ -1,11 +1,13 @@
 /*
  * CubicRunoutSplines.cpp
  *
- * \date 1 août 2012, 09:57:37
+ * \date 1 aoï¿½t 2012, 09:57:37
  *  \author cec
  */
 
 #include "CubicRunoutSplines.hpp"
+
+using namespace ssc::interpolation;
 
 CubicRunoutSplines::CubicRunoutSplines() : Splines()
 {

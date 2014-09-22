@@ -1,7 +1,7 @@
 /*
  * PiecewiseConstantTest.cpp
  *
- * \date 18 févr. 2013, 12:59:23
+ * \date 18 fï¿½vr. 2013, 12:59:23
  *  \author cec
  */
 
@@ -10,6 +10,7 @@
 #include "PiecewiseConstantException.hpp"
 #include "InterpolatorException.hpp"
 
+using namespace ssc::interpolation;
 
 PiecewiseConstantTest::PiecewiseConstantTest() : a(DataGenerator(22338888))
 {

@@ -12,6 +12,8 @@
 
 #define EPS 1E-10
 
+using namespace ssc::interpolation;
+
 SplineVariableStepTest::SplineVariableStepTest() : a(DataGenerator(7777777))
 {
 }

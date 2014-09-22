@@ -10,12 +10,18 @@
 
 #include "Exception.hpp"
 
-class VectorOfEquallySpacedNumbersException: public Exception {
-public:
-    VectorOfEquallySpacedNumbersException(const char* s) :
-            Exception(s) {
+namespace ssc
+{
+    namespace interpolation
+    {
+        class VectorOfEquallySpacedNumbersException: public Exception
+        {
+            public:
+                VectorOfEquallySpacedNumbersException(const char* s) :
+                        Exception(s) {
+                }
+        };
     }
-};
-
+}
 
 #endif  /* VECTOROFEQUALLYSPACEDNUMBEREXCEPTION_HPP_ */

@@ -9,6 +9,8 @@
 #include "VectorOfEquallySpacedNumbers.hpp"
 #include "VectorOfEquallySpacedNumbersException.hpp"
 
+using namespace ssc::interpolation;
+
 VectorOfEquallySpacedNumbersTest::VectorOfEquallySpacedNumbersTest() : a(DataGenerator(666558882)),
 eps(1E-10)
 {

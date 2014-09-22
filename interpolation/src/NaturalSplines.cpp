@@ -1,11 +1,13 @@
 /*
  * NaturalSpline.cpp
  *
- * \date 1 août 2012, 09:37:58
+ * \date 1 aoï¿½t 2012, 09:37:58
  *  \author cec
  */
 
 #include "NaturalSplines.hpp"
+
+using namespace ssc::interpolation;
 
 NaturalSplines::NaturalSplines() : Splines()
 {

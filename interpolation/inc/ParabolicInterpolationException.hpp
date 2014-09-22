@@ -10,15 +10,20 @@
 
 #include "Exception.hpp"
 
-class ParabolicInterpolationException : public Exception
+namespace ssc
 {
-    public:
-        ParabolicInterpolationException(const char* s) :
-                Exception(s)
+    namespace interpolation
+    {
+        class ParabolicInterpolationException : public Exception
         {
-        }
-};
-
+            public:
+                ParabolicInterpolationException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 
 #endif  /* PARABOLICINTERPOLATIONEXCEPTION_HPP_ */
