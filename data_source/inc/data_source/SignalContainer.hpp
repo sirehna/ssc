@@ -12,7 +12,8 @@
 #include <map>
 #include <typeinfo>
 #include <vector>
-#include "Exception.hpp"
+
+#include "exception_handling/Exception.hpp"
 #include "data_source/SignalContainerTypeLists.hpp"
 #include "data_source/TypeCoercion.hpp"
 

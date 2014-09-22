@@ -13,7 +13,7 @@
 #include "tr1_macros.hpp"
 #include TR1INC(memory)
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {

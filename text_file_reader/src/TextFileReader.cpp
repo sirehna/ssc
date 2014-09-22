@@ -10,7 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include "test_macros.hpp"
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 using namespace ssc::text_file_reader;
 

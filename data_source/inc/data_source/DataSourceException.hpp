@@ -8,7 +8,7 @@
 #ifndef DATASOURCEEXCEPTION_HPP_
 #define DATASOURCEEXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "exception_handling/Exception.hpp"
 
 namespace ssc
 {
