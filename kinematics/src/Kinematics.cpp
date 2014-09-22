@@ -1,8 +1,8 @@
-#include "Kinematics.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/Kinematics.hpp"
+#include "kinematics/KinematicsException.hpp"
 #include "data_source/DataSource.hpp"
-#include "Transform.hpp"
-#include "KinematicTree.hpp"
+#include "kinematics/Transform.hpp"
+#include "kinematics/KinematicTree.hpp"
 
 using namespace ssc::data_source;
 using namespace ssc::kinematics;

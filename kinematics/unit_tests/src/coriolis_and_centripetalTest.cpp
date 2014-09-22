@@ -6,7 +6,7 @@
  */
 
 #include "coriolis_and_centripetalTest.hpp"
-#include "coriolis_and_centripetal.hpp"
+#include "kinematics/coriolis_and_centripetal.hpp"
 
 #define EPS 1E-13
 

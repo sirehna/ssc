@@ -5,11 +5,11 @@
  *      Author: cec
  */
 
-#include "rotation_matrix_builders_Test.hpp"
-#include "rotation_matrix_builders.hpp"
-#include "EulerAngles.hpp"
-#include "test_macros.hpp"
 #include <cmath>
+
+#include "rotation_matrix_builders_Test.hpp"
+#include "kinematics/rotation_matrix_builders.hpp"
+#include "kinematics/EulerAngles.hpp"
 
 #define EPS (1E-10)
 

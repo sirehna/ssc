@@ -1,9 +1,9 @@
 #ifndef RANDOMKINEMATICS_HPP_
 #define RANDOMKINEMATICS_HPP_
 
-#include "Point.hpp"
-#include "PointMatrix.hpp"
-#include "Transform.hpp"
+#include "kinematics/Point.hpp"
+#include "kinematics/PointMatrix.hpp"
+#include "kinematics/Transform.hpp"
 
 namespace ssc
 {

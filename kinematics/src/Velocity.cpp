@@ -1,5 +1,5 @@
-#include "Velocity.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/Velocity.hpp"
+#include "kinematics/KinematicsException.hpp"
 
 using namespace ssc::kinematics;
 

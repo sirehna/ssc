@@ -5,8 +5,8 @@
  *      Author: cady
  */
 
-#include "EnvironmentAndFrames.hpp"
-#include "Kinematics.hpp"
+#include "kinematics/EnvironmentAndFrames.hpp"
+#include "kinematics/Kinematics.hpp"
 
 using namespace ssc::kinematics;
 

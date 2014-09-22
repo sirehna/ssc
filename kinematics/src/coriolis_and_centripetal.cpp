@@ -6,8 +6,8 @@
  */
 
 
-#include "coriolis_and_centripetal.hpp"
-#include "Point.hpp"
+#include "kinematics/coriolis_and_centripetal.hpp"
+#include "kinematics/Point.hpp"
 
 using namespace Eigen;
 using namespace ssc::kinematics;
