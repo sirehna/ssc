@@ -8,41 +8,44 @@
 #ifndef DEFAULTSCHEDULER_HPP_
 #define DEFAULTSCHEDULER_HPP_
 
-
-class DefaultScheduler
+namespace ssc
 {
-    public:
-        DefaultScheduler(const double t0_, const double tend_, const double dt_) : t(t0_), tstart(t0_), tend(tend_), dt(dt_), i(0) {}
-
-        bool has_more_time_events() const
+    namespace solver
+    {
+        class DefaultScheduler
         {
-            return tend > t;
-        }
+            public:
+                DefaultScheduler(const double t0_, const double tend_, const double dt_) : t(t0_), tstart(t0_), tend(tend_), dt(dt_), i(0) {}
 
-        void append_time_event(const double t_)
-        {
-            t = t_;
-        }
+                bool has_more_time_events() const
+                {
+                    return tend > t;
+                }
 
-        double get_time() const
-        {
-            return t;
-        }
+                void append_time_event(const double t_)
+                {
+                    t = t_;
+                }
 
-        double get_step() const
-        {
-            return dt;
-        }
+                double get_time() const
+                {
+                    return t;
+                }
 
-    private:
-        DefaultScheduler();
-        double t;
-        double tstart;
-        double tend;
-        double dt;
-        int i;
-};
+                double get_step() const
+                {
+                    return dt;
+                }
 
-
+            private:
+                DefaultScheduler();
+                double t;
+                double tstart;
+                double tend;
+                double dt;
+                int i;
+        };
+    }
+}
 
 #endif /* DEFAULTSCHEDULER_HPP_ */

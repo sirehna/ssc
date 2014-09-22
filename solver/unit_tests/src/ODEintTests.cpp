@@ -19,6 +19,8 @@
 
 #include <sstream>
 
+using namespace ssc::solver;
+
 ODEintTests::ODEintTests() : a(ssc::random_data_generator::DataGenerator(452251321))
 {
 }
