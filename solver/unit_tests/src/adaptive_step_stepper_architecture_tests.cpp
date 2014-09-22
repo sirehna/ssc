@@ -7,7 +7,7 @@
 
 #include "adaptive_step_stepper_architecture_tests.hpp"
 #include "ODEMocks.hpp"
-#include "solve.hpp"
+#include "solver/solve.hpp"
 
 using ::testing::Return;
 using ::testing::StrictMock;

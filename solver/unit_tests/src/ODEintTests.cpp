@@ -7,10 +7,10 @@
 
 #include "ODEintTests.hpp"
 
-#include "Observers.hpp"
-#include "DefaultScheduler.hpp"
-#include "detection_of_state_update_methods.hpp"
-#include "solve.hpp"
+#include "solver/Observers.hpp"
+#include "solver/DefaultScheduler.hpp"
+#include "solver/detection_of_state_update_methods.hpp"
+#include "solver/solve.hpp"
 #include "test_systems.hpp"
 
 #include <boost/numeric/odeint/stepper/euler.hpp>
