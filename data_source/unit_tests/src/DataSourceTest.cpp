@@ -15,6 +15,8 @@
 
 #include <set>
 
+using namespace ssc::data_source;
+
 #define NB_OF_TRIALS 100
 
 static DataGenerator a_(21);

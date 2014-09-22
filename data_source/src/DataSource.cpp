@@ -12,9 +12,10 @@
 #include <iostream>
 #include <sstream>
 
-const std::string DataSource::default_setter = "Unregistered DataSource user";
 
-class CycleException : public DataSourceException
+const std::string ssc::data_source::DataSource::default_setter = "Unregistered DataSource user";
+
+class CycleException : public ssc::data_source::DataSourceException
 {
     public:
         CycleException(const char* s) :
@@ -23,41 +24,41 @@ class CycleException : public DataSourceException
         }
 };
 
-DataSource::DataSource() : name2module(FromName2Module()),
-                           readonly(false),
-                           signals_(SignalContainer()),
-                           module_setting_signals("DataSource user",""),
-                           signal2module(FromSignal2Module()),
-                           module2dependantmodules(DependantModules()),
-                           module2requiredmodules(DependantModules()),
-                           module2requiredsignals(DependantModules()),
-                           signal2dependantmodules(DependantModules()),
-                           is_up_to_date(UpdateState()),
-                           state_names(std::vector<std::pair<std::string,std::string> >()),
-                           aliases(std::map<TypedSignalName,TypedSignalName>()),
-                           forced_values(SignalContainer()),
-                           modules(std::vector<TypedModuleName>()),
-                           call_stack(std::stack<TypedSignalName>()),
-                           in_module(false)
+ssc::data_source::DataSource::DataSource() :   name2module(FromName2Module()),
+                                               readonly(false),
+                                               signals_(SignalContainer()),
+                                               module_setting_signals("DataSource user",""),
+                                               signal2module(FromSignal2Module()),
+                                               module2dependantmodules(DependantModules()),
+                                               module2requiredmodules(DependantModules()),
+                                               module2requiredsignals(DependantModules()),
+                                               signal2dependantmodules(DependantModules()),
+                                               is_up_to_date(UpdateState()),
+                                               state_names(std::vector<std::pair<std::string,std::string> >()),
+                                               aliases(std::map<TypedSignalName,TypedSignalName>()),
+                                               forced_values(SignalContainer()),
+                                               modules(std::vector<TypedModuleName>()),
+                                               call_stack(std::stack<TypedSignalName>()),
+                                               in_module(false)
 {
 }
 
-DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
-                                                readonly(ds.readonly),
-                                                signals_(ds.signals_),
-                                                module_setting_signals(ds.module_setting_signals),
-                                                signal2module(ds.signal2module),
-                                                module2dependantmodules(ds.module2dependantmodules),
-                                                module2requiredmodules(ds.module2requiredmodules),
-                                                module2requiredsignals(ds.module2requiredsignals),
-                                                signal2dependantmodules(ds.signal2dependantmodules),
-                                                is_up_to_date(ds.is_up_to_date),
-                                                state_names(ds.state_names),
-                                                aliases(ds.aliases),
-                                                forced_values(ds.forced_values),
-                                                modules(std::vector<TypedModuleName>()),
-                                                call_stack(ds.call_stack),
-                                                in_module(false)
+ssc::data_source::DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
+                                                                  readonly(ds.readonly),
+                                                                  signals_(ds.signals_),
+                                                                  module_setting_signals(ds.module_setting_signals),
+                                                                  signal2module(ds.signal2module),
+                                                                  module2dependantmodules(ds.module2dependantmodules),
+                                                                  module2requiredmodules(ds.module2requiredmodules),
+                                                                  module2requiredsignals(ds.module2requiredsignals),
+                                                                  signal2dependantmodules(ds.signal2dependantmodules),
+                                                                  is_up_to_date(ds.is_up_to_date),
+                                                                  state_names(ds.state_names),
+                                                                  aliases(ds.aliases),
+                                                                  forced_values(ds.forced_values),
+                                                                  modules(std::vector<TypedModuleName>()),
+                                                                  call_stack(ds.call_stack),
+                                                                  in_module(false)
 {
     // We need to make sure that all modules now refer to the current DataSource
     FromName2Module::iterator it1 = name2module.begin();
@@ -67,7 +68,7 @@ DataSource::DataSource(const DataSource& ds) :  name2module(ds.name2module),
     }
 }
 
-DataSource& DataSource::operator=(const DataSource& ds)
+ssc::data_source::DataSource& ssc::data_source::DataSource::operator=(const ssc::data_source::DataSource& ds)
 {
     if (this != &ds)
     {
@@ -96,7 +97,7 @@ DataSource& DataSource::operator=(const DataSource& ds)
     return *this;
 }
 
-std::string DataSource::draw(const bool yaml) const
+std::string ssc::data_source::DataSource::draw(const bool yaml) const
 {
     std::stringstream ss;
     DataSourceDrawer serialize(signal2module, module2requiredsignals, signals_);
@@ -107,17 +108,17 @@ std::string DataSource::draw(const bool yaml) const
     return ss.str();
 }
 
-bool DataSource::read_only() const
+bool ssc::data_source::DataSource::read_only() const
 {
     return readonly;
 }
 
-FromName2Module DataSource::get_modules() const
+ssc::data_source::FromName2Module ssc::data_source::DataSource::get_modules() const
 {
     return name2module;
 }
 
-void DataSource::clear()
+void ssc::data_source::DataSource::clear()
 {
     name2module.clear();
     signals_.clear();
@@ -130,7 +131,7 @@ void DataSource::clear()
     forced_values.clear();
 }
 
-void append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value)
+void ssc::data_source::append(DependantModules& map, const TypedModuleName& key, const TypedModuleName& value)
 {
     DependantModules::iterator it = map.find(key);
     if (it == map.end())
@@ -142,7 +143,7 @@ void append(DependantModules& map, const TypedModuleName& key, const TypedModule
     else it->second.insert(value);
 }
 
-void DataSource::add_dependencies_and_dependent_modules(const std::set<TypedSignalName>& required_signals, const TypedModuleName& module_using_signals)
+void ssc::data_source::DataSource::add_dependencies_and_dependent_modules(const std::set<TypedSignalName>& required_signals, const TypedModuleName& module_using_signals)
 {
     std::set<TypedSignalName>::const_iterator that_required_signal = required_signals.begin();
     for (; that_required_signal != required_signals.end(); ++that_required_signal)
@@ -158,7 +159,7 @@ void DataSource::add_dependencies_and_dependent_modules(const std::set<TypedSign
 
 }
 
-std::set<TypedModuleName> DataSource::get_dependencies(const TypedModuleName& ref_module, const TypedModuleName& current_module, std::set<TypedModuleName>& dependencies) const
+std::set<ssc::data_source::TypedModuleName> ssc::data_source::DataSource::get_dependencies(const TypedModuleName& ref_module, const TypedModuleName& current_module, std::set<TypedModuleName>& dependencies) const
 {
     DependantModules::const_iterator that_module = module2dependantmodules.find(current_module);
     if (that_module != module2dependantmodules.end())
@@ -181,12 +182,12 @@ std::set<TypedModuleName> DataSource::get_dependencies(const TypedModuleName& re
     return dependencies;
 }
 
-std::set<TypedModuleName> DataSource::get_dependencies(const TypedModuleName& module, std::set<TypedModuleName>& dependencies) const
+std::set<ssc::data_source::TypedModuleName> ssc::data_source::DataSource::get_dependencies(const TypedModuleName& module, std::set<TypedModuleName>& dependencies) const
 {
     return get_dependencies(module,module, dependencies);
 }
 
-bool DataSource::a_module_depends_on_itself()
+bool ssc::data_source::DataSource::a_module_depends_on_itself()
 {
     DependantModules::iterator it = module2dependantmodules.begin();
     for (;it!= module2dependantmodules.end();++it)
@@ -197,7 +198,7 @@ bool DataSource::a_module_depends_on_itself()
 }
 
 
-void DataSource::update_dependencies()
+void ssc::data_source::DataSource::update_dependencies()
 {
     DependantModules::const_iterator module_requirements_pair = module2requiredsignals.begin();
     for (;module_requirements_pair!=module2requiredsignals.end();++module_requirements_pair)
@@ -220,7 +221,7 @@ void DataSource::update_dependencies()
  *  \returns Nothing.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivative_example
 */
-void DataSource::define_derivative(const std::string& state_name, const std::string& derivative_name)
+void ssc::data_source::DataSource::define_derivative(const std::string& state_name, const std::string& derivative_name)
 {
     std::vector<std::pair<std::string,std::string> >::const_iterator it = state_names.begin();
     for (;it != state_names.end() ; ++it)
@@ -243,7 +244,7 @@ void DataSource::define_derivative(const std::string& state_name, const std::str
  *  \returns A vector of doubles containing all the values of the state variables
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_derivatives_example
 */
-void DataSource::get_derivatives(std::vector<double>& dx_dt //<! Vector storing the calculated derivatives (must be the right size)
+void ssc::data_source::DataSource::get_derivatives(std::vector<double>& dx_dt //<! Vector storing the calculated derivatives (must be the right size)
                                  )
 {
     const size_t n = state_names.size();
@@ -265,7 +266,7 @@ void DataSource::get_derivatives(std::vector<double>& dx_dt //<! Vector storing 
  *  \returns Nothing.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivatives_example
 */
-void DataSource::set_states(const std::vector<double>& v)
+void ssc::data_source::DataSource::set_states(const std::vector<double>& v)
 {
     const size_t n = v.size();
     if (state_names.size() != n)
@@ -287,7 +288,7 @@ void DataSource::set_states(const std::vector<double>& v)
  *  \returns A vector of state names, sorted in the same order as set_states & get_state_derivatives.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_state_names_example
 */
-std::vector<std::string> DataSource::get_state_names() const
+std::vector<std::string> ssc::data_source::DataSource::get_state_names() const
 {
     std::vector<std::string> ret;
     std::vector<std::pair<std::string,std::string> >::const_iterator it;
@@ -303,7 +304,7 @@ std::vector<std::string> DataSource::get_state_names() const
  *  \brief Get the current value of all states
  *  \returns A vector of state state values, sorted in the same order as set_states & get_state_derivatives.
 */
-std::vector<double> DataSource::get_states()
+std::vector<double> ssc::data_source::DataSource::get_states()
 {
     std::vector<double> ret;
     std::vector<std::pair<std::string,std::string> >::const_iterator it;
@@ -319,12 +320,12 @@ std::vector<double> DataSource::get_states()
  *  \returns All the signals currently in the DataSource
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::get_all_signal_names_example
 */
-std::vector<std::string> DataSource::get_all_signal_names() const
+std::vector<std::string> ssc::data_source::DataSource::get_all_signal_names() const
 {
     return signals_.get_all_signal_names();
 }
 
-std::list<TypedModuleName> DataSource::get_module_list() const
+std::list<ssc::data_source::TypedModuleName> ssc::data_source::DataSource::get_module_list() const
 {
     std::list<TypedModuleName> ret;
     FromName2Module::const_iterator it = name2module.begin();
@@ -336,17 +337,24 @@ std::list<TypedModuleName> DataSource::get_module_list() const
     return ret;
 }
 
-bool operator<(const std::pair<TypedSignalName, boost::any>& lhs, const std::pair<TypedSignalName, boost::any>& rhs);
-bool operator<(const std::pair<TypedSignalName, boost::any>& lhs, const std::pair<TypedSignalName, boost::any>& rhs)
+namespace ssc
+{
+    namespace data_source
+    {
+        bool operator<(const std::pair<ssc::data_source::TypedSignalName, boost::any>& lhs, const std::pair<ssc::data_source::TypedSignalName, boost::any>& rhs);
+    }
+}
+
+bool ssc::data_source::operator<(const std::pair<ssc::data_source::TypedSignalName, boost::any>& lhs, const std::pair<ssc::data_source::TypedSignalName, boost::any>& rhs)
 {
     return lhs.first < rhs.first;
 }
 
-std::list<std::pair<TypedSignalName, boost::any> > DataSource::get_signals() const
+std::list<std::pair<ssc::data_source::TypedSignalName, boost::any> > ssc::data_source::DataSource::get_signals() const
 {
-    std::list<std::pair<TypedSignalName, boost::any> > ret;
-    TR1(unordered_map)<TypedSignalName, boost::any, OwnHash> in = signals_.get_all_signals();
-    TR1(unordered_map)<TypedSignalName, boost::any, OwnHash>::const_iterator it = in.begin();
+    std::list<std::pair<ssc::data_source::TypedSignalName, boost::any> > ret;
+    TR1(unordered_map)<ssc::data_source::TypedSignalName, boost::any, OwnHash> in = signals_.get_all_signals();
+    TR1(unordered_map)<ssc::data_source::TypedSignalName, boost::any, OwnHash>::const_iterator it = in.begin();
     for (;it!=in.end();++it)
     {
         ret.push_back(std::make_pair(it->first,it->second));
@@ -355,34 +363,34 @@ std::list<std::pair<TypedSignalName, boost::any> > DataSource::get_signals() con
     return ret;
 }
 
-std::string DataSource::who_am_i() const
+std::string ssc::data_source::DataSource::who_am_i() const
 {
     if (call_stack.empty()) return default_setter;
                             return call_stack.top().get_signal_name() + " (of type " + call_stack.top().get_type_name() + ")";
 }
 
-TypedSignalName DataSource::me() const
+ssc::data_source::TypedSignalName ssc::data_source::DataSource::me() const
 {
     if (call_stack.empty()) return TypedSignalName(default_setter, "unknown");
                             return call_stack.top();
 }
 
-void DataSource::check_in(const TypedSignalName& caller)
+void ssc::data_source::DataSource::check_in(const ssc::data_source::TypedSignalName& caller)
 {
     call_stack.push(caller);
 }
 
-void DataSource::check_in(const std::string& caller)
+void ssc::data_source::DataSource::check_in(const std::string& caller)
 {
     check_in(TypedSignalName(caller, "unknown"));
 }
 
-void DataSource::check_out()
+void ssc::data_source::DataSource::check_out()
 {
     if (not(call_stack.empty())) call_stack.pop();
 }
 
-std::string DataSource::unwind_call_stack()
+std::string ssc::data_source::DataSource::unwind_call_stack()
 {
     std::stringstream ss;
     ss << std::endl << "---[CALL STACK]---" << std::endl;

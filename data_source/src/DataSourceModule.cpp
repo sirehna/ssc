@@ -8,6 +8,8 @@
 
 #include "DataSourceModule.hpp"
 
+using namespace ssc::data_source;
+
 DataSourceModule::DataSourceModule(DataSource* const data_source, const std::string& module_name) : ds(data_source), module_name_(module_name)
 {
 

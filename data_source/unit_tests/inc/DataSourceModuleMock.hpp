@@ -1,5 +1,5 @@
 // Defined so we can derive several types of mock
-class MockableDataSourceModule : public DataSourceModule
+class MockableDataSourceModule : public ssc::data_source::DataSourceModule
 {
     public:
         MockableDataSourceModule();
@@ -15,13 +15,13 @@ class MockDataSourceModule : public MockableDataSourceModule
         {
 
         }
-        MockDataSourceModule(DataSource* const d, const std::string& s)
+        MockDataSourceModule(ssc::data_source::DataSource* const d, const std::string& s)
         {
             (void)d;
             (void)s;
         }
-        MOCK_CONST_METHOD0(clone, DataSourceModule*());
-        MOCK_CONST_METHOD1(clone, DataSourceModule*(DataSource* const));
+        MOCK_CONST_METHOD0(clone, ssc::data_source::DataSourceModule*());
+        MOCK_CONST_METHOD1(clone, ssc::data_source::DataSourceModule*(ssc::data_source::DataSource* const));
         MOCK_CONST_METHOD0(update, void());
         MOCK_CONST_METHOD0(initialize, void());
 };
@@ -32,8 +32,8 @@ class MockDataSourceModule : public MockableDataSourceModule
 class MockDataSourceModuleWithGetName : public MockableDataSourceModule
 {
     public:
-        MOCK_CONST_METHOD0(clone, DataSourceModule*());
-        MOCK_CONST_METHOD1(clone, DataSourceModule*(DataSource* const));
+        MOCK_CONST_METHOD0(clone, ssc::data_source::DataSourceModule*());
+        MOCK_CONST_METHOD1(clone, ssc::data_source::DataSourceModule*(ssc::data_source::DataSource* const));
         MOCK_CONST_METHOD0(update, void());
         MOCK_CONST_METHOD0(get_name, std::string());
         MOCK_CONST_METHOD0(initialize, void());

@@ -10,13 +10,19 @@
 
 #include "Exception.hpp"
 
-class DataSourceException : public Exception
+namespace ssc
 {
-    public:
-        DataSourceException(const char* s) :
-                Exception(s)
+    namespace data_source
+    {
+        class DataSourceException : public Exception
         {
-        }
-};
+            public:
+                DataSourceException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 #endif  /* DATASOURCEEXCEPTION_HPP_ */

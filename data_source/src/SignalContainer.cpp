@@ -9,8 +9,17 @@
 #include "TypeCoercion.hpp"
 #include "PhysicalQuantity.hpp"
 
-void decoerce(std::list<double>& ret, PhysicalQuantity& thing_to_convert);
-void decoerce(std::list<double>& ret, PhysicalQuantity& thing_to_convert)
+using namespace ssc::data_source;
+
+namespace ssc
+{
+    namespace data_source
+    {
+        void decoerce(std::list<double>& ret, ssc::data_source::PhysicalQuantity& thing_to_convert);
+    }
+}
+
+void ssc::data_source::decoerce(std::list<double>& ret, ssc::data_source::PhysicalQuantity& thing_to_convert)
 {
     thing_to_convert.decoerce(ret);
 }

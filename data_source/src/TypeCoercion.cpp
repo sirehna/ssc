@@ -8,7 +8,9 @@
 #include "TypeCoercion.hpp"
 
 
-void decoerce(std::list<double>& ret, bool& thing_to_convert)
+using namespace ssc::data_source;
+
+void ssc::data_source::decoerce(std::list<double>& ret, bool& thing_to_convert)
 {
     if (ret.empty())
     {
@@ -18,7 +20,7 @@ void decoerce(std::list<double>& ret, bool& thing_to_convert)
     ret.pop_front();
 }
 
-void decoerce(std::list<double>& ret, std::vector<bool>& thing_to_convert)
+void ssc::data_source::decoerce(std::list<double>& ret, std::vector<bool>& thing_to_convert)
 {
     if (ret.size() < thing_to_convert.size())
     {

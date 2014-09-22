@@ -4,6 +4,8 @@
 #include "Transform.hpp"
 #include "KinematicTree.hpp"
 
+using namespace ssc::data_source;
+
 std::string make_transform_name(const std::string& from_frame, const std::string& to_frame);
 std::string make_transform_name(const std::string& from_frame, const std::string& to_frame)
 {

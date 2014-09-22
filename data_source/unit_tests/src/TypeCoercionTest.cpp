@@ -9,6 +9,8 @@
 #include "TypeCoercion.hpp"
 #include "CoercionException.hpp"
 
+using namespace ssc::data_source;
+
 TypeCoercionTest::TypeCoercionTest() : a(DataGenerator(1))
 {
 }
