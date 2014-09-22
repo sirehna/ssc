@@ -12,6 +12,8 @@
 #include "test_macros.hpp"
 #include "Exception.hpp"
 
+using namespace ssc::text_file_reader;
+
 class TextFileReaderException: public Exception
 {
     public:
