@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <functional>
 
+using namespace ssc::csv_file_reader;
+
 CSVFileReader::CSVFileReader(const char* filename, const size_t expected_nb_of_columns, const char separator) : titles(std::vector<std::string>()),
         values(std::vector<std::vector<double> >()),
         that_line(values.begin()),

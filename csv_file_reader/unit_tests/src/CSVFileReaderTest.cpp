@@ -11,6 +11,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace ssc::csv_file_reader;
+
 CSVFileReaderTest::CSVFileReaderTest() : a(DataGenerator(9487))
 {
 }
