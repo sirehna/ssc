@@ -8,7 +8,7 @@
 
 #include "random_kinematics.hpp"
 #include "DataGenerator.hpp"
-#include "rotation_matrix_builders.hpp"
+#include "kinematics/rotation_matrix_builders.hpp"
 
 #include <cmath> // For atan
 

@@ -1,5 +1,5 @@
-#include "rotation_matrix_builders.hpp"
-#include "EulerAngles.hpp"
+#include "kinematics/rotation_matrix_builders.hpp"
+#include "kinematics/EulerAngles.hpp"
 #include <Eigen/Geometry>
 
 using namespace ssc::kinematics;

@@ -5,12 +5,12 @@
  *      Author: cady
  */
 
-#include "Kinematics.hpp"
+#include <iostream>
+
+#include "kinematics/Kinematics.hpp"
 #include "almost_equal.hpp"
 #include "transform_double_equal.hpp"
-#include "Transform.hpp"
-
-#include <iostream>
+#include "kinematics/Transform.hpp"
 
 using namespace ssc::kinematics;
 

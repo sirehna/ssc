@@ -5,7 +5,7 @@
  *      Author: cady
  */
 
-#include "UnsafeWrench.hpp"
+#include "kinematics/UnsafeWrench.hpp"
 
 using namespace ssc::kinematics;
 

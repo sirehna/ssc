@@ -5,13 +5,13 @@
  *      Author: cec
  */
 
+#include <cmath> // For atan
+
 #include "TransformTest.hpp"
 #include "extra_test_assertions.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/KinematicsException.hpp"
 #include "random_kinematics.hpp"
-#include "rotation_matrix_builders.hpp"
-
-#include <cmath> // For atan
+#include "kinematics/rotation_matrix_builders.hpp"
 
 #define PI (4.*atan(1.))
 

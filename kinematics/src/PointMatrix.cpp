@@ -1,5 +1,5 @@
-#include "PointMatrix.hpp"
-#include "Point.hpp"
+#include "kinematics/PointMatrix.hpp"
+#include "kinematics/Point.hpp"
 
 using namespace ssc::kinematics;
 

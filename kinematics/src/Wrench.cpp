@@ -5,10 +5,10 @@
  *      Author: cady
  */
 
-#include "Wrench.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/Wrench.hpp"
+#include "kinematics/KinematicsException.hpp"
 #include "almost_equal.hpp"
-#include "Transform.hpp"
+#include "kinematics/Transform.hpp"
 
 #include <sstream>
 

@@ -1,4 +1,4 @@
-#include "EulerAngles.hpp"
+#include "kinematics/EulerAngles.hpp"
 
 using namespace ssc::kinematics;
 

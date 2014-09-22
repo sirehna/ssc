@@ -1,4 +1,4 @@
-#include "Point.hpp"
+#include "kinematics/Point.hpp"
 
 using namespace ssc::kinematics;
 

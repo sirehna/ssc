@@ -6,9 +6,9 @@
  */
 
 #include "VelocityTest.hpp"
-#include "Velocity.hpp"
+#include "kinematics/Velocity.hpp"
 #include "extra_test_assertions.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/KinematicsException.hpp"
 
 #define EPS 1E-13
 

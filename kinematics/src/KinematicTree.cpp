@@ -5,8 +5,8 @@
  *      Author: cady
  */
 
-#include "KinematicTree.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/KinematicTree.hpp"
+#include "kinematics/KinematicsException.hpp"
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>

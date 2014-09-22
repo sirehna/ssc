@@ -5,14 +5,14 @@
  *      Author: cady
  */
 
+#include <cmath>
+
 #include "WrenchTest.hpp"
 #include "random_kinematics.hpp"
-#include "KinematicsException.hpp"
-#include "Wrench.hpp"
-#include "rotation_matrix_builders.hpp"
+#include "kinematics/KinematicsException.hpp"
+#include "kinematics/Wrench.hpp"
+#include "kinematics/rotation_matrix_builders.hpp"
 #include "extra_test_assertions.hpp"
-
-#include <cmath>
 
 #define PI (4.*atan(1.))
 #define EPS 1E-13

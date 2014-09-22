@@ -7,8 +7,7 @@
 
 
 #include "KinematicTreeTest.hpp"
-#include "KinematicTree.hpp"
-#include "test_macros.hpp"
+#include "kinematics/KinematicTree.hpp"
 
 using namespace ssc::kinematics;
 

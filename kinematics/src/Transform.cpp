@@ -1,5 +1,5 @@
-#include "Transform.hpp"
-#include "KinematicsException.hpp"
+#include "kinematics/Transform.hpp"
+#include "kinematics/KinematicsException.hpp"
 
 using namespace ssc::kinematics;
 
