@@ -11,11 +11,13 @@
 // in std namespace or global namespace, according to the machine and compiler...
 
 
-double DecodeUnit::decodeUnit( std::string unit )
+using namespace ssc::decode_unit;
+
+double ssc::decode_unit::decodeUnit( std::string unit )
 {
 	double val;
 	try {
-		DecodeUnit::UnitDecoder decoder( unit );
+	    ssc::decode_unit::UnitDecoder decoder( unit );
 		val=decoder.decode();
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
@@ -27,11 +29,11 @@ double DecodeUnit::decodeUnit( std::string unit )
 	return val;
 }
 
-double DecodeUnit::decodeUnit( std::string unit , std::map<std::string,double> &known_units )
+double ssc::decode_unit::decodeUnit( std::string unit , std::map<std::string,double> &known_units )
 {
 	double val;
 	try {
-		DecodeUnit::UnitDecoder decoder( unit , known_units );
+	    ssc::decode_unit::UnitDecoder decoder( unit , known_units );
 		val=decoder.decode();
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
@@ -50,59 +52,59 @@ double DecodeUnit::decodeUnit( std::string unit , std::map<std::string,double> &
 	return val;
 }
 
-DecodeUnit::UnitDecoder::Token::Token() {}
-DecodeUnit::UnitDecoder::Token::~Token() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::Token::type() {return k_unknown_token;}
-std::string DecodeUnit::UnitDecoder::Token::description() {return std::string("unknown token");}
-std::string DecodeUnit::UnitDecoder::Token::string_value() {std::string tmp; return tmp;}
-int		   DecodeUnit::UnitDecoder::Token::int_value()    {return 0;}
-double      DecodeUnit::UnitDecoder::Token::double_value() {return 0.0;}
+ssc::decode_unit::UnitDecoder::Token::Token() {}
+ssc::decode_unit::UnitDecoder::Token::~Token() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::Token::type() {return k_unknown_token;}
+std::string ssc::decode_unit::UnitDecoder::Token::description() {return std::string("unknown token");}
+std::string ssc::decode_unit::UnitDecoder::Token::string_value() {std::string tmp; return tmp;}
+int		   ssc::decode_unit::UnitDecoder::Token::int_value()    {return 0;}
+double      ssc::decode_unit::UnitDecoder::Token::double_value() {return 0.0;}
 
-DecodeUnit::UnitDecoder::WordToken::WordToken(std::string word) : m_word(word) {}
-DecodeUnit::UnitDecoder::WordToken::~WordToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::WordToken::type() {return k_word;}
-std::string DecodeUnit::UnitDecoder::WordToken::description() {return std::string("Word token ") + m_word;}
-std::string DecodeUnit::UnitDecoder::WordToken::string_value() {return m_word;}
+ssc::decode_unit::UnitDecoder::WordToken::WordToken(std::string word) : m_word(word) {}
+ssc::decode_unit::UnitDecoder::WordToken::~WordToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::WordToken::type() {return k_word;}
+std::string ssc::decode_unit::UnitDecoder::WordToken::description() {return std::string("Word token ") + m_word;}
+std::string ssc::decode_unit::UnitDecoder::WordToken::string_value() {return m_word;}
 
-DecodeUnit::UnitDecoder::IntToken::IntToken(int num) : m_num(num) {}
-DecodeUnit::UnitDecoder::IntToken::~IntToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::IntToken::type() {return k_integer;}
-std::string DecodeUnit::UnitDecoder::IntToken::description() {
+ssc::decode_unit::UnitDecoder::IntToken::IntToken(int num) : m_num(num) {}
+ssc::decode_unit::UnitDecoder::IntToken::~IntToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::IntToken::type() {return k_integer;}
+std::string ssc::decode_unit::UnitDecoder::IntToken::description() {
 	std::ostringstream tmp;
 	tmp << "Int token " << m_num;
 	return tmp.str();
 }
-int    DecodeUnit::UnitDecoder::IntToken::int_value() {return m_num;}
-double DecodeUnit::UnitDecoder::IntToken::double_value() {return static_cast<double> (m_num);}
+int    ssc::decode_unit::UnitDecoder::IntToken::int_value() {return m_num;}
+double ssc::decode_unit::UnitDecoder::IntToken::double_value() {return static_cast<double> (m_num);}
 
-DecodeUnit::UnitDecoder::DoubleToken::DoubleToken(double num) : m_num(num) {}
-DecodeUnit::UnitDecoder::DoubleToken::~DoubleToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::DoubleToken::type() {return k_double;}
-std::string DecodeUnit::UnitDecoder::DoubleToken::description() {
+ssc::decode_unit::UnitDecoder::DoubleToken::DoubleToken(double num) : m_num(num) {}
+ssc::decode_unit::UnitDecoder::DoubleToken::~DoubleToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::DoubleToken::type() {return k_double;}
+std::string ssc::decode_unit::UnitDecoder::DoubleToken::description() {
 	std::ostringstream tmp;
 	tmp << "Int token " << m_num;
 	return tmp.str();
 }
-double DecodeUnit::UnitDecoder::DoubleToken::double_value() {return m_num;}
+double ssc::decode_unit::UnitDecoder::DoubleToken::double_value() {return m_num;}
 
-DecodeUnit::UnitDecoder::OperationToken::OperationToken(char op) : m_op(op) {}
-DecodeUnit::UnitDecoder::OperationToken::~OperationToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::OperationToken::type() {return k_operation;}
-std::string DecodeUnit::UnitDecoder::OperationToken::description() {return std::string("Word token ") + std::string(1,m_op);}
-int DecodeUnit::UnitDecoder::OperationToken::int_value() {return m_op;}
+ssc::decode_unit::UnitDecoder::OperationToken::OperationToken(char op) : m_op(op) {}
+ssc::decode_unit::UnitDecoder::OperationToken::~OperationToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::OperationToken::type() {return k_operation;}
+std::string ssc::decode_unit::UnitDecoder::OperationToken::description() {return std::string("Word token ") + std::string(1,m_op);}
+int ssc::decode_unit::UnitDecoder::OperationToken::int_value() {return m_op;}
 
-DecodeUnit::UnitDecoder::LeftParToken::LeftParToken() {}
-DecodeUnit::UnitDecoder::LeftParToken::~LeftParToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::LeftParToken::type() {return k_leftparenthesis;}
-std::string DecodeUnit::UnitDecoder::LeftParToken::description() {return std::string("Left parenthese (");}
+ssc::decode_unit::UnitDecoder::LeftParToken::LeftParToken() {}
+ssc::decode_unit::UnitDecoder::LeftParToken::~LeftParToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::LeftParToken::type() {return k_leftparenthesis;}
+std::string ssc::decode_unit::UnitDecoder::LeftParToken::description() {return std::string("Left parenthese (");}
 
-DecodeUnit::UnitDecoder::RightParToken::RightParToken() {}
-DecodeUnit::UnitDecoder::RightParToken::~RightParToken() {}
-DecodeUnit::UnitDecoder::e_token_type DecodeUnit::UnitDecoder::RightParToken::type() {return k_rightparenthesis;}
-std::string DecodeUnit::UnitDecoder::RightParToken::description() {return std::string("Right parenthese )");}
+ssc::decode_unit::UnitDecoder::RightParToken::RightParToken() {}
+ssc::decode_unit::UnitDecoder::RightParToken::~RightParToken() {}
+ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::RightParToken::type() {return k_rightparenthesis;}
+std::string ssc::decode_unit::UnitDecoder::RightParToken::description() {return std::string("Right parenthese )");}
 
 
-DecodeUnit::UnitDecoder::UnitDecoder(std::string unit)
+ssc::decode_unit::UnitDecoder::UnitDecoder(std::string unit)
 : m_stream(unit) ,
   m_next_char(0),
   m_token(NULL),
@@ -111,7 +113,7 @@ DecodeUnit::UnitDecoder::UnitDecoder(std::string unit)
 {
 }
 
-DecodeUnit::UnitDecoder::UnitDecoder(std::string unit , std::map<std::string,double> &known_units)
+ssc::decode_unit::UnitDecoder::UnitDecoder(std::string unit , std::map<std::string,double> &known_units)
 : m_stream(unit) ,
   m_next_char(0),
   m_token(NULL),
@@ -120,25 +122,25 @@ DecodeUnit::UnitDecoder::UnitDecoder(std::string unit , std::map<std::string,dou
 {
 }
 
-DecodeUnit::UnitDecoder::~UnitDecoder()
+ssc::decode_unit::UnitDecoder::~UnitDecoder()
 {
 	clear_token();
 }
 
-void DecodeUnit::UnitDecoder::clear_token()
+void ssc::decode_unit::UnitDecoder::clear_token()
 {
 	if (m_token != NULL) delete m_token;
 	m_token = NULL;
 }
 
 // advance one character
-void DecodeUnit::UnitDecoder::advance()
+void ssc::decode_unit::UnitDecoder::advance()
 {
 	m_next_char = m_stream.get();
 }
 
 // scan one token
-DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan()
+ssc::decode_unit::UnitDecoder::Token *ssc::decode_unit::UnitDecoder::scan()
 {
 	while (m_next_char != -1 ) {
 		switch(m_char_table[(size_t)m_next_char])
@@ -176,47 +178,47 @@ DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan()
 	return NULL;
 }
 
-DecodeUnit::UnitDecoder::LeftParToken *DecodeUnit::UnitDecoder::scan_leftParenthesis()
+ssc::decode_unit::UnitDecoder::LeftParToken *ssc::decode_unit::UnitDecoder::scan_leftParenthesis()
 {
-	DecodeUnit::UnitDecoder::LeftParToken *token=new DecodeUnit::UnitDecoder::LeftParToken();
+	ssc::decode_unit::UnitDecoder::LeftParToken *token=new ssc::decode_unit::UnitDecoder::LeftParToken();
 	advance();
 	return token;
 }
 
-DecodeUnit::UnitDecoder::RightParToken *DecodeUnit::UnitDecoder::scan_rightParenthesis()
+ssc::decode_unit::UnitDecoder::RightParToken *ssc::decode_unit::UnitDecoder::scan_rightParenthesis()
 {
-	DecodeUnit::UnitDecoder::RightParToken *token=new DecodeUnit::UnitDecoder::RightParToken();
+	ssc::decode_unit::UnitDecoder::RightParToken *token=new ssc::decode_unit::UnitDecoder::RightParToken();
 	advance();
 	return token;
 }
 
-DecodeUnit::UnitDecoder::OperationToken *DecodeUnit::UnitDecoder::scan_operation()
+ssc::decode_unit::UnitDecoder::OperationToken *ssc::decode_unit::UnitDecoder::scan_operation()
 {
-	DecodeUnit::UnitDecoder::OperationToken *token=new DecodeUnit::UnitDecoder::OperationToken((char)m_next_char);
+	ssc::decode_unit::UnitDecoder::OperationToken *token=new ssc::decode_unit::UnitDecoder::OperationToken((char)m_next_char);
 	advance();
 	return token;
 }
 
-DecodeUnit::UnitDecoder::WordToken *DecodeUnit::UnitDecoder::scan_percent()
+ssc::decode_unit::UnitDecoder::WordToken *ssc::decode_unit::UnitDecoder::scan_percent()
 {
 	std::ostringstream tmp("");
 	tmp.put((char)m_next_char);
 	advance();
-	DecodeUnit::UnitDecoder::WordToken *token=new DecodeUnit::UnitDecoder::WordToken(tmp.str());
+	ssc::decode_unit::UnitDecoder::WordToken *token=new ssc::decode_unit::UnitDecoder::WordToken(tmp.str());
 	return token;
 }
-DecodeUnit::UnitDecoder::WordToken *DecodeUnit::UnitDecoder::scan_word()
+ssc::decode_unit::UnitDecoder::WordToken *ssc::decode_unit::UnitDecoder::scan_word()
 {
 	std::ostringstream tmp("");
 	do {
 		tmp.put((char)m_next_char);
 		advance();
 	} while(m_next_char != -1 && (m_char_table[(size_t)m_next_char]==k_letter || m_char_table[(size_t)m_next_char] == k_underscore));
-	DecodeUnit::UnitDecoder::WordToken *token=new DecodeUnit::UnitDecoder::WordToken(tmp.str());
+	ssc::decode_unit::UnitDecoder::WordToken *token=new ssc::decode_unit::UnitDecoder::WordToken(tmp.str());
 	return token;
 }
 
-DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan_digit()
+ssc::decode_unit::UnitDecoder::Token *ssc::decode_unit::UnitDecoder::scan_digit()
 {
 	std::ostringstream str("");
 	do {
@@ -247,46 +249,46 @@ DecodeUnit::UnitDecoder::Token *DecodeUnit::UnitDecoder::scan_digit()
 		std::istringstream interp(str.str());
 		double dval;
 		interp >> dval;
-		DecodeUnit::UnitDecoder::DoubleToken *token=new DecodeUnit::UnitDecoder::DoubleToken(dval);
+		ssc::decode_unit::UnitDecoder::DoubleToken *token=new ssc::decode_unit::UnitDecoder::DoubleToken(dval);
 		return token;
 	} else {
 		std::istringstream interp(str.str());
 		int ival;
 		interp >> ival;
-		DecodeUnit::UnitDecoder::IntToken *token=new DecodeUnit::UnitDecoder::IntToken(ival);
+		ssc::decode_unit::UnitDecoder::IntToken *token=new ssc::decode_unit::UnitDecoder::IntToken(ival);
 		return token;
 	}
 }
 
 
 // testing tokens
-bool DecodeUnit::UnitDecoder::isIntToken(DecodeUnit::UnitDecoder::Token *token)
+bool ssc::decode_unit::UnitDecoder::isIntToken(ssc::decode_unit::UnitDecoder::Token *token)
 {
 	return token->type() == k_integer;
 }
 
-bool DecodeUnit::UnitDecoder::isDblToken(DecodeUnit::UnitDecoder::Token *token)
+bool ssc::decode_unit::UnitDecoder::isDblToken(ssc::decode_unit::UnitDecoder::Token *token)
 {
 	return token->type() == k_double;
 }
 
-bool DecodeUnit::UnitDecoder::isWordToken(DecodeUnit::UnitDecoder::Token *token)
+bool ssc::decode_unit::UnitDecoder::isWordToken(ssc::decode_unit::UnitDecoder::Token *token)
 {
 	return token->type() == k_word;
 }
 
-bool DecodeUnit::UnitDecoder::isWordToken(DecodeUnit::UnitDecoder::Token *token,const char *value)
+bool ssc::decode_unit::UnitDecoder::isWordToken(ssc::decode_unit::UnitDecoder::Token *token,const char *value)
 {
 	return (token->type() == k_word) && (token->string_value() == std::string(value));
 }
 
-bool DecodeUnit::UnitDecoder::isOpToken(DecodeUnit::UnitDecoder::Token *token,char value)
+bool ssc::decode_unit::UnitDecoder::isOpToken(ssc::decode_unit::UnitDecoder::Token *token,char value)
 {
 	return (token->type() == k_operation) && (token->int_value() == value);
 }
 
 // decode unit
-double DecodeUnit::UnitDecoder::decode()
+double ssc::decode_unit::UnitDecoder::decode()
 {
 	advance();
 	m_token=scan();
@@ -294,7 +296,7 @@ double DecodeUnit::UnitDecoder::decode()
 }
 
 // the main function dealing with unit grammar...
-double DecodeUnit::UnitDecoder::decode_expression()
+double ssc::decode_unit::UnitDecoder::decode_expression()
 {
 	double val=0;
 
@@ -396,7 +398,7 @@ double DecodeUnit::UnitDecoder::decode_expression()
 	return val;
 }
 
-double DecodeUnit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,int tbeg,int tend,bool imp)
+double ssc::decode_unit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,int tbeg,int tend,bool imp)
 {
 	if(tend-tbeg==1) {
 		if(isIntToken(tokens[(size_t)tbeg])) {
@@ -459,7 +461,7 @@ double DecodeUnit::UnitDecoder::decode_expression(std::vector<Token *> &tokens,i
 }
 
 // decode format kg m2 s-2
-double DecodeUnit::UnitDecoder::decode_implicit_op_expression(std::vector<Token *> &tokens,int tbeg,int tend)
+double ssc::decode_unit::UnitDecoder::decode_implicit_op_expression(std::vector<Token *> &tokens,int tbeg,int tend)
 {
 	if(tend-tbeg<1) {
 		return 1.0;
@@ -496,7 +498,7 @@ double DecodeUnit::UnitDecoder::decode_implicit_op_expression(std::vector<Token 
 }
 
 // decode an expression enclosed by parentheses
-double DecodeUnit::UnitDecoder::decode_parenthesis()
+double ssc::decode_unit::UnitDecoder::decode_parenthesis()
 {
 	clear_token();
 	m_token=scan();
@@ -511,7 +513,7 @@ double DecodeUnit::UnitDecoder::decode_parenthesis()
 }
 
 // decode a function call : so far, only function supported is sqrt()
-double DecodeUnit::UnitDecoder::decode_function()
+double ssc::decode_unit::UnitDecoder::decode_function()
 {
 	double result=0;
 	Token *func=m_token;
@@ -531,7 +533,7 @@ double DecodeUnit::UnitDecoder::decode_function()
 }
 
 // decode a word : replace a unit by its value
-double DecodeUnit::UnitDecoder::decode_word( Token *token )
+double ssc::decode_unit::UnitDecoder::decode_word( Token *token )
 {
 	double result=1.0;
 	std::map<std::string,double>::iterator pointer = m_known_units.find(token->string_value());
@@ -545,7 +547,7 @@ double DecodeUnit::UnitDecoder::decode_word( Token *token )
 
 
 // initialize the character classification table
-std::vector<DecodeUnit::UnitDecoder::e_char_type> DecodeUnit::UnitDecoder::get_char_table()
+std::vector<ssc::decode_unit::UnitDecoder::e_char_type> ssc::decode_unit::UnitDecoder::get_char_table()
 {
 	static std::vector<UnitDecoder::e_char_type> table;
     if (table.empty())
@@ -571,7 +573,7 @@ std::vector<DecodeUnit::UnitDecoder::e_char_type> DecodeUnit::UnitDecoder::get_c
 	return table;
 }
 
-std::map<std::string,double> DecodeUnit::UnitDecoder::get_base_units_for_bootstrapping()
+std::map<std::string,double> ssc::decode_unit::UnitDecoder::get_base_units_for_bootstrapping()
 {
 	static std::map<std::string,double> units;
     if (units.empty())
@@ -777,7 +779,7 @@ std::map<std::string,double> DecodeUnit::UnitDecoder::get_base_units_for_bootstr
 }
 
 // initialize known units
-std::map<std::string,double> DecodeUnit::UnitDecoder::get_known_units()
+std::map<std::string,double> ssc::decode_unit::UnitDecoder::get_known_units()
 {
     static std::map<std::string,double> units;
     if (units.empty())
@@ -899,7 +901,7 @@ std::map<std::string,double> DecodeUnit::UnitDecoder::get_known_units()
 }
 
 
-void DecodeUnit::UnitDecoder::extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit )
+void ssc::decode_unit::UnitDecoder::extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit )
 {
 	units[ std::string("y") + unit ]=1.0e-24 * units[ unit ];
 	units[ std::string("z") + unit ]=1.0e-21 * units[ unit ];
@@ -923,7 +925,7 @@ void DecodeUnit::UnitDecoder::extend_with_short_metric_prefix(std::map<std::stri
 	units[ std::string("Y") + unit ]=1.0e+24 * units[ unit ];
 }
 
-void DecodeUnit::UnitDecoder::extend_with_long_metric_prefix(std::map<std::string,double> &units, std::string unit )
+void ssc::decode_unit::UnitDecoder::extend_with_long_metric_prefix(std::map<std::string,double> &units, std::string unit )
 {
 	units[ std::string("yocto") + unit ]=1.0e-24 * units[ unit ];
 	units[ std::string("zepto") + unit ]=1.0e-21 * units[ unit ];
@@ -947,13 +949,13 @@ void DecodeUnit::UnitDecoder::extend_with_long_metric_prefix(std::map<std::strin
 	units[ std::string("yotta") + unit ]=1.0e+24 * units[ unit ];
 }
 
-void DecodeUnit::UnitDecoder::extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit , double value )
+void ssc::decode_unit::UnitDecoder::extend_with_short_metric_prefix(std::map<std::string,double> &units, std::string unit , double value )
 {
 	units[ unit ]=value;
 	extend_with_short_metric_prefix( units , unit );
 }
 
-void DecodeUnit::UnitDecoder::extend_with_long_metric_prefix(std::map<std::string,double> &units, std::string unit , double value )
+void ssc::decode_unit::UnitDecoder::extend_with_long_metric_prefix(std::map<std::string,double> &units, std::string unit , double value )
 {
 	units[ unit ]=value;
 	extend_with_long_metric_prefix( units , unit );
