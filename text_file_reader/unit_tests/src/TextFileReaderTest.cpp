@@ -14,6 +14,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace ssc::text_file_reader;
+
 #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
 #define TMPNAM(x,n) tmpnam_s(x,n)
 #else
