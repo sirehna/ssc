@@ -21,18 +21,25 @@
  *  \snippet physical_types/unit_tests/src/LengthTest.cpp LengthTest expected output
  */
 
-class PhysicalQuantity
+namespace ssc
 {
-    public:
-        PhysicalQuantity();
-        virtual ~PhysicalQuantity();
-        void coerce(std::list<double>& ret) const;
-        void decoerce(std::list<double>& ret);
+    namespace data_source
+    {
+        class PhysicalQuantity
+        {
+            public:
+                PhysicalQuantity();
+                virtual ~PhysicalQuantity();
+                void coerce(std::list<double>& ret) const;
+                void decoerce(std::list<double>& ret);
 
-    protected:
-        PhysicalQuantity(const std::vector<double>& v);
-        std::vector<double> val;
-};
+            protected:
+                PhysicalQuantity(const std::vector<double>& v);
+                std::vector<double> val;
+        };
+    }
+}
+
 
 
 #endif /* PHYSICALQUANTITY_HPP_ */

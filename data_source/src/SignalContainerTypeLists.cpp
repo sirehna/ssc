@@ -8,6 +8,8 @@
 #include "SignalContainerTypeLists.hpp"
 #include <ostream>
 
+using namespace ssc::data_source;
+
 TypedSignalName::TypedSignalName(const SignalName& signal_name, const TypeName& type_name) : _signal_name(signal_name),
                     _type_name(type_name)
 {}
@@ -180,7 +182,7 @@ template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleType
     return l.iter_phys_qty.end();
 }
 
-::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s)
+::std::ostream& ssc::data_source::operator<<(::std::ostream& os, const ssc::data_source::TypedSignalName& s)
 {
     os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
     return os;

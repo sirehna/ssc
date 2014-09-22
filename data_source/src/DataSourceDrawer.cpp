@@ -11,6 +11,9 @@
 #include <map>
 #include <boost/algorithm/string.hpp>
 #include "test_macros.hpp"
+
+using namespace ssc::data_source;
+
 std::string DataSourceDrawer::serialize(const std::set<std::string>& s) const
 {
     std::stringstream ss;

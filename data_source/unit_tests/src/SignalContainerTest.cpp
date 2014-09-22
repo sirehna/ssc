@@ -8,6 +8,8 @@
 #include "SignalContainerTest.hpp"
 #include "SignalContainer.hpp"
 
+using namespace ssc::data_source;
+
 SignalContainerTest::SignalContainerTest() : a(DataGenerator(19))
 {
 }

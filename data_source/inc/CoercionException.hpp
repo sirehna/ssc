@@ -10,14 +10,20 @@
 
 #include "Exception.hpp"
 
-class CoercionException : public Exception
+namespace ssc
 {
-    public:
-        CoercionException(const char* s) :
-                Exception(s)
+    namespace data_source
+    {
+        class CoercionException : public Exception
         {
-        }
-};
+            public:
+                CoercionException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
+    }
+}
 
 
 #endif  /* COERCIONEXCEPTION_HPP_ */
