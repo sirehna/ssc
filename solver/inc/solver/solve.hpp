@@ -8,9 +8,9 @@
 #ifndef SOLVE_HPP_
 #define SOLVE_HPP_
 
-#include "DefaultEventHandler.hpp"
-#include "DefaultScheduler.hpp"
-#include "detection_of_state_update_methods.hpp"
+#include "solver/DefaultEventHandler.hpp"
+#include "solver/DefaultScheduler.hpp"
+#include "solver/detection_of_state_update_methods.hpp"
 
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 
