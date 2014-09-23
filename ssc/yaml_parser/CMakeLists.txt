@@ -4,7 +4,6 @@ project(yaml_parser)
 set(SRC YamlParser.cpp)
 
 include_directories(${SSC_INCLUDE_DIRS})
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(SYSTEM ${YAML_CPP_INCLUDE_DIRS})
 
 # Using C++ 2011
