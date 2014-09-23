@@ -151,6 +151,17 @@ MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
     ENDIF()
 ENDMACRO(MACRO_GET_NUMBER_OF_PROCESSORS)
 
+MACRO(create_wrapper_hpp module_name headers)
+    set(${module_name}_INCLUDES "")
+    foreach(f ${headers})
+        get_filename_component(x ${f} NAME)
+        LIST(APPEND ${module_name}_INCLUDES "#include \"ssc/${module_name}/${x}\"")
+        LIST(APPEND ${module_name}_INCLUDES "\n")
+    endforeach()
+    STRING(REGEX REPLACE ";" "" ${module_name}_INCLUDES "${${module_name}_INCLUDES}")
+    configure_file(${module_name}.hpp.in ${module_name}.hpp)
+ENDMACRO()
+
 MACRO(add_libs name)
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
     ADD_LIBRARY(${${name}}_static STATIC
