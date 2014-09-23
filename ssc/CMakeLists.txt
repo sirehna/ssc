@@ -148,8 +148,6 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:interpolation_tests>
         )
 
-#SET(LINK_FLAGS ${LINK_FLAGS} "-Wl,-whole-archive")
-
 TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
