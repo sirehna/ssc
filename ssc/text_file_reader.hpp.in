@@ -1,0 +1,6 @@
+#ifndef text_file_reader_guard
+#define text_file_reader_guard
+
+@text_file_reader_INCLUDES@
+
+#endif

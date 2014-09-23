@@ -1,0 +1,6 @@
+#ifndef decode_unit_guard
+#define decode_unit_guard
+
+@decode_unit_INCLUDES@
+
+#endif

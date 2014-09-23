@@ -1,0 +1,6 @@
+#ifndef data_source_guard
+#define data_source_guard
+
+@data_source_INCLUDES@
+
+#endif
