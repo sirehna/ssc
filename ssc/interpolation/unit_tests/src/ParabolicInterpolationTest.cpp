@@ -6,9 +6,9 @@
  */
 
 #include "ParabolicInterpolationTest.hpp"
-#include "interpolation/ParabolicInterpolation.hpp"
-#include "interpolation/ParabolicInterpolationException.hpp"
-#include "interpolation/InterpolatorException.hpp"
+#include "ssc/interpolation/ParabolicInterpolation.hpp"
+#include "ssc/interpolation/ParabolicInterpolationException.hpp"
+#include "ssc/interpolation/InterpolatorException.hpp"
 
 using namespace ssc::interpolation;
 

@@ -7,10 +7,10 @@
 
 #include <iostream>
 
-#include "kinematics/Kinematics.hpp"
-#include "numeric/almost_equal.hpp"
+#include "ssc/kinematics/Kinematics.hpp"
+#include "ssc/numeric/almost_equal.hpp"
 #include "transform_double_equal.hpp"
-#include "kinematics/Transform.hpp"
+#include "ssc/kinematics/Transform.hpp"
 
 using namespace ssc::kinematics;
 

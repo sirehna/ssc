@@ -5,15 +5,17 @@
  *  \author cec
  */
 
-#include "DataSourceTest.hpp"
-#include "data_source/DataSource.hpp"
+#include <set>
+
 #include "gmock/gmock.h"
-#include "data_source/DataSourceModule.hpp"
+
+#include "DataSourceTest.hpp"
 #include "DataSourceModuleMock.hpp"
-#include "data_source/DataSourceException.hpp"
 #include "TestModules.hpp"
 
-#include <set>
+#include "ssc/data_source/DataSource.hpp"
+#include "ssc/data_source/DataSourceModule.hpp"
+#include "ssc/data_source/DataSourceException.hpp"
 
 using namespace ssc::data_source;
 

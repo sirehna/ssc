@@ -8,8 +8,8 @@
 #include <cmath>
 
 #include "rotation_matrix_builders_Test.hpp"
-#include "kinematics/rotation_matrix_builders.hpp"
-#include "kinematics/EulerAngles.hpp"
+#include "ssc/kinematics/rotation_matrix_builders.hpp"
+#include "ssc/kinematics/EulerAngles.hpp"
 
 #define EPS (1E-10)
 

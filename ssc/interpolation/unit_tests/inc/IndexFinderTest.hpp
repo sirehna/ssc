@@ -9,7 +9,7 @@
 #define INDEXFINDERTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "random_data_generator/DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class IndexFinderTest : public ::testing::Test
 {

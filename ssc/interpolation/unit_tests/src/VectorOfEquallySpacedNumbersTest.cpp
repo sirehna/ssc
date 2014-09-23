@@ -6,8 +6,8 @@
  */
 
 #include "VectorOfEquallySpacedNumbersTest.hpp"
-#include "interpolation/VectorOfEquallySpacedNumbers.hpp"
-#include "interpolation/VectorOfEquallySpacedNumbersException.hpp"
+#include "ssc/interpolation/VectorOfEquallySpacedNumbers.hpp"
+#include "ssc/interpolation/VectorOfEquallySpacedNumbersException.hpp"
 
 using namespace ssc::interpolation;
 using namespace ssc::random_data_generator;

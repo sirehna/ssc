@@ -7,7 +7,6 @@ set(SRC src/CSVFileReaderTest.cpp)
 # Include directories
 include_directories (inc)
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${exception_handling_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})

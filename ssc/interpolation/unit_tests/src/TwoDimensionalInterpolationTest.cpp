@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "TwoDimensionalInterpolationTest.hpp"
-#include "interpolation/TwoDimensionalInterpolation.hpp"
-#include "interpolation/LinearInterpolation.hpp"
+#include "ssc/interpolation/TwoDimensionalInterpolation.hpp"
+#include "ssc/interpolation/LinearInterpolation.hpp"
 
 using namespace ssc::interpolation;
 

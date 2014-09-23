@@ -8,10 +8,10 @@
 #include <cmath> // For atan
 
 #include "TransformTest.hpp"
-#include "extra_test_assertions.hpp"
-#include "kinematics/KinematicsException.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
+#include "ssc/kinematics/KinematicsException.hpp"
 #include "random_kinematics.hpp"
-#include "kinematics/rotation_matrix_builders.hpp"
+#include "ssc/kinematics/rotation_matrix_builders.hpp"
 
 #define PI (4.*atan(1.))
 

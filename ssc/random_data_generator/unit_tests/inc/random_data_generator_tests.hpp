@@ -2,7 +2,7 @@
 #define RANDOM_DATA_GENERATOR_TESTS_HPP
 
 #include "gtest/gtest.h"
-#include "random_data_generator/DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class DataGeneratorTests : public ::testing::Test
 {

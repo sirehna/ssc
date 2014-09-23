@@ -15,12 +15,9 @@ FILE(GLOB SRC src/KinematicsTests.cpp
 
 # Include directories
 include_directories(inc)
-include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${test_macros_SOURCE_DIR})
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-include_directories(${data_source_INCLUDE_DIRS})
 
 # Using C++ 2011
 # The -std=c++0x option causes g++ to go into 'strict ANSI' mode so it doesn't declare non-standard functions
