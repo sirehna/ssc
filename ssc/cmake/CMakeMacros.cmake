@@ -176,8 +176,8 @@ MACRO(add_headers name)
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
     create_wrapper_hpp(${name} headers)
 ENDMACRO()
-    
-    
+
+
 MACRO(add_libs name)
     add_headers(${name})
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
@@ -186,14 +186,14 @@ MACRO(add_libs name)
                 )
     set_target_properties(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
     foreach(f ${ARGN})
-        TARGET_LINK_LIBRARIES(${name}_static $f)
+        TARGET_LINK_LIBRARIES(${${name}}_static $f)
     endforeach()
     ADD_LIBRARY(${name}_shared SHARED
                 $<TARGET_OBJECTS:${name}_object>
                 )
     set_target_properties(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
     foreach(f ${ARGN})
-        TARGET_LINK_LIBRARIES(${name}_shared $f)
+        TARGET_LINK_LIBRARIES(${${name}}_shared $f)
     endforeach()
     LIST(APPEND ALL_SSC_TARGETS ${name}_static)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
