@@ -1,0 +1,6 @@
+#ifndef interpolation_guard
+#define interpolation_guard
+
+@interpolation_INCLUDES@
+
+#endif
