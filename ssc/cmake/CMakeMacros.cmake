@@ -181,4 +181,10 @@ MACRO(add_libs name)
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
             ARCHIVE DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
     )
+    FILE(GLOB headers ${name}/*.h*)
+    INSTALL(FILES ${headers}
+            DESTINATION inc/${ssc_VERSION}/ssc/${name})
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
+            DESTINATION inc/${ssc_VERSION}/ssc)
+    create_wrapper_hpp(${name} headers)
 ENDMACRO()
