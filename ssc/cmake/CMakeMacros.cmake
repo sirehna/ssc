@@ -170,7 +170,7 @@ MACRO(add_headers name)
             COMPONENT ${name}
             )
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION ${ssc_INCLUDE_DIRS}/ssc
+            DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
             COMPONENT ${name}
             )
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
@@ -193,7 +193,9 @@ MACRO(add_libs name)
                 )
     set_target_properties(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
     foreach(f ${ARGN})
-        TARGET_LINK_LIBRARIES(${${name}}_shared $f)
+        SET(current_arg_name ${f})
+        TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name})
+        TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name})
     endforeach()
     LIST(APPEND ALL_SSC_TARGETS ${name}_static)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
