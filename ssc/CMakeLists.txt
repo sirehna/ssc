@@ -95,20 +95,9 @@ ENDIF()
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
 SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
-ADD_SUBDIRECTORY(exception_handling)
-ADD_SUBDIRECTORY(macros)
-ADD_SUBDIRECTORY(random_data_generator)
-ADD_SUBDIRECTORY(interpolation)
-ADD_SUBDIRECTORY(numeric)
-ADD_SUBDIRECTORY(text_file_reader)
-ADD_SUBDIRECTORY(decode_unit)
-ADD_SUBDIRECTORY(data_source)
-ADD_SUBDIRECTORY(yaml_parser)
-ADD_SUBDIRECTORY(solver)
-ADD_SUBDIRECTORY(kinematics)
-ADD_SUBDIRECTORY(csv_file_reader)
 
 # Define libraries
+add_headers(macros)
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser)
@@ -119,15 +108,7 @@ add_libs(kinematics)
 add_libs(interpolation)
 add_libs(csv_file_reader)
 add_libs(numeric)
-
-
-#############################################################################
-# Testing part
-ENABLE_TESTING()
-IF(BUILD_TESTING)
-    SET(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
-    MARK_AS_ADVANCED(BUILDNAME)
-ENDIF(BUILD_TESTING)
+add_headers(solver)
 
 SET(TEST_EXE run_all_tests)
 
