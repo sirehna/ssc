@@ -162,7 +162,19 @@ MACRO(create_wrapper_hpp module_name headers)
     configure_file(${module_name}.hpp.in ${module_name}.hpp)
 ENDMACRO()
 
+MACRO(add_headers name)
+    ADD_SUBDIRECTORY(${name})
+    FILE(GLOB headers ${name}/*.h*)
+    INSTALL(FILES ${headers}
+            DESTINATION ssc/${ssc_VERSION}/ssc/${name})
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
+            DESTINATION ssc/${ssc_VERSION}/ssc)
+    create_wrapper_hpp(${name} headers)
+ENDMACRO()
+    
+    
 MACRO(add_libs name)
+    add_headers(${name})
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
     ADD_LIBRARY(${${name}}_static STATIC
                 $<TARGET_OBJECTS:${name}_object>
@@ -176,15 +188,10 @@ MACRO(add_libs name)
     foreach(f ${ARGN})
         TARGET_LINK_LIBRARIES(${name}_shared $f)
     endforeach()
+
     INSTALL(TARGETS ${${name}}_static ${${name}}_shared
             RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
             ARCHIVE DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
     )
-    FILE(GLOB headers ${name}/*.h*)
-    INSTALL(FILES ${headers}
-            DESTINATION inc/${ssc_VERSION}/ssc/${name})
-    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION inc/${ssc_VERSION}/ssc)
-    create_wrapper_hpp(${name} headers)
 ENDMACRO()
