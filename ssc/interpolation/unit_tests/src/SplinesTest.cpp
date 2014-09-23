@@ -9,12 +9,12 @@
 #include <algorithm>
 
 #include "SplinesTest.hpp"
-#include "extra_test_assertions.hpp"
-#include "interpolation/NaturalSplines.hpp"
-#include "interpolation/VectorOfEquallySpacedNumbers.hpp"
-#include "interpolation/VectorOfEquallySpacedNumbersException.hpp"
-#include "interpolation/InterpolatorException.hpp"
-#include "interpolation/SplinesException.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
+#include "ssc/interpolation/NaturalSplines.hpp"
+#include "ssc/interpolation/VectorOfEquallySpacedNumbers.hpp"
+#include "ssc/interpolation/VectorOfEquallySpacedNumbersException.hpp"
+#include "ssc/interpolation/InterpolatorException.hpp"
+#include "ssc/interpolation/SplinesException.hpp"
 
 #define PI 4.*atan(1.)
 #define EPS 1E-10
@@ -219,7 +219,7 @@ TEST_F(SplinesTest, should_be_able_to_retrieve_parabolic_coefficients)
     ASSERT_DOUBLE_EQ(1.4,coeffs2.at(2).c);
 
 }
-#include "test_macros.hpp"
+
 TEST_F(SplinesTest, should_be_able_to_compute_position_of_minimum)
 {
     for (size_t i = 0 ; i < 100 ; ++i)

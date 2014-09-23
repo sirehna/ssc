@@ -9,10 +9,10 @@
 
 #include "WrenchTest.hpp"
 #include "random_kinematics.hpp"
-#include "kinematics/KinematicsException.hpp"
-#include "kinematics/Wrench.hpp"
-#include "kinematics/rotation_matrix_builders.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/kinematics/KinematicsException.hpp"
+#include "ssc/kinematics/Wrench.hpp"
+#include "ssc/kinematics/rotation_matrix_builders.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
 #define PI (4.*atan(1.))
 #define EPS 1E-13

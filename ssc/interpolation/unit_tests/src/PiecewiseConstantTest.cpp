@@ -6,9 +6,9 @@
  */
 
 #include "PiecewiseConstantTest.hpp"
-#include "interpolation/PiecewiseConstant.hpp"
-#include "interpolation/PiecewiseConstantException.hpp"
-#include "interpolation/InterpolatorException.hpp"
+#include "ssc/interpolation/PiecewiseConstant.hpp"
+#include "ssc/interpolation/PiecewiseConstantException.hpp"
+#include "ssc/interpolation/InterpolatorException.hpp"
 
 using namespace ssc::interpolation;
 

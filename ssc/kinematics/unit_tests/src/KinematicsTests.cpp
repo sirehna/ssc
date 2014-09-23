@@ -6,9 +6,9 @@
  */
 
 #include "KinematicsTests.hpp"
-#include "kinematics/Kinematics.hpp"
+#include "ssc/kinematics/Kinematics.hpp"
 #include "random_kinematics.hpp"
-#include "kinematics/KinematicsException.hpp"
+#include "ssc/kinematics/KinematicsException.hpp"
 #include "transform_double_equal.hpp"
 
 #define EPS 1E-13

@@ -1,9 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(exception_handling)
-FILE(GLOB SRC src/Exception.cpp)
+set(SRC Exception.cpp)
 
-INCLUDE_DIRECTORIES(inc)
-
+include_directories(${SSC_INCLUDE_DIRS})
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
-
-SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_SOURCE_DIR}/inc CACHE PATH "Path to ${PROJECT_NAME}'s include directory")

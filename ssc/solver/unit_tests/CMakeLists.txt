@@ -10,11 +10,8 @@ FILE(GLOB SRC src/ODEintTests.cpp
 include_directories(SYSTEM inc)
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 include_directories(SYSTEM ${GMOCK_INCLUDE_DIRS})
-include_directories(${${MODULE_UNDER_TEST}_SOURCE_DIR}/inc)
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${test_macros_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-include_directories(${test_utilities_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 
 # Using C++ 2011
 # The -std=c++0x option causes g++ to go into 'strict ANSI' mode so it doesn't declare non-standard functions

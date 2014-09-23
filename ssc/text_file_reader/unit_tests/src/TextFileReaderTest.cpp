@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include "TextFileReaderTest.hpp"
-#include "text_file_reader/TextFileReader.hpp"
+#include "ssc/text_file_reader/TextFileReader.hpp"
 
 using namespace ssc::text_file_reader;
 

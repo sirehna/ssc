@@ -100,6 +100,7 @@ ENDIF()
 #############################################################################
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
+SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
 ADD_SUBDIRECTORY(exception_handling)
 ADD_SUBDIRECTORY(macros)
 ADD_SUBDIRECTORY(random_data_generator)

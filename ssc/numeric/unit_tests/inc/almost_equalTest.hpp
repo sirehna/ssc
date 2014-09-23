@@ -9,7 +9,7 @@
 #define ALMOST_EQUALTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "random_data_generator/DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class almost_equalTest : public ::testing::Test
 {

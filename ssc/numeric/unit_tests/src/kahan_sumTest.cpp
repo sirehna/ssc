@@ -10,7 +10,7 @@
 
 #include "kahan_sumTest.hpp"
 
-#include "numeric/kahan_sum.hpp"
+#include "ssc/numeric/kahan_sum.hpp"
 
 using namespace ssc::numeric;
 

@@ -8,8 +8,8 @@
 #ifndef TESTMODULES_HPP_
 #define TESTMODULES_HPP_
 
-#include "data_source/DataSourceModule.hpp"
-
+#include "ssc/data_source/DataSourceModule.hpp"
+#include "ssc/data_source/DataSource.hpp"
 
 DECLARE_MODULE(ModuleDependingOnItself);
 void ModuleDependingOnItself::update() const

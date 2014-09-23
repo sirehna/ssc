@@ -5,6 +5,7 @@ set(SRC src/random_data_generator_tests.cpp)
 # ------8<---------------------------------------------->8-----
 
 include_directories (inc)
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 
 

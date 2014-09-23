@@ -1,3 +1,5 @@
+#include "ssc/data_source/DataSourceModule.hpp"
+
 // Defined so we can derive several types of mock
 class MockableDataSourceModule : public ssc::data_source::DataSourceModule
 {

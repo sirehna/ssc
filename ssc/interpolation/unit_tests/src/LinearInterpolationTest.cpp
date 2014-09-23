@@ -6,7 +6,7 @@
  */
 
 #include "LinearInterpolationTest.hpp"
-#include "interpolation/LinearInterpolation.hpp"
+#include "ssc/interpolation/LinearInterpolation.hpp"
 
 using namespace ssc::interpolation;
 

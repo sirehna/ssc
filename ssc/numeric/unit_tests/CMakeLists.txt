@@ -12,9 +12,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 
 # Include directories
 include_directories(inc)
-include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${test_macros_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIRS})
 

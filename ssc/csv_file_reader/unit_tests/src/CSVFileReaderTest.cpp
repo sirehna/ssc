@@ -10,7 +10,7 @@
 #include <fstream>
 
 #include "CSVFileReaderTest.hpp"
-#include "csv_file_reader/CSVFileReader.hpp"
+#include "ssc/csv_file_reader/CSVFileReader.hpp"
 
 using namespace ssc::csv_file_reader;
 

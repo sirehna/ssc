@@ -7,11 +7,7 @@ FILE(GLOB SRC src/TextFileReaderTest.cpp)
 # Include directories
 include_directories(inc)
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
-include_directories(${${MODULE_UNDER_TEST}_SOURCE_DIR}/inc)
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${validate_using_csv_files_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 
 # Linking libraries
 add_library(${PROJECT_NAME} OBJECT ${SRC})
-
-ADD_DEFINITIONS("-DPATH_TO_ACCEPTANCE_TESTS=${PATH_TO_ACCEPTANCE_TESTS}")

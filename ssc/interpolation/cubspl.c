@@ -12,6 +12,8 @@
 
 #include "f2c.h"
 
+int cubspl_(doublereal *tau, doublereal *c__, integer *n, 
+	integer *ibcbeg, integer *ibcend);
 /* Subroutine */ int cubspl_(doublereal *tau, doublereal *c__, integer *n, 
 	integer *ibcbeg, integer *ibcend)
 {
