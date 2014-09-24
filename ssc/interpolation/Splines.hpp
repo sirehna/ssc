@@ -14,7 +14,6 @@
 #include "ConstantStepInterpolator.hpp"
 #include <functional>
 
-
 namespace ssc
 {
     namespace interpolation
@@ -42,9 +41,9 @@ namespace ssc
          *  - Resp. 4: Compute the second derivative of the interpolated data
          *  cf. Cubic Spline Interpolation by Sky McKinley and Megan Levine
          *  \section ex1 Example
-         *  \snippet splines/unit_tests/src/SplinesTest.cpp SplinesTest example
+         *  \snippet interpolation/unit_tests/src/SplinesTest.cpp SplinesTest example
          *  \section ex2 Expected output
-         *  \snippet splines/unit_tests/src/SplinesTest.cpp SplinesTest expected output
+         *  \snippet interpolation/unit_tests/src/SplinesTest.cpp SplinesTest expected output
          */
         class Splines : public ConstantStepInterpolator
         {
