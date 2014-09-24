@@ -62,7 +62,7 @@ INCLUDE(CMakeOutputDirectories)
 # Boost
 # -> Require at least version 1.53 of boost to use Odeint
 #SET(Boost_DEBUG 1)
-IF (WIN32)
+IF(WIN32)
     IF(NOT DEFINED BOOST_ROOT)
         SET(BOOST_ROOT "C:\\Program Files\\boost")
         IF(NOT "$ENV{BOOST_ROOT}" STREQUAL "")
@@ -90,8 +90,8 @@ SET(YAML_CPP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/src
 SET(eigen_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/eigen)
 ADD_DEFINITIONS(-DEIGEN_DONT_VECTORIZE) # Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
 ADD_DEFINITIONS(-DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
-if (${CMAKE_BUILD_TYPE})
-    if (${CMAKE_BUILD_TYPE} EQUAL Release)
+IF(${CMAKE_BUILD_TYPE})
+    IF(${CMAKE_BUILD_TYPE} EQUAL Release)
         ADD_DEFINITIONS(-DEIGEN_NO_DEBUG)
     ENDIF()
 ENDIF()
