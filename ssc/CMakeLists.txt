@@ -156,7 +156,6 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         csv_file_reader_shared
         interpolation_shared
         numeric_shared
-        lapack
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
