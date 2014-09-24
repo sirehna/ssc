@@ -14,10 +14,8 @@ SET(${PROJECT_NAME}_VERSION_STR
 #############################################################################
 # CMake utilities
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+INCLUDE(CMakeMacros)
 #############################################################################
-
-
-INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeMacros.cmake)
 
 # Configure the package
 IF(INSTALL_PREFIX)
@@ -95,13 +93,13 @@ SET(YAML_CPP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/src
 SET(eigen_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/eigen)
 ADD_DEFINITIONS(-DEIGEN_DONT_VECTORIZE) # Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
 ADD_DEFINITIONS(-DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
-
 if (${CMAKE_BUILD_TYPE})
     if (${CMAKE_BUILD_TYPE} EQUAL Release)
         ADD_DEFINITIONS(-DEIGEN_NO_DEBUG)
     ENDIF()
 ENDIF()
 
+ADD_SUBDIRECTORY(f2c)
 #############################################################################
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
@@ -110,15 +108,22 @@ INCLUDE(CMakeCompilationOptions)
 add_headers(macros)
 add_libs(random_data_generator)
 add_libs(exception_handling)
-add_libs(yaml_parser)
+add_libs(yaml_parser
+         OBJECT_DEPENDENCIES yaml-cpp_object)
 add_libs(decode_unit)
-add_libs(text_file_reader)
-add_libs(data_source)
-add_libs(kinematics)
-add_libs(interpolation)
-add_libs(csv_file_reader)
+add_libs(text_file_reader
+         SSC_DEPENDENCIES exception_handling)
 add_libs(numeric)
+add_libs(data_source
+         SSC_DEPENDENCIES exception_handling numeric)
+add_libs(kinematics
+         SSC_DEPENDENCIES exception_handling data_source)
+add_libs(interpolation
+         SSC_DEPENDENCIES exception_handling
+         OBJECTS_DEPENDENCIES f2c_object)
+add_libs(csv_file_reader ssc_exception_handling)
 add_headers(solver)
+#LIST(APPEND ALL_SSC_TARGETS f2c)
 
 install(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
   LIBRARY DESTINATION lib
