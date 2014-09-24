@@ -12,9 +12,9 @@
 
 #include "f2c.h"
 
-int cubspl_(doublereal *tau, doublereal *c__, integer *n, 
+int cubspl_(doublereal *tau, doublereal *c__, integer *n,
 	integer *ibcbeg, integer *ibcend);
-/* Subroutine */ int cubspl_(doublereal *tau, doublereal *c__, integer *n, 
+/* Subroutine */ int cubspl_(doublereal *tau, doublereal *c__, integer *n,
 	integer *ibcbeg, integer *ibcend)
 {
     /* System generated locals */
@@ -97,7 +97,7 @@ L12:
     c__[7] = c__[11] + c__[15];
 /* Computing 2nd power */
     d__1 = c__[11];
-    c__[6] = ((c__[11] + c__[7] * 2.f) * c__[12] * c__[15] + d__1 * d__1 * 
+    c__[6] = ((c__[11] + c__[7] * 2.f) * c__[12] * c__[15] + d__1 * d__1 *
 	    c__[16]) / c__[7];
     goto L19;
 /*     slope prescribed at left end. */
@@ -121,11 +121,11 @@ L19:
     i__1 = l;
     for (m = 2; m <= i__1; ++m) {
 	g = -c__[(m + 1 << 2) + 3] / c__[(m - 1 << 2) + 4];
-	c__[(m << 2) + 2] = g * c__[(m - 1 << 2) + 2] + (c__[(m << 2) + 3] * 
-		c__[(m + 1 << 2) + 4] + c__[(m + 1 << 2) + 3] * c__[(m << 2) 
+	c__[(m << 2) + 2] = g * c__[(m - 1 << 2) + 2] + (c__[(m << 2) + 3] *
+		c__[(m + 1 << 2) + 4] + c__[(m + 1 << 2) + 3] * c__[(m << 2)
 		+ 4]) * 3.f;
 /* L20: */
-	c__[(m << 2) + 4] = g * c__[(m - 1 << 2) + 3] + (c__[(m << 2) + 3] + 
+	c__[(m << 2) + 4] = g * c__[(m - 1 << 2) + 3] + (c__[(m << 2) + 3] +
 		c__[(m + 1 << 2) + 3]) * 2.f;
     }
 /* onstruct last equation from the second boundary condition, of the form */
@@ -149,8 +149,8 @@ L21:
     g = c__[(*n - 1 << 2) + 3] + c__[(*n << 2) + 3];
 /* Computing 2nd power */
     d__1 = c__[(*n << 2) + 3];
-    c__[(*n << 2) + 2] = ((c__[(*n << 2) + 3] + g * 2.f) * c__[(*n << 2) + 4] 
-	    * c__[(*n - 1 << 2) + 3] + d__1 * d__1 * (c__[(*n - 1 << 2) + 1] 
+    c__[(*n << 2) + 2] = ((c__[(*n << 2) + 3] + g * 2.f) * c__[(*n << 2) + 4]
+	    * c__[(*n - 1 << 2) + 3] + d__1 * d__1 * (c__[(*n - 1 << 2) + 1]
 	    - c__[(*n - 2 << 2) + 1]) / c__[(*n - 1 << 2) + 3]) / g;
     g = -g / c__[(*n - 1 << 2) + 4];
     c__[(*n << 2) + 4] = c__[(*n - 1 << 2) + 3];
@@ -187,7 +187,7 @@ L28:
 /* omplete forward pass of gauss elimination. */
 L29:
     c__[(*n << 2) + 4] = g * c__[(*n - 1 << 2) + 3] + c__[(*n << 2) + 4];
-    c__[(*n << 2) + 2] = (g * c__[(*n - 1 << 2) + 2] + c__[(*n << 2) + 2]) / 
+    c__[(*n << 2) + 2] = (g * c__[(*n - 1 << 2) + 2] + c__[(*n << 2) + 2]) /
 	    c__[(*n << 2) + 4];
 /* arry out back substitution */
 L30:
@@ -206,7 +206,7 @@ L40:
 	dtau = c__[(i__ << 2) + 3];
 	divdf1 = (c__[(i__ << 2) + 1] - c__[(i__ - 1 << 2) + 1]) / dtau;
 	divdf3 = c__[(i__ - 1 << 2) + 2] + c__[(i__ << 2) + 2] - divdf1 * 2.f;
-	c__[(i__ - 1 << 2) + 3] = (divdf1 - c__[(i__ - 1 << 2) + 2] - divdf3) 
+	c__[(i__ - 1 << 2) + 3] = (divdf1 - c__[(i__ - 1 << 2) + 2] - divdf3)
 		* 2.f / dtau;
 /* L50: */
 	c__[(i__ - 1 << 2) + 4] = divdf3 / dtau * (6.f / dtau);
