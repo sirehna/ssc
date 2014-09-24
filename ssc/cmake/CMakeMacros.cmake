@@ -166,9 +166,11 @@ MACRO(add_headers name)
     ADD_SUBDIRECTORY(${name})
     FILE(GLOB headers ${name}/*.h*)
     INSTALL(FILES ${headers}
-            DESTINATION ssc/${ssc_VERSION}/ssc/${name})
+            DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
+            )
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION ssc/${ssc_VERSION}/ssc)
+            DESTINATION ${ssc_INCLUDE_DIRS}/ssc
+            )
     create_wrapper_hpp(${name} headers)
 ENDMACRO()
     
