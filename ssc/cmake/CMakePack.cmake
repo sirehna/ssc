@@ -52,3 +52,17 @@ IF(UNIX OR MSYS)
     ENDIF(WIN32)
     INCLUDE(CPack)
 ENDIF(UNIX OR MSYS)
+
+set(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
+install(EXPORT ${PROJECT_NAME}Targets
+  FILE
+    ${PROJECT_NAME}Targets.cmake
+  DESTINATION
+    ${ConfigPackageLocation}
+)
+install(
+  FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+  DESTINATION
+    ${ConfigPackageLocation}
+)
