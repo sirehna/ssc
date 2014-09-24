@@ -165,6 +165,7 @@ ENDMACRO()
 MACRO(add_headers name)
     ADD_SUBDIRECTORY(${name})
     FILE(GLOB headers ${name}/*.h*)
+
     INSTALL(FILES ${headers}
             DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
             COMPONENT ${name}
@@ -179,6 +180,9 @@ ENDMACRO()
 
 
 MACRO(add_libs name)
+    set(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES OBJECTS_DEPENDENCIES)
+    cmake_parse_arguments(add_libs "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+    
     add_headers(${name})
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
     ADD_LIBRARY(${name}_static STATIC
@@ -186,24 +190,27 @@ MACRO(add_libs name)
                 )
     set_target_properties(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
     LIST(APPEND ALL_SSC_TARGETS ${name}_static)
-    foreach(f ${ARGN})
-        TARGET_LINK_LIBRARIES(${${name}}_static $f)
-    endforeach()
-    ADD_LIBRARY(${name}_shared SHARED
-                $<TARGET_OBJECTS:${name}_object>
-                )
+    if (add_libs_OBJECTS_DEPENDENCIES)
+        ADD_LIBRARY(${name}_shared SHARED
+                    $<TARGET_OBJECTS:${name}_object>
+                    $<TARGET_OBJECTS:${add_libs_OBJECTS_DEPENDENCIES}>
+                    )
+    else()
+        ADD_LIBRARY(${name}_shared SHARED
+                    $<TARGET_OBJECTS:${name}_object>
+                    )
+    endif()
     set_target_properties(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
-    FOREACH(f ${ARGN})
+    FOREACH(f ${add_libs_SSC_DEPENDENCIES})
         SET(current_arg_name ${f})
-        STRING(REGEX MATCH "^ssc" res ${current_arg_name})
-        IF(res)
-            TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name}_static)
-            TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name}_shared)
-        ELSE()
-            TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name})
-            TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name})
-        ENDIF()
+        TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name}_static)
+        TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name}_shared)
+    ENDFOREACH()
+    FOREACH(f ${add_libs_EXTERNAL_DEPENDENCIES})
+        SET(current_arg_name ${f})
+        TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name})
+        TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name})
     ENDFOREACH()
 
     INSTALL(TARGETS ${name}_static ${name}_shared
