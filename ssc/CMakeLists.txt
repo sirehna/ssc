@@ -108,6 +108,13 @@ add_libs(csv_file_reader)
 add_libs(numeric)
 add_headers(solver)
 
+install(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
 SET(TEST_EXE run_all_tests)
 
 ADD_EXECUTABLE(${TEST_EXE}
