@@ -1,5 +1,6 @@
 debug/
 eigen/
+f2c/
 gcovr/
 gmock/
 release/
