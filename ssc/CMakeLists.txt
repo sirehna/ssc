@@ -34,7 +34,6 @@ configure_package_config_file (
        PATH_VARS SSC_INCLUDE_DIRS )
 
 
-SET(CMAKE_VERBOSE_MAKEFILE OFF)
 #############################################################################
 # User configuration
 IF(NOT DEFINED CMAKE_BUILD_TYPE)
