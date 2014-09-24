@@ -180,27 +180,27 @@ ENDMACRO()
 
 
 MACRO(add_libs name)
-    set(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES OBJECTS_DEPENDENCIES)
-    cmake_parse_arguments(add_libs "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
-    
+    SET(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES OBJECTS_DEPENDENCIES)
+    cmake_parse_arguments(add_libs "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
     add_headers(${name})
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
     ADD_LIBRARY(${name}_static STATIC
                 $<TARGET_OBJECTS:${name}_object>
                 )
-    set_target_properties(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
+    SET_TARGET_PROPERTIES(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
     LIST(APPEND ALL_SSC_TARGETS ${name}_static)
-    if (add_libs_OBJECTS_DEPENDENCIES)
+    IF(add_libs_OBJECTS_DEPENDENCIES)
         ADD_LIBRARY(${name}_shared SHARED
                     $<TARGET_OBJECTS:${name}_object>
                     $<TARGET_OBJECTS:${add_libs_OBJECTS_DEPENDENCIES}>
                     )
-    else()
+    ELSE()
         ADD_LIBRARY(${name}_shared SHARED
                     $<TARGET_OBJECTS:${name}_object>
                     )
-    endif()
-    set_target_properties(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
+    ENDIF()
+    SET_TARGET_PROPERTIES(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
     FOREACH(f ${add_libs_SSC_DEPENDENCIES})
         SET(current_arg_name ${f})
