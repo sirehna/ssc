@@ -195,6 +195,8 @@ MACRO(add_libs name)
     foreach(f ${ARGN})
         TARGET_LINK_LIBRARIES(${name}_shared $f)
     endforeach()
+    LIST(APPEND ALL_SSC_TARGETS ${name}_static)
+    LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
     INSTALL(TARGETS ${name}_static ${name}_shared
             RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
