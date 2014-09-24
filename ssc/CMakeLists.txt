@@ -14,13 +14,25 @@ set(${PROJECT_NAME}_VERSION_STR
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 #############################################################################
 
+
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CMakeMacros.cmake)
 
-set(ssc_MAJOR_VERSION "${${PROJECT_NAME}_MAJOR_VERSION}")
-set(ssc_MINOR_VERSION "${${PROJECT_NAME}_MINOR_VERSION}")
-set(ssc_PATCH_VERSION "${${PROJECT_NAME}_PATCH_VERSION}")
-configure_file(ssc-config-version.cmake.in
-  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" @ONLY)
+
+# Configure the package
+IF(INSTALL_PREFIX)
+    SET(CMAKE_INSTALL_PREFIX ${INSTALL_PREFIX})
+ENDIF()
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
+SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
+SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc/${ssc_VERSION})
+include(CMakePackageConfigHelpers)
+set(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
+
+configure_package_config_file ( 
+       ssc-config.cmake.in 
+       "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+       INSTALL_DESTINATION "${ConfigPackageLocation}"
+       PATH_VARS SSC_INCLUDE_DIRS )
 
 
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
@@ -29,13 +41,6 @@ SET(CMAKE_VERBOSE_MAKEFILE OFF)
 IF(NOT DEFINED CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Debug)
 ENDIF()
-
-IF(DEFINED INSTALL_PREFIX)
-    SET(CMAKE_INSTALL_PREFIX ${INSTALL_PREFIX})
-ELSE()
-    SET(CMAKE_INSTALL_PREFIX ../install${CMAKE_BUILD_TYPE})
-ENDIF()
-MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
 
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
@@ -47,7 +52,6 @@ CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt"
 INCLUDE(CMakeGMock)
 
 INCLUDE(CMakeOutputDirectories)
-
 #############################################################################
 # Third party libraries
 # Boost
@@ -92,7 +96,6 @@ ENDIF()
 #############################################################################
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
-SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 # Define libraries
 add_headers(macros)
@@ -131,16 +134,16 @@ ADD_EXECUTABLE(${TEST_EXE}
 TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
-        ${random_data_generator}_shared
-        ${exception_handling}_shared
-        ${yaml_parser}_shared
-        ${decode_unit}_shared
-        ${text_file_reader}_shared
-        ${data_source}_shared
-        ${kinematics}_shared
-        ${csv_file_reader}_shared
-        ${interpolation}_shared
-        ${numeric}_shared
+        random_data_generator_shared
+        exception_handling_shared
+        yaml_parser_shared
+        decode_unit_shared
+        text_file_reader_shared
+        data_source_shared
+        kinematics_shared
+        csv_file_reader_shared
+        interpolation_shared
+        numeric_shared
         lapack
         )
 
