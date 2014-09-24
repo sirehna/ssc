@@ -185,6 +185,7 @@ MACRO(add_libs name)
                 $<TARGET_OBJECTS:${name}_object>
                 )
     set_target_properties(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
+    LIST(APPEND ALL_SSC_TARGETS ${name}_static)
     foreach(f ${ARGN})
         TARGET_LINK_LIBRARIES(${${name}}_static $f)
     endforeach()
@@ -192,13 +193,19 @@ MACRO(add_libs name)
                 $<TARGET_OBJECTS:${name}_object>
                 )
     set_target_properties(${name}_shared PROPERTIES OUTPUT_NAME ${${name}}_shared)
-    foreach(f ${ARGN})
-        SET(current_arg_name ${f})
-        TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name})
-        TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name})
-    endforeach()
-    LIST(APPEND ALL_SSC_TARGETS ${name}_static)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
+    FOREACH(f ${ARGN})
+        SET(current_arg_name ${f})
+        STRING(REGEX MATCH "^ssc" res ${current_arg_name})
+        IF(res)
+            TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name}_static)
+            TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name}_shared)
+        ELSE()
+            TARGET_LINK_LIBRARIES(${name}_static ${current_arg_name})
+            TARGET_LINK_LIBRARIES(${name}_shared ${current_arg_name})
+        ENDIF()
+    ENDFOREACH()
+
     INSTALL(TARGETS ${name}_static ${name}_shared
             RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
