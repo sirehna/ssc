@@ -29,7 +29,6 @@ mkdir -p build${buildType}${suffix}
 cd build${buildType}${suffix}
 cmake .. -G"${cmakeGenerator}" -DCMAKE_BUILD_TYPE=${buildType} -DINSTALL_PREFIX=`pwd`/../install${buildType}${suffix}
 make install
-make test
 
 if [ ! `uname -s` = "Linux" ];
 then
