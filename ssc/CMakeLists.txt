@@ -22,7 +22,6 @@ set(ssc_PATCH_VERSION "${${PROJECT_NAME}_PATCH_VERSION}")
 configure_file(ssc-config-version.cmake.in
   "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake" @ONLY)
 
-INCLUDE(CTest)
 
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 #############################################################################
