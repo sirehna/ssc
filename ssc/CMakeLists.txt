@@ -106,7 +106,7 @@ add_headers(macros)
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser
-         OBJECT_DEPENDENCIES yaml-cpp_object)
+         OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(decode_unit)
 add_libs(text_file_reader
          SSC_DEPENDENCIES exception_handling)
@@ -118,7 +118,8 @@ add_libs(kinematics
 add_libs(interpolation
          SSC_DEPENDENCIES exception_handling
          OBJECTS_DEPENDENCIES f2c_object)
-add_libs(csv_file_reader ssc_exception_handling)
+add_libs(csv_file_reader
+         SSC_DEPENDENCIES exception_handling)
 add_headers(solver)
 #LIST(APPEND ALL_SSC_TARGETS f2c)
 
