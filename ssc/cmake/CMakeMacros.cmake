@@ -167,10 +167,13 @@ MACRO(add_headers name)
     FILE(GLOB headers ${name}/*.h*)
     INSTALL(FILES ${headers}
             DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
+            COMPONENT ${name}
             )
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
             DESTINATION ${ssc_INCLUDE_DIRS}/ssc
+            COMPONENT ${name}
             )
+    LIST(APPEND ALL_SSC_COMPONENTS ${name})
     create_wrapper_hpp(${name} headers)
 ENDMACRO()
     
@@ -195,5 +198,6 @@ MACRO(add_libs name)
             RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
             ARCHIVE DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+            COMPONENT ${name}
     )
 ENDMACRO()
