@@ -24,15 +24,14 @@ ENDIF()
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
 SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
 SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc/${ssc_VERSION})
-include(CMakePackageConfigHelpers)
-set(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
+INCLUDE(CMakePackageConfigHelpers)
+SET(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
 
-configure_package_config_file ( 
-       ssc-config.cmake.in 
+configure_package_config_file(
+       ssc-config.cmake.in
        "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
        INSTALL_DESTINATION "${ConfigPackageLocation}"
        PATH_VARS SSC_INCLUDE_DIRS )
-
 
 #############################################################################
 # User configuration
