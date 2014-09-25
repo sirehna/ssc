@@ -8,7 +8,7 @@
 #ifndef SIMULATOR_INTERFACE_HPP_
 #define SIMULATOR_INTERFACE_HPP_
 
-#include "data_source/DataSource.hpp"
+#include "ssc/data_source/DataSource.hpp"
 
 namespace ssc
 {
