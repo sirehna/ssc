@@ -165,7 +165,7 @@ ENDMACRO()
 MACRO(add_headers name)
     ADD_SUBDIRECTORY(${name})
     FILE(GLOB headers ${name}/*.h*)
-
+    
     INSTALL(FILES ${headers}
             DESTINATION include/ssc/${${PROJECT_NAME}_VERSION}/${name}
             COMPONENT ${name}
@@ -174,6 +174,7 @@ MACRO(add_headers name)
             DESTINATION include/ssc/${${PROJECT_NAME}_VERSION}
             COMPONENT ${name}
             )
+
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
     create_wrapper_hpp(${name} headers)
 ENDMACRO()

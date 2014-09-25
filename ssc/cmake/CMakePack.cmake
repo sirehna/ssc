@@ -14,7 +14,10 @@ IF(MSYS)
 ENDIF()
 
 SET(PACKAGE_NAME ${PROJECT_NAME}-${${PROJECT_NAME}_VERSION})
-set(CPACK_SET_DESTDIR true)
+
+IF (NOT WIN32) # Otherwise installs headers in /usr instead of /usr/local under Debian
+    set(CPACK_SET_DESTDIR true)
+ENDIF()
 
 #####################################"
 # Instructions to build an installer
