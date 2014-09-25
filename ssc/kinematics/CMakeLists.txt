@@ -20,7 +20,6 @@ SET(SRC Velocity.cpp
         Wrench.cpp
         UnsafeWrench.cpp
         coriolis_and_centripetal.cpp
-        EnvironmentAndFrames.cpp
         )
 
 include_directories(${SSC_INCLUDE_DIRS})
