@@ -152,13 +152,13 @@ MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
 ENDMACRO(MACRO_GET_NUMBER_OF_PROCESSORS)
 
 MACRO(create_wrapper_hpp module_name headers)
-    set(${module_name}_INCLUDES "")
+    set(${module_name}_INCLUDES_ "")
     foreach(f ${headers})
         get_filename_component(x ${f} NAME)
-        LIST(APPEND ${module_name}_INCLUDES "#include \"ssc/${module_name}/${x}\"")
-        LIST(APPEND ${module_name}_INCLUDES "\n")
+        LIST(APPEND ${module_name}_INCLUDES_ "#include \"ssc/${module_name}/${x}\"")
+        LIST(APPEND ${module_name}_INCLUDES_ "\n")
     endforeach()
-    STRING(REGEX REPLACE ";" "" ${module_name}_INCLUDES "${${module_name}_INCLUDES}")
+    STRING(REGEX REPLACE ";" "" ${module_name}_INCLUDES "${${module_name}_INCLUDES_}")
     configure_file(${module_name}.hpp.in ${module_name}.hpp)
 ENDMACRO()
 
@@ -175,7 +175,7 @@ MACRO(add_headers name)
             )
 
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
-    create_wrapper_hpp(${name} headers)
+    create_wrapper_hpp(${name} "${headers}")
 ENDMACRO()
 
 
