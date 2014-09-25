@@ -165,13 +165,12 @@ ENDMACRO()
 MACRO(add_headers name)
     ADD_SUBDIRECTORY(${name})
     FILE(GLOB headers ${name}/*.h*)
-    
     INSTALL(FILES ${headers}
-            DESTINATION include/ssc/${${PROJECT_NAME}_VERSION}/${name}
+            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc/${name}
             COMPONENT ${name}
             )
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION include/ssc/${${PROJECT_NAME}_VERSION}
+            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc
             COMPONENT ${name}
             )
 
