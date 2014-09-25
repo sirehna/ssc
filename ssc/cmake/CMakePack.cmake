@@ -14,6 +14,7 @@ IF(MSYS)
 ENDIF()
 
 SET(PACKAGE_NAME ${PROJECT_NAME}-${${PROJECT_NAME}_VERSION})
+set(CPACK_SET_DESTDIR true)
 
 #####################################"
 # Instructions to build an installer
