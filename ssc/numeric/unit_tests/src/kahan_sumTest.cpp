@@ -33,7 +33,8 @@ void kahan_sumTest::TearDown()
 TEST_F(kahan_sumTest, example)
 {
 //! [kahan_sumTest example]
-    const std::vector<int> v = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+    std::vector<int> v;
+    for (size_t i = 1 ; i <= 14 ; ++i)  v.push_back(i);
 //! [kahan_sumTest example]
 //! [kahan_sumTest expected output]
     ASSERT_EQ(105, kahan(v));
@@ -42,7 +43,8 @@ TEST_F(kahan_sumTest, example)
 
 TEST_F(kahan_sumTest, example_from_wikipedia)
 {
-    const std::vector<double> v = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7};
+    std::vector<double> v;
+    for (double i = 0.1 ; i <= 1.7 ; i+=0.1)  v.push_back(i);
     const double naive = std::accumulate (v.begin(),v.end(),0,std::plus<double>());
     const double kahan_sum = kahan(v);
     ASSERT_NEAR(8,naive, 1E-1);
