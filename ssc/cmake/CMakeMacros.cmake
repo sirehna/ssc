@@ -167,11 +167,11 @@ MACRO(add_headers name)
     FILE(GLOB headers ${name}/*.h*)
 
     INSTALL(FILES ${headers}
-            DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
+            DESTINATION ssc/${name}
             COMPONENT ${name}
             )
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION ${ssc_INCLUDE_DIRS}/ssc/${name}
+            DESTINATION ssc
             COMPONENT ${name}
             )
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
