@@ -23,7 +23,7 @@ FILE(GLOB SRC Splines.cpp
               dgtsv.c
               xerbla.c)
 
-SET(CMAKE_C_FLAGS "")#${CMAKE_C_FLAGS} -Werror -pedantic -pedantic-errors -Wextra -Wall -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -fno-common -Wformat=2 -Winit-self -Wpacked -Wp,-D_FORTIFY_SOURCE=2 -Wpointer-arith -Wlarger-than-65500 -Wmissing-declarations -Wmissing-format-attribute -Wsign-compare -Wstrict-aliasing=2 -Wundef -ffast-math -Wconversion")
+SET(CMAKE_C_FLAGS "-fPIC")
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_BINARY_DIR})
 
