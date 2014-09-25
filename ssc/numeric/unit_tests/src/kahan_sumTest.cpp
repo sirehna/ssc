@@ -44,7 +44,7 @@ TEST_F(kahan_sumTest, example)
 TEST_F(kahan_sumTest, example_from_wikipedia)
 {
     std::vector<double> v;
-    for (double i = 0.1 ; i <= 1.7 ; i+=0.1)  v.push_back(i);
+    for (size_t i = 1 ; i <= 17 ; ++i) v.push_back(double(i)/10);
     const double naive = std::accumulate (v.begin(),v.end(),0,std::plus<double>());
     const double kahan_sum = kahan(v);
     ASSERT_NEAR(8,naive, 1E-1);
