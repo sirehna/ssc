@@ -35,7 +35,7 @@ IF(UNIX OR MSYS)
     IF(WIN32)
         # There is a bug in NSIS that does not handle full unix paths properly. Make
         # sure there is at least one set of four (4) backlasshes.
-        SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/ssc.bmp")
+        SET(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\ssc.bmp")
         SET(CPACK_NSIS_INSTALLED_ICON_NAME "${PACKAGE_NAME}-setup")
         SET(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY}")
         SET(CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.sirehna.com")
