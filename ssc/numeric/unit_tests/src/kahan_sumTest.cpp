@@ -34,7 +34,7 @@ TEST_F(kahan_sumTest, example)
 {
 //! [kahan_sumTest example]
     std::vector<int> v;
-    for (size_t i = 1 ; i <= 14 ; ++i)  v.push_back(i);
+    for (int i = 1 ; i <= 14 ; ++i)  v.push_back(i);
 //! [kahan_sumTest example]
 //! [kahan_sumTest expected output]
     ASSERT_EQ(105, kahan(v));
