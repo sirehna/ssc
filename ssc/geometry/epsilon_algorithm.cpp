@@ -12,7 +12,7 @@ double ssc::geometry::epsilon_algorithm(std::vector<double> S)
 {
     if (S.empty()) return 0;
     if (S.size() == 1) return S.front();
-    const int N = S.size()-1;
+    const int N = (int)S.size()-1;
     int i, k = 1;
     double rLimes = S[N], A_max = 0.0;
     std::vector<double> A(N+1,0);
