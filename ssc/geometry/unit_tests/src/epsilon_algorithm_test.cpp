@@ -33,7 +33,7 @@ TEST_F(epsilon_algorithm_test, example)
     const size_t N = 25;
     for (size_t i = 1 ; i < N ; ++i)
     {
-        S.push_back(S.back()+pow(-1,i)/(2.*i+1));
+        S.push_back(S.back()+pow(-1,(double)i)/(2.*(double)i+1.));
     }
 //! [epsilon_algorithm_test example]
 //! [epsilon_algorithm_test expected output]
