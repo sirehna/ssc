@@ -9,16 +9,16 @@
 #define LEGTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class ShortestPathLegTest : public ::testing::Test
 {
     protected:
         ShortestPathLegTest();
-	    virtual ~ShortestPathLegTest();
+        virtual ~ShortestPathLegTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

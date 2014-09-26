@@ -8,11 +8,17 @@
 #ifndef TRACKGENERATOR_HPP_
 #define TRACKGENERATOR_HPP_
 
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "Track.hpp"
 
-template <> Track get_min_bound();
-template <> Track get_max_bound();
-template <> Track TypedScalarDataGenerator<Track>::get() const;
+namespace ssc
+{
+    namespace random_data_generator
+    {
+        template <> Track get_min_bound();
+        template <> Track get_max_bound();
+        template <> Track TypedScalarDataGenerator<Track>::get() const;
+    }
+}
 
 #endif /* TRACKGENERATOR_HPP_ */

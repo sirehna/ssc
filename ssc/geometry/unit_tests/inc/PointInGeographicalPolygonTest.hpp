@@ -9,16 +9,16 @@
 #define POINTINGEOGRAPHICALPOLYGONTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class PointInGeographicalPolygonTest : public ::testing::Test
 {
     protected:
         PointInGeographicalPolygonTest();
-	    virtual ~PointInGeographicalPolygonTest();
+        virtual ~PointInGeographicalPolygonTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

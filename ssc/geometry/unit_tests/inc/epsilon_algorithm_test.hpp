@@ -9,16 +9,16 @@
 #define EPSILON_ALGORITHM_TEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class epsilon_algorithm_test : public ::testing::Test
 {
     protected:
         epsilon_algorithm_test();
-	    virtual ~epsilon_algorithm_test();
+        virtual ~epsilon_algorithm_test();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

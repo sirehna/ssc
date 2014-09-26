@@ -7,7 +7,7 @@
 
 #include "Track.hpp"
 #include "ShortestPathLeg.hpp"
-#include "IndexFinder.hpp"
+#include "ssc/interpolation/IndexFinder.hpp"
 #include "LegChain.hpp"
 
 #include <sstream>
@@ -27,7 +27,7 @@ class Track::TrackImpl
         nb_of_legs(waypoints_.size()-1),
         waypoints(waypoints_),
         direction_at_waypoint(std::vector<Angle>()),
-        index(new IndexFinder(distance_from_start_to_begining_of_leg, false))
+        index(new ssc::interpolation::IndexFinder(distance_from_start_to_begining_of_leg, false))
         {
             if (waypoints.size() < 2)
             {
@@ -51,7 +51,7 @@ class Track::TrackImpl
                 distance_from_start_to_begining_of_leg.push_back(distance_from_start_to_begining_of_leg.back()+d);
                 direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
             }
-            *index = IndexFinder(distance_from_start_to_begining_of_leg, false);
+            *index = ssc::interpolation::IndexFinder(distance_from_start_to_begining_of_leg, false);
             legs->push_back(waypoints.at(nb_of_legs-1),waypoints.at(nb_of_legs));
             direction_at_waypoint.push_back(legs->back()->azimuth_at(0));
             direction_at_waypoint.push_back(legs->back()->azimuth_at(legs->back()->length()));
@@ -88,7 +88,7 @@ class Track::TrackImpl
 
     private:
         TrackImpl();
-        std::tr1::shared_ptr<IndexFinder> index;
+        std::tr1::shared_ptr<ssc::interpolation::IndexFinder> index;
 };
 
 Track::Track(const std::vector<LatitudeLongitude>& waypoints, //!< List of points composing the track (at least two), longitude & latitude given in decimal degrees on the WGS84

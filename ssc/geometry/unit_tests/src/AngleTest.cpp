@@ -8,12 +8,12 @@
 #include "AngleTest.hpp"
 #include "Angle.hpp"
 #include <cmath>
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include <cmath>
 
 #define EPS 1E-10
 
-AngleTest::AngleTest() : a(DataGenerator(88))
+AngleTest::AngleTest() : a(ssc::random_data_generator::DataGenerator(88))
 {
 }
 

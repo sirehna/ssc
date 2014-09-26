@@ -10,7 +10,7 @@
 
 #include "LatitudeLongitude.hpp"
 #include "Angle.hpp"
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
 class LegException : public Exception
 {

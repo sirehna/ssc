@@ -1,39 +1,41 @@
 cmake_minimum_required (VERSION 2.6)
 project (geometry)
-set(SOURCES src/PointInPolygon.cpp
-            src/PointInCartesianPolygon.cpp
-            src/PointInSphericalPolygon.cpp
-            src/PointInGeographicalPolygon.cpp
-            src/LatitudeLongitude.cpp
-            src/Angle.cpp
-            src/Track.cpp
-            src/ShortestPathLeg.cpp
-            src/GreatCircle.cpp
-            src/Vector3D.cpp
-            src/Geometry.cpp
-            src/Angle.cxx
-            src/Leg.cpp
-            src/loxodrome_on_ellipsoid.cpp
-            src/ConstantAzimuthLeg.cpp
-            src/epsilon_algorithm.cpp
-            src/LegChain.cpp
-            src/ShortestPathLegChain.cpp
-            src/ConstantAzimuthLegChain.cpp
+
+# Using C++ 2011
+# The -std=c++0x option causes g++ to go into 'strict ANSI' mode so it doesn't declare non-standard functions
+# (and _stricmp() is non-standard - it's just a version of strcmp() that's case-insensitive).
+# Use -std=gnu++0x instead.
+IF (NOT(MSVC))
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
+ENDIF()
+
+set(SRC src/PointInPolygon.cpp
+        src/PointInCartesianPolygon.cpp
+        src/PointInSphericalPolygon.cpp
+        src/PointInGeographicalPolygon.cpp
+        src/LatitudeLongitude.cpp
+        src/Angle.cpp
+        src/Track.cpp
+        src/ShortestPathLeg.cpp
+        src/GreatCircle.cpp
+        src/Vector3D.cpp
+        src/Geometry.cpp
+        src/Angle.cxx
+        src/Leg.cpp
+        src/loxodrome_on_ellipsoid.cpp
+        src/ConstantAzimuthLeg.cpp
+        src/epsilon_algorithm.cpp
+        src/LegChain.cpp
+        src/ShortestPathLegChain.cpp
+        src/ConstantAzimuthLegChain.cpp
             )
 
 include_directories(inc)
-include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${test_macros_SOURCE_DIR})
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(SYSTEM ${geographiclib_INCLUDE_DIRS})
-include_directories(${interpolation_INCLUDE_DIRS})
 
-add_library(${PROJECT_NAME}_object OBJECT ${SOURCES})
-
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
-set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
-set(${PROJECT_NAME}_STATIC_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}_static${CMAKE_STATIC_LIBRARY_SUFFIX}  CACHE FILEPATH "${PROJECT_NAME}'s static library")
-set(${PROJECT_NAME}_FOUND            TRUE                                                                                                            CACHE BOOL     "Is ${PROJECT_NAME} available to other modules?")
+ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
 
 add_subdirectory(unit_tests)
 

@@ -14,8 +14,6 @@
 #include <cmath>
 #include <algorithm> // std::min, std::max
 
-#include "test_macros.hpp"
-
 #define PI 4.*atan(1.)
 #define EPS 1e-6
 

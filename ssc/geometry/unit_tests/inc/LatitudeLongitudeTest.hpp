@@ -9,16 +9,16 @@
 #define LONGITUDELATITUDETEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class LatitudeLongitudeTest : public ::testing::Test
 {
     protected:
         LatitudeLongitudeTest();
-	    virtual ~LatitudeLongitudeTest();
+        virtual ~LatitudeLongitudeTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

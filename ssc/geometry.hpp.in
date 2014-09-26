@@ -1,0 +1,6 @@
+#ifndef geometry_guard
+#define geometry_guard
+
+@geometry_INCLUDES@
+
+#endif

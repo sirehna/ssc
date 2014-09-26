@@ -9,19 +9,19 @@
 #define LOXODROME_ON_ELLIPSOIDTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class loxodrome_on_ellipsoidTest : public ::testing::Test
 {
     protected:
         loxodrome_on_ellipsoidTest();
-	    virtual ~loxodrome_on_ellipsoidTest();
+        virtual ~loxodrome_on_ellipsoidTest();
         virtual void SetUp();
         virtual void TearDown();
 
 
-        DataGenerator a;
-		double latitude_of_Murray_Spring;
+        ssc::random_data_generator::DataGenerator a;
+        double latitude_of_Murray_Spring;
         double longitude_of_Murray_Spring;
         double latitude_of_Wauka_1978;
         double longitude_of_Wauka_1978;

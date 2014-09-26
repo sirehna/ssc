@@ -9,16 +9,16 @@
 #define TRACKTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class TrackTest : public ::testing::Test
 {
     protected:
         TrackTest();
-	    virtual ~TrackTest();
+        virtual ~TrackTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

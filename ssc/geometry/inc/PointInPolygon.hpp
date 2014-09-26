@@ -12,7 +12,7 @@
 #include <tr1/memory>
 #include "LatitudeLongitude.hpp"
 
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
 class PointInPolygonException : public Exception
 {

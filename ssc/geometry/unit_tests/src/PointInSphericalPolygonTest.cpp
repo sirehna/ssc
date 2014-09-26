@@ -12,7 +12,7 @@
 
 #define EPS 1e-6
 
-PointInSphericalPolygonTest::PointInSphericalPolygonTest() : a(DataGenerator(997788))
+PointInSphericalPolygonTest::PointInSphericalPolygonTest() : a(ssc::random_data_generator::DataGenerator(997788))
 {
 }
 

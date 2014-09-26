@@ -96,12 +96,17 @@ IF(${CMAKE_BUILD_TYPE})
 ENDIF()
 
 ADD_SUBDIRECTORY(f2c)
+ADD_SUBDIRECTORY(geographiclib)
+set(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include CACHE PATH "Path to libGeographic include directory")
+
 #############################################################################
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
 
 # Define libraries
 add_headers(macros)
+add_libs(geometry
+         OBJECTS_DEPENDENCIES Geographic_object)
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser
@@ -140,6 +145,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:numeric_tests>
         $<TARGET_OBJECTS:csv_file_reader_tests>
         $<TARGET_OBJECTS:interpolation_tests>
+        $<TARGET_OBJECTS:geometry_tests>
         )
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
@@ -155,6 +161,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         csv_file_reader_shared
         interpolation_shared
         numeric_shared
+        geometry_shared
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)

@@ -7,8 +7,8 @@
 
 #include "epsilon_algorithm_test.hpp"
 #include "epsilon_algorithm.hpp"
-#include "test_macros.hpp"
-epsilon_algorithm_test::epsilon_algorithm_test() : a(DataGenerator(211))
+
+epsilon_algorithm_test::epsilon_algorithm_test() : a(ssc::random_data_generator::DataGenerator(211))
 {
 }
 
@@ -38,6 +38,3 @@ TEST_F(epsilon_algorithm_test, example)
     ASSERT_DOUBLE_EQ(atan(1), epsilon_algorithm(S));
 //! [epsilon_algorithm_test expected output]
 }
-
-
-

@@ -7,7 +7,6 @@
 
 #include "PointInGeographicalPolygon.hpp"
 #include "PointInPolygonPimpl.hpp"
-#include "test_macros.hpp"
 
 typedef boost::geometry::model::ll::point<boost::geometry::degree> Point;
 
