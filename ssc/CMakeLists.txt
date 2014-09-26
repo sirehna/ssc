@@ -100,10 +100,11 @@ INCLUDE(CMakeCompilationOptions)
 
 # Define libraries
 add_headers(macros)
-add_libs(geometry
-         OBJECTS_DEPENDENCIES Geographic_object)
 add_libs(random_data_generator)
 add_libs(exception_handling)
+add_libs(geometry
+         OBJECTS_DEPENDENCIES Geographic_object
+         SSC_DEPENDENCIES exception_handling)
 add_libs(yaml_parser
          OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(decode_unit)
