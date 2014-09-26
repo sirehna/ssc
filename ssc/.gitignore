@@ -2,6 +2,7 @@ debug/
 eigen/
 f2c/
 gcovr/
+geographiclib/
 gmock/
 release/
 yaml-cpp/
