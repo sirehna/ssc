@@ -6,7 +6,7 @@
  */
 
 #include "PointInCartesianPolygonTest.hpp"
-#include "PointInCartesianPolygon.hpp"
+#include "ssc/geometry/PointInCartesianPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 
 using namespace ssc::geometry;

@@ -1,6 +1,6 @@
 #include "TrackGenerator.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
-#include "ShortestPathLegChain.hpp"
+#include "ssc/geometry/ShortestPathLegChain.hpp"
 #include <algorithm> // std::min, std::max
 
 template <> ssc::geometry::Track ssc::random_data_generator::get_min_bound() {return ssc::geometry::Track({ssc::geometry::LatitudeLongitude(0,0),ssc::geometry::LatitudeLongitude(90,90)}, new ssc::geometry::ShortestPathLegChain());}

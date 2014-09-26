@@ -6,7 +6,7 @@
  */
 
 #include "AngleTest.hpp"
-#include "Angle.hpp"
+#include "ssc/geometry/Angle.hpp"
 #include <cmath>
 #include "ssc/macros/extra_test_assertions.hpp"
 #include <cmath>

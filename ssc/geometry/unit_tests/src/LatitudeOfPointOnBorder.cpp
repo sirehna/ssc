@@ -6,7 +6,7 @@
  */
 
 #include "LatitudeOfPointOnBorder.hpp"
-#include "PointInPolygon.hpp"
+#include "ssc/geometry/PointInPolygon.hpp"
 #include <cmath>
 
 using namespace ssc::geometry;

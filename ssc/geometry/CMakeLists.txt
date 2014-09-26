@@ -9,25 +9,25 @@ IF (NOT(MSVC))
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 ENDIF()
 
-set(SRC src/PointInPolygon.cpp
-        src/PointInCartesianPolygon.cpp
-        src/PointInSphericalPolygon.cpp
-        src/PointInGeographicalPolygon.cpp
-        src/LatitudeLongitude.cpp
-        src/Angle.cpp
-        src/Track.cpp
-        src/ShortestPathLeg.cpp
-        src/GreatCircle.cpp
-        src/Vector3D.cpp
-        src/Geometry.cpp
-        src/Angle.cxx
-        src/Leg.cpp
-        src/loxodrome_on_ellipsoid.cpp
-        src/ConstantAzimuthLeg.cpp
-        src/epsilon_algorithm.cpp
-        src/LegChain.cpp
-        src/ShortestPathLegChain.cpp
-        src/ConstantAzimuthLegChain.cpp
+set(SRC PointInPolygon.cpp
+        PointInCartesianPolygon.cpp
+        PointInSphericalPolygon.cpp
+        PointInGeographicalPolygon.cpp
+        LatitudeLongitude.cpp
+        Angle.cpp
+        Track.cpp
+        ShortestPathLeg.cpp
+        GreatCircle.cpp
+        Vector3D.cpp
+        Geometry.cpp
+        Angle.cxx
+        Leg.cpp
+        loxodrome_on_ellipsoid.cpp
+        ConstantAzimuthLeg.cpp
+        epsilon_algorithm.cpp
+        LegChain.cpp
+        ShortestPathLegChain.cpp
+        ConstantAzimuthLegChain.cpp
             )
 
 include_directories(inc)

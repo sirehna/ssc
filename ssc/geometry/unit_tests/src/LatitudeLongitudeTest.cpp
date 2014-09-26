@@ -6,7 +6,7 @@
  */
 
 #include "LatitudeLongitudeTest.hpp"
-#include "LatitudeLongitude.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 
 using namespace ssc::geometry;
