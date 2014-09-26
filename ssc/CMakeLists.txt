@@ -23,15 +23,10 @@ IF(NOT DEFINED CMAKE_BUILD_TYPE)
 ENDIF()
 
 # Configure the package
-IF(DEFINED INSTALL_PREFIX)
-    SET(CMAKE_INSTALL_PREFIX ${INSTALL_PREFIX})
-    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
+IF(WIN32)
+    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}-${${PROJECT_NAME}_VERSION}/include/ssc-${ssc_VERSION})
 ELSE()
-    IF(WIN32)
-        SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}-${${PROJECT_NAME}_VERSION}/include/ssc-${ssc_VERSION})
-    ELSE()
-        SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
-    ENDIF()
+    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
 ENDIF()
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
 SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
@@ -105,8 +100,6 @@ INCLUDE(CMakeCompilationOptions)
 
 # Define libraries
 add_headers(macros)
-add_libs(geometry
-         OBJECTS_DEPENDENCIES Geographic_object)
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser
@@ -122,6 +115,9 @@ add_libs(kinematics
 add_libs(interpolation
          SSC_DEPENDENCIES exception_handling
          OBJECTS_DEPENDENCIES f2c_object)
+add_libs(geometry
+         OBJECTS_DEPENDENCIES Geographic_object
+         SSC_DEPENDENCIES exception_handling interpolation)
 add_libs(csv_file_reader
          SSC_DEPENDENCIES exception_handling)
 add_headers(solver)

@@ -27,7 +27,7 @@ fi
 
 mkdir -p build${buildType}${suffix}
 cd build${buildType}${suffix}
-cmake .. -G"${cmakeGenerator}" -DCMAKE_BUILD_TYPE=${buildType} -DINSTALL_PREFIX=../install${buildType}${suffix}
+cmake .. -G"${cmakeGenerator}" -DCMAKE_BUILD_TYPE=${buildType} -DCMAKE_INSTALL_PREFIX=../install${buildType}${suffix}
 make install
 
 if [ ! `uname -s` = "Linux" ];
