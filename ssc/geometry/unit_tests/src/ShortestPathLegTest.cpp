@@ -62,10 +62,10 @@ TEST_F(ShortestPathLegTest, should_be_able_to_compute_the_distance_between_two_p
     const ShortestPathLeg houston_los_angeles = ShortestPathLeg::build(chicago, los_angeles);
     const ShortestPathLeg boston_los_angeles = ShortestPathLeg::build(boston, los_angeles);
     // The geodesic distances on the WGS84 are then given by the method length()
-    ASSERT_DOUBLE_EQ(2583009.0737499665, boston_houston.length());
-    ASSERT_DOUBLE_EQ(1509875.9483076334, houston_chicago.length());
-    ASSERT_DOUBLE_EQ(2807378.1345177018, houston_los_angeles.length());
-    ASSERT_DOUBLE_EQ(4178586.7239053571, boston_los_angeles.length());
+    ASSERT_NEAR(2583009.0737499665, boston_houston.length(),1E-6);
+    ASSERT_NEAR(1509875.9483076334, houston_chicago.length(),1E-6);
+    ASSERT_NEAR(2807378.1345177018, houston_los_angeles.length(),1E-6);
+    ASSERT_NEAR(4178586.7239053571, boston_los_angeles.length(),1E-6);
 //! [LegTest length_example]
 }
 
