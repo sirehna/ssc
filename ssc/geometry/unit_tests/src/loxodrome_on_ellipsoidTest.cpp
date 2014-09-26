@@ -13,6 +13,7 @@
 #define RAD (PI/180.)
 #define EPS 1E-6
 
+using namespace ssc::geometry;
 
 loxodrome_on_ellipsoidTest::loxodrome_on_ellipsoidTest() : a(ssc::random_data_generator::DataGenerator(564562)),
                                                            latitude_of_Murray_Spring(-(36  + 47/60. + 49.2232/3600)*RAD),

@@ -8,6 +8,8 @@
 #include "epsilon_algorithm_test.hpp"
 #include "epsilon_algorithm.hpp"
 
+using namespace ssc::geometry;
+
 epsilon_algorithm_test::epsilon_algorithm_test() : a(ssc::random_data_generator::DataGenerator(211))
 {
 }

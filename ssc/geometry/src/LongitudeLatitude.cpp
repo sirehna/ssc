@@ -9,6 +9,8 @@
 #include "LongitudeLatitude.hpp"
 #include <cmath>
 
+using namespace ssc::geometry;
+
 LongitudeLatitude::LongitudeLatitude(const double& longitude, const double& latitude) : lat(latitude), lon(longitude)
 {
     if ((fabs(latitude)>90) || (fabs(longitude)>180))

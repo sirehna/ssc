@@ -12,6 +12,8 @@
 
 #define EPS 1e-6
 
+using namespace ssc::geometry;
+
 PointInSphericalPolygonTest::PointInSphericalPolygonTest() : a(ssc::random_data_generator::DataGenerator(997788))
 {
 }

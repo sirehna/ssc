@@ -11,6 +11,8 @@
 
 #define EPS 1E-6
 
+using namespace ssc::geometry;
+
 ConstantAzimuthLegTest::ConstantAzimuthLegTest() : a(ssc::random_data_generator::DataGenerator(121))
 {
 }

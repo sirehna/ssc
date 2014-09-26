@@ -17,6 +17,8 @@
 #define PI 4.*atan(1.)
 #define EPS 1e-6
 
+using namespace ssc::geometry;
+
 class ShortestPathLeg::LegImpl
 {
     public:

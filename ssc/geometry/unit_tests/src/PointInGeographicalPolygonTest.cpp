@@ -20,6 +20,8 @@
 #include <algorithm> // std::reverse
 #define EPS 1e-6
 
+using namespace ssc::geometry;
+
 PointInGeographicalPolygonTest::PointInGeographicalPolygonTest() : a(ssc::random_data_generator::DataGenerator(997788))
 {
 }

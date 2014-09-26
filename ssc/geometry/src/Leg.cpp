@@ -10,6 +10,8 @@
 
 #define EPS 1e-6
 
+using namespace ssc::geometry;
+
 Leg::Leg(const LatitudeLongitude& point1, const LatitudeLongitude& point2, const double length__) : point_1(point1),
                                                                              point_2(point2),
                                                                              length_(length__)

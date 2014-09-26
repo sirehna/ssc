@@ -16,22 +16,27 @@
  */
 
 
-
-class PointInPolygon;
-typedef std::pair<double,double> MinMax;
-
-class LatitudeOfPointOnBorder
+namespace ssc
 {
-    public:
-        LatitudeOfPointOnBorder(PointInPolygon* eca_zone, const double& eps);
-        double get_latitude(const double& longitude) const;
+    namespace geometry
+    {
+        class PointInPolygon;
+        typedef std::pair<double,double> MinMax;
 
-    private:
-        LatitudeOfPointOnBorder();
-        MinMax bisection(const MinMax& latitude_bounds, const double& longitude) const;
-        std::tr1::shared_ptr<PointInPolygon> eca;
-        double eps_;
+        class LatitudeOfPointOnBorder
+        {
+            public:
+                LatitudeOfPointOnBorder(PointInPolygon* eca_zone, const double& eps);
+                double get_latitude(const double& longitude) const;
 
-};
+            private:
+                LatitudeOfPointOnBorder();
+                MinMax bisection(const MinMax& latitude_bounds, const double& longitude) const;
+                std::tr1::shared_ptr<PointInPolygon> eca;
+                double eps_;
+
+        };
+    }
+}
 
 #endif /* GETMAXLONGITUDE_HPP_ */

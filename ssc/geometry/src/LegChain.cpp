@@ -8,6 +8,8 @@
 #include "LegChain.hpp"
 #include "Leg.hpp"
 
+using namespace ssc::geometry;
+
 LegChain::LegChain() : legs(std::vector<LegPtr>()), first_waypoint(LatitudeLongitude(0,0))
 {
 }

@@ -9,6 +9,8 @@
 #include "PointInPolygon.hpp"
 #include <cmath>
 
+using namespace ssc::geometry;
+
 LatitudeOfPointOnBorder::LatitudeOfPointOnBorder(PointInPolygon* eca_zone, const double& eps) : eca(eca_zone), eps_(eps)
 {
 

@@ -9,6 +9,7 @@
 #include <cmath>
 
 using namespace Geometry;
+using namespace ssc::geometry;
 
 Vector3D Geometry::LLToCartesian(const LatitudeLongitude& point) {
 	return Vector3D(

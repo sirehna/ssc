@@ -8,12 +8,9 @@
 #include "Angle.hpp"
 #include <cmath>
 
+using namespace ssc::geometry;
+
 #define PI (4.*atan(1.))
-
-Angle::Angle(const double& value_in_radians) : usi_value(value_in_radians)
-{
-
-}
 
 Angle::Angle() : usi_value(0)
 {
@@ -80,27 +77,27 @@ bool Angle::operator!=(const Angle& rhs) const
     return not(*this==rhs);
 }
 
-double cos(const Angle& angle)
+double ssc::geometry::cos(const ssc::geometry::Angle& angle)
 {
-    return cos(angle.get_radian());
+    return ::cos(angle.get_radian());
 }
 
-double sin(const Angle& angle)
+double ssc::geometry::sin(const Angle& angle)
 {
-    return sin(angle.get_radian());
+    return ::sin(angle.get_radian());
 }
 
-double tan(const Angle& angle)
+double ssc::geometry::tan(const Angle& angle)
 {
-    return tan(angle.get_radian());
+    return ::tan(angle.get_radian());
 }
 
-Angle operator*(const double& factor, const Angle& angle)
+Angle ssc::geometry::operator*(const double& factor, const Angle& angle)
 {
     return angle*factor;
 }
 
-Angle operator-(const Angle& angle)
+Angle ssc::geometry::operator-(const Angle& angle)
 {
     return Angle::radian(-angle.get_radian());
 }

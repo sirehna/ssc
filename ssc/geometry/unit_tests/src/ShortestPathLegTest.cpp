@@ -14,6 +14,8 @@
 
 #define PI 4.*atan(1.)
 
+using namespace ssc::geometry;
+
 ShortestPathLegTest::ShortestPathLegTest() : a(ssc::random_data_generator::DataGenerator(8796))
 {
 }

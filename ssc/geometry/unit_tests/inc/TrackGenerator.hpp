@@ -15,9 +15,9 @@ namespace ssc
 {
     namespace random_data_generator
     {
-        template <> Track get_min_bound();
-        template <> Track get_max_bound();
-        template <> Track TypedScalarDataGenerator<Track>::get() const;
+        template <> ssc::geometry::Track get_min_bound();
+        template <> ssc::geometry::Track get_max_bound();
+        template <> ssc::geometry::Track TypedScalarDataGenerator<ssc::geometry::Track>::get() const;
     }
 }
 
