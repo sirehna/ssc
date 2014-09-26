@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "LatitudeLongitude.hpp"
-#include "Vector3D.h"
-#include "Angle.h"
+#include "ssc/geometry/LatitudeLongitude.hpp"
+#include "ssc/geometry/Vector3D.h"
+#include "ssc/geometry/Angle.h"
 
 namespace Geometry {
 	

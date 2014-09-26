@@ -8,7 +8,7 @@
 #ifndef POINTINGEOGRAPHICALPOLYGON_HPP_
 #define POINTINGEOGRAPHICALPOLYGON_HPP_
 
-#include "PointInPolygon.hpp"
+#include "ssc/geometry/PointInPolygon.hpp"
 
 namespace ssc
 {

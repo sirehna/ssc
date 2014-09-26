@@ -11,7 +11,7 @@
 #include <tr1/memory>
 #include <vector>
 
-#include "LatitudeLongitude.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 
 namespace ssc
 {

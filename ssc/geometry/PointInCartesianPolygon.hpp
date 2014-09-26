@@ -8,7 +8,7 @@
 #ifndef POINTINCARTESIANPOLYGON_HPP_
 #define POINTINCARTESIANPOLYGON_HPP_
 
-#include "PointInPolygon.hpp"
+#include "ssc/geometry/PointInPolygon.hpp"
 
 namespace ssc
 {

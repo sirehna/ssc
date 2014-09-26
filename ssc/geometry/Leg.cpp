@@ -5,7 +5,7 @@
  *      Author: cady
  */
 
-#include "Leg.hpp"
+#include "ssc/geometry/Leg.hpp"
 #include <sstream>
 
 #define EPS 1e-6

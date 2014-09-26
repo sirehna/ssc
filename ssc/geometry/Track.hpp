@@ -8,11 +8,11 @@
 #ifndef TRACK_HPP_
 #define TRACK_HPP_
 
-#include "LatitudeLongitude.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 #include <vector>
 #include <tr1/memory>
 #include "ssc/exception_handling/Exception.hpp"
-#include "Angle.hpp"
+#include "ssc/geometry/Angle.hpp"
 
 namespace ssc
 {

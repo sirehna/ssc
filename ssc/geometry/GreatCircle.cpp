@@ -5,8 +5,8 @@
 * GreatCircle class
 */
 
-#include "GreatCircle.h"
-#include "Geometry.h"
+#include "ssc/geometry/GreatCircle.h"
+#include "ssc/geometry/Geometry.h"
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>

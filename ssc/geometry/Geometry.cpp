@@ -5,7 +5,7 @@
 * Spherical Geometry functions
 */
 
-#include "Geometry.h"
+#include "ssc/geometry/Geometry.h"
 #include <cmath>
 
 using namespace Geometry;

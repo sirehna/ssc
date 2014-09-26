@@ -5,8 +5,8 @@
  *      Author: cady
  */
 
-#include "LegChain.hpp"
-#include "Leg.hpp"
+#include "ssc/geometry/LegChain.hpp"
+#include "ssc/geometry/Leg.hpp"
 
 using namespace ssc::geometry;
 

@@ -6,7 +6,7 @@
  */
 
 #include <cmath>
-#include "epsilon_algorithm.hpp"
+#include "ssc/geometry/epsilon_algorithm.hpp"
 
 double ssc::geometry::epsilon_algorithm(std::vector<double> S)
 {

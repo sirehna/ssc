@@ -6,7 +6,7 @@
 */
 
 
-#include "Vector3D.h"
+#include "ssc/geometry/Vector3D.h"
 #include <cmath>
 
 using namespace Geometry;

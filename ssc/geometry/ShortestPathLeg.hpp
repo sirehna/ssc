@@ -9,7 +9,7 @@
 #define SHORTEST_PATH_LEG_HPP_
 
 #include <tr1/memory>
-#include "Leg.hpp"
+#include "ssc/geometry/Leg.hpp"
 
 namespace ssc
 {
