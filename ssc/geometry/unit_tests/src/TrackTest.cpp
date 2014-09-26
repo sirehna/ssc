@@ -6,11 +6,11 @@
  */
 
 #include "TrackTest.hpp"
-#include "Track.hpp"
+#include "ssc/geometry/Track.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
-#include "ShortestPathLeg.hpp"
-#include "ShortestPathLegChain.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
+#include "ssc/geometry/ShortestPathLegChain.hpp"
 
 using namespace ssc::geometry;
 

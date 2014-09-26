@@ -6,7 +6,7 @@
  */
 
 #include "loxodrome_on_ellipsoidTest.hpp"
-#include "loxodrome_on_ellipsoid.hpp"
+#include "ssc/geometry/loxodrome_on_ellipsoid.hpp"
 #include <cmath>
 
 #define PI (4.*atan(1.))

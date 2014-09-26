@@ -6,7 +6,7 @@
  */
 
 #include "ConstantAzimuthLegTest.hpp"
-#include "ConstantAzimuthLeg.hpp"
+#include "ssc/geometry/ConstantAzimuthLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 
 #define EPS 1E-6

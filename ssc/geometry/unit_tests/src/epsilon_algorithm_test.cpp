@@ -6,7 +6,7 @@
  */
 
 #include "epsilon_algorithm_test.hpp"
-#include "epsilon_algorithm.hpp"
+#include "ssc/geometry/epsilon_algorithm.hpp"
 
 using namespace ssc::geometry;
 

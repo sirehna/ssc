@@ -6,7 +6,7 @@
  */
 
 #include "ShortestPathLegTest.hpp"
-#include "ShortestPathLeg.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 #include <algorithm> // std::min, std::max

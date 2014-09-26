@@ -6,9 +6,9 @@
  */
 
 #include "PointInGeographicalPolygonTest.hpp"
-#include "PointInGeographicalPolygon.hpp"
-#include "PointInSphericalPolygon.hpp"
-#include "PointInCartesianPolygon.hpp"
+#include "ssc/geometry/PointInGeographicalPolygon.hpp"
+#include "ssc/geometry/PointInSphericalPolygon.hpp"
+#include "ssc/geometry/PointInCartesianPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "LatitudeOfPointOnBorder.hpp"
 

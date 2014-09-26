@@ -9,7 +9,7 @@
 #define TRACKGENERATOR_HPP_
 
 #include "ssc/random_data_generator/DataGenerator.hpp"
-#include "Track.hpp"
+#include "ssc/geometry/Track.hpp"
 
 namespace ssc
 {

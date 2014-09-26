@@ -9,7 +9,7 @@
 #define LONGITUDELATITUDEGENERATORS_HPP_
 
 #include "ssc/random_data_generator/DataGenerator.hpp"
-#include "LatitudeLongitude.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 
 namespace ssc
 {

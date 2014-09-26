@@ -6,7 +6,7 @@
  */
 
 #include "PointInSphericalPolygonTest.hpp"
-#include "PointInSphericalPolygon.hpp"
+#include "ssc/geometry/PointInSphericalPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "LatitudeOfPointOnBorder.hpp"
 
