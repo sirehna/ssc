@@ -15,6 +15,8 @@
 #define RAD (PI/180.)
 #define DEG (180./PI)
 
+using namespace ssc::geometry;
+
 ConstantAzimuthLeg::ConstantAzimuthLeg(const LatitudeLongitude& point1, const LatitudeLongitude& point2, const double L, const double az12_) : Leg(point1,point2,L),
 az12(az12_), latitude_point_1_in_radians(point_1.lat*RAD), longitude_point_1_in_radians(point_1.lon*RAD)
 {

@@ -15,6 +15,8 @@
 
 using namespace Geometry;
 
+using namespace ssc::geometry;
+
 GreatCircle::GreatCircle(const LatitudeLongitude& pole ) : m_A(pole), m_B(pole){
 	double latDeg=pole.lat*180./PI;
 	m_A = LatitudeLongitude(

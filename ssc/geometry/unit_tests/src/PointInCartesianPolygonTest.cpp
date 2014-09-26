@@ -9,6 +9,8 @@
 #include "PointInCartesianPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 
+using namespace ssc::geometry;
+
 PointInCartesianPolygonTest::PointInCartesianPolygonTest() : a(ssc::random_data_generator::DataGenerator(997788))
 {
 }

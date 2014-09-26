@@ -12,6 +12,8 @@
 #include "ShortestPathLeg.hpp"
 #include "ShortestPathLegChain.hpp"
 
+using namespace ssc::geometry;
+
 TrackTest::TrackTest() : a(ssc::random_data_generator::DataGenerator(557))
 {
 }

@@ -7,11 +7,11 @@
 
 #include "LatitudeLongitudeGenerators.hpp"
 
-template <> LatitudeLongitude ssc::random_data_generator::get_min_bound() {return LatitudeLongitude(-90,-180);}
-template <> LatitudeLongitude ssc::random_data_generator::get_max_bound() {return LatitudeLongitude(90,180);}
+template <> ssc::geometry::LatitudeLongitude ssc::random_data_generator::get_min_bound() {return ssc::geometry::LatitudeLongitude(-90,-180);}
+template <> ssc::geometry::LatitudeLongitude ssc::random_data_generator::get_max_bound() {return ssc::geometry::LatitudeLongitude(90,180);}
 
-template <> LatitudeLongitude ssc::random_data_generator::TypedScalarDataGenerator<LatitudeLongitude>::get() const
+template <> ssc::geometry::LatitudeLongitude ssc::random_data_generator::TypedScalarDataGenerator<ssc::geometry::LatitudeLongitude>::get() const
 {
-    return LatitudeLongitude(random<double>().between(-90,90),random<double>().between(-180,180));
+    return ssc::geometry::LatitudeLongitude(random<double>().between(-90,90),random<double>().between(-180,180));
 }
 

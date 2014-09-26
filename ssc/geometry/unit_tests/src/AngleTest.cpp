@@ -13,6 +13,8 @@
 
 #define EPS 1E-10
 
+using namespace ssc::geometry;
+
 AngleTest::AngleTest() : a(ssc::random_data_generator::DataGenerator(88))
 {
 }

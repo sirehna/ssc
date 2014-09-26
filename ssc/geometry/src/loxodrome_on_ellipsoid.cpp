@@ -9,11 +9,13 @@
 #include <boost/math/tools/roots.hpp>
 #include "loxodrome_on_ellipsoid.hpp"
 
+using namespace ssc::geometry;
+
 #define QUARTER_PI atan(1.)
 #define HALF_PI (2.*atan(1.))
 #define PI (4.*QUARTER_PI)
 
-double azimuth_of_loxodrome(const double e,      //!< Excentricity of the ellipsoid (in meters)
+double ssc::geometry::azimuth_of_loxodrome(const double e,      //!< Excentricity of the ellipsoid (in meters)
                             const double lat_P1, //!< Latitude of P1 (in radians)
                             const double lon_P1, //!< Longitude of P1 (in radians)
                             const double lat_P2, //!< Latitude of P2 (in radians)
@@ -25,14 +27,14 @@ double azimuth_of_loxodrome(const double e,      //!< Excentricity of the ellips
     return atan2(lon_P2-lon_P1, q2-q1);
 }
 
-double isometric_latitude(const double e,  //!< Excentricity of the ellipsoid (in meters)
+double ssc::geometry::isometric_latitude(const double e,  //!< Excentricity of the ellipsoid (in meters)
                           const double phi //!< Latitude of the point under consideration (in radians)
                          )
 {
     return log(tan(QUARTER_PI + phi/2.)*pow((1-e*sin(phi))/(1+e*sin(phi)),e/2.));
 }
 
-double isometric_latitude(const double phi //!< Latitude of the point under consideration (in radians)
+double ssc::geometry::isometric_latitude(const double phi //!< Latitude of the point under consideration (in radians)
                          )
 {
     return isometric_latitude(0.0818191908426214943348024517538,phi);
@@ -97,7 +99,7 @@ double second_derivative_series_expansion(const double a, const double A[13], co
     return -a*(4*A[2]*sin(2*phi) + 16*A[4]*sin(4*phi) + 36*A[6]*sin(6*phi) + 64*A[8]*sin(8*phi) + 100*A[10]*sin(10*phi) + 144*A[12]*sin(12*phi));
 }
 
-double meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
+double ssc::geometry::meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                          const double a,  //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                          const double phi //!< Latitude of the point (in radians)
                          )
@@ -109,7 +111,7 @@ double meridian_distance(const double f,  //!< Flattening of the ellipsoid (298.
     return series_expansion(a, A, phi);
 }
 
-void loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
+void ssc::geometry::loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                        const double a,      //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                        const double lat_P1, //!< Latitude of P1 (in radians)
                        const double lon_P1, //!< Longitude of P1 (in radians)
@@ -139,7 +141,7 @@ void loxodrome_inverse(const double f_inv,  //!< Inverse flattening of the ellip
 }
 
 
-void loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
+void ssc::geometry::loxodrome_inverse(const double lat_P1, //!< Latitude of P1 (in radians)
                        const double lon_P1, //!< Longitude of P1 (in radians)
                        const double lat_P2, //!< Latitude of P2 (in radians)
                        const double lon_P2, //!< Longitude of P2 (in radians)
@@ -339,7 +341,7 @@ struct isometric_latitude_functor
        double q;
 };
 
-double convert_isometric_latitude_to_latitude(const double e,  //!< Excentricity of the ellipsoid (in metres)
+double ssc::geometry::convert_isometric_latitude_to_latitude(const double e,  //!< Excentricity of the ellipsoid (in metres)
                                               const double q   //!< Isometric latitude to convert (in radians)
                                               )
 {
@@ -351,7 +353,7 @@ double convert_isometric_latitude_to_latitude(const double e,  //!< Excentricity
     return boost::math::tools::newton_raphson_iterate(isometric_latitude_functor(e,q), guess, min, max, digits);
 }
 
-double convert_isometric_latitude_to_latitude(const double q   //!< Isometric latitude to convert (in radians)
+double ssc::geometry::convert_isometric_latitude_to_latitude(const double q   //!< Isometric latitude to convert (in radians)
                                               )
 {
     return convert_isometric_latitude_to_latitude(0.0818191908426214943348024517538,q);
@@ -366,7 +368,7 @@ double wrap_minus_minus_alpha_and_alpha(double angle, const double alpha)
     return angle;
 }
 
-void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
+void ssc::geometry::loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298.257223563 for the WGS84 ellipsoid)
                       const double a,      //!< Length of the ellipsoid's semi-major axis (in metres) (6378137 m for the WGS84 ellipsoid)
                       const double lat_P1, //!< Latitude of P1 (in radians)
                       const double lon_P1, //!< Longitude of P1 (in radians)
@@ -407,7 +409,7 @@ void loxodrome_direct(const double f_inv,  //!< Flattening of the ellipsoid (298
     lon_P2 = wrap_minus_minus_alpha_and_alpha(lon_P2,PI);
 }
 
-void loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
+void ssc::geometry::loxodrome_direct(const double lat_P1, //!< Latitude of P1 (in radians)
                       const double lon_P1, //!< Longitude of P1 (in radians)
                       double& lat_P2,      //!< Calculated latitude of P2 (in radians)
                       double& lon_P2,      //!< Calculated longitude of P2 (in radians)

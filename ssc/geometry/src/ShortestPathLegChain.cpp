@@ -9,6 +9,8 @@
 #include "ShortestPathLeg.hpp"
 #include "Leg.hpp"
 
+using namespace ssc::geometry;
+
 LegPtr ShortestPathLegChain::make_new(const LatitudeLongitude& waypoint1,const LatitudeLongitude& waypoint2) const
 {
     return LegPtr(new ShortestPathLeg(ShortestPathLeg::build(waypoint1,waypoint2)));

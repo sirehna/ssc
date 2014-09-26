@@ -8,12 +8,19 @@
 #include "PointInCartesianPolygon.hpp"
 #include "PointInPolygonPimpl.hpp"
 
+using namespace ssc::geometry;
+
 typedef boost::geometry::model::d2::point_xy<double> Point;
 
-
-template <> boost::geometry::model::d2::point_xy<double> convert_to(const double& longitude, const double& latitude)
+namespace ssc
 {
-    return boost::geometry::model::d2::point_xy<double>(longitude,latitude);
+    namespace geometry
+    {
+        template <> boost::geometry::model::d2::point_xy<double> convert_to(const double& longitude, const double& latitude)
+        {
+            return boost::geometry::model::d2::point_xy<double>(longitude,latitude);
+        }
+    }
 }
 
 PointInCartesianPolygon::PointInCartesianPolygon(const std::vector<LatitudeLongitude>& polygon) : PointInPolygon(polygon)

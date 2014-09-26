@@ -15,9 +15,9 @@ namespace ssc
 {
     namespace random_data_generator
     {
-        template <> LatitudeLongitude get_min_bound();
-        template <> LatitudeLongitude get_max_bound();
-        template <> LatitudeLongitude TypedScalarDataGenerator<LatitudeLongitude>::get() const;
+        template <> ssc::geometry::LatitudeLongitude get_min_bound();
+        template <> ssc::geometry::LatitudeLongitude get_max_bound();
+        template <> ssc::geometry::LatitudeLongitude TypedScalarDataGenerator<ssc::geometry::LatitudeLongitude>::get() const;
     }
 }
 

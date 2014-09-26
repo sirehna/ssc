@@ -14,6 +14,8 @@
 #include <cmath>
 #include <tr1/memory>
 
+using namespace ssc::geometry;
+
 typedef std::tr1::shared_ptr<Leg> LegPtr;
 
 class Track::TrackImpl

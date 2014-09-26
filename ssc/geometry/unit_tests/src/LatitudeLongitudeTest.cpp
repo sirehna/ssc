@@ -9,6 +9,8 @@
 #include "LatitudeLongitude.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 
+using namespace ssc::geometry;
+
 LatitudeLongitudeTest::LatitudeLongitudeTest() : a(ssc::random_data_generator::DataGenerator(22))
 {
 }

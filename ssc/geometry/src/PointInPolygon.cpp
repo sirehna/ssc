@@ -11,6 +11,7 @@
 
 #include "PointInPolygonPimpl.hpp"
 
+using namespace ssc::geometry;
 
 PointInPolygon::~PointInPolygon()
 {

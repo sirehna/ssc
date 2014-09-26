@@ -12,67 +12,73 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/extensions/gis/latlong/latlong.hpp>
 
-class DegreesMinutesSecond
+namespace ssc
 {
-    public:
-        DegreesMinutesSecond(const double& decimal_degrees) : degrees((int)floor(decimal_degrees)),
-                                                              minutes((int)floor((decimal_degrees-degrees)*60)),
-                                                              seconds(decimal_degrees-degrees-minutes/60.)
+    namespace geometry
+    {
+        class DegreesMinutesSecond
         {
+            public:
+                DegreesMinutesSecond(const double& decimal_degrees) : degrees((int)floor(decimal_degrees)),
+                                                                      minutes((int)floor((decimal_degrees-degrees)*60)),
+                                                                      seconds(decimal_degrees-degrees-minutes/60.)
+                {
 
-        }
+                }
 
-        int degrees;
-        int minutes;
-        double seconds;
+                int degrees;
+                int minutes;
+                double seconds;
 
-    private:
-        DegreesMinutesSecond();
-};
+            private:
+                DegreesMinutesSecond();
+        };
 
-template <typename PointType> PointType convert_to(const double& longitude, const double& latitude);
+        template <typename PointType> PointType convert_to(const double& longitude, const double& latitude);
 
 
-class PointInPolygon::PointInPolygonPimpl
-{
-    public:
-        virtual ~PointInPolygonPimpl() {}
-
-        virtual bool is_in_polygon(const LatitudeLongitude& point) const = 0;
-};
-
-template<typename PointType> class Pimpl : public PointInPolygon::PointInPolygonPimpl
-{
-    public:
-        Pimpl(const std::vector<LatitudeLongitude>& points) : polygon(boost::geometry::model::polygon<PointType>())
+        class PointInPolygon::PointInPolygonPimpl
         {
-            if (points.size() < 3)
-            {
-                THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Need at least three points in polygon");
-            }
-            const double eps = 1E-15;
-            bool polygon_is_closed = (fabs(points.front().lat-points.back().lat)<eps)&&(fabs(points.front().lon-points.back().lon)<eps);
-            if (not(polygon_is_closed))
-            {
-                THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Polygon should be closed");
-            }
-            for (auto it = points.begin() ; it != points.end() ; ++it)
-            {
+            public:
+                virtual ~PointInPolygonPimpl() {}
 
-                const PointType p = convert_to<PointType>(it->lon, it->lat);
-                boost::geometry::append(polygon, p);
-            }
-        }
+                virtual bool is_in_polygon(const LatitudeLongitude& point) const = 0;
+        };
 
-        bool is_in_polygon(const LatitudeLongitude& point) const
+        template<typename PointType> class Pimpl : public PointInPolygon::PointInPolygonPimpl
         {
-            const PointType p = convert_to<PointType>(point.lon, point.lat);
-            return boost::geometry::within(p, polygon);
-        }
+            public:
+                Pimpl(const std::vector<LatitudeLongitude>& points) : polygon(boost::geometry::model::polygon<PointType>())
+                {
+                    if (points.size() < 3)
+                    {
+                        THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Need at least three points in polygon");
+                    }
+                    const double eps = 1E-15;
+                    bool polygon_is_closed = (fabs(points.front().lat-points.back().lat)<eps)&&(fabs(points.front().lon-points.back().lon)<eps);
+                    if (not(polygon_is_closed))
+                    {
+                        THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Polygon should be closed");
+                    }
+                    for (auto it = points.begin() ; it != points.end() ; ++it)
+                    {
 
-    private:
-        boost::geometry::model::polygon<PointType> polygon;
-};
+                        const PointType p = convert_to<PointType>(it->lon, it->lat);
+                        boost::geometry::append(polygon, p);
+                    }
+                }
+
+                bool is_in_polygon(const LatitudeLongitude& point) const
+                {
+                    const PointType p = convert_to<PointType>(point.lon, point.lat);
+                    return boost::geometry::within(p, polygon);
+                }
+
+            private:
+                boost::geometry::model::polygon<PointType> polygon;
+        };
+    }
+}
 
 
 #endif  /* POINTINPOLYGONPIMPL_HPP_ */

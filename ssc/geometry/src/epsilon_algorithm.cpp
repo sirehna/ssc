@@ -8,7 +8,7 @@
 #include <cmath>
 #include "epsilon_algorithm.hpp"
 
-double epsilon_algorithm(std::vector<double> S)
+double ssc::geometry::epsilon_algorithm(std::vector<double> S)
 {
     if (S.empty()) return 0;
     if (S.size() == 1) return S.front();
