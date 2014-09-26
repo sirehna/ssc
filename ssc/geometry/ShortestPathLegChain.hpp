@@ -8,7 +8,7 @@
 #ifndef SHORTESTPATHLEGCHAIN_HPP_
 #define SHORTESTPATHLEGCHAIN_HPP_
 
-#include "LegChain.hpp"
+#include "ssc/geometry/LegChain.hpp"
 
 namespace ssc
 {

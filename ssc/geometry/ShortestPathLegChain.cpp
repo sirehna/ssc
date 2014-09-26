@@ -5,9 +5,9 @@
  *      Author: cady
  */
 
-#include "ShortestPathLegChain.hpp"
-#include "ShortestPathLeg.hpp"
-#include "Leg.hpp"
+#include "ssc/geometry/ShortestPathLegChain.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
+#include "ssc/geometry/Leg.hpp"
 
 using namespace ssc::geometry;
 

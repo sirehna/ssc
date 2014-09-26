@@ -8,8 +8,8 @@
 #ifndef LEG_HPP_
 #define LEG_HPP_
 
-#include "LatitudeLongitude.hpp"
-#include "Angle.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
+#include "ssc/geometry/Angle.hpp"
 #include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc

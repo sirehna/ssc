@@ -10,8 +10,7 @@
 
 #include <vector>
 #include <tr1/memory>
-#include "LatitudeLongitude.hpp"
-
+#include "ssc/geometry/LatitudeLongitude.hpp"
 #include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc

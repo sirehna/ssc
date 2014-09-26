@@ -8,7 +8,7 @@
 #ifndef CONSTANTAZIMUTHLEGCHAIN_HPP_
 #define CONSTANTAZIMUTHLEGCHAIN_HPP_
 
-#include "LegChain.hpp"
+#include "ssc/geometry/LegChain.hpp"
 
 namespace ssc
 {

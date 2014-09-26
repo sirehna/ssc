@@ -6,7 +6,7 @@
  */
 
 
-#include "LatitudeLongitude.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 #include <cmath>
 #include <sstream>
 

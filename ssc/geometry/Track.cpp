@@ -5,10 +5,10 @@
  *  \author cec
  */
 
-#include "Track.hpp"
-#include "ShortestPathLeg.hpp"
+#include "ssc/geometry/Track.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
 #include "ssc/interpolation/IndexFinder.hpp"
-#include "LegChain.hpp"
+#include "ssc/geometry/LegChain.hpp"
 
 #include <sstream>
 #include <cmath>

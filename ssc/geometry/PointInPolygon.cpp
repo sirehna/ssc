@@ -7,9 +7,8 @@
 
 
 
-#include "PointInPolygon.hpp"
-
-#include "PointInPolygonPimpl.hpp"
+#include "ssc/geometry/PointInPolygon.hpp"
+#include "ssc/geometry/PointInPolygonPimpl.hpp"
 
 using namespace ssc::geometry;
 

@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "PointInSphericalPolygon.hpp"
-#include "PointInPolygonPimpl.hpp"
+#include "ssc/geometry/PointInSphericalPolygon.hpp"
+#include "ssc/geometry/PointInPolygonPimpl.hpp"
 
 namespace ssc
 {

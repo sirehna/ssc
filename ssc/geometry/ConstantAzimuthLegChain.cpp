@@ -5,8 +5,8 @@
  *      Author: cady
  */
 
-#include "ConstantAzimuthLegChain.hpp"
-#include "ConstantAzimuthLeg.hpp"
+#include "ssc/geometry/ConstantAzimuthLegChain.hpp"
+#include "ssc/geometry/ConstantAzimuthLeg.hpp"
 
 using namespace ssc::geometry;
 

@@ -7,7 +7,7 @@
 
 #include <cmath>
 #include <boost/math/tools/roots.hpp>
-#include "loxodrome_on_ellipsoid.hpp"
+#include "ssc/geometry/loxodrome_on_ellipsoid.hpp"
 
 using namespace ssc::geometry;
 

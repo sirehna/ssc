@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "ShortestPathLeg.hpp"
-#include "GreatCircle.h"
+#include "ssc/geometry/ShortestPathLeg.hpp"
+#include "ssc/geometry/GreatCircle.h"
 
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/GeodesicLine.hpp>

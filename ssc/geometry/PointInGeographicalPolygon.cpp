@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "PointInGeographicalPolygon.hpp"
-#include "PointInPolygonPimpl.hpp"
+#include "ssc/geometry/PointInGeographicalPolygon.hpp"
+#include "ssc/geometry/PointInPolygonPimpl.hpp"
 
 using namespace ssc::geometry;
 

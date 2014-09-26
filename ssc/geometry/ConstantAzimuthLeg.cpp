@@ -5,11 +5,10 @@
  *      Author: cady
  */
 
-#include "ConstantAzimuthLeg.hpp"
-#include "ShortestPathLeg.hpp"
-#include "loxodrome_on_ellipsoid.hpp"
-
-#include "min_search_golden_section.hpp"
+#include "ssc/geometry/ConstantAzimuthLeg.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
+#include "ssc/geometry/loxodrome_on_ellipsoid.hpp"
+#include "ssc/geometry/min_search_golden_section.hpp"
 
 #define PI (4.*atan(1.))
 #define RAD (PI/180.)

@@ -6,7 +6,7 @@
  */
 
 
-#include "LongitudeLatitude.hpp"
+#include "ssc/geometry/LongitudeLatitude.hpp"
 #include <cmath>
 
 using namespace ssc::geometry;

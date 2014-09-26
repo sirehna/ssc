@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "PointInCartesianPolygon.hpp"
-#include "PointInPolygonPimpl.hpp"
+#include "ssc/geometry/PointInCartesianPolygon.hpp"
+#include "ssc/geometry/PointInPolygonPimpl.hpp"
 
 using namespace ssc::geometry;
 

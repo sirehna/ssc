@@ -8,7 +8,7 @@
 #ifndef CONSTANTAZIMUTHLEG_HPP_
 #define CONSTANTAZIMUTHLEG_HPP_
 
-#include "Leg.hpp"
+#include "ssc/geometry/Leg.hpp"
 
 namespace ssc
 {
