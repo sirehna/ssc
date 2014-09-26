@@ -5,13 +5,13 @@
  *  \author cec
  */
 
-#include "AngleTest.hpp"
-#include "ssc/geometry/Angle.hpp"
-#include <cmath>
-#include "ssc/macros/extra_test_assertions.hpp"
 #include <cmath>
 
-#define EPS 1E-10
+#include "AngleTest.hpp"
+#include "ssc/geometry/Angle.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
+
+#define EPS 1E-8
 
 using namespace ssc::geometry;
 
