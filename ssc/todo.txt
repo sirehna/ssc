@@ -1,0 +1,18 @@
+- Integrate 'functors_for_optimizer'
+- Integrate 'functional_programming'
+- Integrate 'lpsolve_interface'
+- Integrate 'optimizer'
+- Integrate 'integrate'
+- Integrate 'ipopt_interface'
+- Integrate 'quadpack' (transform it using f2c)
+- Integrate 'generic_pimpl'
+- Move 'epsilon_algorithm to numeric'
+- Move Haley iterate to 'numeric' (merge with simulator's version?)
+- Use Jenkins SVN user in Jenkins to retrieve SVN code
+- Restrict Jenkins access
+- Set version number based on git's tags (otherwise use the date & time)
+- Fix build on MSVC
+- Create both RPM & DEB for Linux
+- Create both mingw & MSVC for Windows
+- Update Doxygen
+- Add unit tests to decode_unit
