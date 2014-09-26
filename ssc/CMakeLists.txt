@@ -102,9 +102,6 @@ INCLUDE(CMakeCompilationOptions)
 add_headers(macros)
 add_libs(random_data_generator)
 add_libs(exception_handling)
-add_libs(geometry
-         OBJECTS_DEPENDENCIES Geographic_object
-         SSC_DEPENDENCIES exception_handling)
 add_libs(yaml_parser
          OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(decode_unit)
@@ -118,6 +115,9 @@ add_libs(kinematics
 add_libs(interpolation
          SSC_DEPENDENCIES exception_handling
          OBJECTS_DEPENDENCIES f2c_object)
+add_libs(geometry
+         OBJECTS_DEPENDENCIES Geographic_object
+         SSC_DEPENDENCIES exception_handling interpolation)
 add_libs(csv_file_reader
          SSC_DEPENDENCIES exception_handling)
 add_headers(solver)
