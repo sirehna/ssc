@@ -11,7 +11,7 @@
 #include "ssc/geometry/Angle.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
-#define EPS 1E-8
+#define EPS 1E-6
 
 using namespace ssc::geometry;
 
