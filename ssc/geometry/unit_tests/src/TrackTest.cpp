@@ -8,11 +8,11 @@
 #include "TrackTest.hpp"
 #include "Track.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include "ShortestPathLeg.hpp"
 #include "ShortestPathLegChain.hpp"
 
-TrackTest::TrackTest() : a(DataGenerator(557))
+TrackTest::TrackTest() : a(ssc::random_data_generator::DataGenerator(557))
 {
 }
 

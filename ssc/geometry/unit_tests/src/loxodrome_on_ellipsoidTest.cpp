@@ -14,7 +14,7 @@
 #define EPS 1E-6
 
 
-loxodrome_on_ellipsoidTest::loxodrome_on_ellipsoidTest() : a(DataGenerator(564562)),
+loxodrome_on_ellipsoidTest::loxodrome_on_ellipsoidTest() : a(ssc::random_data_generator::DataGenerator(564562)),
                                                            latitude_of_Murray_Spring(-(36  + 47/60. + 49.2232/3600)*RAD),
                                                            longitude_of_Murray_Spring((148 + 11/60. + 48.3333/3600)*RAD),
                                                            latitude_of_Wauka_1978(-(37  + 30/60. + 18.0674/3600)*RAD),

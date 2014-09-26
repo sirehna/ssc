@@ -15,8 +15,8 @@
 class DegreesMinutesSecond
 {
     public:
-        DegreesMinutesSecond(const double& decimal_degrees) : degrees(floor(decimal_degrees)),
-                                                              minutes(floor((decimal_degrees-degrees)*60)),
+        DegreesMinutesSecond(const double& decimal_degrees) : degrees((int)floor(decimal_degrees)),
+                                                              minutes((int)floor((decimal_degrees-degrees)*60)),
                                                               seconds(decimal_degrees-degrees-minutes/60.)
         {
 

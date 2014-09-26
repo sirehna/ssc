@@ -11,7 +11,7 @@
 
 #define EPS 1E-6
 
-ConstantAzimuthLegTest::ConstantAzimuthLegTest() : a(DataGenerator(121))
+ConstantAzimuthLegTest::ConstantAzimuthLegTest() : a(ssc::random_data_generator::DataGenerator(121))
 {
 }
 

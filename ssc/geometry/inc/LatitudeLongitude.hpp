@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
 class LatitudeLongitudeException : public Exception
 {

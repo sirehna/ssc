@@ -11,7 +11,7 @@
 #include "LatitudeLongitude.hpp"
 #include <vector>
 #include <tr1/memory>
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 #include "Angle.hpp"
 
 class LegChain;

@@ -8,13 +8,13 @@
 #include "ShortestPathLegTest.hpp"
 #include "ShortestPathLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include <algorithm> // std::min, std::max
 #include <cmath>
 
 #define PI 4.*atan(1.)
 
-ShortestPathLegTest::ShortestPathLegTest() : a(DataGenerator(8796))
+ShortestPathLegTest::ShortestPathLegTest() : a(ssc::random_data_generator::DataGenerator(8796))
 {
 }
 
