@@ -5,7 +5,12 @@
  *  \author cec
  */
 
+#define _USE_MATH_DEFINES
 #include <cmath>
+#ifndef M_PI
+#define M_PI (4*atan(1.))
+#endif
+#define PI M_PI
 
 #include "AngleTest.hpp"
 #include "ssc/geometry/Angle.hpp"
@@ -135,61 +140,56 @@ TEST_F(AngleTest, should_be_able_to_substract_two_angles)
 
 TEST_F(AngleTest, should_be_able_to_retrieve_the_value_in_degrees)
 {
-    const double pi = 3.141592653589793;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
         const double value_in_degrees = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(value_in_degrees, Angle::degree(value_in_degrees).get_degree(),EPS);
-        ASSERT_SMALL_RELATIVE_ERROR(value_in_radians*180./pi, Angle::radian(value_in_radians).get_degree(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(value_in_radians*180./PI, Angle::radian(value_in_radians).get_degree(),EPS);
     }
 }
 
 TEST_F(AngleTest, should_be_able_to_retrieve_the_value_in_radians)
 {
-    const double pi = 3.141592653589793;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
         const double value_in_degrees = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(value_in_radians, Angle::radian(value_in_radians).get_radian(),EPS);
-        ASSERT_SMALL_RELATIVE_ERROR(value_in_degrees*pi/180., Angle::degree(value_in_degrees).get_radian(),EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(value_in_degrees*PI/180., Angle::degree(value_in_degrees).get_radian(),EPS);
     }
 }
 
 TEST_F(AngleTest, should_be_able_to_calculate_the_cosine_of_an_angle)
 {
-    const double pi = 3.141592653589793;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
         const double value_in_degrees = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(cos(value_in_radians), cos(Angle::radian(value_in_radians)), EPS);
-        ASSERT_SMALL_RELATIVE_ERROR(cos(value_in_degrees*pi/180.), cos(Angle::degree(value_in_degrees)), EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(cos(value_in_degrees*PI/180.), cos(Angle::degree(value_in_degrees)), EPS);
     }
 }
 
 TEST_F(AngleTest, should_be_able_to_calculate_the_sine_of_an_angle)
 {
-    const double pi = 3.141592653589793;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
         const double value_in_degrees = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(sin(value_in_radians), sin(Angle::radian(value_in_radians)), EPS);
-        ASSERT_SMALL_RELATIVE_ERROR(sin(value_in_degrees*pi/180.), sin(Angle::degree(value_in_degrees)), EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(sin(value_in_degrees*PI/180.), sin(Angle::degree(value_in_degrees)), EPS);
     }
 }
 
 TEST_F(AngleTest, should_be_able_to_calculate_the_tangent_of_an_angle)
 {
-    const double pi = 3.141592653589793;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
         const double value_in_degrees = a.random<double>();
         ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_radians), tan(Angle::radian(value_in_radians)), EPS);
-        ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*pi/180.), tan(Angle::degree(value_in_degrees)), EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*PI/180.), tan(Angle::degree(value_in_degrees)), EPS);
     }
 }
 
