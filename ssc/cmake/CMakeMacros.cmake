@@ -208,7 +208,7 @@ MACRO(add_headers name copyright)
 ENDMACRO()
 
 MACRO(get_copyright copyright)
-    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/copyright_notice.txt" ${copyright})
+    FILE(READ "${CMAKE_CURRENT_SOURCE_DIR}/copyright_notice.txt" ${copyright})
 ENDMACRO()
 
 MACRO(add_libs name)
