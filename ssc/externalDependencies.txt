@@ -3,4 +3,5 @@ http://130.66.124.6/svn/tools/ThirdParty eigen 3.2.0
 http://130.66.124.6/svn/tools/ThirdParty yaml-cpp 0.3.0
 http://130.66.124.6/svn/tools/ThirdParty gcovr
 http://130.66.124.6/svn/tools/ThirdParty f2c 1.0.0
-http://130.66.124.6/svn/tools/ThirdParty geographiclib
+http://130.66.124.6/svn/tools/ThirdParty geographiclib 1.30
+
