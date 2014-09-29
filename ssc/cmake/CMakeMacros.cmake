@@ -47,6 +47,7 @@ function(GET_BUILD_TYPE_STR DBG_STR)
     endif()
 endfunction()
 
+    
 function(ARCHITECTURE ARCHSTR)
     # Test 32/64 bits
     if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
@@ -151,7 +152,7 @@ MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
     ENDIF()
 ENDMACRO(MACRO_GET_NUMBER_OF_PROCESSORS)
 
-MACRO(create_wrapper_hpp module_name headers)
+MACRO(create_wrapper_hpp module_name headers copyright)
     set(${module_name}_INCLUDES_ "")
     foreach(f ${headers})
         get_filename_component(x ${f} NAME)
@@ -159,31 +160,61 @@ MACRO(create_wrapper_hpp module_name headers)
         LIST(APPEND ${module_name}_INCLUDES_ "\n")
     endforeach()
     STRING(REGEX REPLACE ";" "" ${module_name}_INCLUDES "${${module_name}_INCLUDES_}")
-    configure_file(${module_name}.hpp.in ${module_name}.hpp)
+    set(COPYRIGHT_NOTICE ${copyright})
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "@COPYRIGHT_NOTICE@")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "#ifndef ${module_name}_guard")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "#define ${module_name}_guard")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "@${module_name}@")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "")
+    file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in "#endif")
+    configure_file(${CMAKE_CURRENT_BINARY_DIR}/${module_name}.hpp.in ${module_name}.hpp)
 ENDMACRO()
 
-MACRO(add_headers name)
+MACRO(append_copyright IN_FILE OUT_FILE copyright)
+  file(READ ${IN_FILE} CONTENTS)
+  file(APPEND ${OUT_FILE} "/*")
+  file(APPEND ${OUT_FILE} ${copyright})
+  file(APPEND ${OUT_FILE} "*/")
+  file(APPEND ${OUT_FILE} ${CONTENTS})
+ENDMACRO()
+
+MACRO(append_copyright_and_install module_name header copyright)
+    get_filename_component(b ${header} NAME)
+    append_copyright(${header} ${CMAKE_CURRENT_BINARY_DIR}/${b} ${copyright})
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${b}
+            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc/${module_name}
+            COMPONENT ${module_name}
+            )
+ENDMACRO()
+
+
+MACRO(add_headers name copyright)
     ADD_SUBDIRECTORY(${name})
     FILE(GLOB headers ${name}/*.h*)
-    INSTALL(FILES ${headers}
-            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc/${name}
-            COMPONENT ${name}
-            )
+    FOREACH(header ${headers})
+        append_copyright_and_install(${name} ${header} ${copyright})
+    ENDFOREACH()
+    create_wrapper_hpp(${name} "${headers}" "${copyright}")
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
             DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc
             COMPONENT ${name}
             )
 
     LIST(APPEND ALL_SSC_COMPONENTS ${name})
-    create_wrapper_hpp(${name} "${headers}")
 ENDMACRO()
 
+MACRO(get_copyright copyright)
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/copyright_notice.txt" ${copyright})
+ENDMACRO()
 
 MACRO(add_libs name)
     SET(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES OBJECTS_DEPENDENCIES)
     cmake_parse_arguments(add_libs "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    add_headers(${name})
+    get_copyright(copyright)
+    add_headers(${name} "${copyright}")
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
     ADD_LIBRARY(${name}_static STATIC
                 $<TARGET_OBJECTS:${name}_object>

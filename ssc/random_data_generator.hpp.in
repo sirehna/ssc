@@ -1,6 +1,0 @@
-#ifndef random_data_generator_guard
-#define random_data_generator_guard
-
-@random_data_generator_INCLUDES@
-
-#endif
