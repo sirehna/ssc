@@ -17,7 +17,7 @@
 #include "ssc/interpolation/SplinesException.hpp"
 
 #define PI 4.*atan(1.)
-#define EPS 1E-10
+#define EPS 1E-8
 
 using namespace ssc::interpolation;
 
