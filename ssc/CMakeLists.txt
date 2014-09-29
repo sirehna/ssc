@@ -14,24 +14,6 @@ IF(NOT DEFINED CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Debug)
 ENDIF()
 
-# Configure the package
-IF(WIN32)
-    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}-${${PROJECT_NAME}_VERSION}/include/ssc-${ssc_VERSION})
-ELSE()
-    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
-ENDIF()
-MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
-SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
-
-INCLUDE(CMakePackageConfigHelpers)
-SET(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
-
-configure_package_config_file(
-       ssc-config.cmake.in
-       "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-       INSTALL_DESTINATION "${ConfigPackageLocation}"
-       PATH_VARS SSC_INCLUDE_DIRS )
-
 #############################################################################
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
@@ -89,6 +71,27 @@ SET(${PROJECT_NAME}_VERSION
     ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_VERSION})
 SET(${PROJECT_NAME}_VERSION_STR
     ${${PROJECT_NAME}_MAJOR_VERSION}-${${PROJECT_NAME}_MINOR_VERSION}-${${PROJECT_NAME}_PATCH_VERSION})
+
+#############################################################################
+
+# Configure the package
+IF(WIN32)
+    SET(ssc_INCLUDE_DIRS "\${CMAKE_CURRENT_LIST_DIR}/../../../include/ssc-${ssc_VERSION}")
+ELSE()
+    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
+ENDIF()
+MESSAGE(STATUS "ssc_INCLUDE_DIRS :${ssc_INCLUDE_DIRS}")
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
+SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
+
+INCLUDE(CMakePackageConfigHelpers)
+SET(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
+
+configure_package_config_file(
+       ssc-config.cmake.in
+       "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+       INSTALL_DESTINATION "${ConfigPackageLocation}"
+       PATH_VARS SSC_INCLUDE_DIRS)
 
 #############################################################################
 INCLUDE(CMakeGMock)
