@@ -191,5 +191,9 @@ TEST_F(AngleTest, should_be_able_to_calculate_the_tangent_of_an_angle)
         ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_radians), tan(Angle::radian(value_in_radians)), EPS);
         ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*PI/180.), tan(Angle::degree(value_in_degrees)), EPS);
     }
+    double value_in_degrees = 1E11;
+    ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*PI/180.), tan(Angle::degree(value_in_degrees)), EPS);
+    value_in_degrees = -1E8;
+    ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*PI/180.), tan(Angle::degree(value_in_degrees)), EPS);
 }
 
