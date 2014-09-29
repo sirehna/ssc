@@ -5,7 +5,12 @@
  *      Author: cec
  */
 
+#define _USE_MATH_DEFINES
 #include <cmath>
+#ifndef M_PI
+#define M_PI (4*atan(1.))
+#endif
+#define PI M_PI
 
 #include "rotation_matrix_builders_Test.hpp"
 #include "ssc/kinematics/rotation_matrix_builders.hpp"
@@ -30,8 +35,6 @@ void rotation_matrix_builders_Test::SetUp()
 void rotation_matrix_builders_Test::TearDown()
 {
 }
-
-#define PI (4.*atan(1))
 
 TEST_F(rotation_matrix_builders_Test, can_get_rotation_around_x_axis)
 {
