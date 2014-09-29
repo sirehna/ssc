@@ -187,7 +187,7 @@ TEST_F(AngleTest, should_be_able_to_calculate_the_tangent_of_an_angle)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const double value_in_radians = a.random<double>();
-        const double value_in_degrees = a.random<double>();
+        const double value_in_degrees = a.random<double>().between(-1E7,1E7);
         ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_radians), tan(Angle::radian(value_in_radians)), EPS);
         ASSERT_SMALL_RELATIVE_ERROR(tan(value_in_degrees*PI/180.), tan(Angle::degree(value_in_degrees)), EPS);
     }
