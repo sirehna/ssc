@@ -103,11 +103,10 @@ function(git_describe _var)
 	#endif()
 
 	#message(STATUS "Arguments to execute_process: ${ARGN}")
-
 	execute_process(COMMAND
 		"${GIT_EXECUTABLE}"
 		describe
-		${hash}
+		#GJ ${hash}
 		${ARGN}
 		WORKING_DIRECTORY
 		"${CMAKE_SOURCE_DIR}"
@@ -117,8 +116,11 @@ function(git_describe _var)
 		out
 		ERROR_QUIET
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
+	#GJ message(STATUS "res :${res}")
+	#GJ message(STATUS "out :${out}")
 	if(NOT res EQUAL 0)
-		set(out "${out}-${res}-NOTFOUND")
+		#GJ set(out "${out}-${res}-NOTFOUND")
+		set(out "GIT_UNTAGGED_REVISION")
 	endif()
 
 	set(${_var} "${out}" PARENT_SCOPE)
