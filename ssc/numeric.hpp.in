@@ -1,6 +1,0 @@
-#ifndef numeric_guard
-#define numeric_guard
-
-@numeric_INCLUDES@
-
-#endif

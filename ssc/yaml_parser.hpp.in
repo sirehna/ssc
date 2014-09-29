@@ -1,6 +1,0 @@
-#ifndef yaml_parser_guard
-#define yaml_parser_guard
-
-@yaml_parser_INCLUDES@
-
-#endif

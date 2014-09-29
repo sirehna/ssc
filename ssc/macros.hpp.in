@@ -1,6 +1,0 @@
-#ifndef macros_guard
-#define macros_guard
-
-@macros_INCLUDES@
-
-#endif

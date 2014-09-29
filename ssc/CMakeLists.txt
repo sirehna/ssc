@@ -45,8 +45,11 @@ configure_package_config_file(
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
 MESSAGE(STATUS "GIT_SHA1 : ${GIT_SHA1}")
-CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt"
-               "${CMAKE_CURRENT_BINARY_DIR}/Copyright.txt" @ONLY)
+
+get_copyright(COPYRIGHT_NOTICE)
+FILE(READ "${CMAKE_CURRENT_SOURCE_DIR}/read_me.txt" DESCRIPTION)
+CONFIGURE_FILE(Copyright.txt.in
+               ${CMAKE_CURRENT_BINARY_DIR}/Copyright.txt @ONLY)
 #############################################################################
 INCLUDE(CMakeGMock)
 
@@ -99,7 +102,8 @@ set(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include
 INCLUDE(CMakeCompilationOptions)
 
 # Define libraries
-add_headers(macros)
+get_copyright(copyright)
+add_headers(macros "${copyright}")
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser
@@ -120,7 +124,7 @@ add_libs(geometry
          SSC_DEPENDENCIES exception_handling interpolation)
 add_libs(csv_file_reader
          SSC_DEPENDENCIES exception_handling)
-add_headers(solver)
+add_headers(solver "${copyright}")
 #LIST(APPEND ALL_SSC_TARGETS f2c)
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets

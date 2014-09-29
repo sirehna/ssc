@@ -1,6 +1,0 @@
-#ifndef kinematics_guard
-#define kinematics_guard
-
-@kinematics_INCLUDES@
-
-#endif

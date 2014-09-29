@@ -1,6 +1,0 @@
-#ifndef solver_guard
-#define solver_guard
-
-@solver_INCLUDES@
-
-#endif
