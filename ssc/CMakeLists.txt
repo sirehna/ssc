@@ -126,8 +126,8 @@ IF(${CMAKE_BUILD_TYPE})
 ENDIF()
 
 ADD_SUBDIRECTORY(f2c)
-ADD_SUBDIRECTORY(geographiclib)
-set(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include CACHE PATH "Path to libGeographic include directory")
+ADD_SUBDIRECTORY(geographiclib EXCLUDE_FROM_ALL)
+SET(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include CACHE PATH "Path to libGeographic include directory")
 
 #############################################################################
 # Compilation part
