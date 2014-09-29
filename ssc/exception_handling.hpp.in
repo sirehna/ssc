@@ -1,6 +1,0 @@
-#ifndef exception_handling_guard
-#define exception_handling_guard
-
-@exception_handling_INCLUDES@
-
-#endif

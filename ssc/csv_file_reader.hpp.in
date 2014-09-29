@@ -1,6 +1,0 @@
-#ifndef csv_file_reader_guard
-#define csv_file_reader_guard
-
-@csv_file_reader_INCLUDES@
-
-#endif
