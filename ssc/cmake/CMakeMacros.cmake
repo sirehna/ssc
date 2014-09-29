@@ -185,8 +185,8 @@ ENDMACRO()
 
 MACRO(append_copyright_and_install module_name header copyright)
     get_filename_component(b ${header} NAME)
-    append_copyright(${header} ${CMAKE_CURRENT_BINARY_DIR}/${b} ${copyright})
-    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${b}
+    append_copyright(${header} ${CMAKE_CURRENT_BINARY_DIR}/${module_name}/${b} ${copyright})
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${module_name}/${b}
             DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc/${module_name}
             COMPONENT ${module_name}
             )
