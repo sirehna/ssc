@@ -23,7 +23,12 @@ FILE(GLOB SRC Splines.cpp
               dgtsv.c
               xerbla.c)
 
-SET(CMAKE_C_FLAGS "-fPIC")
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
+    IF(UNIX AND NOT WIN32) # If on Linux
+        SET(CMAKE_C_FLAGS "-fPIC")
+    ENDIF()
+ENDIF()
+
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM ${CMAKE_CURRENT_BINARY_DIR})
 
