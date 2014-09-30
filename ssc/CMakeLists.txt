@@ -90,11 +90,17 @@ SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
 INCLUDE(CMakePackageConfigHelpers)
 SET(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
 
-configure_package_config_file(
+CONFIGURE_PACKAGE_CONFIG_FILE(
        ssc-config.cmake.in
        "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
        INSTALL_DESTINATION "${ConfigPackageLocation}"
        PATH_VARS SSC_INCLUDE_DIRS)
+
+INSTALL(
+    FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+    DESTINATION "${ConfigPackageLocation}"
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+    )
 
 #############################################################################
 INCLUDE(CMakeGMock)
