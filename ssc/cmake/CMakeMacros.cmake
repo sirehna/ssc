@@ -27,92 +27,89 @@ MACRO(MACRO_SVNVERSION SVNVERSION_RESULT)
     ENDIF()
 ENDMACRO(MACRO_SVNVERSION)
 
-function(_Boost_COMPILER_DUMPVERSION _OUTPUT_VERSION)
+FUNCTION(_Boost_COMPILER_DUMPVERSION _OUTPUT_VERSION)
+    EXEC_PROGRAM(${CMAKE_CXX_COMPILER}
+        ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+        OUTPUT_VARIABLE _boost_COMPILER_VERSION
+    )
+    STRING(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1\\2"
+        _boost_COMPILER_VERSION ${_boost_COMPILER_VERSION})
 
-  exec_program(${CMAKE_CXX_COMPILER}
-    ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
-    OUTPUT_VARIABLE _boost_COMPILER_VERSION
-  )
-  string(REGEX REPLACE "([0-9])\\.([0-9])(\\.[0-9])?" "\\1\\2"
-    _boost_COMPILER_VERSION ${_boost_COMPILER_VERSION})
+    SET(${_OUTPUT_VERSION} ${_boost_COMPILER_VERSION} PARENT_SCOPE)
+ENDFUNCTION()
 
-  set(${_OUTPUT_VERSION} ${_boost_COMPILER_VERSION} PARENT_SCOPE)
-endfunction()
+FUNCTION(GET_BUILD_TYPE_STR DBG_STR)
+    IF(CMAKE_BUILD_TYPE MATCHES Debug)
+        SET(${DBG_STR} debug PARENT_SCOPE)
+    ELSE()
+        SET(${DBG_STR} release PARENT_SCOPE)
+    ENDIF()
+ENDFUNCTION()
 
-function(GET_BUILD_TYPE_STR DBG_STR)
-    if (CMAKE_BUILD_TYPE MATCHES Debug)
-        set(${DBG_STR} debug PARENT_SCOPE)
-    else()
-        set(${DBG_STR} release PARENT_SCOPE)
-    endif()
-endfunction()
-
-    
-function(ARCHITECTURE ARCHSTR)
+FUNCTION(ARCHITECTURE ARCHSTR)
     # Test 32/64 bits
-    if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-       set(${ARCHSTR} "64bits" PARENT_SCOPE)
-    else("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-       set(${ARCHSTR} "32bits" PARENT_SCOPE)
-    endif()
-endfunction()
+    IF("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+        SET(${ARCHSTR} "64bits" PARENT_SCOPE)
+    ELSE("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+        SET(${ARCHSTR} "32bits" PARENT_SCOPE)
+    ENDIF()
+ENDFUNCTION()
 
 # Guesses Boost's compiler prefix used in built library names
 # Returns the guess by setting the variable pointed to by _ret
-function(GUESS_COMPILER_PREFIX _ret)
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel"
-      OR "${CMAKE_CXX_COMPILER}" MATCHES "icl"
-      OR "${CMAKE_CXX_COMPILER}" MATCHES "icpc")
-    if(WIN32)
-      set (_boost_COMPILER "iw")
-    else()
-      set (_boost_COMPILER "il")
-    endif()
-  elseif (MSVC12)
-    set(_boost_COMPILER "vc120")
-  elseif (MSVC11)
-    set(_boost_COMPILER "vc110")
-  elseif (MSVC10)
-    set(_boost_COMPILER "vc100")
-  elseif (MSVC90)
-    set(_boost_COMPILER "vc90")
-  elseif (MSVC80)
-    set(_boost_COMPILER "vc80")
-  elseif (MSVC71)
-    set(_boost_COMPILER "vc71")
-  elseif (MSVC70) # Good luck!
-    set(_boost_COMPILER "vc7") # yes, this is correct
-  elseif (MSVC60) # Good luck!
-    set(_boost_COMPILER "vc6") # yes, this is correct
-  elseif (BORLAND)
-    set(_boost_COMPILER "bcb")
-  elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "SunPro")
-    set(_boost_COMPILER "sw")
-  elseif (MINGW)
-      _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION)
-      set(_boost_COMPILER "mgw${_boost_COMPILER_VERSION}")
-  elseif (UNIX)
-    if (CMAKE_COMPILER_IS_GNUCXX)
+FUNCTION(GUESS_COMPILER_PREFIX _ret)
+    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel"
+        OR "${CMAKE_CXX_COMPILER}" MATCHES "icl"
+        OR "${CMAKE_CXX_COMPILER}" MATCHES "icpc")
+        IF(WIN32)
+            SET(_boost_COMPILER "iw")
+        ELSE()
+            SET(_boost_COMPILER "il")
+        ENDIF()
+    ELSEIF(MSVC12)
+        SET(_boost_COMPILER "vc120")
+    ELSEIF(MSVC11)
+        SET(_boost_COMPILER "vc110")
+    ELSEIF(MSVC10)
+        SET(_boost_COMPILER "vc100")
+    ELSEIF(MSVC90)
+        SET(_boost_COMPILER "vc90")
+    ELSEIF(MSVC80)
+        SET(_boost_COMPILER "vc80")
+    ELSEIF(MSVC71)
+        SET(_boost_COMPILER "vc71")
+    ELSEIF(MSVC70) # Good luck!
+        SET(_boost_COMPILER "vc7") # yes, this is correct
+    ELSEIF(MSVC60) # Good luck!
+        SET(_boost_COMPILER "vc6") # yes, this is correct
+    ELSEIF(BORLAND)
+        SET(_boost_COMPILER "bcb")
+    ELSEIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "SunPro")
+        SET(_boost_COMPILER "sw")
+    ELSEIF(MINGW)
         _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION)
-        # Determine which version of GCC we have.
-      set(_boost_COMPILER "gcc-${_boost_COMPILER_VERSION}")
-    endif ()
-  else()
-    # TODO at least Boost_DEBUG here?
-    set(_boost_COMPILER "")
-  endif()
-  set(${_ret} ${_boost_COMPILER} PARENT_SCOPE)
-endfunction()
+        SET(_boost_COMPILER "mgw${_boost_COMPILER_VERSION}")
+    ELSEIF(UNIX)
+        IF(CMAKE_COMPILER_IS_GNUCXX)
+            _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION)
+            # Determine which version of GCC we have.
+            SET(_boost_COMPILER "gcc-${_boost_COMPILER_VERSION}")
+        ENDIF()
+    ELSE()
+        # TODO at least Boost_DEBUG here?
+        SET(_boost_COMPILER "")
+    ENDIF()
+    SET(${_ret} ${_boost_COMPILER} PARENT_SCOPE)
+ENDFUNCTION()
 
-
-function(GET_LIBNAME LIBNAME VERSIONSTR OUT)
-_Boost_COMPILER_DUMPVERSION(test)
+FUNCTION(GET_LIBNAME LIBNAME VERSIONSTR OUT)
+    _Boost_COMPILER_DUMPVERSION(test)
     GUESS_COMPILER_PREFIX(COMPILERSTR)
     GET_BUILD_TYPE_STR(DBG_STR)
     ARCHITECTURE(ARCHSTR)
-    set(SYSTEM ${CMAKE_SYSTEM_NAME}-${ARCHSTR})
-    set(${OUT} ${LIBNAME}-${SYSTEM}-${COMPILERSTR}-${DBG_STR}-${VERSIONSTR} PARENT_SCOPE)
-endfunction()
+    SET(SYSTEM ${CMAKE_SYSTEM_NAME}-${ARCHSTR})
+    SET(${OUT} ${LIBNAME}-${SYSTEM}-${COMPILERSTR}-${DBG_STR}-${VERSIONSTR} PARENT_SCOPE)
+ENDFUNCTION()
 
 #At the end of this script snippet, the CMake variable PROCESSOR_COUNT has a
 #value appropriate for passing to make's -j for parallel builds.
@@ -128,14 +125,12 @@ endfunction()
 MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
     # Unknown:
     SET(PROCESSOR_COUNT 0)
-
     # Linux:
     SET(cpuinfo_file "/proc/cpuinfo")
     IF(EXISTS "${cpuinfo_file}")
         FILE(STRINGS "${cpuinfo_file}" procs REGEX "^processor.: [0-9]+$")
         LIST(LENGTH procs PROCESSOR_COUNT)
     ENDIF()
-
     # Mac:
     IF(APPLE)
         FIND_PROGRAM(cmd_sys_pro "system_profiler")
@@ -145,7 +140,6 @@ MACRO(MACRO_GET_NUMBER_OF_PROCESSORS PROCESSOR_COUNT)
                    PROCESSOR_COUNT "${info}")
         ENDIF()
     ENDIF()
-
     # Windows:
     IF(WIN32)
         SET(PROCESSOR_COUNT "$ENV{NUMBER_OF_PROCESSORS}")
@@ -176,11 +170,11 @@ MACRO(create_wrapper_hpp module_name headers copyright)
 ENDMACRO()
 
 MACRO(append_copyright IN_FILE OUT_FILE copyright)
-	file(READ ${IN_FILE} CONTENTS)
-	file(WRITE ${OUT_FILE} "/*")
-	file(APPEND ${OUT_FILE} ${copyright})
-	file(APPEND ${OUT_FILE} "*/")
-	file(APPEND ${OUT_FILE} "${CONTENTS}")
+    FILE(READ ${IN_FILE} CONTENTS)
+    FILE(WRITE ${OUT_FILE} "/*")
+    FILE(APPEND ${OUT_FILE} ${copyright})
+    FILE(APPEND ${OUT_FILE} "*/")
+    FILE(APPEND ${OUT_FILE} "${CONTENTS}")
 ENDMACRO()
 
 MACRO(append_copyright_and_install module_name header copyright)
