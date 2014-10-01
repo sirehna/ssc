@@ -2,13 +2,18 @@
 set -e
 mkdir -p fix_up_deb
 dpkg-deb -x @CPACK_PACKAGE_FILE_NAME@.deb fix_up_deb
-# dpkg-deb --control @CPACK_PACKAGE_FILE_NAME@.deb fix_up_deb/DEBIAN
+dpkg-deb --control @CPACK_PACKAGE_FILE_NAME@.deb fix_up_deb/DEBIAN
 rm @CPACK_PACKAGE_FILE_NAME@.deb
-chmod 0644 fix_up_deb/DEBIAN/md5sums
+if [ -f fix_up_deb/DEBIAN/md5sums ]
+then
+    chmod 0644 fix_up_deb/DEBIAN/md5sums
+fi
 if [ -f fix_up_deb/DEBIAN/postinst ]
+then
     chmod 0755 fix_up_deb/DEBIAN/postinst
 fi
 if [ -f fix_up_deb/DEBIAN/prerm ]
+then
     chmod 0755 fix_up_deb/DEBIAN/prerm
 fi
 find -type d -print0 | xargs -0 chmod 755
