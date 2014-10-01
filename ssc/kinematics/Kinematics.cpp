@@ -110,6 +110,7 @@ class Kinematics::Impl
 
         void add(const Transform& t)
         {
+            ds.check_in(__PRETTY_FUNCTION__);
             const std::string direct_transform = make_transform_name(t.get_from_frame(), t.get_to_frame());
             const bool need_to_add_modules = not(ds.has<kinematics::Transform>(direct_transform));
             ds.set(direct_transform, t);
@@ -122,29 +123,27 @@ class Kinematics::Impl
                 ds.add(computer);
                 tree.add(t.get_from_frame(), t.get_to_frame());
             }
+            ds.check_out();
         }
 
         kinematics::Transform get(const std::string& from_frame, const std::string& to_frame)
         {
+            ds.check_in(__PRETTY_FUNCTION__);
             if (from_frame == to_frame) return kinematics::identity(from_frame);
             try
             {
+                ds.check_out();
                 return ds.get<kinematics::Transform>(make_transform_name(from_frame, to_frame));
             }
             catch (const DataSourceException& )
             {
-                try
-                {
-                    CompositeTransformComputer computer(&ds, std::string("composite(")+make_transform_name(from_frame, to_frame)+")");
-                    computer.transforms = tree.get_path(from_frame, to_frame);
-                    ds.add(computer);
-                    tree.add(from_frame, to_frame); // Register compose transform in kinematic tree so it can be used when computing shortest paths
-                    return ds.get<kinematics::Transform>(make_transform_name(from_frame, to_frame));
-                }
-                catch (const KinematicsException& )
-                {
-                    THROW(__PRETTY_FUNCTION__, KinematicsException, std::string("Unable to compute transform from ") + make_transform_name(from_frame, to_frame));
-                }
+                CompositeTransformComputer computer(&ds, std::string("composite(")+make_transform_name(from_frame, to_frame)+")");
+                computer.transforms = tree.get_path(from_frame, to_frame);
+                ds.add(computer);
+                tree.add(from_frame, to_frame); // Register compose transform in kinematic tree so it can be used when computing shortest paths
+                const auto T = ds.get<kinematics::Transform>(make_transform_name(from_frame, to_frame));
+                ds.check_out();
+                return T;
             }
         }
 
