@@ -118,3 +118,17 @@ TEST_F(KinematicsTests, can_add_same_transform_several_times)
     k.add(bTa);
     k.add(bTa);
 }
+
+TEST_F(KinematicsTests, should_throw_when_computing_transform_between_two_disjoint_frames)
+{
+    ssc::kinematics::Kinematics k;
+    const auto bTa = random_transform(a, "A", "B");
+    const auto cTb = random_transform(a, "B", "C");
+    const auto dTe = random_transform(a, "E", "D");
+    k.add(bTa);
+    k.add(cTb);
+    k.add(dTe);
+    ASSERT_THROW(k.get("A", "E"), KinematicsException);
+}
+
+

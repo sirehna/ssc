@@ -60,8 +60,15 @@ class KinematicTree::Impl
 
         PathType get_path(const std::string& frame_A, const std::string& frame_B)
         {
+            if (frame_A == frame_B) return PathType(1,std::make_pair(frame_A,frame_B));
             const std::pair<Vertex,Vertex> edge = get_edge(frame_A, frame_B);
             std::vector<std::string> path = dijkstra(edge);
+
+            if (path.empty())
+            {
+                THROW(__PRETTY_FUNCTION__, KinematicsException,
+                std::string("Unable to compute transform from ") + frame_A + " to " + frame_B + ": maybe the graph is not connected?");
+            }
             if (path.size() < 2) return PathType(1, std::make_pair(frame_A,frame_B));
             PathType ret;
             for (size_t i = 0 ; i < path.size()-1 ; ++i)
