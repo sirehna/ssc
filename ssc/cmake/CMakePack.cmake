@@ -47,26 +47,22 @@ IF(UNIX OR MSYS)
         SET(CPACK_NSIS_CONTACT "charles-edouard.cady@sirehna.com")
         SET(CPACK_NSIS_MODIFY_PATH ON)
         #SET(CPACK_PACKAGE_EXECUTABLES "" "")
-    ELSE(WIN32)
+    ELSE()
         SET(CPACK_STRIP_FILES "./${PACKAGE_NAME}-setup")
         SET(CPACK_SOURCE_STRIP_FILES "")
         SET(CPACK_PACKAGE_EXECUTABLES "" "")
         SET(CPACK_GENERATOR "DEB")
         SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Charles-Edouard Cady")
-    ENDIF(WIN32)
+    ENDIF()
     INCLUDE(CPack)
-ENDIF(UNIX OR MSYS)
+ENDIF()
 
-set(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
-install(EXPORT ${PROJECT_NAME}Targets
-  FILE
-    ${PROJECT_NAME}Targets.cmake
-  DESTINATION
-    ${ConfigPackageLocation}
+SET(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
+INSTALL(EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    DESTINATION ${ConfigPackageLocation}
 )
-install(
-  FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-  DESTINATION
-    ${ConfigPackageLocation}
+INSTALL(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+    DESTINATION ${ConfigPackageLocation}
 )
