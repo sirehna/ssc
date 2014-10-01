@@ -15,12 +15,13 @@ ENDIF()
 
 SET(PACKAGE_NAME ${PROJECT_NAME}-${${PROJECT_NAME}_VERSION})
 
-IF (NOT WIN32) # Otherwise installs headers in /usr instead of /usr/local under Debian
+IF(NOT WIN32) # Otherwise installs headers in /usr instead of /usr/local under Debian
     set(CPACK_SET_DESTDIR true)
 ENDIF()
 
 #####################################"
 # Instructions to build an installer
+# See http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 IF(UNIX OR MSYS)
     INCLUDE(InstallRequiredSystemLibraries)
     SET(CPACK_PACKAGE_NAME ${PACKAGE_NAME})
@@ -48,11 +49,24 @@ IF(UNIX OR MSYS)
         SET(CPACK_NSIS_MODIFY_PATH ON)
         #SET(CPACK_PACKAGE_EXECUTABLES "" "")
     ELSE()
+        IF(NOT CPACK_GENERATOR)
+            SET(CPACK_GENERATOR "DEB")
+        ENDIF(NOT CPACK_GENERATOR)
         SET(CPACK_STRIP_FILES "./${PACKAGE_NAME}-setup")
         SET(CPACK_SOURCE_STRIP_FILES "")
         SET(CPACK_PACKAGE_EXECUTABLES "" "")
-        SET(CPACK_GENERATOR "DEB")
-        SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Charles-Edouard Cady")
+        IF(CPACK_GENERATOR STREQUAL "DEB")
+            CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/fixup_deb.sh.in
+                           ${CMAKE_CURRENT_BINARY_DIR}/fixup_deb.sh @ONLY IMMEDIATE)
+            SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Charles-Edouard Cady")
+            SET(CPACK_DEBIAN_PACKAGE_PRIORITY "")
+            SET(CPACK_DEBIAN_PACKAGE_SECTION "")#input our section
+            SET(CPACK_DEBIAN_PACKAGE_RECOMMENDS "Unknown")
+            SET(CPACK_DEBIAN_PACKAGE_SUGGESTS "Unknown")
+            #SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.12), libstdc++6 (>= 4.4.7)")
+            #SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "")#i386, amd64
+            #SET(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/postinst;${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/prerm")
+        ENDIF()
     ENDIF()
     INCLUDE(CPack)
 ENDIF()
