@@ -137,20 +137,13 @@ class Kinematics::Impl
             }
             catch (const DataSourceException& )
             {
-                try
-                {
-                    CompositeTransformComputer computer(&ds, std::string("composite(")+make_transform_name(from_frame, to_frame)+")");
-                    computer.transforms = tree.get_path(from_frame, to_frame);
-                    ds.add(computer);
-                    tree.add(from_frame, to_frame); // Register compose transform in kinematic tree so it can be used when computing shortest paths
-                    const auto T = ds.get<kinematics::Transform>(make_transform_name(from_frame, to_frame));
-                    ds.check_out();
-                    return T;
-                }
-                catch (const KinematicsException& )
-                {
-                    THROW(__PRETTY_FUNCTION__, KinematicsException, std::string("Unable to compute transform from ") + make_transform_name(from_frame, to_frame));
-                }
+                CompositeTransformComputer computer(&ds, std::string("composite(")+make_transform_name(from_frame, to_frame)+")");
+                computer.transforms = tree.get_path(from_frame, to_frame);
+                ds.add(computer);
+                tree.add(from_frame, to_frame); // Register compose transform in kinematic tree so it can be used when computing shortest paths
+                const auto T = ds.get<kinematics::Transform>(make_transform_name(from_frame, to_frame));
+                ds.check_out();
+                return T;
             }
         }
 
