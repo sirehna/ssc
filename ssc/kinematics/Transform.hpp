@@ -38,6 +38,7 @@ namespace ssc
                 Eigen::Vector3d operator*(const Eigen::Vector3d& P) const;
                 Point operator*(const Point& P) const;
                 PointMatrix operator*(const PointMatrix& P) const;
+                PointMatrix operator*(const PointMatrixPtr& P) const;
                 Velocity operator*(const Velocity& P) const;
                 Transform operator*(const Transform& P) const;
                 std::string get_from_frame() const;

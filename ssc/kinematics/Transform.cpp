@@ -44,6 +44,17 @@ PointMatrix Transform::operator*(const PointMatrix& P) const
     return PointMatrix(m,to_frame);
 }
 
+PointMatrix Transform::operator*(const PointMatrixPtr& P) const
+{
+    if (P->get_frame() != get_from_frame())
+    {
+        THROW(__PRETTY_FUNCTION__, KinematicsException, std::string("Frames don't match: transform goes from ") + get_from_frame() + " to " + to_frame + ", but point lies in " + P->get_frame());
+    }
+    Matrix3Xd m(r*P->m);
+    m.colwise() += t.v;
+    return PointMatrix(m,to_frame);
+}
+
 Velocity Transform::operator*(const Velocity& V) const
 {
     if (V.get_frame() != get_from_frame())
