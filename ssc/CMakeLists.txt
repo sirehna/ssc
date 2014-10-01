@@ -66,7 +66,6 @@ FILE(READ "${CMAKE_CURRENT_SOURCE_DIR}/description.txt" DESCRIPTION)
 CONFIGURE_FILE(${CMAKE_CURRENT_BINARY_DIR}/readme.txt.in
                ${CMAKE_CURRENT_BINARY_DIR}/readme.txt @ONLY)
 #############################################################################
-
 MESSAGE(STATUS "VERSION_MAJOR : ${${PROJECT_NAME}_MAJOR_VERSION}")
 MESSAGE(STATUS "VERSION_MINOR : ${${PROJECT_NAME}_MINOR_VERSION}")
 MESSAGE(STATUS "VERSION_PATCH : ${${PROJECT_NAME}_PATCH_VERSION}")
@@ -74,7 +73,6 @@ SET(${PROJECT_NAME}_VERSION
     ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_VERSION})
 SET(${PROJECT_NAME}_VERSION_STR
     ${${PROJECT_NAME}_MAJOR_VERSION}-${${PROJECT_NAME}_MINOR_VERSION}-${${PROJECT_NAME}_PATCH_VERSION})
-
 #############################################################################
 
 # Configure the package
@@ -137,7 +135,8 @@ SET(YAML_CPP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/src
                           ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include/yaml-cpp)
 
 SET(eigen_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/eigen)
-ADD_DEFINITIONS(-DEIGEN_DONT_VECTORIZE) # Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
+# Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
+ADD_DEFINITIONS(-DEIGEN_DONT_VECTORIZE)
 ADD_DEFINITIONS(-DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
 IF(${CMAKE_BUILD_TYPE})
     IF(${CMAKE_BUILD_TYPE} EQUAL Release)
@@ -147,7 +146,8 @@ ENDIF()
 
 ADD_SUBDIRECTORY(f2c)
 ADD_SUBDIRECTORY(geographiclib EXCLUDE_FROM_ALL)
-SET(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include CACHE PATH "Path to libGeographic include directory")
+SET(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include
+    CACHE PATH "Path to libGeographic include directory")
 
 #############################################################################
 # Compilation part
@@ -225,4 +225,3 @@ ENDIF()
 #############################################################################
 INCLUDE(CMakeCustomTargets)
 INCLUDE(CMakePack)
-
