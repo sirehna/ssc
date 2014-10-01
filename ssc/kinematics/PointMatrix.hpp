@@ -4,6 +4,9 @@
 #include <string>
 #include <Eigen/Dense>
 
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
+
 namespace ssc
 {
     namespace kinematics
@@ -34,5 +37,7 @@ namespace ssc
         void swap(PointMatrix& one, PointMatrix& the_other);
     }
 }
+
+typedef TR1(shared_ptr)<ssc::kinematics::PointMatrix> PointMatrixPtr;
 
 #endif
