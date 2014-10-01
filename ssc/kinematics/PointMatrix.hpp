@@ -35,9 +35,9 @@ namespace ssc
         PointMatrix operator+(const Point& P, const PointMatrix& M);
 
         void swap(PointMatrix& one, PointMatrix& the_other);
+        typedef TR1(shared_ptr)<ssc::kinematics::PointMatrix> PointMatrixPtr;
     }
 }
 
-typedef TR1(shared_ptr)<ssc::kinematics::PointMatrix> PointMatrixPtr;
 
 #endif
