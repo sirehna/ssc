@@ -92,14 +92,6 @@ CONFIGURE_PACKAGE_CONFIG_FILE(
        "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
        INSTALL_DESTINATION "${ConfigPackageLocation}"
        PATH_VARS SSC_INCLUDE_DIRS)
-
-IF(NOT WIN32)
-    INSTALL(
-        FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-        DESTINATION "${ConfigPackageLocation}"
-        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-        )
-ENDIF()
 #############################################################################
 INCLUDE(CMakeGMock)
 
