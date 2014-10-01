@@ -681,7 +681,6 @@ INPUT = "@CMAKE_CURRENT_SOURCE_DIR@/DoxygenMainPage.txt" \
         "@CMAKE_CURRENT_SOURCE_DIR@/quadpack" \
         "@CMAKE_CURRENT_SOURCE_DIR@/random_data_generator" \
         "@CMAKE_CURRENT_SOURCE_DIR@/solver" \
-        "@CMAKE_CURRENT_SOURCE_DIR@/solver/concepts.txt" \
         "@CMAKE_CURRENT_SOURCE_DIR@/text_file_reader" \
         "@CMAKE_CURRENT_SOURCE_DIR@/yaml_parser"
 
