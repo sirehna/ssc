@@ -18,7 +18,8 @@ ENDIF()
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
-MESSAGE(STATUS "GIT : SHA1 : ${GIT_SHA1}")
+get_short_git_hash(short_hash)
+write_sha_checker(${short_hash} ${GIT_SHA1} "check_ssc_version.hpp")
 
 GIT_DESCRIBE(GIT_VERSION --tags --dirty=-dirty)
 IF(${GIT_VERSION} STREQUAL "GIT_UNTAGGED_REVISION")
