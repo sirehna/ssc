@@ -236,3 +236,16 @@ TEST_F(WrenchTest, can_multiply_wrench_by_constant)
     ASSERT_DOUBLE_EQ(10, v.M());
     ASSERT_DOUBLE_EQ(12, v.N());
 }
+
+TEST_F(WrenchTest, can_build_a_wrench_from_a_6x1_matrix)
+{
+    Vector6d W;
+    W << 1,2,3,4,5,6;
+    const Wrench w(Point("foo", 4564,321258,21421), W);
+    ASSERT_DOUBLE_EQ(1, w.X());
+    ASSERT_DOUBLE_EQ(2, w.Y());
+    ASSERT_DOUBLE_EQ(3, w.Z());
+    ASSERT_DOUBLE_EQ(4, w.K());
+    ASSERT_DOUBLE_EQ(5, w.M());
+    ASSERT_DOUBLE_EQ(6, w.N());
+}
