@@ -18,8 +18,6 @@ ENDIF()
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
-get_short_git_hash(short_hash)
-write_sha_checker(${short_hash} ${GIT_SHA1} "check_ssc_version.hpp")
 
 GIT_DESCRIBE(GIT_VERSION --tags --dirty=-dirty)
 IF(${GIT_VERSION} STREQUAL "GIT_UNTAGGED_REVISION")
@@ -75,6 +73,9 @@ SET(${PROJECT_NAME}_VERSION
 SET(${PROJECT_NAME}_VERSION_STR
     ${${PROJECT_NAME}_MAJOR_VERSION}-${${PROJECT_NAME}_MINOR_VERSION}-${${PROJECT_NAME}_PATCH_VERSION})
 #############################################################################
+
+get_short_git_hash(short_hash)
+write_sha_checker(${short_hash} ${GIT_SHA1} "check_ssc_version.hpp")
 
 # Configure the package
 IF(WIN32)
