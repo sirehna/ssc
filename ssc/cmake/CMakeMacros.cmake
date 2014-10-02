@@ -247,3 +247,20 @@ MACRO(add_libs name)
             COMPONENT ${name}
     )
 ENDMACRO()
+
+MACRO(write_sha_checker short_sha long_sha filename)
+    FILE(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${filename} "")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#ifndef SSC_SHA_CHECKER\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#define SSC_SHA_CHECKER\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#include <boost/static_assert.hpp>\n\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#define SSC_GIT_SHA 0x${short_sha}\n\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#define LONG_SSC_GIT_SHA \"0x${long_sha}\"\n\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "// Compile-time assert. Usage: CHECK_SSC_VERSION(0x741957727bb3e14);\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#define CHECK_SSC_VERSION(expected) BOOST_STATIC_ASSERT(SSC_GIT_SHA == expected);\n\n")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#endif")
+    FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "\n")
+    INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${filename}
+            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc
+            )
+ENDMACRO()
