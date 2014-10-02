@@ -37,6 +37,12 @@ Wrench::Wrench(const Point& P_) : force(Eigen::Vector3d(0,0,0)),
 {
 }
 
+Wrench::Wrench(const Point& P_, const Vector6d& v) : force(Eigen::Vector3d(v(0),v(1),v(2))),
+        torque(Eigen::Vector3d(v(3),v(4),v(5))),
+        P(P_)
+{
+}
+
 Wrench::Wrench() : force(Eigen::Vector3d()),
                    torque(Eigen::Vector3d()),
                    P(Point())
