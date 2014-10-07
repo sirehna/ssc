@@ -10,18 +10,9 @@
 #include <sstream>
 
 #include "ssc/text_file_reader/TextFileReader.hpp"
-#include "ssc/exception_handling/Exception.hpp"
+#include "ssc/text_file_reader/TextFileReaderException.hpp"
 
 using namespace ssc::text_file_reader;
-
-class TextFileReaderException: public Exception
-{
-    public:
-        TextFileReaderException(const char* s) :
-                Exception(s)
-        {
-        }
-};
 
 TextFileReader::TextFileReader(const std::vector<std::string>& filenames_) : filenames(filenames_),
 contents("")
@@ -34,7 +25,7 @@ contents("")
 		if (current_input_file.fail())
 		{
 			std::string error = std::string("Unable to open input file '") + *that_filename + std::string("'");
-			THROW("TextFileReader::TextFileReader::TextFileReader(const std::vector<std::string>&)", TextFileReaderException, "Unable to open input file");
+			THROW(__PRETTY_FUNCTION__, TextFileReaderException, error);
 		}
 		std::string current_line;
 		while (!current_input_file.eof())
