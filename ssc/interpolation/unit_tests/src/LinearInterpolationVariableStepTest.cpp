@@ -202,16 +202,16 @@ TEST_F(LinearInterpolationVariableStepTest, should_throw_if_there_are_not_at_lea
     ASSERT_THROW(LinearInterpolationVariableStep(std::vector<double>(1,a.random<double>()),std::vector<double>(1,a.random<double>())), PiecewiseConstantVariableStepException);
 }
 
-TEST_F(LinearInterpolationVariableStepTest, should_throw_if_retrieving_an_x_outside_bounds)
+TEST_F(LinearInterpolationVariableStepTest, should_return_constant_when_retrieving_an_x_outside_bounds)
 {
     for (size_t i = 0 ; i < 100 ; ++i)
     {
         const size_t n = a.random<size_t>().between(2,100);
         const std::vector<double> x = a_random_vector_of_doubles_in_increasing_order_of_size(a, n);
-        const std::vector<double> y = a.random_vector_of<double>().of_size(n);
+        const std::vector<double> y = a.random_vector_of<double>().of_size(n).between(-1E3,1E3);
         LinearInterpolationVariableStep interpolate(x,y);
-        ASSERT_THROW(interpolate.f(a.random<double>().outside(x.front(),x.back())), IndexFinderException);
-        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back())), IndexFinderException);
-        ASSERT_THROW(interpolate.df(a.random<double>().outside(x.front(),x.back()),2), IndexFinderException);
+        ASSERT_SMALL_RELATIVE_ERROR(y.front(), interpolate.f(a.random<double>().no().greater_than(x.front())), 1E-6) << "i = " << i;
+        ASSERT_SMALL_RELATIVE_ERROR(y.back(), interpolate.f(a.random<double>().greater_than(x.back())), 1E-6) << "i = " << i;
+        ASSERT_DOUBLE_EQ(0, interpolate.df(a.random<double>().outside(x.front(),x.back()))) << "i = " << i;
     }
 }
