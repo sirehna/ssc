@@ -12,11 +12,11 @@
 
 using namespace ssc::data_source;
 
-class PhysicalQuantityException : public Exception
+class PhysicalQuantityException : public ::ssc::exception_handling::Exception
 {
     public:
         PhysicalQuantityException(const char* s) :
-                Exception(s)
+            ::ssc::exception_handling::Exception(s)
         {
         }
 };

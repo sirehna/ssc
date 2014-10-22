@@ -21,7 +21,7 @@ namespace ssc
 {
     namespace data_source
     {
-        class SignalContainerException : public Exception
+        class SignalContainerException : public ::ssc::exception_handling::Exception
         {
             public:
                 SignalContainerException(const char* s) :

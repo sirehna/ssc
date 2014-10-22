@@ -19,11 +19,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class SplineVariableStepException : public Exception
+        class SplineVariableStepException : public ::ssc::exception_handling::Exception
         {
             public:
                 SplineVariableStepException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

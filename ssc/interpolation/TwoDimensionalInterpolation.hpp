@@ -23,11 +23,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class TwoDimensionalInterpolationException : public Exception
+        class TwoDimensionalInterpolationException : public ::ssc::exception_handling::Exception
         {
             public:
                 TwoDimensionalInterpolationException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

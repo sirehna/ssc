@@ -14,7 +14,7 @@ namespace ssc
 {
     namespace data_source
     {
-        class CoercionException : public Exception
+        class CoercionException : public ::ssc::exception_handling::Exception
         {
             public:
                 CoercionException(const char* s) :

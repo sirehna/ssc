@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class PiecewiseConstantException : public Exception
+        class PiecewiseConstantException : public ::ssc::exception_handling::Exception
         {
             public:
                 PiecewiseConstantException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

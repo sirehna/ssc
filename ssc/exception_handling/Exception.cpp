@@ -3,21 +3,21 @@
 
 #include "ssc/exception_handling/Exception.hpp"
 
-Exception::Exception(const char* message_):
+::ssc::exception_handling::Exception::Exception(const char* message_):
                                message(message_)
 {
 }
 
-Exception::Exception(const Exception& rhs):
+::ssc::exception_handling::Exception::Exception(const Exception& rhs):
                     message(rhs.message)
 {
 }
 
-Exception::~Exception () throw ()
+::ssc::exception_handling::Exception::~Exception () throw ()
 {
 }
 
-const char* Exception::what() const throw()
+const char* ::ssc::exception_handling::Exception::what() const throw()
 {
     return message;
 }

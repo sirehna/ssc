@@ -20,11 +20,11 @@ namespace ssc
     {
         class LegChain;
 
-        class TrackException : public Exception
+        class TrackException : public ::ssc::exception_handling::Exception
         {
             public:
                 TrackException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };
