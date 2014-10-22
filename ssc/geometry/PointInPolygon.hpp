@@ -17,11 +17,11 @@ namespace ssc
 {
     namespace geometry
     {
-        class PointInPolygonException : public Exception
+        class PointInPolygonException : public ::ssc::exception_handling::Exception
         {
             public:
                 PointInPolygonException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

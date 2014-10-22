@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class ParabolicInterpolationException : public Exception
+        class ParabolicInterpolationException : public ::ssc::exception_handling::Exception
         {
             public:
                 ParabolicInterpolationException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

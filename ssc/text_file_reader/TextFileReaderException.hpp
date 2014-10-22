@@ -3,11 +3,11 @@
 
 #include "ssc/exception_handling/Exception.hpp"
 
-class TextFileReaderException: public Exception
+class TextFileReaderException: public ::ssc::exception_handling::Exception
 {
     public:
         TextFileReaderException(const char* s) :
-                Exception(s)
+            ::ssc::exception_handling::Exception(s)
         {
         }
 };

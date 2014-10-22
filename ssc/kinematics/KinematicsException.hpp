@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace kinematics
     {
-        class KinematicsException: public Exception
+        class KinematicsException: public ::ssc::exception_handling::Exception
         {
             public:
                 KinematicsException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

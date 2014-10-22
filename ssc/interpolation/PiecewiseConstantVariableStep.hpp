@@ -22,11 +22,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class PiecewiseConstantVariableStepException : public Exception
+        class PiecewiseConstantVariableStepException : public ::ssc::exception_handling::Exception
         {
             public:
                 PiecewiseConstantVariableStepException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

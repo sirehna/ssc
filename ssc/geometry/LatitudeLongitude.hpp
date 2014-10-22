@@ -16,7 +16,7 @@ namespace ssc
 {
     namespace geometry
     {
-        class LatitudeLongitudeException : public Exception
+        class LatitudeLongitudeException : public ::ssc::exception_handling::Exception
         {
             public:
                 LatitudeLongitudeException(const char* s) :

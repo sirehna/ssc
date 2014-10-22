@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class SplinesException : public Exception
+        class SplinesException : public ::ssc::exception_handling::Exception
         {
             public:
                 SplinesException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

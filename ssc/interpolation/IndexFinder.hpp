@@ -16,11 +16,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class IndexFinderException : public Exception
+        class IndexFinderException : public ::ssc::exception_handling::Exception
         {
             public:
                 IndexFinderException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

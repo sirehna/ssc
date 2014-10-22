@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace data_source
     {
-        class DataSourceException : public Exception
+        class DataSourceException : public ::ssc::exception_handling::Exception
         {
             public:
                 DataSourceException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

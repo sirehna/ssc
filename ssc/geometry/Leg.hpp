@@ -16,11 +16,11 @@ namespace ssc
 {
     namespace geometry
     {
-        class LegException : public Exception
+        class LegException : public ::ssc::exception_handling::Exception
         {
             public:
                 LegException(const char* s) :
-                        Exception(s)
+                    ::ssc::exception_handling::Exception(s)
                 {
                 }
         };

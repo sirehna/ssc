@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace interpolation
     {
-        class VectorOfEquallySpacedNumbersException: public Exception
+        class VectorOfEquallySpacedNumbersException: public ::ssc::exception_handling::Exception
         {
             public:
                 VectorOfEquallySpacedNumbersException(const char* s) :
-                        Exception(s) {
+                    ::ssc::exception_handling::Exception(s) {
                 }
         };
     }

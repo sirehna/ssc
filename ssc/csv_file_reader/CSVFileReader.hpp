@@ -11,10 +11,10 @@ namespace ssc
 {
     namespace csv_file_reader
     {
-        class CSVFileReaderException: public Exception {
+        class CSVFileReaderException: public ::ssc::exception_handling::Exception {
         public:
             CSVFileReaderException(const char* s) :
-                    Exception(s) {
+                ::ssc::exception_handling::Exception(s) {
             }
         };
 
