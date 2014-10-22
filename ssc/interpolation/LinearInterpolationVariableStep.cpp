@@ -53,34 +53,36 @@ namespace ssc
                 const double b = y.at(i) - a*x.at(i);
                 ret.push_back(Linear(a,b));
             }
+
             ret.push_back(ret.back());
             return ret;
         }
     }
 }
 
-
-
 class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
 {
     public:
-        LinearInterpolationVariableStepImpl(const std::vector<double>& x_, const std::vector<double>& y) : coeff_computer(PiecewiseConstantVariableStep<Linear>(x_, compute_linear_coefficients(x_,y))), coeffs(std::vector<Linear>(x_.size()-1,Linear())), x0_(0), x(x_)
+        LinearInterpolationVariableStepImpl(const std::vector<double>& x_, const std::vector<double>& y) : coeff_computer(PiecewiseConstantVariableStep<Linear>(x_, compute_linear_coefficients(x_,y),true)), coeffs(std::vector<Linear>(x_.size()-1,Linear())), x0_(0), x(x_)
         {
 
         }
 
         void set_computed_value(const double x0, const size_t i)
         {
-            coeffs[i] = coeff_computer.f(x0);
+            coeffs[i] = coeff_computer.f(std::min(x.back(),std::max(x.front(),x0)));
         }
 
         double get_val(const size_t i) const
         {
-            return coeffs[i].slope*x0_ + coeffs[i].intersection_with_origin;
+            if (x0_ < x.front()) return coeffs.front().slope*x.front() + coeffs.front().intersection_with_origin;
+            if (x0_ > x.back())  return coeffs.back().slope*x.back() + coeffs.back().intersection_with_origin;
+                                 return coeffs[i].slope*x0_ + coeffs[i].intersection_with_origin;
         }
 
         double get_derivative(const size_t i) const
         {
+            if ((x0_ < x.front()) or (x0_ > x.back())) return 0;
             return coeffs[i].slope;
         }
 
