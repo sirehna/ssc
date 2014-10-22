@@ -13,7 +13,7 @@ std::vector<double> a_random_vector_of_doubles_in_increasing_order_of_size(const
     std::vector<double> ret;
     if (n)
     {
-        const double x = a.random<double>();
+        const double x = a.random<double>().between(-1E6,1E6);
         ret.push_back(x);
     }
     for (size_t i = 1 ; i < n ; ++i)
