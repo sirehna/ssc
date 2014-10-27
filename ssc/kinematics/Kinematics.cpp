@@ -110,6 +110,10 @@ class Kinematics::Impl
 
         void add(const Transform& t)
         {
+            if (t.get_from_frame() == t.get_to_frame())
+            {
+                THROW(__PRETTY_FUNCTION__, KinematicsException, std::string("Cannot add a transform from '") + t.get_from_frame() + "' to itself");
+            }
             ds.check_in(__PRETTY_FUNCTION__);
             const std::string direct_transform = make_transform_name(t.get_from_frame(), t.get_to_frame());
             const bool need_to_add_modules = not(ds.has<kinematics::Transform>(direct_transform));
