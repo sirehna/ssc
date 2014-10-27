@@ -42,7 +42,7 @@ namespace ssc
         {
             public:
                 SplineVariableStep();
-                SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y);
+                SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y, const bool allow_queries_outside_bounds = false);
 
             private:
                 double get_f() const;

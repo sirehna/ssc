@@ -122,3 +122,14 @@ TEST_F(SplineVariableStepTest, derivative_should_be_computed_properly)
         ASSERT_NEAR(0,S2.df(a.random<double>().between(1,13),3),EPS);
     }
 }
+
+TEST_F(SplineVariableStepTest, can_query_outside_bounds_if_needed)
+{
+    std::vector<double> x,y;
+    x.push_back(1);x.push_back(0);x.push_back(20);x.push_back(2);
+    y.push_back(1);y.push_back(4);y.push_back(9);y.push_back(45);
+    bool allow_queries_outside_bounds;
+    SplineVariableStep S(x,y, allow_queries_outside_bounds = true);
+    ASSERT_NO_THROW(S.f(-1));
+    ASSERT_NO_THROW(S.f(21));
+}
