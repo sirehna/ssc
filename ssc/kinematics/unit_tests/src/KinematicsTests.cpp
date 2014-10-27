@@ -131,4 +131,9 @@ TEST_F(KinematicsTests, should_throw_when_computing_transform_between_two_disjoi
     ASSERT_THROW(k.get("A", "E"), KinematicsException);
 }
 
-
+TEST_F(KinematicsTests, should_throw_when_adding_tranform_from_a_frame_to_itself) // Bug detected in IRT simulator
+{
+    ssc::kinematics::Kinematics k;
+    const auto aTa = random_transform(a, "A", "A");
+    ASSERT_THROW(k.add(aTa), KinematicsException);
+}
