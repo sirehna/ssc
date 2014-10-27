@@ -166,8 +166,8 @@ SplineVariableStep::SplineVariableStep() : VariableStepInterpolation(std::vector
 
 }
 
-SplineVariableStep::SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y) :
-        VariableStepInterpolation(sort(x)),
+SplineVariableStep::SplineVariableStep(const std::vector<double>& x, const std::vector<double>& y, const bool allow_queries_outside_bounds) :
+        VariableStepInterpolation(sort(x), allow_queries_outside_bounds),
         pimpl(TR1(shared_ptr)<Impl>(new Impl(x,y)))
 {
 }
