@@ -40,13 +40,13 @@ namespace ssc
             public:
                 bool is_in_polygon(const LatitudeLongitude& point) const;
                 virtual ~PointInPolygon();
+                class PointInPolygonPimpl;
 
             private:
                 PointInPolygon();
 
             protected:
                 PointInPolygon(const std::vector<LatitudeLongitude>& polygon);
-                class PointInPolygonPimpl;
                 std::tr1::shared_ptr<PointInPolygonPimpl> pimpl;
         };
     }
