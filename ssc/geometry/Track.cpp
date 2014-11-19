@@ -292,7 +292,7 @@ std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const Latitude
         {
             nearest_point = p;
             smallest_distance = d;
-            idx = that_leg-pimpl->legs->begin();
+            idx = (size_t)(that_leg-pimpl->legs->begin());
         }
     }
     return std::make_pair(nearest_point,idx);

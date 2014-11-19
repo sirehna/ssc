@@ -111,51 +111,51 @@ void ConvertibleTypes::erase(std::list<ConstSignalIterator>& l, const TypedSigna
     l = ret;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<bool>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<bool>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_bool;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<char>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<char>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_char;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<wchar_t>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<wchar_t>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_wchar_t;
 }
-template<> std::list<ConstSignalIterator>& select_list_from_type<short>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<short>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_short;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<int>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<int>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_int;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<size_t>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<size_t>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_size_t;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<long>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<long>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_long;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<float>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<float>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_float;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<double>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<double>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_double;
 }
 
-template<> std::list<ConstSignalIterator>& select_list_from_type<PhysicalQuantity>(ConvertibleTypes& lists)
+template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::select_list_from_type<PhysicalQuantity>(ssc::data_source::ConvertibleTypes& lists)
 {
     return lists.iter_phys_qty;
 }
@@ -163,28 +163,34 @@ template<> std::list<ConstSignalIterator>& select_list_from_type<PhysicalQuantit
 
 
 
-
-DEFINE_TYPE_ACCESSORS(bool)
-DEFINE_TYPE_ACCESSORS(char)
-DEFINE_TYPE_ACCESSORS(wchar_t)
-DEFINE_TYPE_ACCESSORS(short)
-DEFINE_TYPE_ACCESSORS(int)
-DEFINE_TYPE_ACCESSORS(size_t)
-DEFINE_TYPE_ACCESSORS(long)
-DEFINE_TYPE_ACCESSORS(float)
-DEFINE_TYPE_ACCESSORS(double)
-template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTypes& l)
+namespace ssc
 {
-    return l.iter_phys_qty.begin();
-}
+    namespace data_source
+    {
 
-template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
-{
-    return l.iter_phys_qty.end();
-}
+		DEFINE_TYPE_ACCESSORS(bool)
+		DEFINE_TYPE_ACCESSORS(char)
+		DEFINE_TYPE_ACCESSORS(wchar_t)
+		DEFINE_TYPE_ACCESSORS(short)
+		DEFINE_TYPE_ACCESSORS(int)
+		DEFINE_TYPE_ACCESSORS(size_t)
+		DEFINE_TYPE_ACCESSORS(long)
+		DEFINE_TYPE_ACCESSORS(float)
+		DEFINE_TYPE_ACCESSORS(double)
+		template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTypes& l)
+		{
+			return l.iter_phys_qty.begin();
+		}
 
-::std::ostream& ssc::data_source::operator<<(::std::ostream& os, const ssc::data_source::TypedSignalName& s)
-{
-    os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
-    return os;
+		template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
+		{
+			return l.iter_phys_qty.end();
+		}
+
+		::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s)
+		{
+			os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
+			return os;
+		}
+    }
 }

@@ -73,7 +73,7 @@ namespace ssc
                 T f(const double x0)
                 {
                     update_coefficients_if_necessary(x0);
-                    return y_[idx];
+                    return y_[(size_t)idx];
                 }
 
                 using Interpolator::df;

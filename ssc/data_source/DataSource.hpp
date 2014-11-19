@@ -28,22 +28,26 @@
 #define SET(ds,x,val) ds.set<x::_type>(x::_name,val)
 #define FORCE(ds,x,val) ds.force<x::_type>(x::_name,val)
 
+#define USE_HASH_MAPS 1
+
+#if USE_HASH_MAPS
+#include <tr1/unordered_map>
+#else
+#include <map>
+#endif
+
 namespace ssc
 {
     namespace data_source
     {
         typedef TR1(shared_ptr)<const DataSourceModule> ModulePtr;
 
-        #define USE_HASH_MAPS 1
-
         #if USE_HASH_MAPS
-            #include <tr1/unordered_map>
             typedef TR1(unordered_map)<TypedModuleName,ModulePtr > FromName2Module;
             typedef TR1(unordered_map)<TypedSignalName,TypedModuleName> FromSignal2Module;
             typedef TR1(unordered_map)<TypedModuleName,std::set<TypedModuleName> > DependantModules;
             typedef TR1(unordered_map)<TypedModuleName,bool > UpdateState;
         #else
-            #include <map>
             typedef std::map<TypedModuleName,ModulePtr > FromName2Module;
             typedef std::map<TypedSignalName,TypedModuleName> FromSignal2Module;
             typedef std::map<TypedModuleName,std::set<TypedModuleName> > DependantModules;

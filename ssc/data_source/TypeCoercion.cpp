@@ -16,7 +16,7 @@ void ssc::data_source::decoerce(std::list<double>& ret, bool& thing_to_convert)
     {
         THROW(__PRETTY_FUNCTION__, CoercionException, "List is empty.");
     }
-    thing_to_convert = ret.front();
+    thing_to_convert = (bool)ret.front();
     ret.pop_front();
 }
 
