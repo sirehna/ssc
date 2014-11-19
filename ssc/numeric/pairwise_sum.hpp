@@ -52,7 +52,7 @@ namespace ssc
             std::vector<T> x;
             for (;it!=end ; ++it)
             {
-                x.push_back(*(first+*it));
+                x.push_back((T)*(first+ (long)*it));
             }
             return pairwise(x);
         }

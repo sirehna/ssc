@@ -17,7 +17,7 @@ using namespace ssc::interpolation;
 
 void IndexFinder::check_x_is_strictly_increasing(const std::vector<double>& x)
 {
-    for (int i = 1; i < n; ++i)
+    for (size_t i = 1; i < (size_t)n; ++i)
     {
         if (x[i] <= x[i - 1])
         {
@@ -55,7 +55,7 @@ size_t IndexFinder::compute(const double x0)
         THROW(__PRETTY_FUNCTION__, IndexFinderException, ss.str());
     }
     if (x0 < xmin)       return 0;
-    if (x0 > xmax)       return n-1;
+    if (x0 > xmax)       return (size_t)n-1;
     int ilo = idx_low;
     int ihi = ilo + 1;
     if (ihi >= n-1)
@@ -65,9 +65,9 @@ size_t IndexFinder::compute(const double x0)
         ilo = n - 2;
         ihi = n - 1;
     }
-    if (x0 >= x_[ihi])   return increase_ihi_to_capture_x(ilo, ihi, x0);
-    if (x0 >= x_[ilo])   return between_min_and_max(ilo);
-                         return decrease_ilo_to_capture_x(ilo, ihi, x0);
+    if (x0 >= x_[(size_t)ihi])   return increase_ihi_to_capture_x(ilo, ihi, x0);
+    if (x0 >= x_[(size_t)ilo])   return between_min_and_max(ilo);
+                                 return decrease_ilo_to_capture_x(ilo, ihi, x0);
 }
 
 void IndexFinder::adjust_left(int& left) const
@@ -76,14 +76,14 @@ void IndexFinder::adjust_left(int& left) const
     {
         if (left == 0) break;
         left = left - 1;
-        if (x_[left] < xmax) break;
+        if (x_[(size_t)left] < xmax) break;
     }
 }
 
 size_t IndexFinder::greater_than_max(const int ilo)
 {
       idx_low = ilo;
-      return n-1;
+      return (size_t)n-1;
 }
 
 size_t IndexFinder::lower_than_min(const int ilo)
@@ -95,15 +95,15 @@ size_t IndexFinder::lower_than_min(const int ilo)
 size_t IndexFinder::between_min_and_max(const int ilo)
 {
       idx_low = ilo;
-      return ilo;
+      return (size_t)ilo;
 }
 
 size_t IndexFinder::bisection (const int ilo, const int ihi, const double x)
 {
     const int middle = (ilo + ihi)/2;
-    if (middle == ilo)   return between_min_and_max(ilo);
-    if (x < x_[middle])  return bisection(ilo, middle, x);
-                         return bisection(middle, ihi, x);
+    if (middle == ilo)           return between_min_and_max(ilo);
+    if (x < x_[(size_t)middle])  return bisection(ilo, middle, x);
+                                 return bisection(middle, ihi, x);
 }
 
 size_t IndexFinder::increase_ihi_to_capture_x(int& ilo, int& ihi, const double x)
@@ -114,14 +114,14 @@ size_t IndexFinder::increase_ihi_to_capture_x(int& ilo, int& ihi, const double x
         ilo = ihi;
         ihi = ilo + istep;
         if (ihi >= n-1)              break;
-        if (x < x_[ihi])             return bisection(ilo, ihi, x);
+        if (x < x_[(size_t)ihi])     return bisection(ilo, ihi, x);
         istep = istep*2;
     }
     if (x >= xmax)
     {
         int left = int(greater_than_max(ilo));
         adjust_left(left);
-        return left;
+        return (size_t)left;
     }
     ihi = n-1;
     ilo = std::max(0,std::min(ilo, n-1));
@@ -135,7 +135,7 @@ size_t IndexFinder::decrease_ilo_to_capture_x(int& ilo, int& ihi, const double x
     {
         ihi = ilo;
         ilo = std::max(0,ihi - istep);
-        if (x >= x_[ilo])           return bisection(ilo, ihi, x);
+        if (x >= x_[(size_t)ilo]) return bisection(ilo, ihi, x);
         istep = istep*2;
     }
     ilo = 0;

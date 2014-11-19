@@ -7,6 +7,9 @@
 
 #include <set>
 
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
+
 #include "gmock/gmock.h"
 
 #include "DataSourceTest.hpp"
@@ -62,7 +65,7 @@ MODULE(OneInputTwoOutputs,const double x = ds->get<double>("x");\
 TEST_F(DataSourceTest, example)
 {
 //! [DataSourceTest example]
-    std::tr1::shared_ptr<DataSource> ds(new DataSource);
+    TR1(shared_ptr)<DataSource> ds(new DataSource);
     NiceMock<MockDataSourceModule>* mock = new NiceMock<MockDataSourceModule>();
     ON_CALL(*mock, clone()).WillByDefault(Return(mock));
     EXPECT_CALL(*mock, initialize()).Times(1);
@@ -659,7 +662,7 @@ TEST_F(DataSourceTest, when_forcing_a_signal_dependencies_should_not_be_updated)
     DataSource ds;
     ds.add<M4>();
     ds.add<M5>();
-    std::tr1::shared_ptr<size_t> nb_of_updates(new size_t(0));
+    TR1(shared_ptr)<size_t> nb_of_updates(new size_t(0));
     ds.set("nb of updates", nb_of_updates.get());
     ASSERT_EQ(0, *ds.get<size_t*>("nb of updates"));
     const double x = a.random<double>();
@@ -756,7 +759,7 @@ MODULE(VarUp, const double x = ds->get<double>("x");\
 TEST_F(DataSourceTest, should_not_update_dependencies_if_setting_signal_to_its_current_value)
 {
     DataSource ds;
-    std::tr1::shared_ptr<ssc::random_data_generator::DataGenerator> rng(new ssc::random_data_generator::DataGenerator(1));
+    TR1(shared_ptr)<ssc::random_data_generator::DataGenerator> rng(new ssc::random_data_generator::DataGenerator(1));
     ds.set<ssc::random_data_generator::DataGenerator*>("rng",rng.get());
     ds.add<VarUp>("VarUp");
     const double x0 = a.random<double>()();

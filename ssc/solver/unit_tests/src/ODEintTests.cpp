@@ -7,6 +7,7 @@
 
 #include "ODEintTests.hpp"
 
+#include <functional> // Otherwise CLang issues an error (bind.hpp:36:14: error: ‘std::bind’ has not been declared)
 #include "ssc/solver/Observers.hpp"
 #include "ssc/solver/DefaultScheduler.hpp"
 #include "ssc/solver/detection_of_state_update_methods.hpp"

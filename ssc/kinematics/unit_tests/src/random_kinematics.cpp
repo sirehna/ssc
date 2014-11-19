@@ -68,9 +68,9 @@ PointMatrix random_point_matrix_in_frame(const ssc::random_data_generator::DataG
     PointMatrix p(frame, 100);
     for (size_t i=0;i<100;++i)
     {
-        p.m(0,i)=a.random<double>().between(-10,10);
-        p.m(1,i)=a.random<double>().between(-10,10);
-        p.m(2,i)=a.random<double>().between(-10,10);
+        p.m(0,(long)i)=a.random<double>().between(-10,10);
+        p.m(1,(long)i)=a.random<double>().between(-10,10);
+        p.m(2,(long)i)=a.random<double>().between(-10,10);
     }
     return p;
 }

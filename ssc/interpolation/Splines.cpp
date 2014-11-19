@@ -214,7 +214,7 @@ std::vector<double> Splines::compute_second_derivative() const
     d__[0] = get_endpoint_value();
     d__[*n_+1] = get_endpoint_value();
     b[0] = 0;
-    for (int i = 1 ; i <= *n_ ; ++i)
+    for (size_t i = 1 ; i <= (size_t)*n_ ; ++i)
     {
         dl[i-1] = 1;
         du[i-1] = 1;

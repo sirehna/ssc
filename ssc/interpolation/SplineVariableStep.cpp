@@ -67,8 +67,8 @@ std::vector<Coeff> get_coeffs(const std::vector<double>& x, const std::vector<do
     integer *ibcend = new integer(0);
     for (int i = 0 ; i < *n ; ++i)
     {
-        tau[i] = x[i];
-        c[4*i + 0] = y[i];
+        tau[i] = x[(size_t)i];
+        c[4*i + 0] = y[(size_t)i];
         c[4*i + 1] = 0;
         c[4*i + 2] = 0;
         c[4*i + 3] = 0;
@@ -174,15 +174,15 @@ SplineVariableStep::SplineVariableStep(const std::vector<double>& x, const std::
 
 double SplineVariableStep::get_f() const
 {
-    const Coeff coeff = pimpl->coeffs[idx];
-    const double x_x0 = x0 - pimpl->xleft[idx];
+    const Coeff coeff = pimpl->coeffs[(size_t)idx];
+    const double x_x0 = x0 - pimpl->xleft[(size_t)idx];
     return  x_x0*( x_x0*( x_x0*coeff.d/3. + coeff.c)/2. + coeff.b) + coeff.a;
 }
 
 double SplineVariableStep::get_df(const size_t derivative_order) const
 {
-    const Coeff coeff = pimpl->coeffs[idx];
-    const double x_x0 = x0 - pimpl->xleft[idx];
+    const Coeff coeff = pimpl->coeffs[(size_t)idx];
+    const double x_x0 = x0 - pimpl->xleft[(size_t)idx];
     switch (derivative_order)
     {
         case 0:

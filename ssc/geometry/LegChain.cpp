@@ -43,7 +43,7 @@ std::pair<LatitudeLongitude, size_t> LegChain::find_closest_point_to(const Latit
         {
             nearest_point = p;
             smallest_distance = d;
-            idx = that_leg-legs.begin();
+            idx = (size_t)(that_leg-legs.begin());
         }
     }
     return std::make_pair(nearest_point,idx);
