@@ -15,6 +15,23 @@ using namespace ssc::geometry;
 #define HALF_PI (2.*atan(1.))
 #define PI (4.*QUARTER_PI)
 
+#define BISECTION double mid = 0;\
+				  for (size_t i = 0 ; i < 30 ; ++i)\
+				  {\
+					   mid = (min+max)/2;\
+					   double ymin = std::get<0>(L(min));\
+					   double ymid = std::get<0>(L(mid));\
+					   if (ymin*ymid > 0)\
+					   {\
+						   min = mid;\
+					   }\
+					   else\
+					   {\
+						   max = mid;\
+					   }\
+				  }\
+				  return mid;
+
 double ssc::geometry::azimuth_of_loxodrome(const double e,      //!< Excentricity of the ellipsoid (in meters)
                             const double lat_P1, //!< Latitude of P1 (in radians)
                             const double lon_P1, //!< Longitude of P1 (in radians)
@@ -186,13 +203,21 @@ double halley(const double m, const double a, const double A[13], const double i
 {
    double min = -PI/2;
    double max = -min;
+
+#if defined(__clang__)
+   (void) initial_phi;
+   (void) digits;
+   latitude_functor L(m,a,A);
+   BISECTION;
+#else
    double guess = initial_phi;
    return boost::math::tools::halley_iterate(latitude_functor(m,a,A), guess, min, max, digits);
+#endif
 }
 
 struct cbrt_functor
 {
-    cbrt_functor(const double e_, const double target) : q0(target), e(e_) {}
+    cbrt_functor(const double e_, const double ) : e(e_) {}
 
     std::tuple<double, double, double> operator()(double const& phi)
     {
@@ -303,7 +328,6 @@ struct cbrt_functor
     }
 
     private:
-        double q0;
         double e;
 };
 
@@ -312,9 +336,14 @@ double cbrt(const double e, const double q)
 {
    double max = HALF_PI;
    double min = -max;
+#if defined(__clang__)
+   cbrt_functor L(e,q);
+   BISECTION;
+#else
    double guess = q/(1-e*e);
    int digits = std::numeric_limits<double>::digits;
    return boost::math::tools::halley_iterate(cbrt_functor(e,q), guess, min, max, digits);
+#endif
 }
 
 struct isometric_latitude_functor
@@ -347,10 +376,15 @@ double ssc::geometry::convert_isometric_latitude_to_latitude(const double e,  //
 {
     double min = -PI/2;
     double max = -min;
+#if defined(__clang__)
+    isometric_latitude_functor L(e,q);
+    BISECTION;
+#else
     double guess = fabs(q)<2 ? q : cbrt(e,fabs(q));
     if (q<0) guess = - fabs(guess);
     const int digits = 12;
     return boost::math::tools::newton_raphson_iterate(isometric_latitude_functor(e,q), guess, min, max, digits);
+#endif
 }
 
 double ssc::geometry::convert_isometric_latitude_to_latitude(const double q   //!< Isometric latitude to convert (in radians)
