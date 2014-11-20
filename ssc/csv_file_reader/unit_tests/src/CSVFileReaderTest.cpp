@@ -5,9 +5,10 @@
  *  \author cec
  */
 
-#include <cstdio>
 #include <iostream>
 #include <fstream>
+
+#include <sys/stat.h>
 
 #include "CSVFileReaderTest.hpp"
 #include "ssc/csv_file_reader/CSVFileReader.hpp"
@@ -30,19 +31,25 @@ void CSVFileReaderTest::TearDown()
 {
 }
 
+inline void remove_file_if_it_exists (const std::string& name)
+{
+  struct stat buffer;
+  if (stat (name.c_str(), &buffer) == 0) remove (name.c_str());
+}
+
 TEST_F(CSVFileReaderTest, example)
 {
 //! [CSVFileReaderTest example]
-    char filename [L_tmpnam];
-    ASSERT_STRNE(tmpnam(filename),NULL);
-    std::ofstream file(filename);
+    const std::string filename("data_for_CSVFileReaderTest");
+	remove_file_if_it_exists(filename);
+    std::ofstream file(filename.c_str());
     const std::string contents = "A,B,C\n1,2,3\n4,5,6\n7,8,9";
     file << contents;
     file.close();
-    const size_t invalid_nb_of_columns = a.random<size_t>().but_not(3);
-    ASSERT_THROW(CSVFileReader(filename, invalid_nb_of_columns),CSVFileReaderException);
-    CSVFileReader validator(filename, 3);
-    remove(filename);
+    const size_t invalid_nb_of_columns = a.random<size_t>().between(0,10).but_not(3);
+    ASSERT_THROW(CSVFileReader(filename.c_str(), invalid_nb_of_columns),CSVFileReaderException);
+    CSVFileReader validator(filename.c_str(), 3);
+    //remove_file_if_it_exists(filename);
 //! [CSVFileReaderTest example]
 //! [CSVFileReaderTest expected output]
     std::vector<double> current_line;

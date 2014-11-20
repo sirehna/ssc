@@ -5,20 +5,14 @@
  *  \author cec
  */
 
-#include <cstdio>
 #include <iostream>
 #include <fstream>
 
 #include "TextFileReaderTest.hpp"
 #include "ssc/text_file_reader/TextFileReader.hpp"
+#include "ssc/macros/test_macros.hpp"
 
 using namespace ssc::text_file_reader;
-
-#if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */
-#define TMPNAM(x,n) tmpnam_s(x,n)
-#else
-#define TMPNAM(x,n) char* c##x = tmpnam(x);(void)c##x;
-#endif
 
 TextFileReaderTest::TextFileReaderTest() : a(ssc::random_data_generator::DataGenerator(718293))
 {
@@ -38,13 +32,19 @@ void TextFileReaderTest::TearDown()
 {
 }
 
+inline void remove_file_if_it_exists (const std::string& name)
+{
+  struct stat buffer;
+  if (stat (name.c_str(), &buffer) == 0) remove (name.c_str());
+}
+
 TEST_F(TextFileReaderTest, example)
 {
 //! [TextFileReaderTest example]
-    char filename1 [L_tmpnam];
-    char filename2 [L_tmpnam];
-    TMPNAM(filename1,L_tmpnam);
-    TMPNAM(filename2,L_tmpnam);
+	const std::string filename1 = "data_for_TextFileReaderTest_1";
+	const std::string filename2 = "data_for_TextFileReaderTest_2";
+	remove_file_if_it_exists(filename1);
+	remove_file_if_it_exists(filename2);
     std::ofstream file1 (filename1);
     const std::string contents_file1 = a.random<std::string>();
     const std::string contents_file2 = a.random<std::string>();
@@ -57,8 +57,8 @@ TEST_F(TextFileReaderTest, example)
     filenames.push_back(filename1);
     filenames.push_back(filename2);
     TextFileReader reader(filenames);
-    remove (filename1);
-    remove (filename2);
+    remove_file_if_it_exists(filename1);
+	remove_file_if_it_exists(filename2);
 //! [TextFileReaderTest example]
 //! [TextFileReaderTest expected output]
     ASSERT_EQ(contents_file1+contents_file2, reader.get_contents());
@@ -67,8 +67,7 @@ TEST_F(TextFileReaderTest, example)
 
 TEST_F(TextFileReaderTest, should_represent_newlines_correctly)
 {
-    char filename [L_tmpnam];
-    TMPNAM(filename,L_tmpnam);
+    const std::string filename = "data_for_TextFileReaderTest";
     std::ofstream file (filename);
     const std::string contents_file = a.random<std::string>()()
                                              + std::string("\n")
@@ -80,7 +79,7 @@ TEST_F(TextFileReaderTest, should_represent_newlines_correctly)
     std::vector<std::string> filenames;
     filenames.push_back(filename);
     TextFileReader reader(filenames);
-    remove (filename);
+    remove (filename.c_str());
     ASSERT_EQ(contents_file, reader.get_contents());
 }
 
