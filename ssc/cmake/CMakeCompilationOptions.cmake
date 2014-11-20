@@ -41,8 +41,8 @@ ELSEIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
     IF(CMAKE_BUILD_TYPE_UPPER MATCHES RELEASE)
 # Carefull with -O3: cf. http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556#c14
-        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -DEIGEN_NO_DEBUG")
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -DEIGEN_NO_DEBUG")
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DEIGEN_NO_DEBUG")
     ELSEIF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
         #SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fprofile-arcs -ftest-coverage")
         #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
