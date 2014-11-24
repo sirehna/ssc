@@ -1,3 +1,5 @@
+#include "ssc/macros/tr1_macros.hpp"
+
 #include "ssc/kinematics/Velocity.hpp"
 #include "ssc/kinematics/KinematicsException.hpp"
 

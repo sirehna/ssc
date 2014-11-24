@@ -5,6 +5,7 @@
  *  \author cec
  */
 
+#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/data_source/TypeCoercion.hpp"
 
 

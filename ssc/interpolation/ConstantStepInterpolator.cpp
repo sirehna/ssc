@@ -5,6 +5,7 @@
  *  \author cec
  */
 
+#include <algorithm> // std::min, std::max
 #include <cmath>
 
 #include "ssc/interpolation/ConstantStepInterpolator.hpp"

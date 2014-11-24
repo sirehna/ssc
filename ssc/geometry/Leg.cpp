@@ -5,6 +5,8 @@
  *      Author: cady
  */
 
+#include <algorithm> //std::min, std::max
+#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/geometry/Leg.hpp"
 #include <sstream>
 

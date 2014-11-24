@@ -31,7 +31,7 @@
 #define USE_HASH_MAPS 1
 
 #if USE_HASH_MAPS
-#include <tr1/unordered_map>
+#include TR1INC(unordered_map)
 #else
 #include <map>
 #endif
