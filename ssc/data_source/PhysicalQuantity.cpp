@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-
+#include "ssc/macros/tr1_macros.hpp"
 
 #include "ssc/data_source/PhysicalQuantity.hpp"
 #include "ssc/exception_handling/Exception.hpp"

@@ -5,6 +5,7 @@
  *  \author cec
  */
 
+#include <algorithm> // std::min, std::max
 #include <sstream>
 
 #include "ssc/interpolation/IndexFinder.hpp"

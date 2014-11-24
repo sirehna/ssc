@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <functional>
 
+#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/csv_file_reader/CSVFileReader.hpp"
 
 using namespace ssc::csv_file_reader;

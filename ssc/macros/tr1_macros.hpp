@@ -37,7 +37,8 @@
     /* Microsoft Visual Studio. --------------------------------- */
     #define TR1INC(x) <x>
     #define TR1(x) std::tr1::x
-    #define TR1NAMESPACE 1
+    #define TR1NAMESPACE 0
+    #define __PRETTY_FUNCTION__ __FUNCSIG__
 #elif defined(__PGI)
     /* Portland Group PGCC/PGCPP. ------------------------------- */
     #define TR1INC(x) <tr1/x>

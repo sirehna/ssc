@@ -4,7 +4,7 @@
  * \date 18 f�vr. 2013, 13:07:18
  *  \author cec
  */
-
+#include <algorithm> // std::min, std::max
 #include <cmath>
 
 #include "ssc/interpolation/PiecewiseConstant.hpp"

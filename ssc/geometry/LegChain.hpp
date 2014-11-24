@@ -8,7 +8,8 @@
 #ifndef LEGCHAIN_HPP_
 #define LEGCHAIN_HPP_
 
-#include <tr1/memory>
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 #include <vector>
 
 #include "ssc/geometry/LatitudeLongitude.hpp"

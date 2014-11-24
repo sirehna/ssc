@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-
+#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/geometry/LatitudeLongitude.hpp"
 #include <cmath>
 #include <sstream>

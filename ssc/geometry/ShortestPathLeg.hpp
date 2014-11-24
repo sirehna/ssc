@@ -8,7 +8,8 @@
 #ifndef SHORTEST_PATH_LEG_HPP_
 #define SHORTEST_PATH_LEG_HPP_
 
-#include <tr1/memory>
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 #include "ssc/geometry/Leg.hpp"
 
 namespace ssc
