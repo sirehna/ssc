@@ -8,7 +8,8 @@
 #ifndef GETMAXLONGITUDE_HPP_
 #define GETMAXLONGITUDE_HPP_
 
-#include <tr1/memory>
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 #include <map>
 
 /** \author cec

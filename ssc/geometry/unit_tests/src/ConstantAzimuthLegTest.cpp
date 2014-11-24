@@ -5,6 +5,8 @@
  *      Author: cady
  */
 
+#include <algorithm> // std::mi std::max
+
 #include "ConstantAzimuthLegTest.hpp"
 #include "ssc/geometry/ConstantAzimuthLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
