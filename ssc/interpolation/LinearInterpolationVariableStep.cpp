@@ -71,7 +71,7 @@ class LinearInterpolationVariableStep::LinearInterpolationVariableStepImpl
 
         void set_computed_value(const double x0, const size_t i)
         {
-            coeffs[i] = coeff_computer.f(std::min(x.back(),std::max(x.front(),x0)));
+            coeffs[i] = coeff_computer.typed_f(std::min(x.back(),std::max(x.front(),x0)));
         }
 
         double get_val(const size_t i) const
