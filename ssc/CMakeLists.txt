@@ -157,6 +157,10 @@ add_libs(yaml_parser
 add_libs(decode_unit)
 add_libs(text_file_reader
          SSC_DEPENDENCIES exception_handling)
+
+add_libs(integrate
+         SSC_DEPENDENCIES exception_handling)
+
 add_libs(numeric)
 add_libs(data_source
          SSC_DEPENDENCIES exception_handling numeric)
@@ -186,6 +190,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:random_data_generator_tests>
         $<TARGET_OBJECTS:data_source_tests>
         $<TARGET_OBJECTS:solver_tests>
+        $<TARGET_OBJECTS:integrate_tests>
         $<TARGET_OBJECTS:text_file_reader_tests>
         $<TARGET_OBJECTS:kinematics_tests>
         $<TARGET_OBJECTS:numeric_tests>
@@ -198,6 +203,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
         random_data_generator_shared
+        integrate_shared
         exception_handling_shared
         yaml_parser_shared
         decode_unit_shared
