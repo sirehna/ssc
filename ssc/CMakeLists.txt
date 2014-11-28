@@ -159,7 +159,8 @@ add_libs(text_file_reader
          SSC_DEPENDENCIES exception_handling)
 
 add_libs(integrate
-         SSC_DEPENDENCIES exception_handling)
+         SSC_DEPENDENCIES exception_handling
+         OBJECTS_DEPENDENCIES f2c_object)
 
 add_libs(numeric)
 add_libs(data_source
