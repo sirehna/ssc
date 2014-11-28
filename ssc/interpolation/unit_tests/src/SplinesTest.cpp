@@ -15,6 +15,8 @@
 #include "ssc/interpolation/VectorOfEquallySpacedNumbersException.hpp"
 #include "ssc/interpolation/InterpolatorException.hpp"
 #include "ssc/interpolation/SplinesException.hpp"
+#include "ssc/interpolation/SplineVariableStep.hpp"
+#include "ssc/interpolation/PiecewiseConstantVariableStep.hpp"
 
 #define PI 4.*atan(1.)
 #define EPS 1E-8
@@ -286,4 +288,31 @@ TEST_F(SplinesTest, bug2_in_min_computation)
     NaturalSplines s(xmin,xmax,y);
 
     ASSERT_NEAR(-2.49, s.find_position_and_value_of_minimum().first, 0.1);
+}
+
+double f(const double omega);
+double f(const double omega)
+{
+    return
+0.5*(0.1/(0.01+(0.5-omega)*(0.5-omega))+0.1/(0.01+(0.5+omega)*(0.5+omega)));
+}
+
+TEST_F(SplinesTest, bug_detected_in_simulator)
+{
+    std::vector<double> omega;
+    std::vector<double> B;
+    const double omega_min = 0;
+    const double omega_max = 4;
+    size_t N = 100;
+    for (size_t i = 0 ; i < N ; ++i)
+    {
+        omega.push_back(omega_min + (omega_max-omega_min)*((double)i)/((double)(N-1)));
+        B.push_back(f(omega.back()));
+    }
+    SplineVariableStep s(omega, B);
+    PiecewiseConstantVariableStep<double> p(omega, B);
+    ASSERT_DOUBLE_EQ(B.at(N-2), s.f(omega.at(N-2)));
+    ASSERT_DOUBLE_EQ(B.at(N-2), p.f(omega.at(N-2)));
+    ASSERT_DOUBLE_EQ(B.at(N-1), s.f(omega.at(N-1)));
+    ASSERT_DOUBLE_EQ(B.at(N-1), p.f(omega.at(N-1)));
 }
