@@ -6,9 +6,9 @@
  */
 
 #include "CumulateTest.hpp"
-#include "Cumulate.hpp"
+#include "ssc/integrate/Cumulate.hpp"
 
-CumulateTest::CumulateTest() : a(DataGenerator(22))
+CumulateTest::CumulateTest() : a(ssc::random_data_generator::DataGenerator(22))
 {
 }
 
@@ -27,7 +27,7 @@ void CumulateTest::TearDown()
 TEST_F(CumulateTest, example)
 {
 //! [CumulateTest example]
-    Cumulate c;
+    ssc::integrate::Cumulate c;
     c.add(1,1);
     ASSERT_DOUBLE_EQ(0,c.integrate(a.random<double>(),a.random<double>()));
     c.add(2,2);
@@ -52,7 +52,7 @@ TEST_F(CumulateTest, example)
 TEST_F(CumulateTest, zero_outside_bounds)
 {
 //! [CumulateTest example]
-    Cumulate c;
+    ssc::integrate::Cumulate c;
     c.add(1,1);
     c.add(2,2);
     ASSERT_DOUBLE_EQ(0, c.integrate(0,1));
@@ -60,7 +60,7 @@ TEST_F(CumulateTest, zero_outside_bounds)
 
 TEST_F(CumulateTest, bug_detected_in_CumulateModule)
 {
-    Cumulate c;
+    ssc::integrate::Cumulate c;
     c.add(0,0);
     c.add(1,1);
     c.add(2,4);

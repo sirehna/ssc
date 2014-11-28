@@ -8,7 +8,7 @@
 #include "Simpson.hpp"
 #include <cmath>
 
-class Simpson::Impl
+class ssc::integrate::Simpson::Impl
 {
     public:
         Impl()
@@ -44,12 +44,12 @@ class Simpson::Impl
 
 };
 
-Simpson::Simpson(const Function& f) : Integrator(f), pimpl(new Impl())
+ssc::integrate::Simpson::Simpson(const Function& f) : ssc::integrate::Integrator(f), pimpl(new Impl())
 {
 
 }
 
-double Simpson::integrate(double a, double b, double eps) const
+double ssc::integrate::Simpson::integrate(double a, double b, double eps) const
 {
     return pimpl->integrate(f,a,b,eps);
 }

@@ -19,16 +19,21 @@ typedef std::function<double (const double&)> Function;
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/IntegratorTest.cpp IntegratorTest expected output
  */
-
-class Integrator
+namespace ssc
 {
-    public:
-        Integrator(const Function& f_);
-        virtual ~Integrator();
-        virtual double integrate(double a, double b, double eps=1e-6) const = 0;
+    namespace integrate
+    {
+        class Integrator
+        {
+            public:
+                Integrator(const Function& f_);
+                virtual ~Integrator();
+                virtual double integrate(double a, double b, double eps=1e-6) const = 0;
 
-    protected:
-        Function f;
-};
+            protected:
+                Function f;
+        };
+    }
+}
 
 #endif /* INTEGRATOR_HPP_ */

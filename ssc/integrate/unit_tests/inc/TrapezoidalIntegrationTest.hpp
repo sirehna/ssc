@@ -9,16 +9,16 @@
 #define TRAPEZOIDALINTEGRATIONTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class TrapezoidalIntegrationTest : public ::testing::Test
 {
     protected:
         TrapezoidalIntegrationTest();
-	    virtual ~TrapezoidalIntegrationTest();
+        virtual ~TrapezoidalIntegrationTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        ssc::random_data_generator::DataGenerator a;
 
 };
 

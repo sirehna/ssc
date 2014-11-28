@@ -8,8 +8,9 @@
 #ifndef TRAPEZOIDALINTEGRATION_HPP_
 #define TRAPEZOIDALINTEGRATION_HPP_
 
-#include "Integrator.hpp"
-#include <tr1/memory>
+#include "ssc/integrate/Integrator.hpp"
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 
 /** \author cec
  *  \brief This class was created to
@@ -21,17 +22,22 @@
  *  \section ex2 Expected output
  *  \snippet quadpack/unit_tests/src/TrapezoidalIntegrationTest.cpp TrapezoidalIntegrationTest expected output
  */
-
-class TrapezoidalIntegration : public Integrator
+namespace ssc
 {
-    public:
-        TrapezoidalIntegration(const Function& f);
-        double integrate(double a, double b, double eps=1e-6) const;
-        double integrate_n_steps(double a, double b, size_t n) const;
+    namespace integrate
+    {
+        class TrapezoidalIntegration : public Integrator
+        {
+            public:
+                TrapezoidalIntegration(const Function& f);
+                double integrate(double a, double b, double eps=1e-6) const;
+                double integrate_n_steps(double a, double b, size_t n) const;
 
-    private:
-        class Impl;
-        std::tr1::shared_ptr<Impl> pimpl;
-};
+            private:
+                class Impl;
+                TR1(shared_ptr)<Impl> pimpl;
+        };
+    }
+}
 
 #endif /* TRAPEZOIDALINTEGRATION_HPP_ */

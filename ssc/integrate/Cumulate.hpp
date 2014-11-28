@@ -8,7 +8,7 @@
 #ifndef CUMULATE_HPP_
 #define CUMULATE_HPP_
 
-#include "generic_pimpl.hpp"
+#include "ssc/pimpl_idiom/generic_pimpl.hpp"
 
 /** \author cec
  *  \ingroup integrate
@@ -23,17 +23,23 @@ scheme is trapezoidal integration.
  *  \section ex2 Expected output
  *  \snippet integrate/unit_tests/src/CumulateTest.cpp CumulateTest expected output
  */
-class Cumulate
+namespace ssc
 {
-    public:
-        Cumulate();
-        ~Cumulate();
-        void add(const double x, const double y);
-        double integrate(const double a, const double b);
+    namespace integrate
+    {
+        class Cumulate
+        {
+            public:
+                Cumulate();
+                ~Cumulate();
+                void add(const double x, const double y);
+                double integrate(const double a, const double b);
 
-    private:
-        class Impl;
-        Pimpl<Impl> pimpl;
-};
+            private:
+                class Impl;
+                Pimpl<Impl> pimpl;
+        };
+    }
+}
 
 #endif /* CUMULATE_HPP_ */
