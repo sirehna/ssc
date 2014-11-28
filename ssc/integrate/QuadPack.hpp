@@ -8,7 +8,7 @@
 #ifndef QUADPACK_HPP_
 #define QUADPACK_HPP_
 
-#include "Integrator.hpp"
+#include "ssc/integrate/Integrator.hpp"
 
 /** \author cec
  *  \ingroup integrate
@@ -19,22 +19,26 @@
  *  \section ex2 Expected output
  *  \snippet integrate/unit_tests/src/QuadPackTest.cpp QuadPackTest expected output
  */
-
-class QuadPack : public Integrator
+namespace ssc
 {
-    public:
-        QuadPack(const Function& f_);
-        ~QuadPack();
-        QuadPack(const QuadPack& rhs);
-        QuadPack& operator=(const QuadPack& rhs);
-        double op(double *x);
-        double integrate(double a, double b, double eps=1e-6) const;
+    namespace integrate
+    {
+        class QuadPack : public Integrator
+        {
+            public:
+                QuadPack(const Function& f_);
+                ~QuadPack();
+                QuadPack(const QuadPack& rhs);
+                QuadPack& operator=(const QuadPack& rhs);
+                double op(double *x);
+                double integrate(double a, double b, double eps=1e-6) const;
 
-    private:
-        void throw_any_errors(const int error_code) const;
-        int* iwork;
-        double* work;
-};
-
+            private:
+                void throw_any_errors(const int error_code) const;
+                int* iwork;
+                double* work;
+        };
+    }
+}
 
 #endif /* QUADPACK_HPP_ */

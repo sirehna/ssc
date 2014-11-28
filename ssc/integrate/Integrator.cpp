@@ -7,12 +7,12 @@
 
 #include "Integrator.hpp"
 
-Integrator::Integrator(const Function& f_) : f(f_)
+ssc::integrate::Integrator::Integrator(const Function& f_) : f(f_)
 {
 
 }
 
-Integrator::~Integrator()
+ssc::integrate::Integrator::~Integrator()
 {
 
 }

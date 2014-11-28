@@ -10,15 +10,10 @@ FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
 
 # ------8<---------------------------------------------->8-----
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Woverloaded-virtual -Wwrite-strings -DGTEST_HAS_PTHREAD=0")
-
-
 # Include directories
 include_directories(inc)
-include_directories(${test_macros_INCLUDE_DIRS})
-include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})
 

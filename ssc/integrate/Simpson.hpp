@@ -8,9 +8,10 @@
 #ifndef SIMPSON_HPP_
 #define SIMPSON_HPP_
 
-#include <tr1/memory>
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 
-#include "Integrator.hpp"
+#include "ssc/integrate/Integrator.hpp"
 
 
 
@@ -25,14 +26,20 @@
  *  \section ex2 Expected output
  *  \snippet quadpack/unit_tests/src/SimpsonTest.cpp SimpsonTest expected output
  */
-class Simpson : public Integrator
+namespace ssc
 {
-    public:
-        Simpson(const Function& f);
-        double integrate(double a, double b, double eps=1e-6) const;
-    private:
-        class Impl;
-        std::tr1::shared_ptr<Impl> pimpl;
-};
+    namespace integrate
+    {
+        class Simpson : public Integrator
+        {
+            public:
+                Simpson(const Function& f);
+                double integrate(double a, double b, double eps=1e-6) const;
+            private:
+                class Impl;
+                TR1(shared_ptr)<Impl> pimpl;
+        };
+    }
+}
 
 #endif /* SIMPSON_HPP_ */

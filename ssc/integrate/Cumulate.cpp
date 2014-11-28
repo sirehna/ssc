@@ -9,9 +9,9 @@
 #include <list>
 
 #include "Cumulate.hpp"
-#include "generic_pimpl_implementation.hpp"
+#include "ssc/pimpl_idiom/generic_pimpl_implementation.hpp"
 
-class Cumulate::Impl
+class ssc::integrate::Cumulate::Impl
 {
     public:
         Impl() : x_y_pairs(std::list<std::pair<double,double> >())
@@ -66,22 +66,22 @@ class Cumulate::Impl
 };
 
 
-Cumulate::Cumulate() : pimpl{Impl{}}
+ssc::integrate::Cumulate::Cumulate() : pimpl{Impl{}}
 {
 
 }
 
-Cumulate::~Cumulate()
+ssc::integrate::Cumulate::~Cumulate()
 {
 
 }
 
-void Cumulate::add(const double x, const double y)
+void ssc::integrate::Cumulate::add(const double x, const double y)
 {
     pimpl->add(x,y);
 }
 
-double Cumulate::integrate(const double a, const double b)
+double ssc::integrate::Cumulate::integrate(const double a, const double b)
 {
     return pimpl->integrate(a,b);
 }

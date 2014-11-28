@@ -8,7 +8,7 @@
 #include "TrapezoidalIntegration.hpp"
 #include <cmath>
 
-class TrapezoidalIntegration::Impl
+class ssc::integrate::TrapezoidalIntegration::Impl
 {
     public:
         Impl()
@@ -18,7 +18,7 @@ class TrapezoidalIntegration::Impl
 
         double integrate(const Function& f, const double a, const double b, const double eps) const
         {
-            return integrate_n_steps(f, a, b, floor(1./fabs(eps)));
+            return integrate_n_steps(f, a, b, (size_t)floor(1./fabs(eps)));
         }
 
         double integrate_n_steps(const Function& f, const double a, const double b, const size_t n) const
@@ -36,18 +36,18 @@ class TrapezoidalIntegration::Impl
 
 
 
-TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : Integrator(f), pimpl(new Impl())
+ssc::integrate::TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : Integrator(f), pimpl(new Impl())
 {
 
 }
 
 
-double TrapezoidalIntegration::integrate(double a, double b, double eps) const
+double ssc::integrate::TrapezoidalIntegration::integrate(double a, double b, double eps) const
 {
     return pimpl->integrate(f,a,b,eps);
 }
 
-double TrapezoidalIntegration::integrate_n_steps(double a, double b, size_t n) const
+double ssc::integrate::TrapezoidalIntegration::integrate_n_steps(double a, double b, size_t n) const
 {
     return pimpl->integrate(f,a,b,1./(double)n);
 }
