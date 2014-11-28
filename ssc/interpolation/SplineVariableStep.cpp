@@ -176,7 +176,7 @@ double SplineVariableStep::get_f() const
 {
     const Coeff coeff = pimpl->coeffs[(size_t)idx];
     double x_x0 = x0 - pimpl->xleft[(size_t)idx];
-    if ((x_x0 == 0) and (idx == (pimpl->xleft.size()-1)))
+    if ((x_x0 == 0) and ((size_t)idx == (pimpl->xleft.size()-1)))
     {
         return pimpl->y.back();
     }

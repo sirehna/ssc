@@ -23,11 +23,11 @@ class TrapezoidalIntegration::Impl
 
         double integrate_n_steps(const Function& f, const double a, const double b, const size_t n) const
         {
-            const double h = (b - a) / n;
+            const double h = (b - a) / (double)n;
             double S = (f(a) + f(b))/2.;
             for (size_t i  = 1 ; i < n ; ++i)
             {
-                S += f(a + i * h);
+                S += f(a + (double)i * h);
             }
             return S* h;
         }
@@ -49,5 +49,5 @@ double TrapezoidalIntegration::integrate(double a, double b, double eps) const
 
 double TrapezoidalIntegration::integrate_n_steps(double a, double b, size_t n) const
 {
-    return pimpl->integrate(f,a,b,n);
+    return pimpl->integrate(f,a,b,1./(double)n);
 }
