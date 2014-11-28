@@ -25,5 +25,5 @@ namespace ssc
 
 PointInCartesianPolygon::PointInCartesianPolygon(const std::vector<LatitudeLongitude>& polygon) : PointInPolygon(polygon)
 {
-    pimpl = std::tr1::shared_ptr<Pimpl<Point> >(new Pimpl<Point>(polygon));
+    pimpl = TR1(shared_ptr)<Pimpl<Point> >(new Pimpl<Point>(polygon));
 }

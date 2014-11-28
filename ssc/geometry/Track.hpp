@@ -63,7 +63,7 @@ namespace ssc
             private:
                 Track();
                 class TrackImpl;
-                std::tr1::shared_ptr<TrackImpl> pimpl;
+                TR1(shared_ptr)<TrackImpl> pimpl;
         };
     }
 }

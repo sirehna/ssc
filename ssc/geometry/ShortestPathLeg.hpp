@@ -38,7 +38,7 @@ namespace ssc
                 ShortestPathLeg();
                 LatitudeLongitude waypoint(const double distance_from_point1) const;
                 class LegImpl;
-                std::tr1::shared_ptr<LegImpl> pimpl;
+                TR1(shared_ptr)<LegImpl> pimpl;
         };
     }
 }

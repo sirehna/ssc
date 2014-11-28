@@ -19,7 +19,7 @@ namespace ssc
     namespace geometry
     {
         class Leg;
-        typedef std::tr1::shared_ptr<Leg> LegPtr;
+        typedef TR1(shared_ptr)<Leg> LegPtr;
 
         /** \author cec
          *  \date May 16, 2014, 4:28:13 PM
