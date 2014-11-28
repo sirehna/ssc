@@ -3,43 +3,37 @@
 cmake_minimum_required (VERSION 2.6)
 project (integrate)
 
-ADD_DEFINITIONS("-std=gnu++0x")
-include_directories(inc)
-include_directories(${test_macros_SOURCE_DIR})
-include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${pimpl_idiom_INCLUDE_DIRS})
+# Using C++ 2011
+# The -std=c++0x option causes g++ to go into 'strict ANSI' mode so it doesn't declare non-standard functions
+# (and _stricmp() is non-standard - it's just a version of strcmp() that's case-insensitive).
+# Use -std=gnu++0x instead.
+IF(NOT(MSVC))
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
+ENDIF()
 
 
-add_library(${PROJECT_NAME}_object OBJECT src/TrapezoidalIntegration.cpp
-                                          src/Simpson.cpp
-                                          src/Integrator.cpp
-                                          src/QuadPack.cpp
-                                          src/Cumulate.cpp)
+SET(CMAKE_C_FLAGS "")
 
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
-set(${PROJECT_NAME}_LIBRARIES        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}         CACHE FILEPATH "${PROJECT_NAME}'s shared library")
-set(${PROJECT_NAME}_STATIC_LIBRARIES ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}_static${CMAKE_STATIC_LIBRARY_SUFFIX}  CACHE FILEPATH "${PROJECT_NAME}'s static library")
-set(${PROJECT_NAME}_FOUND            TRUE                                                                                                            CACHE BOOL     "Is ${PROJECT_NAME} available to other modules?")
+INCLUDE_DIRECTORIES(inc)
+INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
+    IF(UNIX AND NOT WIN32) # If on Linux
+        SET(CMAKE_C_FLAGS "-fPIC")
+    ENDIF()
+ENDIF()
 
+ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
+                                          Simpson.cpp
+                                          Integrator.cpp
+                                          QuadPack.cpp
+                                          Cumulate.cpp
+                                          d1mach.c
+                                          dqags.c
+                                          dqagse.c
+                                          dqelg.c
+                                          dqk21.c
+                                          dqpsrt.c
+                                          )
 
 add_subdirectory(unit_tests)
-
-#enable_language (Fortran)
-#    set (CMAKE_Fortran_FLAGS_RELEASE "-funroll-all-loops -fno-f2c -O3 -m32 -g3 -pedantic -pedantic-errors -fpedantic -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
-#    set (CMAKE_Fortran_FLAGS_DEBUG   "-fno-f2c -O0 -g3 -m32 -pedantic -pedantic-errors -pedantic -w -Wno-globals -Wunused -Wuninitialized -Wall -Wsurprising -Werror -W")
-     
-#add_library(${PROJECT_NAME}_object OBJECT d1mach.f
-#                                   dqags.f
-#                                   dqagse.f
-#                                   dqelg.f
-#                                   dqk21.f
-#                                   dqpsrt.f)
-
-#include_directories(inc)
-
-#add_library(${PROJECT_NAME}_object OBJECT src/Integrate.cpp)
-
-
-#add_subdirectory(unit_tests)
-
