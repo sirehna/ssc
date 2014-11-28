@@ -96,25 +96,25 @@ class SplineVariableStep::Impl
     public:
         Impl() : check_that(VectorsAreTheRightSize()),
                  n(0),
-                 x(std::vector<double>()),
-                 y(std::vector<double>()),
-                 h(std::vector<double>()),
-                 coeffs(std::vector<Coeff>()),
-                 xleft(std::vector<double>())
+                 x(),
+                 y(),
+                 h(),
+                 coeffs(),
+                 xleft()
         {
         }
 
         Impl(const std::vector<double>& x_, const std::vector<double>& y_) : check_that(VectorsAreTheRightSize(x_,y_)),
                                                                              n(x_.size()),
-                                                                             x(std::vector<double>()),
-                                                                             y(std::vector<double>()),
-                                                                             h(std::vector<double>()),
-                                                                             coeffs(std::vector<Coeff>()),
-                                                                             xleft(std::vector<double>())
+                                                                             x(),
+                                                                             y(),
+                                                                             h(),
+                                                                             coeffs(),
+                                                                             xleft()
         {
             sort_xs(x_,y_);
             coeffs = get_coeffs(x,y);
-            for (size_t i = 0 ; i < n-1 ; ++i)
+            for (size_t i = 0 ; i < n ; ++i)
             {
                 xleft.push_back(x[i]);
             }
@@ -175,7 +175,11 @@ SplineVariableStep::SplineVariableStep(const std::vector<double>& x, const std::
 double SplineVariableStep::get_f() const
 {
     const Coeff coeff = pimpl->coeffs[(size_t)idx];
-    const double x_x0 = x0 - pimpl->xleft[(size_t)idx];
+    double x_x0 = x0 - pimpl->xleft[(size_t)idx];
+    if ((x_x0 == 0) and (idx == (pimpl->xleft.size()-1)))
+    {
+        return pimpl->y.back();
+    }
     return  x_x0*( x_x0*( x_x0*coeff.d/3. + coeff.c)/2. + coeff.b) + coeff.a;
 }
 
