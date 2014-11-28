@@ -48,7 +48,7 @@ namespace ssc
 
             protected:
                 PointInPolygon(const std::vector<LatitudeLongitude>& polygon);
-                std::tr1::shared_ptr<PointInPolygonPimpl> pimpl;
+                TR1(shared_ptr)<PointInPolygonPimpl> pimpl;
         };
     }
 }

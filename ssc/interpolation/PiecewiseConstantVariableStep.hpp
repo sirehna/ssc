@@ -39,7 +39,7 @@ namespace ssc
 
         template <> inline double pc_f<double>(const typename std::vector<double>& y_, const size_t idx)
         {
-            return y_[(size_t)idx];
+            return y_[idx];
         }
 
         /** \author cec
@@ -96,7 +96,7 @@ namespace ssc
                 double f(const double x0)
                 {
                     update_coefficients_if_necessary(x0);
-                    return pc_f<T>(y_, idx);
+                    return pc_f<T>(y_, (size_t)idx);
                 }
 
             private:

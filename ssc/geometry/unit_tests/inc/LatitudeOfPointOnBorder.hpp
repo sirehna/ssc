@@ -33,7 +33,7 @@ namespace ssc
             private:
                 LatitudeOfPointOnBorder();
                 MinMax bisection(const MinMax& latitude_bounds, const double& longitude) const;
-                std::tr1::shared_ptr<PointInPolygon> eca;
+                TR1(shared_ptr)<PointInPolygon> eca;
                 double eps_;
 
         };
