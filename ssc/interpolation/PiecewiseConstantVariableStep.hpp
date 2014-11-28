@@ -32,6 +32,16 @@ namespace ssc
         };
 
 
+        template <typename U> double pc_f(const typename std::vector<U>& , const size_t )
+        {
+            return 0;
+        }
+
+        template <> inline double pc_f<double>(const typename std::vector<double>& y_, const size_t idx)
+        {
+            return y_[(size_t)idx];
+        }
+
         /** \author cec
          *  \brief This class was created to
          *  \details It has the following responsibilities:
@@ -69,8 +79,7 @@ namespace ssc
                     }
                 }
 
-                using Interpolator::f;
-                T f(const double x0)
+                T typed_f(const double x0)
                 {
                     update_coefficients_if_necessary(x0);
                     return y_[(size_t)idx];
@@ -82,6 +91,12 @@ namespace ssc
                     (void) x0;
                     (void) derivative_order;
                     return T();
+                }
+
+                double f(const double x0)
+                {
+                    update_coefficients_if_necessary(x0);
+                    return pc_f<T>(y_, idx);
                 }
 
             private:

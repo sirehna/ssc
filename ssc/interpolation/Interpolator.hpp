@@ -28,7 +28,7 @@ namespace ssc
             public:
                 Interpolator();
                 virtual ~Interpolator();
-                double f(const double x0);
+                virtual double f(const double x0);
                 double df(const double x0, const size_t derivative_order=1);
 
             protected:
