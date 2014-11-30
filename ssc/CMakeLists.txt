@@ -150,6 +150,7 @@ INCLUDE(CMakeCompilationOptions)
 # Define libraries
 get_copyright(copyright)
 add_headers(macros "${copyright}")
+add_headers(pimpl_idiom "${copyright}")
 add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(yaml_parser
