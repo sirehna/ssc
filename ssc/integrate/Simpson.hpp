@@ -33,11 +33,13 @@ namespace ssc
         class Simpson : public Integrator
         {
             public:
+                Simpson();
                 Simpson(const Function& f);
-                double integrate(double a, double b, double eps=1e-6) const;
+
             private:
                 class Impl;
                 TR1(shared_ptr)<Impl> pimpl;
+                double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
         };
     }
 }

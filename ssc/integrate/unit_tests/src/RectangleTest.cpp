@@ -35,7 +35,7 @@ TEST_F(RectangleTest, should_be_able_to_integrate_a_constant)
         ssc::integrate::Rectangle integrator([c](const double& x)->double{(void)x;return c;});
         const double xa = a.random<double>().between(-100,100);
         const double xb = a.random<double>().between(xa,100);
-        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate(xa,xb,EPS), (xb-xa)*c, EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate_f(xa,xb,EPS), (xb-xa)*c, EPS);
     }
 }
 

@@ -49,6 +49,12 @@ double quadpack_integrand(void* obj, double* x)
     return ret;
 }
 
+ssc::integrate::QuadPack::QuadPack() : Integrator(),
+                                       iwork(new int[LIMIT]),
+                                       work(new double[LENW])
+{
+}
+
 ssc::integrate::QuadPack::QuadPack(const Function& f_) : Integrator(f_),
                                          iwork(new int[LIMIT]),
                                          work(new double[LENW])
@@ -69,7 +75,7 @@ double ssc::integrate::QuadPack::op(double *x)
     return ret;
 }
 
-double ssc::integrate::QuadPack::integrate(double a, double b, double eps) const
+double ssc::integrate::QuadPack::integrate_impl(const Function& f_, double a, double b, double eps) const
 {
     int neval = 0;
     int ier = 0;
@@ -81,7 +87,8 @@ double ssc::integrate::QuadPack::integrate(double a, double b, double eps) const
 
     int lenw = LENW, limit = LIMIT;
     double res = 0;
-    dqags_(quadpack_integrand, (void*)(this), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
+    QuadPack q(f_);
+    dqags_(quadpack_integrand, (void*)(&q), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
     throw_any_errors(ier);
     return res;
 }
@@ -134,8 +141,8 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
 
 ssc::integrate::QuadPack::~QuadPack()
 {
-    delete [] iwork;
-    delete [] work;
+    if (iwork) delete [] iwork;
+    if (work)  delete [] work;
 }
 
 ssc::integrate::QuadPack::QuadPack(const QuadPack& rhs) : Integrator(rhs.f),
