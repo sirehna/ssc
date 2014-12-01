@@ -17,8 +17,11 @@ namespace ssc
         class Rectangle : public Integrator
         {
             public:
+                Rectangle();
                 Rectangle(const Function& f);
-                double integrate(double a, double b, double eps=1e-6) const;
+
+            private:
+                double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
         };
     }
 }

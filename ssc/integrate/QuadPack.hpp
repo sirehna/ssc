@@ -26,14 +26,15 @@ namespace ssc
         class QuadPack : public Integrator
         {
             public:
+                QuadPack();
                 QuadPack(const Function& f_);
                 ~QuadPack();
                 QuadPack(const QuadPack& rhs);
                 QuadPack& operator=(const QuadPack& rhs);
                 double op(double *x);
-                double integrate(double a, double b, double eps=1e-6) const;
 
             private:
+                double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
                 void throw_any_errors(const int error_code) const;
                 int* iwork;
                 double* work;

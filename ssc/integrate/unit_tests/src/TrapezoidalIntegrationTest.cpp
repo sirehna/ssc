@@ -37,7 +37,7 @@ TEST_F(TrapezoidalIntegrationTest, should_be_able_to_integrate_x)
     const double xb = a.random<double>().between(xa,100);
 //! [TrapezoidalIntegrationTest example]
 //! [TrapezoidalIntegrationTest expected output]
-    ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate(xa,xb,(xb-xa)/NINT), (xb*xb-xa*xa)/2., EPS);
+    ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate_f(xa,xb,(xb-xa)/NINT), (xb*xb-xa*xa)/2., EPS);
 //! [TrapezoidalIntegrationTest expected output]
     }
 }
@@ -50,7 +50,7 @@ TEST_F(TrapezoidalIntegrationTest, should_be_able_to_integrate_a_constant)
         ssc::integrate::TrapezoidalIntegration integrator([c](const double& x)->double{(void)x;return c;});
         const double xa = a.random<double>().between(-100,100);
         const double xb = a.random<double>().between(xa,100);
-        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate(xa,xb,(xb-xa)/NINT), (xb-xa)*c, EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate_f(xa,xb,(xb-xa)/NINT), (xb-xa)*c, EPS);
     }
 }
 
@@ -63,7 +63,7 @@ TEST_F(TrapezoidalIntegrationTest, should_be_able_to_integrate_a_parabola)
         ssc::integrate::TrapezoidalIntegration integrator([&lambda,&mu](const double& x)->double{return lambda*x*x+mu;});
         const double xa = a.random<double>().between(-100,100);
         const double xb = a.random<double>().between(xa,100);
-        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate(xa,xb,1E-4), lambda*(pow(xb,3)-pow(xa,3))/3.+mu*(xb-xa), EPS);
+        ASSERT_SMALL_RELATIVE_ERROR(integrator.integrate_f(xa,xb,1E-4), lambda*(pow(xb,3)-pow(xa,3))/3.+mu*(xb-xa), EPS);
     }
 }
 

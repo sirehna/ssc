@@ -44,12 +44,15 @@ class ssc::integrate::Simpson::Impl
 
 };
 
-ssc::integrate::Simpson::Simpson(const Function& f) : ssc::integrate::Integrator(f), pimpl(new Impl())
+ssc::integrate::Simpson::Simpson() : ssc::integrate::Integrator(), pimpl(new Impl())
 {
-
 }
 
-double ssc::integrate::Simpson::integrate(double a, double b, double eps) const
+ssc::integrate::Simpson::Simpson(const Function& f_) : ssc::integrate::Integrator(f_), pimpl(new Impl())
 {
-    return pimpl->integrate(f,a,b,eps);
+}
+
+double ssc::integrate::Simpson::integrate_impl(const Function& f_, double a, double b, double eps) const
+{
+    return pimpl->integrate(f_,a,b,eps);
 }

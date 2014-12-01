@@ -26,12 +26,18 @@ namespace ssc
         class Integrator
         {
             public:
+                Integrator();
                 Integrator(const Function& f_);
                 virtual ~Integrator();
-                virtual double integrate(double a, double b, double eps=1e-6) const = 0;
+                double integrate_f(double a, double b, double eps=1e-6) const;
+                double integrate(const Function& f, double a, double b, double eps=1e-6);
 
             protected:
                 Function f;
+                bool function_defined;
+
+            private:
+                virtual double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const = 0;
         };
     }
 }

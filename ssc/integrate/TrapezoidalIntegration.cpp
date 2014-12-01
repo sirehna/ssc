@@ -34,20 +34,20 @@ class ssc::integrate::TrapezoidalIntegration::Impl
 
 };
 
-
-
-ssc::integrate::TrapezoidalIntegration::TrapezoidalIntegration(const Function& f) : Integrator(f), pimpl(new Impl())
+ssc::integrate::TrapezoidalIntegration::TrapezoidalIntegration() : Integrator(), pimpl(new Impl())
 {
-
 }
 
-
-double ssc::integrate::TrapezoidalIntegration::integrate(double a, double b, double eps) const
+ssc::integrate::TrapezoidalIntegration::TrapezoidalIntegration(const Function& f_) : Integrator(f_), pimpl(new Impl())
 {
-    return pimpl->integrate(f,a,b,eps);
 }
 
 double ssc::integrate::TrapezoidalIntegration::integrate_n_steps(double a, double b, size_t n) const
 {
     return pimpl->integrate(f,a,b,1./(double)n);
+}
+
+double ssc::integrate::TrapezoidalIntegration::integrate_impl(const Function& f_, double a, double b, double eps) const
+{
+    return pimpl->integrate(f_,a,b,eps);
 }
