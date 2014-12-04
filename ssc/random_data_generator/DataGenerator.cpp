@@ -149,7 +149,7 @@ const std::vector<double>      DataGenerator::vector_of_random_doubles(const siz
 
 int DataGenerator::get_random_number() const
 {
-	return static_cast<int>(sir_rand_u01()*MAX_RAND_INT);
+    return static_cast<int>(sir_rand_u01()*MAX_RAND_INT);
 }
 
 namespace ssc
@@ -158,10 +158,10 @@ namespace ssc
     {
         template <> double ssc::random_data_generator::TypedScalarDataGenerator<double>::get() const
         {
-            if (isnan(min_bound))                                         return NAN;
-            if (isnan(max_bound))                                         return NAN;
-            if (isnan(forbidden_min))                                     return NAN;
-            if (isnan(forbidden_max))                                     return NAN;
+            if (isnan((float)min_bound))                                  return NAN;
+            if (isnan((float)max_bound))                                  return NAN;
+            if (isnan((float)forbidden_min))                              return NAN;
+            if (isnan((float)forbidden_max))                              return NAN;
             if ((forbidden_min==min_bound) && (forbidden_max==max_bound)) return 0;
             const double a = random_double(min_bound, max_bound);
             if (outside_forbidden_zone(forbidden_min, a, forbidden_max))  return a;
