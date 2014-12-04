@@ -7,8 +7,8 @@
 
 #include "QuadPack.hpp"
 
-#define LIMIT 250
-#define LENW 1601
+#define LIMIT 2500
+#define LENW 16010
 #define LENIW 500
 #define MAXP1 21
 
