@@ -11,18 +11,21 @@
 */
 
 #include "f2c.h"
+#include <stdio.h>
 
-doublereal qwgtf_(real *x, real *omega, real *p2, real *p3, real *p4, integer 
+#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
+
+doublereal qwgtf_(doublereal *x, doublereal *omega, doublereal *p2, doublereal *p3, doublereal *p4, integer
 	*integr)
 {
     /* System generated locals */
-    real ret_val;
+    doublereal ret_val;
 
     /* Builtin functions */
     double cos(doublereal), sin(doublereal);
 
     /* Local variables */
-    static real omx;
+    static doublereal omx;
 
 /* ***begin prologue  qwgtf */
 /* ***refer to   qk15w */

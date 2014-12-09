@@ -11,7 +11,8 @@
 */
 
 #include "f2c.h"
-
+#include <stdio.h>
+#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
 /* Table of constant values */
 
 static integer c__4 = 4;
@@ -19,48 +20,49 @@ static integer c__0 = 0;
 static integer c__1 = 1;
 static integer c__2 = 2;
 
-/* Subroutine */ int qawoe_(E_fp f, real *a, real *b, real *omega, integer *
-	integr, real *epsabs, real *epsrel, integer *limit, integer *icall, 
-	integer *maxp1, real *result, real *abserr, integer *neval, integer *
-	ier, integer *last, real *alist__, real *blist, real *rlist, real *
-	elist, integer *iord, integer *nnlog, integer *momcom, real *chebmo)
+/* Subroutine */ int qawoe_(E_fp f, integer *obj, doublereal *a, doublereal *b,
+    doublereal *omega, integer * integr, doublereal *epsabs, doublereal *epsrel,
+    integer *limit, integer *icall,
+    integer *maxp1, doublereal *result, doublereal *abserr, integer *neval, integer *
+	ier, integer *last, doublereal *alist__, doublereal *blist, doublereal *rlist, doublereal *
+	elist, integer *iord, integer *nnlog, integer *momcom, doublereal *chebmo)
 {
     /* System generated locals */
     integer chebmo_dim1, chebmo_offset, i__1, i__2;
-    real r__1, r__2;
+    doublereal r__1, r__2;
 
     /* Local variables */
     static integer k;
-    static real a1, a2, b1, b2;
+    static doublereal a1, a2, b1, b2;
     static integer id, nev;
-    static real area;
-    extern /* Subroutine */ int qc25f_(E_fp, real *, real *, real *, integer *
-	    , integer *, integer *, integer *, real *, real *, integer *, 
-	    real *, real *, integer *, real *), qelg_(integer *, real *, real 
-	    *, real *, real *, integer *);
-    static real dres;
+    static doublereal area;
+    extern /* Subroutine */ int qc25f_(E_fp, integer *obj, doublereal *, doublereal *, doublereal *, integer *
+	    , integer *, integer *, integer *, doublereal *, doublereal *, integer *,
+	    doublereal *, doublereal *, integer *, doublereal *), qelg_(integer *, doublereal *, doublereal
+	    *, doublereal *, doublereal *, integer *);
+    static doublereal dres;
     static integer ksgn, nres;
-    static real area1, area2, area12, small, erro12, defab1, defab2, width;
+    static doublereal area1, area2, area12, small, erro12, defab1, defab2, width;
     static integer ierro;
-    static real oflow;
+    static doublereal oflow;
     static integer ktmin, nrmax, nrmom;
-    static real uflow;
+    static doublereal uflow;
     static logical noext;
-    extern /* Subroutine */ int qpsrt_(integer *, integer *, integer *, real *
-	    , real *, integer *, integer *);
+    extern /* Subroutine */ int qpsrt_(integer *, integer *, integer *, doublereal *
+	    , doublereal *, integer *, integer *);
     extern doublereal r1mach_(integer *);
     static integer iroff1, iroff2, iroff3;
-    static real res3la[3], error1, error2, rlist2[52];
+    static doublereal res3la[3], error1, error2, rlist2[52];
     static integer numrl2;
-    static real defabs, domega, epmach, erlarg, abseps, correc, errbnd, 
+    static doublereal defabs, domega, epmach, erlarg, abseps, correc, errbnd,
 	    resabs;
     static integer jupbnd;
     static logical extall;
-    static real erlast, errmax;
+    static doublereal erlast, errmax;
     static integer maxerr;
-    static real reseps;
+    static doublereal reseps;
     static logical extrap;
-    static real ertest, errsum;
+    static doublereal ertest, errsum;
 
 /* ***begin prologue  qawoe */
 /* ***date written   800101   (yymmdd) */
@@ -86,18 +88,18 @@ static integer c__2 = 2;
 
 /*        parameters */
 /*         on entry */
-/*            f      - real */
+/*            f      - doublereal */
 /*                     function subprogram defining the integrand */
 /*                     function f(x). the actual name for f needs to be */
 /*                     declared e x t e r n a l in the driver program. */
 
-/*            a      - real */
+/*            a      - doublereal */
 /*                     lower limit of integration */
 
-/*            b      - real */
+/*            b      - doublereal */
 /*                     upper limit of integration */
 
-/*            omega  - real */
+/*            omega  - doublereal */
 /*                     parameter in the integrand weight function */
 
 /*            integr - integer */
@@ -108,9 +110,9 @@ static integer c__2 = 2;
 /*                     if integr.ne.1 and integr.ne.2, the routine */
 /*                     will end with ier = 6. */
 
-/*            epsabs - real */
+/*            epsabs - doublereal */
 /*                     absolute accuracy requested */
-/*            epsrel - real */
+/*            epsrel - doublereal */
 /*                     relative accuracy requested */
 /*                     if  epsabs.le.0 */
 /*                     and epsrel.lt.max(50*rel.mach.acc.,0.5d-28), */
@@ -140,10 +142,10 @@ static integer c__2 = 2;
 /*                     if maxp1.lt.1, the routine will end with ier = 6. */
 
 /*         on return */
-/*            result - real */
+/*            result - doublereal */
 /*                     approximation to the integral */
 
-/*            abserr - real */
+/*            abserr - doublereal */
 /*                     estimate of the modulus of the absolute error, */
 /*                     which should equal or exceed abs(i-result) */
 
@@ -211,24 +213,24 @@ static integer c__2 = 2;
 /*                     process, which determines the number of */
 /*                     significant elements actually in the */
 /*                     work arrays. */
-/*            alist  - real */
+/*            alist  - doublereal */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the left */
 /*                     end points of the subintervals in the partition */
 /*                     of the given integration range (a,b) */
 
-/*            blist  - real */
+/*            blist  - doublereal */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the right */
 /*                     end points of the subintervals in the partition */
 /*                     of the given integration range (a,b) */
 
-/*            rlist  - real */
+/*            rlist  - doublereal */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the integral */
 /*                     approximations on the subintervals */
 
-/*            elist  - real */
+/*            elist  - doublereal */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the moduli of the */
 /*                     absolute error estimates on the subintervals */
@@ -255,7 +257,7 @@ static integer c__2 = 2;
 /*                     (abs(b-a))*2**(-l), l=0,1,2, ..., momcom-1, */
 /*                     momcom.lt.maxp1 */
 
-/*            chebmo - real */
+/*            chebmo - doublereal */
 /*                     array of dimension (maxp1,25) containing the */
 /*                     chebyshev moments */
 
@@ -334,7 +336,6 @@ static integer c__2 = 2;
 
 /*         test on validity of parameters */
 /*         ------------------------------ */
-
     *ier = 0;
     *neval = 0;
     *last = 0;
@@ -346,10 +347,12 @@ static integer c__2 = 2;
     elist[1] = 0.f;
     iord[1] = 0;
     nnlog[1] = 0;
+    printf("in file %s, line %i\n", __FILE__, __LINE__);
 /* Computing MAX */
     r__1 = epmach * 50.f;
     if (*integr != 1 && *integr != 2 || *epsabs <= 0.f && *epsrel < dmax(r__1,
 	    5e-15f) || *icall < 1 || *maxp1 < 1) {
+
 	*ier = 6;
     }
     if (*ier == 6) {
@@ -366,7 +369,7 @@ static integer c__2 = 2;
     }
     *momcom = 0;
 L5:
-    qc25f_((E_fp)f, a, b, &domega, integr, &nrmom, maxp1, &c__0, result, 
+    qc25f_((E_fp)f, obj, a, b, &domega, integr, &nrmom, maxp1, &c__0, result,
 	    abserr, neval, &defabs, &resabs, momcom, &chebmo[chebmo_offset]);
 
 /*           test on accuracy. */
@@ -390,7 +393,6 @@ L5:
 
 /*           initializations */
 /*           --------------- */
-
     uflow = r1mach_(&c__1);
     oflow = r1mach_(&c__2);
     errmax = *abserr;
@@ -433,18 +435,17 @@ L10:
 
 /*           bisect the subinterval with the nrmax-th largest */
 /*           error estimate. */
-
 	nrmom = nnlog[maxerr] + 1;
 	a1 = alist__[maxerr];
 	b1 = (alist__[maxerr] + blist[maxerr]) * .5f;
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
-	qc25f_((E_fp)f, &a1, &b1, &domega, integr, &nrmom, maxp1, &c__0, &
+	qc25f_((E_fp)f, obj, &a1, &b1, &domega, integr, &nrmom, maxp1, &c__0, &
 		area1, &error1, &nev, &resabs, &defab1, momcom, &chebmo[
 		chebmo_offset]);
 	*neval += nev;
-	qc25f_((E_fp)f, &a2, &b2, &domega, integr, &nrmom, maxp1, &c__1, &
+	qc25f_((E_fp)f, obj, &a2, &b2, &domega, integr, &nrmom, maxp1, &c__1, &
 		area2, &error2, &nev, &resabs, &defab2, momcom, &chebmo[
 		chebmo_offset]);
 	*neval += nev;
@@ -510,7 +511,6 @@ L25:
 	}
 
 /*           append the newly-created intervals to the list. */
-
 	if (error2 > error1) {
 	    goto L30;
 	}

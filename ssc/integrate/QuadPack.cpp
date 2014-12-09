@@ -58,9 +58,7 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
     }
     if (ier == 2)
     {
-        std::stringstream ss;
-        ss << "The occurrence of roundoff error is detected, which prevents the requested tolerance from being achieved. The error may be under-estimated.";
-        THROW(__PRETTY_FUNCTION__, ssc::integrate::QuadPackException, ss.str());
+        std::cerr << "Warning: the occurrence of roundoff error is detected, which prevents the requested tolerance from being achieved. The error may be under-estimated.";
     }
     if (ier == 3)
     {

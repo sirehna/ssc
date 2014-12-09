@@ -11,50 +11,52 @@
 */
 
 #include "f2c.h"
+#include <stdio.h>
+#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
 
 /* Table of constant values */
 
 static integer c__2 = 2;
 
-/* Subroutine */ int qc25f_(E_fp f, real *a, real *b, real *omega, integer *
-	integr, integer *nrmom, integer *maxp1, integer *ksave, real *result, 
-	real *abserr, integer *neval, real *resabs, real *resasc, integer *
-	momcom, real *chebmo)
+/* Subroutine */ int qc25f_(E_fp f, integer *obj, doublereal *a, doublereal *b, doublereal *omega, integer *
+	integr, integer *nrmom, integer *maxp1, integer *ksave, doublereal *result,
+	doublereal *abserr, integer *neval, doublereal *resabs, doublereal *resasc, integer *
+	momcom, doublereal *chebmo)
 {
     /* Initialized data */
 
-    static real x[11] = { .9914448613738104f,.9659258262890683f,
+    static doublereal x[11] = { .9914448613738104f,.9659258262890683f,
 	    .9238795325112868f,.8660254037844386f,.7933533402912352f,
 	    .7071067811865475f,.6087614290087206f,.5f,.3826834323650898f,
 	    .2588190451025208f,.1305261922200516f };
 
     /* System generated locals */
     integer chebmo_dim1, chebmo_offset, i__1;
-    real r__1, r__2;
+    doublereal r__1, r__2;
 
     /* Builtin functions */
     double cos(doublereal), sin(doublereal);
 
     /* Local variables */
-    static real d__[25];
+    static doublereal d__[25];
     static integer i__, j, k, m;
-    static real v[28], d1[25], d2[25], p2, p3, p4, ac, an, as, an2, ass, par2,
+    static doublereal v[28], d1[25], d2[25], p2, p3, p4, ac, an, as, an2, ass, par2,
 	     conc, asap, par22, fval[25], estc, cons;
     static integer iers;
-    extern /* Subroutine */ int qk15w_(E_fp, E_fp, real *, real *, real *, 
-	    real *, integer *, real *, real *, real *, real *, real *, real *)
+    extern /* Subroutine */ int qk15w_(E_fp, E_fp, integer *obj, doublereal *, doublereal *, doublereal *,
+	    doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *)
 	    ;
-    static real ests;
+    static doublereal ests;
     static integer isym, noeq1;
-    static real cheb12[13], cheb24[25];
-    extern /* Subroutine */ int qcheb_(real *, real *, real *, real *);
-    static real resc12, resc24, hlgth, centr, ress12, ress24, oflow;
+    static doublereal cheb12[13], cheb24[25];
+    extern /* Subroutine */ int qcheb_(doublereal *, doublereal *, doublereal *, doublereal *);
+    static doublereal resc12, resc24, hlgth, centr, ress12, ress24, oflow;
     static integer noequ;
     extern doublereal qwgtf_();
-    extern /* Subroutine */ int sgtsl_(integer *, real *, real *, real *, 
-	    real *, integer *);
+    extern /* Subroutine */ int sgtsl_(integer *, doublereal *, doublereal *, doublereal *,
+	    doublereal *, integer *);
     extern doublereal r1mach_(integer *);
-    static real cospar, sinpar, parint;
+    static doublereal cospar, sinpar, parint;
 
 /* ***begin prologue  qc25f */
 /* ***date written   810101   (yymmdd) */
@@ -77,18 +79,18 @@ static integer c__2 = 2;
 
 /*        parameters */
 /*         on entry */
-/*           f      - real */
+/*           f      - doublereal */
 /*                    function subprogram defining the integrand */
 /*                    function f(x). the actual name for f needs to */
 /*                    be declared e x t e r n a l in the calling program. */
 
-/*           a      - real */
+/*           a      - doublereal */
 /*                    lower limit of integration */
 
-/*           b      - real */
+/*           b      - doublereal */
 /*                    upper limit of integration */
 
-/*           omega  - real */
+/*           omega  - doublereal */
 /*                    parameter in the weight function */
 
 /*           integr - integer */
@@ -114,20 +116,20 @@ static integer c__2 = 2;
 /*                    current interval have been computed */
 
 /*         on return */
-/*           result - real */
+/*           result - doublereal */
 /*                    approximation to the integral i */
 
-/*           abserr - real */
+/*           abserr - doublereal */
 /*                    estimate of the modulus of the absolute */
 /*                    error, which should equal or exceed abs(i-result) */
 
 /*           neval  - integer */
 /*                    number of integrand evaluations */
 
-/*           resabs - real */
+/*           resabs - doublereal */
 /*                    approximation to the integral j */
 
-/*           resasc - real */
+/*           resasc - doublereal */
 /*                    approximation to the integral of abs(f-i/(b-a)) */
 
 /*         on entry and return */
@@ -140,7 +142,7 @@ static integer c__2 = 2;
 /*                    already been computed and stored, otherwise we */
 /*                    compute them and we increase momcom. */
 
-/*           chebmo - real */
+/*           chebmo - doublereal */
 /*                    array of dimension at least (maxp1,25) containing */
 /*                    the modified chebyshev moments for the first momcom */
 /*                    momcom interval lengths */
@@ -205,7 +207,7 @@ static integer c__2 = 2;
     if (dabs(parint) > 2.f) {
 	goto L10;
     }
-    qk15w_((E_fp)f, (E_fp)qwgtf_, omega, &p2, &p3, &p4, integr, a, b, result, 
+    qk15w_((E_fp)f, (E_fp)qwgtf_, obj, omega, &p2, &p3, &p4, integr, a, b, result,
 	    abserr, resabs, resasc);
     *neval = 15;
     goto L170;
@@ -372,16 +374,16 @@ L120:
 /*           of degrees 12 and 24 of the function f. */
 
     r__1 = centr + hlgth;
-    fval[0] = (*f)(&r__1) * .5f;
-    fval[12] = (*f)(&centr);
+    fval[0] = (*f)(obj,&r__1) * .5f;
+    fval[12] = (*f)(obj,&centr);
     r__1 = centr - hlgth;
-    fval[24] = (*f)(&r__1) * .5f;
+    fval[24] = (*f)(obj,&r__1) * .5f;
     for (i__ = 2; i__ <= 12; ++i__) {
 	isym = 26 - i__;
 	r__1 = hlgth * x[i__ - 2] + centr;
-	fval[i__ - 1] = (*f)(&r__1);
+	fval[i__ - 1] = (*f)(obj,&r__1);
 	r__1 = centr - hlgth * x[i__ - 2];
-	fval[isym - 1] = (*f)(&r__1);
+	fval[isym - 1] = (*f)(obj,&r__1);
 /* L130: */
     }
     qcheb_(x, fval, cheb12, cheb24);
