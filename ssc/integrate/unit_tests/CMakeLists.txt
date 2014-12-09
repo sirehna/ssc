@@ -7,7 +7,7 @@ FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/GaussKronrodTest.cpp
               src/CumulateTest.cpp
               src/RectangleTest.cpp
-              src/IntegrateOscillatoryTest.cpp
+              src/ClenshawCurtisTest.cpp
               )
 
 
