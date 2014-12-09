@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#ifndef QUADPACK_HPP_
-#define QUADPACK_HPP_
+#ifndef GAUSSKRONROD_HPP_
+#define GAUSSKRONROD_HPP_
 
 #include "ssc/integrate/Integrator.hpp"
 
@@ -42,4 +42,4 @@ namespace ssc
     }
 }
 
-#endif /* QUADPACK_HPP_ */
+#endif /* GAUSSKRONROD_HPP_ */
