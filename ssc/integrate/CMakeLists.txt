@@ -45,6 +45,8 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           sgtsl.c
                                           r1mach.c
                                           ClenshawCurtis.cpp
+                                          ClenshawCurtisCosine.cpp
+                                          ClenshawCurtisSine.cpp
                                           )
 
 add_subdirectory(unit_tests)

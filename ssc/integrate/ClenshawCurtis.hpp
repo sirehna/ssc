@@ -26,6 +26,7 @@ namespace ssc
             private:
                 ClenshawCurtis();
                 double integrate_impl(const Function& f, double a, double b, double eps=1e-6);
+                virtual int get_internal_type_number() const = 0;
                 double tau;
                 int nb_of_chebychev_moments;
                 int nb_of_calls;

@@ -7,7 +7,7 @@
 
 
 #include "ClenshawCurtisTest.hpp"
-#include "ssc/integrate/ClenshawCurtis.hpp"
+#include "ssc/integrate/ClenshawCurtisSine.hpp"
 
 #define _USE_MATH_DEFINE
 #include <cmath>
@@ -32,7 +32,7 @@ void ClenshawCurtisTest::TearDown()
 TEST_F(ClenshawCurtisTest, example)
 {
 //! [IntegrateOscillatoryTest example]
-    ssc::integrate::ClenshawCurtis I([](const double omega){return log(omega);}, 10*PI);
+    ssc::integrate::ClenshawCurtisSine I([](const double omega){return log(omega);}, 10*PI);
 //! [IntegrateOscillatoryTest example]
 //! [IntegrateOscillatoryTest expected output]
     const double expected = -0.1281316; // - ( gamma + log(10*PI) - ci(10*pi) ) / (10*pi)
