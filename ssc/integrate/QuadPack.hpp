@@ -23,14 +23,14 @@ namespace ssc
 {
     namespace integrate
     {
-        class QuadPack : public Integrator
+        class GaussKronrod : public Integrator
         {
             public:
-                QuadPack();
-                QuadPack(const Function& f_);
-                ~QuadPack();
-                QuadPack(const QuadPack& rhs);
-                QuadPack& operator=(const QuadPack& rhs);
+                GaussKronrod();
+                GaussKronrod(const Function& f_);
+                ~GaussKronrod();
+                GaussKronrod(const GaussKronrod& rhs);
+                GaussKronrod& operator=(const GaussKronrod& rhs);
                 double op(double *x);
 
             private:
