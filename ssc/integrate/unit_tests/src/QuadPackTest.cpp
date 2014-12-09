@@ -9,25 +9,25 @@
 #include "ssc/integrate/QuadPack.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
-QuadPackTest::QuadPackTest() : a(ssc::random_data_generator::DataGenerator(2))
+GaussKronrodTest::GaussKronrodTest() : a(ssc::random_data_generator::DataGenerator(2))
 {
 }
 
-QuadPackTest::~QuadPackTest()
+GaussKronrodTest::~GaussKronrodTest()
 {
 }
 
-void QuadPackTest::SetUp()
+void GaussKronrodTest::SetUp()
 {
 }
 
-void QuadPackTest::TearDown()
+void GaussKronrodTest::TearDown()
 {
 }
 
 
 
-TEST_F(QuadPackTest, example)
+TEST_F(GaussKronrodTest, example)
 {
     //! [QuadPackTest example]
     ssc::integrate::QuadPack integrator([](double x){return x*x;});
@@ -40,7 +40,7 @@ TEST_F(QuadPackTest, example)
     //! [QuadPackTest example]
 }
 
-TEST_F(QuadPackTest, sine_squared_plus_cosine_squared_should_equal_one)
+TEST_F(GaussKronrodTest, sine_squared_plus_cosine_squared_should_equal_one)
 {
     ssc::integrate::QuadPack integrator([](double x){return sin(x)*sin(x)+cos(x)*cos(x);});
     for (size_t i = 0 ; i < 1000 ; ++i)
