@@ -1,12 +1,12 @@
 /*
- * IntegrateOscillatory.hpp
+ * ClenshawCurtis.hpp
  *
  *  Created on: Dec 9, 2014
  *      Author: cady
  */
 
-#ifndef INTEGRATEOSCILLATORY_HPP_
-#define INTEGRATEOSCILLATORY_HPP_
+#ifndef CLENSHAWCURTIS_HPP_
+#define CLENSHAWCURTIS_HPP_
 
 #include "ssc/integrate/QuadPack.hpp"
 
@@ -40,4 +40,4 @@ namespace ssc
     }
 }
 
-#endif /* INTEGRATEOSCILLATORY_HPP_ */
+#endif /* CLENSHAWCURTIS_HPP_ */
