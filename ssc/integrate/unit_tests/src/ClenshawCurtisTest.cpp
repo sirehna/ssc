@@ -7,7 +7,7 @@
 
 
 #include "ClenshawCurtisTest.hpp"
-#include "ssc/integrate/IntegrateOscillatory.hpp"
+#include "ssc/integrate/ClenshawCurtis.hpp"
 
 #define _USE_MATH_DEFINE
 #include <cmath>

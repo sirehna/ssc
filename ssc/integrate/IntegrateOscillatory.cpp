@@ -5,7 +5,7 @@
  *      Author: cady
  */
 
-#include <ssc/integrate/IntegrateOscillatory.hpp>
+#include <ssc/integrate/ClenshawCurtis.hpp>
 #include <ssc/macros/test_macros.hpp>
 #define MAX_NB_OF_PARTITIONS 2500 // Maximum number of subdivisions in the partition of (a,b)
 #define MAX_NB_OF_CHEBYCHEV_MOMENTS 1000
