@@ -37,6 +37,13 @@ namespace ssc
             protected:
                 void throw_any_errors(const int error_code) const;
         };
+
+        template <typename T> double integrand(void* obj, double* x)
+        {
+            T* qpi = (T*)(obj);
+            const double ret = qpi->op(x);
+            return ret;
+        }
     }
 }
 
