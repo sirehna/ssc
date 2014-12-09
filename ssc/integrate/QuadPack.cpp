@@ -104,7 +104,7 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
     if (ier == 1)
     {
         std::stringstream ss;
-        ss << "Maximum number of subdivisions allowed has been achieved. One can allow more sub-divisions by increasing the value of limit (and taking the according dimension adjustments into account. However, if this yields no improvement it is advised to analyze the integrand in order to determine the integration difficulties. If the position of a local difficulty can be determined (e.g. singularity, discontinuity within the interval) one will probably gain from splitting up the interval at this point and calling the integrator on the subranges. If possible, an appropriate special-purpose integrator should be used, which is designed for handling the type of difficulty involved.";
+        ss << "Maximum number of subdivisions allowed has been achieved. One can allow more sub-divisions by increasing the value of limit (and taking the according dimension adjustments into account). However, if this yields no improvement it is advised to analyze the integrand in order to determine the integration difficulties. If the position of a local difficulty can be determined (e.g. singularity, discontinuity within the interval) one will probably gain from splitting up the interval at this point and calling the integrator on the subranges. If possible, an appropriate special-purpose integrator should be used, which is designed for handling the type of difficulty involved.";
         THROW(__PRETTY_FUNCTION__, ssc::integrate::QuadPackException, ss.str());
     }
     if (ier == 2)
@@ -163,8 +163,8 @@ ssc::integrate::QuadPack& ssc::integrate::QuadPack::operator=(const QuadPack& rh
 {
     if (this != &rhs)
     {
-        delete iwork;
-        delete work;
+        if (iwork) delete iwork;
+        if (work) delete work;
         iwork = new int[LIMIT];
         work = new double[LENW];
         for (size_t i = 0 ; i < LIMIT ; ++i)
