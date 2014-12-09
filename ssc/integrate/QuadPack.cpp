@@ -44,18 +44,18 @@ double quadpack_integrand(void* obj, double* x);
 
 double quadpack_integrand(void* obj, double* x)
 {
-    ssc::integrate::QuadPack* qpi = (ssc::integrate::QuadPack*)(obj);
+    ssc::integrate::GaussKronrod* qpi = (ssc::integrate::GaussKronrod*)(obj);
     const double ret = qpi->op(x);
     return ret;
 }
 
-ssc::integrate::QuadPack::QuadPack() : Integrator(),
+ssc::integrate::GaussKronrod::GaussKronrod() : Integrator(),
                                        iwork(new int[LIMIT]),
                                        work(new double[LENW])
 {
 }
 
-ssc::integrate::QuadPack::QuadPack(const Function& f_) : Integrator(f_),
+ssc::integrate::GaussKronrod::GaussKronrod(const Function& f_) : Integrator(f_),
                                          iwork(new int[LIMIT]),
                                          work(new double[LENW])
 {
@@ -69,13 +69,13 @@ ssc::integrate::QuadPack::QuadPack(const Function& f_) : Integrator(f_),
     }
 }
 
-double ssc::integrate::QuadPack::op(double *x)
+double ssc::integrate::GaussKronrod::op(double *x)
 {
     const double ret = f(*x);
     return ret;
 }
 
-double ssc::integrate::QuadPack::integrate_impl(const Function& f_, double a, double b, double eps) const
+double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a, double b, double eps) const
 {
     int neval = 0;
     int ier = 0;
@@ -87,13 +87,13 @@ double ssc::integrate::QuadPack::integrate_impl(const Function& f_, double a, do
 
     int lenw = LENW, limit = LIMIT;
     double res = 0;
-    QuadPack q(f_);
+    GaussKronrod q(f_);
     dqags_(quadpack_integrand, (void*)(&q), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
     throw_any_errors(ier);
     return res;
 }
 
-void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
+void ssc::integrate::GaussKronrod::throw_any_errors(const int ier) const
 {
     if (ier < 0)
     {
@@ -139,13 +139,13 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
     }
 }
 
-ssc::integrate::QuadPack::~QuadPack()
+ssc::integrate::GaussKronrod::~GaussKronrod()
 {
     if (iwork) delete [] iwork;
     if (work)  delete [] work;
 }
 
-ssc::integrate::QuadPack::QuadPack(const QuadPack& rhs) : Integrator(rhs.f),
+ssc::integrate::GaussKronrod::GaussKronrod(const GaussKronrod& rhs) : Integrator(rhs.f),
                                           iwork(new int[LIMIT]),
                                           work(new double[LENW])
 {
@@ -159,7 +159,7 @@ ssc::integrate::QuadPack::QuadPack(const QuadPack& rhs) : Integrator(rhs.f),
     }
 }
 
-ssc::integrate::QuadPack& ssc::integrate::QuadPack::operator=(const QuadPack& rhs)
+ssc::integrate::GaussKronrod& ssc::integrate::GaussKronrod::operator=(const GaussKronrod& rhs)
 {
     if (this != &rhs)
     {
