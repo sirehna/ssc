@@ -14,7 +14,7 @@ ssc::integrate::IntegrateOscillatory::IntegrateOscillatory(const Function& f_) :
 {
 }
 
-double ssc::integrate::IntegrateOscillatory::integrate_impl(const Function& f, double a, double b, double eps) const
+double ssc::integrate::IntegrateOscillatory::integrate_impl(const Function& f, double a, double b, double eps)
 {
     return f(a+b+eps);
 }

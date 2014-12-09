@@ -20,7 +20,7 @@ ssc::integrate::Integrator::~Integrator()
 {
 }
 
-double ssc::integrate::Integrator::integrate_f(double a, double b, double eps) const
+double ssc::integrate::Integrator::integrate_f(double a, double b, double eps)
 {
     if (not(function_defined))
     {
