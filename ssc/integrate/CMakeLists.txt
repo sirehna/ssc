@@ -25,6 +25,7 @@ ENDIF()
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           Simpson.cpp
                                           Integrator.cpp
+                                          QuadPack.cpp
                                           GaussKronrod.cpp
                                           Rectangle.cpp
                                           Cumulate.cpp
