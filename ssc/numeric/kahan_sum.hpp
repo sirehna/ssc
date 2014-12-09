@@ -53,7 +53,7 @@ namespace ssc
         {
             return kahan<typename boost::counting_iterator<long>,
                              Iterator,
-                             T>(boost::counting_iterator<long>(0),boost::counting_iterator<long>(std::distance(begin,end)), begin);
+                             T>(boost::counting_iterator<long>(0),boost::counting_iterator<long>((long)std::distance(begin,end)), begin);
         }
 
         template <typename T>  T kahan(const std::vector<T>& points)
