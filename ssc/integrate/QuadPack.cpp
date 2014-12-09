@@ -83,7 +83,7 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
     if (ier == 6)
     {
         std::stringstream ss;
-        ss << "The input is invalid, because (epsabs<=0 and epsrel<max(50*rel.mach.acc.,0.5d-28) or limit<1 or lenw<limit*4.";
+        ss << "The input is invalid, because (epsabs<=0 and epsrel<max(50*rel.mach.acc.,0.5d-28) or limit<1 or lenw<limit*4., or (integr.ne.1 and integr.ne.2) or icall.lt.1 or maxp1.lt.1.";
         THROW(__PRETTY_FUNCTION__, ssc::integrate::QuadPackException, ss.str());
     }
 }

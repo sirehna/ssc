@@ -31,9 +31,6 @@ namespace ssc
                 virtual ~QuadPack();
                 double op(double *x);
 
-            private:
-                virtual double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const = 0;
-
             protected:
                 void throw_any_errors(const int error_code) const;
         };

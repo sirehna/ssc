@@ -34,7 +34,7 @@ namespace ssc
                 double integrate_n_steps(double a, double b, size_t n) const;
 
             private:
-                double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
+                double integrate_impl(const Function& f, double a, double b, double eps=1e-6);
                 class Impl;
                 TR1(shared_ptr)<Impl> pimpl;
         };

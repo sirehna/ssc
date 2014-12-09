@@ -52,7 +52,7 @@ ssc::integrate::Simpson::Simpson(const Function& f_) : ssc::integrate::Integrato
 {
 }
 
-double ssc::integrate::Simpson::integrate_impl(const Function& f_, double a, double b, double eps) const
+double ssc::integrate::Simpson::integrate_impl(const Function& f_, double a, double b, double eps)
 {
     return pimpl->integrate(f_,a,b,eps);
 }

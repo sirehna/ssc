@@ -42,8 +42,9 @@ ssc::integrate::GaussKronrod::GaussKronrod(const Function& f_) : QuadPack(f_),
     }
 }
 
-double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a, double b, double eps) const
+double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a, double b, double eps)
 {
+    f = f_;
     int neval = 0;
     int ier = 0;
     int last = 0;
@@ -54,8 +55,7 @@ double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a
 
     int lenw = LENW, limit = LIMIT;
     double res = 0;
-    GaussKronrod q(f_);
-    dqags_(integrand<GaussKronrod>, (void*)(&q), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
+    dqags_(integrand<GaussKronrod>, (void*)(this), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
     throw_any_errors(ier);
     return res;
 }

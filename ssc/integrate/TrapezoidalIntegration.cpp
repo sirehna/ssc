@@ -47,7 +47,7 @@ double ssc::integrate::TrapezoidalIntegration::integrate_n_steps(double a, doubl
     return pimpl->integrate(f,a,b,1./(double)n);
 }
 
-double ssc::integrate::TrapezoidalIntegration::integrate_impl(const Function& f_, double a, double b, double eps) const
+double ssc::integrate::TrapezoidalIntegration::integrate_impl(const Function& f_, double a, double b, double eps)
 {
     return pimpl->integrate(f_,a,b,eps);
 }

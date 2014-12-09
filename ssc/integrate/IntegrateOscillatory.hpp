@@ -21,7 +21,7 @@ namespace ssc
                 IntegrateOscillatory(const Function& f_);
 
             private:
-                double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
+                double integrate_impl(const Function& f, double a, double b, double eps=1e-6);
         };
     }
 }

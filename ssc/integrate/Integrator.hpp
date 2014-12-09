@@ -29,7 +29,7 @@ namespace ssc
                 Integrator();
                 Integrator(const Function& f_);
                 virtual ~Integrator();
-                double integrate_f(double a, double b, double eps=1e-6) const;
+                double integrate_f(double a, double b, double eps=1e-6);
                 double integrate(const Function& f, double a, double b, double eps=1e-6);
 
             protected:
@@ -37,7 +37,7 @@ namespace ssc
                 bool function_defined;
 
             private:
-                virtual double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const = 0;
+                virtual double integrate_impl(const Function& f, double a, double b, double eps=1e-6) = 0;
         };
     }
 }
