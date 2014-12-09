@@ -8,7 +8,7 @@
 #ifndef GAUSSKRONROD_HPP_
 #define GAUSSKRONROD_HPP_
 
-#include "ssc/integrate/Integrator.hpp"
+#include "ssc/integrate/QuadPack.hpp"
 
 /** \author cec
  *  \ingroup integrate
@@ -23,7 +23,7 @@ namespace ssc
 {
     namespace integrate
     {
-        class GaussKronrod : public Integrator
+        class GaussKronrod : public QuadPack
         {
             public:
                 GaussKronrod();
@@ -35,7 +35,6 @@ namespace ssc
 
             private:
                 double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;
-                void throw_any_errors(const int error_code) const;
                 int* iwork;
                 double* work;
         };
