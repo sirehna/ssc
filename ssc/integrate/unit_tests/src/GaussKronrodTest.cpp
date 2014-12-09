@@ -6,7 +6,7 @@
  */
 
 #include "GaussKronrodTest.hpp"
-#include "ssc/integrate/QuadPack.hpp"
+#include "ssc/integrate/GaussKronrod.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
 GaussKronrodTest::GaussKronrodTest() : a(ssc::random_data_generator::DataGenerator(2))

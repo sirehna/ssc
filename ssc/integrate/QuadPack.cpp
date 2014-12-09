@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "QuadPack.hpp"
+#include "GaussKronrod.hpp"
 
 #define LIMIT 2500
 #define LENW 16010
