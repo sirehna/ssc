@@ -12,11 +12,11 @@
 #include "gtest/gtest.h"
 #include <ssc/random_data_generator/DataGenerator.hpp>
 
-class IntegrateOscillatoryTest : public ::testing::Test
+class ClenshawCurtisTest : public ::testing::Test
 {
     protected:
-        IntegrateOscillatoryTest();
-        virtual ~IntegrateOscillatoryTest();
+        ClenshawCurtisTest();
+        virtual ~ClenshawCurtisTest();
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
