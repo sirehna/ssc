@@ -132,7 +132,7 @@ double ssc::integrate::ClenshawCurtis::integrate_impl(const Function& f_, double
 {
     f = f_;
     COUT(f(0.5));
-    int weight_function_type = 1; // 1 for cos, 2 for sin
+    int weight_function_type = get_internal_type_number(); // 1 for cos, 2 for sin
     double epsabs = eps;
     double epsrel = 1E-4;
     double abserr = 1E-4;
