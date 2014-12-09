@@ -22,16 +22,6 @@ extern "C"
 void dqags_(double f(void*,double*), void*, double*, double*, double*, double*, double*, double*, int*, int*, int*, int*, int* last, int* iwork, double* work);
 }
 
-double quadpack_integrand(void* obj, double* x);
-
-
-double quadpack_integrand(void* obj, double* x)
-{
-    ssc::integrate::GaussKronrod* qpi = (ssc::integrate::GaussKronrod*)(obj);
-    const double ret = qpi->op(x);
-    return ret;
-}
-
 ssc::integrate::GaussKronrod::GaussKronrod() : QuadPack(),
                                        iwork(new int[LIMIT]),
                                        work(new double[LENW])
@@ -65,7 +55,7 @@ double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a
     int lenw = LENW, limit = LIMIT;
     double res = 0;
     GaussKronrod q(f_);
-    dqags_(quadpack_integrand, (void*)(&q), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
+    dqags_(integrand<GaussKronrod>, (void*)(&q), &a, &b, &epsabs, &epsrel, &res, &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
     throw_any_errors(ier);
     return res;
 }
