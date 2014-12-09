@@ -52,12 +52,6 @@ ssc::integrate::GaussKronrod::GaussKronrod(const Function& f_) : QuadPack(f_),
     }
 }
 
-double ssc::integrate::GaussKronrod::op(double *x)
-{
-    const double ret = f(*x);
-    return ret;
-}
-
 double ssc::integrate::GaussKronrod::integrate_impl(const Function& f_, double a, double b, double eps) const
 {
     int neval = 0;

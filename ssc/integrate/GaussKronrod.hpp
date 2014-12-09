@@ -31,7 +31,6 @@ namespace ssc
                 ~GaussKronrod();
                 GaussKronrod(const GaussKronrod& rhs);
                 GaussKronrod& operator=(const GaussKronrod& rhs);
-                double op(double *x);
 
             private:
                 double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const;

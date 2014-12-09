@@ -36,6 +36,12 @@ ssc::integrate::QuadPack::~QuadPack()
 {
 }
 
+double ssc::integrate::QuadPack::op(double *x)
+{
+    const double ret = f(*x);
+    return ret;
+}
+
 void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
 {
     if (ier < 0)
