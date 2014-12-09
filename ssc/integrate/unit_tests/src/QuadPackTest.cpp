@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "QuadPackTest.hpp"
+#include "GaussKronrodTest.hpp"
 #include "ssc/integrate/QuadPack.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
