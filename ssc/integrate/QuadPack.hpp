@@ -29,7 +29,7 @@ namespace ssc
                 QuadPack();
                 QuadPack(const Function& f_);
                 virtual ~QuadPack();
-                virtual double op(double *x) = 0;
+                double op(double *x);
 
             private:
                 virtual double integrate_impl(const Function& f, double a, double b, double eps=1e-6) const = 0;
