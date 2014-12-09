@@ -11,30 +11,32 @@
 */
 
 #include "f2c.h"
+#include <stdio.h>
 
+#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
 /* Table of constant values */
 
 static integer c__4 = 4;
 static integer c__1 = 1;
 static doublereal c_b7 = 1.5;
 
-/* Subroutine */ int qk15w_(E_fp f, E_fp w, real *p1, real *p2, real *p3, 
-	real *p4, integer *kp, real *a, real *b, real *result, real *abserr, 
-	real *resabs, real *resasc)
+/* Subroutine */ int qk15w_(E_fp f, E_fp w, integer *obj, doublereal *p1, doublereal *p2, doublereal *p3,
+	doublereal *p4, integer *kp, doublereal *a, doublereal *b, doublereal *result, doublereal *abserr,
+	doublereal *resabs, doublereal *resasc)
 {
     /* Initialized data */
 
-    static real xgk[8] = { .9914553711208126f,.9491079123427585f,
+    static doublereal xgk[8] = { .9914553711208126f,.9491079123427585f,
 	    .8648644233597691f,.7415311855993944f,.5860872354676911f,
 	    .4058451513773972f,.2077849550078985f,0.f };
-    static real wgk[8] = { .02293532201052922f,.06309209262997855f,
+    static doublereal wgk[8] = { .02293532201052922f,.06309209262997855f,
 	    .1047900103222502f,.1406532597155259f,.1690047266392679f,
 	    .1903505780647854f,.2044329400752989f,.2094821410847278f };
-    static real wg[4] = { .1294849661688697f,.2797053914892767f,
+    static doublereal wg[4] = { .1294849661688697f,.2797053914892767f,
 	    .3818300505051889f,.4179591836734694f };
 
     /* System generated locals */
-    real r__1, r__2;
+    doublereal r__1, r__2;
     doublereal d__1;
 
     /* Builtin functions */
@@ -42,13 +44,13 @@ static doublereal c_b7 = 1.5;
 
     /* Local variables */
     static integer j;
-    static real fc, fv1[7], fv2[7];
+    static doublereal fc, fv1[7], fv2[7];
     static integer jtw;
-    static real absc, resg, resk, fsum, absc1, absc2, fval1, fval2;
+    static doublereal absc, resg, resk, fsum, absc1, absc2, fval1, fval2;
     static integer jtwm1;
-    static real hlgth, centr, reskh, uflow;
+    static doublereal hlgth, centr, reskh, uflow;
     extern doublereal r1mach_(integer *);
-    static real epmach, dhlgth;
+    static doublereal epmach, dhlgth;
 
 /* ***begin prologue  qk15w */
 /* ***date written   810101   (yymmdd) */
@@ -64,48 +66,48 @@ static doublereal c_b7 = 1.5;
 
 /*           integration rules */
 /*           standard fortran subroutine */
-/*           real version */
+/*           doublereal version */
 
 /*           parameters */
 /*             on entry */
-/*              f      - real */
+/*              f      - doublereal */
 /*                       function subprogram defining the integrand */
 /*                       function f(x). the actual name for f needs to be */
 /*                       declared e x t e r n a l in the driver program. */
 
-/*              w      - real */
+/*              w      - doublereal */
 /*                       function subprogram defining the integrand */
 /*                       weight function w(x). the actual name for w */
 /*                       needs to be declared e x t e r n a l in the */
 /*                       calling program. */
 
-/*              p1, p2, p3, p4 - real */
+/*              p1, p2, p3, p4 - doublereal */
 /*                       parameters in the weight function */
 
 /*              kp     - integer */
 /*                       key for indicating the type of weight function */
 
-/*              a      - real */
+/*              a      - doublereal */
 /*                       lower limit of integration */
 
-/*              b      - real */
+/*              b      - doublereal */
 /*                       upper limit of integration */
 
 /*            on return */
-/*              result - real */
+/*              result - doublereal */
 /*                       approximation to the integral i */
 /*                       result is computed by applying the 15-point */
 /*                       kronrod rule (resk) obtained by optimal addition */
 /*                       of abscissae to the 7-point gauss rule (resg). */
 
-/*              abserr - real */
+/*              abserr - doublereal */
 /*                       estimate of the modulus of the absolute error, */
 /*                       which should equal or exceed abs(i-result) */
 
-/*              resabs - real */
+/*              resabs - doublereal */
 /*                       approximation to the integral of abs(f) */
 
-/*              resasc - real */
+/*              resasc - doublereal */
 /*                       approximation to the integral of abs(f-i/(b-a)) */
 
 /* ***references  (none) */
@@ -161,7 +163,7 @@ static doublereal c_b7 = 1.5;
 /*           compute the 15-point kronrod approximation to the */
 /*           integral, and estimate the error. */
 
-    fc = (*f)(&centr) * (*w)(&centr, p1, p2, p3, p4, kp);
+    fc = (*f)(obj,&centr) * (*w)(&centr, p1, p2, p3, p4, kp);
     resg = wg[3] * fc;
     resk = wgk[7] * fc;
     *resabs = dabs(resk);
@@ -170,8 +172,8 @@ static doublereal c_b7 = 1.5;
 	absc = hlgth * xgk[jtw - 1];
 	absc1 = centr - absc;
 	absc2 = centr + absc;
-	fval1 = (*f)(&absc1) * (*w)(&absc1, p1, p2, p3, p4, kp);
-	fval2 = (*f)(&absc2) * (*w)(&absc2, p1, p2, p3, p4, kp);
+	fval1 = (*f)(obj,&absc1) * (*w)(&absc1, p1, p2, p3, p4, kp);
+	fval2 = (*f)(obj,&absc2) * (*w)(&absc2, p1, p2, p3, p4, kp);
 	fv1[jtw - 1] = fval1;
 	fv2[jtw - 1] = fval2;
 	fsum = fval1 + fval2;
@@ -185,8 +187,10 @@ static doublereal c_b7 = 1.5;
 	absc = hlgth * xgk[jtwm1 - 1];
 	absc1 = centr - absc;
 	absc2 = centr + absc;
-	fval1 = (*f)(&absc1) * (*w)(&absc1, p1, p2, p3, p4, kp);
-	fval2 = (*f)(&absc2) * (*w)(&absc2, p1, p2, p3, p4, kp);
+	const double xx1 = (*f)(obj,&absc1);
+	const double xx2 = (*f)(obj,&absc2);
+	fval1 = (*f)(obj,&absc1) * (*w)(&absc1, p1, p2, p3, p4, kp);
+	fval2 = (*f)(obj,&absc2) * (*w)(&absc2, p1, p2, p3, p4, kp);
 	fv1[jtwm1 - 1] = fval1;
 	fv2[jtwm1 - 1] = fval2;
 	fsum = fval1 + fval2;

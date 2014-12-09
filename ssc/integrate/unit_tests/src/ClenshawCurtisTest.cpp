@@ -29,17 +29,15 @@ void ClenshawCurtisTest::TearDown()
 {
 }
 
-TEST_F(ClenshawCurtisTest, example)
+TEST_F(ClenshawCurtisTest, sin)
 {
 //! [IntegrateOscillatoryTest example]
-    ssc::integrate::ClenshawCurtisSine I([](const double omega){return log(omega);}, 10*PI);
+    ssc::integrate::ClenshawCurtisSine I([](const double omega){return sin(omega);}, 1);
 //! [IntegrateOscillatoryTest example]
 //! [IntegrateOscillatoryTest expected output]
-    const double expected = -0.1281316; // - ( gamma + log(10*PI) - ci(10*pi) ) / (10*pi)
+    const double expected = 0.2726756432935796; // - ( gamma + log(10*PI) - ci(10*pi) ) / (10*pi)
 
     ASSERT_NEAR(expected, I.integrate_f(0,1,1E-3), 1E-7);
 //! [IntegrateOscillatoryTest expected output]
 }
-
-
 

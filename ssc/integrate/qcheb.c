@@ -12,7 +12,7 @@
 
 #include "f2c.h"
 
-/* Subroutine */ int qcheb_(real *x, real *fval, real *cheb12, real *cheb24)
+/* Subroutine */ int qcheb_(doublereal *x, doublereal *fval, doublereal *cheb12, doublereal *cheb24)
 {
     static integer i__, j;
     static real v[12], alam, alam1, alam2, part1, part2, part3;
@@ -38,11 +38,11 @@
 
 /*        parameters */
 /*          on entry */
-/*           x      - real */
+/*           x      - doublereal */
 /*                    vector of dimension 11 containing the */
 /*                    values cos(k*pi/24), k = 1, ..., 11 */
 
-/*           fval   - real */
+/*           fval   - doublereal */
 /*                    vector of dimension 25 containing the */
 /*                    function values at the points */
 /*                    (b+a+(b-a)*cos(k*pi/24))/2, k = 0, ...,24, */
@@ -51,11 +51,11 @@
 /*                    (these values are destroyed at output). */
 
 /*          on return */
-/*           cheb12 - real */
+/*           cheb12 - doublereal */
 /*                    vector of dimension 13 containing the */
 /*                    chebyshev coefficients for degree 12 */
 
-/*           cheb24 - real */
+/*           cheb24 - doublereal */
 /*                    vector of dimension 25 containing the */
 /*                    chebyshev coefficients for degree 24 */
 
