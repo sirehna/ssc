@@ -44,7 +44,7 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           qwgtf.c
                                           sgtsl.c
                                           r1mach.c
-                                          IntegrateOscillatory.cpp
+                                          ClenshawCurtis.cpp
                                           )
 
 add_subdirectory(unit_tests)
