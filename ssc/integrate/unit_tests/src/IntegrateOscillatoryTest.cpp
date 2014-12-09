@@ -6,7 +6,7 @@
  */
 
 
-#include "IntegrateOscillatoryTest.hpp"
+#include "ClenshawCurtisTest.hpp"
 #include "ssc/integrate/IntegrateOscillatory.hpp"
 
 #define _USE_MATH_DEFINE
