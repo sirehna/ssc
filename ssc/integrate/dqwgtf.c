@@ -10,7 +10,7 @@
 		http://www.netlib.org/f2c/libf2c.zip
 */
 
-#include "f2c.h"
+#include "ssc/f2c/f2c.h"
 
 doublereal dqwgtf_(doublereal *x, doublereal *omega, doublereal *p2, 
 	doublereal *p3, doublereal *p4, integer *integr)

@@ -10,7 +10,7 @@
 		http://www.netlib.org/f2c/libf2c.zip
 */
 
-#include "f2c.h"
+#include "ssc/f2c/f2c.h"
 
 /* Subroutine */ int dqcheb_(doublereal *x, doublereal *fval, doublereal *
 	cheb12, doublereal *cheb24)
