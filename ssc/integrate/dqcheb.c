@@ -1,4 +1,4 @@
-/* qcheb.f -- translated by f2c (version 20100827).
+/* dqcheb.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -12,13 +12,14 @@
 
 #include "f2c.h"
 
-/* Subroutine */ int qcheb_(doublereal *x, doublereal *fval, doublereal *cheb12, doublereal *cheb24)
+/* Subroutine */ int dqcheb_(doublereal *x, doublereal *fval, doublereal *
+	cheb12, doublereal *cheb24)
 {
     static integer i__, j;
-    static real v[12], alam, alam1, alam2, part1, part2, part3;
+    static doublereal v[12], alam, alam1, alam2, part1, part2, part3;
 
-/* ***begin prologue  qcheb */
-/* ***refer to  qc25c,qc25f,qc25s */
+/* ***begin prologue  dqcheb */
+/* ***refer to  dqc25c,dqc25f,dqc25s */
 /* ***routines called  (none) */
 /* ***revision date  830518   (yymmdd) */
 /* ***keywords  chebyshev series expansion, fast fourier transform */
@@ -34,15 +35,15 @@
 
 /*        chebyshev series expansion */
 /*        standard fortran subroutine */
-/*        real version */
+/*        double precision version */
 
 /*        parameters */
 /*          on entry */
-/*           x      - doublereal */
+/*           x      - double precision */
 /*                    vector of dimension 11 containing the */
 /*                    values cos(k*pi/24), k = 1, ..., 11 */
 
-/*           fval   - doublereal */
+/*           fval   - double precision */
 /*                    vector of dimension 25 containing the */
 /*                    function values at the points */
 /*                    (b+a+(b-a)*cos(k*pi/24))/2, k = 0, ...,24, */
@@ -51,19 +52,19 @@
 /*                    (these values are destroyed at output). */
 
 /*          on return */
-/*           cheb12 - doublereal */
+/*           cheb12 - double precision */
 /*                    vector of dimension 13 containing the */
 /*                    chebyshev coefficients for degree 12 */
 
-/*           cheb24 - doublereal */
+/*           cheb24 - double precision */
 /*                    vector of dimension 25 containing the */
 /*                    chebyshev coefficients for degree 24 */
 
-/* ***end prologue  qcheb */
+/* ***end prologue  dqcheb */
 
 
 
-/* ***first executable statement  qcheb */
+/* ***first executable statement  dqcheb */
     /* Parameter adjustments */
     --cheb24;
     --cheb12;
@@ -156,20 +157,20 @@
     cheb24[25] = cheb12[1] - alam;
     cheb12[13] = v[0] - v[2];
     cheb24[13] = cheb12[13];
-    alam = .16666666666666666f;
+    alam = .16666666666666666;
     for (i__ = 2; i__ <= 12; ++i__) {
 	cheb12[i__] *= alam;
 /* L40: */
     }
-    alam *= .5f;
+    alam *= .5;
     cheb12[1] *= alam;
     cheb12[13] *= alam;
     for (i__ = 2; i__ <= 24; ++i__) {
 	cheb24[i__] *= alam;
 /* L50: */
     }
-    cheb24[1] = alam * .5f * cheb24[1];
-    cheb24[25] = alam * .5f * cheb24[25];
+    cheb24[1] = alam * .5 * cheb24[1];
+    cheb24[25] = alam * .5 * cheb24[25];
     return 0;
-} /* qcheb_ */
+} /* dqcheb_ */
 

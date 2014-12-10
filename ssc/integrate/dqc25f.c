@@ -1,4 +1,4 @@
-/* qc25f.f -- translated by f2c (version 20100827).
+/* dqc25f.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -11,28 +11,33 @@
 */
 
 #include "f2c.h"
-#include <stdio.h>
-#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
 
 /* Table of constant values */
 
 static integer c__2 = 2;
 
-/* Subroutine */ int qc25f_(E_fp f, integer *obj, doublereal *a, doublereal *b, doublereal *omega, integer *
-	integr, integer *nrmom, integer *maxp1, integer *ksave, doublereal *result,
-	doublereal *abserr, integer *neval, doublereal *resabs, doublereal *resasc, integer *
-	momcom, doublereal *chebmo)
+/* Subroutine */ int dqc25f_(D_fp f, integer *obj, doublereal *a, doublereal *b, doublereal
+	*omega, integer *integr, integer *nrmom, integer *maxp1, integer *
+	ksave, doublereal *result, doublereal *abserr, integer *neval, 
+	doublereal *resabs, doublereal *resasc, integer *momcom, doublereal *
+	chebmo)
 {
     /* Initialized data */
 
-    static doublereal x[11] = { .9914448613738104f,.9659258262890683f,
-	    .9238795325112868f,.8660254037844386f,.7933533402912352f,
-	    .7071067811865475f,.6087614290087206f,.5f,.3826834323650898f,
-	    .2588190451025208f,.1305261922200516f };
+    static doublereal x[11] = { .991444861373810411144557526928563,
+	    .965925826289068286749743199728897,
+	    .923879532511286756128183189396788,
+	    .866025403784438646763723170752936,
+	    .793353340291235164579776961501299,
+	    .707106781186547524400844362104849,
+	    .608761429008720639416097542898164,.5,
+	    .382683432365089771728459984030399,
+	    .258819045102520762348898837624048,
+	    .130526192220051591548406227895489 };
 
     /* System generated locals */
     integer chebmo_dim1, chebmo_offset, i__1;
-    doublereal r__1, r__2;
+    doublereal d__1, d__2;
 
     /* Builtin functions */
     double cos(doublereal), sin(doublereal);
@@ -40,25 +45,27 @@ static integer c__2 = 2;
     /* Local variables */
     static doublereal d__[25];
     static integer i__, j, k, m;
-    static doublereal v[28], d1[25], d2[25], p2, p3, p4, ac, an, as, an2, ass, par2,
-	     conc, asap, par22, fval[25], estc, cons;
+    static doublereal v[28], d1[25], d2[25], p2, p3, p4, ac, an, as, an2, ass,
+	     par2, conc, asap, par22, fval[25], estc, cons;
     static integer iers;
-    extern /* Subroutine */ int qk15w_(E_fp, E_fp, integer *obj, doublereal *, doublereal *, doublereal *,
-	    doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *)
-	    ;
     static doublereal ests;
     static integer isym, noeq1;
-    static doublereal cheb12[13], cheb24[25];
-    extern /* Subroutine */ int qcheb_(doublereal *, doublereal *, doublereal *, doublereal *);
-    static doublereal resc12, resc24, hlgth, centr, ress12, ress24, oflow;
-    static integer noequ;
-    extern doublereal qwgtf_();
-    extern /* Subroutine */ int sgtsl_(integer *, doublereal *, doublereal *, doublereal *,
+    static doublereal cheb12[13], cheb24[25], resc12, resc24, hlgth, centr;
+    extern /* Subroutine */ int dqk15w_(D_fp, integer *, D_fp, doublereal *, doublereal *
+	    , doublereal *, doublereal *, integer *, doublereal *, doublereal 
+	    *, doublereal *, doublereal *, doublereal *, doublereal *), 
+	    dgtsl_(integer *, doublereal *, doublereal *, doublereal *, 
 	    doublereal *, integer *);
-    extern doublereal r1mach_(integer *);
-    static doublereal cospar, sinpar, parint;
+    static doublereal ress12, ress24, oflow;
+    static integer noequ;
+    extern doublereal d1mach_(integer *);
+    extern /* Subroutine */ int dqcheb_(doublereal *, doublereal *, 
+	    doublereal *, doublereal *);
+    static doublereal cospar;
+    extern doublereal dqwgtf_();
+    static doublereal parint, sinpar;
 
-/* ***begin prologue  qc25f */
+/* ***begin prologue  dqc25f */
 /* ***date written   810101   (yymmdd) */
 /* ***revision date  830518   (yymmdd) */
 /* ***category no.  h2a2a2 */
@@ -67,30 +74,31 @@ static integer c__2 = 2;
 /* ***author  piessens,robert,appl. math. & progr. div. - k.u.leuven */
 /*           de doncker,elise,appl. math. & progr. div. - k.u.leuven */
 /* ***purpose  to compute the integral i=integral of f(x) over (a,b) */
-/*            where w(x) = cos(omega*x) or (wx)=sin(omega*x) */
-/*            and to compute j=integral of abs(f) over (a,b). for small */
-/*            value of omega or small intervals (a,b) 15-point gauss- */
-/*            kronrod rule used. otherwise generalized clenshaw-curtis us */
+/*            where w(x) = cos(omega*x) or w(x)=sin(omega*x) and to */
+/*            compute j = integral of abs(f) over (a,b). for small value */
+/*            of omega or small intervals (a,b) the 15-point gauss-kronro */
+/*            rule is used. otherwise a generalized clenshaw-curtis */
+/*            method is used. */
 /* ***description */
 
 /*        integration rules for functions with cos or sin factor */
 /*        standard fortran subroutine */
-/*        real version */
+/*        double precision version */
 
 /*        parameters */
 /*         on entry */
-/*           f      - doublereal */
+/*           f      - double precision */
 /*                    function subprogram defining the integrand */
 /*                    function f(x). the actual name for f needs to */
 /*                    be declared e x t e r n a l in the calling program. */
 
-/*           a      - doublereal */
+/*           a      - double precision */
 /*                    lower limit of integration */
 
-/*           b      - doublereal */
+/*           b      - double precision */
 /*                    upper limit of integration */
 
-/*           omega  - doublereal */
+/*           omega  - double precision */
 /*                    parameter in the weight function */
 
 /*           integr - integer */
@@ -116,20 +124,20 @@ static integer c__2 = 2;
 /*                    current interval have been computed */
 
 /*         on return */
-/*           result - doublereal */
+/*           result - double precision */
 /*                    approximation to the integral i */
 
-/*           abserr - doublereal */
+/*           abserr - double precision */
 /*                    estimate of the modulus of the absolute */
 /*                    error, which should equal or exceed abs(i-result) */
 
 /*           neval  - integer */
 /*                    number of integrand evaluations */
 
-/*           resabs - doublereal */
+/*           resabs - double precision */
 /*                    approximation to the integral j */
 
-/*           resasc - doublereal */
+/*           resasc - double precision */
 /*                    approximation to the integral of abs(f-i/(b-a)) */
 
 /*         on entry and return */
@@ -142,14 +150,15 @@ static integer c__2 = 2;
 /*                    already been computed and stored, otherwise we */
 /*                    compute them and we increase momcom. */
 
-/*           chebmo - doublereal */
+/*           chebmo - double precision */
 /*                    array of dimension at least (maxp1,25) containing */
 /*                    the modified chebyshev moments for the first momcom */
 /*                    momcom interval lengths */
 
+/* ...................................................................... */
 /* ***references  (none) */
-/* ***routines called  qcheb,qk15w,qwgtf,r1mach,sgtsl */
-/* ***end prologue  qc25f */
+/* ***routines called  d1mach,dgtsl,dqcheb,dqk15w,dqwgtf */
+/* ***end prologue  dqc25f */
 
 
 
@@ -170,8 +179,7 @@ static integer c__2 = 2;
 /*           centr  - mid point of the integration interval */
 /*           hlgth  - half-length of the integration interval */
 /*           fval   - value of the function f at the points */
-/*                    (b-a)*0.5*cos(k*pi/12) + (b+a)*0.5, */
-/*                    k = 0, ..., 24 */
+/*                    (b-a)*0.5*cos(k*pi/12) + (b+a)*0.5, k = 0, ..., 24 */
 /*           cheb12 - coefficients of the chebyshev series expansion */
 /*                    of degree 12, for the function f, in the */
 /*                    interval (a,b) */
@@ -193,22 +201,22 @@ static integer c__2 = 2;
 
 /*           oflow is the largest positive magnitude. */
 
-/* ***first executable statement  qc25f */
-    oflow = r1mach_(&c__2);
+/* ***first executable statement  dqc25f */
+    oflow = d1mach_(&c__2);
 
-    centr = (*b + *a) * .5f;
-    hlgth = (*b - *a) * .5f;
+    centr = (*b + *a) * .5;
+    hlgth = (*b - *a) * .5;
     parint = *omega * hlgth;
 
 /*           compute the integral using the 15-point gauss-kronrod */
 /*           formula if the value of the parameter in the integrand */
 /*           is small. */
 
-    if (dabs(parint) > 2.f) {
+    if (abs(parint) > 2.) {
 	goto L10;
     }
-    qk15w_((E_fp)f, (E_fp)qwgtf_, obj, omega, &p2, &p3, &p4, integr, a, b, result,
-	    abserr, resabs, resasc);
+    dqk15w_((D_fp)f, obj, (D_fp)dqwgtf_, omega, &p2, &p3, &p4, integr, a, b,
+	    result, abserr, resabs, resasc);
     *neval = 15;
     goto L170;
 
@@ -232,67 +240,69 @@ L10:
 
     m = *momcom + 1;
     par2 = parint * parint;
-    par22 = par2 + 2.f;
+    par22 = par2 + 2.;
     sinpar = sin(parint);
     cospar = cos(parint);
 
 /*           compute the chebyshev moments with respect to cosine. */
 
-    v[0] = sinpar * 2.f / parint;
-    v[1] = (cospar * 8.f + (par2 + par2 - 8.f) * sinpar / parint) / par2;
-    v[2] = ((par2 - 12.f) * 32.f * cospar + ((par2 - 80.f) * par2 + 192.f) * 
-	    2.f * sinpar / parint) / (par2 * par2);
-    ac = cospar * 8.f;
-    as = parint * 24.f * sinpar;
-    if (dabs(parint) > 24.f) {
+    v[0] = sinpar * 2. / parint;
+    v[1] = (cospar * 8. + (par2 + par2 - 8.) * sinpar / parint) / par2;
+    v[2] = ((par2 - 12.) * 32. * cospar + ((par2 - 80.) * par2 + 192.) * 2. * 
+	    sinpar / parint) / (par2 * par2);
+    ac = cospar * 8.;
+    as = parint * 24. * sinpar;
+    if (abs(parint) > 24.) {
 	goto L30;
     }
 
-/*           compute the chebyshev moments as the */
-/*           solutions of a boundary value problem with 1 */
-/*           initial value (v(3)) and 1 end value (computed */
-/*           using an asymptotic formula). */
+/*           compute the chebyshev moments as the solutions of a */
+/*           boundary value problem with 1 initial value (v(3)) and 1 */
+/*           end value (computed using an asymptotic formula). */
 
     noequ = 25;
     noeq1 = noequ - 1;
-    an = 6.f;
+    an = 6.;
     i__1 = noeq1;
     for (k = 1; k <= i__1; ++k) {
 	an2 = an * an;
-	d__[k - 1] = (an2 - 4.f) * -2.f * (par22 - an2 - an2);
-	d2[k - 1] = (an - 1.f) * (an - 2.f) * par2;
-	d1[k] = (an + 3.f) * (an + 4.f) * par2;
-	v[k + 2] = as - (an2 - 4.f) * ac;
-	an += 2.f;
+	d__[k - 1] = (an2 - 4.) * -2. * (par22 - an2 - an2);
+	d2[k - 1] = (an - 1.) * (an - 2.) * par2;
+	d1[k] = (an + 3.) * (an + 4.) * par2;
+	v[k + 2] = as - (an2 - 4.) * ac;
+	an += 2.;
 /* L20: */
     }
     an2 = an * an;
-    d__[noequ - 1] = (an2 - 4.f) * -2.f * (par22 - an2 - an2);
-    v[noequ + 2] = as - (an2 - 4.f) * ac;
-    v[3] -= par2 * 56.f * v[2];
+    d__[noequ - 1] = (an2 - 4.) * -2. * (par22 - an2 - an2);
+    v[noequ + 2] = as - (an2 - 4.) * ac;
+    v[3] -= par2 * 56. * v[2];
     ass = parint * sinpar;
-    asap = (((((par2 * 210.f - 1.f) * cospar - (par2 * 105.f - 63.f) * ass) / 
-	    an2 - (1.f - par2 * 15.f) * cospar + ass * 15.f) / an2 - cospar + 
-	    ass * 3.f) / an2 - cospar) / an2;
-    v[noequ + 2] -= asap * 2.f * par2 * (an - 1.f) * (an - 2.f);
+    asap = (((((par2 * 210. - 1.) * cospar - (par2 * 105. - 63.) * ass) / an2 
+	    - (1. - par2 * 15.) * cospar + ass * 15.) / an2 - cospar + ass * 
+	    3.) / an2 - cospar) / an2;
+    v[noequ + 2] -= asap * 2. * par2 * (an - 1.) * (an - 2.);
 
 /*           solve the tridiagonal system by means of gaussian */
 /*           elimination with partial pivoting. */
 
-    sgtsl_(&noequ, d1, d__, d2, &v[3], &iers);
+/* ***        call to dgtsl must be replaced by call to */
+/* ***        double precision version of linpack routine sgtsl */
+
+    dgtsl_(&noequ, d1, d__, d2, &v[3], &iers);
     goto L50;
 
 /*           compute the chebyshev moments by means of forward */
 /*           recursion. */
 
 L30:
-    an = 4.f;
+    an = 4.;
     for (i__ = 4; i__ <= 13; ++i__) {
 	an2 = an * an;
-	v[i__ - 1] = ((an2 - 4.f) * ((par22 - an2 - an2) * 2.f * v[i__ - 2] - 
-		ac) + as - par2 * (an + 1.f) * (an + 2.f) * v[i__ - 3]) / (
-		par2 * (an - 1.f) * (an - 2.f));
-	an += 2.f;
+	v[i__ - 1] = ((an2 - 4.) * ((par22 - an2 - an2) * 2. * v[i__ - 2] - 
+		ac) + as - par2 * (an + 1.) * (an + 2.) * v[i__ - 3]) / (par2 
+		* (an - 1.) * (an - 2.));
+	an += 2.;
 /* L40: */
     }
 L50:
@@ -303,58 +313,59 @@ L50:
 
 /*           compute the chebyshev moments with respect to sine. */
 
-    v[0] = (sinpar - parint * cospar) * 2.f / par2;
-    v[1] = (18.f - 48.f / par2) * sinpar / par2 + (48.f / par2 - 2.f) * 
-	    cospar / parint;
-    ac = parint * -24.f * cospar;
-    as = sinpar * -8.f;
-    if (dabs(parint) > 24.f) {
+    v[0] = (sinpar - parint * cospar) * 2. / par2;
+    v[1] = (18. - 48. / par2) * sinpar / par2 + (48. / par2 - 2.) * cospar / 
+	    parint;
+    ac = parint * -24. * cospar;
+    as = sinpar * -8.;
+    if (abs(parint) > 24.) {
 	goto L80;
     }
 
-/*           compute the chebyshev moments as the */
-/*           solutions of a boundary value problem with 1 */
-/*           initial value (v(2)) and 1 end value (computed */
-/*           using an asymptotic formula). */
+/*           compute the chebyshev moments as the solutions of a boundary */
+/*           value problem with 1 initial value (v(2)) and 1 end value */
+/*           (computed using an asymptotic formula). */
 
-    an = 5.f;
+    an = 5.;
     i__1 = noeq1;
     for (k = 1; k <= i__1; ++k) {
 	an2 = an * an;
-	d__[k - 1] = (an2 - 4.f) * -2.f * (par22 - an2 - an2);
-	d2[k - 1] = (an - 1.f) * (an - 2.f) * par2;
-	d1[k] = (an + 3.f) * (an + 4.f) * par2;
-	v[k + 1] = ac + (an2 - 4.f) * as;
-	an += 2.f;
+	d__[k - 1] = (an2 - 4.) * -2. * (par22 - an2 - an2);
+	d2[k - 1] = (an - 1.) * (an - 2.) * par2;
+	d1[k] = (an + 3.) * (an + 4.) * par2;
+	v[k + 1] = ac + (an2 - 4.) * as;
+	an += 2.;
 /* L70: */
     }
     an2 = an * an;
-    d__[noequ - 1] = (an2 - 4.f) * -2.f * (par22 - an2 - an2);
-    v[noequ + 1] = ac + (an2 - 4.f) * as;
-    v[2] -= par2 * 42.f * v[1];
+    d__[noequ - 1] = (an2 - 4.) * -2. * (par22 - an2 - an2);
+    v[noequ + 1] = ac + (an2 - 4.) * as;
+    v[2] -= par2 * 42. * v[1];
     ass = parint * cospar;
-    asap = (((((par2 * 105.f - 63.f) * ass + (par2 * 210.f - 1.f) * sinpar) / 
-	    an2 + (par2 * 15.f - 1.f) * sinpar - ass * 15.f) / an2 - ass * 
-	    3.f - sinpar) / an2 - sinpar) / an2;
-    v[noequ + 1] -= asap * 2.f * par2 * (an - 1.f) * (an - 2.f);
+    asap = (((((par2 * 105. - 63.) * ass + (par2 * 210. - 1.) * sinpar) / an2 
+	    + (par2 * 15. - 1.) * sinpar - ass * 15.) / an2 - ass * 3. - 
+	    sinpar) / an2 - sinpar) / an2;
+    v[noequ + 1] -= asap * 2. * par2 * (an - 1.) * (an - 2.);
 
 /*           solve the tridiagonal system by means of gaussian */
 /*           elimination with partial pivoting. */
 
-    sgtsl_(&noequ, d1, d__, d2, &v[2], &iers);
+/* ***        call to dgtsl must be replaced by call to */
+/* ***        double precision version of linpack routine sgtsl */
+
+    dgtsl_(&noequ, d1, d__, d2, &v[2], &iers);
     goto L100;
 
-/*           compute the chebyshev moments by means of */
-/*           forward recursion. */
+/*           compute the chebyshev moments by means of forward recursion. */
 
 L80:
-    an = 3.f;
+    an = 3.;
     for (i__ = 3; i__ <= 12; ++i__) {
 	an2 = an * an;
-	v[i__ - 1] = ((an2 - 4.f) * ((par22 - an2 - an2) * 2.f * v[i__ - 2] + 
-		as) + ac - par2 * (an + 1.f) * (an + 2.f) * v[i__ - 3]) / (
-		par2 * (an - 1.f) * (an - 2.f));
-	an += 2.f;
+	v[i__ - 1] = ((an2 - 4.) * ((par22 - an2 - an2) * 2. * v[i__ - 2] + 
+		as) + ac - par2 * (an + 1.) * (an + 2.) * v[i__ - 3]) / (par2 
+		* (an - 1.) * (an - 2.));
+	an += 2.;
 /* L90: */
     }
 L100:
@@ -373,25 +384,25 @@ L120:
 /*           compute the coefficients of the chebyshev expansions */
 /*           of degrees 12 and 24 of the function f. */
 
-    r__1 = centr + hlgth;
-    fval[0] = (*f)(obj,&r__1) * .5f;
+    d__1 = centr + hlgth;
+    fval[0] = (*f)(obj,&d__1) * .5;
     fval[12] = (*f)(obj,&centr);
-    r__1 = centr - hlgth;
-    fval[24] = (*f)(obj,&r__1) * .5f;
+    d__1 = centr - hlgth;
+    fval[24] = (*f)(obj,&d__1) * .5;
     for (i__ = 2; i__ <= 12; ++i__) {
 	isym = 26 - i__;
-	r__1 = hlgth * x[i__ - 2] + centr;
-	fval[i__ - 1] = (*f)(obj,&r__1);
-	r__1 = centr - hlgth * x[i__ - 2];
-	fval[isym - 1] = (*f)(obj,&r__1);
+	d__1 = hlgth * x[i__ - 2] + centr;
+	fval[i__ - 1] = (*f)(obj,&d__1);
+	d__1 = centr - hlgth * x[i__ - 2];
+	fval[isym - 1] = (*f)(obj,&d__1);
 /* L130: */
     }
-    qcheb_(x, fval, cheb12, cheb24);
+    dqcheb_(x, fval, cheb12, cheb24);
 
 /*           compute the integral and error estimates. */
 
     resc12 = cheb12[12] * chebmo[m + chebmo_dim1 * 13];
-    ress12 = 0.f;
+    ress12 = 0.;
     k = 11;
     for (j = 1; j <= 6; ++j) {
 	resc12 += cheb12[k - 1] * chebmo[m + k * chebmo_dim1];
@@ -400,32 +411,32 @@ L120:
 /* L140: */
     }
     resc24 = cheb24[24] * chebmo[m + chebmo_dim1 * 25];
-    ress24 = 0.f;
-    *resabs = dabs(cheb24[24]);
+    ress24 = 0.;
+    *resabs = abs(cheb24[24]);
     k = 23;
     for (j = 1; j <= 12; ++j) {
 	resc24 += cheb24[k - 1] * chebmo[m + k * chebmo_dim1];
 	ress24 += cheb24[k] * chebmo[m + (k + 1) * chebmo_dim1];
-	*resabs = (r__1 = cheb24[k - 1], dabs(r__1)) + (r__2 = cheb24[k], 
-		dabs(r__2));
+	*resabs = (d__1 = cheb24[k - 1], abs(d__1)) + (d__2 = cheb24[k], abs(
+		d__2));
 	k += -2;
 /* L150: */
     }
-    estc = (r__1 = resc24 - resc12, dabs(r__1));
-    ests = (r__1 = ress24 - ress12, dabs(r__1));
-    *resabs *= dabs(hlgth);
+    estc = (d__1 = resc24 - resc12, abs(d__1));
+    ests = (d__1 = ress24 - ress12, abs(d__1));
+    *resabs *= abs(hlgth);
     if (*integr == 2) {
 	goto L160;
     }
     *result = conc * resc24 - cons * ress24;
-    *abserr = (r__1 = conc * estc, dabs(r__1)) + (r__2 = cons * ests, dabs(
-	    r__2));
+    *abserr = (d__1 = conc * estc, abs(d__1)) + (d__2 = cons * ests, abs(d__2)
+	    );
     goto L170;
 L160:
     *result = conc * ress24 + cons * resc24;
-    *abserr = (r__1 = conc * ests, dabs(r__1)) + (r__2 = cons * estc, dabs(
-	    r__2));
+    *abserr = (d__1 = conc * ests, abs(d__1)) + (d__2 = cons * estc, abs(d__2)
+	    );
 L170:
     return 0;
-} /* qc25f_ */
+} /* dqc25f_ */
 

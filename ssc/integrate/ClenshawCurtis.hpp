@@ -22,6 +22,7 @@ namespace ssc
                 ~ClenshawCurtis();
                 ClenshawCurtis(const ClenshawCurtis& rhs);
                 ClenshawCurtis& operator=(const ClenshawCurtis& rhs);
+                double compute_for(const double tau, const double a, const double b, const double eps);
 
             private:
                 ClenshawCurtis();
