@@ -8,6 +8,7 @@ FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/CumulateTest.cpp
               src/RectangleTest.cpp
               src/ClenshawCurtisTest.cpp
+              src/FilonTest.cpp
               )
 
 
