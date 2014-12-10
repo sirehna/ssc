@@ -68,9 +68,7 @@ void ssc::integrate::QuadPack::throw_any_errors(const int ier) const
     }
     if (ier == 4)
     {
-        std::stringstream ss;
-        ss << "The algorithm does not converge. Roundoff error is detected in the extrapolation table. It is presumed that the requested tolerance cannot be achieved, and that the returned result is the best which can be obtained.";
-        THROW(__PRETTY_FUNCTION__, QuadPackException, ss.str());
+        std::cerr << "Warning: the algorithm does not converge. Roundoff error is detected in the extrapolation table. It is presumed that the requested tolerance cannot be achieved, and that the returned result is the best which can be obtained.";
     }
     if (ier == 5)
     {

@@ -70,6 +70,12 @@ ssc::integrate::ClenshawCurtis& ssc::integrate::ClenshawCurtis::operator=(const 
     return *this;
 }
 
+double ssc::integrate::ClenshawCurtis::compute_for(const double tau_, const double a, const double b, const double eps)
+{
+    tau = tau_;
+    return integrate_impl(f, a, b, eps);
+}
+
 ssc::integrate::ClenshawCurtis::ClenshawCurtis(const double tau_) : QuadPack(), tau(tau_),
         nb_of_chebychev_moments(25*MAX_NB_OF_CHEBYCHEV_MOMENTS),
         nb_of_calls(1),
@@ -122,7 +128,7 @@ ssc::integrate::ClenshawCurtis::ClenshawCurtis(const Function& f_, const double 
     }
 }
 
-extern "C" int qawoe_(double f(void*,double*), void*, double *a, double *b, double *omega, int *
+extern "C" int dqawoe_(double f(void*,double*), void*, double *a, double *b, double *omega, int *
         integr, double *epsabs, double *epsrel, int *limit, int *icall,
         int *maxp1, double *result, double *abserr, int *neval, int *
         ier, int *last, double *alist__, double *blist, double *rlist, double *
@@ -131,24 +137,17 @@ extern "C" int qawoe_(double f(void*,double*), void*, double *a, double *b, doub
 double ssc::integrate::ClenshawCurtis::integrate_impl(const Function& f_, double a, double b, double eps)
 {
     f = f_;
-    COUT(f(0.5));
     int weight_function_type = get_internal_type_number(); // 1 for cos, 2 for sin
     double epsabs = eps;
-    double epsrel = 1E-4;
-    double abserr = 1E-4;
+    double epsrel = eps;
+    double abserr = 0;
     int limit = MAX_NB_OF_PARTITIONS;
     int maxp1 = MAX_NB_OF_CHEBYCHEV_MOMENTS;
     double result = 0;
     int nb_of_integrand_evaluations = 0;
     int ier = 0;
     int nb_of_subintervals_produced = 0;
-    COUT(&epsabs);
-    COUT(sizeof(epsabs));
-    COUT(&limit);
-    COUT(&epsabs);
-    COUT(&a);
-    COUT(&b);
-    qawoe_(integrand<ClenshawCurtis>,
+    dqawoe_(integrand<ClenshawCurtis>,
            (void*)this,
            &a,
            &b,
@@ -173,6 +172,9 @@ double ssc::integrate::ClenshawCurtis::integrate_impl(const Function& f_, double
            &nb_of_chebychev_moments,
            chebychev_moments);
     throw_any_errors(ier);
+    COUT(nb_of_integrand_evaluations);
+    COUT(nb_of_subintervals_produced);
+    COUT(abserr);
     return result;
 }
 

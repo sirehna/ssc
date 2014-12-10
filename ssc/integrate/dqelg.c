@@ -1,4 +1,4 @@
-/* dqelg.f -- translated by f2c (version 20090411).
+/* dqelg.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -10,7 +10,7 @@
 		http://www.netlib.org/f2c/libf2c.zip
 */
 
-#include "ssc/f2c/f2c.h"
+#include "f2c.h"
 
 /* Table of constant values */
 

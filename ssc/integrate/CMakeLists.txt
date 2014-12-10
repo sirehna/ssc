@@ -35,15 +35,18 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           dqelg.c
                                           dqk21.c
                                           dqpsrt.c
-                                          qawoe.c
-                                          qc25f.c
-                                          qcheb.c
-                                          qelg.c
-                                          qk15w.c
-                                          qpsrt.c
-                                          qwgtf.c
-                                          sgtsl.c
-                                          r1mach.c
+                                          dqawoe.c
+                                          dqc25f.c
+                                          dqcheb.c
+                                          dqelg.c
+                                          dqk15w.c
+                                          dqpsrt.c
+                                          dqwgtf.c
+                                          dgtsl.c
+                                          dci.c
+                                          dcsevl.c
+                                          initds.c
+                                          d9sifg.c                                          
                                           ClenshawCurtis.cpp
                                           ClenshawCurtisCosine.cpp
                                           ClenshawCurtisSine.cpp

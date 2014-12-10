@@ -1,4 +1,4 @@
-/* qawoe.f -- translated by f2c (version 20100827).
+/* dqawoe.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -11,8 +11,7 @@
 */
 
 #include "f2c.h"
-#include <stdio.h>
-#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
+
 /* Table of constant values */
 
 static integer c__4 = 4;
@@ -20,41 +19,41 @@ static integer c__0 = 0;
 static integer c__1 = 1;
 static integer c__2 = 2;
 
-/* Subroutine */ int qawoe_(E_fp f, integer *obj, doublereal *a, doublereal *b,
-    doublereal *omega, integer * integr, doublereal *epsabs, doublereal *epsrel,
-    integer *limit, integer *icall,
-    integer *maxp1, doublereal *result, doublereal *abserr, integer *neval, integer *
-	ier, integer *last, doublereal *alist__, doublereal *blist, doublereal *rlist, doublereal *
-	elist, integer *iord, integer *nnlog, integer *momcom, doublereal *chebmo)
+/* Subroutine */ int dqawoe_(D_fp f, integer *obj, doublereal *a, doublereal *b, doublereal
+	*omega, integer *integr, doublereal *epsabs, doublereal *epsrel, 
+	integer *limit, integer *icall, integer *maxp1, doublereal *result, 
+	doublereal *abserr, integer *neval, integer *ier, integer *last, 
+	doublereal *alist__, doublereal *blist, doublereal *rlist, doublereal 
+	*elist, integer *iord, integer *nnlog, integer *momcom, doublereal *
+	chebmo)
 {
     /* System generated locals */
     integer chebmo_dim1, chebmo_offset, i__1, i__2;
-    doublereal r__1, r__2;
+    doublereal d__1, d__2;
 
     /* Local variables */
     static integer k;
     static doublereal a1, a2, b1, b2;
     static integer id, nev;
-    static doublereal area;
-    extern /* Subroutine */ int qc25f_(E_fp, integer *obj, doublereal *, doublereal *, doublereal *, integer *
-	    , integer *, integer *, integer *, doublereal *, doublereal *, integer *,
-	    doublereal *, doublereal *, integer *, doublereal *), qelg_(integer *, doublereal *, doublereal
-	    *, doublereal *, doublereal *, integer *);
-    static doublereal dres;
+    static doublereal area, dres;
     static integer ksgn, nres;
-    static doublereal area1, area2, area12, small, erro12, defab1, defab2, width;
-    static integer ierro;
+    static doublereal area1, area2, area12;
+    extern /* Subroutine */ int dqc25f_(D_fp, integer *obj, doublereal *, doublereal *,
+	    doublereal *, integer *, integer *, integer *, integer *, 
+	    doublereal *, doublereal *, integer *, doublereal *, doublereal *,
+	     integer *, doublereal *), dqelg_(integer *, doublereal *, 
+	    doublereal *, doublereal *, doublereal *, integer *);
+    static doublereal small, erro12, width, defab1, defab2;
+    static integer ierro, ktmin;
     static doublereal oflow;
-    static integer ktmin, nrmax, nrmom;
+    static integer nrmax, nrmom;
     static doublereal uflow;
+    extern doublereal d1mach_(integer *);
     static logical noext;
-    extern /* Subroutine */ int qpsrt_(integer *, integer *, integer *, doublereal *
-	    , doublereal *, integer *, integer *);
-    extern doublereal r1mach_(integer *);
     static integer iroff1, iroff2, iroff3;
     static doublereal res3la[3], error1, error2, rlist2[52];
     static integer numrl2;
-    static doublereal defabs, domega, epmach, erlarg, abseps, correc, errbnd,
+    static doublereal defabs, domega, epmach, erlarg, abseps, correc, errbnd, 
 	    resabs;
     static integer jupbnd;
     static logical extall;
@@ -63,8 +62,10 @@ static integer c__2 = 2;
     static doublereal reseps;
     static logical extrap;
     static doublereal ertest, errsum;
+    extern /* Subroutine */ int dqpsrt_(integer *, integer *, integer *, 
+	    doublereal *, doublereal *, integer *, integer *);
 
-/* ***begin prologue  qawoe */
+/* ***begin prologue  dqawoe */
 /* ***date written   800101   (yymmdd) */
 /* ***revision date  830518   (yymmdd) */
 /* ***category no.  h2a2a1 */
@@ -77,29 +78,29 @@ static integer c__2 = 2;
 /* ***purpose  the routine calculates an approximation result to a given */
 /*            definite integral */
 /*            i = integral of f(x)*w(x) over (a,b) */
-/*            where w(x) = cos(omega*x) or w(x) = sin(omega*x), */
+/*            where w(x) = cos(omega*x) or w(x)=sin(omega*x), */
 /*            hopefully satisfying following claim for accuracy */
 /*            abs(i-result).le.max(epsabs,epsrel*abs(i)). */
 /* ***description */
 
 /*        computation of oscillatory integrals */
 /*        standard fortran subroutine */
-/*        real version */
+/*        double precision version */
 
 /*        parameters */
 /*         on entry */
-/*            f      - doublereal */
+/*            f      - double precision */
 /*                     function subprogram defining the integrand */
 /*                     function f(x). the actual name for f needs to be */
 /*                     declared e x t e r n a l in the driver program. */
 
-/*            a      - doublereal */
+/*            a      - double precision */
 /*                     lower limit of integration */
 
-/*            b      - doublereal */
+/*            b      - double precision */
 /*                     upper limit of integration */
 
-/*            omega  - doublereal */
+/*            omega  - double precision */
 /*                     parameter in the integrand weight function */
 
 /*            integr - integer */
@@ -110,9 +111,9 @@ static integer c__2 = 2;
 /*                     if integr.ne.1 and integr.ne.2, the routine */
 /*                     will end with ier = 6. */
 
-/*            epsabs - doublereal */
+/*            epsabs - double precision */
 /*                     absolute accuracy requested */
-/*            epsrel - doublereal */
+/*            epsrel - double precision */
 /*                     relative accuracy requested */
 /*                     if  epsabs.le.0 */
 /*                     and epsrel.lt.max(50*rel.mach.acc.,0.5d-28), */
@@ -142,10 +143,10 @@ static integer c__2 = 2;
 /*                     if maxp1.lt.1, the routine will end with ier = 6. */
 
 /*         on return */
-/*            result - doublereal */
+/*            result - double precision */
 /*                     approximation to the integral */
 
-/*            abserr - doublereal */
+/*            abserr - double precision */
 /*                     estimate of the modulus of the absolute error, */
 /*                     which should equal or exceed abs(i-result) */
 
@@ -213,24 +214,24 @@ static integer c__2 = 2;
 /*                     process, which determines the number of */
 /*                     significant elements actually in the */
 /*                     work arrays. */
-/*            alist  - doublereal */
+/*            alist  - double precision */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the left */
 /*                     end points of the subintervals in the partition */
 /*                     of the given integration range (a,b) */
 
-/*            blist  - doublereal */
+/*            blist  - double precision */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the right */
 /*                     end points of the subintervals in the partition */
 /*                     of the given integration range (a,b) */
 
-/*            rlist  - doublereal */
+/*            rlist  - double precision */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the integral */
 /*                     approximations on the subintervals */
 
-/*            elist  - doublereal */
+/*            elist  - double precision */
 /*                     vector of dimension at least limit, the first */
 /*                      last  elements of which are the moduli of the */
 /*                     absolute error estimates on the subintervals */
@@ -257,19 +258,19 @@ static integer c__2 = 2;
 /*                     (abs(b-a))*2**(-l), l=0,1,2, ..., momcom-1, */
 /*                     momcom.lt.maxp1 */
 
-/*            chebmo - doublereal */
+/*            chebmo - double precision */
 /*                     array of dimension (maxp1,25) containing the */
 /*                     chebyshev moments */
 
 /* ***references  (none) */
-/* ***routines called  qc25f,qelg,qpsrt,r1mach */
-/* ***end prologue  qawoe */
+/* ***routines called  d1mach,dqc25f,dqelg,dqpsrt */
+/* ***end prologue  dqawoe */
 
 
 
 
 /*            the dimension of rlist2 is determined by  the value of */
-/*            limexp in subroutine qelg (rlist2 should be of */
+/*            limexp in subroutine dqelg (rlist2 should be of */
 /*            dimension (limexp+2) at least). */
 
 /*            list of major variables */
@@ -310,7 +311,7 @@ static integer c__2 = 2;
 /*                       subdividing the smallest interval we try to */
 /*                       decrease the value of erlarg */
 /*           noext     - logical variable denoting that extrapolation */
-/*                       is no longer allowed (true value) */
+/*                       is no longer allowed (true  value) */
 
 /*            machine dependent constants */
 /*            --------------------------- */
@@ -319,7 +320,7 @@ static integer c__2 = 2;
 /*           uflow is the smallest positive magnitude. */
 /*           oflow is the largest positive magnitude. */
 
-/* ***first executable statement  qawoe */
+/* ***first executable statement  dqawoe */
     /* Parameter adjustments */
     --nnlog;
     --iord;
@@ -332,27 +333,26 @@ static integer c__2 = 2;
     chebmo -= chebmo_offset;
 
     /* Function Body */
-    epmach = r1mach_(&c__4);
+    epmach = d1mach_(&c__4);
 
 /*         test on validity of parameters */
 /*         ------------------------------ */
+
     *ier = 0;
     *neval = 0;
     *last = 0;
-    *result = 0.f;
-    *abserr = 0.f;
+    *result = 0.;
+    *abserr = 0.;
     alist__[1] = *a;
     blist[1] = *b;
-    rlist[1] = 0.f;
-    elist[1] = 0.f;
+    rlist[1] = 0.;
+    elist[1] = 0.;
     iord[1] = 0;
     nnlog[1] = 0;
-    printf("in file %s, line %i\n", __FILE__, __LINE__);
 /* Computing MAX */
-    r__1 = epmach * 50.f;
-    if (*integr != 1 && *integr != 2 || *epsabs <= 0.f && *epsrel < dmax(r__1,
-	    5e-15f) || *icall < 1 || *maxp1 < 1) {
-
+    d__1 = epmach * 50.;
+    if (*integr != 1 && *integr != 2 || *epsabs <= 0. && *epsrel < max(d__1,
+	    5e-29) || *icall < 1 || *maxp1 < 1) {
 	*ier = 6;
     }
     if (*ier == 6) {
@@ -362,26 +362,26 @@ static integer c__2 = 2;
 /*           first approximation to the integral */
 /*           ----------------------------------- */
 
-    domega = dabs(*omega);
+    domega = abs(*omega);
     nrmom = 0;
     if (*icall > 1) {
 	goto L5;
     }
     *momcom = 0;
 L5:
-    qc25f_((E_fp)f, obj, a, b, &domega, integr, &nrmom, maxp1, &c__0, result,
+    dqc25f_((D_fp)f, obj, a, b, &domega, integr, &nrmom, maxp1, &c__0, result,
 	    abserr, neval, &defabs, &resabs, momcom, &chebmo[chebmo_offset]);
 
 /*           test on accuracy. */
 
-    dres = dabs(*result);
+    dres = abs(*result);
 /* Computing MAX */
-    r__1 = *epsabs, r__2 = *epsrel * dres;
-    errbnd = dmax(r__1,r__2);
+    d__1 = *epsabs, d__2 = *epsrel * dres;
+    errbnd = max(d__1,d__2);
     rlist[1] = *result;
     elist[1] = *abserr;
     iord[1] = 1;
-    if (*abserr <= epmach * 100.f * defabs && *abserr > errbnd) {
+    if (*abserr <= epmach * 100. * defabs && *abserr > errbnd) {
 	*ier = 2;
     }
     if (*limit == 1) {
@@ -393,8 +393,9 @@ L5:
 
 /*           initializations */
 /*           --------------- */
-    uflow = r1mach_(&c__1);
-    oflow = r1mach_(&c__2);
+
+    uflow = d1mach_(&c__1);
+    oflow = d1mach_(&c__2);
     errmax = *abserr;
     maxerr = 1;
     area = *result;
@@ -408,22 +409,22 @@ L5:
     iroff2 = 0;
     iroff3 = 0;
     ktmin = 0;
-    small = (r__1 = *b - *a, dabs(r__1)) * .75f;
+    small = (d__1 = *b - *a, abs(d__1)) * .75;
     nres = 0;
     numrl2 = 0;
     extall = FALSE_;
-    if ((r__1 = *b - *a, dabs(r__1)) * .5f * domega > 2.f) {
+    if ((d__1 = *b - *a, abs(d__1)) * .5 * domega > 2.) {
 	goto L10;
     }
     numrl2 = 1;
     extall = TRUE_;
     rlist2[0] = *result;
 L10:
-    if ((r__1 = *b - *a, dabs(r__1)) * .25f * domega <= 2.f) {
+    if ((d__1 = *b - *a, abs(d__1)) * .25 * domega <= 2.) {
 	extall = TRUE_;
     }
     ksgn = -1;
-    if (dres >= (1.f - epmach * 50.f) * defabs) {
+    if (dres >= (1. - epmach * 50.) * defabs) {
 	ksgn = 1;
     }
 
@@ -435,17 +436,18 @@ L10:
 
 /*           bisect the subinterval with the nrmax-th largest */
 /*           error estimate. */
+
 	nrmom = nnlog[maxerr] + 1;
 	a1 = alist__[maxerr];
-	b1 = (alist__[maxerr] + blist[maxerr]) * .5f;
+	b1 = (alist__[maxerr] + blist[maxerr]) * .5;
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
-	qc25f_((E_fp)f, obj, &a1, &b1, &domega, integr, &nrmom, maxp1, &c__0, &
+	dqc25f_((D_fp)f, obj, &a1, &b1, &domega, integr, &nrmom, maxp1, &c__0, &
 		area1, &error1, &nev, &resabs, &defab1, momcom, &chebmo[
 		chebmo_offset]);
 	*neval += nev;
-	qc25f_((E_fp)f, obj, &a2, &b2, &domega, integr, &nrmom, maxp1, &c__1, &
+	dqc25f_((D_fp)f, obj, &a2, &b2, &domega, integr, &nrmom, maxp1, &c__1, &
 		area2, &error2, &nev, &resabs, &defab2, momcom, &chebmo[
 		chebmo_offset]);
 	*neval += nev;
@@ -460,8 +462,8 @@ L10:
 	if (defab1 == error1 || defab2 == error2) {
 	    goto L25;
 	}
-	if ((r__1 = rlist[maxerr] - area12, dabs(r__1)) > dabs(area12) * 
-		1e-5f || erro12 < errmax * .99f) {
+	if ((d__1 = rlist[maxerr] - area12, abs(d__1)) > abs(area12) * 1e-5 ||
+		 erro12 < errmax * .99) {
 	    goto L20;
 	}
 	if (extrap) {
@@ -480,11 +482,10 @@ L25:
 	nnlog[maxerr] = nrmom;
 	nnlog[*last] = nrmom;
 /* Computing MAX */
-	r__1 = *epsabs, r__2 = *epsrel * dabs(area);
-	errbnd = dmax(r__1,r__2);
+	d__1 = *epsabs, d__2 = *epsrel * abs(area);
+	errbnd = max(d__1,d__2);
 
-/*           test for roundoff error and eventually */
-/*           set error flag */
+/*           test for roundoff error and eventually set error flag. */
 
 	if (iroff1 + iroff2 >= 10 || iroff3 >= 20) {
 	    *ier = 2;
@@ -504,13 +505,14 @@ L25:
 /*           at a point of the integration range. */
 
 /* Computing MAX */
-	r__1 = dabs(a1), r__2 = dabs(b2);
-	if (dmax(r__1,r__2) <= (epmach * 100.f + 1.f) * (dabs(a2) + uflow * 
-		1e3f)) {
+	d__1 = abs(a1), d__2 = abs(b2);
+	if (max(d__1,d__2) <= (epmach * 100. + 1.) * (abs(a2) + uflow * 1e3)) 
+		{
 	    *ier = 4;
 	}
 
 /*           append the newly-created intervals to the list. */
+
 	if (error2 > error1) {
 	    goto L30;
 	}
@@ -529,13 +531,12 @@ L30:
 	elist[maxerr] = error2;
 	elist[*last] = error1;
 
-/*           call subroutine qpsrt to maintain the descending ordering */
-/*           in the list of error estimates and select the */
-/*           subinterval with nrmax-th largest error estimate (to be */
-/*           bisected next). */
+/*           call subroutine dqpsrt to maintain the descending ordering */
+/*           in the list of error estimates and select the subinterval */
+/*           with nrmax-th largest error estimate (to bisected next). */
 
 L40:
-	qpsrt_(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
+	dqpsrt_(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
 /* ***jump out of do-loop */
 	if (errsum <= errbnd) {
 	    goto L170;
@@ -553,7 +554,7 @@ L40:
 	    goto L50;
 	}
 	erlarg -= erlast;
-	if ((r__1 = b1 - a1, dabs(r__1)) > small) {
+	if ((d__1 = b1 - a1, abs(d__1)) > small) {
 	    erlarg += erro12;
 	}
 	if (extrap) {
@@ -564,7 +565,7 @@ L40:
 /*           smallest interval. */
 
 L50:
-	width = (r__1 = blist[maxerr] - alist__[maxerr], dabs(r__1));
+	width = (d__1 = blist[maxerr] - alist__[maxerr], abs(d__1));
 	if (width > small) {
 	    goto L140;
 	}
@@ -572,13 +573,12 @@ L50:
 	    goto L60;
 	}
 
-/*           test whether we can start with the extrapolation */
-/*           procedure (we do this if we integrate over the */
-/*           next interval with use of a gauss-kronrod rule - see */
-/*           subroutine qc25f). */
+/*           test whether we can start with the extrapolation procedure */
+/*           (we do this if we integrate over the next interval with */
+/*           use of a gauss-kronrod rule - see subroutine dqc25f). */
 
-	small *= .5f;
-	if (width * .25f * domega > 2.f) {
+	small *= .5;
+	if (width * .25 * domega > 2.) {
 	    goto L140;
 	}
 	extall = TRUE_;
@@ -592,9 +592,8 @@ L70:
 	}
 
 /*           the smallest interval has the largest error. */
-/*           before bisecting decrease the sum of the errors */
-/*           over the larger intervals (erlarg) and perform */
-/*           extrapolation. */
+/*           before bisecting decrease the sum of the errors over */
+/*           the larger intervals (erlarg) and perform extrapolation. */
 
 	jupbnd = *last;
 	if (*last > *limit / 2 + 2) {
@@ -605,8 +604,7 @@ L70:
 	for (k = id; k <= i__2; ++k) {
 	    maxerr = iord[nrmax];
 	    errmax = elist[maxerr];
-	    if ((r__1 = blist[maxerr] - alist__[maxerr], dabs(r__1)) > small) 
-		    {
+	    if ((d__1 = blist[maxerr] - alist__[maxerr], abs(d__1)) > small) {
 		goto L140;
 	    }
 	    ++nrmax;
@@ -621,9 +619,9 @@ L90:
 	if (numrl2 < 3) {
 	    goto L110;
 	}
-	qelg_(&numrl2, rlist2, &reseps, &abseps, res3la, &nres);
+	dqelg_(&numrl2, rlist2, &reseps, &abseps, res3la, &nres);
 	++ktmin;
-	if (ktmin > 5 && *abserr < errsum * .001f) {
+	if (ktmin > 5 && *abserr < errsum * .001) {
 	    *ier = 5;
 	}
 	if (abseps >= *abserr) {
@@ -634,8 +632,8 @@ L90:
 	*result = reseps;
 	correc = erlarg;
 /* Computing MAX */
-	r__1 = *epsabs, r__2 = *epsrel * dabs(reseps);
-	ertest = dmax(r__1,r__2);
+	d__1 = *epsabs, d__2 = *epsrel * abs(reseps);
+	ertest = max(d__1,d__2);
 /* ***jump out of do-loop */
 	if (*abserr <= ertest) {
 	    goto L150;
@@ -655,11 +653,11 @@ L110:
 	errmax = elist[maxerr];
 	nrmax = 1;
 	extrap = FALSE_;
-	small *= .5f;
+	small *= .5;
 	erlarg = errsum;
 	goto L140;
 L120:
-	small *= .5f;
+	small *= .5;
 	++numrl2;
 	rlist2[numrl2 - 1] = area;
 L130:
@@ -685,18 +683,18 @@ L150:
     if (*ier == 0) {
 	*ier = 3;
     }
-    if (*result != 0.f && area != 0.f) {
+    if (*result != 0. && area != 0.) {
 	goto L160;
     }
     if (*abserr > errsum) {
 	goto L170;
     }
-    if (area == 0.f) {
+    if (area == 0.) {
 	goto L190;
     }
     goto L165;
 L160:
-    if (*abserr / dabs(*result) > errsum / dabs(area)) {
+    if (*abserr / abs(*result) > errsum / abs(area)) {
 	goto L170;
     }
 
@@ -704,12 +702,12 @@ L160:
 
 L165:
 /* Computing MAX */
-    r__1 = dabs(*result), r__2 = dabs(area);
-    if (ksgn == -1 && dmax(r__1,r__2) <= defabs * .01f) {
+    d__1 = abs(*result), d__2 = abs(area);
+    if (ksgn == -1 && max(d__1,d__2) <= defabs * .01) {
 	goto L190;
     }
-    if (.01f > *result / area || *result / area > 100.f || errsum >= dabs(
-	    area)) {
+    if (.01 > *result / area || *result / area > 100. || errsum >= abs(area)) 
+	    {
 	*ier = 6;
     }
     goto L190;
@@ -717,7 +715,7 @@ L165:
 /*           compute global integral sum. */
 
 L170:
-    *result = 0.f;
+    *result = 0.;
     i__1 = *last;
     for (k = 1; k <= i__1; ++k) {
 	*result += rlist[k];
@@ -729,10 +727,10 @@ L190:
 	--(*ier);
     }
 L200:
-    if (*integr == 2 && *omega < 0.f) {
+    if (*integr == 2 && *omega < 0.) {
 	*result = -(*result);
     }
 L999:
     return 0;
-} /* qawoe_ */
+} /* dqawoe_ */
 

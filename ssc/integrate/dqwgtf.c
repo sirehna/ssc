@@ -1,4 +1,4 @@
-/* qwgtf.f -- translated by f2c (version 20100827).
+/* dqwgtf.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -11,12 +11,9 @@
 */
 
 #include "f2c.h"
-#include <stdio.h>
 
-#define COUT(x) printf("in file %s, line %i: " #x " = %f\n", __FILE__, __LINE__, (double)x);
-
-doublereal qwgtf_(doublereal *x, doublereal *omega, doublereal *p2, doublereal *p3, doublereal *p4, integer
-	*integr)
+doublereal dqwgtf_(doublereal *x, doublereal *omega, doublereal *p2, 
+	doublereal *p3, doublereal *p4, integer *integr)
 {
     /* System generated locals */
     doublereal ret_val;
@@ -27,16 +24,16 @@ doublereal qwgtf_(doublereal *x, doublereal *omega, doublereal *p2, doublereal *
     /* Local variables */
     static doublereal omx;
 
-/* ***begin prologue  qwgtf */
-/* ***refer to   qk15w */
+/* ***begin prologue  dqwgtf */
+/* ***refer to   dqk15w */
 /* ***routines called  (none) */
 /* ***revision date 810101   (yymmdd) */
 /* ***keywords  cos or sin in weight function */
 /* ***author  piessens,robert, appl. math. & progr. div. - k.u.leuven */
 /*           de doncker,elise,appl. math. * progr. div. - k.u.leuven */
-/* ***end prologue  qwgtf */
+/* ***end prologue  dqwgtf */
 
-/* ***first executable statement */
+/* ***first executable statement  dqwgtf */
     omx = *omega * *x;
     switch (*integr) {
 	case 1:  goto L10;
@@ -49,5 +46,5 @@ L20:
     ret_val = sin(omx);
 L30:
     return ret_val;
-} /* qwgtf_ */
+} /* dqwgtf_ */
 

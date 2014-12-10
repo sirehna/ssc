@@ -1,4 +1,4 @@
-/* sgtsl.f -- translated by f2c (version 20100827).
+/* dgtsl.f -- translated by f2c (version 20100827).
    You must link the resulting object file with libf2c:
 	on Microsoft Windows system, link with libf2c.lib;
 	on Linux or Unix systems, link with .../path/to/libf2c.a -lm
@@ -12,20 +12,20 @@
 
 #include "f2c.h"
 
-/* Subroutine */ int sgtsl_(integer *n, real *c__, real *d__, real *e, real *
-	b, integer *info)
+/* Subroutine */ int dgtsl_(integer *n, doublereal *c__, doublereal *d__, 
+	doublereal *e, doublereal *b, integer *info)
 {
     /* System generated locals */
     integer i__1;
-    real r__1, r__2;
+    doublereal d__1, d__2;
 
     /* Local variables */
     static integer k;
-    static real t;
+    static doublereal t;
     static integer kb, kp1, nm1, nm2;
 
 
-/*     sgtsl given a general tridiagonal matrix and a right hand */
+/*     dgtsl given a general tridiagonal matrix and a right hand */
 /*     side will find the solution. */
 
 /*     on entry */
@@ -33,21 +33,21 @@
 /*        n       integer */
 /*                is the order of the tridiagonal matrix. */
 
-/*        c       real(n) */
+/*        c       double precision(n) */
 /*                is the subdiagonal of the tridiagonal matrix. */
 /*                c(2) through c(n) should contain the subdiagonal. */
 /*                on output c is destroyed. */
 
-/*        d       real(n) */
+/*        d       double precision(n) */
 /*                is the diagonal of the tridiagonal matrix. */
 /*                on output d is destroyed. */
 
-/*        e       real(n) */
+/*        e       double precision(n) */
 /*                is the superdiagonal of the tridiagonal matrix. */
 /*                e(1) through e(n-1) should contain the superdiagonal. */
 /*                on output e is destroyed. */
 
-/*        b       real(n) */
+/*        b       double precision(n) */
 /*                is the right hand side vector. */
 
 /*     on return */
@@ -64,7 +64,7 @@
 /*     jack dongarra, argonne national laboratory. */
 
 /*     no externals */
-/*     fortran abs */
+/*     fortran dabs */
 
 /*     internal variables */
 
@@ -84,8 +84,8 @@
 	goto L40;
     }
     d__[1] = e[1];
-    e[1] = 0.f;
-    e[*n] = 0.f;
+    e[1] = 0.;
+    e[*n] = 0.;
 
     i__1 = nm1;
     for (k = 1; k <= i__1; ++k) {
@@ -93,7 +93,7 @@
 
 /*              find the largest of the two rows */
 
-	if ((r__1 = c__[kp1], dabs(r__1)) < (r__2 = c__[k], dabs(r__2))) {
+	if ((d__1 = c__[kp1], abs(d__1)) < (d__2 = c__[k], abs(d__2))) {
 	    goto L10;
 	}
 
@@ -115,7 +115,7 @@ L10:
 
 /*              zero elements */
 
-	if (c__[k] != 0.f) {
+	if (c__[k] != 0.) {
 	    goto L20;
 	}
 	*info = k;
@@ -125,12 +125,12 @@ L20:
 	t = -c__[kp1] / c__[k];
 	c__[kp1] = d__[kp1] + t * d__[k];
 	d__[kp1] = e[kp1] + t * e[k];
-	e[kp1] = 0.f;
+	e[kp1] = 0.;
 	b[kp1] += t * b[k];
 /* L30: */
     }
 L40:
-    if (c__[*n] != 0.f) {
+    if (c__[*n] != 0.) {
 	goto L50;
     }
     *info = *n;
@@ -160,5 +160,5 @@ L90:
 L100:
 
     return 0;
-} /* sgtsl_ */
+} /* dgtsl_ */
 
