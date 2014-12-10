@@ -172,9 +172,6 @@ double ssc::integrate::ClenshawCurtis::integrate_impl(const Function& f_, double
            &nb_of_chebychev_moments,
            chebychev_moments);
     throw_any_errors(ier);
-    COUT(nb_of_integrand_evaluations);
-    COUT(nb_of_subintervals_produced);
-    COUT(abserr);
     return result;
 }
 
