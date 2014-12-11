@@ -9,6 +9,7 @@
 #define BURCHER_HPP_
 
 #include "ssc/integrate/Integrator.hpp"
+#include <stddef.h>
 
 namespace ssc
 {
