@@ -13,7 +13,8 @@ FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/dsi.c
               src/dcsevl.c
               src/initds.c
-              src/d9sifg.c    
+              src/d9sifg.c
+              src/BurcherTest.cpp
               )
 
 SET(CMAKE_C_FLAGS "")
