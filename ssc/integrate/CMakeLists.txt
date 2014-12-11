@@ -48,6 +48,7 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           ClenshawCurtisSine.cpp
                                           Filon.cpp
                                           filon.c
+                                          Burcher.cpp
                                           )
 
 add_subdirectory(unit_tests)
