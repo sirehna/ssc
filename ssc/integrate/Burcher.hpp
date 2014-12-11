@@ -24,7 +24,6 @@ namespace ssc
                 Burcher();
                 Burcher(const Function& f);
                 Burcher(const Function& f, const double tau);
-                double integrate(const std::vector<double>& omegas) const;
                 double integrate_n_steps(const Function& f, double a, double b, size_t n);
                 double compute_for(const double tau, const double a, const double b, const double eps);
 
