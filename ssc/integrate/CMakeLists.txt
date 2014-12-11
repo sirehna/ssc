@@ -15,6 +15,7 @@ SET(CMAKE_C_FLAGS "")
 
 INCLUDE_DIRECTORIES(inc)
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIRS})
 
 IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
     IF(UNIX AND NOT WIN32) # If on Linux
@@ -53,4 +54,4 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           Burcher.cpp
                                           )
 
-add_subdirectory(unit_tests)
+ADD_SUBDIRECTORY(unit_tests)
