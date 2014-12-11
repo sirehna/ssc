@@ -58,8 +58,8 @@ TEST_F(FilonTest, radiation_damping_1)
     ssc::integrate::Filon I(Br, 1);
 
 
-    const std::vector<double> taus = {0, 0.5, 1, 1.5, 2, 1.5, 3};
-    for (auto tau:taus) ASSERT_NEAR(Kr(tau), 2./PI*I.compute_for(tau,0,4,EPS), 0.1) << "tau = " << tau;
+    const std::vector<double> taus = {0.5, 1, 1.5, 2, 1.5, 3};
+    for (auto tau:taus) ASSERT_NEAR(Kr(tau), 2./PI*I.compute_for(tau,0,50,EPS), 1E-4) << "tau = " << tau;
 }
 
 TEST_F(FilonTest, radiation_damping_2)
@@ -70,7 +70,7 @@ TEST_F(FilonTest, radiation_damping_2)
     ssc::integrate::Filon I(Br);
 
 
-    const std::vector<double> taus = {0, 0.5, 1, 1.5, 2, 1.5, 3};
-    for (auto tau:taus) ASSERT_NEAR(Kr(tau), 2./PI*I.compute_for(tau,0,4,EPS), 0.1) << "tau = " << tau;
+    const std::vector<double> taus = {0.5, 1, 1.5, 2, 1.5, 3};
+    for (auto tau:taus) ASSERT_NEAR(Kr(tau), 2./PI*I.compute_for(tau,0,50,EPS), 1E-4) << "tau = " << tau;
 }
 
