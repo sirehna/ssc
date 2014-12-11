@@ -10,8 +10,8 @@
 		http://www.netlib.org/f2c/libf2c.zip
 */
 
-#include "ssc/f2c/f2c.h"
 #include <math.h>
+#include "ssc/f2c/f2c.h"
 
 /* Table of constant values */
 
