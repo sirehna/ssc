@@ -20,7 +20,7 @@ static integer c__17 = 17;
 static integer c__1 = 1;
 static integer c__2 = 2;
 
-doublereal dci_(doublereal *x)
+doublereal dci(doublereal *x)
 {
     /* Initialized data */
 
