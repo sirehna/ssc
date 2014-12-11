@@ -21,7 +21,7 @@ ssc::integrate::Burcher::Burcher(const Function& f) : Integrator(f)
 double ssc::integrate::Burcher::integrate_n_steps(const Function& f_, double a, double b, size_t n)
 {
     f = f_;
-    return a+n*b;
+    return a+(double)n*b;
 }
 
 double ssc::integrate::Burcher::integrate_impl(const Function& f_, double a, double b, double eps)
