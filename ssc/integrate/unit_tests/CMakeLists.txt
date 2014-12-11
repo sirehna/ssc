@@ -9,8 +9,19 @@ FILE(GLOB SRC src/TrapezoidalIntegrationTest.cpp
               src/RectangleTest.cpp
               src/ClenshawCurtisTest.cpp
               src/FilonTest.cpp
+              src/dci.c
+              src/dsi.c
+              src/dcsevl.c
+              src/initds.c
+              src/d9sifg.c    
               )
 
+SET(CMAKE_C_FLAGS "")
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
+    IF(UNIX AND NOT WIN32) # If on Linux
+        SET(CMAKE_C_FLAGS "-fPIC")
+    ENDIF()
+ENDIF()
 
 # ------8<---------------------------------------------->8-----
 

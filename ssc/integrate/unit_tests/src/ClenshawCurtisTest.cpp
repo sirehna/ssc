@@ -31,7 +31,7 @@ void ClenshawCurtisTest::TearDown()
 {
 }
 
-extern "C" double dci_(double *x);
+extern "C" double dci(double *x);
 
 TEST_F(ClenshawCurtisTest, example)
 {
@@ -42,7 +42,7 @@ TEST_F(ClenshawCurtisTest, example)
     //const double expected = -0.1281316; // - ( gamma + log(10*PI) - ci(10*pi) ) / (10*pi)
     const double gamma = 0.57721566490153286060651209;
     double ten_pi = 10*PI;
-    const double expected = - ( gamma + log(10*PI) - dci_(&ten_pi) ) / (10*PI);
+    const double expected = - ( gamma + log(10*PI) - dci(&ten_pi) ) / (10*PI);
 
     ASSERT_NEAR(expected, I.integrate_f(0,1,EPS), EPS);
 //! [IntegrateOscillatoryTest expected output]

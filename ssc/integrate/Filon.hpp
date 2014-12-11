@@ -8,16 +8,17 @@
 #ifndef FILON_HPP_
 #define FILON_HPP_
 
-#include "ssc/integrate/Integrator.hpp"
+#include "ssc/integrate/QuadPack.hpp"
 
 namespace ssc
 {
     namespace integrate
     {
-        class Filon : public Integrator
+        class Filon : public QuadPack
         {
             public:
                 Filon();
+                Filon(const Function& f_);
                 Filon(const Function& f_, const double tau);
                 double compute_for(const double tau, const double a, const double b, const double eps);
 

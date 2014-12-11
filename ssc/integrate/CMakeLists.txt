@@ -43,14 +43,11 @@ ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           dqpsrt.c
                                           dqwgtf.c
                                           dgtsl.c
-                                          dci.c
-                                          dcsevl.c
-                                          initds.c
-                                          d9sifg.c                                          
                                           ClenshawCurtis.cpp
                                           ClenshawCurtisCosine.cpp
                                           ClenshawCurtisSine.cpp
                                           Filon.cpp
+                                          filon.c
                                           )
 
 add_subdirectory(unit_tests)
