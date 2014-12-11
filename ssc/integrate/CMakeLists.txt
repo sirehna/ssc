@@ -22,6 +22,8 @@ IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
     ENDIF()
 ENDIF()
 
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT TrapezoidalIntegration.cpp
                                           Simpson.cpp
                                           Integrator.cpp
