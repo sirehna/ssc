@@ -6,6 +6,7 @@
  */
 
 #include <algorithm> // std::min, std::max
+#include <cfloat>
 #include <sstream>
 
 #include "ssc/interpolation/IndexFinder.hpp"
@@ -48,7 +49,7 @@ IndexFinder::IndexFinder(const std::vector<double>& x, const bool throw_if_outsi
 
 size_t IndexFinder::compute(const double x0)
 {
-    const bool outside_bounds = (x0 < xmin) || (x0 > xmax);
+    const bool outside_bounds = (x0 < xmin-DBL_EPSILON) || (x0 > xmax+DBL_EPSILON);
     if (outside_bounds && throw_if_outside_bounds)
     {
         std::stringstream ss;
