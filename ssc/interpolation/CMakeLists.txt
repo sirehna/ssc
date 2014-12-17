@@ -21,7 +21,9 @@ FILE(GLOB SRC Splines.cpp
               VariableStepInterpolation.cpp
               cubspl.c
               dgtsv.c
-              xerbla.c)
+              xerbla.c
+              TwoDimensionalInterpolationVariableStep.cpp
+              )
 
 SET(CMAKE_C_FLAGS "")
 IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine

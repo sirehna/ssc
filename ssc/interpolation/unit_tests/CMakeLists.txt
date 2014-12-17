@@ -11,7 +11,9 @@ FILE(GLOB SRC src/SplinesTest.cpp
               src/PiecewiseConstantVariableStepTest.cpp
               src/random_increasing_vector.cpp
               src/SplineVariableStepTest.cpp
-              src/IndexFinderTest.cpp)
+              src/IndexFinderTest.cpp
+              src/TwoDimensionalInterpolationVariableStepTest.cpp
+              )
 # ------8<---------------------------------------------->8-----
 
 
