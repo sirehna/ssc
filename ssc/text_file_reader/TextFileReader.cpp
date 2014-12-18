@@ -14,28 +14,41 @@
 
 using namespace ssc::text_file_reader;
 
-TextFileReader::TextFileReader(const std::vector<std::string>& filenames_) : filenames(filenames_),
-contents("")
+void TextFileReader::fill(std::stringstream& ss, const std::string& filename) const
+{
+    std::ifstream current_input_file(filename.c_str(),std::ifstream::in);
+    if (current_input_file.fail())
+    {
+        std::string error = std::string("Unable to open input file '") + filename + std::string("'");
+        THROW(__PRETTY_FUNCTION__, TextFileReaderException, error);
+    }
+    std::string current_line;
+    while (!current_input_file.eof())
+    {
+        getline(current_input_file,current_line);
+        ss << current_line;
+        if (!current_input_file.eof()) ss << std::endl;
+    }
+    current_input_file.close();
+}
+
+TextFileReader::TextFileReader(const std::vector<std::string>& filenames) :
+contents()
 {
 	std::vector<std::string>::const_iterator that_filename = filenames.begin();
 	std::stringstream ss;
 	for (;that_filename!=filenames.end();++that_filename)
 	{
-		std::ifstream current_input_file(that_filename->c_str(),std::ifstream::in);
-		if (current_input_file.fail())
-		{
-			std::string error = std::string("Unable to open input file '") + *that_filename + std::string("'");
-			THROW(__PRETTY_FUNCTION__, TextFileReaderException, error);
-		}
-		std::string current_line;
-		while (!current_input_file.eof())
-		{
-			getline(current_input_file,current_line);
-			ss << current_line;
-			if (!current_input_file.eof()) ss << std::endl;
-		}
-		current_input_file.close();
+        fill(ss, *that_filename);
 	}
+	contents = ss.str();
+}
+
+TextFileReader::TextFileReader(const std::string& filename) :
+contents()
+{
+	std::stringstream ss;
+    fill(ss, filename);
 	contents = ss.str();
 }
 
