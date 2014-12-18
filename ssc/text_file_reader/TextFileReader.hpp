@@ -30,11 +30,13 @@ namespace ssc
         class TextFileReader
         {
             public:
-                TextFileReader(const std::vector<std::string>& filenames_);
+                TextFileReader(const std::string& filename);
+                TextFileReader(const std::vector<std::string>& filenames);
                 std::string get_contents() const;
+
             private:
                 TextFileReader();
-                std::vector<std::string> filenames;
+                void fill(std::stringstream& ss, const std::string& filename) const;
                 std::string contents;
         };
     }
