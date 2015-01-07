@@ -28,10 +28,8 @@ namespace ssc
 
         typedef enum {EXTRINSIC, INTRINSIC} IntrinsicOrExtrinsic;
         typedef enum {CHANGING_ANGLE_ORDER, CHANGING_AXIS_ORDER} OrderConvention;
-        typedef enum {PROPER_EULER, CARDAN} EulerOrCardan;
         template <IntrinsicOrExtrinsic,
                   OrderConvention,
-                  EulerOrCardan,
                   int I,
                   int J,
                   int K> RotationMatrix rotation_matrix(const EulerAngles& angles);
@@ -39,7 +37,6 @@ namespace ssc
 
         template <IntrinsicOrExtrinsic,
                   OrderConvention,
-                  EulerOrCardan,
                   int I,
                   int J,
                   int K> EulerAngles euler_angles(const RotationMatrix& R);
