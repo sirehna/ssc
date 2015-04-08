@@ -13,4 +13,4 @@ l'utilisation non consentie d'une de ses Connaissances Propres par un Membre, pa
 les cas qui ne sont pas explicitement prévus dans l'ACPI, cette réparation pouvant être obtenue par
 toutes les voies de droit appropriées."
 
-(c) SIREHNA 2014.
+(c) SIREHNA 2014-2015.
