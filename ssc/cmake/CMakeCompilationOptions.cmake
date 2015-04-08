@@ -40,9 +40,17 @@ ELSEIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     LIST(GET GCC_VERSION_COMPONENTS 1 GCC_MINOR)
 
     IF(CMAKE_BUILD_TYPE_UPPER MATCHES RELEASE)
-# Carefull with -O3: cf. http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556#c14
+        # Carefull with -O3: cf. http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556#c14
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -DEIGEN_NO_DEBUG")
         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DEIGEN_NO_DEBUG")
+        IF (MINGW AND (CMAKE_SIZEOF_VOID_P EQUAL 4))
+            MESSAGE(STATUS "Adding specific compilation flag for Eigen with MinGW 32 Bits")
+            MESSAGE(STATUS "Without this flag, program crashes...")
+            MESSAGE(STATUS "For example it crashed on matrix multiplication...")
+            # http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556
+            SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-ipa-cp-clone")
+            SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-ipa-cp-clone")
+        ENDIF()
     ELSEIF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
         #SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fprofile-arcs -ftest-coverage")
         #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
