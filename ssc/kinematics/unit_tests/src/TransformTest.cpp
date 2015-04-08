@@ -85,11 +85,11 @@ TEST_F(TransformTest, can_compose_two_translations_for_a_point_matrix)
         ASSERT_EQ(T2.get_to_frame(),Q.get_frame());
         ASSERT_EQ(3,Q.m.rows());
         ASSERT_EQ(PC1.m.cols(),Q.m.cols());
-        for (size_t i=0;i<(size_t)(Q.m.cols());++i)
+        for (auto j=0;j<Q.m.cols();++j)
         {
-            ASSERT_SMALL_RELATIVE_ERROR(P1.x()+P2.x()+PC1.m(0,(long)i),Q.m(0,(long)i),EPS);
-            ASSERT_SMALL_RELATIVE_ERROR(P1.y()+P2.y()+PC1.m(1,(long)i),Q.m(1,(long)i),EPS);
-            ASSERT_SMALL_RELATIVE_ERROR(P1.z()+P2.z()+PC1.m(2,(long)i),Q.m(2,(long)i),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(P1.x()+P2.x()+PC1.m(0,j),Q.m(0,j),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(P1.y()+P2.y()+PC1.m(1,j),Q.m(1,j),EPS);
+            ASSERT_SMALL_RELATIVE_ERROR(P1.z()+P2.z()+PC1.m(2,j),Q.m(2,j),EPS);
         }
     }
 }
