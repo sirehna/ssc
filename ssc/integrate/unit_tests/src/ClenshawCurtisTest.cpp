@@ -66,5 +66,9 @@ TEST_F(ClenshawCurtisTest, radiation_damping)
 
 
     const std::vector<double> taus = {0, 0.5, 1, 1.5, 2, 1.5, 3};
-    for (auto tau:taus) ASSERT_NEAR(Kr2(tau), 2./PI*I.compute_for(tau,0,4,EPS), 0.1) << "tau = " << tau;
+    for (size_t i = 0 ; i < taus.size() ; ++i)
+    {
+        const double tau = taus.at(i);
+        ASSERT_NEAR(Kr2(tau), 2./PI*I.compute_for(tau,0,4,EPS), 0.1) << "tau = " << tau;
+    }
 }
