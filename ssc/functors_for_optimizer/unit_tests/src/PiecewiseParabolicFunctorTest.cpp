@@ -1,19 +1,19 @@
 /*
  * PiecewiseParabolicFunctorTest.cpp
  *
- * \date 19 févr. 2013, 14:43:26
+ * \date 19 fï¿½vr. 2013, 14:43:26
  *  \author cec
  */
 
 #include "PiecewiseParabolicFunctorTest.hpp"
-#include "ParabolicCoefficients.hpp"
+#include "ssc/interpolation/ParabolicCoefficients.hpp"
 #include "PiecewiseParabolicFunctor.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
 #define X_ (*x)
 #define X (x->get_lambda()())
 
-PiecewiseParabolicFunctorTest::PiecewiseParabolicFunctorTest() : a(DataGenerator(967)), generate(StateGenerator())
+PiecewiseParabolicFunctorTest::PiecewiseParabolicFunctorTest() : a(ssc::random_data_generator::DataGenerator(967)), generate(StateGenerator())
 {
 }
 
@@ -34,10 +34,10 @@ TEST_F(PiecewiseParabolicFunctorTest, example)
 //! [PiecewiseParabolicFunctorTest example]
     auto x = generate.state("x");
 
-    std::vector<ParabolicCoefficients> coeffs;
-    coeffs.push_back(ParabolicCoefficients(12./5.,0,1./5.));
-    coeffs.push_back(ParabolicCoefficients(-6.,84./5.,-41./5.));
-    coeffs.push_back(ParabolicCoefficients(18./5.,-108./5.,151./5.));
+    std::vector<ssc::interpolation::ParabolicCoefficients> coeffs;
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(12./5.,0,1./5.));
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(-6.,84./5.,-41./5.));
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(18./5.,-108./5.,151./5.));
     PiecewiseParabolicFunctor pp(x, 0, 3, coeffs);
     const auto f = pp.get_lambda();
 //! [PiecewiseParabolicFunctorTest example]
@@ -65,10 +65,10 @@ TEST_F(PiecewiseParabolicFunctorTest, example)
 TEST_F(PiecewiseParabolicFunctorTest, derivative_should_be_piecewise_linear)
 {
     auto x = generate.state("x");
-    std::vector<ParabolicCoefficients> coeffs;
-    coeffs.push_back(ParabolicCoefficients(12./5.,0,0.2));
-    coeffs.push_back(ParabolicCoefficients(-6.,24./5,13./5));
-    coeffs.push_back(ParabolicCoefficients(18./5,-36./5,7./5.));
+    std::vector<ssc::interpolation::ParabolicCoefficients> coeffs;
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(12./5.,0,0.2));
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(-6.,24./5,13./5));
+    coeffs.push_back(ssc::interpolation::ParabolicCoefficients(18./5,-36./5,7./5.));
     PiecewiseParabolicFunctor pp(x, 0, 3, coeffs);
     const auto f = pp.get_lambda();
     const auto df_dx = pp.diff(x)->get_lambda();

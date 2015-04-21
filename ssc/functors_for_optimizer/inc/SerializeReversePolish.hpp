@@ -1,7 +1,7 @@
 /*
  * SerializeReversePolish.hpp
  *
- * \date 28 févr. 2013, 16:48:41
+ * \date 28 fï¿½vr. 2013, 16:48:41
  *  \author cec
  */
 
@@ -11,8 +11,6 @@
 #include "NodeVisitor.hpp"
 #include <sstream>
 
-#include "tr1_macros.hpp"
-#include TR1INC(memory)
 
 /** \author cec
  *  \brief This class was created to

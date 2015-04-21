@@ -9,17 +9,16 @@
 #define PARAMETERTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class ParameterTest : public ::testing::Test
 {
     protected:
         ParameterTest();
-	    virtual ~ParameterTest();
+        virtual ~ParameterTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-
+        ssc::random_data_generator::DataGenerator a;
 };
 
 #endif  /* PARAMETERTEST_HPP_ */

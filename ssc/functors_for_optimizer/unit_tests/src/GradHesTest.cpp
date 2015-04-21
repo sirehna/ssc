@@ -1,7 +1,7 @@
 /*
  * GradHesTest.cpp
  *
- * \date 20 févr. 2013, 11:46:48
+ * \date 20 fï¿½vr. 2013, 11:46:48
  *  \author cec
  */
 
@@ -16,7 +16,7 @@
 #include "Serialize.hpp"
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
 #define X1_ (*x1)
 #define X2_ (*x2)
@@ -28,7 +28,7 @@
 #define X3 (x3->get_lambda()())
 #define X4 (x4->get_lambda()())
 
-GradHesTest::GradHesTest() : a(DataGenerator(76945)),
+GradHesTest::GradHesTest() : a(ssc::random_data_generator::DataGenerator(76945)),
                              generate(StateGenerator()),
                              x1(generate.state("x1")),
                              x2(generate.state("x2")),

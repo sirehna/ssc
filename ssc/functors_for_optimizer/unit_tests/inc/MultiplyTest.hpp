@@ -9,20 +9,20 @@
 #define MULTIPLYTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class MultiplyTest : public ::testing::Test
 {
     protected:
         MultiplyTest();
-	    virtual ~MultiplyTest();
+        virtual ~MultiplyTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-		StatePtr x1;
-		StatePtr x2;
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
+        StatePtr x1;
+StatePtr x2;
 
 };
 

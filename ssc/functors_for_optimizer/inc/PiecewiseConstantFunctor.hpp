@@ -1,12 +1,14 @@
 /*
  * PiecewiseConstantFunctor.hpp
  *
- * \date 18 févr. 2013, 17:29:41
+ * \date 18 fï¿½vr. 2013, 17:29:41
  *  \author cec
  */
 
 #ifndef PIECEWISECONSTANTFUNCTOR_HPP_
 #define PIECEWISECONSTANTFUNCTOR_HPP_
+
+#include "ssc/interpolation/PiecewiseConstant.hpp"
 
 #include "Unary.hpp"
 
@@ -20,7 +22,6 @@
  *  \snippet MODULE_NAME/unit_tests/src/PiecewiseConstantFunctorTest.cpp PiecewiseConstantFunctorTest expected output
  */
 
-class PiecewiseConstant;
 class State;
 
 class PiecewiseConstantFunctor : public Unary
@@ -38,8 +39,8 @@ class PiecewiseConstantFunctor : public Unary
         void update_lambda();
     private:
         PiecewiseConstantFunctor();
-        std::tr1::shared_ptr<PiecewiseConstant> f;
-        std::tr1::shared_ptr<State> state;
+        TR1(shared_ptr)<ssc::interpolation::PiecewiseConstant> f;
+        TR1(shared_ptr)<State> state;
 
 };
 

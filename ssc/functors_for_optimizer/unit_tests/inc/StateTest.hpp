@@ -3,7 +3,7 @@
 
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class StateTest : public ::testing::Test
 {
@@ -11,8 +11,7 @@ class StateTest : public ::testing::Test
         StateTest();
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
-
+        ssc::random_data_generator::DataGenerator a;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include "Null.hpp"
 #include "StateGenerator.hpp"
 
-NullTest::NullTest() : a(DataGenerator(123))
+NullTest::NullTest() : a(ssc::random_data_generator::DataGenerator(123))
 {
 }
 

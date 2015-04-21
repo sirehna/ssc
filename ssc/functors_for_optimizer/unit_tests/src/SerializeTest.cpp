@@ -1,7 +1,7 @@
 /*
  * SerializeTest.cpp
  *
- * \date 1 févr. 2013, 09:57:08
+ * \date 1 fï¿½vr. 2013, 09:57:08
  *  \author cec
  */
 
@@ -16,7 +16,7 @@
 #include "Ln.hpp"
 #include "FunctorAlgebra.hpp"
 
-SerializeTest::SerializeTest() : a(DataGenerator(12121)), generate(StateGenerator()), ss("")
+SerializeTest::SerializeTest() : a(ssc::random_data_generator::DataGenerator(12121)), generate(StateGenerator()), ss("")
 {
 }
 

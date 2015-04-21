@@ -2,10 +2,10 @@
 #define __STATE_GENERATOR_HPP__
 
 #include "State.hpp"
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 #include <set>
 
-class StateGeneratorException : public Exception
+class StateGeneratorException : public ssc::exception_handling::Exception
 {
     public:
         StateGeneratorException(const char* s) : Exception(s) {}

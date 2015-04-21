@@ -1,7 +1,7 @@
 /*
  * GradHes.hpp
  *
- * \date 20 févr. 2013, 12:21:08
+ * \date 20 fï¿½vr. 2013, 12:21:08
  *  \author cec
  */
 
@@ -9,7 +9,7 @@
 #define GRADHES_HPP_
 
 #include <vector>
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 class State;
@@ -17,8 +17,8 @@ class Node;
 class Grad;
 class Parameter;
 class FunctionMatrix;
-typedef std::tr1::shared_ptr<Node> NodePtr;
-typedef std::tr1::shared_ptr<State> StatePtr;
+typedef TR1(shared_ptr)<Node> NodePtr;
+typedef TR1(shared_ptr)<State> StatePtr;
 
 typedef std::vector<StatePtr> StateList;
 

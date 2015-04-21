@@ -1,7 +1,7 @@
 #include "StateTest.hpp"
 #include "State.hpp"
 
-StateTest::StateTest() : a(DataGenerator(581424))
+StateTest::StateTest() : a(ssc::random_data_generator::DataGenerator(581424))
 {
 }
 

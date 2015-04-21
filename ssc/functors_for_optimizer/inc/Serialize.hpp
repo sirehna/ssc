@@ -1,7 +1,7 @@
 /*
  * Serialize.hpp
  *
- * \date 1 févr. 2013, 10:09:29
+ * \date 1 fï¿½vr. 2013, 10:09:29
  *  \author cec
  */
 
@@ -9,7 +9,7 @@
 #define SERIALIZE_HPP_
 #include "NodeVisitor.hpp"
 #include <sstream>
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 
@@ -46,6 +46,6 @@ class Serialize : public NodeVisitor
 class Node;
 
 ::std::ostream& operator<<(::std::ostream& os, const Node& node);
-::std::ostream& operator<<(::std::ostream& os, const std::tr1::shared_ptr<Node>& node);
+::std::ostream& operator<<(::std::ostream& os, const TR1(shared_ptr)<Node>& node);
 
 #endif /* SERIALIZE_HPP_ */

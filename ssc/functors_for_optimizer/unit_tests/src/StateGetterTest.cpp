@@ -1,7 +1,7 @@
 /*
  * StateGetterTest.cpp
  *
- * \date 20 févr. 2013, 12:44:42
+ * \date 20 fï¿½vr. 2013, 12:44:42
  *  \author cec
  */
 
@@ -13,7 +13,7 @@
 #include "Sum.hpp"
 
 
-StateGetterTest::StateGetterTest() : a(DataGenerator(1))
+StateGetterTest::StateGetterTest() : a(ssc::random_data_generator::DataGenerator(1))
 {
 }
 

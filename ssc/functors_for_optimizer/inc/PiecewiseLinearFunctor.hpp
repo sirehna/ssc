@@ -1,16 +1,17 @@
 /*
  * PiecewiseLinearFunctor.hpp
  *
- * \date 19 févr. 2013, 08:35:13
+ * \date 19 fï¿½vr. 2013, 08:35:13
  *  \author cec
  */
 
 #ifndef PIECEWISELINEARFUNCTOR_HPP_
 #define PIECEWISELINEARFUNCTOR_HPP_
 
+#include "ssc/interpolation/LinearInterpolation.hpp"
+
 #include "Unary.hpp"
 
-class LinearInterpolation;
 class State;
 
 /** \author cec
@@ -38,7 +39,7 @@ class PiecewiseLinearFunctor : public Unary
         void update_lambda();
     private:
         PiecewiseLinearFunctor();
-        std::tr1::shared_ptr<LinearInterpolation> f;
+        TR1(shared_ptr)<ssc::interpolation::LinearInterpolation> f;
         double xmin_;
         double xmax_;
         std::vector<double> dy;

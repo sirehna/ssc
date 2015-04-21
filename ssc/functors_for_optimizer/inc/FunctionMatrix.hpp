@@ -1,7 +1,7 @@
 /*
  * Hes.hpp
  *
- * \date 20 févr. 2013, 15:23:43
+ * \date 20 fï¿½vr. 2013, 15:23:43
  *  \author cec
  */
 
@@ -18,11 +18,11 @@
  *  \snippet MODULE_NAME/unit_tests/src/HesTest.cpp HesTest expected output
  */
 #include <vector>
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include <functional>
 class Node;
-typedef std::tr1::shared_ptr<Node> NodePtr;
+typedef TR1(shared_ptr)<Node> NodePtr;
 
 
 class FunctionMatrix

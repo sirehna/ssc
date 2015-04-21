@@ -1,7 +1,7 @@
 #ifndef __NODEHPP__
 #define __NODEHPP__
 
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include <functional>
 #include TR1INC(memory)
 #include <map>

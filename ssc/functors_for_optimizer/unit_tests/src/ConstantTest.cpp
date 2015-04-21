@@ -1,7 +1,7 @@
 /*
  * ConstantTest.cpp
  *
- * \date 5 févr. 2013, 11:20:51
+ * \date 5 fï¿½vr. 2013, 11:20:51
  *  \author cec
  */
 
@@ -10,7 +10,7 @@
 #include "StateGenerator.hpp"
 
 ConstantTest::ConstantTest() :
-        a(DataGenerator(7777))
+        a(ssc::random_data_generator::DataGenerator(7777))
 {
 }
 

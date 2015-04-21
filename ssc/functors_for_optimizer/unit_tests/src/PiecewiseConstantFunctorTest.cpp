@@ -1,7 +1,7 @@
 /*
  * PiecewiseConstantFunctor.cpp
  *
- * \date 18 févr. 2013, 17:19:21
+ * \date 18 fï¿½vr. 2013, 17:19:21
  *  \author cec
  */
 
@@ -9,10 +9,10 @@
 #include "PiecewiseConstantFunctor.hpp"
 #include "FunctorAlgebra.hpp"
 #include "Sum.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
 
-PiecewiseConstantFunctorTest::PiecewiseConstantFunctorTest() : a(DataGenerator(669)),
+PiecewiseConstantFunctorTest::PiecewiseConstantFunctorTest() : a(ssc::random_data_generator::DataGenerator(669)),
 generate(StateGenerator())
 {
 }

@@ -1,7 +1,7 @@
 /*
  * DivideTest.hpp
  *
- * \date 1 févr. 2013, 08:49:57
+ * \date 1 fï¿½vr. 2013, 08:49:57
  *  \author cec
  */
 
@@ -9,20 +9,20 @@
 #define DIVIDETEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class DivideTest : public ::testing::Test
 {
     protected:
         DivideTest();
-	    virtual ~DivideTest();
+        virtual ~DivideTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-		StatePtr x;
-		StatePtr y;
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
+        StatePtr x;
+        StatePtr y;
 
 };
 

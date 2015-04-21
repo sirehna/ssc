@@ -1,7 +1,7 @@
 /*
  * DifferenceTest.hpp
  *
- * \date 1 févr. 2013, 09:20:05
+ * \date 1 fï¿½vr. 2013, 09:20:05
  *  \author cec
  */
 
@@ -9,18 +9,18 @@
 #define DIFFERENCETEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class DifferenceTest : public ::testing::Test
 {
     protected:
         DifferenceTest();
-	    virtual ~DifferenceTest();
+        virtual ~DifferenceTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 
 };
 

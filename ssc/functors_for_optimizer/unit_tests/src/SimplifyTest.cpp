@@ -1,7 +1,7 @@
 /*
  * SimplifyTest.cpp
  *
- * \date 13 févr. 2013, 08:57:25
+ * \date 13 fï¿½vr. 2013, 08:57:25
  *  \author cec
  */
 
@@ -14,7 +14,7 @@
 #include "Multiply.hpp"
 #include "Divide.hpp"
 
-SimplifyTest::SimplifyTest() : a(DataGenerator(22)),
+SimplifyTest::SimplifyTest() : a(ssc::random_data_generator::DataGenerator(22)),
                                generate(StateGenerator()),
                                x1(generate.state("x1")),
                                x2(generate.state("x2")),

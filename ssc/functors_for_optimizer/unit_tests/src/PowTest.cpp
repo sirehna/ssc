@@ -5,7 +5,7 @@
 #include "Serialize.hpp"
 
 
-PowTest::PowTest() : a(DataGenerator(171429)), generate(StateGenerator())
+PowTest::PowTest() : a(ssc::random_data_generator::DataGenerator(171429)), generate(StateGenerator())
 {
 }
 
