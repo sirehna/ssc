@@ -5,6 +5,8 @@
 #define not !
 #endif
 
+using namespace ssc::functors_for_optimizer;
+
 StateGenerator::StateGenerator() : current_index(0), names(std::set<std::string>())
 {
 }

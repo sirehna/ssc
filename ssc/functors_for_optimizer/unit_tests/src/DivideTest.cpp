@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/Divide.hpp"
 #include "ssc/functors_for_optimizer/Serialize.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 DivideTest::DivideTest() : a(ssc::random_data_generator::DataGenerator(649731)), generate(StateGenerator()), x(generate.state("x")), y(generate.state("y"))
 {
 }

@@ -20,29 +20,33 @@
  *  \snippet MODULE_NAME/unit_tests/src/SumTest.cpp SumTest expected output
  */
 
-
-class Sum : public N_ary
+namespace ssc
 {
-    public:
-        Sum(const NodePtr& n1, const NodePtr& n2);
-        Sum(const std::vector<NodePtr>& nodes);
-        NodePtr diff(const StatePtr& state) const;
-        std::string get_operator_name() const;
-        NodePtr clone() const;
-        bool is_null() const;
-        std::string get_type() const;
-        NodePtr simplify() const;
-        std::vector<NodePtr> get_operands() const;
-        bool must_parenthesize() const;
-        void accept(NodeVisitor& v) const;
-        void update_lambda();
+    namespace functors_for_optimizer
+    {
+        class Sum : public N_ary
+        {
+            public:
+                Sum(const NodePtr& n1, const NodePtr& n2);
+                Sum(const std::vector<NodePtr>& nodes);
+                NodePtr diff(const StatePtr& state) const;
+                std::string get_operator_name() const;
+                NodePtr clone() const;
+                bool is_null() const;
+                std::string get_type() const;
+                NodePtr simplify() const;
+                std::vector<NodePtr> get_operands() const;
+                bool must_parenthesize() const;
+                void accept(NodeVisitor& v) const;
+                void update_lambda();
 
-    private:
-        void common_build();
-        void remove_zeros();
-        std::vector<NodePtr> factorize_operands() const;
-};
+            private:
+                void common_build();
+                void remove_zeros();
+                std::vector<NodePtr> factorize_operands() const;
+        };
 
-typedef std::tr1::shared_ptr<Sum> SumPtr;
-
+        typedef std::tr1::shared_ptr<Sum> SumPtr;
+    }
+}
 #endif /* SUM_HPP_ */

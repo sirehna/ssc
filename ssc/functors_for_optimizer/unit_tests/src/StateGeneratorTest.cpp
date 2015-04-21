@@ -2,6 +2,9 @@
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 #include "ssc/macros/tr1_macros.hpp"
+
+using namespace ssc::functors_for_optimizer;
+
 #include TR1INC(memory)
 
 typedef TR1(shared_ptr)<State> StateShrdPtr;

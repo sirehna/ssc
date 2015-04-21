@@ -22,30 +22,35 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/SerializeTest.cpp SerializeTest expected output
  */
-
-class Serialize : public NodeVisitor
+namespace ssc
 {
-    public:
-        Serialize(std::ostream& os_);
-        ~Serialize() {}
-        void visit(const Binary& node);
-        void visit(const Multiply& node);
-        void visit(const Sum& node);
-        void visit(const State& node);
-        void visit(const Parameter& node);
-        void visit(const Null& node);
-        void visit(const Unary& node);
-        void visit(const Constant& node);
-    private:
-        Serialize();
-        void serialize_multiplicative_factor(const double& k);
-        std::ostream& os;
-        bool parenthesize_next_node;
-};
+    namespace functors_for_optimizer
+    {
+        class Serialize : public NodeVisitor
+        {
+            public:
+                Serialize(std::ostream& os_);
+                ~Serialize() {}
+                void visit(const Binary& node);
+                void visit(const Multiply& node);
+                void visit(const Sum& node);
+                void visit(const State& node);
+                void visit(const Parameter& node);
+                void visit(const Null& node);
+                void visit(const Unary& node);
+                void visit(const Constant& node);
+            private:
+                Serialize();
+                void serialize_multiplicative_factor(const double& k);
+                std::ostream& os;
+                bool parenthesize_next_node;
+        };
 
-class Node;
+        class Node;
+    }
+}
 
-::std::ostream& operator<<(::std::ostream& os, const Node& node);
-::std::ostream& operator<<(::std::ostream& os, const TR1(shared_ptr)<Node>& node);
+::std::ostream& operator<<(::std::ostream& os, const ssc::functors_for_optimizer::Node& node);
+::std::ostream& operator<<(::std::ostream& os, const TR1(shared_ptr)<ssc::functors_for_optimizer::Node>& node);
 
 #endif /* SERIALIZE_HPP_ */

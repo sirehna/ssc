@@ -4,6 +4,7 @@
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/Serialize.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 PowTest::PowTest() : a(ssc::random_data_generator::DataGenerator(171429)), generate(StateGenerator())
 {

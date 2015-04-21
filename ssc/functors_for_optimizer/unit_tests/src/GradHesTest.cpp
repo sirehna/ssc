@@ -28,6 +28,8 @@
 #define X3 (x3->get_lambda()())
 #define X4 (x4->get_lambda()())
 
+using namespace ssc::functors_for_optimizer;
+
 GradHesTest::GradHesTest() : a(ssc::random_data_generator::DataGenerator(76945)),
                              generate(StateGenerator()),
                              x1(generate.state("x1")),

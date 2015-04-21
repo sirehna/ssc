@@ -13,6 +13,8 @@
 #include "ssc/functors_for_optimizer/Serialize.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
     update_lambda();

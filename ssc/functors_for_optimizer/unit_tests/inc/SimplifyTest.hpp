@@ -20,10 +20,10 @@ class SimplifyTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-        StatePtr x1;
-        StatePtr x2;
-        StatePtr x3;
+        ssc::functors_for_optimizer::StateGenerator generate;
+        ssc::functors_for_optimizer::StatePtr x1;
+        ssc::functors_for_optimizer::StatePtr x2;
+        ssc::functors_for_optimizer::StatePtr x3;
 };
 
 #endif  /* SIMPLIFYTEST_HPP_ */

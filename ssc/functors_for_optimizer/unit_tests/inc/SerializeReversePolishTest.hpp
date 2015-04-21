@@ -21,11 +21,11 @@ class SerializeReversePolishTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-        StatePtr x;
-        StatePtr y;
+        ssc::functors_for_optimizer::StateGenerator generate;
+        ssc::functors_for_optimizer::StatePtr x;
+        ssc::functors_for_optimizer::StatePtr y;
         std::stringstream ss;
-        SerializeReversePolish serialize;
+        ssc::functors_for_optimizer::SerializeReversePolish serialize;
 };
 
 #endif  /* SERIALIZEREVERSEPOLISHTEST_HPP_ */

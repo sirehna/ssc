@@ -21,17 +21,25 @@
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include <functional>
-class Node;
-typedef TR1(shared_ptr)<Node> NodePtr;
 
 
-class FunctionMatrix
+namespace ssc
 {
-    public:
-        FunctionMatrix();
-        std::vector<size_t> row_index;
-        std::vector<size_t> col_index;
-        std::vector<std::function<double()> > values;
-};
+    namespace functors_for_optimizer
+    {
+        class Node;
+        typedef TR1(shared_ptr)<Node> NodePtr;
+
+
+        class FunctionMatrix
+        {
+            public:
+                FunctionMatrix();
+                std::vector<size_t> row_index;
+                std::vector<size_t> col_index;
+                std::vector<std::function<double()> > values;
+        };
+    }
+}
 
 #endif /* HES_HPP_ */

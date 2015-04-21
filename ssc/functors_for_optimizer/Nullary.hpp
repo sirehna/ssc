@@ -19,15 +19,20 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/NullaryTest.cpp NullaryTest expected output
  */
-
-class Nullary : public Node
+namespace ssc
 {
+    namespace functors_for_optimizer
+    {
+        class Nullary : public Node
+        {
 
-    public:
-        Nullary();
-        Nullary(const double& val);
-        void set_value(const std::function<double()>& val);
-        ~Nullary() {}
-};
+            public:
+                Nullary();
+                Nullary(const double& val);
+                void set_value(const std::function<double()>& val);
+                ~Nullary() {}
+        };
+    }
+}
 
 #endif /* NULLARY_HPP_ */

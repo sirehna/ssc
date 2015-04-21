@@ -9,6 +9,8 @@
 #include "ssc/functors_for_optimizer/Difference.hpp"
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 DifferenceTest::DifferenceTest() : a(ssc::random_data_generator::DataGenerator(121212)), generate(StateGenerator())
 {
 }

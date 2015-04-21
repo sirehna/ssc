@@ -12,6 +12,7 @@
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 StateGetterTest::StateGetterTest() : a(ssc::random_data_generator::DataGenerator(1))
 {

@@ -12,6 +12,8 @@
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Serialize.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 MultiplyTest::MultiplyTest() : a(ssc::random_data_generator::DataGenerator(99)),
                                generate(StateGenerator()),
                                x1(generate.state("x1")),

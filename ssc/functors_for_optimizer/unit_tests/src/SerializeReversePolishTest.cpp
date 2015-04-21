@@ -13,6 +13,7 @@
 #include "ssc/functors_for_optimizer/Divide.hpp"
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 SerializeReversePolishTest::SerializeReversePolishTest() : a(ssc::random_data_generator::DataGenerator(336699)),
 generate(StateGenerator()),

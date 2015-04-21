@@ -20,19 +20,24 @@
  *  \snippet MODULE_NAME/unit_tests/src/CosTest.cpp CosTest expected output
  */
 
-
-class Cos : public Unary
+namespace ssc
 {
-    public:
-        Cos(const NodePtr& n_);
-        std::string get_operator_name() const;
-        NodePtr diff(const StatePtr& state) const;
-        NodePtr clone() const;
-        bool is_null() const;
-        std::string get_type() const;
-        void update_lambda();
-};
+    namespace functors_for_optimizer
+    {
+        class Cos : public Unary
+        {
+            public:
+                Cos(const NodePtr& n_);
+                std::string get_operator_name() const;
+                NodePtr diff(const StatePtr& state) const;
+                NodePtr clone() const;
+                bool is_null() const;
+                std::string get_type() const;
+                void update_lambda();
+        };
 
-typedef std::tr1::shared_ptr<Cos> CosPtr;
+        typedef std::tr1::shared_ptr<Cos> CosPtr;
+    }
+}
 
 #endif /* COS_HPP_ */

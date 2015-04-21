@@ -8,6 +8,7 @@
 #include "CosTest.hpp"
 #include "ssc/functors_for_optimizer/Cos.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 #define X (*x)
 #define X_ (x->get_lambda()())

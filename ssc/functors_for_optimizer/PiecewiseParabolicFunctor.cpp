@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ssc::interpolation::ParabolicCoefficients>& coeffs) :
 Unary(state_),
 f(new ssc::interpolation::ParabolicInterpolation(xmin,xmax,coeffs)),

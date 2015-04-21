@@ -16,6 +16,8 @@
 #define not !
 #endif
 
+using namespace ssc::functors_for_optimizer;
+
 Sum::Sum(const NodePtr& n1, const NodePtr& n2) : N_ary(n1,n2)
 {
     common_build();

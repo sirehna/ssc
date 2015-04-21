@@ -14,6 +14,8 @@
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Divide.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 SimplifyTest::SimplifyTest() : a(ssc::random_data_generator::DataGenerator(22)),
                                generate(StateGenerator()),
                                x1(generate.state("x1")),

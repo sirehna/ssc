@@ -9,6 +9,10 @@
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
+using namespace ssc::functors_for_optimizer;
+
 Null::Null()
 {
     update_lambda();

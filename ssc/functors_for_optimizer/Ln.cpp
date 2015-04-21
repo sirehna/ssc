@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include <cmath>
 
+using namespace ssc::functors_for_optimizer;
+
 Ln::Ln(const NodePtr& n_) : Unary(n_)
 {
     update_lambda();

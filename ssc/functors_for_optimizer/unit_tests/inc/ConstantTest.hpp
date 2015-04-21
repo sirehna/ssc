@@ -19,7 +19,6 @@ class ConstantTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-
 };
 
 #endif  /* CONSTANTTEST_HPP_ */

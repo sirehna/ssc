@@ -19,18 +19,23 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/LnTest.cpp LnTest expected output
  */
-
-class Ln : public Unary
+namespace ssc
 {
-    public:
-        Ln(const NodePtr& n_);
-        std::string get_operator_name() const;
-        NodePtr diff(const StatePtr& state) const;
-        NodePtr clone() const;
-        bool is_null() const;
-        std::string get_type() const;
-        void update_lambda();
-};
-typedef std::tr1::shared_ptr<Ln> LnPtr;
+    namespace functors_for_optimizer
+    {
+        class Ln : public Unary
+        {
+            public:
+                Ln(const NodePtr& n_);
+                std::string get_operator_name() const;
+                NodePtr diff(const StatePtr& state) const;
+                NodePtr clone() const;
+                bool is_null() const;
+                std::string get_type() const;
+                void update_lambda();
+        };
+        typedef std::tr1::shared_ptr<Ln> LnPtr;
+    }
+}
 
 #endif /* LN_HPP_ */

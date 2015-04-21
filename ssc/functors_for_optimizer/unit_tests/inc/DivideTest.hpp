@@ -20,10 +20,9 @@ class DivideTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-        StatePtr x;
-        StatePtr y;
-
+        ssc::functors_for_optimizer::StateGenerator generate;
+        ssc::functors_for_optimizer::StatePtr x;
+        ssc::functors_for_optimizer::StatePtr y;
 };
 
 #endif  /* DIVIDETEST_HPP_ */

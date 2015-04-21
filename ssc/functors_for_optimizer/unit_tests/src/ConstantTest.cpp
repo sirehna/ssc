@@ -9,6 +9,8 @@
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 ConstantTest::ConstantTest() :
         a(ssc::random_data_generator::DataGenerator(7777))
 {

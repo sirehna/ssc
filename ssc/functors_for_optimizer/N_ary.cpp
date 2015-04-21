@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include <algorithm>
 
+using namespace ssc::functors_for_optimizer;
+
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !

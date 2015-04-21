@@ -14,6 +14,8 @@
 #define X (*x)
 #define X_ (x->get_lambda()())
 
+using namespace ssc::functors_for_optimizer;
+
 SinTest::SinTest() : a(ssc::random_data_generator::DataGenerator(1)), generate(StateGenerator())
 {
 }

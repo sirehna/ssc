@@ -20,23 +20,26 @@
  *  \snippet MODULE_NAME/unit_tests/src/NullTest.cpp NullTest expected output
  */
 
-
-class Null : public Nullary
+namespace ssc
 {
-    public:
-        Null();
-        NodePtr diff(const StatePtr& state) const;
-        void accept(NodeVisitor& v) const;
-        NodePtr clone() const;
-        bool is_null() const;
-        bool equals(const Node& rhs) const;
-        using Node::equals_derived;
-        bool equals_derived(const Null& rhs) const;
-        std::string get_type() const;
-        bool is_constant() const;
-        void update_lambda();
-};
-
-typedef std::tr1::shared_ptr<Null> NullPtr;
-
+    namespace functors_for_optimizer
+    {
+        class Null : public Nullary
+        {
+            public:
+                Null();
+                NodePtr diff(const StatePtr& state) const;
+                void accept(NodeVisitor& v) const;
+                NodePtr clone() const;
+                bool is_null() const;
+                bool equals(const Node& rhs) const;
+                using Node::equals_derived;
+                bool equals_derived(const Null& rhs) const;
+                std::string get_type() const;
+                bool is_constant() const;
+                void update_lambda();
+        };
+        typedef std::tr1::shared_ptr<Null> NullPtr;
+    }
+}
 #endif /* NULL_HPP_ */

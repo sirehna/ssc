@@ -8,6 +8,8 @@
 #include "ssc/functors_for_optimizer/Unary.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Unary::Unary(const NodePtr& n_) : n(n_)
 {
 }

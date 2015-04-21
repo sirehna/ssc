@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 PiecewiseLinearFunctorTest::PiecewiseLinearFunctorTest() : a(ssc::random_data_generator::DataGenerator(11)),
 generate(StateGenerator())
 {

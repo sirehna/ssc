@@ -16,6 +16,8 @@
 #define not !
 #endif
 
+using namespace ssc::functors_for_optimizer;
+
 Constant::Constant(const double& v) : val(v)
 {
     update_lambda();
