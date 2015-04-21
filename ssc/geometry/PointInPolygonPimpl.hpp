@@ -60,7 +60,7 @@ namespace ssc
                     {
                         THROW(__PRETTY_FUNCTION__, PointInPolygonException, "Polygon should be closed");
                     }
-                    for (auto it = points.begin() ; it != points.end() ; ++it)
+                    for (std::vector<LatitudeLongitude>::const_iterator it = points.begin() ; it != points.end() ; ++it)
                     {
 
                         const PointType p = convert_to<PointType>(it->lon, it->lat);
