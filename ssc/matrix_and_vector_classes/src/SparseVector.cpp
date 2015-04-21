@@ -1,4 +1,4 @@
-#include "ssc/matrix_and_vector_classes/inc/SparseVector.hpp"
+#include "ssc/matrix_and_vector_classes/SparseVector.hpp"
 #include "ssc/macros/test_macros.hpp"
 #include <functional>
 

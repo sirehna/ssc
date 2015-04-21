@@ -1,4 +1,4 @@
-#include "ssc/matrix_and_vector_classes/inc/SparseMatrix.hpp"
+#include "ssc/matrix_and_vector_classes/SparseMatrix.hpp"
 #include "ssc/macros/test_macros.hpp"
 #include <assert.h>
 #include <math.h>

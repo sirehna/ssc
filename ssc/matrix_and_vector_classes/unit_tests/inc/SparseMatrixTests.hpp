@@ -2,7 +2,7 @@
 #define __SPARSE_MATRIX_TESTS__
 
 #include "gtest/gtest.h"
-#include "ssc/matrix_and_vector_classes/inc/SparseMatrix.hpp"
+#include "ssc/matrix_and_vector_classes/SparseMatrix.hpp"
 #include "ssc/random_data_generator/DataGenerator.hpp"
 
 class SparseMatrixTests : public ::testing::Test
