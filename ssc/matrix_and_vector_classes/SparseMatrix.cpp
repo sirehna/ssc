@@ -111,12 +111,12 @@ void SparseMatrix::add_element_in_row_order(const size_t& i, const size_t& j, co
 {
     if (current_element>=nb_of_elements)
     {
-        THROW("SparseMatrix::add_element_in_row_order",SparseMatrixException,
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,
               "Can't set a new element in the matrix because the maximum number of elements was reached. Declare a bigger matrix.");
     }
     if (not(position_in_matrix_is_correct(i,j)))
     {
-        THROW("SparseMatrix::add_element_in_row_order",SparseMatrixException,
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,
               "Elements must be added in a strictly increasing order (row-wise).");
     }
 
@@ -483,11 +483,11 @@ void SparseMatrix::copy_row_indexes_to(const size_t& n, size_t * const array) co
 {
     if (!array)
     {
-        THROW("SparseMatrix::copy_row_indexes_to",SparseMatrixException,"Received a null pointer");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"Received a null pointer");
     }
     if (n != nb_of_elements)
     {
-        THROW("SparseMatrix::copy_row_indexes_to",SparseMatrixException,"n does not match the number of elements");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"n does not match the number of elements");
     }
     for (size_t i = 0 ; i < n ; ++i) array[i] = row_indexes[i];
 }
@@ -496,11 +496,11 @@ void SparseMatrix::copy_column_indexes_to(const size_t& n, size_t * const array)
 {
     if (!array)
     {
-        THROW("SparseMatrix::copy_column_indexes_to",SparseMatrixException,"Received a null pointer");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"Received a null pointer");
     }
     if (n != nb_of_elements)
     {
-        THROW("SparseMatrix::copy_column_indexes_to",SparseMatrixException,"n does not match the number of elements");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"n does not match the number of elements");
     }
     for (size_t i = 0 ; i < n ; ++i) array[i] = column_indexes[i];
 }
@@ -509,11 +509,11 @@ void SparseMatrix::copy_values_to(const size_t& n, double * const array) const
 {
     if (!array)
     {
-        THROW("SparseMatrix::copy_column_indexes_to",SparseMatrixException,"Received a null pointer");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"Received a null pointer");
     }
     if (n != nb_of_elements)
     {
-        THROW("SparseMatrix::copy_column_indexes_to",SparseMatrixException,"n does not match the number of elements");
+        THROW(__PRETTY_FUNCTION__,SparseMatrixException,"n does not match the number of elements");
     }
     for (size_t i = 0 ; i < n ; ++i) array[i] = values[i];
 }
