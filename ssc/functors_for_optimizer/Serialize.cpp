@@ -172,14 +172,14 @@ void Serialize::visit(const Constant& node)
     if ((k < 0) && parenthesize_next_node) os << ")";
 }
 
-::std::ostream& operator<<(::std::ostream& os, const Node& node)
+::std::ostream& ssc::functors_for_optimizer::operator<<(::std::ostream& os, const Node& node)
 {
     Serialize v(os);
     node.accept(v);
     return os;
 }
 
-::std::ostream& operator<<(::std::ostream& os, const NodePtr& node)
+::std::ostream& ssc::functors_for_optimizer::operator<<(::std::ostream& os, const NodePtr& node)
 {
     return (os << *node);
 }

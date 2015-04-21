@@ -9,6 +9,7 @@
 
 
 using namespace ssc::matrix_and_vector_classes;
+using namespace ssc::optimizer;
 
 OptimizationResult::OptimizationResult() :
 nb_of_iterations(0),

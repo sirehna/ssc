@@ -47,10 +47,10 @@ namespace ssc
         };
 
         class Node;
+        ::std::ostream& operator<<(::std::ostream& os, const ssc::functors_for_optimizer::Node& node);
+        ::std::ostream& operator<<(::std::ostream& os, const TR1(shared_ptr)<ssc::functors_for_optimizer::Node>& node);
+
     }
 }
-
-::std::ostream& operator<<(::std::ostream& os, const ssc::functors_for_optimizer::Node& node);
-::std::ostream& operator<<(::std::ostream& os, const TR1(shared_ptr)<ssc::functors_for_optimizer::Node>& node);
 
 #endif /* SERIALIZE_HPP_ */
