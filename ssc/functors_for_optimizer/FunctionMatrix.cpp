@@ -7,6 +7,8 @@
 
 #include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 FunctionMatrix::FunctionMatrix() : row_index(std::vector<size_t>()),
              col_index(std::vector<size_t>()),
              values(std::vector<std::function<double()> >())

@@ -24,6 +24,7 @@
 #define PI (4.*atan(1.))
 #define EPS 1e-8
 
+using namespace ssc::functors_for_optimizer;
 
 FunctorAlgebraTest::FunctorAlgebraTest() : a(ssc::random_data_generator::DataGenerator(88)), generate(StateGenerator()),
 x(generate.state("x")),

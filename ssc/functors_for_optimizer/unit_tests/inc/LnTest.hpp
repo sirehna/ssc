@@ -20,8 +20,7 @@ class LnTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-
+        ssc::functors_for_optimizer::StateGenerator generate;
 };
 
 #endif  /* LNTEST_HPP_ */

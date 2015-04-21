@@ -12,6 +12,8 @@
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Serialize.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 SumTest::SumTest() : a(ssc::random_data_generator::DataGenerator(12)), generate(StateGenerator())
 {
 }

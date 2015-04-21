@@ -11,6 +11,7 @@
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 PiecewiseConstantFunctorTest::PiecewiseConstantFunctorTest() : a(ssc::random_data_generator::DataGenerator(669)),
 generate(StateGenerator())

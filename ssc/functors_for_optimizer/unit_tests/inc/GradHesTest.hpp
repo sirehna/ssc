@@ -20,10 +20,10 @@ class GradHesTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-        StatePtr x1,x2,x3,x4;
-        NodePtr f;
-        std::vector<NodePtr> g;
+        ssc::functors_for_optimizer::StateGenerator generate;
+        ssc::functors_for_optimizer::StatePtr x1,x2,x3,x4;
+        ssc::functors_for_optimizer::NodePtr f;
+        std::vector<ssc::functors_for_optimizer::NodePtr> g;
 };
 
 #endif  /* GRADHESTEST_HPP_ */

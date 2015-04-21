@@ -15,6 +15,7 @@
 #include <cmath>
 #include <string>
 
+using namespace ssc::functors_for_optimizer;
 
 Sin::Sin(const NodePtr& n_) : Unary(n_)
 {

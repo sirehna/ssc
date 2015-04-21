@@ -20,10 +20,14 @@
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !
 #endif
+
+using namespace ssc::functors_for_optimizer;
 
 Node::Node() : factor(1), value([](){return 0.;})
 {

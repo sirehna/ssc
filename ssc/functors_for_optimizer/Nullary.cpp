@@ -7,6 +7,8 @@
 
 #include "ssc/functors_for_optimizer/Nullary.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Nullary::Nullary() : Node()
 {
     factor = 1;

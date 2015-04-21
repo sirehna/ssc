@@ -9,6 +9,8 @@
 #include <cmath>
 #include "ssc/functors_for_optimizer/Ln.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 LnTest::LnTest() : a(ssc::random_data_generator::DataGenerator(24)), generate(StateGenerator())
 {
 }

@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !

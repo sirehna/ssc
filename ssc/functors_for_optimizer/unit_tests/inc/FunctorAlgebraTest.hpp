@@ -20,11 +20,10 @@ class FunctorAlgebraTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
-        StateGenerator generate;
-        StatePtr x;
-        StatePtr y;
-        StatePtr z;
-
+        ssc::functors_for_optimizer::StateGenerator generate;
+        ssc::functors_for_optimizer::StatePtr x;
+        ssc::functors_for_optimizer::StatePtr y;
+        ssc::functors_for_optimizer::StatePtr z;
 };
 
 #endif  /* FUNCTORALGEBRATEST_HPP_ */

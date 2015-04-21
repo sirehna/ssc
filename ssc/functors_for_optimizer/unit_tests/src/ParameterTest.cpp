@@ -9,6 +9,8 @@
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 ParameterTest::ParameterTest() : a(ssc::random_data_generator::DataGenerator(123))
 {
 }

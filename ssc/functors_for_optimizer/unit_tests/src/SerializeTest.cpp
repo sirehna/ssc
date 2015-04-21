@@ -16,6 +16,8 @@
 #include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 SerializeTest::SerializeTest() : a(ssc::random_data_generator::DataGenerator(12121)), generate(StateGenerator()), ss("")
 {
 }

@@ -4,6 +4,10 @@
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
+using namespace ssc::functors_for_optimizer;
+
 State::~State()
 {
 }

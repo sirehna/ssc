@@ -20,23 +20,28 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/BinaryTest.cpp BinaryTest expected output
  */
-
-class Binary : public Node
+namespace ssc
 {
-    public:
-        Binary(const NodePtr& n1, const NodePtr& n2);
-        ~Binary() {}
-        void accept(NodeVisitor& v) const;
-        virtual std::string get_operator_name() const = 0;
-        NodePtr get_lhs() const;
-        NodePtr get_rhs() const;
+    namespace functors_for_optimizer
+    {
+        class Binary : public Node
+        {
+            public:
+                Binary(const NodePtr& n1, const NodePtr& n2);
+                ~Binary() {}
+                void accept(NodeVisitor& v) const;
+                virtual std::string get_operator_name() const = 0;
+                NodePtr get_lhs() const;
+                NodePtr get_rhs() const;
 
-    protected:
-        NodePtr n1_;
-        NodePtr n2_;
-        void set_value(const std::function<double()>& val);
-    private:
-        Binary();
-};
+            protected:
+                NodePtr n1_;
+                NodePtr n2_;
+                void set_value(const std::function<double()>& val);
+            private:
+                Binary();
+        };
+    }
+}
 
 #endif /* BINARY_HPP_ */

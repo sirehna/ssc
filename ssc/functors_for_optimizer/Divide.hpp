@@ -20,23 +20,29 @@
  *  \snippet MODULE_NAME/unit_tests/src/DivideTest.cpp DivideTest expected output
  */
 
-class Divide : public Binary
+namespace ssc
 {
-    public:
-        Divide(const NodePtr& n1, const NodePtr& n2);
-        NodePtr diff(const StatePtr& state) const;
-        std::string get_operator_name() const;
-        NodePtr clone() const;
-        bool is_null() const;
-        bool equals(const Node& rhs) const;
-        using Node::equals_derived;
-        bool equals_derived(const Divide& rhs) const;
-        std::string get_type() const;
-        NodePtr simplify() const;
-        bool must_parenthesize() const;
-        bool is_constant() const;
-        void update_lambda();
-};
+    namespace functors_for_optimizer
+    {
+        class Divide : public Binary
+        {
+            public:
+                Divide(const NodePtr& n1, const NodePtr& n2);
+                NodePtr diff(const StatePtr& state) const;
+                std::string get_operator_name() const;
+                NodePtr clone() const;
+                bool is_null() const;
+                bool equals(const Node& rhs) const;
+                using Node::equals_derived;
+                bool equals_derived(const Divide& rhs) const;
+                std::string get_type() const;
+                NodePtr simplify() const;
+                bool must_parenthesize() const;
+                bool is_constant() const;
+                void update_lambda();
+        };
 
-typedef std::tr1::shared_ptr<Divide> DividePtr;
+        typedef std::tr1::shared_ptr<Divide> DividePtr;
+    }
+}
 #endif /* DIVIDE_HPP_ */

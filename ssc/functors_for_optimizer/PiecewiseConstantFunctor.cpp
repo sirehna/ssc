@@ -11,6 +11,7 @@
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 
+using namespace ssc::functors_for_optimizer;
 
 PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state_),

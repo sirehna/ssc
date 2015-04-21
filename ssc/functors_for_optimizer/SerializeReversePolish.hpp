@@ -21,25 +21,31 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/SerializeReversePolishTest.cpp SerializeReversePolishTest expected output
  */
-class N_ary;
-class SerializeReversePolish : public NodeVisitor
+namespace ssc
 {
-    public:
-        SerializeReversePolish(std::ostream& os_);
-        ~SerializeReversePolish() {}
-        void visit(const Binary& node);
-        void visit(const Sum& node);
-        void visit(const Multiply& node);
-        void visit_nary(const N_ary& node);
-        void visit(const State& node);
-        void visit(const Parameter& node);
-        void visit(const Null& node);
-        void visit(const Unary& node);
-        void visit(const Constant& node);
-    private:
-        SerializeReversePolish();
-        void serialize_multiplicative_factor(const double& k);
-        std::ostream& os;
-};
+    namespace functors_for_optimizer
+    {
+        class N_ary;
+        class SerializeReversePolish : public NodeVisitor
+        {
+            public:
+                SerializeReversePolish(std::ostream& os_);
+                ~SerializeReversePolish() {}
+                void visit(const Binary& node);
+                void visit(const Sum& node);
+                void visit(const Multiply& node);
+                void visit_nary(const N_ary& node);
+                void visit(const State& node);
+                void visit(const Parameter& node);
+                void visit(const Null& node);
+                void visit(const Unary& node);
+                void visit(const Constant& node);
+            private:
+                SerializeReversePolish();
+                void serialize_multiplicative_factor(const double& k);
+                std::ostream& os;
+        };
+    }
+}
 
 #endif /* SERIALIZEREVERSEPOLISH_HPP_ */

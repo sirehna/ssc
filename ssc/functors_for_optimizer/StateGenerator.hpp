@@ -5,24 +5,30 @@
 #include "ssc/exception_handling/Exception.hpp"
 #include <set>
 
-class StateGeneratorException : public ssc::exception_handling::Exception
+namespace ssc
 {
-    public:
-        StateGeneratorException(const char* s) : Exception(s) {}
-};
+    namespace functors_for_optimizer
+    {
+        class StateGeneratorException : public ssc::exception_handling::Exception
+        {
+            public:
+                StateGeneratorException(const char* s) : Exception(s) {}
+        };
 
 
 
-class StateGenerator
-{
-    public:
-        StateGenerator();
-        StatePtr state(const std::string& name);
-        void reset();
+        class StateGenerator
+        {
+            public:
+                StateGenerator();
+                StatePtr state(const std::string& name);
+                void reset();
 
-    private:
-        size_t current_index;
-        std::set<std::string> names;
-};
+            private:
+                size_t current_index;
+                std::set<std::string> names;
+        };
+    }
+}
 
 #endif

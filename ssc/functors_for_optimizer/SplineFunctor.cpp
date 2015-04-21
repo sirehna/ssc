@@ -12,6 +12,8 @@
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/interpolation/ParabolicCoefficients.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 class SplineFunctor::Impl
 {
     public:

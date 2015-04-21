@@ -17,6 +17,8 @@
 
 #include <cmath>
 
+using namespace ssc::functors_for_optimizer;
+
 Serialize::Serialize(std::ostream& os_) : os(os_), parenthesize_next_node(false)
 {
 

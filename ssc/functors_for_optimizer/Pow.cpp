@@ -10,6 +10,8 @@
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
     set_value(get_pow_fun());
@@ -27,38 +29,46 @@ std::function<double()> Pow::get_pow_fun() const
     const auto n2__ = n2_;
     const auto factor_ = factor;
     return [n1__,n2__,factor_]()->double{
-        return factor_*(pow(n1__->get_lambda()(),n2__->get_lambda()()));};
+        return factor_*(::pow(n1__->get_lambda()(),n2__->get_lambda()()));};
 }
 
-NodePtr Pow::diff(const StatePtr& state) const
+namespace ssc
 {
-    NodePtr dthis_dstate;
-    if (n2_->is_constant())
+    namespace functors_for_optimizer
     {
-        const double val = n2_->get_lambda()();
-        if (val == 0)
+        NodePtr Pow::diff(const StatePtr& state) const
         {
-            dthis_dstate = NodePtr(new Null());
-        }
-        else if (val == 1)
-        {
-            dthis_dstate = n1_->diff(state);
-        }
-        else if (val == 2)
-        {
-            dthis_dstate = 2*n1_*(n1_->diff(state));
-        }
-        else
-        {
-            dthis_dstate = val*Pow(n1_,(val-1))*(n1_->diff(state));
+            NodePtr dthis_dstate;
+            if (n2_->is_constant())
+            {
+                const double val = n2_->get_lambda()();
+                if (val == 0)
+                {
+                    dthis_dstate = NodePtr(new Null());
+                }
+                else if (val == 1)
+                {
+                    dthis_dstate = n1_->diff(state);
+                }
+                else if (val == 2)
+                {
+                    dthis_dstate = 2*n1_*(n1_->diff(state));
+                }
+                else
+                {
+                    dthis_dstate = val*Pow(n1_,(val-1))*(n1_->diff(state));
+                }
+            }
+            else
+            {
+                const NodePtr a = (n2_->diff(state))*Ln(n1_);
+                const NodePtr b = n2_*(n1_->diff(state))/n1_;
+                dthis_dstate = Pow(n1_,n2_)*(a+b);
+            }
+            dthis_dstate->multiply_by(factor);
+            return dthis_dstate;
         }
     }
-    else
-    {
-        dthis_dstate = Pow(n1_,n2_)*((n2_->diff(state))*Ln(n1_)+n2_*(n1_->diff(state))/n1_);
-    }
-    dthis_dstate->multiply_by(factor);
-    return dthis_dstate;
 }
 
 std::string Pow::get_operator_name() const

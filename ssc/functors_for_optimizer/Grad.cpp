@@ -7,6 +7,8 @@
 
 #include "ssc/functors_for_optimizer/Grad.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Grad::Grad() : index(std::vector<size_t>()), values(std::vector<std::function<double()> >())
 {
 

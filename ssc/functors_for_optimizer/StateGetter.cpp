@@ -18,6 +18,8 @@
 #include <set>
 #include <algorithm>
 
+using namespace ssc::functors_for_optimizer;
+
 class StateGetter::StateGetter_pimpl
 {
     public:

@@ -13,6 +13,8 @@
 #define X_ (*x)
 #define X (x->get_lambda()())
 
+using namespace ssc::functors_for_optimizer;
+
 PiecewiseParabolicFunctorTest::PiecewiseParabolicFunctorTest() : a(ssc::random_data_generator::DataGenerator(967)), generate(StateGenerator())
 {
 }

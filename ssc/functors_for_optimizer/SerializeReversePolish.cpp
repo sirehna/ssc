@@ -18,6 +18,8 @@
 
 #include <cmath>
 
+using namespace ssc::functors_for_optimizer;
+
 SerializeReversePolish::SerializeReversePolish(std::ostream& os_) : os(os_)
 {
 

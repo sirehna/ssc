@@ -1,6 +1,8 @@
 #include "StateTest.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 StateTest::StateTest() : a(ssc::random_data_generator::DataGenerator(581424))
 {
 }

@@ -21,32 +21,37 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/StateGetterTest.cpp StateGetterTest expected output
  */
-
-class State;
-typedef std::tr1::shared_ptr<State> StatePtr;
-typedef std::vector<StatePtr> StateList;
-
-
-class StateGetter : public NodeVisitor
+namespace ssc
 {
-    public:
-        StateGetter();
-        StateGetter(const StateList& list);
-        void operator()(const NodePtr& f);
-        void operator()(const std::vector<NodePtr>& g);
-        std::vector<StatePtr> get() const;
-        void visit(const Binary& node);
-        void visit(const Multiply& node);
-        void visit(const Sum& node);
-        void visit(const State& node);
-        void visit(const Parameter& node);
-        void visit(const Null& node);
-        void visit(const Unary& node);
-        void visit(const Constant& node);
+    namespace functors_for_optimizer
+    {
+        class State;
+        typedef std::tr1::shared_ptr<State> StatePtr;
+        typedef std::vector<StatePtr> StateList;
 
-    private:
-        class StateGetter_pimpl;
-        std::tr1::shared_ptr<StateGetter_pimpl> pimpl;
-};
+
+        class StateGetter : public NodeVisitor
+        {
+            public:
+                StateGetter();
+                StateGetter(const StateList& list);
+                void operator()(const NodePtr& f);
+                void operator()(const std::vector<NodePtr>& g);
+                std::vector<StatePtr> get() const;
+                void visit(const Binary& node);
+                void visit(const Multiply& node);
+                void visit(const Sum& node);
+                void visit(const State& node);
+                void visit(const Parameter& node);
+                void visit(const Null& node);
+                void visit(const Unary& node);
+                void visit(const Constant& node);
+
+            private:
+                class StateGetter_pimpl;
+                std::tr1::shared_ptr<StateGetter_pimpl> pimpl;
+        };
+    }
+}
 
 #endif /* STATEGETTER_HPP_ */

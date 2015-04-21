@@ -20,24 +20,29 @@
  */
 
 
-
-class Difference : public Binary
+namespace ssc
 {
-    public:
-        Difference(const NodePtr& n1, const NodePtr& n2);
-        std::string get_operator_name() const;
-        NodePtr clone() const;
-        NodePtr diff(const StatePtr& state) const;
-        bool is_null() const;
-        bool equals(const Node& rhs) const;
-        using Node::equals_derived;
-        bool equals_derived(const Difference& rhs) const;
-        std::string get_type() const;
-        NodePtr simplify() const;
-        bool is_constant() const;
-        void update_lambda();
-};
+    namespace functors_for_optimizer
+    {
+        class Difference : public Binary
+        {
+            public:
+                Difference(const NodePtr& n1, const NodePtr& n2);
+                std::string get_operator_name() const;
+                NodePtr clone() const;
+                NodePtr diff(const StatePtr& state) const;
+                bool is_null() const;
+                bool equals(const Node& rhs) const;
+                using Node::equals_derived;
+                bool equals_derived(const Difference& rhs) const;
+                std::string get_type() const;
+                NodePtr simplify() const;
+                bool is_constant() const;
+                void update_lambda();
+        };
 
-typedef std::tr1::shared_ptr<Difference> DiffPtr;
+        typedef std::tr1::shared_ptr<Difference> DiffPtr;
+    }
+}
 
 #endif /* DIFFERENCE_HPP_ */

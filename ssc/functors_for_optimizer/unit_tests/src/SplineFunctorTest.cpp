@@ -14,6 +14,8 @@
 #define X (*x)
 #define X_ (x->get_lambda()())
 
+using namespace ssc::functors_for_optimizer;
+
 SplineFunctorTest::SplineFunctorTest() : a(ssc::random_data_generator::DataGenerator(7779988)),
                                          generate(StateGenerator())
 {

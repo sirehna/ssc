@@ -9,6 +9,8 @@
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
+using namespace ssc::functors_for_optimizer;
+
 Difference::Difference(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {
     update_lambda();
