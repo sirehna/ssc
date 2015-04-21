@@ -3,6 +3,8 @@
 #include "ssc/macros/test_macros.hpp"
 #include <algorithm> // For sort
 
+using namespace ssc::matrix_and_vector_classes;
+
 void SparseMatrixTests::SetUp()
 {
 }
