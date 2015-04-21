@@ -1,14 +1,14 @@
 /*
  * Unary.hpp
  *
- * \date 1 févr. 2013, 12:33:33
+ * \date 1 fï¿½vr. 2013, 12:33:33
  *  \author cec
  */
 
 #ifndef UNARY_HPP_
 #define UNARY_HPP_
 
-#include "Node.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 
 
 class Unary : public Node

@@ -8,7 +8,7 @@
 #ifndef SPLINEFUNCTOR_HPP_
 #define SPLINEFUNCTOR_HPP_
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 
 /** \author cec

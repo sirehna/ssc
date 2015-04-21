@@ -1,14 +1,14 @@
 /*
  * Sin.hpp
  *
- * \date 1 févr. 2013, 14:24:01
+ * \date 1 fï¿½vr. 2013, 14:24:01
  *  \author cec
  */
 
 #ifndef SIN_HPP_
 #define SIN_HPP_
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 /** \author cec
  *  \brief This class was created to

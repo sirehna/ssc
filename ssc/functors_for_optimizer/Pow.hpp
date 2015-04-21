@@ -1,7 +1,7 @@
 #ifndef __POWHPP__
 #define __POWHPP__
 
-#include "Binary.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
 
 
 class Pow : public Binary

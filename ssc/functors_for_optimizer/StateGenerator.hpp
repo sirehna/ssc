@@ -1,7 +1,7 @@
 #ifndef __STATE_GENERATOR_HPP__
 #define __STATE_GENERATOR_HPP__
 
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/exception_handling/Exception.hpp"
 #include <set>
 

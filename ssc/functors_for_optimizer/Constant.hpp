@@ -1,14 +1,14 @@
 /*
  * Constant.hpp
  *
- * \date 5 févr. 2013, 11:22:54
+ * \date 5 fï¿½vr. 2013, 11:22:54
  *  \author cec
  */
 
 #ifndef CONSTANT_HPP_
 #define CONSTANT_HPP_
 
-#include "Nullary.hpp"
+#include "ssc/functors_for_optimizer/Nullary.hpp"
 
 /** \author cec
  *  \brief This class was created to

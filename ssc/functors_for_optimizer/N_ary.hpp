@@ -8,7 +8,7 @@
 #ifndef NARY_HPP_
 #define NARY_HPP_
 
-#include "Node.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 #include <string>
 #include <vector>
 #include <map>

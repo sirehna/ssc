@@ -8,7 +8,7 @@
 #ifndef SERIALIZEREVERSEPOLISH_HPP_
 #define SERIALIZEREVERSEPOLISH_HPP_
 
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <sstream>
 
 

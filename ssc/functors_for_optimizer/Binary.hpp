@@ -8,7 +8,7 @@
 #ifndef BINARY_HPP_
 #define BINARY_HPP_
 
-#include "Node.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 #include <string>
 
 /** \author cec
