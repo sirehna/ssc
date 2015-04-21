@@ -2,18 +2,17 @@
 #define __SPARSE_VECTOR_TESTS__
 
 #include "gtest/gtest.h"
-#include "SparseVector.hpp"
-#include "DataGenerator.hpp"
+#include "ssc/matrix_and_vector_classes/inc/SparseVector.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class SparseVectorTests : public ::testing::Test
 {
     protected:
-        SparseVectorTests() : a(DataGenerator(95442))
+        SparseVectorTests() : a(ssc::random_data_generator::DataGenerator(95442))
                                 {}
         virtual void SetUp();
         virtual void TearDown();
-        DataGenerator a;
-
+        ssc::random_data_generator::DataGenerator a;
 };
 
 #endif

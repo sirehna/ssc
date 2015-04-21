@@ -1,5 +1,5 @@
-#include "SparseVector.hpp"
-#include "test_macros.hpp"
+#include "ssc/matrix_and_vector_classes/inc/SparseVector.hpp"
+#include "ssc/macros/test_macros.hpp"
 #include <functional>
 
 SparseVector::SparseVector() :
