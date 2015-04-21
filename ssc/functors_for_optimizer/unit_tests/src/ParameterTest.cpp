@@ -6,8 +6,8 @@
  */
 
 #include "ParameterTest.hpp"
-#include "Parameter.hpp"
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 ParameterTest::ParameterTest() : a(ssc::random_data_generator::DataGenerator(123))
 {

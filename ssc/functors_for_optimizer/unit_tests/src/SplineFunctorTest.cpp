@@ -6,10 +6,10 @@
  */
 
 #include "SplineFunctorTest.hpp"
-#include "SplineFunctor.hpp"
+#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 #define X (*x)
 #define X_ (x->get_lambda()())

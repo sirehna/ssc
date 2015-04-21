@@ -1,12 +1,12 @@
 /*
  * Unary.cpp
  *
- * \date 1 févr. 2013, 12:34:31
+ * \date 1 fï¿½vr. 2013, 12:34:31
  *  \author cec
  */
 
-#include "Unary.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
 Unary::Unary(const NodePtr& n_) : n(n_)
 {

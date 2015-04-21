@@ -6,13 +6,13 @@
  */
 
 #include "SimplifyTest.hpp"
-#include "Serialize.hpp"
-#include "Constant.hpp"
-#include "Null.hpp"
-#include "Sum.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Multiply.hpp"
-#include "Divide.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
 
 SimplifyTest::SimplifyTest() : a(ssc::random_data_generator::DataGenerator(22)),
                                generate(StateGenerator()),

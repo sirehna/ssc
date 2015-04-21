@@ -6,8 +6,8 @@
  */
 
 #include "NullTest.hpp"
-#include "Null.hpp"
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 NullTest::NullTest() : a(ssc::random_data_generator::DataGenerator(123))
 {

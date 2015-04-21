@@ -6,11 +6,11 @@
  */
 
 #include "MultiplyTest.hpp"
-#include "StateGenerator.hpp"
-#include "Multiply.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
 
-#include "FunctorAlgebra.hpp"
-#include "Serialize.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
 
 MultiplyTest::MultiplyTest() : a(ssc::random_data_generator::DataGenerator(99)),
                                generate(StateGenerator()),

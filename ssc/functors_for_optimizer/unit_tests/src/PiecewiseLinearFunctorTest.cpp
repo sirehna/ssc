@@ -6,9 +6,9 @@
  */
 
 #include "PiecewiseLinearFunctorTest.hpp"
-#include "PiecewiseLinearFunctor.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 PiecewiseLinearFunctorTest::PiecewiseLinearFunctorTest() : a(ssc::random_data_generator::DataGenerator(11)),
 generate(StateGenerator())

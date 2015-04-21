@@ -6,11 +6,11 @@
  */
 
 #include "SumTest.hpp"
-#include "StateGenerator.hpp"
-#include "Sum.hpp"
-#include "Constant.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Serialize.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
 
 SumTest::SumTest() : a(ssc::random_data_generator::DataGenerator(12)), generate(StateGenerator())
 {

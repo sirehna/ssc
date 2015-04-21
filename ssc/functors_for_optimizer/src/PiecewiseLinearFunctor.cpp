@@ -5,10 +5,10 @@
  *  \author cec
  */
 
-#include "PiecewiseLinearFunctor.hpp"
-#include "NodeVisitor.hpp"
-#include "State.hpp"
-#include "PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
 
 PiecewiseLinearFunctor::PiecewiseLinearFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state_),

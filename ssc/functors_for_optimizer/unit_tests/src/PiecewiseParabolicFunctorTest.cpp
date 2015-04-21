@@ -7,7 +7,7 @@
 
 #include "PiecewiseParabolicFunctorTest.hpp"
 #include "ssc/interpolation/ParabolicCoefficients.hpp"
-#include "PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
 #define X_ (*x)

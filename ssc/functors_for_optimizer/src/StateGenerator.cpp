@@ -1,4 +1,4 @@
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

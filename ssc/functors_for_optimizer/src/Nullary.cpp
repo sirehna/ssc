@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "Nullary.hpp"
+#include "ssc/functors_for_optimizer/Nullary.hpp"
 
 Nullary::Nullary() : Node()
 {

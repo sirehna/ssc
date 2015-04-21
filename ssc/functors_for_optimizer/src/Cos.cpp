@@ -5,13 +5,13 @@
  *  \author cec
  */
 
-#include "Cos.hpp"
-#include "Sin.hpp"
-#include "State.hpp"
-#include "Constant.hpp"
-#include "Multiply.hpp"
-#include "Parameter.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include <cmath>
 #include <string>
 

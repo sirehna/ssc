@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "Ln.hpp"
-#include "Divide.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include <cmath>
 
 Ln::Ln(const NodePtr& n_) : Unary(n_)

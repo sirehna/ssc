@@ -6,15 +6,15 @@
  */
 
 #include "SerializeTest.hpp"
-#include "Divide.hpp"
-#include "Multiply.hpp"
-#include "Sum.hpp"
-#include "Difference.hpp"
-#include "Pow.hpp"
-#include "Serialize.hpp"
-#include "StateGenerator.hpp"
-#include "Ln.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
 SerializeTest::SerializeTest() : a(ssc::random_data_generator::DataGenerator(12121)), generate(StateGenerator()), ss("")
 {

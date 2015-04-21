@@ -6,9 +6,9 @@
  */
 
 #include "PiecewiseConstantFunctorTest.hpp"
-#include "PiecewiseConstantFunctor.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
 

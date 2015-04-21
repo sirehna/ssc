@@ -6,16 +6,16 @@
  */
 
 #include "GradHesTest.hpp"
-#include "GradHes.hpp"
-#include "FunctionMatrix.hpp"
-#include "FunctorAlgebra.hpp"
-#include "StateGenerator.hpp"
-#include "Sum.hpp"
-#include "Multiply.hpp"
-#include "Pow.hpp"
-#include "Serialize.hpp"
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
+#include "ssc/functors_for_optimizer/GradHes.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 
 #define X1_ (*x1)

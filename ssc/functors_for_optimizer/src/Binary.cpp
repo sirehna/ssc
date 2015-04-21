@@ -5,8 +5,8 @@
  *  \author cec
  */
 
-#include "Binary.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
 Binary::Binary(const NodePtr& n1, const NodePtr& n2) : n1_(n1),n2_(n2)
 {

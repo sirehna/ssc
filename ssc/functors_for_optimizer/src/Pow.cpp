@@ -1,14 +1,14 @@
-#include "Pow.hpp"
-#include "Sum.hpp"
-#include "Multiply.hpp"
-#include "Constant.hpp"
-#include "NodeVisitor.hpp"
-#include "Ln.hpp"
-#include "Divide.hpp"
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 #include <cmath>
-#include "FunctorAlgebra.hpp"
-#include "Null.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
 
 Pow::Pow(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {

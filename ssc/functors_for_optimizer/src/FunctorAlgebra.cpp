@@ -5,16 +5,16 @@
  *  \author cec
  */
 
-#include "FunctorAlgebra.hpp"
-#include "Parameter.hpp"
-#include "Difference.hpp"
-#include "Sum.hpp"
-#include "Divide.hpp"
-#include "Multiply.hpp"
-#include "State.hpp"
-#include "Pow.hpp"
-#include "Null.hpp"
-#include "Constant.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
