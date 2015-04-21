@@ -5,7 +5,7 @@
  *  \author cec
  */
 
-#include "ssc/optimizer/inc/OptimizationResult.hpp"
+#include "ssc/optimizer/OptimizationResult.hpp"
 
 
 using namespace ssc::matrix_and_vector_classes;

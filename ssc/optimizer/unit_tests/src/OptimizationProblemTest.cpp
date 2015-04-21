@@ -6,7 +6,7 @@
  */
 
 #include "OptimizationProblemTest.hpp"
-#include "ssc/optimizer/inc/OptimizationProblem.hpp"
+#include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/GradHes.hpp"
 #include "ssc/functors_for_optimizer/Grad.hpp"
 #include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
