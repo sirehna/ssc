@@ -1,7 +1,7 @@
 /*
  * LnTest.hpp
  *
- * \date 1 févr. 2013, 12:29:31
+ * \date 1 fï¿½vr. 2013, 12:29:31
  *  \author cec
  */
 
@@ -9,18 +9,18 @@
 #define LNTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class LnTest : public ::testing::Test
 {
     protected:
         LnTest();
-	    virtual ~LnTest();
+        virtual ~LnTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 
 };
 

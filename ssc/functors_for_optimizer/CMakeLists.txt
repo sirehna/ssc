@@ -31,9 +31,7 @@ set(SOURCES src/State.cpp
             src/SerializeReversePolish.cpp)
 
 include_directories(inc)
-include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${test_macros_SOURCE_DIR})
-include_directories(${interpolation_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 
 # Using C++ 2011
 # The -std=c++0x option causes g++ to go into 'strict ANSI' mode so it doesn't declare non-standard functions

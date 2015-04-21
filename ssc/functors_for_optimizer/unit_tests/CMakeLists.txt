@@ -28,10 +28,9 @@ FILE(GLOB SRC src/NullTest.cpp
 
 # Include directories
 include_directories(inc)
-include_directories(${test_macros_SOURCE_DIR})
-include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${yaml_parser_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
+include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 include_directories(SYSTEM ${YAMLCPP_INCLUDE_DIR})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})

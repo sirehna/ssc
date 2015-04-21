@@ -7,27 +7,28 @@
 
 #include "SplineFunctor.hpp"
 #include "PiecewiseParabolicFunctor.hpp"
-#include "NaturalSplines.hpp"
+#include "ssc/interpolation/NaturalSplines.hpp"
 #include "NodeVisitor.hpp"
 #include "State.hpp"
-#include "ParabolicCoefficients.hpp"
+#include "ssc/interpolation/ParabolicCoefficients.hpp"
 
 class SplineFunctor::Impl
 {
     public:
-        Impl(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) : f(new NaturalSplines(xmin,xmax,y_values)),
+        Impl(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
+                f(new ssc::interpolation::NaturalSplines(xmin,xmax,y_values)),
                 xmin_(xmin),
                 xmax_(xmax),
-                dy(std::vector<ParabolicCoefficients>()),
+                dy(std::vector<ssc::interpolation::ParabolicCoefficients>()),
                 state(state_)
         {
 
         }
-        std::tr1::shared_ptr<NaturalSplines> f;
+        TR1(shared_ptr)<ssc::interpolation::NaturalSplines> f;
         double xmin_;
         double xmax_;
-        std::vector<ParabolicCoefficients> dy;
-        std::tr1::shared_ptr<State> state;
+        std::vector<ssc::interpolation::ParabolicCoefficients> dy;
+        TR1(shared_ptr)<State> state;
 };
 
 SplineFunctor::SplineFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :

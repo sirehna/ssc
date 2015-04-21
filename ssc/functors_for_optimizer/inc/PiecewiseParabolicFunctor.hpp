@@ -1,7 +1,7 @@
 /*
  * PiecewiseParabolicFunctor.hpp
  *
- * \date 19 févr. 2013, 14:44:08
+ * \date 19 fï¿½vr. 2013, 14:44:08
  *  \author cec
  */
 
@@ -9,8 +9,8 @@
 #define PIECEWISEPARABOLICFUNCTOR_HPP_
 
 #include "Unary.hpp"
-#include "ParabolicCoefficients.hpp"
-class ParabolicInterpolation;
+#include "ssc/interpolation/ParabolicInterpolation.hpp"
+
 class State;
 
 /** \author cec
@@ -26,7 +26,7 @@ class State;
 class PiecewiseParabolicFunctor : public Unary
 {
     public:
-        PiecewiseParabolicFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs);
+        PiecewiseParabolicFunctor(const StatePtr& state, const double& xmin, const double& xmax, const std::vector<ssc::interpolation::ParabolicCoefficients>& coeffs);
         NodePtr diff(const StatePtr& state) const;
         void accept(NodeVisitor& v) const;
         NodePtr clone() const;
@@ -38,7 +38,7 @@ class PiecewiseParabolicFunctor : public Unary
         void update_lambda();
     private:
         PiecewiseParabolicFunctor();
-        std::tr1::shared_ptr<ParabolicInterpolation> f;
+        std::tr1::shared_ptr<ssc::interpolation::ParabolicInterpolation> f;
         double xmin_;
         double xmax_;
         std::vector<double> dy;

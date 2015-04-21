@@ -1,7 +1,7 @@
 /*
  * PiecewiseLinearFunctorTest.cpp
  *
- * \date 19 févr. 2013, 08:34:47
+ * \date 19 fï¿½vr. 2013, 08:34:47
  *  \author cec
  */
 
@@ -10,7 +10,7 @@
 #include "FunctorAlgebra.hpp"
 #include "Sum.hpp"
 
-PiecewiseLinearFunctorTest::PiecewiseLinearFunctorTest() : a(DataGenerator(11)),
+PiecewiseLinearFunctorTest::PiecewiseLinearFunctorTest() : a(ssc::random_data_generator::DataGenerator(11)),
 generate(StateGenerator())
 {
 }

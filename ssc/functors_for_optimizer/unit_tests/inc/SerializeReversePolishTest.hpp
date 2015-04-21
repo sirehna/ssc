@@ -1,7 +1,7 @@
 /*
  * SerializeReversePolishTest.hpp
  *
- * \date 28 févr. 2013, 17:02:32
+ * \date 28 fï¿½vr. 2013, 17:02:32
  *  \author cec
  */
 
@@ -9,7 +9,7 @@
 #define SERIALIZEREVERSEPOLISHTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 #include "SerializeReversePolish.hpp"
 
@@ -17,16 +17,15 @@ class SerializeReversePolishTest : public ::testing::Test
 {
     protected:
         SerializeReversePolishTest();
-	    virtual ~SerializeReversePolishTest();
+        virtual ~SerializeReversePolishTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-		StatePtr x;
-		StatePtr y;
-		std::stringstream ss;
-		SerializeReversePolish serialize;
-
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
+        StatePtr x;
+        StatePtr y;
+        std::stringstream ss;
+        SerializeReversePolish serialize;
 };
 
 #endif  /* SERIALIZEREVERSEPOLISHTEST_HPP_ */

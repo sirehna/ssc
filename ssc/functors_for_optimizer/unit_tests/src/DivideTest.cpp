@@ -1,7 +1,7 @@
 /*
  * DivideTest.cpp
  *
- * \date 1 févr. 2013, 08:50:07
+ * \date 1 fï¿½vr. 2013, 08:50:07
  *  \author cec
  */
 
@@ -10,7 +10,7 @@
 #include "Divide.hpp"
 #include "Serialize.hpp"
 
-DivideTest::DivideTest() : a(DataGenerator(649731)), generate(StateGenerator()), x(generate.state("x")), y(generate.state("y"))
+DivideTest::DivideTest() : a(ssc::random_data_generator::DataGenerator(649731)), generate(StateGenerator()), x(generate.state("x")), y(generate.state("y"))
 {
 }
 

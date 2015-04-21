@@ -1,7 +1,7 @@
 /*
  * SerializeReversePolishTest.cpp
  *
- * \date 28 févr. 2013, 17:02:40
+ * \date 28 fï¿½vr. 2013, 17:02:40
  *  \author cec
  */
 
@@ -14,7 +14,7 @@
 #include "Multiply.hpp"
 
 
-SerializeReversePolishTest::SerializeReversePolishTest() : a(DataGenerator(336699)),
+SerializeReversePolishTest::SerializeReversePolishTest() : a(ssc::random_data_generator::DataGenerator(336699)),
 generate(StateGenerator()),
 x(generate.state("x")),
 y(generate.state("y")),

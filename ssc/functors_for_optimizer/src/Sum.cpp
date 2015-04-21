@@ -103,7 +103,7 @@ std::vector<NodePtr> Sum::factorize_operands() const
     for (auto f = factor.begin(); f != factor.end(); ++f)
     {
         ret.push_back(f->first->simplify());
-        ret.back()->multiply_by(f->second);
+        ret.back()->multiply_by((double)f->second);
     }
     return ret;
 }

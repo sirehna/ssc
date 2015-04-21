@@ -1,7 +1,7 @@
 /*
  * CubicSplineFunctor.hpp
  *
- * \date 19 févr. 2013, 09:39:25
+ * \date 19 fï¿½vr. 2013, 09:39:25
  *  \author cec
  */
 
@@ -20,7 +20,6 @@
  *  \section ex2 Expected output
  *  \snippet MODULE_NAME/unit_tests/src/CubicSplineFunctorTest.cpp CubicSplineFunctorTest expected output
  */
-class NaturalSplines;
 class State;
 class SplineFunctor : public Unary
 {
@@ -39,7 +38,7 @@ class SplineFunctor : public Unary
     private:
         SplineFunctor();
         class Impl;
-        std::tr1::shared_ptr<Impl> pimpl;
+        TR1(shared_ptr)<Impl> pimpl;
 
 
 };

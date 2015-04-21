@@ -1,7 +1,7 @@
 /*
  * FunctorAlgebraTest.cpp
  *
- * \date 1 févr. 2013, 15:25:03
+ * \date 1 fï¿½vr. 2013, 15:25:03
  *  \author cec
  */
 
@@ -12,7 +12,7 @@
 #include "Pow.hpp"
 #include "Divide.hpp"
 #include "Multiply.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include "SerializeReversePolish.hpp"
 
 #include "Cos.hpp"
@@ -25,7 +25,7 @@
 #define EPS 1e-8
 
 
-FunctorAlgebraTest::FunctorAlgebraTest() : a(DataGenerator(88)), generate(StateGenerator()),
+FunctorAlgebraTest::FunctorAlgebraTest() : a(ssc::random_data_generator::DataGenerator(88)), generate(StateGenerator()),
 x(generate.state("x")),
 y(generate.state("y")),
 z(generate.state("z"))

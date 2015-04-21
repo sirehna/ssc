@@ -1,7 +1,7 @@
 /*
  * PiecewiseLinearFunctorTest.hpp
  *
- * \date 19 févr. 2013, 08:34:35
+ * \date 19 fï¿½vr. 2013, 08:34:35
  *  \author cec
  */
 
@@ -9,19 +9,18 @@
 #define PIECEWISELINEARFUNCTORTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class PiecewiseLinearFunctorTest : public ::testing::Test
 {
     protected:
         PiecewiseLinearFunctorTest();
-	    virtual ~PiecewiseLinearFunctorTest();
+        virtual ~PiecewiseLinearFunctorTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 };
 
 #endif  /* PIECEWISELINEARFUNCTORTEST_HPP_ */

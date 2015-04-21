@@ -6,7 +6,7 @@
  */
 
 #include "PiecewiseConstantFunctor.hpp"
-#include "PiecewiseConstant.hpp"
+#include "ssc/interpolation/PiecewiseConstant.hpp"
 #include "Null.hpp"
 #include "NodeVisitor.hpp"
 #include "State.hpp"
@@ -14,7 +14,7 @@
 
 PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :
 Unary(state_),
-f(new PiecewiseConstant(xmin,xmax,y_values)),
+f(new ssc::interpolation::PiecewiseConstant(xmin,xmax,y_values)),
 state(state_)
 {
     update_lambda();

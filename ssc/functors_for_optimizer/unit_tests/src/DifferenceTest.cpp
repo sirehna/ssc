@@ -1,7 +1,7 @@
 /*
  * DifferenceTest.cpp
  *
- * \date 1 févr. 2013, 09:20:24
+ * \date 1 fï¿½vr. 2013, 09:20:24
  *  \author cec
  */
 
@@ -9,7 +9,7 @@
 #include "Difference.hpp"
 #include "StateGenerator.hpp"
 
-DifferenceTest::DifferenceTest() : a(DataGenerator(121212)), generate(StateGenerator())
+DifferenceTest::DifferenceTest() : a(ssc::random_data_generator::DataGenerator(121212)), generate(StateGenerator())
 {
 }
 

@@ -12,7 +12,7 @@
 #include "FunctorAlgebra.hpp"
 #include "Serialize.hpp"
 
-MultiplyTest::MultiplyTest() : a(DataGenerator(99)),
+MultiplyTest::MultiplyTest() : a(ssc::random_data_generator::DataGenerator(99)),
                                generate(StateGenerator()),
                                x1(generate.state("x1")),
                                x2(generate.state("x2"))

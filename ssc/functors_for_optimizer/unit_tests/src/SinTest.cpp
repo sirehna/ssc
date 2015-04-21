@@ -1,7 +1,7 @@
 /*
  * SinTest.cpp
  *
- * \date 1 févr. 2013, 14:20:08
+ * \date 1 fï¿½vr. 2013, 14:20:08
  *  \author cec
  */
 
@@ -14,7 +14,7 @@
 #define X (*x)
 #define X_ (x->get_lambda()())
 
-SinTest::SinTest() : a(DataGenerator(1)), generate(StateGenerator())
+SinTest::SinTest() : a(ssc::random_data_generator::DataGenerator(1)), generate(StateGenerator())
 {
 }
 

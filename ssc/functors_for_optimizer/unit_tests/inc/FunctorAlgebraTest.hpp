@@ -1,7 +1,7 @@
 /*
  * FunctorAlgebraTest.hpp
  *
- * \date 1 févr. 2013, 15:24:54
+ * \date 1 fï¿½vr. 2013, 15:24:54
  *  \author cec
  */
 
@@ -9,21 +9,21 @@
 #define FUNCTORALGEBRATEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class FunctorAlgebraTest : public ::testing::Test
 {
     protected:
         FunctorAlgebraTest();
-	    virtual ~FunctorAlgebraTest();
+        virtual ~FunctorAlgebraTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-		StatePtr x;
-		StatePtr y;
-		StatePtr z;
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
+        StatePtr x;
+        StatePtr y;
+        StatePtr z;
 
 };
 

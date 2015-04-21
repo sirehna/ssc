@@ -1,19 +1,19 @@
 /*
  * FunctorAlgebra.hpp
  *
- * \date 1 févr. 2013, 15:29:46
+ * \date 1 fï¿½vr. 2013, 15:29:46
  *  \author cec
  */
 
 #ifndef FUNCTORALGEBRA_HPP_
 #define FUNCTORALGEBRA_HPP_
 
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
-class FunctorAlgebraException : public Exception
+class FunctorAlgebraException : public ssc::exception_handling::Exception
 {
     public:
         FunctorAlgebraException(const char* s) :
@@ -32,16 +32,16 @@ class State;
 class Pow;
 class Null;
 class Constant;
-typedef std::tr1::shared_ptr<Node> NodePtr;
-typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
-typedef std::tr1::shared_ptr<Difference> DifferencePtr;
-typedef std::tr1::shared_ptr<Sum> SumPtr;
-typedef std::tr1::shared_ptr<Divide> DividePtr;
-typedef std::tr1::shared_ptr<Multiply> Mult;
-typedef std::tr1::shared_ptr<State> StatePtr;
-typedef std::tr1::shared_ptr<Pow> PowPtr;
-typedef std::tr1::shared_ptr<Null> NullPtr;
-typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+typedef TR1(shared_ptr)<Node> NodePtr;
+typedef TR1(shared_ptr)<Parameter> ParameterPtr;
+typedef TR1(shared_ptr)<Difference> DifferencePtr;
+typedef TR1(shared_ptr)<Sum> SumPtr;
+typedef TR1(shared_ptr)<Divide> DividePtr;
+typedef TR1(shared_ptr)<Multiply> Mult;
+typedef TR1(shared_ptr)<State> StatePtr;
+typedef TR1(shared_ptr)<Pow> PowPtr;
+typedef TR1(shared_ptr)<Null> NullPtr;
+typedef TR1(shared_ptr)<Constant> ConstantPtr;
 
 
 

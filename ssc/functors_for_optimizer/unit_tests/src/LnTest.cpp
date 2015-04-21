@@ -1,7 +1,7 @@
 /*
  * LnTest.cpp
  *
- * \date 1 févr. 2013, 12:28:55
+ * \date 1 fï¿½vr. 2013, 12:28:55
  *  \author cec
  */
 
@@ -9,7 +9,7 @@
 #include <cmath>
 #include "Ln.hpp"
 
-LnTest::LnTest() : a(DataGenerator(24)), generate(StateGenerator())
+LnTest::LnTest() : a(ssc::random_data_generator::DataGenerator(24)), generate(StateGenerator())
 {
 }
 

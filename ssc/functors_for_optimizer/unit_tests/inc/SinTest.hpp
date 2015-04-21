@@ -1,7 +1,7 @@
 /*
  * SinTest.hpp
  *
- * \date 1 févr. 2013, 13:24:30
+ * \date 1 fï¿½vr. 2013, 13:24:30
  *  \author cec
  */
 
@@ -9,19 +9,18 @@
 #define SINTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class SinTest : public ::testing::Test
 {
     protected:
         SinTest();
-	    virtual ~SinTest();
+        virtual ~SinTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 };
 
 #endif  /* SINTEST_HPP_ */

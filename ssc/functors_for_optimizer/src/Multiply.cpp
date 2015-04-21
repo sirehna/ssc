@@ -148,7 +148,7 @@ std::vector<NodePtr> Multiply::group_factors_together() const
         if (nb_occurences > 1)
         {
             ret.push_back(
-                    NodePtr(new Pow(f->first->simplify(), nb_occurences)));
+                    NodePtr(new Pow(f->first->simplify(), (double)nb_occurences)));
         } else
         {
             ret.push_back(f->first->simplify());

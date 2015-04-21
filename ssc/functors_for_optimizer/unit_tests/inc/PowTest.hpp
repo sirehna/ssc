@@ -9,7 +9,7 @@
 #define POWTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class PowTest : public ::testing::Test
@@ -18,9 +18,8 @@ class PowTest : public ::testing::Test
         PowTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 };
 
 #endif  /* POWTEST_HPP_ */

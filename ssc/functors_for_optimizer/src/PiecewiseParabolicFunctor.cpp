@@ -7,13 +7,12 @@
 
 #include "PiecewiseParabolicFunctor.hpp"
 #include "PiecewiseLinearFunctor.hpp"
-#include "ParabolicInterpolation.hpp"
 #include "State.hpp"
 #include "NodeVisitor.hpp"
 
-PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ParabolicCoefficients>& coeffs) :
+PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ssc::interpolation::ParabolicCoefficients>& coeffs) :
 Unary(state_),
-f(new ParabolicInterpolation(xmin,xmax,coeffs)),
+f(new ssc::interpolation::ParabolicInterpolation(xmin,xmax,coeffs)),
 xmin_(xmin),
 xmax_(xmax),
 dy(std::vector<double>()),
@@ -21,10 +20,10 @@ state(state_)
 {
     update_lambda();
     const size_t n = coeffs.size();
-    const double delta = (xmax-xmin)/n;
+    const double delta = (xmax-xmin)/((double)n);
     for (size_t i = 0 ; i < n+1 ; ++i)
     {
-        dy.push_back(f->df(xmin+i*delta));
+        dy.push_back(f->df(xmin+((double)i)*delta));
     }
 }
 

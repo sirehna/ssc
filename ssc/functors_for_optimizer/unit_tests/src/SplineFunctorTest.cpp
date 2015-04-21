@@ -1,20 +1,20 @@
 /*
  * CubicSplineFunctorTest.cpp
  *
- * \date 19 févr. 2013, 09:38:01
+ * \date 19 fï¿½vr. 2013, 09:38:01
  *  \author cec
  */
 
 #include "SplineFunctorTest.hpp"
 #include "SplineFunctor.hpp"
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include "FunctorAlgebra.hpp"
 #include "Sum.hpp"
 
 #define X (*x)
 #define X_ (x->get_lambda()())
 
-SplineFunctorTest::SplineFunctorTest() : a(DataGenerator(7779988)),
+SplineFunctorTest::SplineFunctorTest() : a(ssc::random_data_generator::DataGenerator(7779988)),
                                          generate(StateGenerator())
 {
 }

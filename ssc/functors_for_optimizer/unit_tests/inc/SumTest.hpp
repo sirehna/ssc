@@ -9,7 +9,7 @@
 #define SUMTEST_HPP_
 
 #include "gtest/gtest.h"
-#include "DataGenerator.hpp"
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "StateGenerator.hpp"
 
 class SumTest : public ::testing::Test
@@ -19,9 +19,8 @@ class SumTest : public ::testing::Test
 	    virtual ~SumTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
-		StateGenerator generate;
-
+        ssc::random_data_generator::DataGenerator a;
+        StateGenerator generate;
 };
 
 #endif  /* SUMTEST_HPP_ */

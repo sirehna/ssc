@@ -1,7 +1,7 @@
 /*
  * Grad.hpp
  *
- * \date 20 févr. 2013, 15:20:24
+ * \date 20 fï¿½vr. 2013, 15:20:24
  *  \author cec
  */
 
@@ -19,11 +19,11 @@
  */
 
 #include <vector>
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include <functional>
 class Node;
-typedef std::tr1::shared_ptr<Node> NodePtr;
+typedef TR1(shared_ptr)<Node> NodePtr;
 
 class Grad
 {

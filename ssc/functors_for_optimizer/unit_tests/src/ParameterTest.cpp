@@ -9,7 +9,7 @@
 #include "Parameter.hpp"
 #include "StateGenerator.hpp"
 
-ParameterTest::ParameterTest() : a(DataGenerator(123))
+ParameterTest::ParameterTest() : a(ssc::random_data_generator::DataGenerator(123))
 {
 }
 

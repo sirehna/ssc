@@ -12,7 +12,7 @@
 #include "FunctorAlgebra.hpp"
 #include "Serialize.hpp"
 
-SumTest::SumTest() : a(DataGenerator(12)), generate(StateGenerator())
+SumTest::SumTest() : a(ssc::random_data_generator::DataGenerator(12)), generate(StateGenerator())
 {
 }
 
