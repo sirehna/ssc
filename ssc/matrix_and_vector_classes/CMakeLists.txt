@@ -4,12 +4,9 @@ project (matrix_and_vector_classes)
 FILE(GLOB SRC src/SparseMatrix.cpp
               src/SparseVector.cpp)
 
-include_directories(${exception_handling_INCLUDE_DIRS})
-include_directories(${test_macros_INCLUDE_DIRS})
 include_directories (inc)
+INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 
-set(${PROJECT_NAME}_INCLUDE_DIRS     ${${PROJECT_NAME}_SOURCE_DIR}/inc                                                                               CACHE PATH     "Path to ${PROJECT_NAME}'s include directory")
-add_library (${PROJECT_NAME}_static STATIC ${SRC})
-add_library (${PROJECT_NAME}_object OBJECT ${SRC})
+ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
 
 add_subdirectory(unit_tests)

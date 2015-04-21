@@ -1,6 +1,6 @@
 #include "SparseMatrixTests.hpp"
-#include "Exception.hpp"
-#include "test_macros.hpp"
+#include "ssc/exception_handling/Exception.hpp"
+#include "ssc/macros/test_macros.hpp"
 #include <algorithm> // For sort
 
 void SparseMatrixTests::SetUp()
@@ -47,7 +47,7 @@ TEST_F(SparseMatrixTests, should_throw_an_exception_when_adding_an_element_twice
     const size_t idx1 = a.random<size_t>();
     const size_t idx2 = a.random<size_t>();
     A.add_element_in_row_order(idx1,idx2, a.random<double>());
-    EXPECT_THROW(A.add_element_in_row_order(idx1,idx2, a.random<double>()),Exception);
+    EXPECT_THROW(A.add_element_in_row_order(idx1,idx2, a.random<double>()),ssc::exception_handling::Exception);
 }
 
 TEST_F(SparseMatrixTests, should_throw_an_exception_when_inserting_an_element_not_in_row_order)
@@ -55,7 +55,7 @@ TEST_F(SparseMatrixTests, should_throw_an_exception_when_inserting_an_element_no
     SparseMatrix A(2);
     const size_t idx = a.random<size_t>();
     A.add_element_in_row_order(idx+1,idx+2,a.random<double>());
-    EXPECT_THROW(A.add_element_in_row_order(idx,idx,a.random<double>()), Exception);
+    EXPECT_THROW(A.add_element_in_row_order(idx,idx,a.random<double>()), ssc::exception_handling::Exception);
 }
 
 TEST_F(SparseMatrixTests, elements_which_are_not_present_in_the_matrix_are_set_to_zero_by_default)
@@ -69,7 +69,7 @@ TEST_F(SparseMatrixTests, should_throw_an_exception_when_adding_too_many_element
     SparseMatrix A(1);
     const size_t idx = a.random<size_t>();
     A.add_element_in_row_order(idx,idx, a.random<double>());
-    EXPECT_THROW(A.add_element_in_row_order(idx+1,idx+1, a.random<double>()),Exception);
+    EXPECT_THROW(A.add_element_in_row_order(idx+1,idx+1, a.random<double>()),ssc::exception_handling::Exception);
 }
 
 TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_indexes_and_all_column_indexes)

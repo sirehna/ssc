@@ -2,14 +2,14 @@
 #define __SPARSEVECTOR__
 
 #include <vector>
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 #ifdef WIN32
 #include <ciso646>
 #endif
-class SparseVectorException : public Exception
+class SparseVectorException : public ssc::exception_handling::Exception
 {
     public:
-        SparseVectorException(const char* str) : Exception(str) {}
+        SparseVectorException(const char* str) : ssc::exception_handling::Exception(str) {}
 };
 
 class SparseVector

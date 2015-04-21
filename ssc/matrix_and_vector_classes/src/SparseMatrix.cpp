@@ -1,5 +1,5 @@
-#include "SparseMatrix.hpp"
-#include "test_macros.hpp"
+#include "ssc/matrix_and_vector_classes/inc/SparseMatrix.hpp"
+#include "ssc/macros/test_macros.hpp"
 #include <assert.h>
 #include <math.h>
 #include <list>

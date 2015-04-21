@@ -1,6 +1,6 @@
 #include "SparseVectorTests.hpp"
-#include "Exception.hpp"
-#include "test_macros.hpp"
+#include "ssc/exception_handling/Exception.hpp"
+#include "ssc/macros/test_macros.hpp"
 
 void SparseVectorTests::SetUp()
 {
@@ -20,9 +20,9 @@ TEST_F(SparseVectorTests, should_be_able_to_set_and_retrieve_an_element)
 {
     SparseVector A(3);
     const size_t idx1 = a.random<size_t>();
-    const size_t idx2 = a.random<size_t>().between(idx1, get_max_bound<size_t>());
-    const size_t idx3 = a.random<size_t>().between(idx2, get_max_bound<size_t>());
-    const size_t idx4 = a.random<size_t>().between(idx3, get_max_bound<size_t>());
+    const size_t idx2 = a.random<size_t>().between(idx1, ssc::random_data_generator::get_max_bound<size_t>());
+    const size_t idx3 = a.random<size_t>().between(idx2, ssc::random_data_generator::get_max_bound<size_t>());
+    const size_t idx4 = a.random<size_t>().between(idx3, ssc::random_data_generator::get_max_bound<size_t>());
     const double val1 = a.random<double>();
     const double val2 = a.random<double>();
     const double val3 = a.random<double>();
@@ -32,9 +32,9 @@ TEST_F(SparseVectorTests, should_be_able_to_set_and_retrieve_an_element)
     EXPECT_EQ(val1, A.get(idx1));
     EXPECT_EQ(val2, A.get(idx2));
     EXPECT_EQ(val3, A.get(idx3));
-    EXPECT_THROW(A.add_element_in_order(idx1, val1),Exception);
-    EXPECT_THROW(A.get(idx4),Exception);
-    EXPECT_THROW(A.add_element_in_order(idx2,a.random<double>()), Exception);
+    EXPECT_THROW(A.add_element_in_order(idx1, val1), ssc::exception_handling::Exception);
+    EXPECT_THROW(A.get(idx4), ssc::exception_handling::Exception);
+    EXPECT_THROW(A.add_element_in_order(idx2,a.random<double>()), ssc::exception_handling::Exception);
 }
 
 TEST_F(SparseVectorTests, should_be_able_to_retrieve_all_elements_and_all_indexes)

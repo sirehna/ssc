@@ -6,12 +6,12 @@
 #endif
 
 #include <vector>
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
-class SparseMatrixException : public Exception
+class SparseMatrixException : public ssc::exception_handling::Exception
 {
     public:
-        SparseMatrixException(const char* s) : Exception(s) {}
+        SparseMatrixException(const char* s) : ssc::exception_handling::Exception(s) {}
 };
 
 
