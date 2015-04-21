@@ -1,19 +1,19 @@
 /*
  * OptimizationProblemTest.cpp
  *
- * \date 21 févr. 2013, 10:15:03
+ * \date 21 fï¿½vr. 2013, 10:15:03
  *  \author cec
  */
 
 #include "OptimizationProblemTest.hpp"
-#include "OptimizationProblem.hpp"
-#include "GradHes.hpp"
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
-#include "extra_test_assertions.hpp"
-#include "Serialize.hpp"
-#include "Cos.hpp"
-#include "Sin.hpp"
+#include "ssc/optimizer/inc/OptimizationProblem.hpp"
+#include "ssc/functors_for_optimizer/GradHes.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
 
 #include <cmath>
 #define PI (4.*atan(1.))
@@ -28,8 +28,8 @@
 #define X3 (x3->get_lambda()())
 #define X4 (x4->get_lambda()())
 
-OptimizationProblemTest::OptimizationProblemTest() : a(DataGenerator(1)),
-                                                     generate(StateGenerator()),
+OptimizationProblemTest::OptimizationProblemTest() : a(ssc::random_data_generator::DataGenerator(1)),
+                                                     generate(ssc::functors_for_optimizer::StateGenerator()),
                                                      x1(generate.state("x1")),
                                                      x2(generate.state("x2")),
                                                      x3(generate.state("x3")),
@@ -48,6 +48,8 @@ void OptimizationProblemTest::SetUp()
 void OptimizationProblemTest::TearDown()
 {
 }
+
+using namespace ssc::functors_for_optimizer;
 
 TEST_F(OptimizationProblemTest, example)
 {

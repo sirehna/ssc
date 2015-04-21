@@ -180,8 +180,9 @@ add_libs(matrix_and_vector_classes
          SSC_DEPENDENCIES exception_handling)
 add_libs(functors_for_optimizer
          SSC_DEPENDENCIES exception_handling interpolation)
+add_libs(optimizer
+         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
 add_headers(solver "${copyright}")
-#LIST(APPEND ALL_SSC_TARGETS f2c)
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
@@ -205,6 +206,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:functors_for_optimizer_tests>
         $<TARGET_OBJECTS:geometry_tests>
         $<TARGET_OBJECTS:matrix_and_vector_classes_tests>
+        $<TARGET_OBJECTS:optimizer_tests>
         )
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
@@ -224,6 +226,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         geometry_shared
         functors_for_optimizer_shared
         matrix_and_vector_classes_shared
+        optimizer_shared
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)

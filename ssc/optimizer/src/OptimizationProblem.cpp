@@ -1,25 +1,28 @@
 /*
  * OptimizationProblem.cpp
  *
- * \date 21 févr. 2013, 10:15:54
+ * \date 21 fï¿½vr. 2013, 10:15:54
  *  \author cec
  */
 #include <map>
 #include <algorithm>    // std::find
-#include "OptimizationProblem.hpp"
-#include "Parameter.hpp"
-#include "Null.hpp"
-#include "State.hpp"
-#include "Serialize.hpp"
-#include "SerializeReversePolish.hpp"
-#include "GradHes.hpp"
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
+#include "ssc/optimizer/inc/OptimizationProblem.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
+#include "ssc/functors_for_optimizer/GradHes.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !
 #endif
+
+
+using namespace ssc::functors_for_optimizer;
 
 template <class T> std::string get_string(const T& t)
 {

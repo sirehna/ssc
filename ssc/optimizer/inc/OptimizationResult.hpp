@@ -1,15 +1,15 @@
 /*
  * OptimizationResult.hpp
  *
- * \date 22 févr. 2013, 15:54:39
+ * \date 22 fï¿½vr. 2013, 15:54:39
  *  \author cec
  */
 
 #ifndef OPTIMIZATIONRESULT_HPP_
 #define OPTIMIZATIONRESULT_HPP_
 
-#include "SparseVector.hpp"
-#include "SparseMatrix.hpp"
+#include "ssc/matrix_and_vector_classes/SparseVector.hpp"
+#include "ssc/matrix_and_vector_classes/SparseMatrix.hpp"
 #include <map>
 #include <string>
 
@@ -31,9 +31,9 @@ struct OptimizationResult
     double total_time_needed_for_optimization;
     std::map<std::string,double> state_values;
     std::vector<double> constraint_values;
-    SparseVector gradient_of_the_objective_function;
-    SparseMatrix constraint_jacobian;
-    SparseMatrix hessian_of_the_lagrangian;
+    ssc::matrix_and_vector_classes::SparseVector gradient_of_the_objective_function;
+    ssc::matrix_and_vector_classes::SparseMatrix constraint_jacobian;
+    ssc::matrix_and_vector_classes::SparseMatrix hessian_of_the_lagrangian;
     bool converged;
 
 };
