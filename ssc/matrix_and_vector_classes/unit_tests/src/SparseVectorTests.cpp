@@ -2,6 +2,8 @@
 #include "ssc/exception_handling/Exception.hpp"
 #include "ssc/macros/test_macros.hpp"
 
+using namespace ssc::matrix_and_vector_classes;
+
 void SparseVectorTests::SetUp()
 {
 }

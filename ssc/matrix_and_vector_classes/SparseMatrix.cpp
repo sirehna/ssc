@@ -4,6 +4,8 @@
 #include <math.h>
 #include <list>
 
+using namespace ssc::matrix_and_vector_classes;
+
 SparseMatrix::SparseMatrix() :
         nb_of_elements(0),
         values(NULL),
@@ -187,7 +189,7 @@ const SparseMatrix SparseMatrix::operator*(const double& a) const
     return ret;
 }
 
-const SparseMatrix operator*(const double& a, const SparseMatrix& M)
+const SparseMatrix ssc::matrix_and_vector_classes::operator*(const double& a, const SparseMatrix& M)
 {
     return (M*a);
 }
@@ -341,7 +343,7 @@ void SparseMatrix::fetch_extra_elements_if_matrices_have_different_nb_of_element
     }
 }
 
-const SparseMatrix eye(const size_t& n)
+const SparseMatrix ssc::matrix_and_vector_classes::eye(const size_t& n)
 {
     SparseMatrix ret(n);
     for (size_t k = 0 ; k < n ; ++k)
@@ -355,14 +357,14 @@ const SparseMatrix eye(const size_t& n)
     return ret;
 }
 
-const SparseMatrix sum(const std::vector<SparseMatrix>& v)
+const SparseMatrix ssc::matrix_and_vector_classes::sum(const std::vector<SparseMatrix>& v)
 {
     if (v.empty())   return SparseMatrix();
     if (v.size()==1) return v.at(0);
                      return sum(v.at(0), std::vector<SparseMatrix>(v.begin()+1, v.end()));
 }
 
-const SparseMatrix sum(const SparseMatrix& accumulator, const std::vector<SparseMatrix>& v)
+const SparseMatrix ssc::matrix_and_vector_classes::sum(const SparseMatrix& accumulator, const std::vector<SparseMatrix>& v)
 {
     if (v.empty())           return accumulator;
     if (accumulator.empty()) return sum(v.at(0), std::vector<SparseMatrix>(v.begin()+1, v.end()));
@@ -412,7 +414,7 @@ bool SparseMatrix::operator!=(const SparseMatrix& rhs) const
     return not(*this == rhs);
 }
 
-::std::ostream& operator<<(::std::ostream& os, const SparseMatrix& bar)
+::std::ostream& ssc::matrix_and_vector_classes::operator<<(::std::ostream& os, const SparseMatrix& bar)
 {
     size_t nb_of_rows = 0;
     for (size_t i = 0 ; i < bar.nb_of_elements ; ++i)
@@ -516,7 +518,7 @@ void SparseMatrix::copy_values_to(const size_t& n, double * const array) const
     for (size_t i = 0 ; i < n ; ++i) array[i] = values[i];
 }
 
-const SparseMatrix abs(SparseMatrix M)
+const SparseMatrix ssc::matrix_and_vector_classes::abs(SparseMatrix M)
 {
     for (size_t i = 0 ; i < M.nb_of_elements ; ++i) M.values[i] = fabs(M.values[i]);
     return M;

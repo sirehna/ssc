@@ -2,6 +2,8 @@
 #include "ssc/macros/test_macros.hpp"
 #include <functional>
 
+using namespace ssc::matrix_and_vector_classes;
+
 SparseVector::SparseVector() :
         nb_of_elements(0),
         values(NULL),
@@ -144,7 +146,7 @@ const SparseVector SparseVector::operator*(const double& a) const
     return ret;
 }
 
-const SparseVector operator*(const double& a, const SparseVector& M)
+const SparseVector ssc::matrix_and_vector_classes::operator*(const double& a, const SparseVector& M)
 {
     return (M*a);
 }
@@ -279,14 +281,14 @@ bool SparseVector::empty() const
     return nb_of_elements==0;
 }
 
-SparseVector sum(const SparseVector& accumulator, const std::vector<SparseVector>& v)
+SparseVector ssc::matrix_and_vector_classes::sum(const SparseVector& accumulator, const std::vector<SparseVector>& v)
 {
     if (v.empty())           return accumulator;
     if (accumulator.empty()) return sum(v.at(0), std::vector<SparseVector>(v.begin()+1, v.end()));
                              return SparseVector(accumulator, sum(v.at(0), std::vector<SparseVector>(v.begin()+1, v.end())));
 }
 
-SparseVector sum(const std::vector<SparseVector>& v)
+SparseVector ssc::matrix_and_vector_classes::sum(const std::vector<SparseVector>& v)
 {
     if (v.empty())   return SparseVector();
     if (v.size()==1) return v.at(0);
@@ -340,7 +342,7 @@ SparseVector& SparseVector::operator+=(const SparseVector& rhs)
     return *this;
 }
 
-::std::ostream& operator<<(::std::ostream& os, const SparseVector& bar)
+::std::ostream& ssc::matrix_and_vector_classes::operator<<(::std::ostream& os, const SparseVector& bar)
 {
     size_t k = 0;
     os.width(2);
