@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (optimizer)
-set(SOURCES src/OptimizationProblem.cpp
-            src/OptimizationResult.cpp)
+set(SOURCES OptimizationProblem.cpp
+            OptimizationResult.cpp)
 
 include_directories(inc)
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
