@@ -1,14 +1,14 @@
 /*
  * Cos.hpp
  *
- * \date 1 févr. 2013, 14:40:27
+ * \date 1 fï¿½vr. 2013, 14:40:27
  *  \author cec
  */
 
 #ifndef COS_HPP_
 #define COS_HPP_
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 /** \author cec
  *  \brief This class was created to

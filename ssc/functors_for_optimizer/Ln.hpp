@@ -1,14 +1,14 @@
 /*
  * Ln.hpp
  *
- * \date 1 févr. 2013, 12:32:08
+ * \date 1 fï¿½vr. 2013, 12:32:08
  *  \author cec
  */
 
 #ifndef LN_HPP_
 #define LN_HPP_
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 /** \author cec
  *  \brief This class was created to

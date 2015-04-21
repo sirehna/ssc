@@ -7,7 +7,7 @@
 
 #ifndef SERIALIZE_HPP_
 #define SERIALIZE_HPP_
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <sstream>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)

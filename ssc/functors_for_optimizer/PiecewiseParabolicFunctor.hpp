@@ -8,7 +8,7 @@
 #ifndef PIECEWISEPARABOLICFUNCTOR_HPP_
 #define PIECEWISEPARABOLICFUNCTOR_HPP_
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 #include "ssc/interpolation/ParabolicInterpolation.hpp"
 
 class State;

@@ -10,7 +10,7 @@
 
 #include "ssc/interpolation/LinearInterpolation.hpp"
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 class State;
 

@@ -1,14 +1,14 @@
 /*
  * Divide.hpp
  *
- * \date 1 févr. 2013, 08:59:33
+ * \date 1 fï¿½vr. 2013, 08:59:33
  *  \author cec
  */
 
 #ifndef DIVIDE_HPP_
 #define DIVIDE_HPP_
 
-#include "Binary.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
 
 /** \author cec
  *  \brief This class was created to

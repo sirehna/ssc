@@ -10,7 +10,7 @@
 
 #include "ssc/interpolation/PiecewiseConstant.hpp"
 
-#include "Unary.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 
 /** \author cec
  *  \brief This class was created to

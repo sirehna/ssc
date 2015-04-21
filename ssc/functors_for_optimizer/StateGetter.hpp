@@ -1,15 +1,15 @@
 /*
  * StateGetter.hpp
  *
- * \date 20 févr. 2013, 12:53:19
+ * \date 20 fï¿½vr. 2013, 12:53:19
  *  \author cec
  */
 
 #ifndef STATEGETTER_HPP_
 #define STATEGETTER_HPP_
 
-#include "NodeVisitor.hpp"
-#include "Node.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 
 
 /** \author cec

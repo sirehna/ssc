@@ -1,14 +1,14 @@
 /*
  * Difference.hpp
  *
- * \date 1 févr. 2013, 09:22:47
+ * \date 1 fï¿½vr. 2013, 09:22:47
  *  \author cec
  */
 
 #ifndef DIFFERENCE_HPP_
 #define DIFFERENCE_HPP_
 
-#include "Binary.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
 /** \author cec
  *  \brief This class was created to
  *  \details It has the following responsibilities:

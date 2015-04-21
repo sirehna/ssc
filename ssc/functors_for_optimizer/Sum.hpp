@@ -8,7 +8,7 @@
 #ifndef SUM_HPP_
 #define SUM_HPP_
 
-#include "N_ary.hpp"
+#include "ssc/functors_for_optimizer/N_ary.hpp"
 
 /** \author cec
  *  \brief This class was created to

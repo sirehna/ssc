@@ -8,7 +8,7 @@
 #ifndef NULLARY_HPP_
 #define NULLARY_HPP_
 
-#include "Node.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 
 /** \author cec
  *  \brief This class was created to

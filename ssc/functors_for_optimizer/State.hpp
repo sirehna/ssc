@@ -3,7 +3,7 @@
 
 #include <stdlib.h> // For size_t
 #include <string>
-#include "Parameter.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
 
 
 
