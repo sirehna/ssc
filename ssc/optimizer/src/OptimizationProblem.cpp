@@ -6,7 +6,7 @@
  */
 #include <map>
 #include <algorithm>    // std::find
-#include "ssc/optimizer/inc/OptimizationProblem.hpp"
+#include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
