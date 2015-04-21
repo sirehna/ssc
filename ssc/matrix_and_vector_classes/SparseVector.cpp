@@ -85,12 +85,12 @@ void SparseVector::add_element_in_order(const size_t& i, const double& val)
 {
     if (current_element>=nb_of_elements)
     {
-        THROW("SparseVector::set", SparseVectorException,
+        THROW(__PRETTY_FUNCTION__, SparseVectorException,
               "Can't set a new element in the vector because the maximum number of elements was reached. Declare a bigger vector.");
     }
     if (not(position_in_vector_is_correct(i)))
     {
-        THROW("SparseVector::set", SparseVectorException,
+        THROW(__PRETTY_FUNCTION__, SparseVectorException,
               "Elements must be added by strictly increasing indexes.");
     }
     values[current_element] = val;
@@ -117,7 +117,7 @@ double SparseVector::get(const size_t& i) const
     }
     if (not(element_was_found))
     {
-        THROW("SparseVector::get", SparseVectorException, "element not found.");
+        THROW(__PRETTY_FUNCTION__, SparseVectorException, "element not found.");
     }
     return values[k-1];
 }
@@ -185,13 +185,6 @@ SparseVector SparseVector::append(const SparseVector& rhs) const
 
 SparseVector SparseVector::operator+(const SparseVector& rhs) const
 {
-//	if (this->is_empty) return rhs;
-//	if (rhs.is_empty) return *this;
-//
-//	if (this->index_of_last_element < rhs.indexes[0])
-//	{
-//		return append(rhs);
-//	}
     const size_t nc = count_nb_of_elements_in_sum(*this, rhs);
     SparseVector C(nc);
     add(*this, rhs, C);
@@ -376,11 +369,11 @@ void SparseVector::copy_indexes_to(const size_t& n, size_t * const array) const
 {
     if (!array)
     {
-        THROW("SparseVector::copy_column_indexes_to",SparseVectorException,"Received a null pointer");
+        THROW(__PRETTY_FUNCTION__,SparseVectorException,"Received a null pointer");
     }
     if (n != nb_of_elements)
     {
-        THROW("SparseVector::copy_column_indexes_to",SparseVectorException,"n does not match the number of elements");
+        THROW(__PRETTY_FUNCTION__,SparseVectorException,"n does not match the number of elements");
     }
     for (size_t i = 0 ; i < n ; ++i) array[i] = indexes[i];
 }
@@ -389,11 +382,11 @@ void SparseVector::copy_values_to(const size_t& n, double * const array) const
 {
     if (!array)
     {
-        THROW("SparseVector::copy_column_indexes_to",SparseVectorException,"Received a null pointer");
+        THROW(__PRETTY_FUNCTION__,SparseVectorException,"Received a null pointer");
     }
     if (n != nb_of_elements)
     {
-        THROW("SparseVector::copy_column_indexes_to",SparseVectorException,"n does not match the number of elements");
+        THROW(__PRETTY_FUNCTION__,SparseVectorException,"n does not match the number of elements");
     }
     for (size_t i = 0 ; i < n ; ++i) array[i] = values[i];
 }
