@@ -1,12 +1,14 @@
 /*
  * OptimizationResult.cpp
  *
- * \date 22 févr. 2013, 15:54:39
+ * \date 22 fï¿½vr. 2013, 15:54:39
  *  \author cec
  */
 
-#include "OptimizationResult.hpp"
+#include "ssc/optimizer/inc/OptimizationResult.hpp"
 
+
+using namespace ssc::matrix_and_vector_classes;
 
 OptimizationResult::OptimizationResult() :
 nb_of_iterations(0),
