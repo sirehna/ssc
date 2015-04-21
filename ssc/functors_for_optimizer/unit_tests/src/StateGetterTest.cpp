@@ -6,11 +6,11 @@
  */
 
 #include "StateGetterTest.hpp"
-#include "StateGetter.hpp"
-#include "FunctorAlgebra.hpp"
-#include "StateGenerator.hpp"
-#include "Multiply.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/StateGetter.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 
 StateGetterTest::StateGetterTest() : a(ssc::random_data_generator::DataGenerator(1))

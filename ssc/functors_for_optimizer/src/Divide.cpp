@@ -5,13 +5,13 @@
  *  \author cec
  */
 
-#include "Divide.hpp"
-#include "State.hpp"
-#include "Multiply.hpp"
-#include "Difference.hpp"
-#include "NodeVisitor.hpp"
-#include "Serialize.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
 Divide::Divide(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {

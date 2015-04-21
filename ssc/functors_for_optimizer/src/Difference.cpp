@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "Difference.hpp"
-#include "NodeVisitor.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
 Difference::Difference(const NodePtr& n1, const NodePtr& n2) : Binary(n1,n2)
 {

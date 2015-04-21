@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "Sum.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <algorithm>
-#include "FunctorAlgebra.hpp"
-#include "Constant.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

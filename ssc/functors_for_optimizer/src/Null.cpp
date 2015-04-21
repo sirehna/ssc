@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "Null.hpp"
-#include "State.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
 Null::Null()
 {

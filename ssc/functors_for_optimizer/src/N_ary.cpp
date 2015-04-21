@@ -5,9 +5,9 @@
  *  \author cec
  */
 
-#include "N_ary.hpp"
-#include "NodeVisitor.hpp"
-#include "Constant.hpp"
+#include "ssc/functors_for_optimizer/N_ary.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
 #include <algorithm>
 
 #if defined(_MSC_VER)

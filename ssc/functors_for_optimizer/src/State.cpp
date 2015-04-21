@@ -1,8 +1,8 @@
-#include "State.hpp"
-#include "Parameter.hpp"
-#include "Null.hpp"
-#include "NodeVisitor.hpp"
-#include "Constant.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
 
 State::~State()
 {

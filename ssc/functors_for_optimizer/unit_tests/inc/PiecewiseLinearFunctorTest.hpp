@@ -10,7 +10,7 @@
 
 #include "gtest/gtest.h"
 #include "ssc/random_data_generator/DataGenerator.hpp"
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 class PiecewiseLinearFunctorTest : public ::testing::Test
 {

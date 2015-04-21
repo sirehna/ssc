@@ -6,7 +6,7 @@
  */
 
 #include "SinTest.hpp"
-#include "Sin.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
 
 #define PI 4.*(atan(1.))
 

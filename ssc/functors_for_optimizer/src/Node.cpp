@@ -6,19 +6,19 @@
  */
 
 
-#include "Node.hpp"
-#include "Constant.hpp"
-#include "Cos.hpp"
-#include "Difference.hpp"
-#include "Divide.hpp"
-#include "Ln.hpp"
-#include "Multiply.hpp"
-#include "Null.hpp"
-#include "Parameter.hpp"
-#include "Pow.hpp"
-#include "Sin.hpp"
-#include "State.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

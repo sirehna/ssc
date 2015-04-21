@@ -6,8 +6,8 @@
  */
 
 #include "ConstantTest.hpp"
-#include "Constant.hpp"
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 ConstantTest::ConstantTest() :
         a(ssc::random_data_generator::DataGenerator(7777))

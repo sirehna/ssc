@@ -5,10 +5,10 @@
  *  \author cec
  */
 
-#include "PiecewiseParabolicFunctor.hpp"
-#include "PiecewiseLinearFunctor.hpp"
-#include "State.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
 PiecewiseParabolicFunctor::PiecewiseParabolicFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<ssc::interpolation::ParabolicCoefficients>& coeffs) :
 Unary(state_),

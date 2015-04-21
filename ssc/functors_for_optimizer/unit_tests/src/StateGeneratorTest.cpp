@@ -1,10 +1,10 @@
 #include "StateGeneratorTest.hpp"
-#include "StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
-typedef std::tr1::shared_ptr<State> StateShrdPtr;
+typedef TR1(shared_ptr)<State> StateShrdPtr;
 
 StateGeneratorTest::StateGeneratorTest() : a(ssc::random_data_generator::DataGenerator(171429))
 {

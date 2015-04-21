@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "Constant.hpp"
-#include "Null.hpp"
-#include "State.hpp"
-#include "NodeVisitor.hpp"
-#include "N_ary.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/N_ary.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

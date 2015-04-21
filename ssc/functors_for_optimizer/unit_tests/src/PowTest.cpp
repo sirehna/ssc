@@ -1,8 +1,8 @@
 #include "PowTest.hpp"
-#include "Pow.hpp"
-#include "StateGenerator.hpp"
-#include "Parameter.hpp"
-#include "Serialize.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
 
 
 PowTest::PowTest() : a(ssc::random_data_generator::DataGenerator(171429)), generate(StateGenerator())

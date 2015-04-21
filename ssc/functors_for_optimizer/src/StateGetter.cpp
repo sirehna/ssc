@@ -1,20 +1,20 @@
 /*
  * StateGetter.cpp
  *
- * \date 20 févr. 2013, 12:53:19
+ * \date 20 fï¿½vr. 2013, 12:53:19
  *  \author cec
  */
 
-#include "StateGetter.hpp"
-#include "Binary.hpp"
-#include "N_ary.hpp"
-#include "State.hpp"
-#include "Null.hpp"
-#include "Unary.hpp"
-#include "Constant.hpp"
-#include "Multiply.hpp"
-#include "Sum.hpp"
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/StateGetter.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/N_ary.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 #include <set>
 #include <algorithm>
 

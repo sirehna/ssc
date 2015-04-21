@@ -6,9 +6,9 @@
  */
 
 #include "DivideTest.hpp"
-#include "StateGenerator.hpp"
-#include "Divide.hpp"
-#include "Serialize.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
 
 DivideTest::DivideTest() : a(ssc::random_data_generator::DataGenerator(649731)), generate(StateGenerator()), x(generate.state("x")), y(generate.state("y"))
 {

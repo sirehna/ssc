@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
 #include "ssc/interpolation/PiecewiseConstant.hpp"
-#include "Null.hpp"
-#include "NodeVisitor.hpp"
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 
 
 PiecewiseConstantFunctor::PiecewiseConstantFunctor(const StatePtr& state_, const double& xmin, const double& xmax, const std::vector<double>& y_values) :

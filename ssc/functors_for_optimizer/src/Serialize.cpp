@@ -1,19 +1,19 @@
 /*
  * Serialize.cpp
  *
- * \date 1 févr. 2013, 10:09:29
+ * \date 1 fï¿½vr. 2013, 10:09:29
  *  \author cec
  */
 
-#include "Serialize.hpp"
-#include "Binary.hpp"
-#include "N_ary.hpp"
-#include "State.hpp"
-#include "Null.hpp"
-#include "Unary.hpp"
-#include "Constant.hpp"
-#include "Multiply.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/N_ary.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 #include <cmath>
 

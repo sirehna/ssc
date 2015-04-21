@@ -1,18 +1,18 @@
 /*
  * GradHes.cpp
  *
- * \date 20 févr. 2013, 12:21:18
+ * \date 20 fï¿½vr. 2013, 12:21:18
  *  \author cec
  */
 
-#include "GradHes.hpp"
-#include "StateGetter.hpp"
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
-#include "State.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Multiply.hpp"
-#include "Sum.hpp"
+#include "ssc/functors_for_optimizer/GradHes.hpp"
+#include "ssc/functors_for_optimizer/StateGetter.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

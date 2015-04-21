@@ -1,11 +1,11 @@
 /*
  * Hes.cpp
  *
- * \date 20 févr. 2013, 15:23:43
+ * \date 20 fï¿½vr. 2013, 15:23:43
  *  \author cec
  */
 
-#include "FunctionMatrix.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
 
 FunctionMatrix::FunctionMatrix() : row_index(std::vector<size_t>()),
              col_index(std::vector<size_t>()),

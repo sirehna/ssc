@@ -7,7 +7,7 @@
 
 #include "LnTest.hpp"
 #include <cmath>
-#include "Ln.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
 
 LnTest::LnTest() : a(ssc::random_data_generator::DataGenerator(24)), generate(StateGenerator())
 {

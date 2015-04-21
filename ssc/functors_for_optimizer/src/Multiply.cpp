@@ -5,16 +5,16 @@
  *  \author cec
  */
 
-#include "Multiply.hpp"
-#include "Sum.hpp"
-#include "NodeVisitor.hpp"
-#include "Null.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
 #include <algorithm>
-#include "FunctorAlgebra.hpp"
-#include "Pow.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
 
-#include "SerializeReversePolish.hpp"
-#include "Serialize.hpp"
+#include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

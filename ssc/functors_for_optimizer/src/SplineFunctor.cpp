@@ -5,11 +5,11 @@
  *  \author cec
  */
 
-#include "SplineFunctor.hpp"
-#include "PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
 #include "ssc/interpolation/NaturalSplines.hpp"
-#include "NodeVisitor.hpp"
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/interpolation/ParabolicCoefficients.hpp"
 
 class SplineFunctor::Impl

@@ -10,8 +10,8 @@
 
 #include "gtest/gtest.h"
 #include "ssc/random_data_generator/DataGenerator.hpp"
-#include "StateGenerator.hpp"
-#include "SerializeReversePolish.hpp"
+#include "ssc/functors_for_optimizer/StateGenerator.hpp"
+#include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
 
 class SerializeReversePolishTest : public ::testing::Test
 {

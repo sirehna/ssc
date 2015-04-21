@@ -5,10 +5,10 @@
  *  \author cec
  */
 
-#include "Parameter.hpp"
-#include "Null.hpp"
-#include "State.hpp"
-#include "NodeVisitor.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

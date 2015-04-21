@@ -6,7 +6,7 @@
  */
 
 #include "CosTest.hpp"
-#include "Cos.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
 
 
 #define X (*x)

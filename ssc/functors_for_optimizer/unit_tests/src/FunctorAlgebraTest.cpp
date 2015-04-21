@@ -6,18 +6,18 @@
  */
 
 #include "FunctorAlgebraTest.hpp"
-#include "FunctorAlgebra.hpp"
-#include "Serialize.hpp"
-#include "Sum.hpp"
-#include "Pow.hpp"
-#include "Divide.hpp"
-#include "Multiply.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Serialize.hpp"
+#include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
-#include "SerializeReversePolish.hpp"
+#include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
 
-#include "Cos.hpp"
-#include "Sin.hpp"
-#include "Constant.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/Constant.hpp"
 #include <cmath>
 #include <sstream>
 
