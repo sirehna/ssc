@@ -23,6 +23,7 @@
 
 
 using namespace ssc::functors_for_optimizer;
+using namespace ssc::optimizer;
 
 template <class T> std::string get_string(const T& t)
 {
@@ -473,7 +474,7 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     pimpl->states.get_bounds(n, xl, xu);
 }
 
-::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb)
+::std::ostream& ssc::optimizer::operator<<(::std::ostream& os, const ssc::optimizer::OptimizationProblem& pb)
 {
     SerializeReversePolish s(os);
     if (pb.is_a_minimization_problem())

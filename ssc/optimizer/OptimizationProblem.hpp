@@ -29,58 +29,63 @@
 
 #include "ssc/exception_handling/Exception.hpp"
 
-class OptimizationProblemException : public ssc::exception_handling::Exception
+namespace ssc
 {
-    public:
-        OptimizationProblemException(const char* s) :
-                ssc::exception_handling::Exception(s)
+    namespace optimizer
+    {
+        class OptimizationProblemException : public ssc::exception_handling::Exception
         {
-        }
-};
+            public:
+                OptimizationProblemException(const char* s) :
+                        ssc::exception_handling::Exception(s)
+                {
+                }
+        };
 
-class OptimizationProblem
-{
-    public:
-        OptimizationProblem();
-        virtual ~OptimizationProblem();
-        OptimizationProblem& minimize(const ssc::functors_for_optimizer::NodePtr& objective_function);
-        OptimizationProblem& maximize(const ssc::functors_for_optimizer::NodePtr& objective_function);
-        OptimizationProblem& subject_to(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::NodePtr& constraint);
-        OptimizationProblem& subject_to(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::NodePtr& constraint, const ssc::functors_for_optimizer::Parameter& max_bound);
-        OptimizationProblem& subject_to(const ssc::functors_for_optimizer::NodePtr& constraint, const ssc::functors_for_optimizer::Parameter& max_bound);
-        OptimizationProblem& bound_state(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::StatePtr& state, const ssc::functors_for_optimizer::Parameter& max_bound);
-        OptimizationProblem& bound_state(const ssc::functors_for_optimizer::StatePtr& state, const ssc::functors_for_optimizer::Parameter& max_bound);
-        OptimizationProblem& bound_state(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::StatePtr& state);
-        OptimizationProblem& binary(const ssc::functors_for_optimizer::StatePtr& state);
-        OptimizationProblem& integer(const ssc::functors_for_optimizer::StatePtr& state);
+        class OptimizationProblem
+        {
+            public:
+                OptimizationProblem();
+                virtual ~OptimizationProblem();
+                OptimizationProblem& minimize(const ssc::functors_for_optimizer::NodePtr& objective_function);
+                OptimizationProblem& maximize(const ssc::functors_for_optimizer::NodePtr& objective_function);
+                OptimizationProblem& subject_to(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::NodePtr& constraint);
+                OptimizationProblem& subject_to(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::NodePtr& constraint, const ssc::functors_for_optimizer::Parameter& max_bound);
+                OptimizationProblem& subject_to(const ssc::functors_for_optimizer::NodePtr& constraint, const ssc::functors_for_optimizer::Parameter& max_bound);
+                OptimizationProblem& bound_state(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::StatePtr& state, const ssc::functors_for_optimizer::Parameter& max_bound);
+                OptimizationProblem& bound_state(const ssc::functors_for_optimizer::StatePtr& state, const ssc::functors_for_optimizer::Parameter& max_bound);
+                OptimizationProblem& bound_state(const ssc::functors_for_optimizer::Parameter& min_bound, const ssc::functors_for_optimizer::StatePtr& state);
+                OptimizationProblem& binary(const ssc::functors_for_optimizer::StatePtr& state);
+                OptimizationProblem& integer(const ssc::functors_for_optimizer::StatePtr& state);
 
-        bool has_binary_variables() const;
-        bool has_integer_variables() const;
-        bool has_continuous_variables() const;
+                bool has_binary_variables() const;
+                bool has_integer_variables() const;
+                bool has_continuous_variables() const;
 
-        ssc::functors_for_optimizer::StateList get_states() const;
-        std::function<double()> get_objective_function() const;
-        std::vector<std::function<double()> > get_constraints() const;
-        ssc::functors_for_optimizer::Grad get_grad_objective_function() const;
-        ssc::functors_for_optimizer::FunctionMatrix get_constraint_jacobian() const;
-        ssc::functors_for_optimizer::FunctionMatrix get_hessian() const;
-        ssc::functors_for_optimizer::Parameter get_sigma_f() const;
-        std::vector<ssc::functors_for_optimizer::Parameter> get_lambda() const;
-        void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
-        void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
-        friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
-        void reset_state_bounds();
-        void clear_constraints();
-        bool is_a_minimization_problem() const;
-        std::vector<size_t> get_index_of_binary_variables() const;
-        std::vector<size_t> get_index_of_integer_variables() const;
+                ssc::functors_for_optimizer::StateList get_states() const;
+                std::function<double()> get_objective_function() const;
+                std::vector<std::function<double()> > get_constraints() const;
+                ssc::functors_for_optimizer::Grad get_grad_objective_function() const;
+                ssc::functors_for_optimizer::FunctionMatrix get_constraint_jacobian() const;
+                ssc::functors_for_optimizer::FunctionMatrix get_hessian() const;
+                ssc::functors_for_optimizer::Parameter get_sigma_f() const;
+                std::vector<ssc::functors_for_optimizer::Parameter> get_lambda() const;
+                void get_constraint_bounds(const size_t& n, double* const gl, double* const gu) const;
+                void get_state_bounds(const size_t& n, double* const xl, double* const xu) const;
+                friend ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
+                void reset_state_bounds();
+                void clear_constraints();
+                bool is_a_minimization_problem() const;
+                std::vector<size_t> get_index_of_binary_variables() const;
+                std::vector<size_t> get_index_of_integer_variables() const;
 
-    private:
-        void check_state_for_bound_setting(const ssc::functors_for_optimizer::StatePtr& state) const;
-        class OptimizationProblem_pimpl;
-        std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
-};
+            private:
+                void check_state_for_bound_setting(const ssc::functors_for_optimizer::StatePtr& state) const;
+                class OptimizationProblem_pimpl;
+                std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
+        };
 
-::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
-
+        ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);
+    }
+}
 #endif /* OPTIMIZATIONPROBLEM_HPP_ */

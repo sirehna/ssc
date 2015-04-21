@@ -50,6 +50,7 @@ void OptimizationProblemTest::TearDown()
 }
 
 using namespace ssc::functors_for_optimizer;
+using namespace ssc::optimizer;
 
 TEST_F(OptimizationProblemTest, example)
 {

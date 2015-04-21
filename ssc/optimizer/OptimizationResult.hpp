@@ -22,20 +22,24 @@
  *  \section ex2 Expected output
  *  \snippet optimizer/unit_tests/src/OptimizationResultTest.cpp OptimizationResultTest expected output
  */
-
-struct OptimizationResult
+namespace ssc
 {
-    OptimizationResult();
-    size_t nb_of_iterations;
-    double value_of_the_objective_function;
-    double total_time_needed_for_optimization;
-    std::map<std::string,double> state_values;
-    std::vector<double> constraint_values;
-    ssc::matrix_and_vector_classes::SparseVector gradient_of_the_objective_function;
-    ssc::matrix_and_vector_classes::SparseMatrix constraint_jacobian;
-    ssc::matrix_and_vector_classes::SparseMatrix hessian_of_the_lagrangian;
-    bool converged;
-
-};
+    namespace optimizer
+    {
+        struct OptimizationResult
+        {
+            OptimizationResult();
+            size_t nb_of_iterations;
+            double value_of_the_objective_function;
+            double total_time_needed_for_optimization;
+            std::map<std::string,double> state_values;
+            std::vector<double> constraint_values;
+            ssc::matrix_and_vector_classes::SparseVector gradient_of_the_objective_function;
+            ssc::matrix_and_vector_classes::SparseMatrix constraint_jacobian;
+            ssc::matrix_and_vector_classes::SparseMatrix hessian_of_the_lagrangian;
+            bool converged;
+        };
+    }
+}
 
 #endif /* OPTIMIZATIONRESULT_HPP_ */
