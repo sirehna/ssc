@@ -758,7 +758,7 @@ WARN_LOGFILE           = doxygen_errors.txt
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = "@CMAKE_CURRENT_SOURCE_DIR@/DoxygenMainPage.txt" \
+INPUT                  = \
                          "@CMAKE_CURRENT_SOURCE_DIR@/csv_file_reader" \
                          "@CMAKE_CURRENT_SOURCE_DIR@/data_source" \
                          "@CMAKE_CURRENT_SOURCE_DIR@/decode_unit" \
