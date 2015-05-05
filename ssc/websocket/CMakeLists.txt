@@ -5,6 +5,7 @@ set(SRC src/ConnectionMetadata.cpp
         src/WebSocketClient.cpp
         src/WebSocketMessage.cpp
         src/WebSocketMessageImpl.cpp
+        src/WebSocketServer.cpp
         )
 
 # Using C++ 2011
