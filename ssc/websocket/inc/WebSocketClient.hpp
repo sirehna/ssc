@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include <ssc/macros.hpp>
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 namespace ssc
