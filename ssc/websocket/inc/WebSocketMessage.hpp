@@ -9,7 +9,7 @@
 #ifndef WEBSOCKETMESSAGE_HPP_
 #define WEBSOCKETMESSAGE_HPP_
 
-#include <ssc/macros.hpp>
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 #include "WebSocketClient.hpp"

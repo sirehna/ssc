@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-#include <ssc/macros.hpp>
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 #define ADDRESS "127.0.0.1"

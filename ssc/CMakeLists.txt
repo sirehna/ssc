@@ -116,7 +116,7 @@ MESSAGE(STATUS "BOOST_ROOT : ${BOOST_ROOT}")
 SET(Boost_USE_STATIC_LIBS        ON)
 SET(Boost_USE_MULTITHREADED     OFF)
 #SET(Boost_USE_STATIC_RUNTIME   OFF)
-FIND_PACKAGE(Boost 1.53 REQUIRED)
+FIND_PACKAGE(Boost 1.53 COMPONENTS system REQUIRED)
 IF(Boost_FOUND)
     MESSAGE(STATUS "Boost_INCLUDE_DIRS  : ${Boost_INCLUDE_DIRS}")
     MESSAGE(STATUS "Boost_LIBRARIES     : ${Boost_LIBRARIES}")
@@ -184,6 +184,10 @@ add_libs(optimizer
          SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
 add_headers(solver "${copyright}")
 
+SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
+add_libs(websocket
+         SSC_DEPENDENCIES exception_handling)
+
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
@@ -207,6 +211,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:geometry_tests>
         $<TARGET_OBJECTS:matrix_and_vector_classes_tests>
         $<TARGET_OBJECTS:optimizer_tests>
+        $<TARGET_OBJECTS:websocket_tests>
         )
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
@@ -227,6 +232,8 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         functors_for_optimizer_shared
         matrix_and_vector_classes_shared
         optimizer_shared
+        websocket_shared
+        ${Boost_SYSTEM_LIBRARY}
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)

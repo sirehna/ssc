@@ -2,7 +2,7 @@
 #define WEBSOCKETOBSERVERTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class WebSocketObserverTest : public ::testing::Test
 {

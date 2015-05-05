@@ -9,7 +9,7 @@
 #ifndef WEBSOCKETOBSERVEREXCEPTION_HPP_
 #define WEBSOCKETOBSERVEREXCEPTION_HPP_
 
-#include <ssc/exception_handling.hpp>
+#include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc
 {

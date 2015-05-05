@@ -13,7 +13,7 @@ FILE(GLOB SRC src/WebSocketServer.cpp
 # Include directories
 include_directories(inc)
 include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${ssc_INCLUDE_DIRS})
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME} OBJECT ${SRC})
