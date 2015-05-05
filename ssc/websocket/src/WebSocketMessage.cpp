@@ -5,7 +5,7 @@
  *      Author: cady
  */
 
-#include "WebSocketMessage.hpp"
+#include "ssc/websocket/WebSocketMessage.hpp"
 #include "WebSocketMessageImpl.hpp"
 
 using namespace ssc::websocket;

@@ -1,8 +1,8 @@
-#include "string2vector.hpp"
+#include "ssc/websocket/string2vector.hpp"
 #include "WebSocketObserverTest.hpp"
-#include "WebSocketException.hpp"
-#include "WebSocketClient.hpp"
-#include "WebSocketServer.hpp"
+#include "ssc/websocket/WebSocketException.hpp"
+#include "ssc/websocket/WebSocketClient.hpp"
+#include "ssc/websocket/WebSocketServer.hpp"
 
 #include <iostream>
 

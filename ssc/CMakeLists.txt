@@ -186,7 +186,8 @@ add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 add_libs(websocket
-         SSC_DEPENDENCIES exception_handling)
+         SSC_DEPENDENCIES exception_handling
+         EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY})
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
@@ -233,7 +234,6 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         matrix_and_vector_classes_shared
         optimizer_shared
         websocket_shared
-        ${Boost_SYSTEM_LIBRARY}
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
