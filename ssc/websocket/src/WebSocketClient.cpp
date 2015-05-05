@@ -11,8 +11,8 @@
 #include <websocketpp/client.hpp>
 
 #include "ConnectionMetadata.hpp"
-#include "WebSocketClient.hpp"
-#include "WebSocketException.hpp"
+#include "ssc/websocket/WebSocketClient.hpp"
+#include "ssc/websocket/WebSocketException.hpp"
 
 using namespace ssc::websocket;
 

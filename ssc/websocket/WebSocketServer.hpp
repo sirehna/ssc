@@ -11,8 +11,8 @@
 
 #include <functional>
 
-#include "WebSocketClient.hpp"
-#include "WebSocketMessage.hpp"
+#include "ssc/websocket/WebSocketClient.hpp"
+#include "ssc/websocket/WebSocketMessage.hpp"
 
 namespace ssc
 {

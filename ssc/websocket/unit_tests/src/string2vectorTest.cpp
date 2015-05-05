@@ -7,7 +7,7 @@
 
 
 #include "string2vectorTest.hpp"
-#include "string2vector.hpp"
+#include "ssc/websocket/string2vector.hpp"
 
 string2vectorTest::string2vectorTest() : a(ssc::random_data_generator::DataGenerator(8542222))
 {
