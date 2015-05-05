@@ -107,8 +107,8 @@ TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_closest_waypoint_on_meridi
     ASSERT_GT(distance<ConstantAzimuthLeg>(P,M),EPS);
     ASSERT_NEAR(lon, P.lon, EPS);
 
-    ASSERT_LT(std::min(A.lat,B.lat), P.lat);
-    ASSERT_LT(P.lat, std::max(A.lat,B.lat));
+    ASSERT_LT(std::min(A.lat,B.lat), P.lat+1E-10);
+    ASSERT_LT(P.lat, std::max(A.lat,B.lat)+1E-10);
 }
 
 TEST_F(ConstantAzimuthLegTest, should_be_able_to_find_closest_waypoint_on_any_parallel)
