@@ -1,8 +1,7 @@
 # ------8<---[LINES TO MODIFY WHEN CHANGING MODULE]----->8-----
 set(MODULE_UNDER_TEST websocket)
 project(${MODULE_UNDER_TEST}_tests)
-FILE(GLOB SRC src/WebSocketServer.cpp
-              src/WebSocketObserverTest.cpp
+FILE(GLOB SRC src/WebSocketObserverTest.cpp
               src/BoostAsioTest.cpp
               src/WebSocketPPTest1_endpoint.cpp
               src/WebSocketPPTest2_server.cpp
