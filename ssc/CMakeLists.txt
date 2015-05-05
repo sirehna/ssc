@@ -185,9 +185,17 @@ add_libs(optimizer
 add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
-add_libs(websocket
-         SSC_DEPENDENCIES exception_handling
-         EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY})
+
+IF(WIN32)
+    add_libs(websocket
+            SSC_DEPENDENCIES exception_handling
+            EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY} wsock32 ws2_32)
+ELSE()
+    add_libs(websocket
+             SSC_DEPENDENCIES exception_handling
+             EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY})
+ENDIF()
+
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
