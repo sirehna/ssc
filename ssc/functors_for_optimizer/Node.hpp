@@ -6,6 +6,7 @@
 #include TR1INC(memory)
 #include <map>
 #include <vector>
+#include <string>
 
 namespace ssc
 {
@@ -31,7 +32,6 @@ namespace ssc
         class Pow;
         class Divide;
         class Unary;
-        #include <string>
         class Node
         {
             public:
