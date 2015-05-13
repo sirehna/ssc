@@ -1,10 +1,11 @@
 debug/
+release/
 eigen/
 f2c/
 gcovr/
 geographiclib/
 gmock/
-release/
+websocketpp/
 yaml-cpp/
 *.swp
 buildDebug32/
