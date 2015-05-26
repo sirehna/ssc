@@ -19,6 +19,27 @@ ENDIF()
 ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_STL_)
 ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_THREAD_)
 ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_SYSTEM_ERROR_)
+IF(WIN32)
+    # By default WebSocket++ performs block masking/unmasking in a manner that
+    # makes assumptions about the nature of the machine and STL library used.
+    # In particular the assumption is either a 32 or 64 bit word size and an
+    # STL with std::string::data returning a contiguous char array.
+    #
+    # This method improves masking performance by 3-8x depending on the ratio
+    # of small to large messages and the availability of a 64 bit processor.
+    #
+    # To disable this optimization (for use with alternative STL
+    # implementations or processors) define WEBSOCKETPP_STRICT_MASKING when
+    # compiling the library. This will force the library to perform masking in
+    # single byte chunks.
+    #
+    # https://github.com/zaphoyd/websocketpp/blob/master/websocketpp/processors/hybi13.hpp
+    # https://github.com/zaphoyd/websocketpp/issues/423
+    #
+    # This option is at least required for MinGW 64 bits
+    # It may be uncessary for MSVC.
+    ADD_DEFINITIONS(-DWEBSOCKETPP_STRICT_MASKING)
+ENDIF()
 INCLUDE_DIRECTORIES(inc)
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM ${websocketpp_INCLUDE_DIR})
