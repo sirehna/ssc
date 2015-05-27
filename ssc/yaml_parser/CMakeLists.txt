@@ -1,7 +1,8 @@
 cmake_minimum_required (VERSION 2.8.8)
 project(yaml_parser)
 
-set(SRC YamlParser.cpp)
+set(SRC YamlParser.cpp
+        parse_unit_value.cpp)
 
 include_directories(${SSC_INCLUDE_DIRS})
 include_directories(SYSTEM ${YAML_CPP_INCLUDE_DIRS})
