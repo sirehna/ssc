@@ -1,11 +1,11 @@
 /*
  * IpoptParameters.cpp
  *
- * \date 26 févr. 2013, 10:31:33
+ * \date 26 fï¿½vr. 2013, 10:31:33
  *  \author cec
  */
 
-#include "IpoptParameters.hpp"
+#include "ssc/ipopt_interface/IpoptParameters.hpp"
 
 
 PositiveDouble::PositiveDouble(const double& val) : value(val)

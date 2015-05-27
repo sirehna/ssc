@@ -1,7 +1,7 @@
 /*
  * IpoptSolver.hpp
  *
- * \date 22 févr. 2013, 15:28:59
+ * \date 22 fï¿½vr. 2013, 15:28:59
  *  \author cec
  */
 
@@ -11,7 +11,7 @@
 #include "tr1_macros.hpp"
 #include TR1INC(memory)
 #include <vector>
-#include "IpoptParameters.hpp"
+#include "ssc/ipopt_interface/IpoptParameters.hpp"
 
 struct OptimizationResult;
 class OptimizationProblem;

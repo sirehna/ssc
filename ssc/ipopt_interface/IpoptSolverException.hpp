@@ -8,9 +8,9 @@
 #ifndef IPOPTSOLVEREXCEPTION_HPP_
 #define IPOPTSOLVEREXCEPTION_HPP_
 
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
-class IpoptSolverException : public Exception
+class IpoptSolverException : public ssc::exception_handling::Exception
 {
     public:
         IpoptSolverException(const char* s) :

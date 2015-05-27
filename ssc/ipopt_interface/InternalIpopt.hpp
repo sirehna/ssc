@@ -1,7 +1,7 @@
 /*
  * InternalIpopt.hpp
  *
- * \date 25 févr. 2013, 10:03:00
+ * \date 25 fevr. 2013, 10:03:00
  *  \author cec
  */
 
@@ -28,11 +28,11 @@
     explicitly.*/
 #include <vector>
 #include "IpTNLP.hpp"
-#include "OptimizationProblem.hpp"
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
-#include "Parameter.hpp"
-#include "OptimizationResult.hpp"
+#include "ssc/optimizer/OptimizationProblem.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/optimizer/OptimizationResult.hpp"
 
 using namespace Ipopt;
 
