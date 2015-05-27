@@ -1,7 +1,7 @@
 /*
  * IpoptParameters.hpp
  *
- * \date 26 févr. 2013, 10:31:33
+ * \date 26 fï¿½vr. 2013, 10:31:33
  *  \author cec
  */
 
@@ -18,9 +18,9 @@
  *  \snippet MODULE_NAME/unit_tests/src/IpoptParametersTest.cpp IpoptParametersTest expected output
  */
 
-#include "Exception.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 
-class PositiveDoubleException : public Exception
+class PositiveDoubleException : public ssc::exception_handling::Exception
 {
     public:
         PositiveDoubleException(const char* s) :

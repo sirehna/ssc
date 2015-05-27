@@ -1,18 +1,18 @@
 /*
  * IpoptSolver.cpp
  *
- * \date 22 févr. 2013, 15:28:59
+ * \date 22 fï¿½vr. 2013, 15:28:59
  *  \author cec
  */
 
-#include "Grad.hpp"
-#include "FunctionMatrix.hpp"
-#include "IpoptSolver.hpp"
-#include "OptimizationResult.hpp"
-#include "OptimizationProblem.hpp"
-#include "Parameter.hpp"
-#include "State.hpp"
-#include "InternalIpopt.hpp"
+#include "ssc/functors_for_optimizer/Grad.hpp"
+#include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+#include "ssc/ipopt_interface/IpoptSolver.hpp"
+#include "ssc/optimizer/OptimizationResult.hpp"
+#include "ssc/optimizer/OptimizationProblem.hpp"
+#include "ssc/functors_for_optimizer/Parameter.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/ipopt_interface/InternalIpopt.hpp"
 #include "IpIpoptApplication.hpp"
 #include "IpoptSolverException.hpp"
 
