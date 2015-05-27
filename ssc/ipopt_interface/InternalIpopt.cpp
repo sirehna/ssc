@@ -12,7 +12,9 @@
 #include <sstream>
 #include <iomanip> //std::set_precision
 
-InternalIpopt::InternalIpopt(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) :
+using namespace ssc::ipopt_interface;
+
+InternalIpopt::InternalIpopt(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
 problem_(problem),
 objective_function(problem_->get_objective_function()),
 constraints(problem_->get_constraints()),
@@ -21,9 +23,9 @@ constraint_jacobian(problem_->get_constraint_jacobian()),
 hessian(problem_->get_hessian()),
 sigma_f(problem_->get_sigma_f()),
 lambda(problem_->get_lambda()),
-starting_point(std::vector<double>()),
+starting_point(),
 states(problem_->get_states()),
-results(OptimizationResult()),
+results(),
 trace_function_calls(parameters.trace_function_calls),
 show_evaluated_points(parameters.show_evaluated_points)
 {
@@ -369,7 +371,7 @@ void InternalIpopt::finalize_solution(SolverReturn status,
     (void) n;
 
     const size_t njac = constraint_jacobian.row_index.size();
-    results.constraint_jacobian = SparseMatrix(njac);
+    results.constraint_jacobian = ssc::matrix_and_vector_classes::SparseMatrix(njac);
 
     for (size_t i = 0 ; i < njac ; ++i)
     {
@@ -405,7 +407,7 @@ void InternalIpopt::finalize_solution(SolverReturn status,
 }
 
 
-OptimizationResult InternalIpopt::get_results() const
+ssc::optimizer::OptimizationResult InternalIpopt::get_results() const
 {
     if (trace_function_calls) std::cout << "entering InternalIpopt::get_results" << std::endl;
     if (trace_function_calls) std::cout << "exiting InternalIpopt::get_results" << std::endl;

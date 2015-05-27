@@ -7,6 +7,7 @@
 
 #include "ssc/ipopt_interface/IpoptParameters.hpp"
 
+using namespace ssc::ipopt_interface;
 
 PositiveDouble::PositiveDouble(const double& val) : value(val)
 {
@@ -69,22 +70,22 @@ PositiveDouble& PositiveDouble::operator=(const PositiveDouble& rhs)
     return *this;
 }
 
-double operator+(const double& lhs, const PositiveDouble& rhs)
+double ssc::ipopt_interface::operator+(const double& lhs, const PositiveDouble& rhs)
 {
     return rhs+lhs;
 }
 
-double operator-(const double& lhs, const PositiveDouble& rhs)
+double ssc::ipopt_interface::operator-(const double& lhs, const PositiveDouble& rhs)
 {
     return -(rhs-lhs);
 }
 
-double operator*(const double& lhs, const PositiveDouble& rhs)
+double ssc::ipopt_interface::operator*(const double& lhs, const PositiveDouble& rhs)
 {
     return rhs*lhs;
 }
 
-double operator/(const double& lhs, const PositiveDouble& rhs)
+double ssc::ipopt_interface::operator/(const double& lhs, const PositiveDouble& rhs)
 {
     return rhs/lhs;
 }
