@@ -21,11 +21,13 @@
 #define not !
 #endif
 
+using namespace ssc::ipopt_interface;
+
 class IpoptSolver::IpoptSolverPimpl
 {
     public:
         ~IpoptSolverPimpl(){}
-        IpoptSolverPimpl(const std::tr1::shared_ptr<OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
+        IpoptSolverPimpl(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
                                                                app(IpoptApplicationFactory())
         {
             if (problem->has_binary_variables())
@@ -77,11 +79,11 @@ class IpoptSolver::IpoptSolverPimpl
             }
         }
 
-        OptimizationResult solve(const std::vector<double>& starting_point)
+        ssc::optimizer::OptimizationResult solve(const std::vector<double>& starting_point)
         {
             (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->set_starting_point(starting_point);
             const ApplicationReturnStatus status = app->OptimizeTNLP(nlp);
-            OptimizationResult ret = (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->get_results();
+            ssc::optimizer::OptimizationResult ret = (dynamic_cast<InternalIpopt*>(GetRawPtr(nlp)))->get_results();
             ret.converged = (status == Solve_Succeeded) || (status == Solved_To_Acceptable_Level) || (status == Feasible_Point_Found);
             return ret;
         }
@@ -94,7 +96,7 @@ class IpoptSolver::IpoptSolverPimpl
 
 
 
-IpoptSolver::IpoptSolver(const std::tr1::shared_ptr<OptimizationProblem>& problem, const IpoptParameters& parameters) :
+IpoptSolver::IpoptSolver(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
         pimpl(new IpoptSolverPimpl(problem, parameters))
 {
 }
@@ -105,7 +107,7 @@ IpoptSolver::IpoptSolver() : pimpl(std::tr1::shared_ptr<IpoptSolverPimpl>())
 }
 
 
-OptimizationResult IpoptSolver::solve(const std::vector<double>& starting_point)
+ssc::optimizer::OptimizationResult IpoptSolver::solve(const std::vector<double>& starting_point)
 {
     return pimpl->solve(starting_point);
 }

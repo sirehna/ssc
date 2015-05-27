@@ -6,13 +6,9 @@ FILE(GLOB SRC src/IpoptSolverTest.cpp)
 
 # Include directories
 include_directories(inc)
-include_directories(${test_macros_SOURCE_DIR})
+include_directories(${SSC_INCLUDE_DIRS})
 include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
-include_directories(${random_data_generator_INCLUDE_DIRS})
-include_directories(${exception_handling_INCLUDE_DIRS})
 include_directories(SYSTEM ${GTEST_INCLUDE_DIRS})
-include_directories(${functors_for_optimizer_INCLUDE_DIRS})
-include_directories(${matrix_and_vector_classes_INCLUDE_DIRS})
 
 add_library (${PROJECT_NAME} OBJECT ${SRC})
 

@@ -143,6 +143,9 @@ ADD_SUBDIRECTORY(geographiclib EXCLUDE_FROM_ALL)
 SET(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include
     CACHE PATH "Path to libGeographic include directory")
 
+FIND_PACKAGE(IPOPT REQUIRED)
+
+
 #############################################################################
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
@@ -182,6 +185,9 @@ add_libs(functors_for_optimizer
          SSC_DEPENDENCIES exception_handling interpolation)
 add_libs(optimizer
          SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
+add_libs(ipopt_interface
+         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes
+         EXTERNAL_DEPENDENCIES ${IPOPT})
 add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
@@ -221,6 +227,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:matrix_and_vector_classes_tests>
         $<TARGET_OBJECTS:optimizer_tests>
         $<TARGET_OBJECTS:websocket_tests>
+        $<TARGET_OBJECTS:ipopt_interface_tests>
         )
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
@@ -242,6 +249,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         matrix_and_vector_classes_shared
         optimizer_shared
         websocket_shared
+        ipopt_interface_shared
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)

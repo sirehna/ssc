@@ -20,57 +20,64 @@
 
 #include "ssc/exception_handling/Exception.hpp"
 
-class PositiveDoubleException : public ssc::exception_handling::Exception
+namespace ssc
 {
-    public:
-        PositiveDoubleException(const char* s) :
-                Exception(s)
+    namespace ipopt_interface
+    {
+        class PositiveDoubleException : public ssc::exception_handling::Exception
         {
-        }
-};
+            public:
+                PositiveDoubleException(const char* s) :
+                        Exception(s)
+                {
+                }
+        };
 
 
-class PositiveDouble
-{
-    public:
-        PositiveDouble(const double& val);
-        operator double() const;
-        double operator+(const double& rhs) const;
-        PositiveDouble operator+(const PositiveDouble& rhs) const;
-        double operator-(const double& rhs) const;
-        double operator-(const PositiveDouble& rhs) const;
-        PositiveDouble operator*(const PositiveDouble& rhs) const;
-        double operator*(const double& rhs) const;
-        PositiveDouble operator/(const PositiveDouble& rhs) const;
-        PositiveDouble& operator+=(const PositiveDouble& rhs) const;
-        double operator/(const double& rhs) const;
-        PositiveDouble& operator=(const PositiveDouble& rhs);
-        bool operator==(const double& rhs) const;
-        bool operator==(const PositiveDouble& rhs) const;
+        class PositiveDouble
+        {
+            public:
+                PositiveDouble(const double& val);
+                operator double() const;
+                double operator+(const double& rhs) const;
+                PositiveDouble operator+(const PositiveDouble& rhs) const;
+                double operator-(const double& rhs) const;
+                double operator-(const PositiveDouble& rhs) const;
+                PositiveDouble operator*(const PositiveDouble& rhs) const;
+                double operator*(const double& rhs) const;
+                PositiveDouble operator/(const PositiveDouble& rhs) const;
+                PositiveDouble& operator+=(const PositiveDouble& rhs) const;
+                double operator/(const double& rhs) const;
+                PositiveDouble& operator=(const PositiveDouble& rhs);
+                bool operator==(const double& rhs) const;
+                bool operator==(const PositiveDouble& rhs) const;
 
-    private:
-        double value;
+            private:
+                double value;
 
-};
+        };
 
-double operator+(const double& lhs, const PositiveDouble& rhs);
-double operator-(const double& lhs, const PositiveDouble& rhs);
-double operator*(const double& lhs, const PositiveDouble& rhs);
-double operator/(const double& lhs, const PositiveDouble& rhs);
+        double operator+(const double& lhs, const PositiveDouble& rhs);
+        double operator-(const double& lhs, const PositiveDouble& rhs);
+        double operator*(const double& lhs, const PositiveDouble& rhs);
+        double operator/(const double& lhs, const PositiveDouble& rhs);
 
-class IpoptParameters
-{
-    public:
-        IpoptParameters();
-        PositiveDouble tolerance;
-        PositiveDouble bound_relaxation_factor;
-        std::string mu_strategy;
-        size_t print_level;
-        size_t maximum_number_of_iterations;
-        bool trace_function_calls;
-        bool show_evaluated_points;
-        bool check_first_derivative;
-        bool check_second_derivative;
-};
+        class IpoptParameters
+        {
+            public:
+                IpoptParameters();
+                PositiveDouble tolerance;
+                PositiveDouble bound_relaxation_factor;
+                std::string mu_strategy;
+                size_t print_level;
+                size_t maximum_number_of_iterations;
+                bool trace_function_calls;
+                bool show_evaluated_points;
+                bool check_first_derivative;
+                bool check_second_derivative;
+        };
+
+    }
+}
 
 #endif /* IPOPTPARAMETERS_HPP_ */

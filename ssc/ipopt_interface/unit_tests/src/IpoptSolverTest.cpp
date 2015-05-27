@@ -6,24 +6,29 @@
  */
 
 #include "IpoptSolverTest.hpp"
-#include "IpoptSolver.hpp"
-#include "IpoptSolverException.hpp"
-#include "OptimizationProblem.hpp"
-#include "OptimizationResult.hpp"
+#include "ssc/ipopt_interface/IpoptSolver.hpp"
+#include "ssc/ipopt_interface/IpoptSolverException.hpp"
+#include "ssc/optimizer/OptimizationProblem.hpp"
+#include "ssc/optimizer/OptimizationResult.hpp"
 
-#include "State.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 
-#include "extra_test_assertions.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
-#include "Cos.hpp"
-#include "Sin.hpp"
-#include "FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 
 #include <iostream>
 #include <cmath>
 
 #define PI (4.*atan(1.))
-IpoptSolverTest::IpoptSolverTest() : a(DataGenerator(56)),
+
+using namespace ssc::ipopt_interface;
+using namespace ssc::functors_for_optimizer;
+using namespace ssc::optimizer;
+
+IpoptSolverTest::IpoptSolverTest() : a(ssc::random_data_generator::DataGenerator(56)),
                                      generate(StateGenerator()),
                                      x1(generate.state("x1")),
                                      x2(generate.state("x2")),
