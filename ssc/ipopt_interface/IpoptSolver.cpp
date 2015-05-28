@@ -69,8 +69,8 @@ class IpoptSolver::IpoptSolverPimpl
                 app->Options()->SetNumericValue("point_perturbation_radius", 0);
             }
 
-            app->Options()->SetIntegerValue("print_level", parameters.print_level);
-            app->Options()->SetIntegerValue("max_iter", parameters.maximum_number_of_iterations);
+            app->Options()->SetIntegerValue("print_level", (Index)parameters.print_level);
+            app->Options()->SetIntegerValue("max_iter", (Index)parameters.maximum_number_of_iterations);
             const ApplicationReturnStatus status = app->Initialize();
 
             if (status != Solve_Succeeded)

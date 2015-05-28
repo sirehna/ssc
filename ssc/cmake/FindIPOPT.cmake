@@ -50,5 +50,5 @@ set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK}
         quadmath
         ${COIN_BLAS}
         m
-        dl
+        #dl
 )
