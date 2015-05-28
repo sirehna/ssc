@@ -43,12 +43,21 @@ find_path (
           IpTNLP.hpp
           PATHS ${IPOPT_ROOT}/include/coin)
 
-
-set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} 
-        gfortran
-        gcc_s
-        quadmath
-        ${COIN_BLAS}
-        m
-        #dl
-)
+if (WIN32)
+    set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} 
+            gfortran
+            gcc_s
+            quadmath
+            ${COIN_BLAS}
+            m
+    )
+else()
+    set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} 
+            gfortran
+            gcc_s
+            quadmath
+            ${COIN_BLAS}
+            m
+            dl
+    )
+endif()
