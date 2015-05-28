@@ -156,9 +156,10 @@ add_headers(macros "${copyright}")
 add_headers(pimpl_idiom "${copyright}")
 add_libs(random_data_generator)
 add_libs(exception_handling)
-add_libs(yaml_parser
-         OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(decode_unit)
+add_libs(yaml_parser
+		 SSC_DEPENDENCIES decode_unit
+         OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(text_file_reader
          SSC_DEPENDENCIES exception_handling)
 
@@ -186,7 +187,7 @@ add_libs(functors_for_optimizer
 add_libs(optimizer
          SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
 add_libs(ipopt_interface
-         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes
+         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes optimizer
          EXTERNAL_DEPENDENCIES ${IPOPT})
 add_headers(solver "${copyright}")
 
@@ -247,9 +248,9 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         geometry_shared
         functors_for_optimizer_shared
         matrix_and_vector_classes_shared
+		ipopt_interface_shared
         optimizer_shared
         websocket_shared
-        ipopt_interface_shared
         )
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)

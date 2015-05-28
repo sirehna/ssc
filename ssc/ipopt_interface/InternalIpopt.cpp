@@ -87,10 +87,10 @@ bool InternalIpopt::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
     if (trace_function_calls) std::cout << "entering InternalIpopt::get_nlp_info" << std::endl;
     (void) n;
     (void) m;
-    n = states.size();
-    m = constraints.size();
-    nnz_jac_g = constraint_jacobian.col_index.size();
-    nnz_h_lag = hessian.values.size();
+    n = (Index)states.size();
+    m = (Index)constraints.size();
+    nnz_jac_g = (Index)constraint_jacobian.col_index.size();
+    nnz_h_lag = (Index)hessian.values.size();
     index_style = C_STYLE;
     if (trace_function_calls) std::cout << "exiting InternalIpopt::get_nlp_info" << std::endl;
     return true;
@@ -269,8 +269,8 @@ bool InternalIpopt::eval_jac_g(Index n, const Number* x, bool new_x,
     {
         for (size_t i = 0 ; i < (size_t)nele_jac ; ++i)
         {
-            iRow[i] = constraint_jacobian.row_index.at(i);
-            jCol[i] = constraint_jacobian.col_index.at(i);
+            iRow[i] = (Index)constraint_jacobian.row_index.at(i);
+            jCol[i] = (Index)constraint_jacobian.col_index.at(i);
         }
     }
     else
@@ -316,8 +316,8 @@ bool InternalIpopt::eval_h(Index n, const Number* x, bool new_x,
     {
         for (size_t i = 0 ; i < (size_t)nele_hess ; ++i)
         {
-            iRow[i] = hessian.row_index.at(i);
-            jCol[i] = hessian.col_index.at(i);
+            iRow[i] = (Index)hessian.row_index.at(i);
+            jCol[i] = (Index)hessian.col_index.at(i);
         }
     }
     else
