@@ -1,4 +1,5 @@
 #include "PowTest.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include "ssc/functors_for_optimizer/Pow.hpp"
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"
@@ -21,13 +22,16 @@ void PowTest::TearDown()
 
 TEST_F(PowTest, should_be_able_to_define_x_power_something)
 {
+    const double EPS = 1e-13;
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         const auto x = generate.state(a.random<std::string>());
-        *x = a.random<double>().between(-20,20);
+        *x = a.random<double>().between(0.1,20);
         const double exp = a.random<double>().between(-5,5);
         const auto x2 = Pow(x,exp);
-        ASSERT_EQ(pow(x->get_lambda()(),exp), x2.get_lambda()());
+        const double expected = pow(x->get_lambda()(),exp);
+        const double actual = x2.get_lambda()();
+        ASSERT_SMALL_RELATIVE_ERROR(expected, actual, EPS);
         generate.reset();
     }
 }

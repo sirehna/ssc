@@ -16,9 +16,32 @@ IF(NOT(MSVC))
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 ENDIF()
 
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_STL_)
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_THREAD_)
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_SYSTEM_ERROR_)
+SET(USE_BOOST_FOR_WEBSOCKETPP 0)
+IF(WIN32)
+    IF(CMAKE_COMPILER_IS_GNUCC)
+        MESSAGE(STATUS "WEBSOCKET -- Checking GCC version for WebsocketPP")
+        IF(GCC_VERSION VERSION_LESS 4.6)
+            MESSAGE(STATUS "WEBSOCKET -- Use Boost for WebsocketPP instead of STL")
+            SET(USE_BOOST_FOR_WEBSOCKETPP 1)
+        ELSE()
+            MESSAGE(STATUS "WEBSOCKET -- Use STL for WebsocketPP instead of Boost")
+        ENDIF()
+    ENDIF()
+ENDIF()
+
+IF(USE_BOOST_FOR_WEBSOCKETPP)
+    IF(WIN32)
+        # http://msdn.microsoft.com/en-us/library/windows/desktop/aa383745%28v=vs.85%29.aspx
+        # http://boost.2283326.n4.nabble.com/boost-asio-UnregisterWaitEx-RegisterWaitForSingleObject-has-not-been-declared-td4633963.html
+        ADD_DEFINITIONS(-D_WIN32_WINNT=0x0501)
+        ADD_DEFINITIONS(-DWINVER=0x0501)
+    ENDIF()
+ELSE()
+    ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_STL_)
+    ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_THREAD_)
+    ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_SYSTEM_ERROR_)
+ENDIF()
+
 IF(WIN32)
     # By default WebSocket++ performs block masking/unmasking in a manner that
     # makes assumptions about the nature of the machine and STL library used.

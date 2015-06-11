@@ -198,7 +198,11 @@ Client::Client() : pimpl(new Impl())
 Client::~Client()
 {
     pimpl->endpoint.stop_perpetual();
-    for (const auto id2connection:pimpl->id_to_connection) pimpl->close(id2connection.second);
+    Impl::IdToConnexionMap::const_iterator it = pimpl->id_to_connection.begin();
+    for (;it!=pimpl->id_to_connection.end() ; ++it)
+    {
+        pimpl->close(it->second);
+    }
     pimpl->websocket_thread->join();
 }
 

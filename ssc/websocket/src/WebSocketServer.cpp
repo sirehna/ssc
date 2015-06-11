@@ -5,6 +5,7 @@
  *      Author: cady
  */
 
+#include "websocketpp/common/thread.hpp"
 #include "ssc/websocket/WebSocketServer.hpp"
 #include "ssc/websocket/WebSocketException.hpp"
 #include "WebSocketMessageImpl.hpp"
@@ -19,7 +20,7 @@ struct Server::Impl
     {}
 
     WSServer server;
-    std::thread server_thread; // Thread in which the server runs
+    websocketpp::lib::thread server_thread; // Thread in which the server runs
 };
 
 
@@ -46,7 +47,7 @@ InternalMessageHandler get_lambda(MessageHandler& message_handler)
 Server::Server(MessageHandler& message_handler, const std::string& address, const short unsigned int port):
         pimpl(new Impl())
 {
-    pimpl->server_thread = std::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
 }
 
 struct DoNothing : public MessageHandler
@@ -57,7 +58,7 @@ struct DoNothing : public MessageHandler
 Server::Server(const std::string& address, const short unsigned int port) : pimpl(new Impl())
 {
     DoNothing message_handler;
-    pimpl->server_thread = std::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
 }
 
 
