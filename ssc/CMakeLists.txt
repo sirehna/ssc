@@ -114,12 +114,13 @@ IF(WIN32)
 ENDIF()
 MESSAGE(STATUS "BOOST_ROOT : ${BOOST_ROOT}")
 SET(Boost_USE_STATIC_LIBS        ON)
-SET(Boost_USE_MULTITHREADED     OFF)
+SET(Boost_USE_MULTITHREADED     ON)
+#SET(Boost_USE_MULTITHREADED     OFF)
 #SET(Boost_USE_STATIC_RUNTIME   OFF)
-FIND_PACKAGE(Boost 1.53 COMPONENTS system REQUIRED)
+FIND_PACKAGE(Boost 1.53 COMPONENTS system thread random REQUIRED)
 IF(Boost_FOUND)
-    MESSAGE(STATUS "Boost_INCLUDE_DIRS  : ${Boost_INCLUDE_DIRS}")
-    MESSAGE(STATUS "Boost_LIBRARIES     : ${Boost_LIBRARIES}")
+    MESSAGE(STATUS "Boost_INCLUDE_DIRS    : ${Boost_INCLUDE_DIRS}")
+    MESSAGE(STATUS "Boost_LIBRARIES       : ${Boost_LIBRARIES}")
 ENDIF()
 
 SET(YAML_SKIP_INSTALL ON)
@@ -158,7 +159,7 @@ add_libs(random_data_generator)
 add_libs(exception_handling)
 add_libs(decode_unit)
 add_libs(yaml_parser
-		 SSC_DEPENDENCIES decode_unit
+         SSC_DEPENDENCIES decode_unit
          OBJECTS_DEPENDENCIES yaml-cpp_object)
 add_libs(text_file_reader
          SSC_DEPENDENCIES exception_handling)
@@ -193,16 +194,16 @@ add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
+SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY})
 IF(WIN32)
     add_libs(websocket
             SSC_DEPENDENCIES exception_handling
-            EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY} wsock32 ws2_32)
+            EXTERNAL_DEPENDENCIES ${websocketpp_LIBRARIES} wsock32 ws2_32)
 ELSE()
     add_libs(websocket
              SSC_DEPENDENCIES exception_handling
-             EXTERNAL_DEPENDENCIES ${Boost_SYSTEM_LIBRARY})
+             EXTERNAL_DEPENDENCIES ${websocketpp_LIBRARIES})
 ENDIF()
-
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
@@ -248,7 +249,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         geometry_shared
         functors_for_optimizer_shared
         matrix_and_vector_classes_shared
-		ipopt_interface_shared
+        ipopt_interface_shared
         optimizer_shared
         websocket_shared
         )

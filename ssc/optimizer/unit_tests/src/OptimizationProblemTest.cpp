@@ -6,6 +6,7 @@
  */
 
 #include "OptimizationProblemTest.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 #include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/GradHes.hpp"
 #include "ssc/functors_for_optimizer/Grad.hpp"
@@ -82,6 +83,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_list_of_states)
 
 TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
 {
+    const double EPS = 1e-9;
     OptimizationProblem hs71;
     hs71.minimize(x1*x4*(x1+x2+x3)+x3);
     const auto objective_function = hs71.get_objective_function();
@@ -91,7 +93,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_objective_function)
         X2_ = a.random<double>();
         X3_ = a.random<double>();
         X4_ = a.random<double>();
-        ASSERT_DOUBLE_EQ(X1*X4*(X1+X2+X3)+X3, objective_function());
+        ASSERT_SMALL_RELATIVE_ERROR(X1*X4*(X1+X2+X3)+X3, objective_function(), EPS);
     }
 }
 

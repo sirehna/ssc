@@ -20,17 +20,16 @@ add_library(${PROJECT_NAME} OBJECT ${SRC})
 INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM websocketpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_STL_)
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_THREAD_)
-ADD_DEFINITIONS(-D_WEBSOCKETPP_CPP11_SYSTEM_ERROR_)
+
 FOREACH(f DemoWebSocket
           DemoWebSocketBug
           DemoWebSocketClient
           DemoWebSocketServerSingleClient
-          DemoWebSocketServerMultiClient)
+          # DemoWebSocketServerMultiClient
+        )
     ADD_EXECUTABLE(${f}
         src/${f}.cpp)
-    TARGET_LINK_LIBRARIES(${f} ${Boost_SYSTEM_LIBRARY})
+    TARGET_LINK_LIBRARIES(${f} ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY})
     IF(WIN32)
         TARGET_LINK_LIBRARIES(${f} wsock32 ws2_32)
     ELSE()
