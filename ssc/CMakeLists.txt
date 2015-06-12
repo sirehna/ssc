@@ -254,6 +254,10 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         websocket_shared
         )
 
+IF (NOT(WIN32))
+    TARGET_LINK_LIBRARIES(${TEST_EXE} rt)
+ENDIF()
+
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
                            FILTER boost eigen gmock lapack
