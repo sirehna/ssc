@@ -5,10 +5,10 @@
 *  \author cec
 */
 
-#include "ssc/ipopt_interface/InternalIpopt.hpp"
+#include "InternalIpopt.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "IpIpoptData.hpp"
-#include "IpoptParameters.hpp"
+#include "ssc/ipopt_interface/IpoptParameters.hpp"
 #include <sstream>
 #include <iomanip> //std::set_precision
 

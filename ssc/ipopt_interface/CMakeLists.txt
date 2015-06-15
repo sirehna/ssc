@@ -4,7 +4,7 @@ set(SOURCES InternalIpopt.cpp
             IpoptParameters.cpp
             IpoptSolver.cpp)
 
-include_directories(inc)
+include_directories(private_includes)
 include_directories(${test_macros_SOURCE_DIR})
 include_directories(${${MODULE_UNDER_TEST}_INCLUDE_DIRS})
 include_directories(${random_data_generator_INCLUDE_DIRS})

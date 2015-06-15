@@ -8,7 +8,7 @@
 #ifndef IPOPTSOLVER_HPP_
 #define IPOPTSOLVER_HPP_
 
-#include "tr1_macros.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include <vector>
 #include "ssc/ipopt_interface/IpoptParameters.hpp"
