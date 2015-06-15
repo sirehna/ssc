@@ -12,7 +12,7 @@
 #include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
-#include "ssc/ipopt_interface/InternalIpopt.hpp"
+#include "InternalIpopt.hpp"
 #include "IpIpoptApplication.hpp"
 #include "IpoptSolverException.hpp"
 
