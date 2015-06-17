@@ -57,12 +57,13 @@ namespace ssc
         Grad grad(const NodePtr& f, const StateList& states)
         {
             Grad ret;
+            size_t k = 0;
             for (auto state = states.begin() ; state != states.end() ; ++state)
             {
                 auto df_dstate = f->diff(*state);
                 if (not(df_dstate->is_null()))
                 {
-                    ret.index.push_back((*state)->get_index());
+                    ret.index.push_back(k++);//(*state)->get_index());
                     ret.values.push_back(df_dstate->get_lambda());
                 }
             }
@@ -83,16 +84,16 @@ namespace ssc
                     auto xj = states.at(j);
                     NodePtr d2f_dxidxj = sigma_f*f->diff(xi)->diff(xj);
                     bool d2g_is_null = true;
-                    for (size_t j = 0 ; j < g.size() ; ++j)
+                    for (size_t k = 0 ; k < g.size() ; ++k)
                     {
-                        d2f_dxidxj = d2f_dxidxj + lambda.at(j)*g.at(j)->diff(xi)->diff(xj);
-                        if (not(g.at(j)->diff(xi)->diff(xj)->is_null())) d2g_is_null = false;
+                        d2f_dxidxj = d2f_dxidxj + lambda.at(k)*g.at(k)->diff(xi)->diff(xj);
+                        if (not(g.at(k)->diff(xi)->diff(xj)->is_null())) d2g_is_null = false;
                     }
                     const bool term_is_zero =  (f->diff(xi)->diff(xj)->is_null()) && d2g_is_null;
                     if (not(term_is_zero))
                     {
-                        ret.row_index.push_back((xi)->get_index());
-                        ret.col_index.push_back((xj)->get_index());
+                        ret.row_index.push_back(i);//(xi)->get_index());
+                        ret.col_index.push_back(j);//(xj)->get_index());
                         ret.values.push_back(d2f_dxidxj->get_lambda());
                     }
                 }
@@ -114,7 +115,7 @@ namespace ssc
                     if (not(dgi_dxj->is_null()))
                     {
                         ret.row_index.push_back(i);
-                        ret.col_index.push_back(xj->get_index());
+                        ret.col_index.push_back(j);//xj->get_index());
                         ret.values.push_back(dgi_dxj->get_lambda());
                     }
                 }
