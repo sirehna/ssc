@@ -526,7 +526,7 @@ void OptimizationProblem::get_state_bounds(const size_t& n, double* const xl, do
     pb.get_state_bounds(n, xl, xu);
     for (size_t i = 0 ; i < n ; ++i)
     {
-        const auto x = l.back()/l.back()->get_multiplicative_factor();
+        const auto x = l.at(i)/l.at(i)->get_multiplicative_factor();
         os << xl[i] << " < " << *(x) << " < " << xu[i] << std::endl;
     }
     delete[] xl;
