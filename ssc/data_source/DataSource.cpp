@@ -174,7 +174,12 @@ std::set<ssc::data_source::TypedModuleName> ssc::data_source::DataSource::get_de
             dependencies.insert(new_dependencies.begin(),new_dependencies.end());
             if (dependencies.find(ref_module) != dependencies.end())
             {
-                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Module '") + ref_module.get_signal_name() + "' depends on itself");
+                std::stringstream ss;
+                for (std::set<TypedModuleName>::const_iterator it = dependencies.begin() ; it != dependencies.end() ; ++it)
+                {
+                    ss << it->get_signal_name() << std::endl;
+                }
+                THROW(__PRETTY_FUNCTION__, CycleException, std::string("Module '") + ref_module.get_signal_name() + "' depends on itself: " + ss.str());
             }
         }
     }
