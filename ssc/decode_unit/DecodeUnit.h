@@ -4,17 +4,17 @@
 // A class and a function for decoding units (transform into a scale factor).
 //
 // The main function is :
-//		DecodeUnits::decodeUnit( std::string unit );
+//      DecodeUnits::decodeUnit( std::string unit );
 // Example:
-//		double scal=DecodeUnits::decodeUnit( std::string("km") );
+//      double scal=DecodeUnits::decodeUnit( std::string("km") );
 // would answer:
-//		1000.0
+//      1000.0
 //
 // In order to convert the value into USI, it must be multiplied with obtained scale factor.
 // If conversion fails, then 0 is answered. This should be tested.
 //
 // Two syntaxes are possible :
-//		- implicit operations : for example : kg m3 s-2
+//    - implicit operations : for example : kg m3 s-2
 //    - explicit operations : for example : kg*m^3/s^2
 // It is not possible to mix the two syntaxes : kg*m2 would fail
 // Parentheses can be used : ((tour/min) / (mph))
@@ -54,8 +54,8 @@
 // A good start would be to compare outputs with UNIX or CYGWIN /bin/units
 //
 
-#ifndef	__DECODE_UNIT__
-#define	__DECODE_UNIT__
+#ifndef __DECODE_UNIT__
+#define __DECODE_UNIT__
 
 #include <string>
 #include <istream>
@@ -103,7 +103,7 @@ namespace ssc
                         virtual e_token_type type();
                         virtual std::string description();
                         virtual std::string string_value();
-                        virtual int		     int_value();
+                        virtual int         int_value();
                         virtual double      double_value();
                 };
 
@@ -171,7 +171,7 @@ namespace ssc
             private :
                 std::istringstream m_stream;                 // source stream
                 int m_next_char;                             // next char to be decoded
-                decode_unit::UnitDecoder::Token *m_token;     // next token to be decoded
+                decode_unit::UnitDecoder::Token *m_token;    // next token to be decoded
                 std::vector<e_char_type> m_char_table;       // classification of characters
                                                              // (for lexical scanner)
                 std::map<std::string,double> m_known_units;  // dictionary of knows units
@@ -200,10 +200,10 @@ namespace ssc
                 //STATIC VARIABLES AND INITIALIZER FUNCTIONS
 
                 // classification of characters
-    //			static std::vector<e_char_type> k_char_table;
+                // static std::vector<e_char_type> k_char_table;
 
                 // known units and conversion factors
-    //			static std::map<std::string,double> k_known_units;
+                // static std::map<std::string,double> k_known_units;
 
                 static std::map<std::string,double> get_base_units_for_bootstrapping();
                 static std::vector<e_char_type> get_char_table();
