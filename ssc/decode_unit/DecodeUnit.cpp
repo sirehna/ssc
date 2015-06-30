@@ -19,7 +19,7 @@ double ssc::decode_unit::decodeUnit( std::string unit )
 {
 	double val;
 	try {
-	    ssc::decode_unit::UnitDecoder decoder( unit );
+		ssc::decode_unit::UnitDecoder decoder( unit );
 		val=decoder.decode();
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
@@ -35,7 +35,7 @@ double ssc::decode_unit::decodeUnit( std::string unit , std::map<std::string,dou
 {
 	double val;
 	try {
-	    ssc::decode_unit::UnitDecoder decoder( unit , known_units );
+		ssc::decode_unit::UnitDecoder decoder( unit , known_units );
 		val=decoder.decode();
 #ifndef NDEBUG
 		std::cout << "Successful decoding : " << unit << " -> " << val << std::endl;
@@ -48,7 +48,7 @@ double ssc::decode_unit::decodeUnit( std::string unit , std::map<std::string,dou
 			std::cout << it->first << " -> " << it->second << std::endl;
 		std::cout << "Failed decoding :" << unit << " with message : " << message << std::endl;
 #else
-        (void)message;
+		(void)message;
 #endif
 	}
 	return val;
@@ -59,7 +59,7 @@ ssc::decode_unit::UnitDecoder::Token::~Token() {}
 ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::Token::type() {return k_unknown_token;}
 std::string ssc::decode_unit::UnitDecoder::Token::description() {return std::string("unknown token");}
 std::string ssc::decode_unit::UnitDecoder::Token::string_value() {std::string tmp; return tmp;}
-int		   ssc::decode_unit::UnitDecoder::Token::int_value()    {return 0;}
+int         ssc::decode_unit::UnitDecoder::Token::int_value()    {return 0;}
 double      ssc::decode_unit::UnitDecoder::Token::double_value() {return 0.0;}
 
 ssc::decode_unit::UnitDecoder::WordToken::WordToken(std::string word) : m_word(word) {}
@@ -107,20 +107,20 @@ std::string ssc::decode_unit::UnitDecoder::RightParToken::description() {return 
 
 
 ssc::decode_unit::UnitDecoder::UnitDecoder(std::string unit)
-: m_stream(unit) ,
-  m_next_char(0),
-  m_token(NULL),
-  m_char_table(get_char_table()) ,
-  m_known_units(get_known_units())
+:	m_stream(unit) ,
+	m_next_char(0),
+	m_token(NULL),
+	m_char_table(get_char_table()) ,
+	m_known_units(get_known_units())
 {
 }
 
 ssc::decode_unit::UnitDecoder::UnitDecoder(std::string unit , std::map<std::string,double> &known_units)
-: m_stream(unit) ,
-  m_next_char(0),
-  m_token(NULL),
-  m_char_table(get_char_table()) ,
-  m_known_units(known_units)
+:	m_stream(unit) ,
+	m_next_char(0),
+	m_token(NULL),
+	m_char_table(get_char_table()) ,
+	m_known_units(known_units)
 {
 }
 
@@ -362,7 +362,7 @@ double ssc::decode_unit::UnitDecoder::decode_expression()
 				} else {
 					tokens.push_back(m_token);
 					m_token = scan();
-				}	
+				}
 				break;
 			case k_leftparenthesis:
 				tokens.push_back(new DoubleToken(decode_parenthesis()));
@@ -372,7 +372,7 @@ double ssc::decode_unit::UnitDecoder::decode_expression()
 				break;
 			}
 		}
-	
+
 		// 2) search highest precedence and evaluate
 		if(tokens.size()==0) {
 			// no unit ? interpreted as 1
@@ -418,7 +418,7 @@ double ssc::decode_unit::UnitDecoder::decode_expression(std::vector<Token *> &to
 		int hprec = 0;
 		int iprec = (int)tokens.size();
 		for(int i=tend;i>tbeg;) {
-		    i--;
+			i--;
 			if(isOpToken(tokens[(size_t)i],'*') || isOpToken(tokens[(size_t)i],'/') ) {
 				if(i==tbeg || i==tend-1) {
 					throw std::string("unexpected */ position");
@@ -552,353 +552,353 @@ double ssc::decode_unit::UnitDecoder::decode_word( Token *token )
 std::vector<ssc::decode_unit::UnitDecoder::e_char_type> ssc::decode_unit::UnitDecoder::get_char_table()
 {
 	static std::vector<UnitDecoder::e_char_type> table;
-    if (table.empty())
-    {
-        table = std::vector<UnitDecoder::e_char_type>(256,k_unknown);
-        int c;
-        for(c='0';c<='9';c++) table[(size_t)c]=k_digit;
-        for(c='a';c<='z';c++) table[(size_t)c]=k_letter;
-        for(c='A';c<='Z';c++) table[(size_t)c]=k_letter;
-        table['*']=k_star;
-        table['/']=k_slash;
-        table['^']=k_caret;
-        table['-']=k_minus;
-        table['_']=k_underscore;
-        table['%']=k_percent;
-        table['(']=k_leftpar;
-        table[')']=k_rightpar;
-        table[' ']=k_separator;
-        table['\t']=k_separator;
-        table['\r']=k_separator;
-        table['\n']=k_separator;
-    }
+	if (table.empty())
+	{
+		table = std::vector<UnitDecoder::e_char_type>(256,k_unknown);
+		int c;
+		for(c='0';c<='9';c++) table[(size_t)c]=k_digit;
+		for(c='a';c<='z';c++) table[(size_t)c]=k_letter;
+		for(c='A';c<='Z';c++) table[(size_t)c]=k_letter;
+		table['*']=k_star;
+		table['/']=k_slash;
+		table['^']=k_caret;
+		table['-']=k_minus;
+		table['_']=k_underscore;
+		table['%']=k_percent;
+		table['(']=k_leftpar;
+		table[')']=k_rightpar;
+		table[' ']=k_separator;
+		table['\t']=k_separator;
+		table['\r']=k_separator;
+		table['\n']=k_separator;
+	}
 	return table;
 }
 
 std::map<std::string,double> ssc::decode_unit::UnitDecoder::get_base_units_for_bootstrapping()
 {
 	static std::map<std::string,double> units;
-    if (units.empty())
-    {
-        extend_with_short_metric_prefix(units, "m" , 1.0 );
-        extend_with_long_metric_prefix(units, "meter" , 1.0 );
-        extend_with_long_metric_prefix(units, "meters" , 1.0 );
-        extend_with_long_metric_prefix(units, "metre" , 1.0 );
-        extend_with_long_metric_prefix(units, "metres" , 1.0 );
+	if (units.empty())
+	{
+		extend_with_short_metric_prefix(units, "m" , 1.0 );
+		extend_with_long_metric_prefix(units, "meter" , 1.0 );
+		extend_with_long_metric_prefix(units, "meters" , 1.0 );
+		extend_with_long_metric_prefix(units, "metre" , 1.0 );
+		extend_with_long_metric_prefix(units, "metres" , 1.0 );
 
-        extend_with_short_metric_prefix(units, "s" , 1.0 );
-        extend_with_long_metric_prefix(units, "second" , 1.0 );
-        extend_with_long_metric_prefix(units, "seconds" , 1.0 );
-        extend_with_long_metric_prefix(units, "seconde" , 1.0 );
-        extend_with_long_metric_prefix(units, "secondes" , 1.0 );
+		extend_with_short_metric_prefix(units, "s" , 1.0 );
+		extend_with_long_metric_prefix(units, "second" , 1.0 );
+		extend_with_long_metric_prefix(units, "seconds" , 1.0 );
+		extend_with_long_metric_prefix(units, "seconde" , 1.0 );
+		extend_with_long_metric_prefix(units, "secondes" , 1.0 );
 
-        extend_with_short_metric_prefix(units, "g" , 1.0e-3 );
-        extend_with_long_metric_prefix(units, "gram" , 1.0e-3 );
-        extend_with_long_metric_prefix(units, "grams" , 1.0e-3 );
-        extend_with_long_metric_prefix(units, "gramme" , 1.0e-3 );
-        extend_with_long_metric_prefix(units, "grammes" , 1.0e-3 );
+		extend_with_short_metric_prefix(units, "g" , 1.0e-3 );
+		extend_with_long_metric_prefix(units, "gram" , 1.0e-3 );
+		extend_with_long_metric_prefix(units, "grams" , 1.0e-3 );
+		extend_with_long_metric_prefix(units, "gramme" , 1.0e-3 );
+		extend_with_long_metric_prefix(units, "grammes" , 1.0e-3 );
 
-        extend_with_short_metric_prefix(units, "A" , 1.0 );
-        extend_with_long_metric_prefix(units, "Ampere" , 1.0 );
+		extend_with_short_metric_prefix(units, "A" , 1.0 );
+		extend_with_long_metric_prefix(units, "Ampere" , 1.0 );
 
-        units[ "K" ]=1.0;
-        units[ "Kelvin" ]=1.0;
+		units[ "K" ]=1.0;
+		units[ "Kelvin" ]=1.0;
 
-        units[ "usi" ]=1.0;
-        units[ "USI" ]=1.0;
+		units[ "usi" ]=1.0;
+		units[ "USI" ]=1.0;
 
-        units[ "none" ]=1.0;
+		units[ "none" ]=1.0;
 
-        // --------------
-        // MEASURING TIME
-        // --------------
-        units[ "min" ]=60 * units[ "s" ];
-        units[ "minute" ]=60 * units[ "s" ];
-        units[ "minutes" ]=60 * units[ "s" ];
+		// --------------
+		// MEASURING TIME
+		// --------------
+		units[ "min" ]=60 * units[ "s" ];
+		units[ "minute" ]=60 * units[ "s" ];
+		units[ "minutes" ]=60 * units[ "s" ];
 
-        units[ "hr" ]=60 * units[ "min" ];
-        units[ "hour" ]=60 * units[ "min" ];
-        units[ "hours" ]=60 * units[ "min" ];
-        units[ "heure" ]=60 * units[ "min" ];
-        units[ "heures" ]=60 * units[ "min" ];
+		units[ "hr" ]=60 * units[ "min" ];
+		units[ "hour" ]=60 * units[ "min" ];
+		units[ "hours" ]=60 * units[ "min" ];
+		units[ "heure" ]=60 * units[ "min" ];
+		units[ "heures" ]=60 * units[ "min" ];
 
-        units[ "day" ]=24 * units[ "hr" ];
-        units[ "days" ]=24 * units[ "hr" ];
-        units[ "jour" ]=24 * units[ "hr" ];
-        units[ "jours" ]=24 * units[ "hr" ];
+		units[ "day" ]=24 * units[ "hr" ];
+		units[ "days" ]=24 * units[ "hr" ];
+		units[ "jour" ]=24 * units[ "hr" ];
+		units[ "jours" ]=24 * units[ "hr" ];
 
-        units[ "week" ]=7 * units[ "day" ];
-        units[ "weeks" ]=7 * units[ "day" ];
-        units[ "semaine" ]=7 * units[ "day" ];
-        units[ "semaines" ]=7 * units[ "day" ];
+		units[ "week" ]=7 * units[ "day" ];
+		units[ "weeks" ]=7 * units[ "day" ];
+		units[ "semaine" ]=7 * units[ "day" ];
+		units[ "semaines" ]=7 * units[ "day" ];
 
-        units[ "Hz" ]=1.0 /  units[ "s" ];
-        units[ "Hertz" ]=1.0 /  units[ "s" ];
+		units[ "Hz" ]=1.0 /  units[ "s" ];
+		units[ "Hertz" ]=1.0 /  units[ "s" ];
 
-        // ----------------
-        // MEASURING ANGLES
-        // ----------------
-        units[ "pi" ]=acos(-1.0);
-        units[ "rad" ]=1.0;
-        units[ "radian" ]=1.0;
-        units[ "radians" ]=1.0;
+		// ----------------
+		// MEASURING ANGLES
+		// ----------------
+		units[ "pi" ]=acos(-1.0);
+		units[ "rad" ]=1.0;
+		units[ "radian" ]=1.0;
+		units[ "radians" ]=1.0;
 
-        units[ "deg" ]=acos(-1.0)/180.0 * units[ "rad" ];
-        units[ "degree" ]=acos(-1.0)/180.0 * units[ "rad" ];
-        units[ "degrees" ]=acos(-1.0)/180.0 * units[ "rad" ];
-        units[ "degre" ]=acos(-1.0)/180.0 * units[ "rad" ];
-        units[ "degres" ]=acos(-1.0)/180.0 * units[ "rad" ];
+		units[ "deg" ]=acos(-1.0)/180.0 * units[ "rad" ];
+		units[ "degree" ]=acos(-1.0)/180.0 * units[ "rad" ];
+		units[ "degrees" ]=acos(-1.0)/180.0 * units[ "rad" ];
+		units[ "degre" ]=acos(-1.0)/180.0 * units[ "rad" ];
+		units[ "degres" ]=acos(-1.0)/180.0 * units[ "rad" ];
 
-        units[ "min_arc" ]=units[ "degre" ] /60.0;
-        units[ "arcmin" ]=units[ "degre" ] /60.0;
+		units[ "min_arc" ]=units[ "degre" ] /60.0;
+		units[ "arcmin" ]=units[ "degre" ] /60.0;
 
-        units[ "sec_arc" ]=units[ "degre" ] /3600.0;
-        units[ "arcsec" ]=units[ "degre" ] /3600.0;
-        
-        units[ "tr" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "tour" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "tours" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "turn" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "turns" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "rev" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "revolution" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "revolutions" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "circle" ]=2 * units[ "pi" ] * units[ "rad" ];
-        units[ "circles" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "sec_arc" ]=units[ "degre" ] /3600.0;
+		units[ "arcsec" ]=units[ "degre" ] /3600.0;
 
-        units[ "%" ]=1.0e-2;
-        units[ "percent" ]=1.0e-2;
-        units[ "percents" ]=1.0e-2;
-        units[ "pourcent" ]=1.0e-2;
-        units[ "pourcents" ]=1.0e-2;
-        units[ "ppm" ]=1.0e-6;
+		units[ "tr" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "tour" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "tours" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "turn" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "turns" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "rev" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "revolution" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "revolutions" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "circle" ]=2 * units[ "pi" ] * units[ "rad" ];
+		units[ "circles" ]=2 * units[ "pi" ] * units[ "rad" ];
 
-        // ----------------
-        // MEASURING LENGTH
-        // ----------------
-        units[ "in" ]=2.54 * units[ "cm" ];
-        units[ "inch" ]=2.54 * units[ "cm" ];
-        units[ "inches" ]=2.54 * units[ "cm" ];
-        units[ "pouce" ]=2.54 * units[ "cm" ];
-        units[ "pouces" ]=2.54 * units[ "cm" ];
+		units[ "%" ]=1.0e-2;
+		units[ "percent" ]=1.0e-2;
+		units[ "percents" ]=1.0e-2;
+		units[ "pourcent" ]=1.0e-2;
+		units[ "pourcents" ]=1.0e-2;
+		units[ "ppm" ]=1.0e-6;
 
-        units[ "ft" ]=12 * units[ "in" ];
-        units[ "foot" ]=12 * units[ "in" ];
-        units[ "feet" ]=12 * units[ "in" ];
-        units[ "pied" ]=12 * units[ "in" ];
-        units[ "pieds" ]=12 * units[ "in" ];
+		// ----------------
+		// MEASURING LENGTH
+		// ----------------
+		units[ "in" ]=2.54 * units[ "cm" ];
+		units[ "inch" ]=2.54 * units[ "cm" ];
+		units[ "inches" ]=2.54 * units[ "cm" ];
+		units[ "pouce" ]=2.54 * units[ "cm" ];
+		units[ "pouces" ]=2.54 * units[ "cm" ];
 
-        units[ "yard" ]=3 * units[ "ft" ];
-        units[ "yards" ]=3 * units[ "ft" ];
+		units[ "ft" ]=12 * units[ "in" ];
+		units[ "foot" ]=12 * units[ "in" ];
+		units[ "feet" ]=12 * units[ "in" ];
+		units[ "pied" ]=12 * units[ "in" ];
+		units[ "pieds" ]=12 * units[ "in" ];
 
-        units[ "mile" ]=5280 * units[ "ft" ];
-        units[ "miles" ]=5280 * units[ "ft" ];
+		units[ "yard" ]=3 * units[ "ft" ];
+		units[ "yards" ]=3 * units[ "ft" ];
 
-        units[ "u_a" ]=1.49597871e11* units[ "m" ];
-        units[ "a_u" ]=1.49597871e11* units[ "m" ];
-        units[ "unite_astronomique" ]=1.49597871e11* units[ "m" ];
-        units[ "astronomical_unit" ]=1.49597871e11* units[ "m" ];
+		units[ "mile" ]=5280 * units[ "ft" ];
+		units[ "miles" ]=5280 * units[ "ft" ];
 
-        units[ "parsec" ]= units[ "a_u" ] / tan( units[ "arcsec" ] );
+		units[ "u_a" ]=1.49597871e11* units[ "m" ];
+		units[ "a_u" ]=1.49597871e11* units[ "m" ];
+		units[ "unite_astronomique" ]=1.49597871e11* units[ "m" ];
+		units[ "astronomical_unit" ]=1.49597871e11* units[ "m" ];
 
-        units[ "micron" ]= 1.0e-6 * units[ "m" ];
-        units[ "microns" ]= 1.0e-6 * units[ "m" ];
-        
-        units[ "Angstrom" ]= 1.0e-10 * units[ "m" ];
+		units[ "parsec" ]= units[ "a_u" ] / tan( units[ "arcsec" ] );
 
-        units[ "acre" ]= 4840 * pow(units[ "yard" ] , 2);
-        units[ "acres" ]= 4840 * pow(units[ "yard" ] , 2);
+		units[ "micron" ]= 1.0e-6 * units[ "m" ];
+		units[ "microns" ]= 1.0e-6 * units[ "m" ];
 
-        units[ "are" ]= 100 * pow(units[ "m" ] , 2);
-        units[ "ares" ]= 100 * pow(units[ "m" ] , 2);
+		units[ "Angstrom" ]= 1.0e-10 * units[ "m" ];
 
-        units[ "ha" ]= 100 * units[ "are" ];
-        units[ "hectare" ]= 100 * units[ "are" ];
-        units[ "hectares" ]= 100 * units[ "are" ];
+		units[ "acre" ]= 4840 * pow(units[ "yard" ] , 2);
+		units[ "acres" ]= 4840 * pow(units[ "yard" ] , 2);
 
-        units[ "lb" ]= 0.45359237 * units[ "kg" ];
-        units[ "lbs" ]= 0.45359237 * units[ "kg" ];
-        units[ "livre" ]= 0.45359237 * units[ "kg" ];
-        units[ "livres" ]= 0.45359237 * units[ "kg" ];
-        units[ "pound" ]= 0.45359237 * units[ "kg" ];
-        units[ "pounds" ]= 0.45359237 * units[ "kg" ];
+		units[ "are" ]= 100 * pow(units[ "m" ] , 2);
+		units[ "ares" ]= 100 * pow(units[ "m" ] , 2);
 
-        // metric ton
-        units[ "tonne" ]= 1000 * units[ "kg" ];
-        units[ "tonnes" ]= 1000 * units[ "kg" ];
+		units[ "ha" ]= 100 * units[ "are" ];
+		units[ "hectare" ]= 100 * units[ "are" ];
+		units[ "hectares" ]= 100 * units[ "are" ];
 
-        // short ton
-        units[ "ton" ]= 2000 * units[ "lbs" ];
-        units[ "tons" ]= 2000 * units[ "lbs" ];
+		units[ "lb" ]= 0.45359237 * units[ "kg" ];
+		units[ "lbs" ]= 0.45359237 * units[ "kg" ];
+		units[ "livre" ]= 0.45359237 * units[ "kg" ];
+		units[ "livres" ]= 0.45359237 * units[ "kg" ];
+		units[ "pound" ]= 0.45359237 * units[ "kg" ];
+		units[ "pounds" ]= 0.45359237 * units[ "kg" ];
 
-        units[ "oz" ]= units[ "lbs" ] / 16;
-        units[ "ounce" ]= units[ "lbs" ] / 16;
-        units[ "ounces" ]= units[ "lbs" ] / 16;
-        units[ "once" ]= units[ "lbs" ] / 16;
-        units[ "onces" ]= units[ "lbs" ] / 16;
+		// metric ton
+		units[ "tonne" ]= 1000 * units[ "kg" ];
+		units[ "tonnes" ]= 1000 * units[ "kg" ];
 
-        units[ "grain" ]= units[ "lbs" ] / 7000;
-        units[ "grains" ]= units[ "lbs" ] / 7000;
-        units[ "graine" ]= units[ "lbs" ] / 7000;
-        units[ "graines" ]= units[ "lbs" ] / 7000;
+		// short ton
+		units[ "ton" ]= 2000 * units[ "lbs" ];
+		units[ "tons" ]= 2000 * units[ "lbs" ];
 
-        // metric carat
-        units[ "carat" ]= 0.2 * units[ "g" ];
-        units[ "carats" ]= 0.2 * units[ "g" ];
-        units[ "english_carat" ]= 0.3163 * units[ "grain" ];
-        units[ "english_carats" ]= 0.3163 * units[ "grain" ];
+		units[ "oz" ]= units[ "lbs" ] / 16;
+		units[ "ounce" ]= units[ "lbs" ] / 16;
+		units[ "ounces" ]= units[ "lbs" ] / 16;
+		units[ "once" ]= units[ "lbs" ] / 16;
+		units[ "onces" ]= units[ "lbs" ] / 16;
 
-        units[ "quintal" ]= 100 * units[ "kg" ];
-        units[ "quintaux" ]= 100 * units[ "kg" ];
+		units[ "grain" ]= units[ "lbs" ] / 7000;
+		units[ "grains" ]= units[ "lbs" ] / 7000;
+		units[ "graine" ]= units[ "lbs" ] / 7000;
+		units[ "graines" ]= units[ "lbs" ] / 7000;
 
-        units[ "cental" ]= 100 * units[ "lbs" ];
-        units[ "centals" ]= 100 * units[ "lbs" ];
+		// metric carat
+		units[ "carat" ]= 0.2 * units[ "g" ];
+		units[ "carats" ]= 0.2 * units[ "g" ];
+		units[ "english_carat" ]= 0.3163 * units[ "grain" ];
+		units[ "english_carats" ]= 0.3163 * units[ "grain" ];
 
-        units[ "l" ]= pow(units[ "dm" ],3);
-        units[ "liter" ]= pow(units[ "dm" ],3);
-        units[ "liters" ]= pow(units[ "dm" ],3);
-        units[ "litre" ]= pow(units[ "dm" ],3);
-        units[ "litres" ]= pow(units[ "dm" ],3);
-        
-        units[ "cc" ]= pow(units[ "cm" ],3);
+		units[ "quintal" ]= 100 * units[ "kg" ];
+		units[ "quintaux" ]= 100 * units[ "kg" ];
 
-        units[ "stere" ]= pow(units[ "m" ],3);
-        units[ "steres" ]= pow(units[ "m" ],3);
-        
-        // US gallon
-        units[ "gal_liquid" ]= 231*pow(units[ "in" ],3);
-        units[ "gallon_liquid" ]= 231*pow(units[ "in" ],3);
+		units[ "cental" ]= 100 * units[ "lbs" ];
+		units[ "centals" ]= 100 * units[ "lbs" ];
 
-        units[ "floz" ]= 29.57353*units[ "cc" ];
-        units[ "fluid_ounce" ]= 29.57353*units[ "cc" ];
+		units[ "l" ]= pow(units[ "dm" ],3);
+		units[ "liter" ]= pow(units[ "dm" ],3);
+		units[ "liters" ]= pow(units[ "dm" ],3);
+		units[ "litre" ]= pow(units[ "dm" ],3);
+		units[ "litres" ]= pow(units[ "dm" ],3);
 
-        units[ "bushel" ]= 2150.42*pow(units[ "in" ],3);
-        units[ "peck" ]= units[ "bushel" ] / 4;
-        units[ "gal_dry" ]= units[ "peck" ] / 2;
-        units[ "gallon_dry" ]= units[ "peck" ] / 2;
-    }
-    return units;
+		units[ "cc" ]= pow(units[ "cm" ],3);
+
+		units[ "stere" ]= pow(units[ "m" ],3);
+		units[ "steres" ]= pow(units[ "m" ],3);
+
+		// US gallon
+		units[ "gal_liquid" ]= 231*pow(units[ "in" ],3);
+		units[ "gallon_liquid" ]= 231*pow(units[ "in" ],3);
+
+		units[ "floz" ]= 29.57353*units[ "cc" ];
+		units[ "fluid_ounce" ]= 29.57353*units[ "cc" ];
+
+		units[ "bushel" ]= 2150.42*pow(units[ "in" ],3);
+		units[ "peck" ]= units[ "bushel" ] / 4;
+		units[ "gal_dry" ]= units[ "peck" ] / 2;
+		units[ "gallon_dry" ]= units[ "peck" ] / 2;
+	}
+	return units;
 }
 
 // initialize known units
 std::map<std::string,double> ssc::decode_unit::UnitDecoder::get_known_units()
 {
-    static std::map<std::string,double> units;
-    if (units.empty())
-    {
-        units = get_base_units_for_bootstrapping();
-        extend_with_short_metric_prefix(units, "Hz" , decodeUnit("1.0/s" , units) );
-        extend_with_long_metric_prefix(units, "Hertz" , decodeUnit("1.0/s" , units) );
-        extend_with_short_metric_prefix(units, "N" , decodeUnit("kg*m/s^2" , units) );
-        extend_with_long_metric_prefix(units, "Newton" , decodeUnit("kg*m/s^2" , units) );
-        
-        extend_with_short_metric_prefix(units, "Pa" , decodeUnit("N/m^2" , units) );
-        extend_with_long_metric_prefix(units, "Pascal" , decodeUnit("N/m^2" , units) );
-        
-        extend_with_short_metric_prefix(units, "J" , decodeUnit("N*m" , units) );
-        extend_with_long_metric_prefix(units, "Joule" , decodeUnit("N*m" , units) );
+	static std::map<std::string,double> units;
+	if (units.empty())
+	{
+		units = get_base_units_for_bootstrapping();
+		extend_with_short_metric_prefix(units, "Hz" , decodeUnit("1.0/s" , units) );
+		extend_with_long_metric_prefix(units, "Hertz" , decodeUnit("1.0/s" , units) );
+		extend_with_short_metric_prefix(units, "N" , decodeUnit("kg*m/s^2" , units) );
+		extend_with_long_metric_prefix(units, "Newton" , decodeUnit("kg*m/s^2" , units) );
 
-        extend_with_short_metric_prefix(units, "W" , decodeUnit("J/s" , units) );
-        extend_with_long_metric_prefix(units, "Watt" , decodeUnit("J/s" , units) );
+		extend_with_short_metric_prefix(units, "Pa" , decodeUnit("N/m^2" , units) );
+		extend_with_long_metric_prefix(units, "Pascal" , decodeUnit("N/m^2" , units) );
 
-        units[ "atm" ]= decodeUnit("101325.0*Pa" , units);
-        units[ "atmosphere" ]= decodeUnit("101325.0*Pa" , units);
+		extend_with_short_metric_prefix(units, "J" , decodeUnit("N*m" , units) );
+		extend_with_long_metric_prefix(units, "Joule" , decodeUnit("N*m" , units) );
 
-        extend_with_long_metric_prefix(units, "bar" , decodeUnit("1.0e5*Pa" , units) );
-        extend_with_long_metric_prefix(units, "bars" , decodeUnit("1.0e5*Pa" , units) );
-        extend_with_short_metric_prefix(units, "eV" , decodeUnit("1.6021917e-19*J" , units) );
-        extend_with_short_metric_prefix(units, "cal" , decodeUnit("4.1868*J" , units) );
-        extend_with_long_metric_prefix(units, "calorie" , decodeUnit("4.1868*J" , units) );
-        extend_with_long_metric_prefix(units, "calories" , decodeUnit("4.1868*J" , units) );
+		extend_with_short_metric_prefix(units, "W" , decodeUnit("J/s" , units) );
+		extend_with_long_metric_prefix(units, "Watt" , decodeUnit("J/s" , units) );
 
-        // ELECTRICITY
-        extend_with_short_metric_prefix(units, "C" , decodeUnit("A*s" , units) );
-        extend_with_long_metric_prefix(units, "Coulomb" , decodeUnit("A*s" , units) );
-        
-        extend_with_short_metric_prefix(units, "V" , decodeUnit("W/A" , units) );
-        extend_with_long_metric_prefix(units, "Volt" , decodeUnit("W/A" , units) );
-        
-        extend_with_long_metric_prefix(units, "Ohm" , decodeUnit("V/A" , units) );
-        
-        extend_with_short_metric_prefix(units, "S" , decodeUnit("1/Ohm" , units) );
-        extend_with_long_metric_prefix(units, "Siemens" , decodeUnit("1/Ohm" , units) );
-        
-        extend_with_short_metric_prefix(units, "F" , decodeUnit("C/V" , units) );
-        extend_with_long_metric_prefix(units, "Farad" , decodeUnit("C/V" , units) );
-        
-        extend_with_short_metric_prefix(units, "H" , decodeUnit("V/(A/s)" , units) );
-        extend_with_long_metric_prefix(units, "Henry" , decodeUnit("V/(A/s)" , units) );
-        
-        extend_with_short_metric_prefix(units, "Wb" , decodeUnit("V*s" , units) );
-        extend_with_long_metric_prefix(units, "Weber" , decodeUnit("V*s" , units) );
-        
-        extend_with_short_metric_prefix(units, "T" , decodeUnit("Wb/m^2" , units) );
-        extend_with_long_metric_prefix(units, "Tesla" , decodeUnit("Wb/m^2" , units) );
+		units[ "atm" ]= decodeUnit("101325.0*Pa" , units);
+		units[ "atmosphere" ]= decodeUnit("101325.0*Pa" , units);
 
-        extend_with_long_metric_prefix(units, "Gauss" , decodeUnit("1.0e-4*Tesla" , units) );
-        extend_with_long_metric_prefix(units, "Maxwell" , decodeUnit("1.0e-8*Wb" , units) );
+		extend_with_long_metric_prefix(units, "bar" , decodeUnit("1.0e5*Pa" , units) );
+		extend_with_long_metric_prefix(units, "bars" , decodeUnit("1.0e5*Pa" , units) );
+		extend_with_short_metric_prefix(units, "eV" , decodeUnit("1.6021917e-19*J" , units) );
+		extend_with_short_metric_prefix(units, "cal" , decodeUnit("4.1868*J" , units) );
+		extend_with_long_metric_prefix(units, "calorie" , decodeUnit("4.1868*J" , units) );
+		extend_with_long_metric_prefix(units, "calories" , decodeUnit("4.1868*J" , units) );
 
-        // ------
-        // MARINE
-        // ------
-        units[ "n_m" ]= decodeUnit("1852*m" , units);
-        units[ "m_n" ]= decodeUnit("1852*m" , units);
-        units[ "nautical_mile" ]= decodeUnit("1852*m" , units);
-        units[ "nautical_miles" ]= decodeUnit("1852*m" , units);
-        units[ "mille_nautique" ]= decodeUnit("1852*m" , units);
-        units[ "milles_nautiques" ]= decodeUnit("1852*m" , units);
-        
-        units[ "kt" ]= decodeUnit("n_m / hr" , units);
-        units[ "knot" ]= decodeUnit("n_m / hr" , units);
-        units[ "knots" ]= decodeUnit("n_m / hr" , units);
-        units[ "noeud" ]= decodeUnit("n_m / hr" , units);
-        units[ "noeuds" ]= decodeUnit("n_m / hr" , units);
+		// ELECTRICITY
+		extend_with_short_metric_prefix(units, "C" , decodeUnit("A*s" , units) );
+		extend_with_long_metric_prefix(units, "Coulomb" , decodeUnit("A*s" , units) );
 
-        // international cable (not US nor british)
-        units[ "cable" ]= decodeUnit("n_m / 10" , units);
-        units[ "cables" ]= decodeUnit("n_m / 10" , units);
-        units[ "encablure" ]= decodeUnit("n_m / 10" , units);
-        units[ "encablures" ]= decodeUnit("n_m / 10" , units);
+		extend_with_short_metric_prefix(units, "V" , decodeUnit("W/A" , units) );
+		extend_with_long_metric_prefix(units, "Volt" , decodeUnit("W/A" , units) );
 
-        // OLD CGS SYSTEM
-        extend_with_long_metric_prefix(units, "dyne" , decodeUnit("cm*g/s^2" , units) );
-        extend_with_long_metric_prefix(units, "dynes" , decodeUnit("cm*g/s^2" , units) );
-        
-        extend_with_long_metric_prefix(units, "erg" , decodeUnit("cm^2*g/s^2" , units) );
-        extend_with_long_metric_prefix(units, "ergs" , decodeUnit("cm^2*g/s^2" , units) );
-        
-        extend_with_long_metric_prefix(units, "poise" , decodeUnit("g/(cm*s)" , units) );
-        extend_with_long_metric_prefix(units, "poises" , decodeUnit("g/(cm*s)" , units) );
-        
-        extend_with_long_metric_prefix(units, "Stokes" , decodeUnit("cm^2/s" , units) );
+		extend_with_long_metric_prefix(units, "Ohm" , decodeUnit("V/A" , units) );
 
-        extend_with_short_metric_prefix(units, "Gal" , decodeUnit("cm/s^2" , units) );
-        extend_with_long_metric_prefix(units, "Galileo" , decodeUnit("cm/s^2" , units) );
+		extend_with_short_metric_prefix(units, "S" , decodeUnit("1/Ohm" , units) );
+		extend_with_long_metric_prefix(units, "Siemens" , decodeUnit("1/Ohm" , units) );
 
-        // OTHER
-        units[ "rpm" ]= units[ "rev" ] / units[ "min" ];
+		extend_with_short_metric_prefix(units, "F" , decodeUnit("C/V" , units) );
+		extend_with_long_metric_prefix(units, "Farad" , decodeUnit("C/V" , units) );
 
-        units[ "mph" ]= decodeUnit("mile/hour" , units);
-        units[ "mile_per_hour" ]= decodeUnit("mile/hour" , units);
-        units[ "miles_per_hour" ]= decodeUnit("mile/hour" , units);
+		extend_with_short_metric_prefix(units, "H" , decodeUnit("V/(A/s)" , units) );
+		extend_with_long_metric_prefix(units, "Henry" , decodeUnit("V/(A/s)" , units) );
 
-        units[ "kWh" ]= decodeUnit("kW*hr" , units);
+		extend_with_short_metric_prefix(units, "Wb" , decodeUnit("V*s" , units) );
+		extend_with_long_metric_prefix(units, "Weber" , decodeUnit("V*s" , units) );
 
-        units[ "kgf" ]= decodeUnit("kg*9.80665*m/s^2" , units);
-        units[ "kilogram_force" ]= decodeUnit("kg*9.80665*m/s^2" , units);
+		extend_with_short_metric_prefix(units, "T" , decodeUnit("Wb/m^2" , units) );
+		extend_with_long_metric_prefix(units, "Tesla" , decodeUnit("Wb/m^2" , units) );
 
-        units[ "lbf" ]= decodeUnit("lb*9.80665*m/s^2" , units);
-        units[ "pound_force" ]= decodeUnit("lb*9.80665*m/s^2" , units);
-        
-        units[ "cheval_force" ]= decodeUnit("550*ft*lbf/s" , units);
-        units[ "horse_power" ]= decodeUnit("550*ft*lbf/s" , units);
+		extend_with_long_metric_prefix(units, "Gauss" , decodeUnit("1.0e-4*Tesla" , units) );
+		extend_with_long_metric_prefix(units, "Maxwell" , decodeUnit("1.0e-8*Wb" , units) );
 
-        units[ "btu" ]= decodeUnit("1054.68*J" , units);
-        units[ "british_thermal_unit" ]= decodeUnit("1054.68*J" , units);
+		// ------
+		// MARINE
+		// ------
+		units[ "n_m" ]= decodeUnit("1852*m" , units);
+		units[ "m_n" ]= decodeUnit("1852*m" , units);
+		units[ "nautical_mile" ]= decodeUnit("1852*m" , units);
+		units[ "nautical_miles" ]= decodeUnit("1852*m" , units);
+		units[ "mille_nautique" ]= decodeUnit("1852*m" , units);
+		units[ "milles_nautiques" ]= decodeUnit("1852*m" , units);
 
-        units[ "tep" ]= decodeUnit("42*GJ" , units);
-        units[ "tonne_equivalent_petrole" ]= decodeUnit("42*GJ" , units);
-    }
+		units[ "kt" ]= decodeUnit("n_m / hr" , units);
+		units[ "knot" ]= decodeUnit("n_m / hr" , units);
+		units[ "knots" ]= decodeUnit("n_m / hr" , units);
+		units[ "noeud" ]= decodeUnit("n_m / hr" , units);
+		units[ "noeuds" ]= decodeUnit("n_m / hr" , units);
+
+		// international cable (not US nor british)
+		units[ "cable" ]= decodeUnit("n_m / 10" , units);
+		units[ "cables" ]= decodeUnit("n_m / 10" , units);
+		units[ "encablure" ]= decodeUnit("n_m / 10" , units);
+		units[ "encablures" ]= decodeUnit("n_m / 10" , units);
+
+		// OLD CGS SYSTEM
+		extend_with_long_metric_prefix(units, "dyne" , decodeUnit("cm*g/s^2" , units) );
+		extend_with_long_metric_prefix(units, "dynes" , decodeUnit("cm*g/s^2" , units) );
+
+		extend_with_long_metric_prefix(units, "erg" , decodeUnit("cm^2*g/s^2" , units) );
+		extend_with_long_metric_prefix(units, "ergs" , decodeUnit("cm^2*g/s^2" , units) );
+
+		extend_with_long_metric_prefix(units, "poise" , decodeUnit("g/(cm*s)" , units) );
+		extend_with_long_metric_prefix(units, "poises" , decodeUnit("g/(cm*s)" , units) );
+
+		extend_with_long_metric_prefix(units, "Stokes" , decodeUnit("cm^2/s" , units) );
+
+		extend_with_short_metric_prefix(units, "Gal" , decodeUnit("cm/s^2" , units) );
+		extend_with_long_metric_prefix(units, "Galileo" , decodeUnit("cm/s^2" , units) );
+
+		// OTHER
+		units[ "rpm" ]= units[ "rev" ] / units[ "min" ];
+
+		units[ "mph" ]= decodeUnit("mile/hour" , units);
+		units[ "mile_per_hour" ]= decodeUnit("mile/hour" , units);
+		units[ "miles_per_hour" ]= decodeUnit("mile/hour" , units);
+
+		units[ "kWh" ]= decodeUnit("kW*hr" , units);
+
+		units[ "kgf" ]= decodeUnit("kg*9.80665*m/s^2" , units);
+		units[ "kilogram_force" ]= decodeUnit("kg*9.80665*m/s^2" , units);
+
+		units[ "lbf" ]= decodeUnit("lb*9.80665*m/s^2" , units);
+		units[ "pound_force" ]= decodeUnit("lb*9.80665*m/s^2" , units);
+
+		units[ "cheval_force" ]= decodeUnit("550*ft*lbf/s" , units);
+		units[ "horse_power" ]= decodeUnit("550*ft*lbf/s" , units);
+
+		units[ "btu" ]= decodeUnit("1054.68*J" , units);
+		units[ "british_thermal_unit" ]= decodeUnit("1054.68*J" , units);
+
+		units[ "tep" ]= decodeUnit("42*GJ" , units);
+		units[ "tonne_equivalent_petrole" ]= decodeUnit("42*GJ" , units);
+	}
 	return units;
 }
 
