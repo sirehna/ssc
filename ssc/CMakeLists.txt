@@ -79,16 +79,16 @@ write_sha_checker(${short_hash} ${GIT_SHA1} "check_ssc_version.hpp")
 
 # Configure the package
 IF(WIN32)
-    SET(ssc_INCLUDE_DIRS "\${CMAKE_CURRENT_LIST_DIR}/../../../include/ssc-${ssc_VERSION}")
+    SET(ssc_INCLUDE_DIRS "\${CMAKE_CURRENT_LIST_DIR}/../../../include")
 ELSE()
-    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc-${ssc_VERSION})
+    SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include/ssc)
 ENDIF()
 MESSAGE(STATUS "ssc_INCLUDE_DIRS :${ssc_INCLUDE_DIRS}")
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX :${CMAKE_INSTALL_PREFIX}")
 SET(SSC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 INCLUDE(CMakePackageConfigHelpers)
-SET(ConfigPackageLocation lib/${PROJECT_NAME}-${${PROJECT_NAME}_VERSION_STR}/cmake)
+SET(ConfigPackageLocation lib/${PROJECT_NAME}/cmake)
 CONFIGURE_PACKAGE_CONFIG_FILE(
        ssc-config.cmake.in
        "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"

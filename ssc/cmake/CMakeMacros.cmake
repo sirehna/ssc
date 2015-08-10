@@ -182,7 +182,7 @@ MACRO(append_copyright_and_install module_name header copyright)
     get_filename_component(b ${header} NAME)
     append_copyright(${header} ${CMAKE_CURRENT_BINARY_DIR}/${module_name}/${b} ${copyright})
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${module_name}/${b}
-            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc/${module_name}
+            DESTINATION include/ssc/${module_name}
             COMPONENT ${module_name}
             )
 ENDMACRO()
@@ -195,7 +195,7 @@ MACRO(add_headers name copyright)
     ENDFOREACH()
     create_wrapper_hpp(${name} "${headers}" "${copyright}")
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${name}.hpp
-            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc
+            DESTINATION include/ssc
             COMPONENT ${name}
             )
 
@@ -262,6 +262,6 @@ MACRO(write_sha_checker short_sha long_sha filename)
     FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "#endif")
     FILE(APPEND ${CMAKE_CURRENT_BINARY_DIR}/${filename} "\n")
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${filename}
-            DESTINATION include/ssc-${${PROJECT_NAME}_VERSION}/ssc
+            DESTINATION include/ssc
             )
 ENDMACRO()
