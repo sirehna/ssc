@@ -75,7 +75,7 @@ SET(${PROJECT_NAME}_VERSION_STR
 #############################################################################
 
 get_short_git_hash(short_hash)
-write_sha_checker(${short_hash} ${GIT_SHA1} "check_ssc_version.hpp")
+write_sha_checker(${short_hash} ${GIT_SHA1} ${${PROJECT_NAME}_MAJOR_VERSION} ${${PROJECT_NAME}_MINOR_VERSION} "check_ssc_version.hpp")
 
 # Configure the package
 IF(WIN32)
