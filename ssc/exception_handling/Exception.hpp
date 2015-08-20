@@ -3,7 +3,7 @@
 
 #include <string>
 #include <exception>
-#include <iostream>
+#include <sstream>
 
 namespace ssc
 {
@@ -32,11 +32,9 @@ namespace ssc
 #define QUOTEME_(x) #x
 #define QUOTEME(x) QUOTEME_(x)
 #define THROW(function,exception, message)\
-    std::string __msg215("In file " __FILE__ ", line " QUOTEME(__LINE__) ", function ");\
-    __msg215 += function;\
-    __msg215 += ": ";\
-    __msg215 += message;\
-    exception exc(message, __FILE__, function, __LINE__);\
+    std::stringstream __ss;\
+    __ss << message;\
+    exception exc(__ss.str(), __FILE__, function, __LINE__);\
     throw exc;
 #endif
 

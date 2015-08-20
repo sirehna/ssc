@@ -5,7 +5,7 @@
  *      Author: cady
  */
 
-#include <sstream>
+#include <iostream> // For cerr
 
 #include <ssc/integrate/QuadPack.hpp>
 
