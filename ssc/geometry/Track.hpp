@@ -24,8 +24,8 @@ namespace ssc
         class TrackException : public ::ssc::exception_handling::Exception
         {
             public:
-                TrackException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                TrackException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

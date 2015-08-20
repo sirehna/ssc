@@ -12,7 +12,8 @@ namespace ssc
         class StateGeneratorException : public ssc::exception_handling::Exception
         {
             public:
-                StateGeneratorException(const char* s) : Exception(s) {}
+                StateGeneratorException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                                                Exception(message, file, function, line){}
         };
 
 

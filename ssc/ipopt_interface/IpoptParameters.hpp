@@ -27,8 +27,8 @@ namespace ssc
         class PositiveDoubleException : public ssc::exception_handling::Exception
         {
             public:
-                PositiveDoubleException(const char* s) :
-                        Exception(s)
+                PositiveDoubleException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

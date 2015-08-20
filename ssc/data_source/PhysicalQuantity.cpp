@@ -15,8 +15,8 @@ using namespace ssc::data_source;
 class PhysicalQuantityException : public ::ssc::exception_handling::Exception
 {
     public:
-        PhysicalQuantityException(const char* s) :
-            ::ssc::exception_handling::Exception(s)
+        PhysicalQuantityException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                                Exception(message, file, function, line)
         {
         }
 };

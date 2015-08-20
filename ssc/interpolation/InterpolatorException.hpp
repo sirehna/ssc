@@ -7,8 +7,8 @@ namespace ssc
         class InterpolatorException : public ::ssc::exception_handling::Exception
         {
             public:
-                InterpolatorException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                InterpolatorException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

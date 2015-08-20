@@ -24,8 +24,8 @@ namespace ssc
         class SignalContainerException : public ::ssc::exception_handling::Exception
         {
             public:
-                SignalContainerException(const char* s) :
-                        Exception(s)
+                SignalContainerException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

@@ -20,8 +20,8 @@ namespace ssc
         class FunctorAlgebraException : public ssc::exception_handling::Exception
         {
             public:
-                FunctorAlgebraException(const char* s) :
-                        Exception(s)
+                FunctorAlgebraException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

@@ -13,8 +13,8 @@
 class IpoptSolverException : public ssc::exception_handling::Exception
 {
     public:
-        IpoptSolverException(const char* s) :
-                Exception(s)
+        IpoptSolverException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+            Exception(message, file, function, line)
         {
         }
 };
