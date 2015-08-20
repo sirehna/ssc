@@ -19,8 +19,8 @@ namespace ssc
         class IndexFinderException : public ::ssc::exception_handling::Exception
         {
             public:
-                IndexFinderException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                IndexFinderException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

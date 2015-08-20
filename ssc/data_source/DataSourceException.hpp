@@ -17,8 +17,8 @@ namespace ssc
         class DataSourceException : public ::ssc::exception_handling::Exception
         {
             public:
-                DataSourceException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                DataSourceException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

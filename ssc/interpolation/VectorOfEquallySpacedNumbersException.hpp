@@ -17,8 +17,8 @@ namespace ssc
         class VectorOfEquallySpacedNumbersException: public ::ssc::exception_handling::Exception
         {
             public:
-                VectorOfEquallySpacedNumbersException(const char* s) :
-                    ::ssc::exception_handling::Exception(s) {
+                VectorOfEquallySpacedNumbersException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line) {
                 }
         };
     }

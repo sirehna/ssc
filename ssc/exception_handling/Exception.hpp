@@ -12,17 +12,19 @@ namespace ssc
         class Exception : public std::exception
         {
             public:
-                Exception(const char* message_);
+                Exception(const std::string& message, const std::string& file, const std::string& function, const unsigned int line);
                 Exception(const Exception& rhs);
 
                 ~Exception () throw ();
 
                 virtual const char* what() const throw();
+                std::string get_message() const;
 
             private:
                 Exception();
                 Exception& operator=(const Exception& rhs);
-                const char* message;
+                std::string full_message;
+                std::string short_message;
         };
     }
 }
@@ -34,7 +36,7 @@ namespace ssc
     __msg215 += function;\
     __msg215 += ": ";\
     __msg215 += message;\
-    exception exc(__msg215.c_str());\
+    exception exc(message, __FILE__, function, __LINE__);\
     throw exc;
 #endif
 

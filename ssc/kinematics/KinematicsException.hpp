@@ -17,8 +17,8 @@ namespace ssc
         class KinematicsException: public ::ssc::exception_handling::Exception
         {
             public:
-                KinematicsException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                KinematicsException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

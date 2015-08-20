@@ -26,8 +26,8 @@ namespace ssc
         class TwoDimensionalInterpolationException : public ::ssc::exception_handling::Exception
         {
             public:
-                TwoDimensionalInterpolationException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                TwoDimensionalInterpolationException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

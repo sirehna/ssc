@@ -15,7 +15,8 @@ namespace ssc
         class SparseMatrixException : public ssc::exception_handling::Exception
         {
             public:
-                SparseMatrixException(const char* s) : ssc::exception_handling::Exception(s) {}
+                SparseMatrixException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line) {}
         };
 
 

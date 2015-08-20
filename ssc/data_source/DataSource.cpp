@@ -17,8 +17,8 @@ const std::string ssc::data_source::DataSource::default_setter = "Unregistered D
 class CycleException : public ssc::data_source::DataSourceException
 {
     public:
-        CycleException(const char* s) :
-            DataSourceException(s)
+        CycleException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+            DataSourceException(message, file, function, line)
         {
         }
 };

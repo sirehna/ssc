@@ -17,8 +17,8 @@ namespace ssc
         class ParabolicInterpolationException : public ::ssc::exception_handling::Exception
         {
             public:
-                ParabolicInterpolationException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                ParabolicInterpolationException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

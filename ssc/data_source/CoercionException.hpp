@@ -17,8 +17,8 @@ namespace ssc
         class CoercionException : public ::ssc::exception_handling::Exception
         {
             public:
-                CoercionException(const char* s) :
-                        Exception(s)
+                CoercionException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                        Exception(message, file, function, line)
                 {
                 }
         };

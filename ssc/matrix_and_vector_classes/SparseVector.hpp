@@ -15,7 +15,8 @@ namespace ssc
         class SparseVectorException : public ssc::exception_handling::Exception
         {
             public:
-                SparseVectorException(const char* str) : ssc::exception_handling::Exception(str) {}
+                SparseVectorException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line) {}
         };
 
         class SparseVector

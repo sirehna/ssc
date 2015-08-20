@@ -17,8 +17,8 @@ namespace ssc
         class SplinesException : public ::ssc::exception_handling::Exception
         {
             public:
-                SplinesException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                SplinesException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };

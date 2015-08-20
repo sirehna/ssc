@@ -19,8 +19,8 @@ namespace ssc
         class LegException : public ::ssc::exception_handling::Exception
         {
             public:
-                LegException(const char* s) :
-                    ::ssc::exception_handling::Exception(s)
+                LegException(const std::string& message, const std::string& file, const std::string& function, const unsigned int line) :
+                    Exception(message, file, function, line)
                 {
                 }
         };
