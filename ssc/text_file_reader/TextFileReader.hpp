@@ -36,7 +36,7 @@ namespace ssc
 
             private:
                 TextFileReader();
-                void fill(std::stringstream& ss, const std::string& filename) const;
+                void fill(const std::string& filename);
                 std::string contents;
         };
     }
