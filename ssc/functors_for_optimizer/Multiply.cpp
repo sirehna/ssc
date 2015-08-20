@@ -5,6 +5,8 @@
  *  \author cec
  */
 
+#include <iostream> // For std::cout
+
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
