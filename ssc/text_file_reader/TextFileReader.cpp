@@ -21,7 +21,7 @@ void TextFileReader::fill(const std::string& filename)
     std::ifstream t(filename.c_str());
 
     current_input_file.seekg(0, std::ios::end);
-    contents.reserve(contents.size() + current_input_file.tellg());
+    contents.reserve(contents.size() + (size_t)current_input_file.tellg());
     current_input_file.seekg(0, std::ios::beg);
 
     contents.append(std::istreambuf_iterator<char>(current_input_file),
