@@ -83,3 +83,20 @@ TEST_F(TextFileReaderTest, should_represent_newlines_correctly)
     ASSERT_EQ(contents_file, reader.get_contents());
 }
 
+TEST_F(TextFileReaderTest, should_issue_a_warning_if_a_file_is_empty)
+{
+    std::stringstream error_stream;
+    // Redirect cerr to our stringstream buffer or any other ostream
+    std::streambuf* orig = std::cerr.rdbuf(error_stream.rdbuf());
+    ASSERT_TRUE(error_stream.str().empty());
+    // Call TextFileReader
+	const std::string filename = "data_for_TextFileReaderTest";
+    create_file(filename, "");
+    TextFileReader(std::vector<std::string>(1, filename));
+	remove_file_if_it_exists(filename);
+    const std::string error = error_stream.str();
+    // Restore cerr's buffer
+    std::cerr.rdbuf(orig);
+    ASSERT_FALSE(error.empty());
+}
+

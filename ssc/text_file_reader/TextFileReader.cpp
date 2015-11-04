@@ -19,9 +19,15 @@ void TextFileReader::fill(const std::string& filename)
     std::ifstream current_input_file(filename.c_str(),std::ifstream::in);
 
     std::ifstream t(filename.c_str());
-
+    
     current_input_file.seekg(0, std::ios::end);
-    contents.reserve(contents.size() + (size_t)current_input_file.tellg());
+    const size_t nb_of_characters = (size_t)current_input_file.tellg();
+    if (nb_of_characters == 0)
+    {
+        std::cerr << "Warning: file '" << filename << "' is empty.";
+        return;
+    }
+    contents.reserve(contents.size() + nb_of_characters);
     current_input_file.seekg(0, std::ios::beg);
 
     contents.append(std::istreambuf_iterator<char>(current_input_file),
