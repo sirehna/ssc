@@ -17,6 +17,10 @@ using namespace ssc::text_file_reader;
 void TextFileReader::fill(const std::string& filename)
 {
     std::ifstream current_input_file(filename.c_str(),std::ifstream::in);
+    if (not(current_input_file.is_open()))
+    {
+        THROW(__PRETTY_FUNCTION__, TextFileReaderException, "Unable to open file '" << filename << "' for reading: maybe the file does not exist or you do not have read permission");
+    }
 
     std::ifstream t(filename.c_str());
     
