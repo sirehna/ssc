@@ -10,6 +10,7 @@
 
 #include "TextFileReaderTest.hpp"
 #include "ssc/text_file_reader/TextFileReader.hpp"
+#include "ssc/text_file_reader/TextFileReaderException.hpp"
 #include "ssc/macros/test_macros.hpp"
 
 using namespace ssc::text_file_reader;
@@ -100,3 +101,9 @@ TEST_F(TextFileReaderTest, should_issue_a_warning_if_a_file_is_empty)
     ASSERT_FALSE(error.empty());
 }
 
+TEST_F(TextFileReaderTest, should_throw_if_file_does_not_exist)
+{
+    const std::string filename = "data_for_TextFileReaderTest";
+	remove_file_if_it_exists(filename);
+    ASSERT_THROW(TextFileReader(std::vector<std::string>(1, filename)), TextFileReaderException);
+}
