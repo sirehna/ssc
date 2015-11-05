@@ -9,7 +9,6 @@
 #define PIECEWISECONSTANTVARIABLESTEP_HPP_
 
 #include <vector>
-#include <sstream>
 
 #include "ssc/exception_handling/Exception.hpp"
 #include "ssc/interpolation/VariableStepInterpolation.hpp"
@@ -64,18 +63,14 @@ namespace ssc
                 y_(y),val(T())
                 {
                     const size_t n = x.size();
+                    const std::string context = "When interpolating between x and y, ";
                     if (y.size() != n)
                     {
-                        std::stringstream ss;
-                        ss << "x has size " << n
-                           << ", but y has size " << y.size() << ": they should be the same size";
-                        THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
+                        THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, context << "there should be as many x-values as y-values: received " << n << " x-values but " << y.size() << " y-values.");
                     }
                     if (x.size() < 2)
                     {
-                        std::stringstream ss;
-                        ss << "x has size " << n << " but size should be at least 2";
-                        THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, ss.str());
+                        THROW(__PRETTY_FUNCTION__, PiecewiseConstantVariableStepException, context << "there should be at least two x-values. Received " << x.size());
                     }
                 }
 
