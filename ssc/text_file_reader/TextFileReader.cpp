@@ -31,9 +31,11 @@ void TextFileReader::fill(const std::string& filename)
         std::cerr << "Warning: file '" << filename << "' is empty.";
         return;
     }
-    contents.reserve(contents.size() + nb_of_characters);
+    const bool initially_empty = contents.empty();
+    if (initially_empty) contents.reserve(contents.size() + nb_of_characters);
+    else                 contents.reserve(contents.size() + nb_of_characters+2);
     current_input_file.seekg(0, std::ios::beg);
-
+    if (not(initially_empty)) contents.append("\n\n");
     contents.append(std::istreambuf_iterator<char>(current_input_file),
                     std::istreambuf_iterator<char>());
 }

@@ -66,7 +66,8 @@ TEST_F(TextFileReaderTest, example)
 	remove_file_if_it_exists(filename2);
 //! [TextFileReaderTest example]
 //! [TextFileReaderTest expected output]
-    ASSERT_EQ(contents_file1+contents_file2, reader.get_contents());
+    const std::string newline = "\n";
+    ASSERT_EQ(contents_file1+newline+newline+contents_file2, reader.get_contents());
 //! [TextFileReaderTest expected output]
 }
 
