@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(SYSTEM websocketpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 
-FOREACH(f DemoWebSocket
+FOREACH(f #DemoWebSocket
           DemoWebSocketBug
           DemoWebSocketClient
           DemoWebSocketServerSingleClient
