@@ -15,8 +15,8 @@ namespace ssc
         class Node;
 
         class State;
-        typedef std::tr1::shared_ptr<Node> NodePtr;
-        typedef std::tr1::shared_ptr<State> StatePtr;
+        typedef TR1(shared_ptr)<Node> NodePtr;
+        typedef TR1(shared_ptr)<State> StatePtr;
 
         typedef std::map<NodePtr,NodePtr> FactorMap;
 

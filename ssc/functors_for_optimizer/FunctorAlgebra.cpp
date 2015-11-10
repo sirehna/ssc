@@ -343,27 +343,23 @@ namespace ssc
             return PowPtr(new Pow(n1,n2));
         }
 
-        NullPtr pow(const Null& n1, const Node& n2)
+        NullPtr pow(const Null& , const Node& )
         {
-            if (n1.get_lambda()()+n2.get_lambda()()) {}
             return NullPtr(new Null());
         }
 
-        NullPtr pow(const Null& n1, const NodePtr& n2)
+        NullPtr pow(const Null& , const NodePtr& )
         {
-            if (n1.get_lambda()()+n2->get_lambda()()) {}
             return NullPtr(new Null());
         }
 
-        NullPtr pow(const NullPtr& n1, const Node& n2)
+        NullPtr pow(const NullPtr& n1, const Node& )
         {
-            if (n2.get_lambda()()) {}
             return n1;
         }
 
-        NullPtr pow(const NullPtr& n1, const NodePtr& n2)
+        NullPtr pow(const NullPtr& n1, const NodePtr& )
         {
-            if (n2->get_lambda()()) {}
             return n1;
         }
 

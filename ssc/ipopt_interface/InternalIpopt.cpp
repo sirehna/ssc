@@ -14,7 +14,7 @@
 
 using namespace ssc::ipopt_interface;
 
-InternalIpopt::InternalIpopt(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
+InternalIpopt::InternalIpopt(const TR1(shared_ptr)<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
 problem_(problem),
 objective_function(problem_->get_objective_function()),
 constraints(problem_->get_constraints()),
@@ -107,14 +107,14 @@ bool InternalIpopt::get_bounds_info(Index n, Number* x_l, Number* x_u,
     (void) g_u;
     (void) x_l;
     (void) x_u;
-    problem_->get_state_bounds(n, x_l, x_u);
-    problem_->get_constraint_bounds(m, g_l, g_u);
+    problem_->get_state_bounds((size_t)n, x_l, x_u);
+    problem_->get_constraint_bounds((size_t)m, g_l, g_u);
     if (show_evaluated_points)
     {
-        std::cout << "lower state bounds: " << display_array(x_l,n) << std::endl;
-        std::cout << "upper state bounds: " << display_array(x_u,n) << std::endl;
-        std::cout << "lower constraint bounds: " << display_array(g_l,m) << std::endl;
-        std::cout << "upper constraint bounds: " << display_array(g_u,m) << std::endl;
+        std::cout << "lower state bounds: " << display_array(x_l,(size_t)n) << std::endl;
+        std::cout << "upper state bounds: " << display_array(x_u,(size_t)n) << std::endl;
+        std::cout << "lower constraint bounds: " << display_array(g_l,(size_t)m) << std::endl;
+        std::cout << "upper constraint bounds: " << display_array(g_u,(size_t)m) << std::endl;
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::get_bounds_info" << std::endl;
     return true;
@@ -165,7 +165,7 @@ bool InternalIpopt::eval_f(Index n, const Number* x, bool new_x, Number& obj_val
     if (show_evaluated_points)
     {
         std::cout << "eval_f("
-                  << display_array(x,n)
+                  << display_array(x,(size_t)n)
                   << ") = "
                   << obj_value
                   << std::endl;
@@ -201,9 +201,9 @@ bool InternalIpopt::eval_grad_f(Index n, const Number* x, bool new_x, Number* gr
     if (show_evaluated_points)
     {
         std::cout << "eval_grad_f("
-                  << display_array(x,n)
+                  << display_array(x,(size_t)n)
                   << ") = "
-                  << display_array(grad_f,n)
+                  << display_array(grad_f,(size_t)n)
                   << std::endl;
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_grad_f" << std::endl;
@@ -236,9 +236,9 @@ bool InternalIpopt::eval_g(Index n, const Number* x, bool new_x, Index m, Number
     if (show_evaluated_points)
     {
         std::cout << "eval_g("
-                  << display_array(x,n)
+                  << display_array(x,(size_t)n)
                   << ") = "
-                  << display_array(g,m)
+                  << display_array(g,(size_t)m)
                   << std::endl;
     }
     if (trace_function_calls) std::cout << "exiting InternalIpopt::eval_g" << std::endl;
@@ -286,7 +286,7 @@ bool InternalIpopt::eval_jac_g(Index n, const Number* x, bool new_x,
         if (show_evaluated_points)
         {
             std::cout << "eval_jac_g("
-                      << display_array(x,n)
+                      << display_array(x,(size_t)n)
                       << ") = \n";
             for (size_t i = 0 ; i < (size_t)nele_jac ; ++i)
             {
@@ -338,7 +338,7 @@ bool InternalIpopt::eval_h(Index n, const Number* x, bool new_x,
         if (show_evaluated_points)
         {
             std::cout << "eval_h("
-                      << display_array(x,n)
+                      << display_array(x,(size_t)n)
                       << ") = \n";
             for (size_t i = 0 ; i < (size_t)nele_hess ; ++i)
             {

@@ -27,7 +27,7 @@ class IpoptSolver::IpoptSolverPimpl
 {
     public:
         ~IpoptSolverPimpl(){}
-        IpoptSolverPimpl(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
+        IpoptSolverPimpl(const TR1(shared_ptr)<ssc::optimizer::OptimizationProblem>& problem, IpoptParameters parameters) : nlp(new InternalIpopt(problem, parameters)),
                                                                app(IpoptApplicationFactory())
         {
             if (problem->has_binary_variables())
@@ -96,12 +96,12 @@ class IpoptSolver::IpoptSolverPimpl
 
 
 
-IpoptSolver::IpoptSolver(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
+IpoptSolver::IpoptSolver(const TR1(shared_ptr)<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters) :
         pimpl(new IpoptSolverPimpl(problem, parameters))
 {
 }
 
-IpoptSolver::IpoptSolver() : pimpl(std::tr1::shared_ptr<IpoptSolverPimpl>())
+IpoptSolver::IpoptSolver() : pimpl(TR1(shared_ptr)<IpoptSolverPimpl>())
 {
 
 }

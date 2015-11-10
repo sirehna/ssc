@@ -52,7 +52,7 @@ void IpoptSolverTest::TearDown()
 TEST_F(IpoptSolverTest, example)
 {
 //! [IpoptSolverTest example]
-    std::tr1::shared_ptr<OptimizationProblem> hs71(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> hs71(new OptimizationProblem());
     hs71->minimize(x1*x4*(x1+x2+x3)+x3)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
@@ -83,7 +83,7 @@ TEST_F(IpoptSolverTest, example)
 
 TEST_F(IpoptSolverTest, rosenbrock_banana)
 {
-    std::tr1::shared_ptr<OptimizationProblem> rosenbrock(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> rosenbrock(new OptimizationProblem());
     rosenbrock->minimize(100*pow(x2-pow(x1,2),2)+pow(x1-1,2));
     IpoptParameters ipopt_parameters;
     ipopt_parameters.print_level = 5;
@@ -100,7 +100,7 @@ TEST_F(IpoptSolverTest, rosenbrock_banana)
 
 TEST_F(IpoptSolverTest, test_01)
 {
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     Parameter c0(2);
     pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
@@ -113,7 +113,7 @@ TEST_F(IpoptSolverTest, test_01)
 
 TEST_F(IpoptSolverTest, test_02)
 {
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     Parameter c0(2);
     pb->minimize(pow(x1*x1-c0,2));
     IpoptSolver optimize(pb);
@@ -133,7 +133,7 @@ TEST_F(IpoptSolverTest, DISABLED_old_maroff_allocation_problem_does_not_converge
     const double theta = PI/4.;
     Parameter b1(cos(theta));
     Parameter b2(sin(theta));
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     pb->minimize(pow(x1,3)+pow(x2,3))
        .subject_to(b1,(pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4)),b1)
        .subject_to(b2,(pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4)),b2)
@@ -162,7 +162,7 @@ TEST_F(IpoptSolverTest, new_allocation_problem_converges)
     const double theta = PI/4.;
     Parameter b1(cos(theta));
     Parameter b2(sin(theta));
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     const double p = 1000; // Penalty factor
     pb->minimize((pow(x1,3)+pow(x2,3))/2
                 +p*pow((pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4))-b1,2)/2
@@ -191,7 +191,7 @@ TEST_F(IpoptSolverTest, new_allocation_problem_converges)
 
 TEST_F(IpoptSolverTest, can_solve_a_maximization_problem)
 {
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     pb->maximize(143*x1+60*x2)
       .subject_to(120*x1 + 210*x2, 15000)
       .subject_to(110*x1 + 30*x2, 4000)
@@ -209,7 +209,7 @@ TEST_F(IpoptSolverTest, can_solve_a_maximization_problem)
 
 TEST_F(IpoptSolverTest, cannot_use_ipopt_when_there_are_binary_variables)
 {
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     pb->maximize(143*x1+60*x2)
       .subject_to(120*x1 + 210*x2, 15000)
       .subject_to(110*x1 + 30*x2, 4000)
@@ -220,7 +220,7 @@ TEST_F(IpoptSolverTest, cannot_use_ipopt_when_there_are_binary_variables)
 
 TEST_F(IpoptSolverTest, cannot_use_ipopt_when_there_are_integer_variables)
 {
-    std::tr1::shared_ptr<OptimizationProblem> pb(new OptimizationProblem());
+    TR1(shared_ptr)<OptimizationProblem> pb(new OptimizationProblem());
     pb->maximize(143*x1+60*x2)
       .subject_to(120*x1 + 210*x2, 15000)
       .subject_to(110*x1 + 30*x2, 4000)

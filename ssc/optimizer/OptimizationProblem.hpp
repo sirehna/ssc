@@ -82,7 +82,7 @@ namespace ssc
             private:
                 void check_state_for_bound_setting(const ssc::functors_for_optimizer::StatePtr& state) const;
                 class OptimizationProblem_pimpl;
-                std::tr1::shared_ptr<OptimizationProblem_pimpl> pimpl;
+                TR1(shared_ptr)<OptimizationProblem_pimpl> pimpl;
         };
 
         ::std::ostream& operator<<(::std::ostream& os, const OptimizationProblem& pb);

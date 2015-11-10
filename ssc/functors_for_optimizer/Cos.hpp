@@ -36,7 +36,7 @@ namespace ssc
                 void update_lambda();
         };
 
-        typedef std::tr1::shared_ptr<Cos> CosPtr;
+        typedef TR1(shared_ptr)<Cos> CosPtr;
     }
 }
 

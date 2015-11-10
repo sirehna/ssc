@@ -42,7 +42,7 @@ namespace ssc
                 void update_lambda();
         };
 
-        typedef std::tr1::shared_ptr<Divide> DividePtr;
+        typedef TR1(shared_ptr)<Divide> DividePtr;
     }
 }
 #endif /* DIVIDE_HPP_ */

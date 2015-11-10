@@ -45,13 +45,13 @@ namespace ssc
                 void update_lambda();
 
             protected:
-                std::tr1::shared_ptr<double> ptr;
+                TR1(shared_ptr)<double> ptr;
                 //friend double& operator*(const Parameter& s);
                 int nb_of_copies;
 
         };
 
-        typedef std::tr1::shared_ptr<Parameter> ParameterPtr;
+        typedef TR1(shared_ptr)<Parameter> ParameterPtr;
     }
 }
 #endif /* PARAMETER_HPP_ */

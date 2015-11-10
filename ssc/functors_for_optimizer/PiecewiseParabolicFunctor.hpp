@@ -42,11 +42,11 @@ namespace ssc
                 void update_lambda();
             private:
                 PiecewiseParabolicFunctor();
-                std::tr1::shared_ptr<ssc::interpolation::ParabolicInterpolation> f;
+                TR1(shared_ptr)<ssc::interpolation::ParabolicInterpolation> f;
                 double xmin_;
                 double xmax_;
                 std::vector<double> dy;
-                std::tr1::shared_ptr<State> state;
+                TR1(shared_ptr)<State> state;
         };
     }
 }

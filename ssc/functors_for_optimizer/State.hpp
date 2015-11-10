@@ -37,7 +37,7 @@ namespace ssc
                 size_t index;
         };
 
-        typedef std::tr1::shared_ptr<State> StatePtr;
+        typedef TR1(shared_ptr)<State> StatePtr;
     }
 }
 

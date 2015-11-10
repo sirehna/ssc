@@ -26,7 +26,7 @@ namespace ssc
     namespace functors_for_optimizer
     {
         class State;
-        typedef std::tr1::shared_ptr<State> StatePtr;
+        typedef TR1(shared_ptr)<State> StatePtr;
         typedef std::vector<StatePtr> StateList;
 
 
@@ -49,7 +49,7 @@ namespace ssc
 
             private:
                 class StateGetter_pimpl;
-                std::tr1::shared_ptr<StateGetter_pimpl> pimpl;
+                TR1(shared_ptr)<StateGetter_pimpl> pimpl;
         };
     }
 }

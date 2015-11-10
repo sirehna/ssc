@@ -25,7 +25,7 @@ namespace ssc
     namespace functors_for_optimizer
     {
         class Constant;
-        typedef std::tr1::shared_ptr<Constant> ConstantPtr;
+        typedef TR1(shared_ptr)<Constant> ConstantPtr;
 
         class Constant : public Nullary
         {

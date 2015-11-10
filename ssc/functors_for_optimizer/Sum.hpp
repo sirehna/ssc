@@ -46,7 +46,7 @@ namespace ssc
                 std::vector<NodePtr> factorize_operands() const;
         };
 
-        typedef std::tr1::shared_ptr<Sum> SumPtr;
+        typedef TR1(shared_ptr)<Sum> SumPtr;
     }
 }
 #endif /* SUM_HPP_ */
