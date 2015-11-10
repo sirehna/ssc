@@ -36,13 +36,13 @@ namespace ssc
         class IpoptSolver
         {
             public:
-                IpoptSolver(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters = IpoptParameters());
+                IpoptSolver(const TR1(shared_ptr)<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters = IpoptParameters());
                 IpoptSolver();
                 ssc::optimizer::OptimizationResult solve(const std::vector<double>& starting_point);
 
             private:
                 class IpoptSolverPimpl;
-                std::tr1::shared_ptr<IpoptSolverPimpl> pimpl;
+                TR1(shared_ptr)<IpoptSolverPimpl> pimpl;
         };
     }
 }

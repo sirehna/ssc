@@ -38,7 +38,7 @@ namespace ssc
                 std::string get_type() const;
         };
 
-        typedef std::tr1::shared_ptr<Sin> SinPtr;
+        typedef TR1(shared_ptr)<Sin> SinPtr;
     }
 }
 #endif /* SIN_HPP_ */

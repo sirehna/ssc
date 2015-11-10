@@ -34,7 +34,7 @@ namespace ssc
                 std::string get_type() const;
                 void update_lambda();
         };
-        typedef std::tr1::shared_ptr<Ln> LnPtr;
+        typedef TR1(shared_ptr)<Ln> LnPtr;
     }
 }
 

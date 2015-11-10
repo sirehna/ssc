@@ -47,7 +47,7 @@ namespace ssc
         {
             public:
               /** default constructor */
-                InternalIpopt(const std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters);
+                InternalIpopt(const TR1(shared_ptr)<ssc::optimizer::OptimizationProblem>& problem, const IpoptParameters& parameters);
 
                void set_starting_point(const std::vector<double>& start);
 
@@ -127,7 +127,7 @@ namespace ssc
                 std::string display_array(const double* v, const size_t& n) const;
                 std::string display_vector(const std::vector<double>& v) const;
 
-                std::tr1::shared_ptr<ssc::optimizer::OptimizationProblem> problem_;
+                TR1(shared_ptr)<ssc::optimizer::OptimizationProblem> problem_;
                 std::function<double()> objective_function;
                 std::vector<std::function<double()> > constraints;
                 ssc::functors_for_optimizer::Grad grad_objective_function;

@@ -46,7 +46,7 @@ namespace ssc
                 std::vector<NodePtr> group_factors_together() const;
         };
 
-        typedef std::tr1::shared_ptr<Multiply> Mult;
+        typedef TR1(shared_ptr)<Multiply> Mult;
         FactorMap operator+(const FactorMap& a, const FactorMap& b);
     }
 }

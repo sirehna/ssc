@@ -39,7 +39,7 @@ namespace ssc
                 bool is_constant() const;
                 void update_lambda();
         };
-        typedef std::tr1::shared_ptr<Null> NullPtr;
+        typedef TR1(shared_ptr)<Null> NullPtr;
     }
 }
 #endif /* NULL_HPP_ */

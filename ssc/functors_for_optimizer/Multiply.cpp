@@ -92,7 +92,7 @@ NodePtr Multiply::diff(const StatePtr& state) const
     for (size_t i = 0 ; i < n ; ++i)
     {
         std::vector<NodePtr> all_sons_except_i = sons;
-        all_sons_except_i.erase(all_sons_except_i.begin()+i);
+        all_sons_except_i.erase(all_sons_except_i.begin()+(long)i);
         std::vector<NodePtr> prod = all_sons_except_i;
         auto new_end = std::copy_if(all_sons_except_i.begin(),all_sons_except_i.end(), prod.begin(), not_equal_to_one);
         prod.erase(new_end, prod.end());
