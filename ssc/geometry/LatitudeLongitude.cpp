@@ -12,6 +12,9 @@
 
 using namespace ssc::geometry;
 
+LatitudeLongitude::LatitudeLongitude() : lat(0), lon(0)
+{}
+
 LatitudeLongitude::LatitudeLongitude(const double latitude, const double longitude) : lat(latitude), lon(longitude)
 {
     if (fabs(latitude)>90)

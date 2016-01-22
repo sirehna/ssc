@@ -41,6 +41,7 @@ namespace ssc
         class LatitudeLongitude
         {
             public:
+                LatitudeLongitude();
                 LatitudeLongitude(const double latitude_in_degrees, const double longitude_in_degrees);
                 double lat;
                 double lon;
