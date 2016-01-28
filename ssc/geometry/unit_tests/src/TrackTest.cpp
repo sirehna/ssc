@@ -283,6 +283,6 @@ TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_to_clos
     });
     const Track track(waypoints, new ShortestPathLegChain());
     const LatitudeLongitude point(48.1212583333333,-5.18037333333333);
-    ASSERT_DOUBLE_EQ(0, track.distance_from_beginning_of_track_to_closest_point(point));
+    ASSERT_NEAR(0, track.distance_from_beginning_of_track_to_closest_point(point), 1E-10);
 }
 
