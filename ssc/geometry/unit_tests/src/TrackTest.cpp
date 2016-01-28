@@ -268,4 +268,21 @@ TEST_F(TrackTest, should_throw_if_more_than_one_point_at_90_deg_latitude)
     ASSERT_THROW(Track t(waypoints, new ShortestPathLegChain()), TrackException);
 }
 
+TEST_F(TrackTest, should_be_able_to_compute_distance_from_start_of_track_to_closest_point)
+{
+    const std::vector<LatitudeLongitude> waypoints({
+                                                    LatitudeLongitude(48.17345, -5.25086),
+                                                    LatitudeLongitude(48.0489575, -5.3956907),
+                                                    LatitudeLongitude(47.9594333, -5.5547712),
+                                                    LatitudeLongitude(47.9377618, -5.7839548),
+                                                    LatitudeLongitude(48.0189832, -5.9484278),
+                                                    LatitudeLongitude(48.1792447, -5.9740425),
+                                                    LatitudeLongitude(48.3990127, -5.9079837),
+                                                    LatitudeLongitude(48.4705688, -5.592519),
+                                                    LatitudeLongitude(48.3219773, -5.3336762)
+    });
+    const Track track(waypoints, new ShortestPathLegChain());
+    const LatitudeLongitude point(48.1212583333333,-5.18037333333333);
+    ASSERT_DOUBLE_EQ(0, track.distance_from_beginning_of_track_to_closest_point(point));
+}
 
