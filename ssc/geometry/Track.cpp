@@ -281,18 +281,20 @@ bool Track::operator!=(const Track& rhs) const
 */
 std::pair<LatitudeLongitude, size_t> Track::find_closest_point_to(const LatitudeLongitude& point) const
 {
+    if (pimpl->waypoints.empty()) return std::make_pair(point,0);
     LatitudeLongitude nearest_point = pimpl->waypoints.front();
-    double smallest_distance = 1e3*pimpl->length;
+    double smallest_distance = distance<ShortestPathLeg>(nearest_point,point);
     size_t idx = 0;
-    for (auto that_leg = pimpl->legs->begin() ; that_leg != pimpl->legs->end() ; ++that_leg)
+
+    for (size_t i = 1 ; i < pimpl->legs->size() ; ++i)
     {
-        LatitudeLongitude p = (*that_leg)->find_closest_point_to(point);
+        LatitudeLongitude p = pimpl->legs->at(i)->find_closest_point_to(point);
         const double d = distance<ShortestPathLeg>(p,point);
         if (d<smallest_distance)
         {
             nearest_point = p;
             smallest_distance = d;
-            idx = (size_t)(that_leg-pimpl->legs->begin());
+            idx = i;
         }
     }
     return std::make_pair(nearest_point,idx);
