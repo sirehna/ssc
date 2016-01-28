@@ -195,3 +195,16 @@ TEST_F(ShortestPathLegTest, can_calculate_heading_on_leg_on_meridian_for_any_poi
         ASSERT_DOUBLE_EQ(0, fmod(l.azimuth_at(a.random<double>().between(0, d)).get_radian(),PI));
     }
 }
+
+TEST_F(ShortestPathLegTest, bug_detected_in_EONAV)
+{
+    const LatitudeLongitude A(48.049, -5.39569);
+    const LatitudeLongitude B(47.9594, -5.55477);
+    const LatitudeLongitude P(48.1213, -5.18037);
+    const ShortestPathLeg l = ShortestPathLeg::build(A,B);
+    const LatitudeLongitude Q = l.find_closest_point_to(P);
+    ASSERT_LE(Q.lat, std::max(A.lat, B.lat));
+    ASSERT_GE(Q.lat, std::min(A.lat, B.lat));
+    ASSERT_LE(Q.lon, std::max(A.lon, B.lon));
+    ASSERT_GE(Q.lon, std::min(A.lon, B.lon));
+}
