@@ -80,6 +80,21 @@ Angle ShortestPathLeg::azimuth_at(const double distance_from_point1) const
 */
 LatitudeLongitude ShortestPathLeg::find_closest_point_to(const LatitudeLongitude& point) const
 {
-    return pimpl->geodesic.nearestPointTo(point);
-
+    const LatitudeLongitude ret = pimpl->geodesic.nearestPointTo(point);
+    const double lat_min = std::min(point_1.lat, point_2.lat);
+    const double lat_max = std::max(point_1.lat, point_2.lat);
+    const double lon_min = std::min(point_1.lon, point_2.lon);
+    const double lon_max = std::max(point_1.lon, point_2.lon);
+    const bool out_of_bounds =  (ret.lat < lat_min)
+                             || (ret.lat > lat_max)
+                             || (ret.lon < lon_min)
+                             || (ret.lon > lon_max);
+    if (out_of_bounds)
+    {
+        const double distance_to_point_1 = distance<ShortestPathLeg>(point_1, point);
+        const double distance_to_point_2 = distance<ShortestPathLeg>(point_2, point);
+        if (distance_to_point_1 < distance_to_point_2) return point_1;
+        return point_2;
+    }
+    return ret;
 }
