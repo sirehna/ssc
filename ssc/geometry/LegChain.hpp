@@ -42,6 +42,7 @@ namespace ssc
                 virtual LegChain* make_new() const = 0;
                 std::vector<LegPtr>::const_iterator begin() const;
                 std::vector<LegPtr>::const_iterator end() const;
+                size_t size() const;
 
             private:
                 virtual LegPtr make_new(const LatitudeLongitude& waypoint1,const LatitudeLongitude& waypoint2) const = 0;
