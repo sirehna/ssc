@@ -24,6 +24,7 @@ namespace ssc
                 StateGenerator();
                 StatePtr state(const std::string& name);
                 void reset();
+                size_t total_number_of_states() const;
 
             private:
                 size_t current_index;

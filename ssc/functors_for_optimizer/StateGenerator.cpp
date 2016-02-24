@@ -27,3 +27,7 @@ void StateGenerator::reset()
     names.clear();
 }
 
+size_t StateGenerator::total_number_of_states() const
+{
+    return names.size();
+}
