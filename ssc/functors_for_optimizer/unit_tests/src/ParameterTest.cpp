@@ -30,7 +30,7 @@ void ParameterTest::TearDown()
 TEST_F(ParameterTest, example)
 {
 //! [ConstantTest example]
-    Parameter c(a.random<double>());
+    Parameter c(a.random<double>(), a.random<size_t>());
     for (size_t i = 0 ; i < 10000 ; ++i)
     {
         const double val = a.random<double>();
@@ -47,7 +47,7 @@ TEST_F(ParameterTest, derivative_is_always_zero)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const Parameter n(a.random<double>());
+        const Parameter n(a.random<double>(), a.random<size_t>());
         StateGenerator generate;
         auto x = generate.state("x");
         ASSERT_EQ(0, n.diff(x)->get_lambda()());
@@ -58,8 +58,8 @@ TEST_F(ParameterTest, equality_operator)
 {
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
-        const Parameter p1(a.random<double>());
-        const Parameter p2(a.random<double>());
+        const Parameter p1(a.random<double>(), a.random<size_t>());
+        const Parameter p2(a.random<double>(), a.random<size_t>());
         ASSERT_TRUE(p1.equals(p1));
         ASSERT_TRUE(p2.equals(p2));
         ASSERT_FALSE(p1.equals(p2));

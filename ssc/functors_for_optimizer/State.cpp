@@ -12,9 +12,8 @@ State::~State()
 {
 }
 
-State::State(const std::string& name_, const size_t& index_) : Parameter(0),
-                                                               name(name_),
-                                                               index(index_)
+State::State(const std::string& name_, const size_t& index_) : Parameter(0, index_),
+                                                               name(name_)
 {
     update_lambda();
 }
@@ -35,19 +34,9 @@ State& State::operator=(const double& a)
     return *this;
 }
 
-bool State::operator<(const State& rhs) const
-{
-    return index<rhs.index;
-}
-
 std::string State::get_name() const
 {
     return name;
-}
-
-size_t State::get_index() const
-{
-    return index;
 }
 
 NodePtr State::diff(const StatePtr& state) const

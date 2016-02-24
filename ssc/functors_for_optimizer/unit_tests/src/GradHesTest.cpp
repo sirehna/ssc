@@ -60,7 +60,7 @@ TEST_F(GradHesTest, example)
 //! [GradHesTest example]
     const StateList states = get_states(f,g);
     Grad grad_f = grad(f, states);
-    Parameter sigma_f(1), lambda_1(1), lambda_2(1);
+    Parameter sigma_f(1, a.random<size_t>()), lambda_1(1, a.random<size_t>()), lambda_2(1, a.random<size_t>());
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
     lambda.push_back(lambda_2);

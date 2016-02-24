@@ -17,7 +17,7 @@ using namespace ssc::functors_for_optimizer;
 #define not !
 #endif
 
-Parameter::Parameter() : ptr(new double(0)), nb_of_copies(0)
+Parameter::Parameter() : ptr(new double(0)), nb_of_copies(0), index(0)
 {
     update_lambda();
 }
@@ -29,7 +29,12 @@ void Parameter::update_lambda()
     set_value([ptr_,factor_]()->double {return factor_*(*ptr_);});
 }
 
-Parameter::Parameter(const double& val) : ptr(new double(val)), nb_of_copies(0)
+Parameter::Parameter(const double val, const size_t idx) : ptr(new double(val)), nb_of_copies(0), index(idx)
+{
+    update_lambda();
+}
+
+Parameter::Parameter(const double val) : ptr(new double(val)), nb_of_copies(0), index(0)
 {
     update_lambda();
 }
@@ -38,7 +43,7 @@ Parameter::~Parameter()
 {
 }
 
-Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr), nb_of_copies(rhs.nb_of_copies)
+Parameter::Parameter(const Parameter& rhs) : Nullary(rhs.factor), ptr(rhs.ptr), nb_of_copies(rhs.nb_of_copies), index(rhs.index)
 {
     nb_of_copies++;
     update_lambda();
@@ -52,12 +57,13 @@ Parameter& Parameter::operator=(const Parameter& rhs)
         ptr = rhs.ptr;
         factor = rhs.factor;
         nb_of_copies = rhs.nb_of_copies;
+        index = rhs.index;
         update_lambda();
     }
     return *this;
 }
 
-Parameter& Parameter::operator=(const double& rhs)
+Parameter& Parameter::operator=(const double rhs)
 {
     *ptr = rhs;
     factor = 1;
@@ -117,4 +123,12 @@ std::string Parameter::get_type() const
     return "Parameter";
 }
 
+size_t Parameter::get_index() const
+{
+    return index;
+}
 
+bool Parameter::operator<(const Parameter& rhs) const
+{
+    return index<rhs.index;
+}

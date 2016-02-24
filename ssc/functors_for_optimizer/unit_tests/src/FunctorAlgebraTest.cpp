@@ -200,7 +200,7 @@ TEST_F(FunctorAlgebraTest, bug_09)
 
 TEST_F(FunctorAlgebraTest, should_be_able_to_substract_a_parameter)
 {
-    Parameter p(12);
+    Parameter p(12,0);
     auto f = pow(x-p,2)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
