@@ -30,7 +30,9 @@ set(SOURCES State.cpp
             Sign.cpp
             Grad.cpp
             FunctionMatrix.cpp
-            SerializeReversePolish.cpp)
+            SerializeReversePolish.cpp
+            count_states_and_parameters.cpp
+            )
 
 include_directories(inc)
 include_directories(${SSC_INCLUDE_DIRS})
