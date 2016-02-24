@@ -16,6 +16,8 @@ namespace ssc
     {
         size_t max_state_index(const NodePtr& node);
         size_t max_parameter_index(const NodePtr& node);
+        bool there_are_states(const NodePtr& node);
+        bool there_are_parameters(const NodePtr& node);
     }
 }
 
