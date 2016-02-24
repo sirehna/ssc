@@ -26,7 +26,7 @@ FILE(GLOB SRC src/NullTest.cpp
               src/SerializeReversePolishTest.cpp
               src/AbsTest.cpp
               src/SignTest.cpp
-              )
+              src/count_states_and_parametersTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories
