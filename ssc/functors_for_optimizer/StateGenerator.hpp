@@ -23,12 +23,15 @@ namespace ssc
             public:
                 StateGenerator();
                 StatePtr state(const std::string& name);
+                ParameterPtr parameter(const double value);
                 void reset();
                 size_t total_number_of_states() const;
+                size_t total_number_of_parameters() const;
 
             private:
-                size_t current_index;
-                std::set<std::string> names;
+                size_t current_state_index;
+                std::set<std::string> state_names;
+                size_t current_parameter_index;
         };
     }
 }

@@ -26,12 +26,15 @@ namespace ssc
         class Parameter : public Nullary
         {
             public:
-                Parameter(const double& val);
+                Parameter(const double val);
+                Parameter(const double val, const size_t index);
                 Parameter(const Parameter& rhs);
                 Parameter();
                 ~Parameter();
+                size_t get_index() const;
                 Parameter& operator=(const Parameter& rhs);
-                Parameter& operator=(const double& rhs);
+                Parameter& operator=(const double rhs);
+                bool operator<(const Parameter& rhs) const;
                 NodePtr diff(const StatePtr& state) const;
                 bool operator==(const Parameter& rhs) const;
                 bool operator!=(const Parameter& rhs) const;
@@ -48,6 +51,9 @@ namespace ssc
                 TR1(shared_ptr)<double> ptr;
                 //friend double& operator*(const Parameter& s);
                 int nb_of_copies;
+
+            private:
+                size_t index;
 
         };
 

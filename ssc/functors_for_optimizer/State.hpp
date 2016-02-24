@@ -17,8 +17,6 @@ namespace ssc
               //State(const State& rhs);
               NodePtr diff(const StatePtr& state) const;
               std::string get_name() const;
-              size_t get_index() const;
-              bool operator<(const State& rhs) const;
               ~State();
               void accept(NodeVisitor& v) const;
               NodePtr clone() const;
@@ -34,7 +32,6 @@ namespace ssc
             private:
                 State(); // Private & without implementation to disable the use of the default constructor
                 std::string name;
-                size_t index;
         };
 
         typedef TR1(shared_ptr)<State> StatePtr;
