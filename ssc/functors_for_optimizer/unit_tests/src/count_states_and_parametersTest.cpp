@@ -11,6 +11,8 @@
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Multiply.hpp"
+#include "ssc/macros/test_macros.hpp"
 
 using namespace ssc::functors_for_optimizer;
 
@@ -30,7 +32,7 @@ void count_states_and_parametersTest::TearDown()
 {
 }
 
-TEST_F(count_states_and_parametersTest, example)
+TEST_F(count_states_and_parametersTest, can_get_number_of_states)
 {
 //! [count_states_and_parametersTest example]
     StateGenerator generate;
@@ -43,5 +45,14 @@ TEST_F(count_states_and_parametersTest, example)
 //! [count_states_and_parametersTest expected output]
 }
 
-
+TEST_F(count_states_and_parametersTest, can_get_number_of_parameters)
+{
+    StateGenerator generate;
+    auto x = generate.state("x");
+    auto k = generate.parameter(25);
+    auto p = generate.parameter(2.5);
+    auto m = generate.parameter(3.5);
+    auto z = generate.state("z");
+    ASSERT_EQ(2, max_parameter_index(k*x+p*z+m));
+}
 

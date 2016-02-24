@@ -21,7 +21,7 @@
 class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 {
     public:
-        CounterVisitor() : max_idx(0) {}
+        CounterVisitor() : max_state_idx(0), max_parameter_idx(0) {}
         void visit(const ::ssc::functors_for_optimizer::Binary& node)
         {
             node.get_lhs()->accept(*this);
@@ -45,10 +45,14 @@ class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
         }
         void visit(const ::ssc::functors_for_optimizer::State& node)
         {
-            max_idx = std::max(max_idx, node.get_index());
+            max_state_idx = std::max(max_state_idx, node.get_index());
         }
 
-        void visit(const ::ssc::functors_for_optimizer::Parameter& ) {}
+        void visit(const ::ssc::functors_for_optimizer::Parameter& node)
+        {
+            max_parameter_idx = std::max(max_parameter_idx, node.get_index());
+        }
+
         void visit(const ::ssc::functors_for_optimizer::Constant& ) {}
         void visit(const ::ssc::functors_for_optimizer::Null& ) {}
         void visit(const ::ssc::functors_for_optimizer::Unary& node)
@@ -59,11 +63,17 @@ class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 
         size_t get_max_state_index() const
         {
-            return max_idx;
+            return max_state_idx;
+        }
+
+        size_t get_max_parameter_index() const
+        {
+            return max_parameter_idx;
         }
 
     private:
-        size_t max_idx;
+        size_t max_state_idx;
+        size_t max_parameter_idx;
 };
 
 
@@ -72,4 +82,11 @@ size_t ssc::functors_for_optimizer::max_state_index(const NodePtr& node)
     CounterVisitor visitor;
     node->accept(visitor);
     return visitor.get_max_state_index();
+}
+
+size_t ssc::functors_for_optimizer::max_parameter_index(const NodePtr& node)
+{
+    CounterVisitor visitor;
+    node->accept(visitor);
+    return visitor.get_max_parameter_index();
 }

@@ -15,6 +15,7 @@ namespace ssc
     namespace functors_for_optimizer
     {
         size_t max_state_index(const NodePtr& node);
+        size_t max_parameter_index(const NodePtr& node);
     }
 }
 
