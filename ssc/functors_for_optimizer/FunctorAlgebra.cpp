@@ -224,28 +224,32 @@ namespace ssc
             return ConstantPtr(new Constant(d))/n;
         }
 
-        PowPtr pow(const NodePtr& n1, const double d)
+        NodePtr pow(const NodePtr& n1, const double d)
         {
             return pow(n1, ConstantPtr(new Constant(d)));
         }
 
-        PowPtr pow(const Node& n1, const Node& n2)
+        NodePtr pow(const Node& n1, const Node& n2)
         {
+            if (n1.is_null()) return n1.clone();
             return pow(n1.clone(),n2.clone());
         }
 
-        PowPtr pow(const NodePtr& n1, const Node& n2)
+        NodePtr pow(const NodePtr& n1, const Node& n2)
         {
+            if (n1->is_null()) return n1;
             return pow(n1, n2.clone());
         }
 
-        PowPtr pow(const Node& n1, const NodePtr& n2)
+        NodePtr pow(const Node& n1, const NodePtr& n2)
         {
+            if (n1.is_null()) return n1.clone();
             return pow(n1.clone(), n2);
         }
 
-        PowPtr pow(const NodePtr& n1, const NodePtr& n2)
+        NodePtr pow(const NodePtr& n1, const NodePtr& n2)
         {
+            if (n1->is_null()) return n1;
             return PowPtr(new Pow(n1,n2));
         }
 
