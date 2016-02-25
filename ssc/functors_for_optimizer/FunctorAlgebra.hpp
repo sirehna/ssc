@@ -85,12 +85,12 @@ namespace ssc
         NodePtr operator/(const NodePtr& n, const double d);
         NodePtr operator/(const double d, const NodePtr& n);
 
-        PowPtr pow(const Node& n1, const double d);
-        PowPtr pow(const NodePtr& n1, const double d);
-        PowPtr pow(const Node& n1, const Node& n2);
-        PowPtr pow(const NodePtr& n1, const Node& n2);
-        PowPtr pow(const Node& n1, const NodePtr& n2);
-        PowPtr pow(const NodePtr& n1, const NodePtr& n2);
+        NodePtr pow(const Node& n1, const double d);
+        NodePtr pow(const NodePtr& n1, const double d);
+        NodePtr pow(const Node& n1, const Node& n2);
+        NodePtr pow(const NodePtr& n1, const Node& n2);
+        NodePtr pow(const Node& n1, const NodePtr& n2);
+        NodePtr pow(const NodePtr& n1, const NodePtr& n2);
 
         //NullPtr sin(const NullPtr& n);
         NodePtr sin(const NodePtr& n);
