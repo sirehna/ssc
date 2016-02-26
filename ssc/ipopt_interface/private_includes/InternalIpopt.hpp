@@ -131,8 +131,8 @@ namespace ssc
                 std::function<double()> objective_function;
                 std::vector<std::function<double()> > constraints;
                 ssc::functors_for_optimizer::Grad<std::function<double()> > grad_objective_function;
-                ssc::functors_for_optimizer::FunctionMatrix constraint_jacobian;
-                ssc::functors_for_optimizer::FunctionMatrix hessian;
+                ssc::functors_for_optimizer::FunctionMatrix<std::function<double()> > constraint_jacobian;
+                ssc::functors_for_optimizer::FunctionMatrix<std::function<double()> > hessian;
                 ssc::functors_for_optimizer::Parameter sigma_f;
                 std::vector<ssc::functors_for_optimizer::Parameter> lambda;
                 std::vector<double> starting_point;

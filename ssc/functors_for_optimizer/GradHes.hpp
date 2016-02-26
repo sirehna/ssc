@@ -13,6 +13,7 @@
 #include TR1INC(memory)
 
 #include "Grad.hpp"
+#include "FunctionMatrix.hpp"
 
 
 namespace ssc
@@ -22,7 +23,6 @@ namespace ssc
         class State;
         class Node;
         class Parameter;
-        class FunctionMatrix;
         typedef TR1(shared_ptr)<Node> NodePtr;
         typedef TR1(shared_ptr)<State> StatePtr;
 
@@ -34,8 +34,10 @@ namespace ssc
         void append(StateList& list, const StatePtr& state);
         template <typename T> Grad<T> grad(const NodePtr& f, const StateList& states);
         template <> Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states);
-        FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
-        FunctionMatrix jac(const std::vector<NodePtr>& g, const StateList& states);
+        template <typename T> FunctionMatrix<T> hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
+        template <> FunctionMatrix<std::function<double()> > hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
+        template <typename T> FunctionMatrix<T> jac(const std::vector<NodePtr>& g, const StateList& states);
+        template <> FunctionMatrix<std::function<double()> > jac(const std::vector<NodePtr>& g, const StateList& states);
     }
 }
 

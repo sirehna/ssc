@@ -444,14 +444,14 @@ Grad<std::function<double()> > OptimizationProblem::get_grad_objective_function(
     return grad<std::function<double()> >(pimpl->objective_function, pimpl->get_states());
 }
 
-FunctionMatrix OptimizationProblem::get_constraint_jacobian() const
+FunctionMatrix<std::function<double()> > OptimizationProblem::get_constraint_jacobian() const
 {
-    return jac(pimpl->constraints.get_vals(), pimpl->get_states());
+    return jac<std::function<double()> >(pimpl->constraints.get_vals(), pimpl->get_states());
 }
 
-FunctionMatrix OptimizationProblem::get_hessian() const
+FunctionMatrix<std::function<double()> > OptimizationProblem::get_hessian() const
 {
-    return hes(pimpl->objective_function,pimpl->constraints.get_vals(),pimpl->sigma_f,pimpl->lambda,pimpl->get_states());
+    return hes<std::function<double()> >(pimpl->objective_function,pimpl->constraints.get_vals(),pimpl->sigma_f,pimpl->lambda,pimpl->get_states());
 }
 
 Parameter OptimizationProblem::get_sigma_f() const

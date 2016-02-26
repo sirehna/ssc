@@ -31,13 +31,13 @@ namespace ssc
         typedef TR1(shared_ptr)<Node> NodePtr;
 
 
-        class FunctionMatrix
+        template <typename T> class FunctionMatrix
         {
             public:
-                FunctionMatrix();
+                FunctionMatrix() : row_index(), col_index(), values() {}
                 std::vector<size_t> row_index;
                 std::vector<size_t> col_index;
-                std::vector<std::function<double()> > values;
+                std::vector<T> values;
         };
     }
 }

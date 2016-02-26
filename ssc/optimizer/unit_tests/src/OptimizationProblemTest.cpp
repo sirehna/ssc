@@ -334,7 +334,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_constraints_jacobian)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
-    const FunctionMatrix jacobian = hs71.get_constraint_jacobian();
+    const FunctionMatrix<std::function<double()> > jacobian = hs71.get_constraint_jacobian();
     ASSERT_EQ(8, jacobian.values.size());
     ASSERT_EQ(8, jacobian.row_index.size());
     ASSERT_EQ(8, jacobian.col_index.size());
@@ -371,7 +371,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_hessian)
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
-    const FunctionMatrix hessian = hs71.get_hessian();
+    const FunctionMatrix<std::function<double()> > hessian = hs71.get_hessian();
     ASSERT_EQ(10, hessian.values.size());
     ASSERT_EQ(10, hessian.row_index.size());
     ASSERT_EQ(10, hessian.col_index.size());
@@ -453,7 +453,7 @@ TEST_F(OptimizationProblemTest, allocation_for_two_azimuths)
       .subject_to(b1,(pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4)),b1)
       .subject_to(b2,(pow(x1,2)*Sin(x3))+(pow(x2,2)*Sin(x4)),b2);
     auto f = (pow(x1,2)*Cos(x3))+(pow(x2,2)*Cos(x4));
-    const FunctionMatrix jacobian = pb.get_constraint_jacobian();
+    const FunctionMatrix<std::function<double()> > jacobian = pb.get_constraint_jacobian();
     ASSERT_EQ(8, jacobian.values.size());
     ASSERT_EQ(8, jacobian.row_index.size());
     ASSERT_EQ(8, jacobian.col_index.size());
