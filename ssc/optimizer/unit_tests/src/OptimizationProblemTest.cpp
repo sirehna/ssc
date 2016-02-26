@@ -305,7 +305,7 @@ TEST_F(OptimizationProblemTest, should_be_able_to_retrieve_gradient_of_objective
         .subject_to(25,x1*x2*x3*x4)
         .subject_to(40,pow(x1,2)+pow(x2,2)+pow(x3,2)+pow(x4,2),40)
         .bound_state(2,x1);
-    const Grad grad_f = hs71.get_grad_objective_function();
+    const Grad<std::function<double()> > grad_f = hs71.get_grad_objective_function();
     ASSERT_EQ(4, grad_f.index.size());
     ASSERT_EQ(4, grad_f.values.size());
 

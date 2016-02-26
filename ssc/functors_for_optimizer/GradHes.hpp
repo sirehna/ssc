@@ -12,13 +12,15 @@
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
+#include "Grad.hpp"
+
+
 namespace ssc
 {
     namespace functors_for_optimizer
     {
         class State;
         class Node;
-        class Grad;
         class Parameter;
         class FunctionMatrix;
         typedef TR1(shared_ptr)<Node> NodePtr;
@@ -30,7 +32,7 @@ namespace ssc
         StateList get_states(const NodePtr& objective_function);
         StateList get_states(const std::vector<NodePtr>& constraints);
         void append(StateList& list, const StatePtr& state);
-        Grad grad(const NodePtr& f, const StateList& states);
+        Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states);
         FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
         FunctionMatrix jac(const std::vector<NodePtr>& g, const StateList& states);
     }

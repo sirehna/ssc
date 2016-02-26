@@ -59,7 +59,7 @@ TEST_F(GradHesTest, example)
 {
 //! [GradHesTest example]
     const StateList states = get_states(f,g);
-    Grad grad_f = grad(f, states);
+    Grad<std::function<double()> > grad_f = grad(f, states);
     Parameter sigma_f(1, a.random<size_t>()), lambda_1(1, a.random<size_t>()), lambda_2(1, a.random<size_t>());
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
@@ -84,7 +84,7 @@ TEST_F(GradHesTest, should_be_able_to_retrieve_states_from_objective_and_constra
 TEST_F(GradHesTest, should_be_able_to_compute_the_gradient)
 {
     const StateList states = get_states(f);
-    Grad grad_f = grad(f, states);
+    Grad<std::function<double()> > grad_f = grad(f, states);
     ASSERT_EQ(4, grad_f.index.size());
     ASSERT_EQ(4, grad_f.values.size());
 
