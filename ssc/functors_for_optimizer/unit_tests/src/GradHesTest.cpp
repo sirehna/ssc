@@ -64,7 +64,7 @@ TEST_F(GradHesTest, example)
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
     lambda.push_back(lambda_2);
-    FunctionMatrix hessian = hes(f,g,sigma_f,lambda,states);
+    FunctionMatrix<std::function<double()> > hessian = hes<std::function<double()> >(f,g,sigma_f,lambda,states);
 //! [GradHesTest example]
 //! [GradHesTest expected output]
 //! [GradHesTest expected output]
@@ -113,7 +113,7 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
     std::vector<Parameter> lambda;
     lambda.push_back(lambda_1);
     lambda.push_back(lambda_2);
-    FunctionMatrix hessian = hes(f,g,sigma_f,lambda,states);
+    FunctionMatrix<std::function<double()> > hessian = hes<std::function<double()> >(f,g,sigma_f,lambda,states);
     ASSERT_EQ(10, hessian.values.size());
     ASSERT_EQ(10, hessian.row_index.size());
     ASSERT_EQ(10, hessian.col_index.size());
@@ -155,7 +155,7 @@ TEST_F(GradHesTest, should_be_able_to_compute_the_hessian)
 TEST_F(GradHesTest, should_be_able_to_compute_the_jacobian)
 {
     const StateList states = get_states(g);
-    FunctionMatrix jacobian = jac(g,states);
+    FunctionMatrix<std::function<double()> > jacobian = jac<std::function<double()> >(g,states);
     ASSERT_EQ(8, jacobian.values.size());
     ASSERT_EQ(8, jacobian.row_index.size());
     ASSERT_EQ(8, jacobian.col_index.size());

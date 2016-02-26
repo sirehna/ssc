@@ -71,9 +71,9 @@ namespace ssc
             return ret;
         }
 
-        FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states)
+        template <> FunctionMatrix<std::function<double()> > hes<std::function<double()> >(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states)
         {
-            FunctionMatrix ret;
+            FunctionMatrix<std::function<double()> > ret;
             const size_t n = states.size();
 
             for (size_t i = 0 ; i < n ; ++i)
@@ -101,9 +101,9 @@ namespace ssc
             return ret;
         }
 
-        FunctionMatrix jac(const std::vector<NodePtr>& g, const StateList& states)
+        template <> FunctionMatrix<std::function<double()> > jac(const std::vector<NodePtr>& g, const StateList& states)
         {
-            FunctionMatrix ret;
+            FunctionMatrix<std::function<double()> > ret;
             const size_t n = states.size();
             const size_t m = g.size();
             for (size_t i = 0 ; i < m ; ++i)
