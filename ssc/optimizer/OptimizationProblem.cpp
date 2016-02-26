@@ -441,7 +441,7 @@ std::vector<std::function<double()> > OptimizationProblem::get_constraints() con
 
 Grad<std::function<double()> > OptimizationProblem::get_grad_objective_function() const
 {
-    return grad(pimpl->objective_function, pimpl->get_states());
+    return grad<std::function<double()> >(pimpl->objective_function, pimpl->get_states());
 }
 
 FunctionMatrix OptimizationProblem::get_constraint_jacobian() const
