@@ -54,7 +54,7 @@ namespace ssc
             list = retrieve_states.get();
         }
 
-        Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states)
+        template <> Grad<std::function<double()> > grad<std::function<double()> >(const NodePtr& f, const StateList& states)
         {
             Grad<std::function<double()> > ret;
             size_t k = 0;

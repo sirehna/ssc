@@ -32,7 +32,8 @@ namespace ssc
         StateList get_states(const NodePtr& objective_function);
         StateList get_states(const std::vector<NodePtr>& constraints);
         void append(StateList& list, const StatePtr& state);
-        Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states);
+        template <typename T> Grad<T> grad(const NodePtr& f, const StateList& states);
+        template <> Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states);
         FunctionMatrix hes(const NodePtr& f, const std::vector<NodePtr>& g, const Parameter& sigma_f, const std::vector<Parameter>& lambda, const StateList& states);
         FunctionMatrix jac(const std::vector<NodePtr>& g, const StateList& states);
     }
