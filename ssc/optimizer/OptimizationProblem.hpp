@@ -65,7 +65,7 @@ namespace ssc
                 ssc::functors_for_optimizer::StateList get_states() const;
                 std::function<double()> get_objective_function() const;
                 std::vector<std::function<double()> > get_constraints() const;
-                ssc::functors_for_optimizer::Grad get_grad_objective_function() const;
+                ssc::functors_for_optimizer::Grad<std::function<double()> > get_grad_objective_function() const;
                 ssc::functors_for_optimizer::FunctionMatrix get_constraint_jacobian() const;
                 ssc::functors_for_optimizer::FunctionMatrix get_hessian() const;
                 ssc::functors_for_optimizer::Parameter get_sigma_f() const;

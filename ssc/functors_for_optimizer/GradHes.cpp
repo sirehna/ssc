@@ -54,16 +54,16 @@ namespace ssc
             list = retrieve_states.get();
         }
 
-        Grad grad(const NodePtr& f, const StateList& states)
+        Grad<std::function<double()> > grad(const NodePtr& f, const StateList& states)
         {
-            Grad ret;
+            Grad<std::function<double()> > ret;
             size_t k = 0;
             for (auto state = states.begin() ; state != states.end() ; ++state)
             {
                 auto df_dstate = f->diff(*state);
                 if (not(df_dstate->is_null()))
                 {
-                    ret.index.push_back(k++);//(*state)->get_index());
+                    ret.index.push_back(k++);
                     ret.values.push_back(df_dstate->get_lambda());
                 }
             }

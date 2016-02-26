@@ -130,7 +130,7 @@ namespace ssc
                 TR1(shared_ptr)<ssc::optimizer::OptimizationProblem> problem_;
                 std::function<double()> objective_function;
                 std::vector<std::function<double()> > constraints;
-                ssc::functors_for_optimizer::Grad grad_objective_function;
+                ssc::functors_for_optimizer::Grad<std::function<double()> > grad_objective_function;
                 ssc::functors_for_optimizer::FunctionMatrix constraint_jacobian;
                 ssc::functors_for_optimizer::FunctionMatrix hessian;
                 ssc::functors_for_optimizer::Parameter sigma_f;

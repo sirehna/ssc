@@ -28,7 +28,6 @@ set(SOURCES State.cpp
             StateGetter.cpp
             Abs.cpp
             Sign.cpp
-            Grad.cpp
             FunctionMatrix.cpp
             SerializeReversePolish.cpp
             StateAndParameterCounter.cpp

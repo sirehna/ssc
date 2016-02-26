@@ -439,7 +439,7 @@ std::vector<std::function<double()> > OptimizationProblem::get_constraints() con
     return pimpl->constraints.get();
 }
 
-Grad OptimizationProblem::get_grad_objective_function() const
+Grad<std::function<double()> > OptimizationProblem::get_grad_objective_function() const
 {
     return grad(pimpl->objective_function, pimpl->get_states());
 }

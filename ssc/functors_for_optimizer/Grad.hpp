@@ -30,12 +30,12 @@ namespace ssc
         class Node;
         typedef TR1(shared_ptr)<Node> NodePtr;
 
-        class Grad
+        template <typename T> class Grad
         {
             public:
-                Grad();
+                Grad() : index(), values() {}
                 std::vector<size_t> index;
-                std::vector<std::function<double()> > values;
+                std::vector<T> values;
         };
     }
 }
