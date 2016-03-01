@@ -25,10 +25,12 @@
 #include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
 #include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
 #include "ssc/functors_for_optimizer/SplineFunctor.hpp"
+#include "ssc/functors_for_optimizer/Node.hpp"
 
 
 
 #include <cmath>
+#include <sstream>
 
 using namespace ssc::functors_for_optimizer;
 
@@ -225,4 +227,12 @@ void SerializeReversePolish::serialize_multiplicative_factor(const double& k)
         }
         os << "*";
     }
+}
+
+std::string ssc::functors_for_optimizer::serialize(const NodePtr& node)
+{
+    std::stringstream ss;
+    SerializeReversePolish S(ss);
+    node->accept(S);
+    return ss.str();
 }

@@ -10,6 +10,8 @@
 
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <sstream>
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
 
 
 /** \author cec
@@ -56,6 +58,9 @@ namespace ssc
                 void serialize_multiplicative_factor(const double& k);
                 std::ostream& os;
         };
+        class Node;
+        typedef TR1(shared_ptr)<Node> NodePtr;
+        std::string serialize(const NodePtr& node);
     }
 }
 
