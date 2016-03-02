@@ -29,9 +29,9 @@ namespace ssc
          *           - Otherwise throw a KinematicsException.
          *  \ingroup kinematics
          *  \section ex1 Example
-         *  \snippet kinematics/unit_tests/src/KinematicsTest.cpp KinematicsTest example
+         *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest example
          *  \section ex2 Expected output
-         *  \snippet kinematics/unit_tests/src/KinematicsTest.cpp KinematicsTest expected output
+         *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest expected output
          */
         class Kinematics
         {
@@ -42,7 +42,7 @@ namespace ssc
                   *  \date 23 avr. 2014, 10:45:40
                   *  \author cec
                   *  \brief Adds a transform between two reference frames to *this
-                  *  \snippet kinematics/unit_tests/src/KinematicsTest.cpp KinematicsTest add_example
+                  *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest add_example
                   */
                 void add(const kinematics::Transform& transform_to_add //!< Transform to add
                         );
@@ -52,7 +52,7 @@ namespace ssc
                   *  \author cec
                   *  \brief Returns the transform from one frame to another (or throws a KinematicsException).
                   *  \returns Transform from from_frame to to_frame
-                  *  \snippet kinematics/unit_tests/src/KinematicsTest.cpp KinematicsTest get_example
+                  *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest get_example
                   */
                 kinematics::Transform get(const std::string& from_frame, //!< Name of the start frame
                                           const std::string& to_frame    //!< Name of the end frame
