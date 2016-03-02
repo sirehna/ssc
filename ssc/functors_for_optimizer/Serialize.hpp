@@ -18,9 +18,9 @@
  *  \details It has the following responsibilities:
  *  - Resp. 1 ...
  *  \section ex1 Example
- *  \snippet MODULE_NAME/unit_tests/src/SerializeTest.cpp SerializeTest example
+ *  \snippet functors_for_optimizer/unit_tests/src/SerializeTest.cpp SerializeTest example
  *  \section ex2 Expected output
- *  \snippet MODULE_NAME/unit_tests/src/SerializeTest.cpp SerializeTest expected output
+ *  \snippet functors_for_optimizer/unit_tests/src/SerializeTest.cpp SerializeTest expected output
  */
 namespace ssc
 {
