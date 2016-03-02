@@ -22,9 +22,9 @@ namespace ssc
          *  - Attempt to read all the supplied text files & report any errors
          *  - Can return the contents read as a string
          *  \section ex1 Example
-         *  \snippet yaml_parser/unit_tests/src/TextFileReaderTest.cpp TextFileReaderTest example
+         *  \snippet text_file_reader/unit_tests/src/TextFileReaderTest.cpp TextFileReaderTest example
          *  \section ex2 Expected output
-         *  \snippet yaml_parser/unit_tests/src/TextFileReaderTest.cpp TextFileReaderTest expected output
+         *  \snippet text_file_reader/unit_tests/src/TextFileReaderTest.cpp TextFileReaderTest expected output
          */
 
         class TextFileReader
