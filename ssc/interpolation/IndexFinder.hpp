@@ -31,9 +31,9 @@ namespace ssc
          *  \brief Responsibility
          *  \details
          *  \section ex1 Example
-         *  \snippet MODULE_NAME/unit_tests/src/IndexFinderTest.cpp IndexFinderTest example
+         *  \snippet interpolation/unit_tests/src/IndexFinderTest.cpp IndexFinderTest example
          *  \section ex2 Expected output
-         *  \snippet MODULE_NAME/unit_tests/src/IndexFinderTest.cpp IndexFinderTest expected output
+         *  \snippet interpolation/unit_tests/src/IndexFinderTest.cpp IndexFinderTest expected output
          */
 
         class IndexFinder
