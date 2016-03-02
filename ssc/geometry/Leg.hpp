@@ -32,9 +32,9 @@ namespace ssc
          *  \details ShortestPathLeg & ConstantAzimuthLeg will derive from this interface
          *  \ingroup geometry
          *  \section ex1 Example
-         *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest example
+         *  \snippet geometry/geometry/unit_tests/src/LegTest.cpp LegTest example
          *  \section ex2 Expected output
-         *  \snippet geometry/unit_tests/src/LegTest.cpp LegTest expected output
+         *  \snippet geometry/geometry/unit_tests/src/LegTest.cpp LegTest expected output
          */
         class Leg
         {
