@@ -42,14 +42,14 @@ namespace ssc
                  *  \details This method is called by the DataSource when adding a
                  *  module so we can have a container with pointers to each module.
                  *  \returns Typically, std::shared_ptr<DataSourceModule>(new DataSourceModule(*this));
-                 *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+                 *  \snippet data_source/unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
                 */
                 virtual DataSourceModule* clone() const = 0;
                 /** \author cec
                  *  \date 22 aug 2013, 14:18:54
                  *  \brief Clones the module & updates the referenced DataSource
                  *  \returns
-                 *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+                 *  \snippet data_source/unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
                 */
                 virtual DataSourceModule* clone(DataSource* const data_source) const = 0;
 
@@ -62,7 +62,7 @@ namespace ssc
                  *  to "read only" mode.
                  *  - When querying a value computed by that module
                  *  \returns Nothing
-                 *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+                 *  \snippet data_source/unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
                 */
                 virtual void update() const = 0;
 
@@ -72,7 +72,7 @@ namespace ssc
                  *  \details This method is only virtual so that it may be tracked by
                  *  mocks but the default implementation should suffice in most cases.
                  *  \returns Name of the module.
-                 *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+                 *  \snippet data_source/unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
                 */
                 virtual std::string get_name() const;
 
@@ -83,7 +83,7 @@ namespace ssc
                  *  to a DataSource. By default it doesn't do anything (and therefore
                  *  only needs to be overriden for "statefull" modules).
                  *  \returns Nothing
-                 *  \snippet /unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
+                 *  \snippet data_source/unit_tests/src/DataSourceModuleTest.cpp DataSourceModuleTest enclosing_method_example
                 */
                 virtual void initialize() const;
 
