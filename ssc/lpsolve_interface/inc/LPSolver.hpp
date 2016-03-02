@@ -24,11 +24,11 @@ struct LPSolverParameters
 /** \author cec
  *  \ingroup lp_solve_interface
  *  \brief Responsibility
- *  \details 
+ *  \details
  *  \section ex1 Example
- *  \snippet lp_solve_interface/unit_tests/src/LPSolverTest.cpp LPSolverTest example
+ *  \snippet lpsolve_interface/unit_tests/src/LPSolverTest.cpp LPSolverTest example
  *  \section ex2 Expected output
- *  \snippet lp_solve_interface/unit_tests/src/LPSolverTest.cpp LPSolverTest expected output
+ *  \snippet lpsolve_interface/unit_tests/src/LPSolverTest.cpp LPSolverTest expected output
  */
 class LPSolver
 {
