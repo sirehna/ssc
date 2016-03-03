@@ -111,6 +111,10 @@ namespace ssc
         NodePtr cos(const NodePtr& n);
         NodePtr cos(const Node& n);
 
+        NodePtr sign(const NodePtr& n);
+
+        NodePtr abs(const NodePtr& n);
+
         bool operator==(const NodePtr& n, const double& v);
         bool operator==(const double& v, const NodePtr& n);
         bool operator!=(const NodePtr& n, const double& v);

@@ -18,6 +18,8 @@
 #include "ssc/functors_for_optimizer/Sin.hpp"
 #include "ssc/functors_for_optimizer/Cos.hpp"
 #include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/Sign.hpp"
+#include "ssc/functors_for_optimizer/Abs.hpp"
 
 using namespace ssc::functors_for_optimizer;
 
@@ -389,6 +391,17 @@ namespace ssc
             return CosPtr(new Cos(n.clone()));
         }
 
+        NodePtr sign(const NodePtr& n)
+        {
+            if (n->is_null()) return ConstantPtr(new Constant(1));
+            return SignPtr(new Sign(n));
+        }
+
+        NodePtr abs(const NodePtr& n)
+        {
+            if (n->is_null()) return NullPtr(new Null());
+            return AbsPtr(new Abs(n));
+        }
 
         bool operator==(const double& v, const NodePtr& n)
         {

@@ -570,3 +570,24 @@ TEST_F(FunctorAlgebraTest, bug_36)
         ASSERT_SMALL_RELATIVE_ERROR(pow((x->get_lambda()() - x0.get_lambda()()),2), f->get_lambda()(),EPS);
     }
 }
+
+TEST_F(FunctorAlgebraTest, sign)
+{
+    auto f = sign(x);
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        *x = a.random<double>();
+        if (x->get_lambda()() >= 0) ASSERT_EQ(1, f->get_lambda()());
+        if (x->get_lambda()() < 0) ASSERT_EQ(-1, f->get_lambda()());
+    }
+}
+
+TEST_F(FunctorAlgebraTest, abs)
+{
+    auto f = abs(x);
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        *x = a.random<double>();
+        ASSERT_DOUBLE_EQ(std::abs(x->get_lambda()()), f->get_lambda()());
+    }
+}
