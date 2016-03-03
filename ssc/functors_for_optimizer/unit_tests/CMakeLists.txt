@@ -23,7 +23,10 @@ FILE(GLOB SRC src/NullTest.cpp
               src/PiecewiseParabolicFunctorTest.cpp
               src/GradHesTest.cpp
               src/StateGetterTest.cpp
-              src/SerializeReversePolishTest.cpp)
+              src/SerializeReversePolishTest.cpp
+              src/AbsTest.cpp
+              src/SignTest.cpp
+              )
 # ------8<---------------------------------------------->8-----
 
 # Include directories
