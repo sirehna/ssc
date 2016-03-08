@@ -47,13 +47,11 @@ TEST_F(SimplifyTest, states_should_not_be_simplified)
 TEST_F(SimplifyTest, parameters_should_not_be_simplified)
 {
     std::stringstream ss;
-    std::stringstream ss_ref;
     Serialize v(ss);
-    Parameter p(a.random<double>(), a.random<size_t>());
+    Parameter p(a.random<double>(), 123456);
     p = a.random<double>();
-    ss_ref << p.get_lambda()();
     p.simplify()->accept(v);
-    ASSERT_EQ(ss_ref.str(), ss.str());
+    ASSERT_EQ("p123456", ss.str());
 }
 
 TEST_F(SimplifyTest, null_should_not_be_simplified)
