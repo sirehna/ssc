@@ -147,7 +147,7 @@ void Serialize::visit(const State& node)
 
 void Serialize::visit(const Parameter& node)
 {
-    os << node.get_lambda()();
+    os << "p" << node.get_index();
 }
 
 void Serialize::visit(const Null& node)

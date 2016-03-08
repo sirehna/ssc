@@ -77,7 +77,7 @@ void SerializeReversePolish::visit(const State& node)
 
 void SerializeReversePolish::visit(const Parameter& node)
 {
-    os << node.get_lambda()();
+    os << "p" << node.get_index();
 }
 
 void SerializeReversePolish::visit(const Null& node)

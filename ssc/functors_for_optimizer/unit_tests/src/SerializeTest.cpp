@@ -97,13 +97,13 @@ TEST_F(SerializeTest, state)
     ASSERT_EQ(state_name, ss.str());
 }
 
-TEST_F(SerializeTest, constant)
+TEST_F(SerializeTest, parameter)
 {
     const double cst = 12365;
-    Parameter c(cst,0);
+    Parameter c(cst,54321);
     Serialize v(ss);
     c.accept(v);
-    ASSERT_EQ("12365", ss.str());
+    ASSERT_EQ("p54321", ss.str());
 }
 
 TEST_F(SerializeTest, logarithm)
