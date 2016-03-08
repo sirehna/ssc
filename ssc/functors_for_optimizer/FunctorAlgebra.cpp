@@ -21,6 +21,7 @@
 #include "ssc/functors_for_optimizer/Sign.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
 #include "ssc/functors_for_optimizer/Sqrt.hpp"
+
 #include <cmath>
 using namespace ssc::functors_for_optimizer;
 
@@ -223,12 +224,7 @@ namespace ssc
 
         NodePtr operator-(const NodePtr& n, const Parameter&p)
         {
-            NodePtr pp = p.clone();
-            pp->multiply_by(-1);
-            pp->update_lambda();
-            Sum* ret = new Sum(n,pp);
-            ret->update_lambda();
-            return NodePtr(ret);
+            return DifferencePtr(new Difference(n, p.clone()));
         }
 
         DividePtr operator/(const Node& n1, const Node& n2)
