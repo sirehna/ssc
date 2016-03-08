@@ -100,7 +100,7 @@ void Parameter::accept(NodeVisitor& v) const
 
 NodePtr Parameter::clone() const
 {
-    return NodePtr(new Parameter(*this));
+    return ParameterPtr(new Parameter(*this));
 }
 
 bool Parameter::is_null() const
