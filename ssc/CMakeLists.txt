@@ -15,6 +15,8 @@ IF(NOT DEFINED CMAKE_BUILD_TYPE)
 ENDIF()
 
 #############################################################################
+
+INCLUDE(EnableCoverageReport)
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
