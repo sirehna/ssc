@@ -42,7 +42,7 @@ namespace ssc
 
             private:
                 void common_build();
-                void remove_zeros();
+                std::vector<NodePtr> remove_zeros(std::vector<NodePtr> nodes) const;
                 std::vector<NodePtr> factorize_operands() const;
         };
 

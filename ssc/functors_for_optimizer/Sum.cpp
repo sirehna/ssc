@@ -9,7 +9,7 @@
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <algorithm>
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
-#include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Null.hpp"
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
@@ -31,8 +31,7 @@ Sum::Sum(const std::vector<NodePtr>& nodes) : N_ary(nodes)
 void Sum::common_build()
 {
     auto operands = [](const NodePtr& n)->std::vector<NodePtr>{return n->get_operands();};
-    sons = extract_subnodes(operands);
-    remove_zeros();
+    sons = remove_zeros(extract_subnodes(operands));
     if (sons.empty())
     {
         set_value([]()->double {return 0;});
@@ -53,15 +52,17 @@ void Sum::common_build()
     }
 }
 
-void Sum::remove_zeros()
+std::vector<NodePtr> Sum::remove_zeros(std::vector<NodePtr> nodes) const
 {
     auto equal_to_zero = [](NodePtr node)->bool{return node->is_null();};
-    auto new_end = std::remove_if (sons.begin(), sons.end(), equal_to_zero );
-    sons = std::vector<NodePtr>(sons.begin(), new_end);
+    auto new_end = std::remove_if (nodes.begin(), nodes.end(), equal_to_zero );
+    return std::vector<NodePtr>(nodes.begin(), new_end);
 }
-
+#include <ssc/macros/test_macros.hpp>
+#include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
 NodePtr Sum::diff(const StatePtr& state) const
 {
+    if (factor == 0) return NullPtr(new Null());
     std::vector<NodePtr> dsons;
     for (auto son = sons.begin() ; son != sons.end() ; ++son)
     {
@@ -69,9 +70,11 @@ NodePtr Sum::diff(const StatePtr& state) const
         if (not(dson_dstate->is_null()))
 	    {
             dson_dstate->multiply_by(factor);
+            dson_dstate->update_lambda();
 	    	dsons.push_back(dson_dstate);
 	    }
     }
+    if (dsons.empty()) return NullPtr(new Null());
     return NodePtr(new Sum(dsons));
 }
 

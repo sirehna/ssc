@@ -79,6 +79,7 @@ bool Multiply::null_or_one(const NodePtr& node) const
 
 NodePtr Multiply::diff(const StatePtr& state) const
 {
+    if (factor == 0) return NullPtr(new Null());
     std::vector<NodePtr> dsons_dstate;
     SerializeReversePolish s(std::cout);
     const size_t n = sons.size();
@@ -103,9 +104,11 @@ NodePtr Multiply::diff(const StatePtr& state) const
         if (not(dson_dstate->is_null()))
         {
             prod.push_back(dson_dstate);
-            dsons_dstate.push_back(NodePtr(new Multiply(prod)));
+            if (prod.size() > 1) dsons_dstate.push_back(NodePtr(new Multiply(prod)));
+            else if (prod.size() == 1) dsons_dstate.push_back(prod.front());
         }
     }
+    if (dsons_dstate.empty()) return NodePtr(new Null());
     if (std::all_of(dsons_dstate.begin(), dsons_dstate.end(), is_null)) return NodePtr(new Null());
     if (dsons_dstate.size()>1)
     {
