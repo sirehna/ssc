@@ -177,7 +177,7 @@ namespace ssc
 
         NodePtr operator-(const NodePtr& n, const Parameter&p)
         {
-            return DifferencePtr(new Difference(n, p.clone()));
+            return n-p.clone();
         }
 
         NodePtr operator/(const Node& n1, const Node& n2)
