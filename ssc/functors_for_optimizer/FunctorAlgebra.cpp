@@ -168,11 +168,12 @@ namespace ssc
 
         NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
         {
+            if (n2->is_null()) return n1;
             auto n2_ = n2->clone();
             n2_->multiply_by(-1);
             n2_->update_lambda();
-            Sum* ret = new Sum(n1,n2_);
-            return NodePtr(ret);
+            if (n1->is_null()) return n2;
+            return SumPtr(new Sum(n1,n2_));
         }
 
         NodePtr operator-(const NodePtr& n, const Parameter&p)
