@@ -55,8 +55,8 @@ namespace ssc
         Mult operator*(const Node& n1, const NodePtr& n2);
         Mult operator*(const NodePtr& n1, const NodePtr& n2);
         Mult operator*(const NodePtr& n1, const Node& n2);
-        NodePtr operator*(const NodePtr& n, const double& d);
-        NodePtr operator*(const double& d, const NodePtr& n);
+        NodePtr operator*(const NodePtr& n, const double d);
+        NodePtr operator*(const double d, const NodePtr& n);
         NullPtr operator*(const NodePtr& n1, const Null& n2);
         NullPtr operator*(const Null& n1, const NodePtr& n2);
         NullPtr operator*(const Node& n1, const Null& n2);
@@ -70,15 +70,15 @@ namespace ssc
         SumPtr operator+(const Node& n1, const NodePtr& n2);
         SumPtr operator+(const NodePtr& n1, const NodePtr& n2);
         SumPtr operator+(const NodePtr& n1, const Node& n2);
-        NodePtr operator+(const NodePtr& n, const double& d);
-        NodePtr operator+(const double& d, const NodePtr& n);
+        NodePtr operator+(const NodePtr& n, const double d);
+        NodePtr operator+(const double d, const NodePtr& n);
         NodePtr operator+(const NodePtr& n1, const Null& n2);
         NodePtr operator+(const Null& n1, const NodePtr& n2);
         NodePtr operator+(const Node& n1, const Null& n2);
         NodePtr operator+(const Null& n1, const Node& n2);
 
-        NodePtr operator-(const double& d, const NodePtr& n);
-        NodePtr operator-(const NodePtr& n, const double& d);
+        NodePtr operator-(const double d, const NodePtr& n);
+        NodePtr operator-(const NodePtr& n, const double d);
         NodePtr operator-(const NodePtr& n1, const NodePtr&n2);
         NodePtr operator-(const NodePtr& n, const Parameter&p);
 
@@ -86,23 +86,19 @@ namespace ssc
         DividePtr operator/(const Node& n1, const NodePtr& n2);
         DividePtr operator/(const NodePtr& n1, const NodePtr& n2);
         DividePtr operator/(const NodePtr& n1, const Node& n2);
-        NodePtr operator/(const NodePtr& n, const double& d);
-        NodePtr operator/(const double& d, const NodePtr& n);
+        NodePtr operator/(const NodePtr& n, const double d);
+        NodePtr operator/(const double d, const NodePtr& n);
         NullPtr operator/(const NodePtr& n1, const Null& n2);
         NullPtr operator/(const Null& n1, const NodePtr& n2);
         NullPtr operator/(const Node& n1, const Null& n2);
         NullPtr operator/(const Null& n1, const Node& n2);
 
-        PowPtr pow(const Node& n1, const double& d);
-        PowPtr pow(const NodePtr& n1, const double& d);
+        PowPtr pow(const Node& n1, const double d);
+        PowPtr pow(const NodePtr& n1, const double d);
         PowPtr pow(const Node& n1, const Node& n2);
         PowPtr pow(const NodePtr& n1, const Node& n2);
         PowPtr pow(const Node& n1, const NodePtr& n2);
         PowPtr pow(const NodePtr& n1, const NodePtr& n2);
-        NullPtr pow(const Null& n1, const Node& n2);
-        NullPtr pow(const Null& n1, const NodePtr& n2);
-        NullPtr pow(const NullPtr& n1, const Node& n2);
-        NullPtr pow(const NullPtr& n1, const NodePtr& n2);
 
         //NullPtr sin(const NullPtr& n);
         NodePtr sin(const NodePtr& n);
@@ -117,18 +113,18 @@ namespace ssc
 
         NodePtr sqrt(const NodePtr& n);
 
-        bool operator==(const NodePtr& n, const double& v);
-        bool operator==(const double& v, const NodePtr& n);
-        bool operator!=(const NodePtr& n, const double& v);
-        bool operator!=(const double& v, const NodePtr& n);
+        bool operator==(const NodePtr& n, const double v);
+        bool operator==(const double v, const NodePtr& n);
+        bool operator!=(const NodePtr& n, const double v);
+        bool operator!=(const double v, const NodePtr& n);
 
 
         bool operator==(const NodePtr& n1, const NodePtr& n2);
         bool operator!=(const NodePtr& n1, const NodePtr& n2);
         bool operator==(const Node& n1, const Node& n2);
         bool operator!=(const Node& n1, const Node& n2);
-        bool operator==(const NodePtr& n1, const double& n2);
-        bool operator!=(const Node& n1, const double& n2);
+        bool operator==(const NodePtr& n1, const double n2);
+        bool operator!=(const Node& n1, const double n2);
     }
 }
 

@@ -63,7 +63,7 @@ namespace ssc
             return Mult(new Multiply(n1,n2.clone()));
         }
 
-        NodePtr operator*(const NodePtr& n, const double& d)
+        NodePtr operator*(const NodePtr& n, const double d)
         {
             if (d == 0) return NullPtr(new Null());
             if (n->is_null()) return NullPtr(new Null());
@@ -73,7 +73,7 @@ namespace ssc
             return c;
         }
 
-        NodePtr operator*(const double& d, const NodePtr& n)
+        NodePtr operator*(const double d, const NodePtr& n)
         {
             return n*d;
         }
@@ -196,19 +196,19 @@ namespace ssc
             return n2.clone();
         }
 
-        NodePtr operator+(const NodePtr& n, const double& d)
+        NodePtr operator+(const NodePtr& n, const double d)
         {
             return NodePtr(new Sum(n,NodePtr(new Constant(d))));
         }
 
-        NodePtr operator-(const double& d, const NodePtr& n)
+        NodePtr operator-(const double d, const NodePtr& n)
         {
             auto n_ = n->clone();
             n_->multiply_by(-1);
             return n_+d;
         }
 
-        NodePtr operator-(const NodePtr& n, const double& d)
+        NodePtr operator-(const NodePtr& n, const double d)
         {
             return (n+(-d));
         }
@@ -247,18 +247,18 @@ namespace ssc
             return DividePtr(new Divide(n1,n2.clone()));
         }
 
-        NodePtr operator/(const NodePtr& n, const double& d)
+        NodePtr operator/(const NodePtr& n, const double d)
         {
             if (d == 0)
             {
-                THROW("operator /(const NodePtr&, const double&)", FunctorAlgebraException, "Division by zero");
+                THROW("operator /(const NodePtr&, const double)", FunctorAlgebraException, "Division by zero");
             }
             auto c = n->clone();
             c->multiply_by(1./d);
             return c;
         }
 
-        NodePtr operator/(const double& d, const NodePtr& n)
+        NodePtr operator/(const double d, const NodePtr& n)
         {
             return n/d;
         }
@@ -313,14 +313,14 @@ namespace ssc
             ret->multiply_by(1/n2->get_value()());
             return ret;
         }
-        */
+*/        
 
-        PowPtr pow(const Node& n1, const double& d)
+        PowPtr pow(const Node& n1, const double d)
         {
             return PowPtr(new Pow(n1.clone(),ConstantPtr(new Constant(d))));
         }
 
-        PowPtr pow(const NodePtr& n1, const double& d)
+        PowPtr pow(const NodePtr& n1, const double d)
         {
             return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
         }
@@ -345,25 +345,6 @@ namespace ssc
             return PowPtr(new Pow(n1,n2));
         }
 
-        NullPtr pow(const Null& , const Node& )
-        {
-            return NullPtr(new Null());
-        }
-
-        NullPtr pow(const Null& , const NodePtr& )
-        {
-            return NullPtr(new Null());
-        }
-
-        NullPtr pow(const NullPtr& n1, const Node& )
-        {
-            return n1;
-        }
-
-        NullPtr pow(const NullPtr& n1, const NodePtr& )
-        {
-            return n1;
-        }
 
 //        NullPtr sin(const NullPtr& n)
 //        {
@@ -407,16 +388,16 @@ namespace ssc
             return SqrtPtr(new Sqrt(n));
         }
 
-        bool operator==(const double& v, const NodePtr& n)
+        bool operator==(const double v, const NodePtr& n)
         {
             return n==v;
         }
-        bool operator!=(const NodePtr& n, const double& v)
+        bool operator!=(const NodePtr& n, const double v)
         {
             return not(n==v);
         }
 
-        bool operator!=(const double& v, const NodePtr& n)
+        bool operator!=(const double v, const NodePtr& n)
         {
             return not(n==v);
         }
@@ -441,12 +422,12 @@ namespace ssc
             return not(n1==n2);
         }
 
-        bool operator==(const NodePtr& n1, const double& n2)
+        bool operator==(const NodePtr& n1, const double n2)
         {
             return *n1==Constant(n2);
         }
 
-        bool operator!=(const Node& n1, const double& n2)
+        bool operator!=(const Node& n1, const double n2)
         {
             return not(n1==Constant(n2));
         }
