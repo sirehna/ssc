@@ -122,36 +122,7 @@ namespace ssc
             ret->multiply_by(n2.get_lambda()());
             return ret;
         }
-        /*
-        NodePtr operator*(const Constant& n1, const NodePtr& n2)
-        {
-            return n2*n1;
-        }
 
-        NodePtr operator*(const Node& n1, const ConstantPtr& n2)
-        {
-            auto ret = n1.clone();
-            ret->multiply_by(n2->get_value()());
-            return ret;
-        }
-
-        NodePtr operator*(const ConstantPtr& n1, const Node& n2)
-        {
-            return n2*n1;
-        }
-
-        NodePtr operator*(const NodePtr& n1, const ConstantPtr& n2)
-        {
-            auto ret = n1;
-            ret->multiply_by(n2->get_value()());
-            return ret;
-        }
-
-        NodePtr operator*(const ConstantPtr& n1, const NodePtr& n2)
-        {
-            return n2*n1;
-        }
-        */
         NodePtr operator+(const Node& n1, const Node& n2)
         {
             return SumPtr(new Sum(n1.clone(),n2.clone()));
