@@ -232,37 +232,8 @@ namespace ssc
 
         NodePtr operator/(const double d, const NodePtr& n)
         {
-            return n/d;
-        }
-
-        NodePtr operator/(const NodePtr& n1, const Null& n2)
-        {
-            THROW("operator /(const NodePtr&, const Null&)", FunctorAlgebraException, "Division by zero");
-            n1->multiply_by(1);
-            if (n2.get_lambda()) {}
-            return NullPtr(new Null());
-        }
-
-        NodePtr operator/(const Null& n1, const NodePtr& n2)
-        {
-            n2->multiply_by(1);
-            if (n1.get_lambda()) {}
-            return NullPtr(new Null());
-        }
-
-        NodePtr operator/(const Node& n1, const Null& n2)
-        {
-            THROW("operator /(const Node&, const Null&)", FunctorAlgebraException, "Division by zero");
-            n1.get_lambda();
-            if (n2.get_lambda()) {}
-            return NullPtr(new Null());
-        }
-
-        NodePtr operator/(const Null& n1, const Node& n2)
-        {
-            if (n1.get_lambda()) {}
-            if (n2.get_lambda()) {}
-            return NullPtr(new Null());
+            if (d==0) return NullPtr(new Null());
+            return ConstantPtr(new Constant(d))/n;
         }
         /*
         NodePtr operator/(const NodePtr& n1, const Constant& n2)
