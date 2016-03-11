@@ -183,29 +183,34 @@ namespace ssc
 
         NodePtr operator/(const Node& n1, const Node& n2)
         {
-            return DividePtr(new Divide(n1.clone(),n2.clone()));
+            return n1.clone()/n2.clone();
         }
 
         NodePtr operator/(const Node& n1, const NodePtr& n2)
         {
-            return DividePtr(new Divide(n1.clone(),n2));
+            return n1.clone()/n2;
         }
 
         NodePtr operator/(const NodePtr& n1, const NodePtr& n2)
         {
+            if (n1->is_null()) return n1;
+            if (n2->is_null())
+            {
+                THROW(__PRETTY_FUNCTION__, FunctorAlgebraException, "Division by zero");
+            }
             return DividePtr(new Divide(n1,n2));
         }
 
         NodePtr operator/(const NodePtr& n1, const Node& n2)
         {
-            return DividePtr(new Divide(n1,n2.clone()));
+            return n1/n2.clone();
         }
 
         NodePtr operator/(const NodePtr& n, const double d)
         {
             if (d == 0)
             {
-                THROW("operator /(const NodePtr&, const double)", FunctorAlgebraException, "Division by zero");
+                THROW(__PRETTY_FUNCTION__, FunctorAlgebraException, "Division by zero");
             }
             auto c = n->clone();
             c->multiply_by(1./d);
@@ -217,64 +222,31 @@ namespace ssc
             if (d==0) return NullPtr(new Null());
             return ConstantPtr(new Constant(d))/n;
         }
-        /*
-        NodePtr operator/(const NodePtr& n1, const Constant& n2)
-        {
-            auto ret = n1;
-            ret->multiply_by(1/n2.get_value()());
-            return ret;
-        }
-
-        NodePtr operator/(const Node& n1, const ConstantPtr& n2)
-        {
-            auto ret = n1.clone();
-            ret->multiply_by(1/n2->get_value()());
-            return ret;
-        }
-
-        NodePtr operator/(const NodePtr& n1, const ConstantPtr& n2)
-        {
-            auto ret = n1;
-            ret->multiply_by(1/n2->get_value()());
-            return ret;
-        }
-*/        
-
-        PowPtr pow(const Node& n1, const double d)
-        {
-            return PowPtr(new Pow(n1.clone(),ConstantPtr(new Constant(d))));
-        }
 
         PowPtr pow(const NodePtr& n1, const double d)
         {
-            return PowPtr(new Pow(n1,ConstantPtr(new Constant(d))));
+            return pow(n1, ConstantPtr(new Constant(d)));
         }
 
         PowPtr pow(const Node& n1, const Node& n2)
         {
-            return PowPtr(new Pow(n1.clone(),n2.clone()));
+            return pow(n1.clone(),n2.clone());
         }
 
         PowPtr pow(const NodePtr& n1, const Node& n2)
         {
-            return PowPtr(new Pow(n1,n2.clone()));
+            return pow(n1, n2.clone());
         }
 
         PowPtr pow(const Node& n1, const NodePtr& n2)
         {
-            return PowPtr(new Pow(n1.clone(),n2));
+            return pow(n1.clone(), n2);
         }
 
         PowPtr pow(const NodePtr& n1, const NodePtr& n2)
         {
             return PowPtr(new Pow(n1,n2));
         }
-
-
-//        NullPtr sin(const NullPtr& n)
-//        {
-//            return n;
-//        }
 
         NodePtr sin(const NodePtr& n)
         {
