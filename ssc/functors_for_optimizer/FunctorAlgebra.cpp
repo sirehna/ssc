@@ -125,22 +125,32 @@ namespace ssc
 
         NodePtr operator+(const Node& n1, const Node& n2)
         {
-            return SumPtr(new Sum(n1.clone(),n2.clone()));
+            return n1.clone() + n2.clone();
         }
 
         NodePtr operator+(const Node& n1, const NodePtr& n2)
         {
-            return SumPtr(new Sum(n1.clone(),n2));
+            return n1.clone() + n2;
         }
 
         NodePtr operator+(const NodePtr& n1, const NodePtr& n2)
         {
+            if (n1->is_null()) return n2;
+            if (n2->is_null()) return n1;
             return SumPtr(new Sum(n1,n2));
         }
 
         NodePtr operator+(const NodePtr& n1, const Node& n2)
         {
-            return SumPtr(new Sum(n1,n2.clone()));
+            return n1 + n2.clone();
+        }
+
+        NodePtr operator+(const NodePtr& n1, const double d)
+        {
+            if (d==0) return n1;
+            ConstantPtr n2(new Constant(d));
+            if (n1->is_null()) return n2;
+            return n1 + n2;
         }
 
         NodePtr operator-(const double d, const NodePtr& n2)
