@@ -78,28 +78,28 @@ namespace ssc
             return n*d;
         }
 
-        NullPtr operator*(const NodePtr& n1, const Null& n2)
+        NodePtr operator*(const NodePtr& n1, const Null& n2)
         {
             (void) n1;
             (void) n2;
             return NullPtr(new Null());
         }
 
-        NullPtr operator*(const Null& n1, const NodePtr& n2)
+        NodePtr operator*(const Null& n1, const NodePtr& n2)
         {
             (void) n1;
             (void) n2;
             return NullPtr(new Null());
         }
 
-        NullPtr operator*(const Node& n1, const Null& n2)
+        NodePtr operator*(const Node& n1, const Null& n2)
         {
             (void) n1;
             (void) n2;
             return NullPtr(new Null());
         }
 
-        NullPtr operator*(const Null& n1, const Node& n2)
+        NodePtr operator*(const Null& n1, const Node& n2)
         {
             return n2*n1;
         }
@@ -152,22 +152,22 @@ namespace ssc
             return n2*n1;
         }
         */
-        SumPtr operator+(const Node& n1, const Node& n2)
+        NodePtr operator+(const Node& n1, const Node& n2)
         {
             return SumPtr(new Sum(n1.clone(),n2.clone()));
         }
 
-        SumPtr operator+(const Node& n1, const NodePtr& n2)
+        NodePtr operator+(const Node& n1, const NodePtr& n2)
         {
             return SumPtr(new Sum(n1.clone(),n2));
         }
 
-        SumPtr operator+(const NodePtr& n1, const NodePtr& n2)
+        NodePtr operator+(const NodePtr& n1, const NodePtr& n2)
         {
             return SumPtr(new Sum(n1,n2));
         }
 
-        SumPtr operator+(const NodePtr& n1, const Node& n2)
+        NodePtr operator+(const NodePtr& n1, const Node& n2)
         {
             return SumPtr(new Sum(n1,n2.clone()));
         }
@@ -227,22 +227,22 @@ namespace ssc
             return DifferencePtr(new Difference(n, p.clone()));
         }
 
-        DividePtr operator/(const Node& n1, const Node& n2)
+        NodePtr operator/(const Node& n1, const Node& n2)
         {
             return DividePtr(new Divide(n1.clone(),n2.clone()));
         }
 
-        DividePtr operator/(const Node& n1, const NodePtr& n2)
+        NodePtr operator/(const Node& n1, const NodePtr& n2)
         {
             return DividePtr(new Divide(n1.clone(),n2));
         }
 
-        DividePtr operator/(const NodePtr& n1, const NodePtr& n2)
+        NodePtr operator/(const NodePtr& n1, const NodePtr& n2)
         {
             return DividePtr(new Divide(n1,n2));
         }
 
-        DividePtr operator/(const NodePtr& n1, const Node& n2)
+        NodePtr operator/(const NodePtr& n1, const Node& n2)
         {
             return DividePtr(new Divide(n1,n2.clone()));
         }
@@ -263,7 +263,7 @@ namespace ssc
             return n/d;
         }
 
-        NullPtr operator/(const NodePtr& n1, const Null& n2)
+        NodePtr operator/(const NodePtr& n1, const Null& n2)
         {
             THROW("operator /(const NodePtr&, const Null&)", FunctorAlgebraException, "Division by zero");
             n1->multiply_by(1);
@@ -271,14 +271,14 @@ namespace ssc
             return NullPtr(new Null());
         }
 
-        NullPtr operator/(const Null& n1, const NodePtr& n2)
+        NodePtr operator/(const Null& n1, const NodePtr& n2)
         {
             n2->multiply_by(1);
             if (n1.get_lambda()) {}
             return NullPtr(new Null());
         }
 
-        NullPtr operator/(const Node& n1, const Null& n2)
+        NodePtr operator/(const Node& n1, const Null& n2)
         {
             THROW("operator /(const Node&, const Null&)", FunctorAlgebraException, "Division by zero");
             n1.get_lambda();
@@ -286,7 +286,7 @@ namespace ssc
             return NullPtr(new Null());
         }
 
-        NullPtr operator/(const Null& n1, const Node& n2)
+        NodePtr operator/(const Null& n1, const Node& n2)
         {
             if (n1.get_lambda()) {}
             if (n2.get_lambda()) {}

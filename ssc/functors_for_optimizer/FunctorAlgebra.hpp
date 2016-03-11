@@ -57,19 +57,19 @@ namespace ssc
         Mult operator*(const NodePtr& n1, const Node& n2);
         NodePtr operator*(const NodePtr& n, const double d);
         NodePtr operator*(const double d, const NodePtr& n);
-        NullPtr operator*(const NodePtr& n1, const Null& n2);
-        NullPtr operator*(const Null& n1, const NodePtr& n2);
-        NullPtr operator*(const Node& n1, const Null& n2);
-        NullPtr operator*(const Null& n1, const Node& n2);
+        NodePtr operator*(const NodePtr& n1, const Null& n2);
+        NodePtr operator*(const Null& n1, const NodePtr& n2);
+        NodePtr operator*(const Node& n1, const Null& n2);
+        NodePtr operator*(const Null& n1, const Node& n2);
 
         NodePtr operator*(const Node& n1, const Constant& n2);
         NodePtr operator*(const Constant& n1, const Node& n2);
         NodePtr operator*(const NodePtr& n1, const Constant& n2);
 
-        SumPtr operator+(const Node& n1, const Node& n2);
-        SumPtr operator+(const Node& n1, const NodePtr& n2);
-        SumPtr operator+(const NodePtr& n1, const NodePtr& n2);
-        SumPtr operator+(const NodePtr& n1, const Node& n2);
+        NodePtr operator+(const Node& n1, const Node& n2);
+        NodePtr operator+(const Node& n1, const NodePtr& n2);
+        NodePtr operator+(const NodePtr& n1, const NodePtr& n2);
+        NodePtr operator+(const NodePtr& n1, const Node& n2);
         NodePtr operator+(const NodePtr& n, const double d);
         NodePtr operator+(const double d, const NodePtr& n);
         NodePtr operator+(const NodePtr& n1, const Null& n2);
@@ -82,16 +82,16 @@ namespace ssc
         NodePtr operator-(const NodePtr& n1, const NodePtr&n2);
         NodePtr operator-(const NodePtr& n, const Parameter&p);
 
-        DividePtr operator/(const Node& n1, const Node& n2);
-        DividePtr operator/(const Node& n1, const NodePtr& n2);
-        DividePtr operator/(const NodePtr& n1, const NodePtr& n2);
-        DividePtr operator/(const NodePtr& n1, const Node& n2);
+        NodePtr operator/(const Node& n1, const Node& n2);
+        NodePtr operator/(const Node& n1, const NodePtr& n2);
+        NodePtr operator/(const NodePtr& n1, const NodePtr& n2);
+        NodePtr operator/(const NodePtr& n1, const Node& n2);
         NodePtr operator/(const NodePtr& n, const double d);
         NodePtr operator/(const double d, const NodePtr& n);
-        NullPtr operator/(const NodePtr& n1, const Null& n2);
-        NullPtr operator/(const Null& n1, const NodePtr& n2);
-        NullPtr operator/(const Node& n1, const Null& n2);
-        NullPtr operator/(const Null& n1, const Node& n2);
+        NodePtr operator/(const NodePtr& n1, const Null& n2);
+        NodePtr operator/(const Null& n1, const NodePtr& n2);
+        NodePtr operator/(const Node& n1, const Null& n2);
+        NodePtr operator/(const Null& n1, const Node& n2);
 
         PowPtr pow(const Node& n1, const double d);
         PowPtr pow(const NodePtr& n1, const double d);
