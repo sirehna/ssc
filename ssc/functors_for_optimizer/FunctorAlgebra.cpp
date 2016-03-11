@@ -172,45 +172,17 @@ namespace ssc
             return SumPtr(new Sum(n1,n2.clone()));
         }
 
-        NodePtr operator+(const NodePtr& n1, const Null& n2)
+        NodePtr operator-(const double d, const NodePtr& n2)
         {
-            (void) n2;
-            return n1;
+            ConstantPtr n1(new Constant(d));
+            return n1-n2;
         }
 
-        NodePtr operator+(const Null& n1, const NodePtr& n2)
+        NodePtr operator-(const NodePtr& n1, const double d)
         {
-            n1.get_lambda();
-            return n2;
-        }
-
-        NodePtr operator+(const Node& n1, const Null& n2)
-        {
-            if (n2.get_lambda()) {}
-            return n1.clone();
-        }
-
-        NodePtr operator+(const Null& n1, const Node& n2)
-        {
-            if (n1.get_lambda()) {}
-            return n2.clone();
-        }
-
-        NodePtr operator+(const NodePtr& n, const double d)
-        {
-            return NodePtr(new Sum(n,NodePtr(new Constant(d))));
-        }
-
-        NodePtr operator-(const double d, const NodePtr& n)
-        {
-            auto n_ = n->clone();
-            n_->multiply_by(-1);
-            return n_+d;
-        }
-
-        NodePtr operator-(const NodePtr& n, const double d)
-        {
-            return (n+(-d));
+            if (d==0) return n1;
+            ConstantPtr n2(new Constant(d));
+            return n1-n2;
         }
 
         NodePtr operator-(const NodePtr& n1, const NodePtr&n2)
