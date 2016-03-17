@@ -10,7 +10,7 @@
 class CSVWriterTest : public ::testing::Test
 {
     protected:
-        CSVWriterTest() : csv(CSVWriter()),
+        CSVWriterTest() : csv(ssc::csv_writer::CSVWriter()),
                           title_column1(std::string()),
                           title_column2(std::string()),
                           title_column3(std::string()),
@@ -25,7 +25,7 @@ class CSVWriterTest : public ::testing::Test
         virtual void SetUp();
         virtual void TearDown();
 
-        CSVWriter csv;
+        ssc::csv_writer::CSVWriter csv;
         std::string title_column1;
         std::string title_column2;
         std::string title_column3;
