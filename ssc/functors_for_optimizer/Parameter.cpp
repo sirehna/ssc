@@ -105,7 +105,7 @@ NodePtr Parameter::clone() const
 
 bool Parameter::is_null() const
 {
-    return *ptr==0;
+    return false;
 }
 
 bool Parameter::equals(const Node& rhs) const
