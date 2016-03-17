@@ -181,6 +181,8 @@ add_libs(geometry
          SSC_DEPENDENCIES exception_handling interpolation)
 add_libs(csv_file_reader
          SSC_DEPENDENCIES exception_handling)
+add_libs(csv_writer
+         SSC_DEPENDENCIES exception_handling)
 add_libs(matrix_and_vector_classes
          SSC_DEPENDENCIES exception_handling)
 add_libs(functors_for_optimizer
@@ -223,6 +225,7 @@ ADD_EXECUTABLE(${TEST_EXE}
         $<TARGET_OBJECTS:kinematics_tests>
         $<TARGET_OBJECTS:numeric_tests>
         $<TARGET_OBJECTS:csv_file_reader_tests>
+        $<TARGET_OBJECTS:csv_writer_tests>
         $<TARGET_OBJECTS:interpolation_tests>
         $<TARGET_OBJECTS:functors_for_optimizer_tests>
         $<TARGET_OBJECTS:geometry_tests>
@@ -244,6 +247,7 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         data_source_shared
         kinematics_shared
         csv_file_reader_shared
+        csv_writer_shared
         interpolation_shared
         numeric_shared
         geometry_shared
