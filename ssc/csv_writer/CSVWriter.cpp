@@ -3,13 +3,13 @@
 
 #include <iostream>
 
-CSVWriter::CSVWriter() : data(std::vector<Column>()),
+ssc::csv_writer::CSVWriter::CSVWriter() : data(std::vector<Column>()),
                          nb_of_rows(0),
                          nb_of_columns(0)
 {
 }
 
-void CSVWriter::append(const std::string& column_title, const std::vector<double>& column_values)
+void ssc::csv_writer::CSVWriter::append(const std::string& column_title, const std::vector<double>& column_values)
 {
     const std::vector<double> resized_values            = resize_if_needed(column_values);
     const Column column                                 = std::make_pair(column_title, resized_values);
@@ -17,7 +17,7 @@ void CSVWriter::append(const std::string& column_title, const std::vector<double
     nb_of_columns++;
 }
 
-std::vector<double> CSVWriter::resize_if_needed(const std::vector<double>& column_values)
+std::vector<double> ssc::csv_writer::CSVWriter::resize_if_needed(const std::vector<double>& column_values)
 {
     std::vector<double> resized_column_values = column_values;
     const size_t nb_of_values_in_column       = column_values.size();
@@ -30,7 +30,7 @@ std::vector<double> CSVWriter::resize_if_needed(const std::vector<double>& colum
     return resized_column_values;
 }
 
-void CSVWriter::append_zeros_to_all_columns_except_last(const size_t& new_size)
+void ssc::csv_writer::CSVWriter::append_zeros_to_all_columns_except_last(const size_t& new_size)
 {
     for (size_t i = 0 ; i < nb_of_columns ; ++i)
     {
@@ -39,7 +39,7 @@ void CSVWriter::append_zeros_to_all_columns_except_last(const size_t& new_size)
     nb_of_rows = new_size;
 }
 
-std::string CSVWriter::generate() const
+std::string ssc::csv_writer::CSVWriter::generate() const
 {
     const std::string title_line = make_title_line();
     const std::string data_rows  = make_data_rows();
@@ -47,7 +47,7 @@ std::string CSVWriter::generate() const
     return output;
 }
 
-std::string CSVWriter::make_title_line() const
+std::string ssc::csv_writer::CSVWriter::make_title_line() const
 {
     std::string all_titles_except_last = add_all_titles_except_last();
     std::string last_title = data.back().first;
@@ -56,7 +56,7 @@ std::string CSVWriter::make_title_line() const
     return title;
 }
 
-std::string CSVWriter::normalize(std::string title) const
+std::string ssc::csv_writer::CSVWriter::normalize(std::string title) const
 {
     size_t position = title.find("\n");
     while (position < title.size())
@@ -67,7 +67,7 @@ std::string CSVWriter::normalize(std::string title) const
     return title;
 }
 
-std::string CSVWriter::replace_antislash(std::string title, const size_t& position) const
+std::string ssc::csv_writer::CSVWriter::replace_antislash(std::string title, const size_t& position) const
 {
     std::string slash = "\\";
 
@@ -75,7 +75,7 @@ std::string CSVWriter::replace_antislash(std::string title, const size_t& positi
     return title;
 }
 
-std::string CSVWriter::add_all_titles_except_last() const
+std::string ssc::csv_writer::CSVWriter::add_all_titles_except_last() const
 {
     std::string title;
     for (size_t i = 0 ; i < nb_of_columns-1 ; ++i)
@@ -86,7 +86,7 @@ std::string CSVWriter::add_all_titles_except_last() const
     return title;
 }
 
-std::string CSVWriter::make_data_rows() const
+std::string ssc::csv_writer::CSVWriter::make_data_rows() const
 {
     std::string data_rows;
     for (size_t i = 0 ; i < nb_of_rows ; ++i)
@@ -97,7 +97,7 @@ std::string CSVWriter::make_data_rows() const
     return data_rows;
 }
 
-std::string CSVWriter::get_all_values_in_row_except_last(const size_t& row_idx) const
+std::string ssc::csv_writer::CSVWriter::get_all_values_in_row_except_last(const size_t& row_idx) const
 {
     std::string truncated_row;
     for (size_t j = 0 ; j < nb_of_columns-1 ; ++j)
