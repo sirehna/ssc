@@ -260,7 +260,9 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         websocket_shared
         )
 
-IF (NOT(WIN32))
+IF (WIN32)
+    TARGET_LINK_LIBRARIES(${TEST_EXE} wsock32 ws2_32)
+ELSE()
     TARGET_LINK_LIBRARIES(${TEST_EXE} rt)
 ENDIF()
 
