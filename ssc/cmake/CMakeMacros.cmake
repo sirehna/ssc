@@ -207,17 +207,13 @@ MACRO(get_copyright copyright)
 ENDMACRO()
 
 MACRO(add_libs name)
-    SET(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES OBJECTS_DEPENDENCIES)
+    SET(multiValueArgs SSC_DEPENDENCIES EXTERNAL_DEPENDENCIES EXTERNAL_DEPENDENCIES_STATIC OBJECTS_DEPENDENCIES)
     cmake_parse_arguments(add_libs "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     get_copyright(copyright)
     add_headers(${name} "${copyright}")
     GET_LIBNAME("ssc_${name}" ${${PROJECT_NAME}_VERSION_STR} ${name})
-    ADD_LIBRARY(${name}_static STATIC
-                $<TARGET_OBJECTS:${name}_object>
-                )
-    SET_TARGET_PROPERTIES(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
-    LIST(APPEND ALL_SSC_TARGETS ${name}_static)
+    # Dynamic library
     IF(add_libs_OBJECTS_DEPENDENCIES)
         ADD_LIBRARY(${name}_shared SHARED
                     $<TARGET_OBJECTS:${name}_object>
@@ -232,21 +228,38 @@ MACRO(add_libs name)
     LIST(APPEND ALL_SSC_TARGETS ${name}_shared)
     FOREACH(f ${add_libs_SSC_DEPENDENCIES})
         SET(current_arg_name ${f})
-        TARGET_LINK_LIBRARIES(${name}_static PUBLIC ${current_arg_name}_static)
         TARGET_LINK_LIBRARIES(${name}_shared PUBLIC ${current_arg_name}_shared)
     ENDFOREACH()
-    FOREACH(f ${add_libs_EXTERNAL_DEPENDENCIES})
-        SET(current_arg_name ${f})
-        TARGET_LINK_LIBRARIES(${name}_static PRIVATE ${current_arg_name})
-        TARGET_LINK_LIBRARIES(${name}_shared PRIVATE ${current_arg_name})
-    ENDFOREACH()
-
-    INSTALL(TARGETS ${name}_static ${name}_shared
+    TARGET_LINK_LIBRARIES(${name}_shared  PRIVATE ${add_libs_EXTERNAL_DEPENDENCIES_STATIC})
+    TARGET_LINK_LIBRARIES(${name}_shared  PRIVATE ${add_libs_EXTERNAL_DEPENDENCIES})
+    INSTALL(TARGETS ${name}_shared
             RUNTIME DESTINATION ${RUNTIME_OUTPUT_DIRECTORY}
             LIBRARY DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
             ARCHIVE DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
             COMPONENT ${name}
     )
+
+    # Static library
+    ADD_LIBRARY(${name}_static2 STATIC
+                $<TARGET_OBJECTS:${name}_object>
+                )
+    SET_TARGET_PROPERTIES(${name}_static2 PROPERTIES OUTPUT_NAME ${${name}}_static2)
+    # LIST(APPEND ALL_SSC_TARGETS ${name}_static)
+    FOREACH(f ${add_libs_SSC_DEPENDENCIES})
+        SET(current_arg_name ${f})
+        TARGET_LINK_LIBRARIES(${name}_static2 PUBLIC ${current_arg_name}_static2)
+    ENDFOREACH()
+    TARGET_LINK_LIBRARIES(${name}_static2 PRIVATE ${add_libs_EXTERNAL_DEPENDENCIES})
+    # TODO : Improved this part of the code maybe with CMAKE_CXX_ARCHIVE_CREATE
+    # WARNING : This part of the code works only on Linux environment (MinGW included)
+    ADD_CUSTOM_TARGET(${name}_static ALL
+        COMMENT "Creates an archive that contains all static libraries"
+        COMMAND ${CMAKE_COMMAND} -E remove -f libssc_${name}_static.a
+        COMMAND ${CMAKE_AR} qc libssc_${name}_static.a $<TARGET_FILE:${name}_static2> ${add_libs_EXTERNAL_DEPENDENCIES_STATIC})
+    SET_TARGET_PROPERTIES(${name}_static PROPERTIES OUTPUT_NAME ${${name}}_static)
+    INSTALL(FILES ${CMAKE_BINARY_DIR}/libssc_${name}_static.a
+            DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+            COMPONENT ${name})
 ENDMACRO()
 
 MACRO(write_sha_checker short_sha long_sha major minor filename)
