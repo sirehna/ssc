@@ -119,7 +119,7 @@ SET(Boost_USE_STATIC_LIBS        ON)
 SET(Boost_USE_MULTITHREADED     ON)
 #SET(Boost_USE_MULTITHREADED     OFF)
 #SET(Boost_USE_STATIC_RUNTIME   OFF)
-FIND_PACKAGE(Boost 1.53 COMPONENTS system thread random REQUIRED)
+FIND_PACKAGE(Boost 1.53 COMPONENTS system thread random chrono REQUIRED)
 IF(Boost_FOUND)
     MESSAGE(STATUS "Boost_INCLUDE_DIRS    : ${Boost_INCLUDE_DIRS}")
     MESSAGE(STATUS "Boost_LIBRARIES       : ${Boost_LIBRARIES}")
@@ -199,7 +199,7 @@ add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
-SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY})
+SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY} ${Boost_CHRONO_LIBRARY})
 IF(WIN32)
     add_libs(websocket
             SSC_DEPENDENCIES exception_handling
