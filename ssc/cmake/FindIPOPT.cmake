@@ -50,7 +50,8 @@ if (WIN32)
             gcc_s
             m
     )
-#            quadmath
+    set(IPOPT_LIB_STATIC ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} ${COIN_BLAS})
+    set(IPOPT_LIB_DYNAMIC gfortran gcc_s m) # quadmath
 else()
     set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK}
             ${COIN_BLAS}
@@ -59,5 +60,6 @@ else()
             m
             dl
     )
-#            quadmath
+    set(IPOPT_LIB_STATIC ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} ${COIN_BLAS})
+    set(IPOPT_LIB_DYNAMIC gfortran gcc_s m dl) # quadmath
 endif()
