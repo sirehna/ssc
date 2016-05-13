@@ -29,7 +29,7 @@ FOREACH(f #DemoWebSocket
         )
     ADD_EXECUTABLE(${f}
         src/${f}.cpp)
-    TARGET_LINK_LIBRARIES(${f} ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY})
+    TARGET_LINK_LIBRARIES(${f} ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY} ${Boost_CHRONO_LIBRARY})
     IF(WIN32)
         TARGET_LINK_LIBRARIES(${f} wsock32 ws2_32)
     ELSE()
