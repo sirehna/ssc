@@ -193,7 +193,8 @@ add_libs(optimizer
          SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
 add_libs(ipopt_interface
          SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes optimizer
-         EXTERNAL_DEPENDENCIES ${IPOPT})
+         EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
+         EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
 add_headers(solver "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
@@ -202,11 +203,12 @@ SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boos
 IF(WIN32)
     add_libs(websocket
             SSC_DEPENDENCIES exception_handling
-            EXTERNAL_DEPENDENCIES ${websocketpp_LIBRARIES} wsock32 ws2_32)
+            EXTERNAL_DEPENDENCIES wsock32 ws2_32
+            EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ELSE()
     add_libs(websocket
              SSC_DEPENDENCIES exception_handling
-             EXTERNAL_DEPENDENCIES ${websocketpp_LIBRARIES})
+             EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ENDIF()
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
