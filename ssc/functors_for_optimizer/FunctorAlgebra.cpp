@@ -15,6 +15,9 @@
 #include "ssc/functors_for_optimizer/Pow.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
 
 using namespace ssc::functors_for_optimizer;
 
@@ -362,6 +365,30 @@ namespace ssc
         {
             return n1;
         }
+
+//        NullPtr sin(const NullPtr& n)
+//        {
+//            return n;
+//        }
+
+        NodePtr sin(const NodePtr& n)
+        {
+            if (n->is_null()) return n;
+            return SinPtr(new Sin(n));
+        }
+
+        NodePtr cos(const NodePtr& n)
+        {
+            if (n->is_null()) return ConstantPtr(new Constant(1));
+            return CosPtr(new Cos(n));
+        }
+
+        NodePtr cos(const Node& n)
+        {
+            if (n.is_null()) return ConstantPtr(new Constant(1));
+            return CosPtr(new Cos(n.clone()));
+        }
+
 
         bool operator==(const double& v, const NodePtr& n)
         {
