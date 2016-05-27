@@ -26,7 +26,7 @@ void Cos::update_lambda()
 {
     const auto factor_ = factor;
     const auto n_ = n;
-    set_value([factor_,n_]()->double {return factor_*cos(n_->get_lambda()());});
+    set_value([factor_,n_]()->double {return factor_*std::cos(n_->get_lambda()());});
 }
 
 std::string Cos::get_operator_name() const

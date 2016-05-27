@@ -26,7 +26,7 @@ void Sin::update_lambda()
 {
     const auto n_ = n;
     const auto factor_ = factor;
-    set_value([n_,factor_]()->double {return factor_*sin(n_->get_lambda()());});
+    set_value([n_,factor_]()->double {return factor_*std::sin(n_->get_lambda()());});
 }
 
 std::string Sin::get_operator_name() const

@@ -36,6 +36,8 @@ namespace ssc
         class Pow;
         class Null;
         class Constant;
+        class Sin;
+        class Cos;
         typedef TR1(shared_ptr)<Node> NodePtr;
         typedef TR1(shared_ptr)<Parameter> ParameterPtr;
         typedef TR1(shared_ptr)<Difference> DifferencePtr;
@@ -46,6 +48,8 @@ namespace ssc
         typedef TR1(shared_ptr)<Pow> PowPtr;
         typedef TR1(shared_ptr)<Null> NullPtr;
         typedef TR1(shared_ptr)<Constant> ConstantPtr;
+        typedef TR1(shared_ptr)<Cos> CosPtr;
+        typedef TR1(shared_ptr)<Sin> SinPtr;
 
         Mult operator*(const Node& n1, const Node& n2);
         Mult operator*(const Node& n1, const NodePtr& n2);
@@ -99,6 +103,13 @@ namespace ssc
         NullPtr pow(const Null& n1, const NodePtr& n2);
         NullPtr pow(const NullPtr& n1, const Node& n2);
         NullPtr pow(const NullPtr& n1, const NodePtr& n2);
+
+        //NullPtr sin(const NullPtr& n);
+        NodePtr sin(const NodePtr& n);
+        //NodePtr sin(const Node& n);
+
+        NodePtr cos(const NodePtr& n);
+        NodePtr cos(const Node& n);
 
         bool operator==(const NodePtr& n, const double& v);
         bool operator==(const double& v, const NodePtr& n);
