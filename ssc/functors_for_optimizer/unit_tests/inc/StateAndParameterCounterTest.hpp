@@ -12,11 +12,11 @@
 #include "gtest/gtest.h"
 #include <ssc/random_data_generator/DataGenerator.hpp>
 
-class count_states_and_parametersTest : public ::testing::Test
+class StateAndParameterCounterTest : public ::testing::Test
 {
     protected:
-        count_states_and_parametersTest();
-        virtual ~count_states_and_parametersTest();
+        StateAndParameterCounterTest();
+        virtual ~StateAndParameterCounterTest();
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
