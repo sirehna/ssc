@@ -39,8 +39,17 @@ namespace ssc
                 void visit(const State& node);
                 void visit(const Parameter& node);
                 void visit(const Null& node);
-                void visit(const Unary& node);
+                void visit(const Sin& node);
+                void visit(const Cos& node);
+                void visit(const Ln& node);
                 void visit(const Constant& node);
+                void visit(const PiecewiseConstantFunctor& node);
+                void visit(const PiecewiseLinearFunctor& node);
+                void visit(const SplineFunctor& node);
+                void visit(const PiecewiseParabolicFunctor& node);
+                void visit(const Sign& node);
+                void visit(const Abs& node);
+                void visit(const Sqrt& node);
             private:
                 Serialize();
                 void serialize_multiplicative_factor(const double& k);

@@ -8,6 +8,7 @@
 #include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/Divide.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <cmath>
 
 using namespace ssc::functors_for_optimizer;
@@ -47,4 +48,9 @@ bool Ln::is_null() const
 std::string Ln::get_type() const
 {
     return "Ln";
+}
+
+void Ln::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
 }

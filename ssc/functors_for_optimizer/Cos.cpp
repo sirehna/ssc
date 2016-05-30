@@ -12,6 +12,7 @@
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <cmath>
 #include <string>
 
@@ -59,4 +60,9 @@ bool Cos::is_null() const
 std::string Cos::get_type() const
 {
     return "Cos";
+}
+
+void Cos::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
 }

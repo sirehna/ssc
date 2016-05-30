@@ -17,11 +17,20 @@ namespace ssc
         class State;
         class Parameter;
         class Null;
-        class Unary;
         class Constant;
         class Pow;
         class Difference;
         class Divide;
+        class Sin;
+        class Cos;
+        class Ln;
+        class PiecewiseConstantFunctor;
+        class PiecewiseLinearFunctor;
+        class PiecewiseParabolicFunctor;
+        class SplineFunctor;
+        class Sign;
+        class Abs;
+        class Sqrt;
 
         class NodeVisitor
         {
@@ -35,7 +44,17 @@ namespace ssc
                 virtual void visit(const Parameter& node) = 0;
                 virtual void visit(const Constant& node) = 0;
                 virtual void visit(const Null& node) = 0;
-                virtual void visit(const Unary& node) = 0;
+                virtual void visit(const Sin& node) = 0;
+                virtual void visit(const Cos& node) = 0;
+                virtual void visit(const Ln& node) = 0;
+                virtual void visit(const PiecewiseConstantFunctor& node) = 0;
+                virtual void visit(const PiecewiseLinearFunctor& node) = 0;
+                virtual void visit(const SplineFunctor& node) = 0;
+                virtual void visit(const PiecewiseParabolicFunctor& node) = 0;
+                virtual void visit(const Sign& node) = 0;
+                virtual void visit(const Abs& node) = 0;
+                virtual void visit(const Sqrt& node) = 0;
+
                 virtual ~NodeVisitor() {};
         };
     }
