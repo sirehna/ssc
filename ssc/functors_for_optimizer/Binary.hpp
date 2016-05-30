@@ -29,7 +29,6 @@ namespace ssc
             public:
                 Binary(const NodePtr& n1, const NodePtr& n2);
                 ~Binary() {}
-                void accept(NodeVisitor& v) const;
                 virtual std::string get_operator_name() const = 0;
                 NodePtr get_lhs() const;
                 NodePtr get_rhs() const;

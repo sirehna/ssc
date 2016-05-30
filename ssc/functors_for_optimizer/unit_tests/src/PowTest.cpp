@@ -51,3 +51,4 @@ TEST_F(PowTest, derivative)
         ASSERT_DOUBLE_EQ((n->get_lambda()())*pow(x->get_lambda()(),(n->get_lambda()())-1), dpow());
     }
 }
+

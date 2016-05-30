@@ -38,7 +38,9 @@ namespace ssc
                 void operator()(const NodePtr& f);
                 void operator()(const std::vector<NodePtr>& g);
                 std::vector<StatePtr> get() const;
-                void visit(const Binary& node);
+                void visit(const Pow& node);
+                void visit(const Divide& node);
+                void visit(const Difference& node);
                 void visit(const Multiply& node);
                 void visit(const Sum& node);
                 void visit(const State& node);

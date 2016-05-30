@@ -9,7 +9,9 @@
 
 #include "ssc/functors_for_optimizer/StateAndParameterCounter.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
-#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
@@ -24,7 +26,17 @@ class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 {
     public:
         CounterVisitor() : max_state_idx(0), max_parameter_idx(0),states_present(false), parameters_present(false) {}
-        void visit(const ::ssc::functors_for_optimizer::Binary& node)
+        void visit(const ::ssc::functors_for_optimizer::Difference& node)
+        {
+            node.get_lhs()->accept(*this);
+            node.get_rhs()->accept(*this);
+        }
+        void visit(const ::ssc::functors_for_optimizer::Divide& node)
+        {
+            node.get_lhs()->accept(*this);
+            node.get_rhs()->accept(*this);
+        }
+        void visit(const ::ssc::functors_for_optimizer::Pow& node)
         {
             node.get_lhs()->accept(*this);
             node.get_rhs()->accept(*this);

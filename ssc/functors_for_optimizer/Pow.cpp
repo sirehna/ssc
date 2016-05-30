@@ -122,3 +122,8 @@ bool Pow::is_constant() const
     return (n2_->is_null() || (n1_->is_constant() && n2_->is_constant()) || n1_->equals_one());
 }
 
+
+void Pow::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
+}

@@ -6,7 +6,9 @@
  */
 
 #include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
-#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
@@ -58,7 +60,29 @@ void SerializeReversePolish::visit(const Multiply& node)
     visit_nary(node);
 }
 
-void SerializeReversePolish::visit(const Binary& node)
+void SerializeReversePolish::visit(const Difference& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << node.get_type();
+    os << "(";
+    node.get_lhs()->accept(*this);
+    os << ",";
+    node.get_rhs()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Divide& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << node.get_type();
+    os << "(";
+    node.get_lhs()->accept(*this);
+    os << ",";
+    node.get_rhs()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Pow& node)
 {
     serialize_multiplicative_factor(node.get_multiplicative_factor());
     os << node.get_type();
