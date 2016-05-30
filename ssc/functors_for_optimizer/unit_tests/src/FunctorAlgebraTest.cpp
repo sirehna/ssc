@@ -591,3 +591,25 @@ TEST_F(FunctorAlgebraTest, abs)
         ASSERT_DOUBLE_EQ(std::abs(x->get_lambda()()), f->get_lambda()());
     }
 }
+
+TEST_F(FunctorAlgebraTest, if_positive)
+{
+    auto f = if_positive(x,y,z);
+    for (size_t i = 0 ; i < 1000 ; ++i)
+    {
+        const double x_val = a.random<double>();
+        const double y_val = a.random<double>();
+        const double z_val = a.random<double>();
+        *x = x_val;
+        *y = y_val;
+        *z = z_val;
+        if (x_val >= 0)
+        {
+            ASSERT_DOUBLE_EQ(y_val, f->get_lambda()());
+        }
+        else
+        {
+            ASSERT_DOUBLE_EQ(z_val, f->get_lambda()());
+        }
+    }
+}

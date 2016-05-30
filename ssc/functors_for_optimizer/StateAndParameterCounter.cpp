@@ -28,7 +28,7 @@
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/functors_for_optimizer/Sign.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
-
+#include "ssc/functors_for_optimizer/IfPositive.hpp"
 
 class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 {
@@ -75,6 +75,13 @@ class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
         {
             parameters_present = true;
             max_parameter_idx = std::max(max_parameter_idx, node.get_index());
+        }
+
+        void visit(const ::ssc::functors_for_optimizer::IfPositive& node)
+        {
+            node.get_test()->accept(*this);
+            node.get_positive()->accept(*this);
+            node.get_negative()->accept(*this);
         }
 
         void visit(const ::ssc::functors_for_optimizer::Constant& ) {}

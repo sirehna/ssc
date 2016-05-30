@@ -104,6 +104,7 @@ namespace ssc
         NodePtr abs(const NodePtr& n);
 
         NodePtr sqrt(const NodePtr& n);
+        NodePtr if_positive(const NodePtr& test, const NodePtr& positive, const NodePtr& negative);
 
         bool operator==(const NodePtr& n, const double v);
         bool operator==(const double v, const NodePtr& n);

@@ -27,6 +27,7 @@ FILE(GLOB SRC src/NullTest.cpp
               src/AbsTest.cpp
               src/SignTest.cpp
               src/SqrtTest.cpp
+              src/IfPositiveTest.cpp
               src/StateAndParameterCounterTest.cpp)
 # ------8<---------------------------------------------->8-----
 

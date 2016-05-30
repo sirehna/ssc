@@ -25,6 +25,7 @@
 #include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
 #include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
 #include "ssc/functors_for_optimizer/SplineFunctor.hpp"
+#include "ssc/functors_for_optimizer/IfPositive.hpp"
 
 #include <cmath>
 
@@ -283,6 +284,18 @@ void Serialize::visit(const Constant& node)
     if (k < 0)      os << "- " << fabs(k);
     else if (k!= 0) os << k;
     if ((k < 0) && parenthesize_next_node) os << ")";
+}
+
+void Serialize::visit(const IfPositive& node)
+{
+    if (parenthesize_next_node) os << '(';
+    os << "(";
+    node.get_test()->accept(*this);
+    os << " > 0) ? ";
+    node.get_positive()->accept(*this);
+    os << " : ";
+    node.get_negative()->accept(*this);
+    if (parenthesize_next_node) os << ')';
 }
 
 ::std::ostream& ssc::functors_for_optimizer::operator<<(::std::ostream& os, const Node& node)

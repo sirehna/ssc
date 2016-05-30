@@ -57,6 +57,7 @@ namespace ssc
                 void visit(const Sign& node);
                 void visit(const Abs& node);
                 void visit(const Sqrt& node);
+                void visit(const IfPositive& node);
 
             private:
                 class StateGetter_pimpl;
