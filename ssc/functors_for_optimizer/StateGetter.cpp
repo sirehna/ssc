@@ -12,7 +12,16 @@
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
-#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/Sign.hpp"
+#include "ssc/functors_for_optimizer/Abs.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Sqrt.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
@@ -141,7 +150,53 @@ void StateGetter::visit(const Null& node)
     (void)node;
 }
 
-void StateGetter::visit(const Unary& node)
+void StateGetter::visit(const Sin& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const Sign& node)
+
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const Abs& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const Cos& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const Sqrt& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const Ln& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const PiecewiseConstantFunctor& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const PiecewiseLinearFunctor& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const PiecewiseParabolicFunctor& node)
+{
+    node.get_son()->accept(*this);
+}
+
+void StateGetter::visit(const SplineFunctor& node)
 {
     node.get_son()->accept(*this);
 }

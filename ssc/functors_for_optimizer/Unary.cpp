@@ -19,11 +19,6 @@ NodePtr Unary::get_son() const
     return n;
 }
 
-void Unary::accept(NodeVisitor& v) const
-{
-    v.visit(*this);
-}
-
 void Unary::set_value(const std::function<double()>& val)
 {
     value = val;

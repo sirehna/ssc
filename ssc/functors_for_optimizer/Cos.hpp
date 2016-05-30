@@ -34,6 +34,7 @@ namespace ssc
                 bool is_null() const;
                 std::string get_type() const;
                 void update_lambda();
+                void accept(NodeVisitor& v) const;
         };
 
         typedef TR1(shared_ptr)<Cos> CosPtr;

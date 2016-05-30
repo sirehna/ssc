@@ -36,6 +36,7 @@ namespace ssc
                 bool equals(const Node& rhs) const;
                 void update_lambda();
                 std::string get_type() const;
+                void accept(NodeVisitor& v) const;
         };
 
         typedef TR1(shared_ptr)<Sin> SinPtr;

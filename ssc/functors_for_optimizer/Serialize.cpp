@@ -12,10 +12,19 @@
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
-#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/Sign.hpp"
+#include "ssc/functors_for_optimizer/Abs.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Sqrt.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
 
 #include <cmath>
 
@@ -188,14 +197,85 @@ void Serialize::visit(const Null& node)
     os << node.get_lambda()();
 }
 
-void Serialize::visit(const Unary& node)
+void Serialize::visit(const Sin& node)
 {
     serialize_multiplicative_factor(node.get_multiplicative_factor());
-    os << node.get_operator_name() << "(";
+    os << "sin(";
     node.get_son()->accept(*this);
     os << ")";
 }
 
+void Serialize::visit(const Sign& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "sign(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const Abs& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "abs(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const Cos& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "cos(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const Sqrt& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "sqrt(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const Ln& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "log(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const PiecewiseConstantFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_constant(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const PiecewiseLinearFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_linear(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const PiecewiseParabolicFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_parabolic(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void Serialize::visit(const SplineFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "spline(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
 void Serialize::visit(const Constant& node)
 {
     const double k = node.get_lambda()();

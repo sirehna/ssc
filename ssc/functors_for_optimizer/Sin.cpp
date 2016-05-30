@@ -12,6 +12,7 @@
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include <cmath>
 #include <string>
 
@@ -66,4 +67,9 @@ bool Sin::equals(const Node& rhs) const
 std::string Sin::get_type() const
 {
     return "Sin";
+}
+
+void Sin::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
 }

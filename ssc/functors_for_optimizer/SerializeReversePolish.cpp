@@ -12,10 +12,20 @@
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
-#include "ssc/functors_for_optimizer/Unary.hpp"
+#include "ssc/functors_for_optimizer/Sin.hpp"
+#include "ssc/functors_for_optimizer/Sign.hpp"
+#include "ssc/functors_for_optimizer/Abs.hpp"
+#include "ssc/functors_for_optimizer/Cos.hpp"
+#include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
+#include "ssc/functors_for_optimizer/Sqrt.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
+#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
+#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
+
 
 
 #include <cmath>
@@ -110,14 +120,85 @@ void SerializeReversePolish::visit(const Null& node)
     os << "0";
 }
 
-void SerializeReversePolish::visit(const Unary& node)
+void SerializeReversePolish::visit(const Sin& node)
 {
     serialize_multiplicative_factor(node.get_multiplicative_factor());
-    os << node.get_type() << "(";
+    os << "sin(";
     node.get_son()->accept(*this);
     os << ")";
 }
 
+void SerializeReversePolish::visit(const Sign& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "sign(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Abs& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "abs(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Cos& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "cos(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Sqrt& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "sqrt(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const Ln& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "ln(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const PiecewiseConstantFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_constant(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const PiecewiseLinearFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_linear(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const PiecewiseParabolicFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "piecewise_parabolic(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
+
+void SerializeReversePolish::visit(const SplineFunctor& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "spline(";
+    node.get_son()->accept(*this);
+    os << ")";
+}
 void SerializeReversePolish::visit(const Constant& node)
 {
     os << node.get_lambda()();
