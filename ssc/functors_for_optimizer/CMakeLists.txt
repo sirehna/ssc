@@ -30,6 +30,7 @@ set(SOURCES State.cpp
             Sign.cpp
             SerializeReversePolish.cpp
             StateAndParameterCounter.cpp
+            Sqrt.cpp
             )
 
 include_directories(inc)
