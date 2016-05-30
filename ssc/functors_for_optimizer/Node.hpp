@@ -32,6 +32,7 @@ namespace ssc
         class Pow;
         class Divide;
         class Unary;
+        class IfPositive;
         class Node
         {
             public:
@@ -57,6 +58,7 @@ namespace ssc
                 virtual bool equals_derived(const Divide& rhs) const;
                 virtual bool equals_derived(const Unary& rhs) const;
                 virtual bool equals_derived(const State& rhs) const;
+                virtual bool equals_derived(const IfPositive& rhs) const;
 
 
                 virtual std::string get_type() const = 0;

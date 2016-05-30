@@ -20,6 +20,7 @@
 #include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/Sign.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
+#include "ssc/functors_for_optimizer/IfPositive.hpp"
 #include "ssc/functors_for_optimizer/Sqrt.hpp"
 
 #include <cmath>
@@ -283,6 +284,17 @@ namespace ssc
             if (n->is_null()) return NullPtr(new Null());
             if (n->is_constant()) return ConstantPtr(new Constant(std::sqrt(n->get_lambda()())));
             return SqrtPtr(new Sqrt(n));
+        }
+
+        NodePtr if_positive(const NodePtr& test, const NodePtr& positive, const NodePtr& negative)
+        {
+            if (test->is_null()) return positive;
+            if (test->is_constant())
+            {
+                if (test->get_lambda()() >= 0) return positive;
+                return negative;
+            }
+            return IfPositivePtr(new IfPositive(test, positive, negative));
         }
 
         bool operator==(const double v, const NodePtr& n)

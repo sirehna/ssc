@@ -26,7 +26,7 @@
 #include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
 #include "ssc/functors_for_optimizer/SplineFunctor.hpp"
 #include "ssc/functors_for_optimizer/Node.hpp"
-
+#include "ssc/functors_for_optimizer/IfPositive.hpp"
 
 
 #include <cmath>
@@ -204,6 +204,18 @@ void SerializeReversePolish::visit(const SplineFunctor& node)
 void SerializeReversePolish::visit(const Constant& node)
 {
     os << node.get_lambda()();
+}
+
+void SerializeReversePolish::visit(const IfPositive& node)
+{
+    serialize_multiplicative_factor(node.get_multiplicative_factor());
+    os << "if_positive(";
+    node.get_test()->accept(*this);
+    os << ",";
+    node.get_positive()->accept(*this);
+    os << ",";
+    node.get_negative()->accept(*this);
+    os << ")";
 }
 
 void SerializeReversePolish::serialize_multiplicative_factor(const double& k)

@@ -26,6 +26,7 @@
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
+#include "ssc/functors_for_optimizer/IfPositive.hpp"
 #include <set>
 #include <algorithm>
 
@@ -204,4 +205,11 @@ void StateGetter::visit(const SplineFunctor& node)
 void StateGetter::visit(const Constant& node)
 {
     (void)node;
+}
+
+void StateGetter::visit(const IfPositive& node)
+{
+    node.get_test()->accept(*this);
+    node.get_positive()->accept(*this);
+    node.get_negative()->accept(*this);
 }

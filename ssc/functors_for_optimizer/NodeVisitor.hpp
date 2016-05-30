@@ -31,6 +31,7 @@ namespace ssc
         class Sign;
         class Abs;
         class Sqrt;
+        class IfPositive;
 
         class NodeVisitor
         {
@@ -54,6 +55,7 @@ namespace ssc
                 virtual void visit(const Sign& node) = 0;
                 virtual void visit(const Abs& node) = 0;
                 virtual void visit(const Sqrt& node) = 0;
+                virtual void visit(const IfPositive& node) = 0;
 
                 virtual ~NodeVisitor() {};
         };

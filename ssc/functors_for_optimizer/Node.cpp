@@ -105,6 +105,11 @@ bool Node::equals_derived(const State& rhs) const
     return false;
 }
 
+bool Node::equals_derived(const IfPositive& ) const
+{
+    return false;
+}
+
 NodePtr Node::simplify() const
 {
     return clone();
