@@ -20,7 +20,8 @@
 #include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/Sign.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
-
+#include "ssc/functors_for_optimizer/Sqrt.hpp"
+#include <cmath>
 using namespace ssc::functors_for_optimizer;
 
 #if defined(_MSC_VER)
@@ -401,6 +402,13 @@ namespace ssc
         {
             if (n->is_null()) return NullPtr(new Null());
             return AbsPtr(new Abs(n));
+        }
+
+        NodePtr sqrt(const NodePtr& n)
+        {
+            if (n->is_null()) return NullPtr(new Null());
+            if (n->is_constant()) return ConstantPtr(new Constant(std::sqrt(n->get_lambda()())));
+            return SqrtPtr(new Sqrt(n));
         }
 
         bool operator==(const double& v, const NodePtr& n)

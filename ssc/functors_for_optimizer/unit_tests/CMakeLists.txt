@@ -26,6 +26,7 @@ FILE(GLOB SRC src/NullTest.cpp
               src/SerializeReversePolishTest.cpp
               src/AbsTest.cpp
               src/SignTest.cpp
+              src/SqrtTest.cpp
               src/StateAndParameterCounterTest.cpp)
 # ------8<---------------------------------------------->8-----
 

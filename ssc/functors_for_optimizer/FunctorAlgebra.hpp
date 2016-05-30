@@ -115,6 +115,8 @@ namespace ssc
 
         NodePtr abs(const NodePtr& n);
 
+        NodePtr sqrt(const NodePtr& n);
+
         bool operator==(const NodePtr& n, const double& v);
         bool operator==(const double& v, const NodePtr& n);
         bool operator!=(const NodePtr& n, const double& v);

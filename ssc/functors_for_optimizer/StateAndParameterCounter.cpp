@@ -21,7 +21,6 @@
 #include "ssc/functors_for_optimizer/Sum.hpp"
 
 
-
 class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 {
     public:
