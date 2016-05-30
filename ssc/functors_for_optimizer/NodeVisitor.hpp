@@ -12,7 +12,6 @@ namespace ssc
 {
     namespace functors_for_optimizer
     {
-        class Binary;
         class Sum;
         class Multiply;
         class State;
@@ -21,11 +20,15 @@ namespace ssc
         class Unary;
         class Constant;
         class Pow;
+        class Difference;
+        class Divide;
 
         class NodeVisitor
         {
             public:
-                virtual void visit(const Binary& node) = 0;
+                virtual void visit(const Pow& node) = 0;
+                virtual void visit(const Difference& node) = 0;
+                virtual void visit(const Divide& node) = 0;
                 virtual void visit(const Sum& node) = 0;
                 virtual void visit(const Multiply& node) = 0;
                 virtual void visit(const State& node) = 0;

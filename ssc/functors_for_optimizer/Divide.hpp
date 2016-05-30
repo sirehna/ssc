@@ -40,6 +40,7 @@ namespace ssc
                 bool must_parenthesize() const;
                 bool is_constant() const;
                 void update_lambda();
+                void accept(NodeVisitor& v) const;
         };
 
         typedef TR1(shared_ptr)<Divide> DividePtr;

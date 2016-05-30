@@ -94,3 +94,8 @@ bool Divide::is_constant() const
     return (n1_->is_constant() && n2_->is_constant());
 }
 
+
+void Divide::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
+}

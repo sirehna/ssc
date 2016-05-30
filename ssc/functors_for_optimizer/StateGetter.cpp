@@ -6,7 +6,9 @@
  */
 
 #include "ssc/functors_for_optimizer/StateGetter.hpp"
-#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
@@ -88,7 +90,19 @@ std::vector<StatePtr> StateGetter::get() const
     return pimpl->get_states();
 }
 
-void StateGetter::visit(const Binary& node)
+void StateGetter::visit(const Pow& node)
+{
+    node.get_lhs()->accept(*this);
+    node.get_rhs()->accept(*this);
+}
+
+void StateGetter::visit(const Divide& node)
+{
+    node.get_lhs()->accept(*this);
+    node.get_rhs()->accept(*this);
+}
+
+void StateGetter::visit(const Difference& node)
 {
     node.get_lhs()->accept(*this);
     node.get_rhs()->accept(*this);

@@ -6,7 +6,9 @@
  */
 
 #include "ssc/functors_for_optimizer/Serialize.hpp"
-#include "ssc/functors_for_optimizer/Binary.hpp"
+#include "ssc/functors_for_optimizer/Difference.hpp"
+#include "ssc/functors_for_optimizer/Divide.hpp"
+#include "ssc/functors_for_optimizer/Pow.hpp"
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
@@ -86,7 +88,7 @@ void Serialize::visit(const Sum& node)
 }
 
 
-void Serialize::visit(const Binary& node)
+void Serialize::visit(const Difference& node)
 {
     const double k = node.get_multiplicative_factor();
     serialize_multiplicative_factor(k);
@@ -95,17 +97,48 @@ void Serialize::visit(const Binary& node)
     auto n2 = node.get_rhs();
     bool parenthesize_next_node_back = parenthesize_next_node;
     parenthesize_next_node = true;
-    /*os << "(";
-    serialize_multiplicative_factor(k);
-    auto n1 = node.get_lhs();
-    auto n2 = node.get_rhs();*/
     n1->accept(*this);
     os << " ";
     os << node.get_operator_name();
     os << " ";
     n2->accept(*this);
     parenthesize_next_node = parenthesize_next_node_back;
-    //os << ")";
+    if (k !=1) os << ")";
+}
+
+void Serialize::visit(const Divide& node)
+{
+    const double k = node.get_multiplicative_factor();
+    serialize_multiplicative_factor(k);
+    if (k !=1) os << "(";
+    auto n1 = node.get_lhs();
+    auto n2 = node.get_rhs();
+    bool parenthesize_next_node_back = parenthesize_next_node;
+    parenthesize_next_node = true;
+    n1->accept(*this);
+    os << " ";
+    os << node.get_operator_name();
+    os << " ";
+    n2->accept(*this);
+    parenthesize_next_node = parenthesize_next_node_back;
+    if (k !=1) os << ")";
+}
+
+void Serialize::visit(const Pow& node)
+{
+    const double k = node.get_multiplicative_factor();
+    serialize_multiplicative_factor(k);
+    if (k !=1) os << "(";
+    auto n1 = node.get_lhs();
+    auto n2 = node.get_rhs();
+    bool parenthesize_next_node_back = parenthesize_next_node;
+    parenthesize_next_node = true;
+    n1->accept(*this);
+    os << " ";
+    os << node.get_operator_name();
+    os << " ";
+    n2->accept(*this);
+    parenthesize_next_node = parenthesize_next_node_back;
     if (k !=1) os << ")";
 }
 

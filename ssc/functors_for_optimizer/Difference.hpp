@@ -39,6 +39,7 @@ namespace ssc
                 NodePtr simplify() const;
                 bool is_constant() const;
                 void update_lambda();
+                void accept(NodeVisitor& v) const;
         };
 
         typedef TR1(shared_ptr)<Difference> DiffPtr;

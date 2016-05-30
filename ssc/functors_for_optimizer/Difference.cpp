@@ -71,3 +71,9 @@ bool Difference::is_constant() const
 {
     return is_null() || (n1_->is_constant() && n2_->is_constant());
 }
+
+
+void Difference::accept(NodeVisitor& v) const
+{
+    v.visit(*this);
+}

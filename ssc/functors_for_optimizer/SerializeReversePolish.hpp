@@ -31,7 +31,9 @@ namespace ssc
             public:
                 SerializeReversePolish(std::ostream& os_);
                 ~SerializeReversePolish() {}
-                void visit(const Binary& node);
+                void visit(const Pow& node);
+                void visit(const Divide& node);
+                void visit(const Difference& node);
                 void visit(const Sum& node);
                 void visit(const Multiply& node);
                 void visit_nary(const N_ary& node);

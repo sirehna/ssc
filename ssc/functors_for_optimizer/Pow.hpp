@@ -23,6 +23,7 @@ namespace ssc
                 NodePtr simplify() const;
                 void update_lambda();
                 bool is_constant() const;
+                void accept(NodeVisitor& v) const;
             private:
                 std::function<double()> get_pow_fun() const;
         };
