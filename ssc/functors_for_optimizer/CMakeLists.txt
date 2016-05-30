@@ -31,7 +31,7 @@ set(SOURCES State.cpp
             Grad.cpp
             FunctionMatrix.cpp
             SerializeReversePolish.cpp
-            count_states_and_parameters.cpp
+            StateAndParameterCounter.cpp
             )
 
 include_directories(inc)

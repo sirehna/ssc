@@ -13,13 +13,7 @@
 #include "ssc/functors_for_optimizer/N_ary.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
-#include "ssc/functors_for_optimizer/Sin.hpp"
-#include "ssc/functors_for_optimizer/Cos.hpp"
-#include "ssc/functors_for_optimizer/Ln.hpp"
-#include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"
-#include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"
-#include "ssc/functors_for_optimizer/PiecewiseParabolicFunctor.hpp"
-#include "ssc/functors_for_optimizer/SplineFunctor.hpp"
+#include "ssc/functors_for_optimizer/Unary.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"
 #include "ssc/functors_for_optimizer/Multiply.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
@@ -65,37 +59,7 @@ class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 
         void visit(const ::ssc::functors_for_optimizer::Constant& ) {}
         void visit(const ::ssc::functors_for_optimizer::Null& ) {}
-        void visit(const ::ssc::functors_for_optimizer::Sin& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::Cos& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::Ln& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::PiecewiseConstantFunctor& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::PiecewiseLinearFunctor& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::PiecewiseParabolicFunctor& node)
-        {
-            auto son = node.get_son();
-            son->accept(*this);
-        }
-        void visit(const ::ssc::functors_for_optimizer::SplineFunctor& node)
+        void visit(const ::ssc::functors_for_optimizer::Unary& node)
         {
             auto son = node.get_son();
             son->accept(*this);
