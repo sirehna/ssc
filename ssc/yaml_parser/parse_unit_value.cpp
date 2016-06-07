@@ -11,20 +11,13 @@
 
 void ssc::yaml_parser::parse_uv(const YAML::Node& node, std::vector<double>& d)
 {
-    if(node.FindValue("unit"))
+    std::string unit = "";
+    node["unit"] >> unit;
+    const double factor = ssc::decode_unit::decodeUnit(unit);
+    node["values"] >> d;
+    for (std::vector<double>::iterator it = d.begin() ; it != d.end() ; ++it)
     {
-        std::string unit = "";
-        node["unit"] >> unit;
-        const double factor = ssc::decode_unit::decodeUnit(unit);
-        node["values"] >> d;
-        for (std::vector<double>::iterator it = d.begin() ; it != d.end() ; ++it)
-        {
-            *it *= factor;
-        }
-    }
-    else
-    {
-        node >> d;
+        *it *= factor;
     }
 }
 
