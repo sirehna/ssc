@@ -1,7 +1,7 @@
-http://130.66.124.6/svn/tools/ThirdParty gmock 1.7.0
-http://130.66.124.6/svn/tools/ThirdParty eigen 3.2.0
-http://130.66.124.6/svn/tools/ThirdParty yaml-cpp 0.3.0
-http://130.66.124.6/svn/tools/ThirdParty gcovr
-http://130.66.124.6/svn/tools/ThirdParty f2c 1.0.0
-http://130.66.124.6/svn/tools/ThirdParty geographiclib 1.30
-http://130.66.124.6/svn/tools/ThirdParty websocketpp 0.7.0
+https://svn.sirehna.com/tools/ThirdParty gmock 1.7.0
+https://svn.sirehna.com/tools/ThirdParty eigen 3.2.0
+https://svn.sirehna.com/tools/ThirdParty yaml-cpp 0.3.0
+https://svn.sirehna.com/tools/ThirdParty gcovr
+https://svn.sirehna.com/tools/ThirdParty f2c 1.0.0
+https://svn.sirehna.com/tools/ThirdParty geographiclib 1.30
+https://svn.sirehna.com/tools/ThirdParty websocketpp 0.7.0
