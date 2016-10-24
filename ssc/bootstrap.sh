@@ -91,6 +91,14 @@ sudo chown -R vagrant yaml-cpp
 sudo chgrp -R vagrant yaml-cpp
 cp ../yaml-cpp-CMakeLists.txt yaml-cpp/CMakeLists.txt
 
+# WEBSOCKETPP
+cd /vagrant/${srcDirectory}
+sudo rm -rf websocketpp
+git clone https://github.com/zaphoyd/websocketpp
+cd websocketpp
+git checkout 0.7.0
+cd ..
+
 # GCOVR
 cd /vagrant/${srcDirectory}
 sudo rm -rf gcovr
