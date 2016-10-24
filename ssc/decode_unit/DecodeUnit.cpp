@@ -92,7 +92,7 @@ double ssc::decode_unit::UnitDecoder::DoubleToken::double_value() {return m_num;
 ssc::decode_unit::UnitDecoder::OperationToken::OperationToken(char op) : m_op(op) {}
 ssc::decode_unit::UnitDecoder::OperationToken::~OperationToken() {}
 ssc::decode_unit::UnitDecoder::e_token_type ssc::decode_unit::UnitDecoder::OperationToken::type() {return k_operation;}
-std::string ssc::decode_unit::UnitDecoder::OperationToken::description() {return std::string("Word token ") + std::string(1,m_op);}
+std::string ssc::decode_unit::UnitDecoder::OperationToken::description() {return std::string("Word token ") + std::to_string(m_op);}
 int ssc::decode_unit::UnitDecoder::OperationToken::int_value() {return m_op;}
 
 ssc::decode_unit::UnitDecoder::LeftParToken::LeftParToken() {}
