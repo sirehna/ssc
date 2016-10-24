@@ -43,7 +43,8 @@ wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.g
 tar -xf boost_1_60_0.tar.gz
 cd boost_1_60_0
 ./bootstrap.sh
-sudo ./b2 cxxflags=-fPIC link=static link=shared threading=single threading=multi --layout=tagged --prefix=/usr/local/boost_1_60_0 install
+# link=shared
+sudo ./b2 cxxflags=-fPIC link=static threading=single threading=multi --layout=tagged --prefix=/usr/local/boost_1_60_0 install
 # BOOST Geometry extension
 git clone https://github.com/boostorg/geometry
 cd geometry/
