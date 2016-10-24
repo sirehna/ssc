@@ -1,9 +1,9 @@
-cmake_minimum_required (VERSION 2.6)
-project(decode_unit)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(decode_unit)
 FILE(GLOB SRC DecodeUnit.cpp)
 
-include_directories(${SSC_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 
-add_definitions(-DNDEBUG)
+ADD_DEFINITIONS(-DNDEBUG)
 
-add_library(${PROJECT_NAME}_object OBJECT ${SRC})
+ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
