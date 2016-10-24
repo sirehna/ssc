@@ -109,7 +109,12 @@ mkdir f2c
 cd f2c
 unzip ../libf2c.zip
 sed 's/typedef long int integer/typedef int integer/g' f2c.h0 > f2c.h
-cp ../CMakeLists_f2c.txt CMakeLists.txt
+cp signal1.h0 signal1.h
+cp sysdep1.h0 sysdep1.h
+cd ..
+sudo chown -R vagrant yaml-cpp
+sudo chgrp -R vagrant yaml-cpp
+cp CMakeLists_f2c.txt f2c/CMakeLists.txt
 
 # GCOVR
 cd /vagrant/${srcDirectory}
