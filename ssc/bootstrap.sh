@@ -33,6 +33,7 @@ sudo apt-get install git -y
 
 # PANDOC
 sudo apt-get install pandoc -y
+sudo apt-get install unzip -y
 
 # SUBVERSION
 sudo apt-get install subversion -y
@@ -99,6 +100,16 @@ git clone https://github.com/zaphoyd/websocketpp
 cd websocketpp
 git checkout 0.7.0
 cd ..
+
+# F2C
+cd /vagrant/${srcDirectory}
+wget http://www.netlib.org/f2c/libf2c.zip
+sudo rm -rf f2c
+mkdir f2c
+cd f2c
+unzip ../libf2c.zip
+sed 's/typedef long int integer/typedef int integer/g' f2c.h0 > f2c.h
+cp ../CMakeLists_f2c.txt CMakeLists.txt
 
 # GCOVR
 cd /vagrant/${srcDirectory}
