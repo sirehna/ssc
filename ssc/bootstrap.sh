@@ -195,6 +195,7 @@ cd ..
 
 # FIRST BUILD
 cd /vagrant/${srcDirectory}
+rm -rf build_vagrant
 mkdir build_vagrant
 cd build_vagrant
 cmake .. -DCMAKE_BUILD_TYPE=Release -Wno-dev -DBOOST_ROOT=${BOOST_INSTALL} -DIPOPT_ROOT=${IPOPT_INSTALL} -G Ninja
