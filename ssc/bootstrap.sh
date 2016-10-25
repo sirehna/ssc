@@ -82,6 +82,33 @@ git clone https://github.com/garrison/eigen3-hdf5
 sudo chown -R vagrant eigen3-hdf5
 sudo chgrp -R vagrant eigen3-hdf5
 
+# GEOGRAPHICLIB
+# cd /vagrant/${srcDirectory}
+# rm -rf geographiclib.tgz
+# wget https://sourceforge.net/projects/geographiclib/files/distrib/GeographicLib-1.30.tar.gz/download -O geographiclib.tgz
+# rm -rf geographiclib
+# mkdir -p geographiclib
+# cd geographiclib
+# tar -xf ../geographiclib.tgz --strip 1
+cd /vagrant/${srcDirectory}
+rm -rf geographiclib.tgz
+rm -rf geographiclib
+git clone http://git.code.sf.net/p/geographiclib/code geographiclib
+cd geographiclib
+git checkout v1.30
+# Specific patch for SSC
+echo "IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine" >> src/CMakeLists.txt
+echo "    IF(UNIX AND NOT WIN32) # If on Linux" >> src/CMakeLists.txt
+echo "        SET(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+echo "        SET(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+echo "        SET(CMAKE_Fortran_FLAGS \"\${CMAKE_Fortran_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+echo "    ENDIF()" >> src/CMakeLists.txt
+echo "ENDIF()" >> src/CMakeLists.txt
+echo "add_library (Geographic_object OBJECT \${SOURCES} \${HEADERS})" >> src/CMakeLists.txt
+cd ..
+sudo chown -R vagrant geographiclib
+sudo chgrp -R vagrant geographiclib
+
 # YAML-CPP
 cd /vagrant/${srcDirectory}
 sudo rm -rf yaml-cpp
