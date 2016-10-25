@@ -118,7 +118,7 @@ git checkout tags/release-0.3.0
 cd ..
 sudo chown -R vagrant yaml-cpp
 sudo chgrp -R vagrant yaml-cpp
-cp ../yaml-cpp-CMakeLists.txt yaml-cpp/CMakeLists.txt
+cp CMakeLists_yaml_cpp.txt yaml-cpp/CMakeLists.txt
 
 # WEBSOCKETPP
 cd /vagrant/${srcDirectory}
