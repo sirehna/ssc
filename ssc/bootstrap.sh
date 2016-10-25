@@ -154,28 +154,6 @@ cd ..
 sudo chown -R vagrant gcovr
 sudo chgrp -R vagrant gcovr
 
-# HDF5
-cd ~
-wget https://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.12/src/hdf5-1.8.12.tar.gz -O hdf5_source.tar.gz
-mkdir -p hdf5_source
-tar -xf hdf5_source.tar.gz --strip 1 -C ./hdf5_source
-mkdir hdf5_build
-cd hdf5_build
-cmake \
--Wno-dev \
-../hdf5_source \
-"-DBUILD_SHARED_LIBS:BOOL=OFF" \
-"-DCMAKE_BUILD_TYPE:STRING=Release" \
-"-DHDF5_BUILD_HL_LIB:BOOL=ON" \
-"-DHDF5_BUILD_FORTRAN:BOOL=ON" \
-"-DHDF5_ENABLE_F2003:BOOL=ON" \
-"-DHDF5_BUILD_CPP_LIB:BOOL=ON" \
-"-DHDF5_BUILD_TOOLS:BOOL=ON" \
-"-DCMAKE_INSTALL_PREFIX:PATH=/usr/local/hdf5" \
-"-DCMAKE_C_FLAGS=-fpic" \
-"-DCMAKE_CXX_FLAGS=-fpic"
-sudo make install
-
 # IPOPT
 cd ~
 IPOPT_VERSION=3.12.6
