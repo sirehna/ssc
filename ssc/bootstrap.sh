@@ -40,12 +40,13 @@ sudo apt-get install subversion -y
 
 # BOOST 1.60
 # svn co http://svn.boost.org/svn/boost/tags/release/Boost_1_60_0
+BOOST_INSTALL=/usr/local/boost_1_60_0 install
 wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz
 tar -xf boost_1_60_0.tar.gz
 cd boost_1_60_0
 ./bootstrap.sh
 # link=shared
-sudo ./b2 cxxflags=-fPIC link=static threading=single threading=multi --layout=tagged --prefix=/usr/local/boost_1_60_0 install
+sudo ./b2 cxxflags=-fPIC link=static threading=single threading=multi --layout=tagged --prefix=${BOOST_INSTALL}
 # BOOST Geometry extension
 git clone https://github.com/boostorg/geometry
 cd geometry/
@@ -224,7 +225,7 @@ cd ..
 cd /vagrant/${srcDirectory}
 mkdir build_vagrant
 cd build_vagrant
-cmake .. -DCMAKE_BUILD_TYPE=Release -Wno-dev -DBOOST_ROOT=/usr/local/boost_1_60_0 -DIPOPT_ROOT=${IPOPT_INSTALL} -G Ninja
+cmake .. -DCMAKE_BUILD_TYPE=Release -Wno-dev -DBOOST_ROOT=${BOOST_INSTALL} -DIPOPT_ROOT=${IPOPT_INSTALL} -G Ninja
 ninja
 ninja package
 
