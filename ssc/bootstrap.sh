@@ -40,18 +40,18 @@ sudo apt-get install subversion -y
 
 # BOOST 1.60
 # svn co http://svn.boost.org/svn/boost/tags/release/Boost_1_60_0
-BOOST_INSTALL=/usr/local/boost_1_60_0 install
+BOOST_INSTALL=/usr/local/boost_1_60_0
 wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz
 tar -xf boost_1_60_0.tar.gz
 cd boost_1_60_0
 ./bootstrap.sh
 # link=shared
-sudo ./b2 cxxflags=-fPIC link=static threading=single threading=multi --layout=tagged --prefix=${BOOST_INSTALL}
+sudo ./b2 cxxflags=-fPIC link=static threading=single threading=multi --layout=tagged --prefix=${BOOST_INSTALL} install
 # BOOST Geometry extension
 git clone https://github.com/boostorg/geometry
 cd geometry/
 git checkout 4aa61e59a72b44fb3c7761066d478479d2dd63a0
-sudo cp -rf include/boost/geometry/extensions /usr/local/boost_1_60_0/include/boost/geometry/.
+sudo cp -rf include/boost/geometry/extensions ${BOOST_INSTALL}/include/boost/geometry/.
 cd ..
 
 srcDirectory=ssc
