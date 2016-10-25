@@ -215,17 +215,12 @@ make
 sudo make install
 cd ..
 
-
-
-# SSC
-# cd /vagrant
-# sudo dpkg -i ssc.deb
-
 # FIRST BUILD
 cd /vagrant/${srcDirectory}
 mkdir build_vagrant
 cd build_vagrant
 cmake .. -DCMAKE_BUILD_TYPE=Release -Wno-dev -DBOOST_ROOT=${BOOST_INSTALL} -DIPOPT_ROOT=${IPOPT_INSTALL} -G Ninja
 ninja
+./run_all_tests
 ninja package
 
