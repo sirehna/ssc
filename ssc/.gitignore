@@ -1,14 +1,5 @@
 debug/
 release/
-eigen/
-eigen3-hdf5/
-f2c/
-gcovr/
-geographiclib/
-gmock/
-googletest/
-websocketpp/
-yaml-cpp/
 *.swp
 build*
 install*
