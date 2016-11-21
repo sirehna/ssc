@@ -7,3 +7,6 @@
 [submodule "ssc/yaml-cpp"]
 	path = ssc/yaml-cpp
 	url = git@gitlab.sirehna.com:ThirdParty/yaml-cpp
+[submodule "ssc/gcovr"]
+	path = ssc/gcovr
+	url = git@gitlab.sirehna.com:ThirdParty/gcovr
