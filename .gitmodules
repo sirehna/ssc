@@ -1,3 +1,6 @@
 [submodule "ssc/google-test"]
 	path = ssc/google-test
 	url = git@gitlab.sirehna.com:ThirdParty/google-test
+[submodule "ssc/eigen"]
+	path = ssc/eigen
+	url = git@gitlab.sirehna.com:ThirdParty/eigen
