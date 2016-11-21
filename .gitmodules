@@ -4,3 +4,6 @@
 [submodule "ssc/eigen"]
 	path = ssc/eigen
 	url = git@gitlab.sirehna.com:ThirdParty/eigen
+[submodule "ssc/yaml-cpp"]
+	path = ssc/yaml-cpp
+	url = git@gitlab.sirehna.com:ThirdParty/yaml-cpp
