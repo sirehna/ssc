@@ -142,6 +142,34 @@ IF(${CMAKE_BUILD_TYPE})
 ENDIF()
 
 ADD_SUBDIRECTORY(f2c)
+
+MESSAGE(STATUS "Patching geographiclib")
+# cd geographiclib
+# git checkout r1.30
+IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori")
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt
+                   ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori COPYONLY)
+ENDIF()
+FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori stringToPatch)
+STRING(REPLACE "WIN32" "MSVC" stringToPatched ${stringToPatch})
+FILE(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt ${stringToPatched})
+IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt.ori")
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt
+                   ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt.ori COPYONLY)
+ENDIF()
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt.ori
+               ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt COPYONLY)
+FILE(APPEND geographiclib/src/CMakeLists.txt "\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "# Patching geographiclib\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "    IF(UNIX AND NOT WIN32) # If on Linux\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "        SET(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -fPIC\")\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "        SET(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -fPIC\")\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "        SET(CMAKE_Fortran_FLAGS \"\${CMAKE_Fortran_FLAGS} -fPIC\")\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "    ENDIF()\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "ENDIF()\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "add_library(Geographic_object OBJECT \${SOURCES} \${HEADERS})\n")
+FILE(APPEND geographiclib/src/CMakeLists.txt "# End of patch\n")
 ADD_SUBDIRECTORY(geographiclib EXCLUDE_FROM_ALL)
 SET(geographiclib_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/include
     CACHE PATH "Path to libGeographic include directory")

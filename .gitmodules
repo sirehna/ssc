@@ -13,3 +13,6 @@
 [submodule "ssc/f2c"]
 	path = ssc/f2c
 	url = git@gitlab.sirehna.com:ThirdParty/f2c
+[submodule "ssc/geographiclib"]
+	path = ssc/geographiclib
+	url = git@gitlab.sirehna.com:ThirdParty/geographiclib
