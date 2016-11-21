@@ -16,3 +16,6 @@
 [submodule "ssc/geographiclib"]
 	path = ssc/geographiclib
 	url = git@gitlab.sirehna.com:ThirdParty/geographiclib
+[submodule "ssc/websocketpp"]
+	path = ssc/websocketpp
+	url = git@gitlab.sirehna.com:ThirdParty/websocketpp
