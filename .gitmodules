@@ -10,3 +10,6 @@
 [submodule "ssc/gcovr"]
 	path = ssc/gcovr
 	url = git@gitlab.sirehna.com:ThirdParty/gcovr
+[submodule "ssc/f2c"]
+	path = ssc/f2c
+	url = git@gitlab.sirehna.com:ThirdParty/f2c
