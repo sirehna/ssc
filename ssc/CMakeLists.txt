@@ -146,13 +146,9 @@ ADD_SUBDIRECTORY(f2c)
 MESSAGE(STATUS "Patching geographiclib")
 # cd geographiclib
 # git checkout r1.30
-IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori")
-    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt
-                   ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori COPYONLY)
-ENDIF()
-FILE(READ ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt.ori stringToPatch)
-STRING(REPLACE "WIN32" "MSVC" stringToPatched ${stringToPatch})
-FILE(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt ${stringToPatched})
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists_geographiclib.txt
+               ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/CMakeLists.txt COPYONLY)
+
 IF(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt.ori")
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt
                    ${CMAKE_CURRENT_SOURCE_DIR}/geographiclib/src/CMakeLists.txt.ori COPYONLY)
