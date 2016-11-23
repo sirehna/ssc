@@ -56,103 +56,103 @@ cd ..
 
 srcDirectory=ssc
 
-# GMOCK
-cd /vagrant/${srcDirectory}
-sudo rm -rf googletest
-git clone https://github.com/google/googletest.git googletest
-cd googletest
-git checkout release-1.8.0
-cd ..
-sudo chown -R vagrant googletest
-sudo chgrp -R vagrant googletest
-
-# EIGEN
-cd /vagrant/${srcDirectory}
-wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.bz2 -O eigen.tar.bz2
-sudo rm -rf eigen
-mkdir eigen
-cd eigen
-tar xjf ../eigen.tar.bz2 --strip 1
-sudo chown -R vagrant eigen
-sudo chgrp -R vagrant eigen
-
-# EIGEN3-HDF5
-cd /vagrant/${srcDirectory}
-sudo rm -rf eigen3-hdf5
-git clone https://github.com/garrison/eigen3-hdf5
-sudo chown -R vagrant eigen3-hdf5
-sudo chgrp -R vagrant eigen3-hdf5
-
-# GEOGRAPHICLIB
-# cd /vagrant/${srcDirectory}
-# rm -rf geographiclib.tgz
-# wget https://sourceforge.net/projects/geographiclib/files/distrib/GeographicLib-1.30.tar.gz/download -O geographiclib.tgz
-# rm -rf geographiclib
-# mkdir -p geographiclib
-# cd geographiclib
-# tar -xf ../geographiclib.tgz --strip 1
-cd /vagrant/${srcDirectory}
-rm -rf geographiclib.tgz
-rm -rf geographiclib
-git clone http://git.code.sf.net/p/geographiclib/code geographiclib
-cd geographiclib
-git checkout v1.30
-# Specific patch for SSC
-echo "IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine" >> src/CMakeLists.txt
-echo "    IF(UNIX AND NOT WIN32) # If on Linux" >> src/CMakeLists.txt
-echo "        SET(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -fPIC\")" >> src/CMakeLists.txt
-echo "        SET(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -fPIC\")" >> src/CMakeLists.txt
-echo "        SET(CMAKE_Fortran_FLAGS \"\${CMAKE_Fortran_FLAGS} -fPIC\")" >> src/CMakeLists.txt
-echo "    ENDIF()" >> src/CMakeLists.txt
-echo "ENDIF()" >> src/CMakeLists.txt
-echo "add_library (Geographic_object OBJECT \${SOURCES} \${HEADERS})" >> src/CMakeLists.txt
-cd ..
-sudo chown -R vagrant geographiclib
-sudo chgrp -R vagrant geographiclib
-
-# YAML-CPP
-cd /vagrant/${srcDirectory}
-sudo rm -rf yaml-cpp
-git clone https://github.com/jbeder/yaml-cpp.git
-cd yaml-cpp
-git checkout tags/release-0.3.0
-cd ..
-sudo chown -R vagrant yaml-cpp
-sudo chgrp -R vagrant yaml-cpp
-cp CMakeLists_yaml_cpp.txt yaml-cpp/CMakeLists.txt
-
-# WEBSOCKETPP
-cd /vagrant/${srcDirectory}
-sudo rm -rf websocketpp
-git clone https://github.com/zaphoyd/websocketpp
-cd websocketpp
-git checkout 0.7.0
-cd ..
-
-# F2C
-cd /vagrant/${srcDirectory}
-wget http://www.netlib.org/f2c/libf2c.zip
-sudo rm -rf f2c
-mkdir f2c
-cd f2c
-unzip ../libf2c.zip
-sed 's/typedef long int integer/typedef int integer/g' f2c.h0 > f2c.h
-cp signal1.h0 signal1.h
-cp sysdep1.h0 sysdep1.h
-cd ..
-sudo chown -R vagrant yaml-cpp
-sudo chgrp -R vagrant yaml-cpp
-cp CMakeLists_f2c.txt f2c/CMakeLists.txt
-
-# GCOVR
-cd /vagrant/${srcDirectory}
-sudo rm -rf gcovr
-git clone https://github.com/gcovr/gcovr.git
-cd gcovr
-git checkout tags/3.2
-cd ..
-sudo chown -R vagrant gcovr
-sudo chgrp -R vagrant gcovr
+## GMOCK
+#cd /vagrant/${srcDirectory}
+#sudo rm -rf googletest
+#git clone https://github.com/google/googletest.git googletest
+#cd googletest
+#git checkout release-1.8.0
+#cd ..
+#sudo chown -R vagrant googletest
+#sudo chgrp -R vagrant googletest
+#
+## EIGEN
+#cd /vagrant/${srcDirectory}
+#wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.bz2 -O eigen.tar.bz2
+#sudo rm -rf eigen
+#mkdir eigen
+#cd eigen
+#tar xjf ../eigen.tar.bz2 --strip 1
+#sudo chown -R vagrant eigen
+#sudo chgrp -R vagrant eigen
+#
+## EIGEN3-HDF5
+#cd /vagrant/${srcDirectory}
+#sudo rm -rf eigen3-hdf5
+#git clone https://github.com/garrison/eigen3-hdf5
+#sudo chown -R vagrant eigen3-hdf5
+#sudo chgrp -R vagrant eigen3-hdf5
+#
+## GEOGRAPHICLIB
+## cd /vagrant/${srcDirectory}
+## rm -rf geographiclib.tgz
+## wget https://sourceforge.net/projects/geographiclib/files/distrib/GeographicLib-1.30.tar.gz/download -O geographiclib.tgz
+## rm -rf geographiclib
+## mkdir -p geographiclib
+## cd geographiclib
+## tar -xf ../geographiclib.tgz --strip 1
+#cd /vagrant/${srcDirectory}
+#rm -rf geographiclib.tgz
+#rm -rf geographiclib
+#git clone http://git.code.sf.net/p/geographiclib/code geographiclib
+#cd geographiclib
+#git checkout v1.30
+## Specific patch for SSC
+#echo "IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine" >> src/CMakeLists.txt
+#echo "    IF(UNIX AND NOT WIN32) # If on Linux" >> src/CMakeLists.txt
+#echo "        SET(CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+#echo "        SET(CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+#echo "        SET(CMAKE_Fortran_FLAGS \"\${CMAKE_Fortran_FLAGS} -fPIC\")" >> src/CMakeLists.txt
+#echo "    ENDIF()" >> src/CMakeLists.txt
+#echo "ENDIF()" >> src/CMakeLists.txt
+#echo "add_library (Geographic_object OBJECT \${SOURCES} \${HEADERS})" >> src/CMakeLists.txt
+#cd ..
+#sudo chown -R vagrant geographiclib
+#sudo chgrp -R vagrant geographiclib
+#
+## YAML-CPP
+#cd /vagrant/${srcDirectory}
+#sudo rm -rf yaml-cpp
+#git clone https://github.com/jbeder/yaml-cpp.git
+#cd yaml-cpp
+#git checkout tags/release-0.3.0
+#cd ..
+#sudo chown -R vagrant yaml-cpp
+#sudo chgrp -R vagrant yaml-cpp
+#cp CMakeLists_yaml_cpp.txt yaml-cpp/CMakeLists.txt
+#
+## WEBSOCKETPP
+#cd /vagrant/${srcDirectory}
+#sudo rm -rf websocketpp
+#git clone https://github.com/zaphoyd/websocketpp
+#cd websocketpp
+#git checkout 0.7.0
+#cd ..
+#
+## F2C
+#cd /vagrant/${srcDirectory}
+#wget http://www.netlib.org/f2c/libf2c.zip
+#sudo rm -rf f2c
+#mkdir f2c
+#cd f2c
+#unzip ../libf2c.zip
+#sed 's/typedef long int integer/typedef int integer/g' f2c.h0 > f2c.h
+#cp signal1.h0 signal1.h
+#cp sysdep1.h0 sysdep1.h
+#cd ..
+#sudo chown -R vagrant yaml-cpp
+#sudo chgrp -R vagrant yaml-cpp
+#cp CMakeLists_f2c.txt f2c/CMakeLists.txt
+#
+## GCOVR
+#cd /vagrant/${srcDirectory}
+#sudo rm -rf gcovr
+#git clone https://github.com/gcovr/gcovr.git
+#cd gcovr
+#git checkout tags/3.2
+#cd ..
+#sudo chown -R vagrant gcovr
+#sudo chgrp -R vagrant gcovr
 
 # IPOPT
 cd ~
