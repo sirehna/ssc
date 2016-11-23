@@ -173,7 +173,7 @@ ssc::decode_unit::UnitDecoder::Token *ssc::decode_unit::UnitDecoder::scan()
 			break;
 		case k_underscore:
 		default :
-			throw std::string("unexpected character : ") + std::string(1,m_next_char);
+			throw std::string("unexpected character : ") + std::to_string(m_next_char);
 			break;
 		}
 	}
