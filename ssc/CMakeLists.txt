@@ -16,7 +16,6 @@ ENDIF()
 
 #############################################################################
 
-INCLUDE(EnableCoverageReport)
 # GIT SHA
 INCLUDE(GetGitRevisionDescription)
 GET_GIT_HEAD_REVISION(GIT_REFSPEC GIT_SHA1)
@@ -270,6 +269,7 @@ ELSE()
 ENDIF()
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
+    INCLUDE(EnableCoverageReport)
     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
                            FILTER boost eigen gmock lapack
                                   /c/mingw/lib/gcc /usr/include)
