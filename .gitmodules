@@ -1,21 +1,21 @@
 [submodule "ssc/google-test"]
 	path = ssc/google-test
-	url = git@gitlab.sirehna.com:ThirdParty/google-test
+	url = ../../ThirdParty/google-test.git
 [submodule "ssc/eigen"]
 	path = ssc/eigen
-	url = git@gitlab.sirehna.com:ThirdParty/eigen
+	url = ../../ThirdParty/eigen.git
 [submodule "ssc/yaml-cpp"]
 	path = ssc/yaml-cpp
-	url = git@gitlab.sirehna.com:ThirdParty/yaml-cpp
+	url = ../../ThirdParty/yaml-cpp.git
 [submodule "ssc/gcovr"]
 	path = ssc/gcovr
-	url = git@gitlab.sirehna.com:ThirdParty/gcovr
+	url = ../../ThirdParty/gcovr.git
 [submodule "ssc/f2c"]
 	path = ssc/f2c
-	url = git@gitlab.sirehna.com:ThirdParty/f2c
+	url = ../../ThirdParty/f2c.git
 [submodule "ssc/websocketpp"]
 	path = ssc/websocketpp
-	url = git@gitlab.sirehna.com:ThirdParty/websocketpp
+	url = ../../ThirdParty/websocketpp.git
 [submodule "ssc/geographiclib"]
 	path = ssc/geographiclib
-	url = git@gitlab.sirehna.com:ThirdParty/geographiclib
+	url = ../../ThirdParty/geographiclib.git
