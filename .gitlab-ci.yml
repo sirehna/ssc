@@ -6,7 +6,7 @@ build:
    stage: build
    script:
      - RUNNING=$(docker inspect --format="{{ .State.Running }}" cont_ssc 2> /dev/null) && if [ $? -eq 0 ]; then echo "Deleting cont_ssc"; docker rm cont_ssc; fi
-     - docker build -f ssc/Dockerfile -t test_ssc .
-     # - docker run --name cont_ssc test_ssc
+     - docker build -f ssc/Dockerfile -t ssc .
+     # - docker run --name cont_ssc ssc
      # - docker stop cont_ssc
      # - docker rm cont_ssc
