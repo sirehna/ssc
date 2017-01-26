@@ -129,10 +129,10 @@ class LPSolver::Impl
             size_t i = 1;
             for (auto it = states.begin(); it != states.end(); ++it)
             {
-            	const std::string str = (*it)->get_name();
-            	char * writable = new char[str.size() + 1];
-            	std::copy(str.begin(), str.end(), writable);
-            	writable[str.size()] = '\0';
+                const std::string str = (*it)->get_name();
+                char * writable = new char[str.size() + 1];
+                std::copy(str.begin(), str.end(), writable);
+                writable[str.size()] = '\0';
                 set_col_name(lp, i++, writable);
                 delete[] writable;
             }

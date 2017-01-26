@@ -1,7 +1,7 @@
 /*
  * SerializeTest.hpp
  *
- * \date 1 f�vr. 2013, 09:56:53
+ * \date 1 févr. 2013, 09:56:53
  *  \author cec
  */
 
@@ -16,7 +16,7 @@ class SerializeTest : public ::testing::Test
 {
     protected:
         SerializeTest();
-	    virtual ~SerializeTest();
+        virtual ~SerializeTest();
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;

@@ -23,72 +23,72 @@ _nb_of_values(nb_of_values),
 vec(std::vector<double>()),
 delta((_max_bound-_min_bound)/double(_nb_of_values-1))
 {
-	if (_min_bound>_max_bound)
-	{
-	    std::stringstream msg;
-	    msg << "_min_bound = " << _min_bound
-	        << ", _max_bound = " << _max_bound;
-		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, msg.str());
-	}
-	if (_nb_of_values<1)
-	{
-		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "need at least two values in VectorOfEquallySpacedNumbers");
-	}
-	if (_nb_of_values>vec.max_size())
-	{
-		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "too many elements");
-	}
-	if (_nb_of_values>1)
-	{
+    if (_min_bound>_max_bound)
+    {
+        std::stringstream msg;
+        msg << "_min_bound = " << _min_bound
+            << ", _max_bound = " << _max_bound;
+        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, msg.str());
+    }
+    if (_nb_of_values<1)
+    {
+        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "need at least two values in VectorOfEquallySpacedNumbers");
+    }
+    if (_nb_of_values>vec.max_size())
+    {
+        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "too many elements");
+    }
+    if (_nb_of_values>1)
+    {
         vec.reserve(_nb_of_values);
         for (size_t i = 0 ; i < _nb_of_values ; ++i)
         {
             vec.push_back(_min_bound*(double(_nb_of_values)-1)+double(i)*(_max_bound-_min_bound));
             vec.back() /= double(_nb_of_values-1);
         }
-	}
-	else
-	{
-	    if (min_bound!=max_bound)
-	    {
-	        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "If there is only one value, min & max need to be equal");
-	    }
-	    delta = 0;
-	    vec.push_back(min_bound);
-	}
+    }
+    else
+    {
+        if (min_bound!=max_bound)
+        {
+            THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "If there is only one value, min & max need to be equal");
+        }
+        delta = 0;
+        vec.push_back(min_bound);
+    }
 }
 
 std::vector<double> VectorOfEquallySpacedNumbers::get() const
 {
-	return vec;
+    return vec;
 }
 
 double VectorOfEquallySpacedNumbers::get_delta() const
 {
-	return delta;
+    return delta;
 }
 
 size_t VectorOfEquallySpacedNumbers::size() const
 {
-	return _nb_of_values;
+    return _nb_of_values;
 }
 
 double VectorOfEquallySpacedNumbers::get_min() const
 {
-	return _min_bound;
+    return _min_bound;
 }
 
 double VectorOfEquallySpacedNumbers::get_max() const
 {
-	return _max_bound;
+    return _max_bound;
 }
 
 double VectorOfEquallySpacedNumbers::at(const size_t& i) const
 {
     if (_nb_of_values==1) return vec.back();
-	if (i>=_nb_of_values)
-	{
-		THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "Index out of range");
-	}
-	return (_min_bound*(double(_nb_of_values)-1)+double(i)*double(_max_bound-_min_bound))/double(_nb_of_values-1);
+    if (i>=_nb_of_values)
+    {
+        THROW(__PRETTY_FUNCTION__, VectorOfEquallySpacedNumbersException, "Index out of range");
+    }
+    return (_min_bound*(double(_nb_of_values)-1)+double(i)*double(_max_bound-_min_bound))/double(_nb_of_values-1);
 }

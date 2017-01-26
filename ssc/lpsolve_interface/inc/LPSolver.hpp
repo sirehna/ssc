@@ -17,8 +17,8 @@ class OptimizationProblem;
 
 struct LPSolverParameters
 {
-	LPSolverParameters() : verbose_level(0){}
-	size_t verbose_level;
+    LPSolverParameters() : verbose_level(0){}
+    size_t verbose_level;
 };
 
 /** \author cec

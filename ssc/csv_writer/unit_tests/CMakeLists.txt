@@ -2,7 +2,7 @@
 set(MODULE_UNDER_TEST csv_writer)
 project (${MODULE_UNDER_TEST}_tests)
 set(SRC src/CSVWriterTest.cpp
-		src/ConvertNumericToStringTest.cpp)
+        src/ConvertNumericToStringTest.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories

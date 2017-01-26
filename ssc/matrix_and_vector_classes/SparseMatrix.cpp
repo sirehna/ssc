@@ -120,13 +120,13 @@ void SparseMatrix::add_element_in_row_order(const size_t& i, const size_t& j, co
               "Elements must be added in a strictly increasing order (row-wise).");
     }
 
-	values[current_element] = val;
-	row_indexes[current_element] = i;
-	column_indexes[current_element] = j;
-	row_index_of_last_element = i;
-	column_index_of_last_element = j;
-	current_element++;
-	is_empty = false;
+    values[current_element] = val;
+    row_indexes[current_element] = i;
+    column_indexes[current_element] = j;
+    row_index_of_last_element = i;
+    column_index_of_last_element = j;
+    current_element++;
+    is_empty = false;
 
 }
 
@@ -204,43 +204,43 @@ void SparseMatrix::multiply_in_place_by(const double& a)
 
 SparseMatrix SparseMatrix::append(const SparseMatrix& rhs) const
 {
-	const size_t nc = this->nb_of_elements + rhs.nb_of_elements;
-	SparseMatrix C(nc);
-	size_t k = 0;
-	for (size_t i = 0; i < this->nb_of_elements; ++i)
-	{
-		C.row_indexes[k] = row_indexes[i];
-		C.column_indexes[k] = column_indexes[i];
-		C.values[k] = values[i];
-		k++;
-	}
-	for (size_t i = 0; i < rhs.nb_of_elements; ++i)
-	{
-		C.row_indexes[k] = rhs.row_indexes[i];
-		C.column_indexes[k] = column_indexes[i];
-		C.values[k] = values[i];
-		k++;
-	}
-	if (k>0)
-	{
-		C.is_empty = false;
-		C.row_index_of_last_element    = C.row_indexes[k-1];
-		C.column_index_of_last_element = C.column_indexes[k-1];
-		C.current_element              = k;
-	}
-	return C;
+    const size_t nc = this->nb_of_elements + rhs.nb_of_elements;
+    SparseMatrix C(nc);
+    size_t k = 0;
+    for (size_t i = 0; i < this->nb_of_elements; ++i)
+    {
+        C.row_indexes[k] = row_indexes[i];
+        C.column_indexes[k] = column_indexes[i];
+        C.values[k] = values[i];
+        k++;
+    }
+    for (size_t i = 0; i < rhs.nb_of_elements; ++i)
+    {
+        C.row_indexes[k] = rhs.row_indexes[i];
+        C.column_indexes[k] = column_indexes[i];
+        C.values[k] = values[i];
+        k++;
+    }
+    if (k>0)
+    {
+        C.is_empty = false;
+        C.row_index_of_last_element    = C.row_indexes[k-1];
+        C.column_index_of_last_element = C.column_indexes[k-1];
+        C.current_element              = k;
+    }
+    return C;
 }
 
 SparseMatrix SparseMatrix::operator+(const SparseMatrix& rhs) const
 {
-	if (this->is_empty) return rhs;
-	if (rhs.is_empty) return *this;
-	const bool all_elements_of_rhs_are_after_this =
-			which_element_comes_first(row_index_of_last_element, column_index_of_last_element, row_indexes[0], column_indexes[0])==ELEMENT_IN_A_COMES_FIRST;
-	if (all_elements_of_rhs_are_after_this)
-	{
-		return append(rhs);
-	}
+    if (this->is_empty) return rhs;
+    if (rhs.is_empty) return *this;
+    const bool all_elements_of_rhs_are_after_this =
+            which_element_comes_first(row_index_of_last_element, column_index_of_last_element, row_indexes[0], column_indexes[0])==ELEMENT_IN_A_COMES_FIRST;
+    if (all_elements_of_rhs_are_after_this)
+    {
+        return append(rhs);
+    }
     const size_t nc = count_nb_of_elements_in_sum(*this, rhs);
     SparseMatrix C(nc);
     add(*this, rhs, C);
@@ -459,7 +459,6 @@ bool SparseMatrix::operator!=(const SparseMatrix& rhs) const
                     os.setf(os.scientific);
                     os.setf(os.right);
                     os << bar.values[k];
-
                     k++;
                 }
                 else

@@ -15,8 +15,8 @@ typedef double doublereal;
 extern "C"
 {
     int dgtsv_(integer *n, integer *nrhs, doublereal *dl,
-    	doublereal *d__, doublereal *du, doublereal *b, integer *ldb, integer
-    	*info);
+        doublereal *d__, doublereal *du, doublereal *b, integer *ldb, integer
+        *info);
 }
 
 #include <cmath>
@@ -29,14 +29,14 @@ extern "C"
 using namespace ssc::interpolation;
 
 Splines::Splines() :
-				M(std::vector<double>()),
-				h(0),
-				n(0),
-				x_xi(0),
-				a(std::vector<double>()),
-				b(std::vector<double>()),
-				c(std::vector<double>()),
-				d(std::vector<double>())
+        M(std::vector<double>()),
+        h(0),
+        n(0),
+        x_xi(0),
+        a(std::vector<double>()),
+        b(std::vector<double>()),
+        c(std::vector<double>()),
+        d(std::vector<double>())
 {
 }
 

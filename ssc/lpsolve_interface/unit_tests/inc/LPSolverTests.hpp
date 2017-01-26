@@ -15,10 +15,10 @@ class LPSolverTests : public ::testing::Test
 {
     protected:
         LPSolverTests();
-	    virtual ~LPSolverTests();
+        virtual ~LPSolverTests();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        DataGenerator a;
 
 };
 

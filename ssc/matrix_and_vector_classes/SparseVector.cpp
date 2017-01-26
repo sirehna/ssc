@@ -161,26 +161,26 @@ void SparseVector::multiply_in_place_by(const double& a)
 
 SparseVector SparseVector::append(const SparseVector& rhs) const
 {
-	const size_t nc = this->nb_of_elements + rhs.nb_of_elements;
-	SparseVector C(nc);
-	size_t k = 0;
-	for (size_t i = 0; i < this->nb_of_elements; ++i) {
-		C.indexes[k] = indexes[i];
-		C.values[k] = values[i];
-		k++;
-	}
-	for (size_t i = 0; i < rhs.nb_of_elements; ++i) {
-		C.indexes[k] = rhs.indexes[i];
-		C.values[k] = values[i];
-		k++;
-	}
-	if (k>0)
-	{
-		C.is_empty = false;
-		C.index_of_last_element    = C.indexes[k-1];
-		C.current_element          = k-1;
-	}
-	return C;
+    const size_t nc = this->nb_of_elements + rhs.nb_of_elements;
+    SparseVector C(nc);
+    size_t k = 0;
+    for (size_t i = 0; i < this->nb_of_elements; ++i) {
+        C.indexes[k] = indexes[i];
+        C.values[k] = values[i];
+        k++;
+    }
+    for (size_t i = 0; i < rhs.nb_of_elements; ++i) {
+        C.indexes[k] = rhs.indexes[i];
+        C.values[k] = values[i];
+        k++;
+    }
+    if (k>0)
+    {
+        C.is_empty = false;
+        C.index_of_last_element    = C.indexes[k-1];
+        C.current_element          = k-1;
+    }
+    return C;
 }
 
 SparseVector SparseVector::operator+(const SparseVector& rhs) const
