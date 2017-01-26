@@ -191,6 +191,6 @@ void Multiply::accept(NodeVisitor& v) const
 
 void Multiply::update_lambda()
 {
-	common_build();
+    common_build();
 }
 

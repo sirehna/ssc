@@ -66,25 +66,25 @@ const std::vector<double> CSVFileReader::convert_line_to_vector_of_doubles(const
 
 void CSVFileReader::extract_column_titles(std::istream& file, const char separator)
 {
-	std::string current_line;
-	getline(file, current_line, '\n');
-	titles = convert_line_to_vector_of_strings(current_line, separator);
-	std::vector<std::string>::const_iterator it = titles.begin();
-	for (;it != titles.end() ; ++it)
-	{
-	    map[*it] = std::vector<double>();
-	}
+    std::string current_line;
+    getline(file, current_line, '\n');
+    titles = convert_line_to_vector_of_strings(current_line, separator);
+    std::vector<std::string>::const_iterator it = titles.begin();
+    for (;it != titles.end() ; ++it)
+    {
+        map[*it] = std::vector<double>();
+    }
 }
 
 void CSVFileReader::extract_values(std::istream& file, const char separator)
 {
-	std::string current_line;
-	while (getline(file, current_line, '\n'))
-	{
-	    std::string nospace = current_line;
-	    nospace.erase( std::remove_if( nospace.begin(), nospace.end(), ::isspace), nospace.end() );
-	    if (not(nospace.empty()))
-	    {
+    std::string current_line;
+    while (getline(file, current_line, '\n'))
+    {
+        std::string nospace = current_line;
+        nospace.erase( std::remove_if( nospace.begin(), nospace.end(), ::isspace), nospace.end() );
+        if (not(nospace.empty()))
+        {
             values.push_back(convert_line_to_vector_of_doubles(current_line, separator));
             std::vector<std::string>::const_iterator it = titles.begin();
             size_t i = 0;
@@ -92,22 +92,22 @@ void CSVFileReader::extract_values(std::istream& file, const char separator)
             {
                 map[*it].push_back(values.back().at(i++));
             }
-	    }
-	}
+        }
+    }
 }
 
 bool CSVFileReader::has_more_data() const
 {
-	return that_line != values.end();
+    return that_line != values.end();
 }
 
 std::vector<double> CSVFileReader::get_line()
 {
-	if (that_line == values.end())
-	{
-		THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "No more lines in input CSV file.");
-	}
-	return *(that_line++);
+    if (that_line == values.end())
+    {
+        THROW(__PRETTY_FUNCTION__, CSVFileReaderException, "No more lines in input CSV file.");
+    }
+    return *(that_line++);
 }
 
 std::map<std::string,std::vector<double> > CSVFileReader::get_map() const

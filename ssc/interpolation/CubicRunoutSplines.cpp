@@ -1,7 +1,7 @@
 /*
  * CubicRunoutSplines.cpp
  *
- * \date 1 ao�t 2012, 09:57:37
+ * \date 1 août 2012, 09:57:37
  *  \author cec
  */
 
@@ -11,7 +11,7 @@ using namespace ssc::interpolation;
 
 CubicRunoutSplines::CubicRunoutSplines() : Splines()
 {
-	M = (h != 0) ? compute_second_derivative() : std::vector<double>(2,0);
+    M = (h != 0) ? compute_second_derivative() : std::vector<double>(2,0);
 }
 
 CubicRunoutSplines::CubicRunoutSplines(const double& xmin_, const double& xmax_, const std::vector<double>& y) : Splines(xmin_, xmax_,y)
@@ -28,5 +28,5 @@ CubicRunoutSplines::CubicRunoutSplines(const double& xmin_, const double& xmax_,
 
 double CubicRunoutSplines::get_endpoint_value() const
 {
-	return 6;
+    return 6;
 }

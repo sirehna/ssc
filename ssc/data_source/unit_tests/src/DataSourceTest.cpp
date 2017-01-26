@@ -277,9 +277,9 @@ TEST_F(DataSourceTest, should_be_able_to_remove_a_module)
 
 TEST_F(DataSourceTest, error_detected_by_valgrind_in_data_source_unset)
 {
-	DataSource data_source;
-	data_source.set<double>("t", 123);
-	data_source.unset<double>("t");
+    DataSource data_source;
+    data_source.set<double>("t", 123);
+    data_source.unset<double>("t");
 }
 
 TEST_F(DataSourceTest, should_be_able_to_remove_a_signal)
@@ -734,17 +734,17 @@ TEST_F(DataSourceTest, serialization)
 
 TEST_F(DataSourceTest, signals_not_set_or_got_by_any_module_should_still_be_outputted_by_draw)
 {
-	DataSource data_source;
-	data_source.set<double>("s", a.random<double>());
-	std::stringstream expected;
-	expected << "data_source:" << std::endl
-			 << "    modules:" << std::endl
-			 << "    signals:" << std::endl
-			 << "      - name: s" << std::endl
-			 << "        type: " << typeid(double).name() << std::endl
-			 << "        created by: " << DataSource::default_setter << "(:unknown)" << std::endl
-			 << "        used by: []" << std::endl;
-	ASSERT_EQ(expected.str(), data_source.draw());
+    DataSource data_source;
+    data_source.set<double>("s", a.random<double>());
+    std::stringstream expected;
+    expected << "data_source:" << std::endl
+             << "    modules:" << std::endl
+             << "    signals:" << std::endl
+             << "      - name: s" << std::endl
+             << "        type: " << typeid(double).name() << std::endl
+             << "        created by: " << DataSource::default_setter << "(:unknown)" << std::endl
+             << "        used by: []" << std::endl;
+    ASSERT_EQ(expected.str(), data_source.draw());
 }
 
 MODULE(VarUp, const double x = ds->get<double>("x");\

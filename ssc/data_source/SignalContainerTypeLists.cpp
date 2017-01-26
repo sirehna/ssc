@@ -160,37 +160,33 @@ template<> std::list<ssc::data_source::ConstSignalIterator>& ssc::data_source::s
     return lists.iter_phys_qty;
 }
 
-
-
-
 namespace ssc
 {
     namespace data_source
     {
+        DEFINE_TYPE_ACCESSORS(bool)
+        DEFINE_TYPE_ACCESSORS(char)
+        DEFINE_TYPE_ACCESSORS(wchar_t)
+        DEFINE_TYPE_ACCESSORS(short)
+        DEFINE_TYPE_ACCESSORS(int)
+        DEFINE_TYPE_ACCESSORS(size_t)
+        DEFINE_TYPE_ACCESSORS(long)
+        DEFINE_TYPE_ACCESSORS(float)
+        DEFINE_TYPE_ACCESSORS(double)
+        template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTypes& l)
+        {
+            return l.iter_phys_qty.begin();
+        }
 
-		DEFINE_TYPE_ACCESSORS(bool)
-		DEFINE_TYPE_ACCESSORS(char)
-		DEFINE_TYPE_ACCESSORS(wchar_t)
-		DEFINE_TYPE_ACCESSORS(short)
-		DEFINE_TYPE_ACCESSORS(int)
-		DEFINE_TYPE_ACCESSORS(size_t)
-		DEFINE_TYPE_ACCESSORS(long)
-		DEFINE_TYPE_ACCESSORS(float)
-		DEFINE_TYPE_ACCESSORS(double)
-		template <> ConvertibleTypesIterator begin<PhysicalQuantity>(const ConvertibleTypes& l)
-		{
-			return l.iter_phys_qty.begin();
-		}
+        template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
+        {
+            return l.iter_phys_qty.end();
+        }
 
-		template <> ConvertibleTypesIterator end<PhysicalQuantity>(const ConvertibleTypes& l)
-		{
-			return l.iter_phys_qty.end();
-		}
-
-		::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s)
-		{
-			os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
-			return os;
-		}
+        ::std::ostream& operator<<(::std::ostream& os, const TypedSignalName& s)
+        {
+            os << s.get_signal_name() << "(:" << s.get_type_name() << ")";
+            return os;
+        }
     }
 }

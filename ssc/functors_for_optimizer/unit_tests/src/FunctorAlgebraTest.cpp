@@ -403,7 +403,7 @@ TEST_F(FunctorAlgebraTest, bug_24)
 
 TEST_F(FunctorAlgebraTest, bug_25)
 {
-	const auto f = (400*(y - x) * x)->diff(y)->get_lambda();
+    const auto f = (400*(y - x) * x)->diff(y)->get_lambda();
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         *x = a.random<double>().between(-1000,1000);

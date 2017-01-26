@@ -4,7 +4,7 @@ project (matrix_and_vector_classes)
 FILE(GLOB SRC SparseMatrix.cpp
               SparseVector.cpp)
 
-include_directories (inc)
+include_directories(inc)
 INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})

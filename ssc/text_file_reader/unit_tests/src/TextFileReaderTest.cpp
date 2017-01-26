@@ -42,7 +42,7 @@ inline void remove_file_if_it_exists (const std::string& name)
 void create_file(const std::string& filename, const std::string& contents);
 void create_file(const std::string& filename, const std::string& contents)
 {
-	remove_file_if_it_exists(filename);
+    remove_file_if_it_exists(filename);
     std::ofstream file(filename);
     file << contents;
     file.close();
@@ -63,7 +63,7 @@ TEST_F(TextFileReaderTest, example)
     filenames.push_back(filename2);
     TextFileReader reader(filenames);
     remove_file_if_it_exists(filename1);
-	remove_file_if_it_exists(filename2);
+    remove_file_if_it_exists(filename2);
 //! [TextFileReaderTest example]
 //! [TextFileReaderTest expected output]
     const std::string newline = "\n";
@@ -92,10 +92,10 @@ TEST_F(TextFileReaderTest, should_issue_a_warning_if_a_file_is_empty)
     std::streambuf* orig = std::cerr.rdbuf(error_stream.rdbuf());
     ASSERT_TRUE(error_stream.str().empty());
     // Call TextFileReader
-	const std::string filename = "data_for_TextFileReaderTest";
+    const std::string filename = "data_for_TextFileReaderTest";
     create_file(filename, "");
     TextFileReader(std::vector<std::string>(1, filename));
-	remove_file_if_it_exists(filename);
+    remove_file_if_it_exists(filename);
     const std::string error = error_stream.str();
     // Restore cerr's buffer
     std::cerr.rdbuf(orig);
@@ -105,6 +105,6 @@ TEST_F(TextFileReaderTest, should_issue_a_warning_if_a_file_is_empty)
 TEST_F(TextFileReaderTest, should_throw_if_file_does_not_exist)
 {
     const std::string filename = "data_for_TextFileReaderTest";
-	remove_file_if_it_exists(filename);
+    remove_file_if_it_exists(filename);
     ASSERT_THROW(TextFileReader(std::vector<std::string>(1, filename)), TextFileReaderException);
 }

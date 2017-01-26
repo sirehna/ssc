@@ -3,7 +3,7 @@
 \brief This module is a simple wrapper around Boost.geometry and libGeographic.
 
 \details
-\subsection Types 
+\subsection Types
 The basic underlying types are:
 - LongitudeLatitude: position on the globe (in spherical, Cartesian or geographical coordinates)
 - Angle: conversion between various angle units

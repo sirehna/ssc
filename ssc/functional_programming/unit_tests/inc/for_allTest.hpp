@@ -15,10 +15,10 @@ class for_allTest : public ::testing::Test
 {
     protected:
         for_allTest();
-	    virtual ~for_allTest();
+        virtual ~for_allTest();
         virtual void SetUp();
         virtual void TearDown();
-		DataGenerator a;
+        DataGenerator a;
 
 };
 

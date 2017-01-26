@@ -68,11 +68,11 @@ NodePtr Sum::diff(const StatePtr& state) const
     {
         auto dson_dstate = (*son)->diff(state);//->simplify();
         if (not(dson_dstate->is_null()))
-	    {
+        {
             dson_dstate->multiply_by(factor);
             dson_dstate->update_lambda();
-	    	dsons.push_back(dson_dstate);
-	    }
+            dsons.push_back(dson_dstate);
+        }
     }
     if (dsons.empty()) return NullPtr(new Null());
     return NodePtr(new Sum(dsons));

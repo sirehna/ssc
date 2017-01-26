@@ -41,7 +41,7 @@ TEST_F(CSVFileReaderTest, example)
 {
 //! [CSVFileReaderTest example]
     const std::string filename("data_for_CSVFileReaderTest");
-	remove_file_if_it_exists(filename);
+    remove_file_if_it_exists(filename);
     std::ofstream file(filename.c_str());
     const std::string contents = "A,B,C\n1,2,3\n4,5,6\n7,8,9";
     file << contents;

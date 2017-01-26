@@ -16,7 +16,7 @@ class SumTest : public ::testing::Test
 {
     protected:
         SumTest();
-	    virtual ~SumTest();
+        virtual ~SumTest();
         virtual void SetUp();
         virtual void TearDown();
         ssc::random_data_generator::DataGenerator a;
