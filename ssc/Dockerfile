@@ -148,33 +148,20 @@ RUN wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.t
     cd .. && \
     rm -rf geometry
 
-RUN mkdir -p /opt/share
-ADD . /opt/share
+#RUN mkdir -p /opt/share
+ADD . /opt/share/ssc
 
 RUN mkdir -p ssc_build \
-    && cd ssc_build \
-    && cmake -Wno-dev \
+ && cd ssc_build \
+ && cmake -Wno-dev \
              -G Ninja \
              -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc \
              -DIPOPT_ROOT:PATH=/opt/CoinIpopt \
              -DBOOST_ROOT:PATH=/opt/boost \
              ../share/ssc \
-    && ninja \
-    && ./run_all_tests --gtest_output=xml:run_all_tests.xml \
+ && ninja \
+ && ./run_all_tests --gtest_output=xml:run_all_tests.xml 
+
+CMD cd ssc_build \
     && ninja package \
-    && ninja install \
-    && cd .. \
-    && rm -rf ssc_build
-
-# CMD bash
-
-CMD mkdir -p ssc_build \
-    && cd ssc_build \
-    && cmake -Wno-dev \
-             -G Ninja \
-             -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc \
-             -DIPOPT_ROOT:PATH=/opt/CoinIpopt \
-             -DBOOST_ROOT:PATH=/opt/boost \
-             ../share/ssc \
-    && ninja \
-    && ./run_all_tests --gtest_output=xml:run_all_tests.xml
+    && cp ssc*.deb /out
