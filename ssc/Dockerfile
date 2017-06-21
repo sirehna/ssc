@@ -45,6 +45,8 @@ RUN apt-get update -yq && apt-get install -y \
     libblas3 \
     liblapack3 \
     libbz2-dev \
+    pandoc \
+    doxygen \
     && apt-get clean \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/lib/apt/lists/
