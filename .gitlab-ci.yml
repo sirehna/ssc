@@ -11,8 +11,12 @@ build:
        then echo "Tabs found in the lines shown above."; false;
        else echo "Repo passed no-tabs check."; fi &&
        cd ..
-     # - RUNNING=$(docker inspect --format="{{ .State.Running }}" cont_ssc 2> /dev/null) && if [ $? -eq 0 ]; then echo "Deleting cont_ssc"; docker rm cont_ssc; fi
      - cd ssc && docker build -f Dockerfile -t ssc .
-     # - docker run --name cont_ssc ssc
+     - docker run --rm -v $(pwd):/out ssc
+   artifacts:
+     paths:
+     - ssc/ssc.deb
+     # - RUNNING=$(docker inspect --format="{{ .State.Running }}" cont_ssc 2> /dev/null) && if [ $? -eq 0 ]; then echo "Deleting cont_ssc"; docker rm cont_ssc; fi
+          # - docker run --name cont_ssc ssc
      # - docker stop cont_ssc
      # - docker rm cont_ssc
