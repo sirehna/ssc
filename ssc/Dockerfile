@@ -151,7 +151,7 @@ RUN wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.t
     rm -rf geometry
 
 #RUN mkdir -p /opt/share
-ADD . /opt/share/ssc
+ADD . /opt/share
 
 RUN mkdir -p ssc_build \
  && cd ssc_build \
