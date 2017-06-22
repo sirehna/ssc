@@ -11,8 +11,8 @@ build:
        then echo "Tabs found in the lines shown above."; false;
        else echo "Repo passed no-tabs check."; fi &&
        cd ..
-     - cd ssc && docker build -f Dockerfile -t ssc .
-     - docker run --rm -v $(pwd):/out ssc
+     - docker build -f ssc/Dockerfile -t ssc .
+     - docker run --rm -v $(pwd)/ssc:/out ssc
    artifacts:
      paths:
      - ssc/ssc.deb
