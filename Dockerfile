@@ -27,7 +27,7 @@
 
 # Require Internet to download all dependencies
 
-FROM debian
+FROM gcc:4.9
 MAINTAINER Guillaume Jacquenot <guillaume.jacquenot@sirehna.com>
 
 # Install dependencies
@@ -35,6 +35,8 @@ MAINTAINER Guillaume Jacquenot <guillaume.jacquenot@sirehna.com>
 # libbz2 is required for Boost compilation
 RUN apt-get update -yq && apt-get install -y \
     build-essential \
+    g++-4.9
+    gcc-4.9
     wget \
     git \
     cmake \
@@ -150,20 +152,5 @@ RUN wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.t
     cd .. && \
     rm -rf geometry
 
-#RUN mkdir -p /opt/share
-ADD . /opt/share
 
-RUN mkdir -p ssc_build \
- && cd ssc_build \
- && cmake -Wno-dev \
-             -G Ninja \
-             -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc \
-             -DIPOPT_ROOT:PATH=/opt/CoinIpopt \
-             -DBOOST_ROOT:PATH=/opt/boost \
-             ../share/ssc \
- && ninja \
- && ./run_all_tests --gtest_output=xml:run_all_tests.xml 
 
-CMD cd ssc_build \
-    && ninja package \
-    && cp ssc*.deb /out

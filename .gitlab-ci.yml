@@ -5,18 +5,22 @@ before_script:
 build:
    stage: build
    script:
+     # Check for tabs
      - cd ssc &&
        if grep --recursive --include={*.cpp,*.c,*.hpp,*.h,*.md,*.yml,*.cmake.*.xml,*.html,*.in,*.txt}
                --exclude-dir={eigen,f2c,gcovr,geographiclib,gmock,google-test,gtest,websocketpp,yaml-cpp,geometry,integrate,interpolation} -P "\t" . ;
        then echo "Tabs found in the lines shown above."; false;
        else echo "Repo passed no-tabs check."; fi &&
        cd ..
-     - docker build -f ssc/Dockerfile -t ssc .
-     - docker run --rm -v $(pwd)/ssc:/out ssc
+     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc
+          cmake -Wno-dev
+          -G Ninja
+          -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
+          -DIPOPT_ROOT:PATH=/opt/CoinIpopt
+          -DBOOST_ROOT:PATH=/opt/boost
+          /opt/share/ssc
+     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ninja package
+     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
    artifacts:
      paths:
-     - ssc/ssc.deb
-     # - RUNNING=$(docker inspect --format="{{ .State.Running }}" cont_ssc 2> /dev/null) && if [ $? -eq 0 ]; then echo "Deleting cont_ssc"; docker rm cont_ssc; fi
-          # - docker run --name cont_ssc ssc
-     # - docker stop cont_ssc
-     # - docker rm cont_ssc
+     - ssc.deb
