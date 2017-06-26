@@ -13,5 +13,6 @@ docker run --rm -v $(pwd):/opt/share -w /opt/share ssc \
 
 echo "Build package"
 docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ninja package
+
 echo "Run all tests"
 docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
