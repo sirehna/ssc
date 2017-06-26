@@ -12,15 +12,15 @@ build:
        then echo "Tabs found in the lines shown above."; false;
        else echo "Repo passed no-tabs check."; fi &&
        cd ..
-     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc
+     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
           cmake -Wno-dev
           -G Ninja
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
           /opt/share/ssc
-     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ninja package
-     - docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
+     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ninja package
+     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
    artifacts:
      paths:
      - ssc.deb
