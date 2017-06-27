@@ -1,5 +1,6 @@
 #!/bin/sh
 
+docker rm -f ssc
 docker build -f Dockerfile -t ssc .
 
 echo "Run CMake"
