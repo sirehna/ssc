@@ -1,19 +1,20 @@
 #!/bin/sh
 
-docker rm -f ssc
 docker build -f Dockerfile -t ssc .
 
+mkdir -p ssc/build
+
 echo "Run CMake"
-docker run --rm -v $(pwd):/opt/share -w /opt/share ssc \
+docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc \
     cmake -Wno-dev \
           -G Ninja \
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc \
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt \
           -DBOOST_ROOT:PATH=/opt/boost \
-          /opt/share/ssc
+          /shared/ssc
 
 echo "Build package"
-docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ninja package
+docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ninja package
 
 echo "Run all tests"
-docker run --rm -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
+docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ./run_all_tests
