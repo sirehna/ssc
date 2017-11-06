@@ -30,6 +30,6 @@ double ssc::interpolation::TwoDimensionalInterpolationVariableStep::f(const doub
     {
         interpolated_values_for_x_fixed.push_back(it->f(y0));
     }
-    SplineVariableStep final_interpolation(x,interpolated_values_for_x_fixed);
+    SplineVariableStep final_interpolation(x,interpolated_values_for_x_fixed, allow_queries_outside_bounds);
     return final_interpolation.f(x0);
 }
