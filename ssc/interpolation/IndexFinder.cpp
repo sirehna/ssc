@@ -53,7 +53,7 @@ size_t IndexFinder::compute(const double x0)
     if (outside_bounds && throw_if_outside_bounds)
     {
         std::stringstream ss;
-        ss << "Received x0 = " << x0 << ", but x0 should be within [" << xmin << "," << xmax << "]";
+        ss << "Received x0 = " << x0 << ", but x0 should be within [" << xmin << "," << xmax << "] (xmin-x0 = " << xmin-x0 << " and x0-xmax = " << x0-xmax << ")";
         THROW(__PRETTY_FUNCTION__, IndexFinderException, ss.str());
     }
     if (x0 < xmin)       return 0;
