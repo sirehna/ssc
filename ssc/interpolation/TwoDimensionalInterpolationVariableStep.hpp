@@ -9,7 +9,7 @@
 #define TWODIMENSIONALINTERPOLATIONVARIABLESTEP_HPP_
 
 
-#include "ssc/interpolation/SplineVariableStep.hpp"
+#include "ssc/interpolation/LinearInterpolationVariableStep.hpp"
 #include <vector>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
@@ -37,7 +37,7 @@ namespace ssc
                 double f(const double x0, const double y0);
 
             private:
-                std::vector<SplineVariableStep> y_interpolators_for_each_x;
+                std::vector<LinearInterpolationVariableStep> y_interpolators_for_each_x;
                 bool allow_queries_outside_bounds;
                 std::vector<double> x;
         };

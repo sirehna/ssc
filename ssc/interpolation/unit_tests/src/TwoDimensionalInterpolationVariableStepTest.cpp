@@ -53,5 +53,5 @@ TEST_F(TwoDimensionalInterpolationVariableStepTest, example)
     ASSERT_DOUBLE_EQ(982, spline.f(10,21));
     ASSERT_DOUBLE_EQ(1900, spline.f(10,30));
     ASSERT_DOUBLE_EQ(1801, spline.f(1,30));
-    ASSERT_DOUBLE_EQ(1330.75, spline.f(5.5,25.5));
+    ASSERT_DOUBLE_EQ((1275+1377+1286+1388)/4., spline.f(5.5,25.5));
 }
