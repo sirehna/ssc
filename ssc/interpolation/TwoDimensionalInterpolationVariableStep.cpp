@@ -4,7 +4,6 @@
  *  Created on: Dec 17, 2014
  *      Author: cady
  */
-
 #include "TwoDimensionalInterpolationVariableStep.hpp"
 
 ssc::interpolation::TwoDimensionalInterpolationVariableStep::TwoDimensionalInterpolationVariableStep() : y_interpolators_for_each_x(),
@@ -19,7 +18,7 @@ ssc::interpolation::TwoDimensionalInterpolationVariableStep::TwoDimensionalInter
 {
     for (auto it = M.begin() ; it != M.end() ; ++it)
     {
-        y_interpolators_for_each_x.push_back(SplineVariableStep(y, *it, allow_queries_outside_bounds));
+        y_interpolators_for_each_x.push_back(LinearInterpolationVariableStep(y, *it));
     }
 }
 
@@ -30,6 +29,7 @@ double ssc::interpolation::TwoDimensionalInterpolationVariableStep::f(const doub
     {
         interpolated_values_for_x_fixed.push_back(it->f(y0));
     }
-    SplineVariableStep final_interpolation(x,interpolated_values_for_x_fixed, allow_queries_outside_bounds);
-    return final_interpolation.f(x0);
+    LinearInterpolationVariableStep final_interpolation(x,interpolated_values_for_x_fixed);
+    const double ret = final_interpolation.f(x0);
+    return ret;
 }
