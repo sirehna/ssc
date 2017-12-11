@@ -2,8 +2,12 @@ before_script:
   - git submodule sync --recursive
   - git submodule update --init --recursive
 
-build:
-   stage: build
+stages:
+  - lint
+  - build
+
+lint:
+   stage: lint
    script:
      # Check for tabs
      - cd ssc &&
@@ -12,6 +16,10 @@ build:
        then echo "Tabs found in the lines shown above."; false;
        else echo "Repo passed no-tabs check."; fi &&
        cd ..
+
+build:
+   stage: build
+   script:
      - docker build -f Dockerfile -t ssc .
      - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
           cmake -Wno-dev
