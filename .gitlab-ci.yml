@@ -26,6 +26,11 @@ build:windows:
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
+          -DBOOST_INCLUDEDIR:PATH=/opt/boost/include
+          -DBoost_INCLUDE_DIR:PATH=/opt/boost/include
+          -DBOOST_LIBRARYDIR:PATH=/opt/boost/lib
+          -DBoost_NO_SYSTEM_PATHS:BOOL=OFF
+          -DBoost_LIBRARY_DIR_RELEASE:PATH=/opt/boost/lib
           -DBoost_DEBUG=1
           /opt/share/ssc
      - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64 ninja package
