@@ -28,6 +28,7 @@ build:windows:
                         cmake -Wno-dev
                         -G Ninja
                         -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
+                        -DCPACK_GENERATOR=ZIP
                         -DIPOPT_ROOT:PATH=/opt/CoinIpopt
                         -DBOOST_ROOT:PATH=/opt/boost
                         -DBOOST_INCLUDEDIR:PATH=/opt/boost/include
