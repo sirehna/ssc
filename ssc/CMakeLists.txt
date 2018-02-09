@@ -211,6 +211,38 @@ ELSE()
              EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ENDIF()
 
+MESSAGE(STATUS "Configuring static library ${name}")
+ADD_LIBRARY(ssc_static STATIC
+            $<TARGET_OBJECTS:random_data_generator_object>
+            $<TARGET_OBJECTS:exception_handling_object>
+            $<TARGET_OBJECTS:decode_unit_object>
+            $<TARGET_OBJECTS:yaml_parser_object>
+            $<TARGET_OBJECTS:text_file_reader_object>
+            $<TARGET_OBJECTS:integrate_object>
+            $<TARGET_OBJECTS:numeric_object>
+            $<TARGET_OBJECTS:data_source_object>
+            $<TARGET_OBJECTS:kinematics_object>
+            $<TARGET_OBJECTS:interpolation_object>
+            $<TARGET_OBJECTS:geometry_object>
+            $<TARGET_OBJECTS:csv_file_reader_object>
+            $<TARGET_OBJECTS:csv_writer_object>
+            $<TARGET_OBJECTS:matrix_and_vector_classes_object>
+            $<TARGET_OBJECTS:functors_for_optimizer_object>
+            $<TARGET_OBJECTS:optimizer_object>
+            $<TARGET_OBJECTS:ipopt_interface_object>
+            $<TARGET_OBJECTS:websocket_object>
+            $<TARGET_OBJECTS:yaml-cpp_object>
+            $<TARGET_OBJECTS:f2c_object>
+            $<TARGET_OBJECTS:Geographic_object>
+            )
+TARGET_LINK_LIBRARIES(ssc_static PUBLIC ${current_arg_name}_static)
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${IPOPT_LIB_STATIC})
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${websocketpp_LIBRARIES})
+IF(WIN32)
+    TARGET_LINK_LIBRARIES(ssc_static PUBLIC wsock32 ws2_32)
+ENDIF()
+LIST(APPEND ALL_SSC_TARGETS ssc_static)
+
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
