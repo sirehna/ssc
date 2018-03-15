@@ -17,4 +17,3 @@ ADD fetch_gitlab_artifacts.sh fetch_gitlab_artifacts.py /
 
 # At run time, use group & user created at build time to change permissions of generated artifacts
 ENTRYPOINT ["/bin/sh", "/fetch_gitlab_artifacts.sh"]
-#ENTRYPOINT /bin/sh
