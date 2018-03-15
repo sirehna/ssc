@@ -48,6 +48,8 @@ RUN apt-get update -yq && apt-get install -y \
     libbz2-dev \
     pandoc \
     doxygen \
+    python3-pip \
+    unzip \
     && apt-get clean \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/lib/apt/lists/
@@ -92,47 +94,6 @@ RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-pa
     rm -rf HDF5_SRC && \
     rm -rf hdf5_src.tar.gz
 
-# Give the user root access, go on!
-RUN echo "$USER ALL = NOPASSWD: ALL" >> /etc/sudoers && \
-    ##################
-    # Download ipopt source
-    # http://www.coin-or.org/Ipopt/documentation/node10.html
-    ##################
-    export IPOPT_VERSION=3.12.6 && \
-    gfortran --version && \
-    mkdir -p CoinIpopt_build && \
-    cd CoinIpopt_build && \
-    wget http://www.coin-or.org/download/source/Ipopt/Ipopt-$IPOPT_VERSION.tgz && \
-    gunzip Ipopt-$IPOPT_VERSION.tgz && \
-    tar -xvf Ipopt-$IPOPT_VERSION.tar && \
-    rm -rf Ipopt-$IPOPT_VERSION.tar && \
-    mv Ipopt-$IPOPT_VERSION CoinIpopt && \
-    cd CoinIpopt && \
-    # Download BLAS, LAPACK, and ASL
-    cd ThirdParty/Blas && \
-        ./get.Blas && \
-    cd ../Lapack && \
-        ./get.Lapack && \
-    cd ../ASL && \
-        ./get.ASL && \
-    # Download MUMPS Linear Solver
-    cd ../Mumps && \
-        ./get.Mumps && \
-    # # Download METIS
-    # cd ../Metis && \
-    #     ./get.Metis && \
-    #############################
-    # Compile ipopt statically
-    #############################
-    cd ../../ && \
-    mkdir build && \
-    cd build && \
-    mkdir -p /opt/CoinIpopt && \
-    ../configure -with-pic --disable-shared --prefix=/opt/CoinIpopt && \
-    make && \
-    make test && \
-    make install && \
-    rm -rf /opt/CoinIpopt_build
 
 
 # BOOST 1.60 with Boost geometry extensions
@@ -156,4 +117,22 @@ RUN git clone https://github.com/boostorg/geometry && \
     rm -rf geometry
 
 
-
+##################
+# Download & compile IPOPT
+##################
+ADD fetch_gitlab_artifacts.sh fetch_gitlab_artifacts.py /
+RUN pip3 install python-gitlab==1.1.0 python-dateutil
+RUn python3 /fetch_gitlab_artifacts.py --project_id 56 --target_branch with-third-parties --build_stage=run \
+ && unzip artifacts.zip && rm artifacts.zip && rm -rf install
+RUN mkdir -p CoinIpopt_build/build \
+ && mkdir -p /opt/CoinIpopt
+RUN cd CoinIpopt_build \
+ && mv ../ipopt-with-third-party.tgz . \
+ && tar xzf ipopt-with-third-party.tgz  \
+ && rm -rf ipopt-with-third-party.tgz
+RUN cd CoinIpopt_build/build \
+ && .././configure -with-pic --disable-shared --prefix=/opt/CoinIpopt \
+ && make \
+ && make test \
+ && make install \
+ && rm -rf /opt/CoinIpopt_build
