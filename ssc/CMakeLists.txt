@@ -238,6 +238,7 @@ ADD_LIBRARY(ssc_static STATIC
 TARGET_LINK_LIBRARIES(ssc_static PUBLIC ${current_arg_name}_static)
 TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${IPOPT_LIB_STATIC})
 TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${websocketpp_LIBRARIES})
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE gfortran)
 IF(WIN32)
     TARGET_LINK_LIBRARIES(ssc_static PUBLIC wsock32 ws2_32)
 ENDIF()
@@ -276,7 +277,6 @@ TARGET_LINK_LIBRARIES(${TEST_EXE}
         gmock gmock_main
         ssc_static
         )
-
 IF (WIN32)
     TARGET_LINK_LIBRARIES(${TEST_EXE} wsock32 ws2_32)
 ELSE()
