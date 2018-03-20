@@ -212,7 +212,7 @@ ELSE()
 ENDIF()
 
 MESSAGE(STATUS "Configuring static library ${name}")
-ADD_LIBRARY(ssc_static STATIC
+ADD_LIBRARY(ssc_static_no_deps STATIC
             $<TARGET_OBJECTS:random_data_generator_object>
             $<TARGET_OBJECTS:exception_handling_object>
             $<TARGET_OBJECTS:decode_unit_object>
@@ -235,15 +235,20 @@ ADD_LIBRARY(ssc_static STATIC
             $<TARGET_OBJECTS:f2c_object>
             $<TARGET_OBJECTS:Geographic_object>
             )
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${IPOPT_LIB_STATIC})
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${websocketpp_LIBRARIES})
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE gfortran) 
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE quadmath) # Ipopt
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE gfortran)
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE quadmath) # Ipopt
 IF(WIN32)
-    TARGET_LINK_LIBRARIES(ssc_static PUBLIC wsock32 ws2_32)
+    TARGET_LINK_LIBRARIES(ssc_static_no_deps PUBLIC wsock32 ws2_32)
 ELSE()
-    TARGET_LINK_LIBRARIES(ssc_static PRIVATE dl) # Ipopt
+    TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE dl) # Ipopt
 ENDIF()
+
+ADD_CUSTOM_TARGET(ssc_static ALL
+    COMMENT "Creates an archive that contains all static libraries"
+    COMMAND ${CMAKE_COMMAND} -E remove -f libssc_static.a
+    COMMAND ${CMAKE_AR} qc libssc_static.a $<TARGET_FILE:ssc_static_no_deps> ${IPOPT_LIB_STATIC} ${websocketpp_LIBRARIES})
 LIST(APPEND ALL_SSC_TARGETS ssc_static)
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
@@ -277,7 +282,7 @@ ADD_EXECUTABLE(${TEST_EXE}
 TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
-        ssc_static
+        ssc_static_no_deps
         )
 IF (WIN32)
     TARGET_LINK_LIBRARIES(${TEST_EXE} wsock32 ws2_32)
