@@ -249,7 +249,10 @@ ADD_CUSTOM_TARGET(ssc_static ALL
     COMMENT "Creates an archive that contains all static libraries"
     COMMAND ${CMAKE_COMMAND} -E remove -f libssc_static.a
     COMMAND ${CMAKE_AR} qc libssc_static.a $<TARGET_FILE:ssc_static_no_deps> ${IPOPT_LIB_STATIC} ${websocketpp_LIBRARIES})
-LIST(APPEND ALL_SSC_TARGETS ssc_static)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/libssc_static.a
+        DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+        COMPONENT ssc)
 
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
