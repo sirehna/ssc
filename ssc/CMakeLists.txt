@@ -274,24 +274,7 @@ ADD_EXECUTABLE(${TEST_EXE}
 TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
-        random_data_generator_shared
-        integrate_shared
-        exception_handling_shared
-        yaml_parser_shared
-        decode_unit_shared
-        text_file_reader_shared
-        data_source_shared
-        kinematics_shared
-        csv_file_reader_shared
-        csv_writer_shared
-        interpolation_shared
-        numeric_shared
-        geometry_shared
-        functors_for_optimizer_shared
-        matrix_and_vector_classes_shared
-        ipopt_interface_shared
-        optimizer_shared
-        websocket_shared
+        ssc_static
         )
 
 IF (WIN32)
