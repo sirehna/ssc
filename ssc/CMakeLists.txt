@@ -238,8 +238,9 @@ ADD_LIBRARY(ssc_static STATIC
 TARGET_LINK_LIBRARIES(ssc_static PUBLIC ${current_arg_name}_static)
 TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${IPOPT_LIB_STATIC})
 TARGET_LINK_LIBRARIES(ssc_static PRIVATE ${websocketpp_LIBRARIES})
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE gfortran)
-TARGET_LINK_LIBRARIES(ssc_static PRIVATE quadmath)
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE gfortran) 
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE quadmath)  # Ipopt
+TARGET_LINK_LIBRARIES(ssc_static PRIVATE dl)        # Ipopt
 IF(WIN32)
     TARGET_LINK_LIBRARIES(ssc_static PUBLIC wsock32 ws2_32)
 ENDIF()
