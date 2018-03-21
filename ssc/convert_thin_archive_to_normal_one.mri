@@ -1,0 +1,4 @@
+create libssc_static.a
+addlib libssc_static.a
+save
+end
