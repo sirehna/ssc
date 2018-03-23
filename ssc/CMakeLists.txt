@@ -211,6 +211,57 @@ ELSE()
              EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ENDIF()
 
+MESSAGE(STATUS "Configuring static library ${name}")
+ADD_LIBRARY(ssc_static_no_deps STATIC
+            $<TARGET_OBJECTS:random_data_generator_object>
+            $<TARGET_OBJECTS:exception_handling_object>
+            $<TARGET_OBJECTS:decode_unit_object>
+            $<TARGET_OBJECTS:yaml_parser_object>
+            $<TARGET_OBJECTS:text_file_reader_object>
+            $<TARGET_OBJECTS:integrate_object>
+            $<TARGET_OBJECTS:numeric_object>
+            $<TARGET_OBJECTS:data_source_object>
+            $<TARGET_OBJECTS:kinematics_object>
+            $<TARGET_OBJECTS:interpolation_object>
+            $<TARGET_OBJECTS:geometry_object>
+            $<TARGET_OBJECTS:csv_file_reader_object>
+            $<TARGET_OBJECTS:csv_writer_object>
+            $<TARGET_OBJECTS:matrix_and_vector_classes_object>
+            $<TARGET_OBJECTS:functors_for_optimizer_object>
+            $<TARGET_OBJECTS:optimizer_object>
+            $<TARGET_OBJECTS:ipopt_interface_object>
+            $<TARGET_OBJECTS:websocket_object>
+            $<TARGET_OBJECTS:yaml-cpp_object>
+            $<TARGET_OBJECTS:f2c_object>
+            $<TARGET_OBJECTS:Geographic_object>
+            )
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE gfortran)
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE quadmath) # Ipopt
+IF(WIN32)
+    TARGET_LINK_LIBRARIES(ssc_static_no_deps PUBLIC wsock32 ws2_32)
+ELSE()
+    TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE dl) # Ipopt
+ENDIF()
+
+IF(WIN32)
+    MESSAGE("x86_64-w64-mingw32.static-ar")
+    SET(AR "x86_64-w64-mingw32.static-ar")
+ELSE()
+    SET(AR ${CMAKE_AR})
+ENDIF()
+
+ADD_CUSTOM_TARGET(ssc_static ALL
+    COMMENT "Creates an archive that contains all static libraries"
+    COMMAND ${CMAKE_COMMAND} -E remove -f libssc_static.a
+    COMMAND ${AR} crT libssc_static.a $<TARGET_FILE:ssc_static_no_deps> ${IPOPT_LIB_STATIC} ${websocketpp_LIBRARIES} && cat ${CMAKE_CURRENT_SOURCE_DIR}/convert_thin_archive_to_normal_one.mri | ar -M
+    )
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/libssc_static.a
+        DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
+        COMPONENT ssc)
+
 INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
@@ -242,31 +293,19 @@ ADD_EXECUTABLE(${TEST_EXE}
 TARGET_LINK_LIBRARIES(${TEST_EXE}
         gtest gtest_main
         gmock gmock_main
-        random_data_generator_shared
-        integrate_shared
-        exception_handling_shared
-        yaml_parser_shared
-        decode_unit_shared
-        text_file_reader_shared
-        data_source_shared
-        kinematics_shared
-        csv_file_reader_shared
-        csv_writer_shared
-        interpolation_shared
-        numeric_shared
-        geometry_shared
-        functors_for_optimizer_shared
-        matrix_and_vector_classes_shared
-        ipopt_interface_shared
-        optimizer_shared
-        websocket_shared
+        ssc_static_no_deps
         )
-
 IF (WIN32)
     TARGET_LINK_LIBRARIES(${TEST_EXE} wsock32 ws2_32)
 ELSE()
     TARGET_LINK_LIBRARIES(${TEST_EXE} rt)
 ENDIF()
+
+INSTALL(TARGETS ${TEST_EXE}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+)
 
 IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
     INCLUDE(EnableCoverageReport)

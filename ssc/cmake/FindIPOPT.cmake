@@ -51,7 +51,9 @@ if (WIN32)
             m
     )
     set(IPOPT_LIB_STATIC ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} ${COIN_BLAS})
-    set(IPOPT_LIB_DYNAMIC gfortran gcc_s m) # quadmath
+    if (NOT IPOPT_LIB_DYNAMIC)
+        set(IPOPT_LIB_DYNAMIC gfortran gcc_s m) # quadmath
+    endif()
 else()
     set(IPOPT ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK}
             ${COIN_BLAS}
@@ -61,5 +63,17 @@ else()
             dl
     )
     set(IPOPT_LIB_STATIC ${COIN_IPOPT} ${COIN_MUMPS} ${COIN_LAPACK} ${COIN_BLAS})
-    set(IPOPT_LIB_DYNAMIC gfortran gcc_s m dl) # quadmath
+    if (NOT IPOPT_LIB_DYNAMIC)
+        set(IPOPT_LIB_DYNAMIC gfortran gcc_s m dl) # quadmath
+    endif()
 endif()
+
+MESSAGE(STATUS "COIN_BLAS           : ${COIN_BLAS}")
+MESSAGE(STATUS "COIN_LAPACK         : ${COIN_LAPACK}")
+MESSAGE(STATUS "COIN_MUMPS          : ${COIN_MUMPS}")
+MESSAGE(STATUS "COIN_IPOPT          : ${COIN_IPOPT}")
+MESSAGE(STATUS "IPOPT               : ${IPOPT}")
+MESSAGE(STATUS "IPOPT_LIB_DYNAMIC   : ${IPOPT_LIB_DYNAMIC}")
+MESSAGE(STATUS "IPOPT_LIB_STATIC    : ${IPOPT_LIB_STATIC}")
+MESSAGE(STATUS "IPOPT_INCLUDE_DIRS  : ${IPOPT_INCLUDE_DIRS}")
+
