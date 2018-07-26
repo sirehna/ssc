@@ -1,12 +1,8 @@
 # Sirehna's Scientific Computing (SSC) framework
 
-
-[![build status](https://gitlab.sirehna.com/root/scientific_computing/badges/master/build.svg)](https://gitlab.sirehna.com/root/scientific_computing/commits/master)
-
 ## Description
 
-This package provides utilities that were used in several projects at Sirehna
-(MAROFF, EONAV, IRT Simulator):
+This package provides utilities that were used in several projects at Sirehna.
 
 - **csv_file_reader**:         Reads CSV (comma-separated values) text files in a
                                std::map.
@@ -51,17 +47,3 @@ This package provides utilities that were used in several projects at Sirehna
 - **text_file_reader**:        Read the contents of one or several files into a
                                std::string.
 - **yaml_parser**:             Thin wrapper around yaml-cpp.
-
-## GitLab CI
-
-To create a GitLab runner and register it for SSC CI, you should enter on the
-slave machine, that has docker
-
-    sudo gitlab-ci-multi-runner register \
-        --non-interactive \
-        --url "https://gitlab.sirehna.com/ci" \
-        --registration-token "xxxxxxxxxxxxxxxxxxxx" \
-        --executor shell \
-        --description "SSC VM Runner that triggers Docker"
-
-You have to replace `registration-token` with the project token
