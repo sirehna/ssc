@@ -1,0 +1,13 @@
+sudo: false
+dist: trusty
+
+language: c++
+
+git:
+  submodules: false
+
+services:
+  - docker
+
+before_install:
+  - docker build -t ssc .
