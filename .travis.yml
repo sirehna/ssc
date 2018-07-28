@@ -10,4 +10,4 @@ services:
   - docker
 
 before_install:
-  - docker build -t ssc .
+  - cd ci && docker build -f Dockerfile -t ssc .
