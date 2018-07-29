@@ -9,5 +9,45 @@ git:
 services:
   - docker
 
-before_install:
-  - cd ci && docker build -f Dockerfile -t ssc .
+# before_install:
+#  - cd ci && docker build -f Dockerfile -t ssc .
+
+script:
+  - docker run --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share gjacquenot/ssc_build /bin/bash -c \
+       "rm -rf /opt/share/ssc/google-test &&
+        cp -rf /opt/googletest /opt/share/ssc/google-test &&
+        rm -rf /opt/share/ssc/eigen &&
+        cp -rf /opt/eigen /opt/share/ssc/eigen &&
+        rm -rf /opt/share/ssc/yaml-cpp &&
+        cp -rf /opt/yaml_cpp /opt/share/ssc/yaml-cpp &&
+        cp /opt/share/ssc/CMakeLists_yaml_cpp.txt /opt/share/ssc/yaml-cpp/CMakeLists.txt &&
+        rm -rf /opt/share/ssc/websocketpp &&
+        cp -rf /opt/websocketpp /opt/share/ssc/websocketpp &&
+        rm -rf /opt/share/ssc/f2c &&
+        cp -rf /opt/libf2c /opt/share/ssc/f2c &&
+        cd /opt/share/ssc/f2c &&
+        sed 's/typedef long int integer/typedef int integer/g' f2c.h0 > f2c.h &&
+        cp signal1.h0 signal1.h &&
+        cp sysdep1.h0 sysdep1.h &&
+        cd .. &&
+        cp CMakeLists_f2c.txt f2c/CMakeLists.txt &&
+        rm -rf /opt/share/ssc/geographiclib &&
+        cp -rf /opt/geographiclib /opt/share/ssc/geographiclib &&
+        cd /opt/share/ssc/geographiclib &&
+        echo IF\(CMAKE_SIZEOF_VOID_P EQUAL 8\) >> src/CMakeLists.txt &&
+        echo     IF\(UNIX AND NOT WIN32\) >> src/CMakeLists.txt &&
+        echo         SET\(CMAKE_C_FLAGS "\\\""\\\${CMAKE_C_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
+        echo         SET\(CMAKE_CXX_FLAGS "\\\""\\\${CMAKE_CXX_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
+        echo         SET\(CMAKE_Fortran_FLAGS "\\\""\\\${CMAKE_Fortran_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
+        echo     ENDIF\(\) >> src/CMakeLists.txt &&
+        echo ENDIF\(\) >> src/CMakeLists.txt &&
+        echo add_library \(Geographic_object OBJECT \\\${SOURCES} \\\${HEADERS}\) >> src/CMakeLists.txt &&
+        cd /opt/share/ssc &&
+        mkdir -p build &&
+        cd build &&
+        cmake -Wno-dev
+          -G Ninja
+          -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
+          -DIPOPT_ROOT:PATH=/opt/CoinIpopt
+          -DBOOST_ROOT:PATH=/opt/boost
+          .."
