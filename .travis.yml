@@ -50,4 +50,6 @@ script:
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
-          .."
+          .. &&
+        ninja package &&
+        ./run_all_tests"
