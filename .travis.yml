@@ -11,7 +11,7 @@ services:
 
 matrix:
   include:
-    # - env: BUILD_TYPE=Release
+    - env: BUILD_TYPE=Release
     - env: BUILD_TYPE=Coverage
 
 before_install:
