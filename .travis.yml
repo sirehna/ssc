@@ -18,7 +18,14 @@ matrix:
 #  - cd ci && docker build -f Dockerfile -t ssc .
 
 script:
-  - docker run --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share gjacquenot/ssc_build /bin/bash -c \
+
+  - if [[ "$BUILD_TYPE" == "Coverage" ]];
+    then
+    ci_env=`bash <(curl -s https://codecov.io/env)`;
+    else
+    ci_env=;
+    fi
+  - docker run $ci_env --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share gjacquenot/ssc_build /bin/bash -c \
        "rm -rf /opt/share/ssc/google-test &&
         cp -rf /opt/googletest /opt/share/ssc/google-test &&
         rm -rf /opt/share/ssc/eigen &&
@@ -56,6 +63,13 @@ script:
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
-          .. &&
+          /opt/share/ssc/ssc &&
         ninja package &&
-        ./run_all_tests"
+        ./run_all_tests &&
+        if [[ "$BUILD_TYPE" == "Coverage" ]];
+        then
+        echo "Coverage";
+        gprof run_all_tests gmon.out > gprof_res.txt;
+        bash <(curl -s https://codecov.io/bash);
+        fi
+        "
