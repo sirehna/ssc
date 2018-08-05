@@ -9,6 +9,11 @@ git:
 services:
   - docker
 
+matrix:
+  include:
+    - env: BUILD_TYPE=Release
+    - env: BUILD_TYPE=Coverage
+
 # before_install:
 #  - cd ci && docker build -f Dockerfile -t ssc .
 
@@ -47,6 +52,7 @@ script:
         cd build &&
         cmake -Wno-dev
           -G Ninja
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
