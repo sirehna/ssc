@@ -46,4 +46,6 @@ This package provides utilities that were used in several projects at Sirehna.
                                any stepper (RK4, RKCK, Euler...).
 - **text_file_reader**:        Read the contents of one or several files into a
                                std::string.
+- **websocket**:               Send & receive data through websockets in real
+                               time. Client & server.
 - **yaml_parser**:             Thin wrapper around yaml-cpp.
