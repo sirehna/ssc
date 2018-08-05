@@ -9,6 +9,11 @@ git:
 services:
   - docker
 
+env:
+  global:
+  - DOCKER_USERNAME=gjacquenot
+  - secure: "R6iNMz54usAq4qGX+8k8YfGyJ0oQpGf7ReqHCZStCzDiUJ+daYZgaNE4iXWkslMun8uG1USTBJAYKUuZWLtE0Z8k0qog8rL8ayXV5nJXdZ9XJSKVakGioIGoL28EwDe9HNuZ5v1xfwjl9z/1EO93bRoYifqqaE8QDdUqgMyWivAdanPVTM3Ro5tAWADnwS5ITYDh4iE8hQwLZDa8GeVCdJhJT4zmnmTa2a2oBZ12uBdWJ1V40Et0O54LSEt2vgtuuafp889dqlhXTzlvQ3rmn2IdoyzxCNBTzL75MTxAvF/8S6YGa91OsjKeJ3qgAJwHtzm1pvSTmzbAeTLAYqf2k0jtffAQS211K33KQnGS5d3DIIGoQYpzBT96mfRWbdOYIjGgbmHlplBfESbZpa30QQAvf7UP7BM4TEntmD+unYu+NdDvl8HpqXSL7sxHJYbC22xCrfG+A6qSQZJspi6Hc/hg3zDoDrqu4f06T0+1vr67Tl9/PVBhzU/ajM9wIA1z9vtSOg3FsMfbEtRMsoE+Lui2pdvTKYfPJqSZOe0GCIblr+tr/wFuvnYQZrjz8SmBDmQVI9q33XUihKronnA9UlDoKxLM1AVoADh/x+MEUjCaVOCCK3vuf28qrftLSh3X0QHkYy2SG7RRhDZk7r6osr4tVekAVJx6DihLkPMbPZM="
+
 matrix:
   include:
     - env: BUILD_TYPE=Release
@@ -73,3 +78,12 @@ script:
         bash <(curl -s https://codecov.io/bash);
         fi
         "
+
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ];
+  then
+  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
+  ls build/ssc.deb
+  #docker build --tag gjacquenot/ssc_build .
+  #docker push gjacquenot/ssc;
+  fi
