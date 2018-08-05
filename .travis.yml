@@ -14,11 +14,11 @@ matrix:
     # - env: BUILD_TYPE=Release
     - env: BUILD_TYPE=Coverage
 
-# before_install:
+before_install:
+  - docker pull gjacquenot/ssc_build || true
 #  - cd ci && docker build -f Dockerfile -t ssc .
 
 script:
-
   - if [[ "$BUILD_TYPE" == "Coverage" ]];
     then
     ci_env=`bash <(curl -s https://codecov.io/env)`;
