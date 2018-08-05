@@ -1,5 +1,8 @@
 # Sirehna's Scientific Computing (SSC) framework
 
+[![Build Status](https://travis-ci.org/Gjacquenot/ssc.svg?branch=master)](https://travis-ci.org/Gjacquenot/ssc)
+[![codecov](https://codecov.io/gh/Gjacquenot/ssc/branch/master/graph/badge.svg)](https://codecov.io/gh/Gjacquenot/ssc)
+
 ## Description
 
 This package provides utilities that were used in several projects at Sirehna.
