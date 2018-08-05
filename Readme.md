@@ -39,9 +39,6 @@ This package provides utilities that were used in several projects at Sirehna.
 - **numeric**:                 Kahan sum, pairwise sum, almost_equal (within 4 ULP)
 - **optimizer**:               Generic optimization module, with a simple
                                computer algebra system (functors_for_optimizer)
-- **quadpack**:                Use Gaussian quadrature to integrate scalar
-                               functions numerically. Developped by Netlib in
-                               Fortran.
 - **random_data_generator**:   Generate random test data, uniformly distributed,
                                between two values, excluding certain values, etc. Used
                                mainly for unit testing.
