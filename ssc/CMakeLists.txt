@@ -307,11 +307,17 @@ INSTALL(TARGETS ${TEST_EXE}
     RUNTIME DESTINATION bin
 )
 
-IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
-    INCLUDE(EnableCoverageReport)
-    ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
-                           FILTER boost eigen gmock lapack
-                                  /c/mingw/lib/gcc /usr/include)
+STRING(TOUPPER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_UPPER)
+# IF(${CMAKE_BUILD_TYPE_UPPER} MATCHES COVERAGE)
+#     INCLUDE(EnableCoverageReport)
+#     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
+#                            FILTER boost eigen gmock lapack
+#                                   /c/mingw/lib/gcc /usr/include)
+# ENDIF()
+IF(${CMAKE_BUILD_TYPE_UPPER} STREQUAL "COVERAGE")
+    MESSAGE(STATUS "Adding coverage")
+    FIND_PACKAGE(codecov)
+    add_coverage(${TEST_EXE})
 ENDIF()
 
 #############################################################################
