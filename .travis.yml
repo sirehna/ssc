@@ -21,7 +21,9 @@ matrix:
 
 before_install:
   - docker pull gjacquenot/ssc_build || true
-#  - cd ci && docker build -f Dockerfile -t ssc .
+  - cd ci
+  - docker build --pull --cache-from gjacquenot/ssc_build --tag gjacquenot/ssc_build -f Dockerfile .
+  - cd ..
 
 script:
   - if [[ "$BUILD_TYPE" == "Coverage" ]];
@@ -68,7 +70,7 @@ script:
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
-          /opt/share/ssc/ssc &&
+          /opt/share/ssc &&
         ninja package &&
         ./run_all_tests &&
         if [[ "$BUILD_TYPE" == "Coverage" ]];
@@ -83,7 +85,8 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ];
   then
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-  ls build/ssc.deb
-  #docker build --tag gjacquenot/ssc_build .
-  #docker push gjacquenot/ssc;
+  cp ssc/build/ssc.deb ci/.;
+  cd ci;
+  docker build --tag gjacquenot/ssc -f Dockerfile_ssc .;
+  docker push gjacquenot/ssc;
   fi
