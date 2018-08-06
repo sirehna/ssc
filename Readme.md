@@ -11,11 +11,15 @@ To use `ssc` for your own program, you can pull the associated docker image:
 
     docker pull gjacquenot/ssc
 
-To build `ssc`, you can pull
+To run all tests, you can run the following command:
+
+    docker run gjacquenot/ssc /bin/bash -c "cd ssc/bin && ./run_all_tests"
+
+To build `ssc`, you can pull the following image that contains all dependencies:
 
     docker pull gjacquenot/ssc_build
 
-These two images are based on Debian 8 and use GCC/G++/GFortran 4.9
+These two images are based on Debian 8 and use GCC/G++/GFortran 4.9.
 
 ## Description
 
