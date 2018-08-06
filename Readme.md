@@ -3,9 +3,21 @@
 [![Build Status](https://travis-ci.org/Gjacquenot/ssc.svg?branch=master)](https://travis-ci.org/Gjacquenot/ssc)
 [![codecov](https://codecov.io/gh/Gjacquenot/ssc/branch/master/graph/badge.svg)](https://codecov.io/gh/Gjacquenot/ssc)
 
+This package provides C++ utilities that are used in several projects at Sirehna.
+
+To use `ssc` for your own program, you can pull the associated docker image:
+
+    docker pull gjacquenot/ssc
+
+To build `ssc`, you can pull
+
+    docker pull gjacquenot/ssc_build
+
+These two images are based on Debian 8 and use GCC/G++/GFortran 4.9
+
 ## Description
 
-This package provides utilities that were used in several projects at Sirehna.
+This package contains:
 
 - **csv_file_reader**:         Reads CSV (comma-separated values) text files in a
                                std::map.
