@@ -21,9 +21,6 @@ matrix:
 
 before_install:
   - docker pull gjacquenot/ssc_build || true
-  - cd ci
-  - docker build --pull --cache-from gjacquenot/ssc_build --tag gjacquenot/ssc_build -f Dockerfile .
-  - cd ..
 
 script:
   - if [[ "$BUILD_TYPE" == "Coverage" ]];
