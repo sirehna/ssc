@@ -53,14 +53,8 @@ script:
         cp CMakeLists_f2c.txt f2c/CMakeLists.txt &&
         rm -rf /opt/share/ssc/geographiclib &&
         cp -rf /opt/geographiclib /opt/share/ssc/geographiclib &&
+        cp /opt/share/ssc/CMakeLists_geographiclib.txt /opt/share/ssc/geographiclib/CMakeLists.txt &&
         cd /opt/share/ssc/geographiclib &&
-        echo IF\(CMAKE_SIZEOF_VOID_P EQUAL 8\) >> src/CMakeLists.txt &&
-        echo     IF\(UNIX AND NOT WIN32\) >> src/CMakeLists.txt &&
-        echo         SET\(CMAKE_C_FLAGS "\\\""\\\${CMAKE_C_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
-        echo         SET\(CMAKE_CXX_FLAGS "\\\""\\\${CMAKE_CXX_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
-        echo         SET\(CMAKE_Fortran_FLAGS "\\\""\\\${CMAKE_Fortran_FLAGS} -fPIC"\\\""\) >> src/CMakeLists.txt &&
-        echo     ENDIF\(\) >> src/CMakeLists.txt &&
-        echo ENDIF\(\) >> src/CMakeLists.txt &&
         echo add_library \(Geographic_object OBJECT \\\${SOURCES} \\\${HEADERS}\) >> src/CMakeLists.txt &&
         cd /opt/share/ssc &&
         mkdir -p $BUILD_DIR &&
