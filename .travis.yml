@@ -16,11 +16,13 @@ env:
 
 matrix:
   include:
-    - env: BUILD_TYPE=Release
-    - env: BUILD_TYPE=Coverage
+    - env: BUILD_TYPE=Release  BUILD_DIR=build_deb CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
+    - env: BUILD_TYPE=Coverage BUILD_DIR=build_deb CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
+    - env: BUILD_TYPE=Release  BUILD_DIR=build_win CPACK_GENERATOR=ZIP DOCKER_IMAGE=gjacquenot/ssc_build_win64  BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static.posix
 
 before_install:
   - docker pull gjacquenot/ssc_build || true
+  - docker pull gjacquenot/ssc_build_win64 || true
 
 script:
   - if [[ "$BUILD_TYPE" == "Coverage" ]];
@@ -29,7 +31,7 @@ script:
     else
     ci_env=;
     fi
-  - docker run $ci_env --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share gjacquenot/ssc_build /bin/bash -c \
+  - docker run $ci_env --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share $DOCKER_IMAGE /bin/bash -c \
        "rm -rf /opt/share/ssc/google-test &&
         cp -rf /opt/googletest /opt/share/ssc/google-test &&
         rm -rf /opt/share/ssc/eigen &&
@@ -59,14 +61,15 @@ script:
         echo ENDIF\(\) >> src/CMakeLists.txt &&
         echo add_library \(Geographic_object OBJECT \\\${SOURCES} \\\${HEADERS}\) >> src/CMakeLists.txt &&
         cd /opt/share/ssc &&
-        mkdir -p build &&
-        cd build &&
+        mkdir -p $BUILD_DIR &&
+        cd $BUILD_DIR &&
         cmake -Wno-dev
           -G Ninja
+          -DCPACK_GENERATOR=$CPACK_GENERATOR
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
-          -DBOOST_ROOT:PATH=/opt/boost
+          -DBOOST_ROOT:PATH=$BOOST_ROOT
           /opt/share/ssc &&
         ninja package &&
         ./run_all_tests &&
@@ -82,10 +85,13 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ];
   then
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-  cp ssc/build/ssc.deb ci/.;
+  cp ssc/build_deb/ssc.deb ci/.;
   cd ci;
-  docker build --tag gjacquenot/ssc -f Dockerfile_ssc .;
+  cd ssc_deb;
+  docker build --tag gjacquenot/ssc -f Dockerfile .;
   docker push gjacquenot/ssc;
+  cd ..;
+  cd ..;
   fi
 
 # travis setup releases
@@ -96,7 +102,7 @@ deploy:
   api_key:
     secure: OHuqTi6NfB19u4PA2WwdNp4aDrHI4nXo8j4jgtCkpD3cX1UnXkDX86sDpktHWbtqbWkMYKQlNvRdRWcQUMIcvtJPPxF89msuDAPwGsBiXVAifsFSESD4CZzv0LQ0Cjcn0BLU5VDobMfAhbQf7ADH6S1Ie07Bb9Bfo0lsvjrkpDB8tw0oG5sILQ1n4SR1ZMSczRCHqRR449keMi0bcj6sexTlbgtJENTQa7va4ro3V7n/96/eGUu4zj7j2/ppP+lMYG1VeoGJX3AmuC7n/d1+VNG4l11ItAluRmwTnBAcN/D9zSwMKoBbVDmAFw+Eur++P/yow/Dsn9UOy8YGhqmB/Wtb9FlGkNHb2zg5pig5sUjtrMKHc7HWcl/u3AGZ9FIfQLwzwzFyHVbW6xsjiIEn3e797elJsEKh5Ds6y8ZwNtbResrSoSWebgh+q0ujMFlg4nOKnv9SeOXtB4IWVtjXafdZhpAlpy1YjHAbrw5Q+PcBWra2k5sDk/1RslxIJvEQy133ZGxuxCSrjfHGnp0rG+jvBQrzKwmmr7/gjCxTLcbYIB400MYGeP7CXoEvTI6Mhb58GPKfaoSCx7CxyG2kR2c7RAV/tz2l+hoPbov8sKWpQswAx6Yye7IDgDvhPf2CI72eFqLnEyIQOwF+kvKo8bjkV9vrvlw9fh0uMe2woTw=
   skip_cleanup: true
-  file: ssc/build/ssc.deb
+  file: ssc/build_deb/ssc.deb
   on:
     tags: true
     repo: Gjacquenot/ssc
