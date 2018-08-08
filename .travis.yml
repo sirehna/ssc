@@ -70,8 +70,19 @@ script:
           -DCPACK_GENERATOR=$CPACK_GENERATOR
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
-          -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=$BOOST_ROOT
+          -DBOOST_INCLUDEDIR:PATH=$BOOST_ROOT/include
+          -DBoost_INCLUDE_DIR:PATH=$BOOST_ROOT/include
+          -DBOOST_LIBRARYDIR:PATH=$BOOST_ROOT/lib
+          -DBoost_NO_SYSTEM_PATHS:BOOL=OFF
+          -DBoost_LIBRARY_DIR_RELEASE:PATH=$BOOST_ROOT/lib
+          -DIPOPT_ROOT:PATH=/opt/CoinIpopt
+          -DCOIN_BLAS:PATH=/opt/CoinIpopt/lib/libcoinblas.a
+          -DCOIN_LAPACK:PATH=/opt/CoinIpopt/lib/libcoinlapack.a
+          -DCOIN_MUMPS:PATH=/opt/CoinIpopt/lib/libcoinmumps.a
+          -DCOIN_IPOPT:PATH=/opt/CoinIpopt/lib/libipopt.a
+          -DIPOPT_INCLUDE_DIRS:PATH=/opt/CoinIpopt/include/coin
+          -DIPOPT_LIB_DYNAMIC=\"gfortran;gcc;quadmath;m\"
           /opt/share/ssc &&
         ninja package &&
         ./run_all_tests &&
