@@ -50,17 +50,18 @@ template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::
 }
 
 template <> TypedVectorDataGenerator<double>& TypedVectorDataGenerator<double>::greater_than(const double& t)
-        {
-            if (negated)
-            {
-                max_bound = t;
-            }
-            else
-            {
-                min_bound = t;
-            }
-            return *this;
-        }*/
+{
+    if (negated)
+    {
+        max_bound = t;
+    }
+    else
+    {
+        min_bound = t;
+    }
+    return *this;
+}
+*/
 
 int DataGenerator::random_int(const int& a, const int& b) const
 {
