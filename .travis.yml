@@ -59,7 +59,7 @@ script:
         cd /opt/share/ssc &&
         mkdir -p $BUILD_DIR &&
         cd $BUILD_DIR &&
-        if [[ "$BUILD_DIR" == "build_win" ]];
+        if [[ $BUILD_DIR == build_win ]];
         then
         mkdir /opt/share/.wine;
         export WINEPREFIX=/opt/share/.wine;
@@ -85,15 +85,15 @@ script:
           -DIPOPT_LIB_DYNAMIC=\"gfortran;gcc;quadmath;m\"
           /opt/share/ssc &&
         ninja package &&
-        if [[ "$BUILD_DIR" == "build_win" ]];
+        if [[ $BUILD_DIR == build_win ]];
         then
         wine ./run_all_tests --gtest_filter=-WebSocketObserverTest*;
         else
         ./run_all_tests;
         fi &&
-        if [[ "$BUILD_TYPE" == "Coverage" ]];
+        if [[ $BUILD_TYPE == Coverage ]];
         then
-        echo "Coverage";
+        echo Coverage;
         gprof run_all_tests gmon.out > gprof_res.txt;
         bash <(curl -s https://codecov.io/bash);
         fi
