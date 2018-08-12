@@ -115,6 +115,9 @@ after_success:
 # travis setup releases
 # https://docs.travis-ci.com/user/deployment
 # https://docs.travis-ci.com/user/deployment#conditional-releases-with-on
+before_deploy:
+- ls -a ssc/build_deb/ssc.deb
+- ls -a ssc/build_win/ssc.zip
 deploy:
   provider: releases
   api_key:
