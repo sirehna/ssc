@@ -115,14 +115,14 @@ after_success:
   cd ..;
   cd ..;
   fi
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
   then
   echo "Fetching generated deb";
   ls -altr ssc/build_deb/ssc.deb;
   shasum -a256 ssc/build_deb/ssc.deb;
   cp ssc/build_deb/ssc.deb ssc_binary_debian8_amd64.deb;
   fi
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
   then
   echo "Fetching generated zip";
   ls -altr ssc/build_win/ssc.zip;
