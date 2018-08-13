@@ -115,14 +115,14 @@ after_success:
   cd ..;
   cd ..;
   fi
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
   then
   echo "Fetching generated deb";
   ls -altr ssc/build_deb/ssc.deb;
   shasum -a256 ssc/build_deb/ssc.deb;
   cp ssc/build_deb/ssc.deb ssc_binary_debian8_amd64.deb;
   fi
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
   then
   echo "Fetching generated zip";
   ls -altr ssc/build_win/ssc.zip;
@@ -134,16 +134,20 @@ after_success:
 # https://docs.travis-ci.com/user/deployment
 # https://docs.travis-ci.com/user/deployment#conditional-releases-with-on
 before_deploy:
-- ls -altr ssc_binary_debian8_amd64.deb;
-- ls -altr ssc_binary_windows_64.zip;
+- ls -altr ssc_binary_*;
+# - ls -altr ssc_binary_debian8_amd64.deb;
+# - ls -altr ssc_binary_windows_64.zip;
 deploy:
   provider: releases
   api_key:
     secure: OHuqTi6NfB19u4PA2WwdNp4aDrHI4nXo8j4jgtCkpD3cX1UnXkDX86sDpktHWbtqbWkMYKQlNvRdRWcQUMIcvtJPPxF89msuDAPwGsBiXVAifsFSESD4CZzv0LQ0Cjcn0BLU5VDobMfAhbQf7ADH6S1Ie07Bb9Bfo0lsvjrkpDB8tw0oG5sILQ1n4SR1ZMSczRCHqRR449keMi0bcj6sexTlbgtJENTQa7va4ro3V7n/96/eGUu4zj7j2/ppP+lMYG1VeoGJX3AmuC7n/d1+VNG4l11ItAluRmwTnBAcN/D9zSwMKoBbVDmAFw+Eur++P/yow/Dsn9UOy8YGhqmB/Wtb9FlGkNHb2zg5pig5sUjtrMKHc7HWcl/u3AGZ9FIfQLwzwzFyHVbW6xsjiIEn3e797elJsEKh5Ds6y8ZwNtbResrSoSWebgh+q0ujMFlg4nOKnv9SeOXtB4IWVtjXafdZhpAlpy1YjHAbrw5Q+PcBWra2k5sDk/1RslxIJvEQy133ZGxuxCSrjfHGnp0rG+jvBQrzKwmmr7/gjCxTLcbYIB400MYGeP7CXoEvTI6Mhb58GPKfaoSCx7CxyG2kR2c7RAV/tz2l+hoPbov8sKWpQswAx6Yye7IDgDvhPf2CI72eFqLnEyIQOwF+kvKo8bjkV9vrvlw9fh0uMe2woTw=
   skip_cleanup: true
+  file_glob: true
   file:
-    - ssc_binary_debian8_amd64.deb
-    - ssc_binary_windows_64.zip
+    - ssc_binary_*
+  #file:
+  #  - ssc_binary_debian8_amd64.deb
+  #  - ssc_binary_windows_64.zip
   on:
     tags: true
     repo: Gjacquenot/ssc
