@@ -112,11 +112,6 @@ after_success:
   cd ..;
   cd ..;
   fi
-
-# travis setup releases
-# https://docs.travis-ci.com/user/deployment
-# https://docs.travis-ci.com/user/deployment#conditional-releases-with-on
-before_deploy:
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
   then
   echo "Fetching generated deb";
@@ -131,6 +126,13 @@ before_deploy:
   shasum -a256 ssc/build_win/ssc.zip;
   cp ssc/build_win/ssc.zip ssc_binary_windows_64.zip;
   fi
+
+# travis setup releases
+# https://docs.travis-ci.com/user/deployment
+# https://docs.travis-ci.com/user/deployment#conditional-releases-with-on
+before_deploy:
+- ls -altr ssc_binary_debian8_amd64.deb;
+- ls -altr ssc_binary_windows_64.zip;
 deploy:
   provider: releases
   api_key:
