@@ -105,7 +105,7 @@ after_success:
     echo "TRAVIS_TAG     $TRAVIS_TAG"
     echo "BUILD_TYPE     $BUILD_TYPE"
     echo "BUILD_DIR      $BUILD_DIR"
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
   then
   echo "Pushing ssc docker image to dockerhub";
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
