@@ -100,6 +100,9 @@ script:
         "
 
 after_success:
+- echo "TRAVIS_BRANCH  $TRAVIS_BRANCH"
+- echo "BUILD_TYPE     $BUILD_TYPE"
+- echo "BUILD_DIR      $BUILD_DIR"
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$BUILD_TYPE" == "Release" ];
   then
   echo "Pushing ssc docker image to dockerhub";
