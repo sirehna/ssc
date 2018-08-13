@@ -107,7 +107,7 @@ after_success:
   then
   echo "Pushing ssc docker image to dockerhub";
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-  cp ssc/build_deb/ssc.deb ci/.;
+  cp ssc/build_deb/ssc.deb ci/ssc_deb/.;
   cd ci;
   cd ssc_deb;
   docker build --tag gjacquenot/ssc -f Dockerfile .;
