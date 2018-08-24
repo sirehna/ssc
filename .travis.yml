@@ -16,10 +16,12 @@ env:
 
 matrix:
   include:
-    - name: "Deb release"
-      env: BUILD_TYPE=Release  BUILD_DIR=build_deb CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
-    - name: "Deb coverage"
-      env: BUILD_TYPE=Coverage BUILD_DIR=build_deb CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
+    - name: "Deb 8 release"
+      env: BUILD_TYPE=Release  BUILD_DIR=build_deb8 CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
+    - name: "Deb 8 coverage"
+      env: BUILD_TYPE=Coverage BUILD_DIR=build_deb8 CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build        BOOST_ROOT=/opt/boost
+    - name: "Deb 9 release"
+      env: BUILD_TYPE=Release  BUILD_DIR=build_deb9 CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build_debian9_gcc8          BOOST_ROOT=/opt/boost
     - name: "Win Release cross compilation"
       env: BUILD_TYPE=Release  BUILD_DIR=build_win CPACK_GENERATOR=ZIP DOCKER_IMAGE=gjacquenot/ssc_build_win64  BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
 
@@ -105,7 +107,7 @@ after_success:
     echo "TRAVIS_TAG     $TRAVIS_TAG"
     echo "BUILD_TYPE     $BUILD_TYPE"
     echo "BUILD_DIR      $BUILD_DIR"
-- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb8" ];
   then
   echo "Pushing ssc docker image to dockerhub";
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
