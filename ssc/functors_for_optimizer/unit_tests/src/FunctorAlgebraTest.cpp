@@ -577,8 +577,8 @@ TEST_F(FunctorAlgebraTest, sign)
     for (size_t i = 0 ; i < 1000 ; ++i)
     {
         *x = a.random<double>();
-        if (x->get_lambda()() >= 0) ASSERT_EQ(1, f->get_lambda()());
-        if (x->get_lambda()() < 0) ASSERT_EQ(-1, f->get_lambda()());
+        if (x->get_lambda()() >= 0) {ASSERT_EQ(1, f->get_lambda()());}
+        if (x->get_lambda()() < 0) {ASSERT_EQ(-1, f->get_lambda()());}
     }
 }
 
