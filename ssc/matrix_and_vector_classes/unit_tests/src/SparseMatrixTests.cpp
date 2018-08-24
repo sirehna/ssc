@@ -80,6 +80,10 @@ TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_index
     std::vector<size_t> idx = a.random_vector_of<size_t>().of_size(nb_of_values).greater_than(1).no().greater_than(400*nb_of_values);
     std::sort(idx.begin(), idx.end());
     SparseMatrix A(nb_of_values);
+    for (size_t i = 1 ; i < nb_of_values ; ++i)
+    {
+        idx.at(i) += idx.at(i - 1);
+    }
     for (size_t i = 0 ; i < nb_of_values ; ++i)
     {
         A.add_element_in_row_order(idx.at(i), idx.at(i), a.random<double>());
