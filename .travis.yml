@@ -130,7 +130,7 @@ after_success:
   then
   echo "Pushing ssc docker image to dockerhub";
   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD;
-  cp ssc/build_deb/ssc.deb ci/ssc_deb/.;
+  cp ssc/$BUILD_DIR/ssc.deb ci/ssc_deb/.;
   cd ci;
   cd ssc_deb;
   docker build --tag gjacquenot/ssc -f Dockerfile .;
@@ -138,12 +138,19 @@ after_success:
   cd ..;
   cd ..;
   fi
-- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb8" ];
   then
   echo "Fetching generated deb";
-  ls -altr ssc/build_deb/ssc.deb;
-  shasum -a256 ssc/build_deb/ssc.deb;
-  cp ssc/build_deb/ssc.deb ssc_binary_debian8_amd64.deb;
+  ls -altr ssc/$BUILD_DIR/ssc.deb;
+  shasum -a256 ssc/$BUILD_DIR/ssc.deb;
+  cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian8_amd64.deb;
+  fi
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb9" ];
+  then
+  echo "Fetching generated deb";
+  ls -altr ssc/$BUILD_DIR/ssc.deb;
+  shasum -a256 ssc/$BUILD_DIR/ssc.deb;
+  cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian9_amd64.deb;
   fi
 - if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
   then
