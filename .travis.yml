@@ -54,7 +54,7 @@ script:
     else
     ci_env=;
     fi
-  - docker run $ci_env --rm -v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share $DOCKER_IMAGE /bin/bash -c \
+  - docker run $ci_env --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share $DOCKER_IMAGE /bin/bash -c \
        "rm -rf /opt/share/ssc/google-test &&
         cp -rf /opt/googletest /opt/share/ssc/google-test &&
         rm -rf /opt/share/ssc/eigen &&
