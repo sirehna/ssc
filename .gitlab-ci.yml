@@ -27,6 +27,7 @@ build:windows:
                         wine winecfg &&
                         cmake -Wno-dev
                         -G Ninja
+                        -DCMAKE_BUILD_TYPE=Release
                         -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
                         -DCPACK_GENERATOR=ZIP
                         -DIPOPT_ROOT:PATH=/opt/CoinIpopt
@@ -59,6 +60,7 @@ build:debian:
      - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
           cmake -Wno-dev
           -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
