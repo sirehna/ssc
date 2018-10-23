@@ -21,8 +21,7 @@ build:windows:
    stage: build
    script:
      - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
-          /bin/bash -c "whoami &&
-                        mkdir /opt/share/.wine &&
+          /bin/bash -c "mkdir /opt/share/.wine &&
                         export WINEPREFIX=/opt/share/.wine &&
                         wine winecfg &&
                         cmake -Wno-dev
