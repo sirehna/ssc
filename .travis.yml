@@ -19,7 +19,8 @@ matrix:
       env:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_deb8
-        - CPACK_GENERATOR=DEB DOCKER_IMAGE=gjacquenot/ssc_build
+        - CPACK_GENERATOR=DEB
+        - DOCKER_IMAGE=gjacquenot/ssc_build
         - BOOST_ROOT=/opt/boost
     - name: "Deb 8 coverage"
       env:
