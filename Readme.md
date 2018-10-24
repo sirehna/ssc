@@ -5,7 +5,7 @@
 [![](https://images.microbadger.com/badges/image/sirehna/ssc.svg)](https://microbadger.com/images/sirehna/ssc "ssc layers")
 [![License](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
 
-This package provides C++ utilities that are used in several projects at [Sirehna](http://sirehna.com).
+This package provides C++ utilities that are used in several projects at [SIREHNA](http://www.sirehna.com/).
 
 To use `ssc` for your own program, you can pull the associated docker image:
 
