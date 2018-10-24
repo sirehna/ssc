@@ -11,9 +11,8 @@ services:
 
 env:
   global:
-  - DOCKER_USERNAME=gjacquenot
-  - secure: "R6iNMz54usAq4qGX+8k8YfGyJ0oQpGf7ReqHCZStCzDiUJ+daYZgaNE4iXWkslMun8uG1USTBJAYKUuZWLtE0Z8k0qog8rL8ayXV5nJXdZ9XJSKVakGioIGoL28EwDe9HNuZ5v1xfwjl9z/1EO93bRoYifqqaE8QDdUqgMyWivAdanPVTM3Ro5tAWADnwS5ITYDh4iE8hQwLZDa8GeVCdJhJT4zmnmTa2a2oBZ12uBdWJ1V40Et0O54LSEt2vgtuuafp889dqlhXTzlvQ3rmn2IdoyzxCNBTzL75MTxAvF/8S6YGa91OsjKeJ3qgAJwHtzm1pvSTmzbAeTLAYqf2k0jtffAQS211K33KQnGS5d3DIIGoQYpzBT96mfRWbdOYIjGgbmHlplBfESbZpa30QQAvf7UP7BM4TEntmD+unYu+NdDvl8HpqXSL7sxHJYbC22xCrfG+A6qSQZJspi6Hc/hg3zDoDrqu4f06T0+1vr67Tl9/PVBhzU/ajM9wIA1z9vtSOg3FsMfbEtRMsoE+Lui2pdvTKYfPJqSZOe0GCIblr+tr/wFuvnYQZrjz8SmBDmQVI9q33XUihKronnA9UlDoKxLM1AVoADh/x+MEUjCaVOCCK3vuf28qrftLSh3X0QHkYy2SG7RRhDZk7r6osr4tVekAVJx6DihLkPMbPZM="
-
+  - DOCKER_USERNAME=charlesedouardcady
+  - secure: "QqkjyuHWFSBX8sSgP8qfMF3xVQ+3aPqMxv2LQ0Ms/eoVnrA92nmFy06/85zmG4RJ/R34cBHRVCA2tr3updAIzle1xG56jjiKcvyLqeC/aa+5Q0JkVJbRunlKUx2KtqJLKm4TmPHVAwj+OfEk9HMRHaCqQFmaWcLnws8rGyzpGO83FaLqpTFzN6Jjd8daeYuOGPyMzdnbgf8/WUKheBdjT5f1lYhFFALo6ElhyBrDlBHl5Bw67yth2BtQ1uLXVIvQ1PktAR6IM2KDrgWBZYvgZW64KqwQS2pxQdYzYd+xbjxHROL02hBcv1Xlo76SDIlph7GM/PmpY95diebreecuFAFAnXMF0VrOQVqT5FPyADDeGog7mfruSWm8BJ40fRWm2LdgnmHKwLLQOi+A95+pqn5f4McNVePeIgc+qIdJxfr9DwTDKJIxbR6lUNts3lq+pq1HnKuppwo2NqgS57G0MCbrUqi8GcJRR3p7yYIu3H8Lz1ZgiMJkxWxaBGliq/A+IoXybuJqyGVvPALy80Td4nAtQu5pqS5GM9ei+UexskjxkxoTpKb284nvbNFcrFpJ5PeLJ5oXVD8UtH5bpfk3AFLsLn+Qb+xP7U2S9RFSPi8up/BN6fD1xaYPoZ+AsU1nn942dGyyOHYPmMZ4vow29OfGlBmJx5TBzg+uqwW6Ic8="
 matrix:
   include:
     - name: "Deb 8 release"
@@ -133,8 +132,8 @@ after_success:
   cp ssc/$BUILD_DIR/ssc.deb ci/ssc_deb/.;
   cd ci;
   cd ssc_deb;
-  docker build --tag gjacquenot/ssc -f Dockerfile .;
-  docker push gjacquenot/ssc;
+  docker build --tag sirehna/ssc -f Dockerfile .;
+  docker push sirehna/ssc;
   cd ..;
   cd ..;
   fi
@@ -170,7 +169,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: OHuqTi6NfB19u4PA2WwdNp4aDrHI4nXo8j4jgtCkpD3cX1UnXkDX86sDpktHWbtqbWkMYKQlNvRdRWcQUMIcvtJPPxF89msuDAPwGsBiXVAifsFSESD4CZzv0LQ0Cjcn0BLU5VDobMfAhbQf7ADH6S1Ie07Bb9Bfo0lsvjrkpDB8tw0oG5sILQ1n4SR1ZMSczRCHqRR449keMi0bcj6sexTlbgtJENTQa7va4ro3V7n/96/eGUu4zj7j2/ppP+lMYG1VeoGJX3AmuC7n/d1+VNG4l11ItAluRmwTnBAcN/D9zSwMKoBbVDmAFw+Eur++P/yow/Dsn9UOy8YGhqmB/Wtb9FlGkNHb2zg5pig5sUjtrMKHc7HWcl/u3AGZ9FIfQLwzwzFyHVbW6xsjiIEn3e797elJsEKh5Ds6y8ZwNtbResrSoSWebgh+q0ujMFlg4nOKnv9SeOXtB4IWVtjXafdZhpAlpy1YjHAbrw5Q+PcBWra2k5sDk/1RslxIJvEQy133ZGxuxCSrjfHGnp0rG+jvBQrzKwmmr7/gjCxTLcbYIB400MYGeP7CXoEvTI6Mhb58GPKfaoSCx7CxyG2kR2c7RAV/tz2l+hoPbov8sKWpQswAx6Yye7IDgDvhPf2CI72eFqLnEyIQOwF+kvKo8bjkV9vrvlw9fh0uMe2woTw=
+    secure: njJkjE7z/srsIGWUe/oR4q66+CBxGS5yz9wV0F5/N8wPOSNqLfO2iF5iu50hIzpqAvphXnocx3pxiJTxDkwdf4RNFFiVlnAld6Go/5kYm8ydzZtJg3TOnGQcWbAaTsqV2SJf2gAeg/a8KSPnCjDNzXbOK1mgcnZFaeKiv3h2wdKq6TPmH/29cTqR/4nSnAx2BUcN6oTJs0hRWtPZVWbCywVkXtG+Yl1G8Ce68fHrfECUXFVqw77c+Lsatl6as9835PAeYqcMSzsG6G9kVVosCd96galJylJq8Gwil78cBiNXB3Lx9CJgCE8vwUfdmMkSGLtrLFUaaB78xrDKRTCrJvPm8UvZOFUTPbLgWGPgVBlBpfqwaOjdhB324KS8laK+xwjbLfS+sc9SGQ2gltKW00/TVPYi6o8Z2coGZ28xY9bEbhXa7tq146/pUnugeCw29xdmhoaU1t9jilUyHuvLN9iJ6tcHc0EpoOFTD2VZ/RsRwqbwcJvgMTE39UUKH323Nma+tmJv/p+g7JBhuCQSW9ehBCjFnUJqg2ZQlGKMbCkiGXWLilcPCWDKAPZNQGk7hy3nRY8p96tuiEVhCzYXeXpTEKcgOJWn+E6xs/+5dskJEQzsHntIhYQ8WAYELr8Ee2Vs0TwNJlVQVKVJ0qp3O8BNzKXmjWt/gNJyBipdiYA=
   skip_cleanup: true
   file_glob: true
   file:
@@ -180,6 +179,6 @@ deploy:
   #  - ssc_binary_windows_64.zip
   on:
     tags: true
-    repo: Gjacquenot/ssc
+    repo: sirehna/ssc
     branch: master
     condition: $BUILD_TYPE = Release
