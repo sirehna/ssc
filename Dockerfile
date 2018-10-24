@@ -1,65 +1,36 @@
-# Build image
-#   docker build -f Dockerfile -t ssc .
-#
-# Delete image
-#   docker rmi ssc
-#
-# Run container
-#   docker run --name test_ssc ssc
-#   docker stop test_ssc
-#   docker rm test_ssc
-#
-# Run interactive
-#   docker run -it ssc /bin/bash
-#
-# This Dockerfile will create an image with
-#
-# - gcc/g++/gfortran                                V 4.9.2
-# - wget / git / ninja
-# - Python3                                         V 3.4
-# - /opt/cmake                                      V 3.7.2
-# - /opt/HDF5                                       V 1.10.0
-# - /opt/boost with its geometry extensions         V 1.60.0
-# - /opt/CoinIpopt                                  V 1.7.2
-# - /opt/ssc
-
-# It builds ssc, tests it and installs it
-
-# Require Internet to download all dependencies
-
 FROM debian:8
-ARG TOKEN
 MAINTAINER Guillaume Jacquenot <guillaume.jacquenot@sirehna.com>
 
 # Install dependencies
 
 # libbz2 is required for Boost compilation
 RUN apt-get update -yq && apt-get install -y \
-    build-essential \
-    curl \
-    g++-4.9 \
-    gcc-4.9 \
-    wget \
-    git \
-    ninja-build \
-    python3 \
-    python3-dev \
-    gfortran \
-    libblas3 \
-    liblapack3 \
-    libbz2-dev \
-    pandoc \
-    doxygen \
-    python3-pip \
-    unzip \
+        build-essential \
+        doxygen \
+        g++-4.9 \
+        gcc-4.9 \
+        gfortran-4.9 \
+        git \
+        libblas3 \
+        liblapack3 \
+        libbz2-dev \
+        ninja-build \
+        pandoc \
+        python3 \
+        python3-dev \
+        python3-pip \
+        unzip \
+        wget \
     && apt-get clean \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/lib/apt/lists/
 
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100
-RUN update-alternatives --set g++ /usr/bin/g++-4.9
-RUN update-alternatives --set gcc /usr/bin/gcc-4.*
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 100 && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 100 && \
+    update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.9 100 && \
+    update-alternatives --set g++ /usr/bin/g++-4.9 && \
+    update-alternatives --set gcc /usr/bin/gcc-4.* && \
+    update-alternatives --set gfortran /usr/bin/gfortran-4.*
 
 RUN mkdir -p /opt
 WORKDIR /opt
@@ -70,12 +41,8 @@ RUN mkdir -p /opt/cmake && \
     rm -rf cmake.sh
 ENV PATH="/opt/cmake/bin:${PATH}"
 
-# HDF5 with fortran support
-# RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.17/src/hdf5-1.8.17.tar.gz -O hdf5_src.tar.gz
-# Version hdf5-1.8.18 -> Requires CMake 3.1.0
-# RUN wget https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.18.tar.gz -O hdf5_src.tar.gz
-# Version hdf5-1.10.0-patch1 -> Requires CMake 3.1.0
-RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-patch1/src/hdf5-1.10.0-patch1.tar.gz -O hdf5_src.tar.gz && \
+# HDF5 with fortran support - No HDF5 V1.10 that does not work with eigen3-hdf5
+RUN wget https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.tar.gz -O hdf5_src.tar.gz && \
     mkdir -p HDF5_SRC && \
     tar -xf hdf5_src.tar.gz --strip 1 -C HDF5_SRC && \
     mkdir -p HDF5_build && \
@@ -96,21 +63,21 @@ RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-pa
     rm -rf HDF5_SRC && \
     rm -rf hdf5_src.tar.gz
 
-
-
 # BOOST 1.60 with Boost geometry extensions
 # SSC : system thread random chrono
 # XDYN : program_options filesystem system regex
+# libbz2 is required for Boost compilation
 RUN wget http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz -O boost_src.tar.gz && \
     mkdir -p boost_src && \
-    tar -xf boost_src.tar.gz --strip 1 -C boost_src && \
-    rm -rf boost_src.tar.gz
-RUN cd boost_src && \
+    tar -xzf boost_src.tar.gz --strip 1 -C boost_src && \
+    rm -rf boost_src.tar.gz && \
+    cd boost_src && \
     ./bootstrap.sh && \
-      link=shared
-RUN cd boost_src && \
-    ./b2 cxxflags=-fPIC --without-mpi --without-python link=static threading=single threading=multi --layout=tagged --prefix=/opt/boost install #> boost.log 2> boost.err
-#    # BOOST Geometry extension
+    ./b2 cxxflags=-fPIC --without-mpi --without-python link=static threading=single threading=multi --layout=tagged --prefix=/opt/boost install && \
+    cd .. && \
+    rm -rf boost_src
+
+# BOOST Geometry extension
 RUN git clone https://github.com/boostorg/geometry && \
     cd geometry && \
     git checkout 4aa61e59a72b44fb3c7761066d478479d2dd63a0 && \
@@ -118,21 +85,28 @@ RUN git clone https://github.com/boostorg/geometry && \
     cd .. && \
     rm -rf geometry
 
-
-##################
-# Download & compile IPOPT
-##################
-RUN curl -k --header "$TOKEN" https://gitlab.sirehna.com/api/v4/projects/56/jobs/10543/artifacts > artifacts.zip \
- && unzip artifacts.zip && rm artifacts.zip && rm -rf install
-RUN mkdir -p CoinIpopt_build/build \
- && mkdir -p /opt/CoinIpopt
-RUN cd CoinIpopt_build \
- && mv ../ipopt-with-third-party.tgz . \
- && tar xzf ipopt-with-third-party.tgz  \
- && rm -rf ipopt-with-third-party.tgz
-RUN cd CoinIpopt_build/build \
- && .././configure -with-pic --disable-shared --prefix=/opt/CoinIpopt \
- && make \
- && make test \
- && make install \
- && rm -rf /opt/CoinIpopt_build
+# Ipopt
+# http://www.coin-or.org/Ipopt/documentation/node10.html
+ENV IPOPT_VERSION=3.12.9
+RUN gfortran --version && \
+    wget http://www.coin-or.org/download/source/Ipopt/Ipopt-$IPOPT_VERSION.tgz -O ipopt_src.tgz && \
+    mkdir -p ipopt_src && \
+    tar -xf ipopt_src.tgz --strip 1 -C ipopt_src && \
+    rm -rf ipopt_src.tgz && \
+    cd ipopt_src && \
+    cd ThirdParty/Blas && \
+        ./get.Blas && \
+    cd ../Lapack && \
+        ./get.Lapack && \
+    cd ../Mumps && \
+        ./get.Mumps && \
+    cd ../../ && \
+    mkdir build && \
+    cd build && \
+    ../configure -with-pic --disable-shared --prefix=/opt/CoinIpopt && \
+    make && \
+    make test && \
+    make install && \
+    cd .. && \
+    cd .. && \
+    rm -rf ipopt_src
