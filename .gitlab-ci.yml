@@ -55,7 +55,7 @@ build:windows:
 build:debian:
    stage: build
    script:
-     - docker build -f Dockerfile -t ssc .
+     - docker build --build-arg TOKEN="JOB_TOKEN:$CI_JOB_TOKEN" . -t ssc
      - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
           cmake -Wno-dev
           -G Ninja

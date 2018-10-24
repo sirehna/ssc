@@ -28,6 +28,7 @@
 # Require Internet to download all dependencies
 
 FROM debian:8
+ARG TOKEN
 MAINTAINER Guillaume Jacquenot <guillaume.jacquenot@sirehna.com>
 
 # Install dependencies
@@ -35,6 +36,7 @@ MAINTAINER Guillaume Jacquenot <guillaume.jacquenot@sirehna.com>
 # libbz2 is required for Boost compilation
 RUN apt-get update -yq && apt-get install -y \
     build-essential \
+    curl \
     g++-4.9 \
     gcc-4.9 \
     wget \
@@ -120,9 +122,7 @@ RUN git clone https://github.com/boostorg/geometry && \
 ##################
 # Download & compile IPOPT
 ##################
-ADD fetch_gitlab_artifacts.sh fetch_gitlab_artifacts.py /
-RUN pip3 install python-gitlab==1.1.0 python-dateutil
-RUn python3 /fetch_gitlab_artifacts.py --project_id 56 --target_branch with-third-parties --build_stage=run \
+RUN curl -k --header "$TOKEN" https://gitlab.sirehna.com/api/v4/projects/56/jobs/10543/artifacts > artifacts.zip \
  && unzip artifacts.zip && rm artifacts.zip && rm -rf install
 RUN mkdir -p CoinIpopt_build/build \
  && mkdir -p /opt/CoinIpopt
