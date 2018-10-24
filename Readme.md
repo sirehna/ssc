@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/sirehna/ssc.svg?branch=master)](https://travis-ci.org/sirehna/ssc)
 [![codecov](https://codecov.io/gh/sirehna/ssc/branch/master/graph/badge.svg)](https://codecov.io/gh/sirehna/ssc)
 [![](https://images.microbadger.com/badges/image/sirehna/ssc.svg)](https://microbadger.com/images/sirehna/ssc "ssc layers")
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
 
 This package provides C++ utilities that are used in several projects at [Sirehna](http://sirehna.com).
 
