@@ -20,13 +20,13 @@ lint:
 build:windows:
    stage: build
    script:
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
-          /bin/bash -c "whoami &&
-                        mkdir /opt/share/.wine &&
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
+          /bin/bash -c "mkdir /opt/share/.wine &&
                         export WINEPREFIX=/opt/share/.wine &&
                         wine winecfg &&
                         cmake -Wno-dev
                         -G Ninja
+                        -DCMAKE_BUILD_TYPE=Release
                         -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
                         -DCPACK_GENERATOR=ZIP
                         -DIPOPT_ROOT:PATH=/opt/CoinIpopt
@@ -44,9 +44,9 @@ build:windows:
                         -DIPOPT_INCLUDE_DIRS:PATH=/opt/CoinIpopt/include/coin
                         -DIPOPT_LIB_DYNAMIC=\"gfortran;gcc;quadmath;m\"
                         /opt/share/ssc"
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
           /bin/bash -c "mkdir -p /opt/share/.wine && export WINEPREFIX=/opt/share/.wine && wine winecfg && ninja package"
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
           /bin/bash -c "mkdir -p /opt/share/.wine && export WINEPREFIX=/opt/share/.wine && wine winecfg && wine ./run_all_tests --gtest_filter=-WebSocketObserverTest*"
    artifacts:
      paths:
@@ -55,16 +55,17 @@ build:windows:
 build:debian:
    stage: build
    script:
-     - docker build -f Dockerfile -t ssc .
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
+     - docker build --build-arg TOKEN="JOB_TOKEN:$CI_JOB_TOKEN" . -t ssc
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc
           cmake -Wno-dev
           -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt
           -DBOOST_ROOT:PATH=/opt/boost
           /opt/share/ssc
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ninja package
-     - docker run --rm -v /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ninja package
+     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share ssc ./run_all_tests
    artifacts:
      paths:
      - ssc.deb

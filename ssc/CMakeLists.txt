@@ -245,17 +245,18 @@ ELSE()
     TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE dl) # Ipopt
 ENDIF()
 
-IF(WIN32)
-    MESSAGE("x86_64-w64-mingw32.static-ar")
-    SET(AR "x86_64-w64-mingw32.static-ar")
-ELSE()
-    SET(AR ${CMAKE_AR})
-ENDIF()
+# IF(WIN32)
+#     MESSAGE("x86_64-w64-mingw32.static-ar")
+#    SET(AR "x86_64-w64-mingw32.static-ar")
+# ELSE()
+#     SET(AR ${CMAKE_AR})
+# ENDIF()
+SET(AR ${CMAKE_AR})
 
 ADD_CUSTOM_TARGET(ssc_static ALL
     COMMENT "Creates an archive that contains all static libraries"
     COMMAND ${CMAKE_COMMAND} -E remove -f libssc_static.a
-    COMMAND ${AR} crT libssc_static.a $<TARGET_FILE:ssc_static_no_deps> ${IPOPT_LIB_STATIC} ${websocketpp_LIBRARIES} && cat ${CMAKE_CURRENT_SOURCE_DIR}/convert_thin_archive_to_normal_one.mri | ar -M
+    COMMAND ${AR} crT libssc_static.a $<TARGET_FILE:ssc_static_no_deps> ${IPOPT_LIB_STATIC} ${websocketpp_LIBRARIES} && cat ${CMAKE_CURRENT_SOURCE_DIR}/convert_thin_archive_to_normal_one.mri | ${AR} -M
     )
 
 INSTALL(FILES ${CMAKE_BINARY_DIR}/libssc_static.a
@@ -307,11 +308,17 @@ INSTALL(TARGETS ${TEST_EXE}
     RUNTIME DESTINATION bin
 )
 
-IF(CMAKE_BUILD_TYPE_UPPER MATCHES COVERAGE)
-    INCLUDE(EnableCoverageReport)
-    ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
-                           FILTER boost eigen gmock lapack
-                                  /c/mingw/lib/gcc /usr/include)
+STRING(TOUPPER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_UPPER)
+# IF(${CMAKE_BUILD_TYPE_UPPER} MATCHES COVERAGE)
+#     INCLUDE(EnableCoverageReport)
+#     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
+#                            FILTER boost eigen gmock lapack
+#                                   /c/mingw/lib/gcc /usr/include)
+# ENDIF()
+IF(${CMAKE_BUILD_TYPE_UPPER} STREQUAL "COVERAGE")
+    MESSAGE(STATUS "Adding coverage")
+    FIND_PACKAGE(codecov)
+    add_coverage(${TEST_EXE})
 ENDIF()
 
 #############################################################################

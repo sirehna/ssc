@@ -74,16 +74,24 @@ TEST_F(SparseMatrixTests, should_throw_an_exception_when_adding_too_many_element
     EXPECT_THROW(A.add_element_in_row_order(idx+1,idx+1, a.random<double>()),ssc::exception_handling::Exception);
 }
 
-TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_indexes_and_all_column_indexes)
+TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_indexes_and_all_column_indexes_V1)
 {
     const size_t nb_of_values = a.random<size_t>().between(1,20);
     std::vector<size_t> idx = a.random_vector_of<size_t>().of_size(nb_of_values).greater_than(1).no().greater_than(400*nb_of_values);
     std::sort(idx.begin(), idx.end());
     SparseMatrix A(nb_of_values);
+    for (size_t i = 1 ; i < nb_of_values ; ++i)
+    {
+        idx.at(i) += idx.at(i - 1);
+    }
     for (size_t i = 0 ; i < nb_of_values ; ++i)
     {
         A.add_element_in_row_order(idx.at(i), idx.at(i), a.random<double>());
     }
+}
+
+TEST_F(SparseMatrixTests, should_be_able_to_retrieve_all_elements_all_line_indexes_and_all_column_indexes_V2)
+{
     SparseMatrix B(3);
     B.add_element_in_row_order(15, 9, 654);
     B.add_element_in_row_order(68, 620, 87654);

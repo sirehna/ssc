@@ -9,6 +9,29 @@
     #define NAN 0x7F800001
 #endif
 
+#if defined(__MINGW32__)
+    /*
+    With MinGW and GCC, isnan macro is creating some compilation problems
+
+    error: conversion to 'float' from 'int' may alter its value [-Werror=conversion]
+    if (isnan((float)min_bound))                                  return NAN;
+        ^
+    compilation terminated due to -Wfatal-errors.
+
+    To workaround this error, we use default isnan
+    macro
+
+    With GCC 6.1.0, this was fixed
+    URL related to this bug
+    https://sourceforge.net/p/mingw-w64/bugs/481/
+    https://github.com/cpputest/cpputest/issues/669
+    */
+    #undef isnan
+    #define isnan(x) (sizeof (x) == sizeof (float) ? __isnanf (x)   \
+                    : sizeof (x) == sizeof (double) ? __isnan (x) \
+                    : __isnanl (x))
+#endif
+
 #define NB_OF_TRIALS 100
 
 using namespace ssc::random_data_generator;
