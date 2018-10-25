@@ -20,28 +20,28 @@ matrix:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_deb8
         - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=gjacquenot/ssc_build
+        - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
         - BOOST_ROOT=/opt/boost
     - name: "Deb 8 coverage"
       env:
         - BUILD_TYPE=Coverage
         - BUILD_DIR=build_deb8
         - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=gjacquenot/ssc_build
+        - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
         - BOOST_ROOT=/opt/boost
     - name: "Deb 9 release"
       env:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_deb9
         - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=gjacquenot/ssc_build_debian9_gcc8
+        - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
         - BOOST_ROOT=/opt/boost
     - name: "Win Release cross compilation"
       env:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_win
         - CPACK_GENERATOR=ZIP
-        - DOCKER_IMAGE=gjacquenot/ssc_build_win64
+        - DOCKER_IMAGE=sirehna/base-image-win64-gcc540-win32threads
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
 
 before_install:
