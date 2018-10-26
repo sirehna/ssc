@@ -36,6 +36,13 @@ matrix:
         - CPACK_GENERATOR=DEB
         - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
         - BOOST_ROOT=/opt/boost
+    - name: "Centos 7.5 Gcc 485 release"
+      env:
+        - BUILD_TYPE=Release
+        - BUILD_DIR=build_centos75
+        - CPACK_GENERATOR=ZIP
+        - DOCKER_IMAGE=sirehna/base-image-centos75-gcc485
+        - BOOST_ROOT=/opt/boost
     - name: "Win Release cross compilation"
       env:
         - BUILD_TYPE=Release
