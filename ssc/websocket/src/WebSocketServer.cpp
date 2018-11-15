@@ -73,21 +73,21 @@ void create_server(WSServer& server, const std::string& address, const short uns
 {
     try
     {
-    server.set_reuse_addr(true);
-    // Set logging settings
-    server.set_access_channels(websocketpp::log::alevel::all);
-    server.clear_access_channels(websocketpp::log::alevel::frame_payload);
-    // Initialize ASIO
-    server.init_asio();
-    // Register our message handler
-    server.set_message_handler(std::bind(message_handler,&server,::_1,::_2));
-    // Listen on port
-    boost::asio::ip::tcp::endpoint ep(boost::asio::ip::address::from_string(address), port);
-    server.listen(ep);
-    // Start the server accept loop
-    server.start_accept();
-    // Start the ASIO io_service run loop
-    server.run();
+        server.set_reuse_addr(true);
+        // Set logging settings
+        server.set_access_channels(websocketpp::log::alevel::all);
+        server.clear_access_channels(websocketpp::log::alevel::frame_payload);
+        // Initialize ASIO
+        server.init_asio();
+        // Register our message handler
+        server.set_message_handler(std::bind(message_handler,&server,::_1,::_2));
+        // Listen on port
+        boost::asio::ip::tcp::endpoint ep(boost::asio::ip::address::from_string(address), port);
+        server.listen(ep);
+        // Start the server accept loop
+        server.start_accept();
+        // Start the ASIO io_service run loop
+        server.run();
     }
     catch (const websocketpp::exception& e)
     {
