@@ -71,6 +71,8 @@ Server::~Server()
 
 void create_server(WSServer& server, const std::string& address, const short unsigned int port, const InternalMessageHandler& message_handler)
 {
+    try
+    {
     server.set_reuse_addr(true);
     // Set logging settings
     server.set_access_channels(websocketpp::log::alevel::all);
@@ -86,4 +88,9 @@ void create_server(WSServer& server, const std::string& address, const short uns
     server.start_accept();
     // Start the ASIO io_service run loop
     server.run();
+    }
+    catch (const websocketpp::exception& e)
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::websocket::WebSocketException, "There was a problem establishing the websocket connexion: " << e.what() << std::endl);
+    }
 }
