@@ -27,8 +27,8 @@ namespace ssc
         class Server
         {
             public:
-                Server(MessageHandler& message_handler, const std::string& address, const short unsigned int port);
-                Server(const std::string& address, const short unsigned int port);
+                Server(MessageHandler& message_handler, const short unsigned int port);
+                Server(const short unsigned int port);
                 ~Server();
 
             private:
