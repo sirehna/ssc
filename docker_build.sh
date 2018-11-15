@@ -11,10 +11,8 @@ docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc \
           -DCMAKE_INSTALL_PREFIX:PATH=/opt/ssc \
           -DIPOPT_ROOT:PATH=/opt/CoinIpopt \
           -DBOOST_ROOT:PATH=/opt/boost \
-          /shared/ssc
-
-echo "Build package"
-docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ninja package
-
-echo "Run all tests"
-docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ./run_all_tests
+          /shared/ssc \
+&& echo "Build package" \
+&& docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ninja package \
+&& echo "Run all tests" \
+&& docker run --rm -v $(pwd):/shared -w /shared/ssc/build ssc ./run_all_tests
