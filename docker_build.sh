@@ -1,6 +1,6 @@
 #!/bin/sh
 
-docker build -f Dockerfile -t ssc .
+docker build -t ssc .
 
 mkdir -p ssc/build
 
