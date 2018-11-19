@@ -1,9 +1,12 @@
-.PHONY: all tests build cmake
+.PHONY: all build cmake package tests
 
-all: tests
+all: package
 
 tests: build
 	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ./run_all_tests
+
+package: tests
+	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ninja package
 
 build: cmake
 	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ninja run_all_tests \
