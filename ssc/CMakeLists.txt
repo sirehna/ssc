@@ -237,6 +237,7 @@ ADD_LIBRARY(ssc_static_no_deps STATIC
             $<TARGET_OBJECTS:yaml-cpp_object>
             $<TARGET_OBJECTS:f2c_object>
             $<TARGET_OBJECTS:Geographic_object>
+            $<TARGET_OBJECTS:json_object>
             )
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
