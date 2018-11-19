@@ -1,3 +1,4 @@
+#include "JSONException.hpp"
 #include "RapidJSON.hpp"
 
 using namespace ssc::json;
