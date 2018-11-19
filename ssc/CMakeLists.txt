@@ -196,6 +196,7 @@ add_libs(ipopt_interface
          EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
          EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
 add_headers(solver "${copyright}")
+add_headers(json "${copyright}")
 
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
