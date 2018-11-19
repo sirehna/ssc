@@ -9,6 +9,7 @@ build: cmake
 	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ninja run_all_tests \
 
 cmake:
+	mkdir -p ssc/build
 	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc \
 		cmake -Wno-dev \
 			  -G Ninja \
