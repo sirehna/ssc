@@ -22,12 +22,12 @@ double ssc::json::find_double(const std::string& key, const rapidjson::Value&  v
       }
       else
       {
-        THROW(__PRETTY_FUNCTION__, JSONException, key << " should be a double, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a double, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
       }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, JSONException, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return 0;
 }
@@ -45,12 +45,12 @@ int ssc::json::find_int(const std::string& key, const rapidjson::Value&  v)
       }
       else
       {
-        THROW(__PRETTY_FUNCTION__, JSONException, key << " should be a int, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a int, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
       }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, JSONException, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return 0;
 }
@@ -68,12 +68,12 @@ std::string ssc::json::find_string(const std::string& key, const rapidjson::Valu
       }
       else
       {
-        THROW(__PRETTY_FUNCTION__, JSONException, key << " should be a string, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a string, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
       }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, JSONException, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return "";
 }
@@ -91,7 +91,7 @@ void ssc::json::parse(const std::string& json, rapidjson::Document& document)
     const rapidjson::ParseResult result = document.Parse(json.c_str());
     if (!result)
     {
-      THROW(__PRETTY_FUNCTION__, JSONException, "JSON parse error: " << GetParseError_En(result.Code()) << " (offset " << result.Offset() << ") in string " << json);
+      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "JSON parse error: " << GetParseError_En(result.Code()) << " (offset " << result.Offset() << ") in input JSON '" << json << "'");
     }
 }
 
