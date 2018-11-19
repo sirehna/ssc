@@ -36,7 +36,7 @@ windows:
                         -DBOOST_LIBRARYDIR:PATH=/opt/boost/lib \
                         -DBoost_NO_SYSTEM_PATHS:BOOL=OFF \
                         -DBoost_LIBRARY_DIR_RELEASE:PATH=/opt/boost/lib \
-                        -DBoost_DEBUG=1 \
+                        -DBoost_DEBUG:BOOL=FALSE \
                         -DCOIN_BLAS:PATH=/opt/CoinIpopt/lib/libcoinblas.a \
                         -DCOIN_LAPACK:PATH=/opt/CoinIpopt/lib/libcoinlapack.a \
                         -DCOIN_MUMPS:PATH=/opt/CoinIpopt/lib/libcoinmumps.a \
