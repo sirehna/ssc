@@ -117,4 +117,5 @@ RUN git clone https://github.com/miloyip/rapidjson.git tmp \
  && git checkout v1.1.0 \
  && cd .. \
  && cp -r tmp/include/rapidjson rapidjson \
+ && mv rapidjson /usr/include \
  && rm -rf tmp
