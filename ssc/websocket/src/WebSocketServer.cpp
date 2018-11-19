@@ -30,7 +30,7 @@ typedef std::function<void(WSServer* , websocketpp::connection_hdl, message_ptr 
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-void create_server(WSServer& server, const std::string& address, const short unsigned int port, const InternalMessageHandler& message_handler);
+void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler);
 
 InternalMessageHandler get_lambda(MessageHandler& message_handler);
 InternalMessageHandler get_lambda(MessageHandler& message_handler)
@@ -44,10 +44,10 @@ InternalMessageHandler get_lambda(MessageHandler& message_handler)
                                                                  message_handler(Message(pimpl));};
 }
 
-Server::Server(MessageHandler& message_handler, const std::string& address, const short unsigned int port):
+Server::Server(MessageHandler& message_handler, const short unsigned int port):
         pimpl(new Impl())
 {
-    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler));
 }
 
 struct DoNothing : public MessageHandler
@@ -55,10 +55,10 @@ struct DoNothing : public MessageHandler
     void operator()(const Message&){}
 };
 
-Server::Server(const std::string& address, const short unsigned int port) : pimpl(new Impl())
+Server::Server(const short unsigned int port) : pimpl(new Impl())
 {
     DoNothing message_handler;
-    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), address, port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler));
 }
 
 
@@ -69,21 +69,27 @@ Server::~Server()
 }
 
 
-void create_server(WSServer& server, const std::string& address, const short unsigned int port, const InternalMessageHandler& message_handler)
+void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler)
 {
-    server.set_reuse_addr(true);
-    // Set logging settings
-    server.set_access_channels(websocketpp::log::alevel::all);
-    server.clear_access_channels(websocketpp::log::alevel::frame_payload);
-    // Initialize ASIO
-    server.init_asio();
-    // Register our message handler
-    server.set_message_handler(std::bind(message_handler,&server,::_1,::_2));
-    // Listen on port
-    boost::asio::ip::tcp::endpoint ep(boost::asio::ip::address::from_string(address), port);
-    server.listen(ep);
-    // Start the server accept loop
-    server.start_accept();
-    // Start the ASIO io_service run loop
-    server.run();
+    try
+    {
+        server.set_reuse_addr(true);
+        // Set logging settings
+        server.set_access_channels(websocketpp::log::alevel::all);
+        server.clear_access_channels(websocketpp::log::alevel::frame_payload);
+        // Initialize ASIO
+        server.init_asio();
+        // Register our message handler
+        server.set_message_handler(std::bind(message_handler,&server,::_1,::_2));
+        // Listen on port
+        server.listen(port);
+        // Start the server accept loop
+        server.start_accept();
+        // Start the ASIO io_service run loop
+        server.run();
+    }
+    catch (const websocketpp::exception& e)
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::websocket::WebSocketException, "There was a problem establishing the websocket connexion: " << e.what() << std::endl);
+    }
 }

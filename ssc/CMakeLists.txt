@@ -239,6 +239,7 @@ TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE gfortran)
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE quadmath) # Ipopt
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE -static-libgcc -static-libstdc++)
 IF(WIN32)
     TARGET_LINK_LIBRARIES(ssc_static_no_deps PUBLIC wsock32 ws2_32)
 ELSE()
