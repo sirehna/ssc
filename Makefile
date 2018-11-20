@@ -3,18 +3,18 @@
 all: package
 
 tests: build
-	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ./run_all_tests
+	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build_debian ssc ./run_all_tests
 
 package: tests
-	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ninja package
+	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build_debian ssc ninja package
 
 build: cmake
-	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc ninja run_all_tests \
+	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build_debian ssc ninja run_all_tests \
 
 cmake:
-	mkdir -p ssc/build
+	mkdir -p ssc/build_debian
 	docker build -t ssc .
-	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build ssc \
+	docker run --rm -v $(shell pwd):/shared -u $(shell id -u):$(shell id -g) -w /shared/ssc/build_debian ssc \
 		cmake -Wno-dev \
 			  -G Ninja \
 			  -DCMAKE_BUILD_TYPE=Debug \
@@ -24,12 +24,14 @@ cmake:
 			  /shared/ssc
 
 windows:
+	mkdir -p ssc/build_windows
 	docker run --rm -u $(shell id -u ):$(shell id -g )\
 		            -v $(shell pwd):/opt/share\
 					-w /opt/share\
 					mydockcross/windows-x64\
-					/bin/bash -c "mkdir -p /opt/share/.wine \
-					           && export WINEPREFIX=/opt/share/.wine\
+					/bin/bash -c "cd /opt/share/ssc/build_windows \
+					           && mkdir -p /opt/share/ssc/build_windows/.wine \
+					           && export WINEPREFIX=/opt/share/ssc/build_windows/.wine\
 							   && wine winecfg\
 							   && cmake -Wno-dev -G Ninja\
 							            -DCMAKE_BUILD_TYPE=Release\
@@ -54,16 +56,18 @@ windows:
 		            -v $(shell pwd):/opt/share\
 					-w /opt/share\
 					mydockcross/windows-x64\
-					/bin/bash -c "mkdir -p /opt/share/.wine\
-					           && export WINEPREFIX=/opt/share/.wine\
+					/bin/bash -c "cd /opt/share/ssc/build_windows \
+					           && mkdir -p /opt/share/ssc/build_windows/.wine\
+					           && export WINEPREFIX=/opt/share/ssc/build_windows/.wine\
 							   && wine winecfg\
 							   && ninja package"
 	docker run --rm -u $(shell id -u ):$(shell id -g )\
 		            -v $(shell pwd):/opt/share\
 					-w /opt/share\
 					mydockcross/windows-x64\
-					/bin/bash -c "mkdir -p /opt/share/.wine\
-					           && export WINEPREFIX=/opt/share/.wine\
+					/bin/bash -c "cd /opt/share/ssc/build_windows \
+					           && mkdir -p /opt/share/ssc/build_windows/.wine\
+					           && export WINEPREFIX=/opt/share/ssc/build_windows/.wine\
 							   && wine winecfg\
 							   && wine ./run_all_tests --gtest_filter=-WebSocketObserverTest*"
 
