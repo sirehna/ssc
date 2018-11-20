@@ -110,12 +110,3 @@ RUN gfortran --version && \
     cd .. && \
     cd .. && \
     rm -rf ipopt_src
-
-# RapidJSON
-RUN git clone https://github.com/miloyip/rapidjson.git tmp \
- && cd tmp \
- && git checkout v1.1.0 \
- && cd .. \
- && cp -r tmp/include/rapidjson rapidjson \
- && mv rapidjson /usr/include \
- && rm -rf tmp

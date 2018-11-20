@@ -196,10 +196,13 @@ add_libs(ipopt_interface
          EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
          EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
 add_headers(solver "${copyright}")
+
+
+
 add_libs(json "${copyright}"
          SSC_DEPENDENCIES exception_handling
          )
-
+INSTALL( DIRECTORY json/rapidjson DESTINATION include/ssc/json )
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
 SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY} ${Boost_CHRONO_LIBRARY})
