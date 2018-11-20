@@ -30,7 +30,7 @@ typedef std::function<void(WSServer* , websocketpp::connection_hdl, message_ptr 
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler);
+void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler, const bool verbose);
 
 InternalMessageHandler get_lambda(MessageHandler& message_handler);
 InternalMessageHandler get_lambda(MessageHandler& message_handler)
@@ -44,10 +44,10 @@ InternalMessageHandler get_lambda(MessageHandler& message_handler)
                                                                  message_handler(Message(pimpl));};
 }
 
-Server::Server(MessageHandler& message_handler, const short unsigned int port):
+Server::Server(MessageHandler& message_handler, const short unsigned int port, const bool verbose):
         pimpl(new Impl())
 {
-    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler), verbose);
 }
 
 struct DoNothing : public MessageHandler
@@ -55,10 +55,10 @@ struct DoNothing : public MessageHandler
     void operator()(const Message&){}
 };
 
-Server::Server(const short unsigned int port) : pimpl(new Impl())
+Server::Server(const short unsigned int port, const bool verbose) : pimpl(new Impl())
 {
     DoNothing message_handler;
-    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler));
+    pimpl->server_thread = websocketpp::lib::thread(create_server, std::ref(pimpl->server), port, get_lambda(message_handler), verbose);
 }
 
 
@@ -69,14 +69,17 @@ Server::~Server()
 }
 
 
-void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler)
+void create_server(WSServer& server, const short unsigned int port, const InternalMessageHandler& message_handler, const bool verbose)
 {
     try
     {
         server.set_reuse_addr(true);
         // Set logging settings
-        server.set_access_channels(websocketpp::log::alevel::all);
-        server.clear_access_channels(websocketpp::log::alevel::frame_payload);
+        server.clear_access_channels(websocketpp::log::alevel::all);
+        if (verbose)
+        {
+            server.set_access_channels(websocketpp::log::alevel::all);
+        }
         // Initialize ASIO
         server.init_asio();
         // Register our message handler
