@@ -12,6 +12,10 @@ std::string ssc::json::print_type(const rapidjson::Value&  v)
 
 double ssc::json::find_double(const std::string& key, const rapidjson::Value&  v)
 {
+    if (not(v.IsObject()))
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Cannot find key '" << key << "' because the part of the JSON we're looking at is not an object: it's a " << print_type(v) << ". The JSON we're looking at was: " << dump(v));
+    }
     static const char* kTypeNames[] =
           { "Null", "False", "True", "Object", "Array", "String", "Number" };
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
@@ -35,6 +39,10 @@ double ssc::json::find_double(const std::string& key, const rapidjson::Value&  v
 
 int ssc::json::find_int(const std::string& key, const rapidjson::Value&  v)
 {
+    if (not(v.IsObject()))
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Cannot find key '" << key << "' because the part of the JSON we're looking at is not an object: it's a " << print_type(v) << ". The JSON we're looking at was: " << dump(v));
+    }
     static const char* kTypeNames[] =
           { "Null", "False", "True", "Object", "Array", "String", "Number" };
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
@@ -58,6 +66,10 @@ int ssc::json::find_int(const std::string& key, const rapidjson::Value&  v)
 
 std::string ssc::json::find_string(const std::string& key, const rapidjson::Value&  v)
 {
+    if (not(v.IsObject()))
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Cannot find key '" << key << "' because the part of the JSON we're looking at is not an object: it's a " << print_type(v) << ". The JSON we're looking at was: " << dump(v));
+    }
     static const char* kTypeNames[] =
           { "Null", "False", "True", "Object", "Array", "String", "Number" };
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
@@ -98,6 +110,10 @@ void ssc::json::parse(const std::string& json, rapidjson::Document& document)
 
 double ssc::json::find_optional_double(const std::string& key, const rapidjson::Value&  v, const double default_value)
 {
+    if (not(v.IsObject()))
+    {
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Cannot find key '" << key << "' because the part of the JSON we're looking at is not an object: it's a " << print_type(v) << ". The JSON we're looking at was: " << dump(v));
+    }
     if (v.HasMember(key.c_str()))
     {
         return find_double(key, v);
