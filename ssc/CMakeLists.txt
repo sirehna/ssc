@@ -197,6 +197,12 @@ add_libs(ipopt_interface
          EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
 add_headers(solver "${copyright}")
 
+
+
+add_libs(json "${copyright}"
+         SSC_DEPENDENCIES exception_handling
+         )
+INSTALL( DIRECTORY json/rapidjson DESTINATION include/ssc/json )
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
 SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY} ${Boost_CHRONO_LIBRARY})
@@ -234,6 +240,7 @@ ADD_LIBRARY(ssc_static_no_deps STATIC
             $<TARGET_OBJECTS:yaml-cpp_object>
             $<TARGET_OBJECTS:f2c_object>
             $<TARGET_OBJECTS:Geographic_object>
+            $<TARGET_OBJECTS:json_object>
             )
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
