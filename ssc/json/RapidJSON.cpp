@@ -1,5 +1,9 @@
-#include "JSONException.hpp"
 #include "RapidJSON.hpp"
+#include "JSONException.hpp"
+#include "rapidjson/error/en.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+
 
 using namespace ssc::json;
 
