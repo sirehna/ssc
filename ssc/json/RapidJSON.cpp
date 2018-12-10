@@ -1,16 +1,20 @@
-#include "JSONException.hpp"
 #include "RapidJSON.hpp"
+#include "JSONException.hpp"
+#include "rapidjson/error/en.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+
 
 using namespace ssc::json;
 
-std::string ssc::json::print_type(const rapidjson::Value&  v)
+std::string ssc::json::print_type(const rapidjson::Value& v)
 {
     static const char* kTypeNames[] =
           { "Null", "False", "True", "Object", "Array", "String", "Number" };
     return kTypeNames[v.GetType()];
 }
 
-double ssc::json::find_double(const std::string& key, const rapidjson::Value&  v)
+double ssc::json::find_double(const std::string& key, const rapidjson::Value& v)
 {
     if (not(v.IsObject()))
     {
@@ -21,23 +25,23 @@ double ssc::json::find_double(const std::string& key, const rapidjson::Value&  v
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
     if (itr != v.MemberEnd())
     {
-      if (itr->value.IsDouble() || itr->value.IsNumber())
-      {
-        return itr->value.GetDouble();
-      }
-      else
-      {
-        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a double, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
-      }
+        if (itr->value.IsDouble() || itr->value.IsNumber())
+        {
+            return itr->value.GetDouble();
+        }
+        else
+        {
+            THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a double, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return 0;
 }
 
-int ssc::json::find_int(const std::string& key, const rapidjson::Value&  v)
+int ssc::json::find_int(const std::string& key, const rapidjson::Value& v)
 {
     if (not(v.IsObject()))
     {
@@ -48,23 +52,23 @@ int ssc::json::find_int(const std::string& key, const rapidjson::Value&  v)
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
     if (itr != v.MemberEnd())
     {
-      if (itr->value.IsInt())
-      {
-        return itr->value.GetInt();
-      }
-      else
-      {
-        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a int, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
-      }
+        if (itr->value.IsInt())
+        {
+            return itr->value.GetInt();
+        }
+        else
+        {
+            THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a int, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return 0;
 }
 
-std::string ssc::json::find_string(const std::string& key, const rapidjson::Value&  v)
+std::string ssc::json::find_string(const std::string& key, const rapidjson::Value& v)
 {
     if (not(v.IsObject()))
     {
@@ -75,18 +79,18 @@ std::string ssc::json::find_string(const std::string& key, const rapidjson::Valu
     rapidjson::Value::ConstMemberIterator itr = v.FindMember(key.c_str());
     if (itr != v.MemberEnd())
     {
-      if (itr->value.IsString())
-      {
-        return itr->value.GetString();
-      }
-      else
-      {
-        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a string, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
-      }
+        if (itr->value.IsString())
+        {
+            return itr->value.GetString();
+        }
+        else
+        {
+            THROW(__PRETTY_FUNCTION__, ssc::json::Exception, key << " should be a string, but it's a " << kTypeNames[itr->value.GetType()] << " in input JSON '" << dump(v) << "'");
+        }
     }
     else
     {
-      THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
+        THROW(__PRETTY_FUNCTION__, ssc::json::Exception, "Could not find key '" << key << "' in input JSON '" << dump(v) << "'");
     }
     return "";
 }
@@ -108,7 +112,7 @@ void ssc::json::parse(const std::string& json, rapidjson::Document& document)
     }
 }
 
-double ssc::json::find_optional_double(const std::string& key, const rapidjson::Value&  v, const double default_value)
+double ssc::json::find_optional_double(const std::string& key, const rapidjson::Value& v, const double default_value)
 {
     if (not(v.IsObject()))
     {

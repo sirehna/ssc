@@ -1,7 +1,7 @@
-cmake_minimum_required (VERSION 2.6)
-project (json)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+PROJECT(json)
 
-set(SRC RapidJSON.cpp)
+SET(SRC RapidJSON.cpp)
 
-include_directories(${SSC_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${SSC_INCLUDE_DIRS})
 ADD_LIBRARY(${PROJECT_NAME}_object OBJECT ${SRC})
