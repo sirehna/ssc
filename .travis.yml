@@ -171,7 +171,7 @@ after_success:
 # https://docs.travis-ci.com/user/deployment
 # https://docs.travis-ci.com/user/deployment#conditional-releases-with-on
 before_deploy:
-- ls -altr ssc_binary_*;
+- ls -altr ssc_binary_* || true;
 # - ls -altr ssc_binary_debian8_amd64.deb;
 # - ls -altr ssc_binary_windows_64.zip;
 deploy:
