@@ -29,10 +29,10 @@ matrix:
         - CPACK_GENERATOR=DEB
         - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
         - BOOST_ROOT=/opt/boost
-    - name: "Debian 9 release"
+    - name: "Debian 9 release GCC8"
       env:
         - BUILD_TYPE=Release
-        - BUILD_DIR=build_deb9
+        - BUILD_DIR=build_deb9_gcc8
         - CPACK_GENERATOR=DEB
         - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
         - BOOST_ROOT=/opt/boost
@@ -152,12 +152,12 @@ after_success:
   shasum -a256 ssc/$BUILD_DIR/ssc.deb;
   cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian8_amd64.deb;
   fi
-- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb9" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb9_gcc8" ];
   then
   echo "Fetching generated deb";
   ls -altr ssc/$BUILD_DIR/ssc.deb;
   shasum -a256 ssc/$BUILD_DIR/ssc.deb;
-  cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian9_amd64.deb;
+  cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian9_gcc8_amd64.deb;
   fi
 - if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
   then
@@ -184,6 +184,7 @@ deploy:
     - ssc_binary_*
   #file:
   #  - ssc_binary_debian8_amd64.deb
+  #  - ssc_binary_debian9_amd64.deb
   #  - ssc_binary_windows_64.zip
   on:
     tags: true
