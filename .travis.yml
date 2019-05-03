@@ -15,20 +15,20 @@ env:
   - secure: "NsDSu4SvdqoWVGjSySY8RzUSZq3HUcx7EhJrycgqoOXcFHoGxL3eejthqQGdjgJEuwnQrCDAIPr3pBBWqS9Yb/LWMx62Rhjpsdc+P/1raytZY35zn9gBhW7/6O6kgkKqEbVs3q6ILsU1WTgpn4lDHkVxz/u5KnEu5O2yyP9s0zLTEsooXx4/Q3RQfKZ1FWDtdQYLlnsHn7WsIRhUldFYu2sucBSs72LgSUsZ/A8nrD6LsqT6rpFSpIFofPiXntCDjnD9W4vzBtxUa7Dd8gT3iG4Btnp4CtJ9wfAnYr+sWLR46AB4TZ1u3qlUKh9YorL+HzHV1h/1aMbTUpOiEB7Prdxb7yx08mvIlvgisELdpFGLj3KoKzOS5zOZgRuPnoFi4ukKPZpIsFcXceFuksyVVpZ3yJHJNDWLR+oE1cRh1shc1l5/ljaaeIIdoO+Si41PygFC8xn7hHQyjDMHKH1E8RKF55d0lDAvHvQi0bRMycsSz3ik2zYez5CZOzsvwzBW2vJXPgCUSPjq5BGlOcwerT9yfivZVhZR3RF6MLaeQx+vZZURQn+fNCgY1f4EySfmzn26vFtgHMPcdSwVmOiewhcmKmYE3QMmoBxAUAbK2IwgjcSh3szQFLOQ1SOGxI1hLn8uFYZvNFUIFs0hTXfJyw5pmnSe2bzcQLxtE5llUSc="
 matrix:
   include:
-    - name: "Debian 8 release"
-      env:
-        - BUILD_TYPE=Release
-        - BUILD_DIR=build_deb8
-        - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
-        - BOOST_ROOT=/opt/boost
-    - name: "Debian 8 coverage"
-      env:
-        - BUILD_TYPE=Coverage
-        - BUILD_DIR=build_deb8
-        - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
-        - BOOST_ROOT=/opt/boost
+    #- name: "Debian 8 release"
+    #  env:
+    #    - BUILD_TYPE=Release
+    #    - BUILD_DIR=build_deb8
+    #    - CPACK_GENERATOR=DEB
+    #    - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
+    #    - BOOST_ROOT=/opt/boost
+    #- name: "Debian 8 coverage"
+    #  env:
+    #    - BUILD_TYPE=Coverage
+    #    - BUILD_DIR=build_deb8
+    #    - CPACK_GENERATOR=DEB
+    #    - DOCKER_IMAGE=sirehna/base-image-debian8-gcc492
+    #    - BOOST_ROOT=/opt/boost
     - name: "Debian 9 release"
       env:
         - BUILD_TYPE=Release
@@ -36,13 +36,13 @@ matrix:
         - CPACK_GENERATOR=DEB
         - DOCKER_IMAGE=sirehna/base-image-debian9-gcc6
         - BOOST_ROOT=/opt/boost
-    - name: "Debian 9 release GCC8"
-      env:
-        - BUILD_TYPE=Release
-        - BUILD_DIR=build_deb9_gcc8
-        - CPACK_GENERATOR=DEB
-        - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
-        - BOOST_ROOT=/opt/boost
+    #- name: "Debian 9 release GCC8"
+    #  env:
+    #    - BUILD_TYPE=Release
+    #    - BUILD_DIR=build_deb9_gcc8
+    #    - CPACK_GENERATOR=DEB
+    #    - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
+    #    - BOOST_ROOT=/opt/boost
     - name: "Centos 7.5 Gcc 485 release"
       env:
         - BUILD_TYPE=Release
