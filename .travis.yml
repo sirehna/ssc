@@ -50,13 +50,20 @@ matrix:
         - CPACK_GENERATOR=ZIP
         - DOCKER_IMAGE=sirehna/base-image-centos75-gcc485
         - BOOST_ROOT=/opt/boost
-    - name: "Windows cross compilation Gcc 5.4.0 release"
+    - name: "Windows cross compilation Gcc 5 Win32Threads release"
       env:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_win
         - CPACK_GENERATOR=ZIP
         - DOCKER_IMAGE=sirehna/base-image-win64-gccx-win32threads-ssc-xdyn
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
+    - name: "Windows cross compilation Gcc 5 Posix release"
+      env:
+        - BUILD_TYPE=Release
+        - BUILD_DIR=build_win
+        - CPACK_GENERATOR=ZIP
+        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-posixthreads-ssc-xdyn
+        - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static.posix
 
 before_install:
   - docker pull $DOCKER_IMAGE || true
