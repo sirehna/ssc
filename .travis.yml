@@ -55,7 +55,7 @@ matrix:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_win
         - CPACK_GENERATOR=ZIP
-        - DOCKER_IMAGE=sirehna/base-image-win64-gcc540-win32threads
+        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-win32threads-ssc-xdyn
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
 
 before_install:
