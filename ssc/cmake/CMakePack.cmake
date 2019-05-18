@@ -102,12 +102,15 @@ IF(UNIX OR MINGW)
     INCLUDE(CPack)
 ENDIF()
 
-SET(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
-INSTALL(EXPORT ${PROJECT_NAME}Targets
-    FILE ${PROJECT_NAME}Targets.cmake
-    DESTINATION ${ConfigPackageLocation}
-)
-INSTALL(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-    DESTINATION ${ConfigPackageLocation}
-)
+IF(TARGET ${PROJECT_NAME}Targets)
+    SET(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
+    INSTALL(
+        EXPORT ${PROJECT_NAME}Targets
+        FILE ${PROJECT_NAME}Targets.cmake
+        DESTINATION ${ConfigPackageLocation}
+    )
+    INSTALL(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+        DESTINATION ${ConfigPackageLocation}
+        )
+ENDIF()
