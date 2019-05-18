@@ -219,8 +219,8 @@ IF(MINGW)
         EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ELSE()
     add_libs(websocket
-            SSC_DEPENDENCIES exception_handling
-            EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
+        SSC_DEPENDENCIES exception_handling
+        EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
 ENDIF()
 
 MESSAGE(STATUS "Configuring static library ${name}")
