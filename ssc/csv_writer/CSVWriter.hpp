@@ -1,8 +1,8 @@
 #ifndef __CSVWRITER__
 #define __CSVWRITER__
 
-#include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace ssc

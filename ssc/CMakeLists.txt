@@ -3,6 +3,8 @@ PROJECT(ssc)
 
 SET(CMAKE_VERBOSE_MAKEFILE OFF)
 
+OPTION(CREATE_INDIVIDUAL_LIBRARIES "Boolean used to build xdyn documentation" ON)
+
 #############################################################################
 # CMake utilities
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -79,7 +81,7 @@ get_short_git_hash(short_hash)
 write_sha_checker(${short_hash} ${GIT_SHA1} ${${PROJECT_NAME}_MAJOR_VERSION} ${${PROJECT_NAME}_MINOR_VERSION} "check_ssc_version.hpp")
 
 # Configure the package
-IF(WIN32)
+IF(MINGW)
     SET(ssc_INCLUDE_DIRS "\${CMAKE_CURRENT_LIST_DIR}/../../../include")
 ELSE()
     SET(ssc_INCLUDE_DIRS ${CMAKE_INSTALL_PREFIX}/include)
@@ -114,7 +116,7 @@ IF(WIN32)
     ENDIF()
 ENDIF()
 MESSAGE(STATUS "BOOST_ROOT : ${BOOST_ROOT}")
-SET(Boost_USE_STATIC_LIBS        ON)
+SET(Boost_USE_STATIC_LIBS       ON)
 SET(Boost_USE_MULTITHREADED     ON)
 #SET(Boost_USE_MULTITHREADED     OFF)
 #SET(Boost_USE_STATIC_RUNTIME   OFF)
@@ -126,9 +128,11 @@ ENDIF()
 
 SET(YAML_SKIP_INSTALL ON)
 ADD_SUBDIRECTORY(yaml-cpp)
-SET(YAML_CPP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/src
-                          ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include
-                          ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include/yaml-cpp)
+SET(YAML_CPP_INCLUDE_DIRS
+    ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include/yaml-cpp
+    )
 
 SET(eigen_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/eigen)
 # Cf. http://eigen.tuxfamily.org/dox-devel/group__TopicUnalignedArrayAssert.html
@@ -153,112 +157,152 @@ FIND_PACKAGE(IPOPT REQUIRED)
 # Compilation part
 INCLUDE(CMakeCompilationOptions)
 
-# Define libraries
-get_copyright(copyright)
-add_headers(macros "${copyright}")
-add_headers(pimpl_idiom "${copyright}")
-add_libs(random_data_generator)
-add_libs(exception_handling)
-add_libs(decode_unit)
-add_libs(yaml_parser
-         SSC_DEPENDENCIES decode_unit
-         OBJECTS_DEPENDENCIES yaml-cpp_object)
-add_libs(text_file_reader
-         SSC_DEPENDENCIES exception_handling)
-
-add_libs(integrate
-         SSC_DEPENDENCIES exception_handling
-         OBJECTS_DEPENDENCIES f2c_object)
-
-add_libs(numeric)
-add_libs(data_source
-         SSC_DEPENDENCIES exception_handling numeric)
-add_libs(kinematics
-         SSC_DEPENDENCIES exception_handling data_source)
-add_libs(interpolation
-         SSC_DEPENDENCIES exception_handling
-         OBJECTS_DEPENDENCIES f2c_object)
-add_libs(geometry
-         OBJECTS_DEPENDENCIES Geographic_object
-         SSC_DEPENDENCIES exception_handling interpolation)
-add_libs(csv_file_reader
-         SSC_DEPENDENCIES exception_handling)
-add_libs(csv_writer
-         SSC_DEPENDENCIES exception_handling)
-add_libs(matrix_and_vector_classes
-         SSC_DEPENDENCIES exception_handling)
-add_libs(functors_for_optimizer
-         SSC_DEPENDENCIES exception_handling interpolation)
-add_libs(optimizer
-         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
-add_libs(ipopt_interface
-         SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes optimizer
-         EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
-         EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
-add_headers(solver "${copyright}")
-
-
-
-add_libs(json "${copyright}"
-         SSC_DEPENDENCIES exception_handling
-         )
-INSTALL( DIRECTORY json/rapidjson DESTINATION include/ssc/json )
 SET(websocketpp_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/websocketpp)
 
-SET(websocketpp_LIBRARIES ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_RANDOM_LIBRARY} ${Boost_CHRONO_LIBRARY})
-IF(WIN32)
-    add_libs(websocket
+SET(websocketpp_LIBRARIES
+    ${Boost_SYSTEM_LIBRARY}
+    ${Boost_THREAD_LIBRARY}
+    ${Boost_RANDOM_LIBRARY}
+    ${Boost_CHRONO_LIBRARY}
+    )
+
+INSTALL( DIRECTORY json/rapidjson DESTINATION include/ssc/json )
+
+
+# Define libraries
+get_copyright(copyright)
+IF(CREATE_INDIVIDUAL_LIBRARIES)
+    add_headers(macros "${copyright}")
+    add_headers(pimpl_idiom "${copyright}")
+    add_libs(random_data_generator)
+    add_libs(exception_handling)
+    add_libs(decode_unit)
+    add_libs(yaml_parser
+            SSC_DEPENDENCIES decode_unit
+            OBJECTS_DEPENDENCIES yaml-cpp_object)
+    add_libs(text_file_reader
+            SSC_DEPENDENCIES exception_handling)
+
+    add_libs(integrate
+            SSC_DEPENDENCIES exception_handling
+            OBJECTS_DEPENDENCIES f2c_object)
+
+    add_libs(numeric)
+    add_libs(data_source
+            SSC_DEPENDENCIES exception_handling numeric)
+    add_libs(kinematics
+            SSC_DEPENDENCIES exception_handling data_source)
+    add_libs(interpolation
+            SSC_DEPENDENCIES exception_handling
+            OBJECTS_DEPENDENCIES f2c_object)
+    add_libs(geometry
+            OBJECTS_DEPENDENCIES Geographic_object
+            SSC_DEPENDENCIES exception_handling interpolation)
+    add_libs(csv_file_reader
+            SSC_DEPENDENCIES exception_handling)
+    add_libs(csv_writer
+            SSC_DEPENDENCIES exception_handling)
+    add_libs(matrix_and_vector_classes
+            SSC_DEPENDENCIES exception_handling)
+    add_libs(functors_for_optimizer
+            SSC_DEPENDENCIES exception_handling interpolation)
+    add_libs(optimizer
+            SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes)
+    add_libs(ipopt_interface
+            SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes optimizer
+            EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
+            EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
+    add_headers(solver "${copyright}")
+
+    add_libs(json "${copyright}"
+            SSC_DEPENDENCIES exception_handling
+            )
+
+    IF(MINGW)
+        add_libs(websocket
             SSC_DEPENDENCIES exception_handling
             EXTERNAL_DEPENDENCIES wsock32 ws2_32
             EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
+    ELSE()
+        add_libs(websocket
+            SSC_DEPENDENCIES exception_handling
+            EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
+    ENDIF()
+
+    INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION include
+        )
+
 ELSE()
-    add_libs(websocket
-             SSC_DEPENDENCIES exception_handling
-             EXTERNAL_DEPENDENCIES_STATIC ${websocketpp_LIBRARIES})
+    add_headers(macros "${copyright}")
+    add_headers(pimpl_idiom "${copyright}")
+    add_headers(random_data_generator "${copyright}")
+    add_headers(exception_handling "${copyright}")
+    add_headers(decode_unit "${copyright}")
+    add_headers(yaml_parser "${copyright}")
+    add_headers(text_file_reader "${copyright}")
+    add_headers(integrate "${copyright}")
+    add_headers(numeric "${copyright}")
+    add_headers(data_source "${copyright}")
+    add_headers(kinematics "${copyright}")
+    add_headers(interpolation "${copyright}")
+    add_headers(geometry "${copyright}")
+    add_headers(csv_file_reader "${copyright}")
+    add_headers(csv_writer "${copyright}")
+    add_headers(matrix_and_vector_classes "${copyright}")
+    add_headers(functors_for_optimizer "${copyright}")
+    add_headers(optimizer "${copyright}")
+    add_headers(ipopt_interface "${copyright}")
+    add_headers(solver "${copyright}")
+    add_headers(json "${copyright}")
+    add_headers(websocket "${copyright}")
 ENDIF()
+
 
 MESSAGE(STATUS "Configuring static library ${name}")
 ADD_LIBRARY(ssc_static_no_deps STATIC
-            $<TARGET_OBJECTS:random_data_generator_object>
-            $<TARGET_OBJECTS:exception_handling_object>
-            $<TARGET_OBJECTS:decode_unit_object>
-            $<TARGET_OBJECTS:yaml_parser_object>
-            $<TARGET_OBJECTS:text_file_reader_object>
-            $<TARGET_OBJECTS:integrate_object>
-            $<TARGET_OBJECTS:numeric_object>
-            $<TARGET_OBJECTS:data_source_object>
-            $<TARGET_OBJECTS:kinematics_object>
-            $<TARGET_OBJECTS:interpolation_object>
-            $<TARGET_OBJECTS:geometry_object>
-            $<TARGET_OBJECTS:csv_file_reader_object>
-            $<TARGET_OBJECTS:csv_writer_object>
-            $<TARGET_OBJECTS:matrix_and_vector_classes_object>
-            $<TARGET_OBJECTS:functors_for_optimizer_object>
-            $<TARGET_OBJECTS:optimizer_object>
-            $<TARGET_OBJECTS:ipopt_interface_object>
-            $<TARGET_OBJECTS:websocket_object>
-            $<TARGET_OBJECTS:yaml-cpp_object>
-            $<TARGET_OBJECTS:f2c_object>
-            $<TARGET_OBJECTS:Geographic_object>
-            $<TARGET_OBJECTS:json_object>
-            )
-TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${IPOPT_LIB_STATIC})
-TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE ${websocketpp_LIBRARIES})
-TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE gfortran)
-TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE quadmath) # Ipopt
-TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE -static-libgcc -static-libstdc++)
-IF(WIN32)
+    $<TARGET_OBJECTS:random_data_generator_object>
+    $<TARGET_OBJECTS:exception_handling_object>
+    $<TARGET_OBJECTS:decode_unit_object>
+    $<TARGET_OBJECTS:yaml_parser_object>
+    $<TARGET_OBJECTS:text_file_reader_object>
+    $<TARGET_OBJECTS:integrate_object>
+    $<TARGET_OBJECTS:numeric_object>
+    $<TARGET_OBJECTS:data_source_object>
+    $<TARGET_OBJECTS:kinematics_object>
+    $<TARGET_OBJECTS:interpolation_object>
+    $<TARGET_OBJECTS:geometry_object>
+    $<TARGET_OBJECTS:csv_file_reader_object>
+    $<TARGET_OBJECTS:csv_writer_object>
+    $<TARGET_OBJECTS:matrix_and_vector_classes_object>
+    $<TARGET_OBJECTS:functors_for_optimizer_object>
+    $<TARGET_OBJECTS:optimizer_object>
+    $<TARGET_OBJECTS:ipopt_interface_object>
+    $<TARGET_OBJECTS:websocket_object>
+    $<TARGET_OBJECTS:yaml-cpp_object>
+    $<TARGET_OBJECTS:f2c_object>
+    $<TARGET_OBJECTS:Geographic_object>
+    $<TARGET_OBJECTS:json_object>
+    )
+
+TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE
+    ${IPOPT_LIB_STATIC}
+    ${websocketpp_LIBRARIES}
+    gfortran
+    quadmath # Ipopt
+    -static-libgcc
+    -static-libstdc++
+    )
+
+IF(MINGW)
     TARGET_LINK_LIBRARIES(ssc_static_no_deps PUBLIC wsock32 ws2_32)
 ELSE()
     TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE dl) # Ipopt
 ENDIF()
 
-# IF(WIN32)
-#     MESSAGE("x86_64-w64-mingw32.static-ar")
-#    SET(AR "x86_64-w64-mingw32.static-ar")
-# ELSE()
-#     SET(AR ${CMAKE_AR})
-# ENDIF()
 SET(AR ${CMAKE_AR})
 
 ADD_CUSTOM_TARGET(ssc_static ALL
@@ -271,40 +315,34 @@ INSTALL(FILES ${CMAKE_BINARY_DIR}/libssc_static.a
         DESTINATION ${LIBRARY_OUTPUT_DIRECTORY}
         COMPONENT ssc)
 
-INSTALL(TARGETS ${ALL_SSC_TARGETS} EXPORT ${PROJECT_NAME}Targets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
-)
-
 SET(TEST_EXE run_all_tests)
 
 ADD_EXECUTABLE(${TEST_EXE}
-        $<TARGET_OBJECTS:random_data_generator_tests>
-        $<TARGET_OBJECTS:data_source_tests>
-        $<TARGET_OBJECTS:solver_tests>
-        $<TARGET_OBJECTS:integrate_tests>
-        $<TARGET_OBJECTS:text_file_reader_tests>
-        $<TARGET_OBJECTS:kinematics_tests>
-        $<TARGET_OBJECTS:numeric_tests>
-        $<TARGET_OBJECTS:csv_file_reader_tests>
-        $<TARGET_OBJECTS:csv_writer_tests>
-        $<TARGET_OBJECTS:interpolation_tests>
-        $<TARGET_OBJECTS:functors_for_optimizer_tests>
-        $<TARGET_OBJECTS:geometry_tests>
-        $<TARGET_OBJECTS:matrix_and_vector_classes_tests>
-        $<TARGET_OBJECTS:optimizer_tests>
-        $<TARGET_OBJECTS:websocket_tests>
-        $<TARGET_OBJECTS:ipopt_interface_tests>
-        )
+    $<TARGET_OBJECTS:random_data_generator_tests>
+    $<TARGET_OBJECTS:data_source_tests>
+    $<TARGET_OBJECTS:solver_tests>
+    $<TARGET_OBJECTS:integrate_tests>
+    $<TARGET_OBJECTS:text_file_reader_tests>
+    $<TARGET_OBJECTS:kinematics_tests>
+    $<TARGET_OBJECTS:numeric_tests>
+    $<TARGET_OBJECTS:csv_file_reader_tests>
+    $<TARGET_OBJECTS:csv_writer_tests>
+    $<TARGET_OBJECTS:interpolation_tests>
+    $<TARGET_OBJECTS:functors_for_optimizer_tests>
+    $<TARGET_OBJECTS:geometry_tests>
+    $<TARGET_OBJECTS:matrix_and_vector_classes_tests>
+    $<TARGET_OBJECTS:optimizer_tests>
+    $<TARGET_OBJECTS:websocket_tests>
+    $<TARGET_OBJECTS:ipopt_interface_tests>
+    )
 
 TARGET_LINK_LIBRARIES(${TEST_EXE}
-        gtest gtest_main
-        gmock gmock_main
-        ssc_static_no_deps
-        )
-IF (WIN32)
+    gtest gtest_main
+    gmock gmock_main
+    ssc_static_no_deps
+    )
+
+IF (MINGW)
     TARGET_LINK_LIBRARIES(${TEST_EXE} wsock32 ws2_32)
 ELSE()
     TARGET_LINK_LIBRARIES(${TEST_EXE} rt)
@@ -317,12 +355,6 @@ INSTALL(TARGETS ${TEST_EXE}
 )
 
 STRING(TOUPPER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_UPPER)
-# IF(${CMAKE_BUILD_TYPE_UPPER} MATCHES COVERAGE)
-#     INCLUDE(EnableCoverageReport)
-#     ENABLE_COVERAGE_REPORT(TARGETS ${TEST_EXE}
-#                            FILTER boost eigen gmock lapack
-#                                   /c/mingw/lib/gcc /usr/include)
-# ENDIF()
 IF(${CMAKE_BUILD_TYPE_UPPER} STREQUAL "COVERAGE")
     MESSAGE(STATUS "Adding coverage")
     FIND_PACKAGE(codecov)
