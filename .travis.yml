@@ -58,15 +58,15 @@ matrix:
     - name: "Windows cross compilation Gcc 5 Win32Threads release"
       env:
         - BUILD_TYPE=Release
-        - BUILD_DIR=build_win
+        - BUILD_DIR=build_win32threads
         - CPACK_GENERATOR=ZIP
         - DOCKER_IMAGE=sirehna/base-image-win64-gccx-win32threads
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
         - CREATE_INDIVIDUAL_LIBRARIES=FALSE
-    - name: "Windows cross compilation Gcc 5 Posix release"
+    - name: "Windows cross compilation Gcc 5 PosixThreads release"
       env:
         - BUILD_TYPE=Release
-        - BUILD_DIR=build_win
+        - BUILD_DIR=build_posixthreads
         - CPACK_GENERATOR=ZIP
         - DOCKER_IMAGE=sirehna/base-image-win64-gccx-posixthreads
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static.posix
@@ -108,7 +108,7 @@ script:
         cd /opt/share/ssc &&
         mkdir -p $BUILD_DIR &&
         cd $BUILD_DIR &&
-        if [[ $BUILD_DIR == build_win ]];
+        if [ $BUILD_DIR == \"build_win32threads\" ] || [ $BUILD_DIR == \"build_posixthreads\" ];
         then
         mkdir /opt/share/.wine;
         export WINEPREFIX=/opt/share/.wine;
@@ -135,7 +135,7 @@ script:
           -DIPOPT_LIB_DYNAMIC=\"gfortran;gcc;quadmath;m\"
           /opt/share/ssc &&
         ninja package &&
-        if [[ $BUILD_DIR == build_win ]];
+        if [ $BUILD_DIR == \"build_win32threads\" ] || [ $BUILD_DIR == \"build_posixthreads\" ];
         then
         wine ./run_all_tests --gtest_filter=-WebSocketObserverTest*;
         else
@@ -188,12 +188,19 @@ after_success:
   shasum -a256 ssc/$BUILD_DIR/ssc.deb;
   cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian9_gcc8_amd64.deb;
   fi
-- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win" ];
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win32threads" ];
   then
   echo "Fetching generated zip";
-  ls -altr ssc/build_win/ssc.zip;
-  shasum -a256 ssc/build_win/ssc.zip;
-  cp ssc/build_win/ssc.zip ssc_binary_windows_64.zip;
+  ls -altr ssc/build_win32threads/ssc.zip;
+  shasum -a256 ssc/build_win32threads/ssc.zip;
+  cp ssc/build_win32threads/ssc.zip ssc_binary_windows_64_win32threads.zip;
+  fi
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_posixthreads" ];
+  then
+  echo "Fetching generated zip";
+  ls -altr ssc/build_posixthreads/ssc.zip;
+  shasum -a256 ssc/build_posixthreads/ssc.zip;
+  cp ssc/build_posixthreads/ssc.zip ssc_binary_windows_64_posixthreads.zip;
   fi
 
 # travis setup releases
