@@ -60,7 +60,7 @@ matrix:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_win
         - CPACK_GENERATOR=ZIP
-        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-win32threads-ssc-xdyn
+        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-win32threads
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static
         - CREATE_INDIVIDUAL_LIBRARIES=FALSE
     - name: "Windows cross compilation Gcc 5 Posix release"
@@ -68,7 +68,7 @@ matrix:
         - BUILD_TYPE=Release
         - BUILD_DIR=build_win
         - CPACK_GENERATOR=ZIP
-        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-posixthreads-ssc-xdyn
+        - DOCKER_IMAGE=sirehna/base-image-win64-gccx-posixthreads
         - BOOST_ROOT=/usr/src/mxe/usr/x86_64-w64-mingw32.static.posix
         - CREATE_INDIVIDUAL_LIBRARIES=FALSE
 
