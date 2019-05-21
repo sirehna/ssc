@@ -1,8 +1,8 @@
 /*
  * LegChain.hpp
  *
- *  Created on: May 16, 2014
- *      Author: cady
+ * \date May 16, 2014
+ * \author cec
  */
 
 #ifndef LEGCHAIN_HPP_
@@ -10,9 +10,9 @@
 
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include "ssc/geometry/LatitudeLongitude.hpp"
 #include <vector>
 
-#include "ssc/geometry/LatitudeLongitude.hpp"
 
 namespace ssc
 {

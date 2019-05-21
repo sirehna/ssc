@@ -2,20 +2,17 @@
  * TypeCoercion.hpp
  *
  * \date 17 juin 2013, 14:50:54
- *  \author cec
+ * \author cec
  */
 
 #ifndef TYPECOERCION_HPP_
 #define TYPECOERCION_HPP_
 
 
+#include "ssc/data_source/CoercionException.hpp"
 #include <cstddef>
 #include <vector>
 #include <list>
-
-#include "ssc/data_source/CoercionException.hpp"
-
-
 
 namespace ssc
 {

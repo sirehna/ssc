@@ -2,7 +2,7 @@
  * SumTest.hpp
  *
  * \date 31 janv. 2013, 16:02:07
- *  \author cec
+ * \author cec
  */
 
 #ifndef SUMTEST_HPP_

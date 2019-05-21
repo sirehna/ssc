@@ -2,15 +2,14 @@
  * LatitudeLongitude.hpp
  *
  * \date 22 mars 2013, 17:42:12
- *  \author cec
+ * \author cec
  */
 
 #ifndef LATITUDELONGITUDE_HPP_
 #define LATITUDELONGITUDE_HPP_
 
-#include <iostream>
-
 #include "ssc/exception_handling/Exception.hpp"
+#include <iostream>
 
 namespace ssc
 {

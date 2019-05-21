@@ -1,8 +1,8 @@
 /*
  * coriolis_and_centripetalTest.cpp
  *
- *  Created on: Jun 3, 2014
- *      Author: cady
+ * \date Jun 3, 2014
+ * \author cec
  */
 
 #include "coriolis_and_centripetalTest.hpp"

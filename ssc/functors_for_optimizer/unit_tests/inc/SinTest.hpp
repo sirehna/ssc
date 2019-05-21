@@ -1,8 +1,8 @@
 /*
  * SinTest.hpp
  *
- * \date 1 f�vr. 2013, 13:24:30
- *  \author cec
+ * \date 1 févr. 2013, 13:24:30
+ * \author cec
  */
 
 #ifndef SINTEST_HPP_

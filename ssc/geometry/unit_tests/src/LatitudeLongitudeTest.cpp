@@ -2,12 +2,12 @@
  * LongitudeLatitudeTest.cpp
  *
  * \date 28 mars 2013, 11:30:35
- *  \author cec
+ * \author cec
  */
 
 #include "LatitudeLongitudeTest.hpp"
-#include "ssc/geometry/LatitudeLongitude.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
+#include "ssc/geometry/LatitudeLongitude.hpp"
 
 using namespace ssc::geometry;
 

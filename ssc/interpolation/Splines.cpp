@@ -2,7 +2,7 @@
  * Splines.cpp
  *
  * \date 8 juin 2012, 17:14:15
- *  \author cec
+ * \author cec
  */
 
 typedef long int integer;
@@ -19,12 +19,12 @@ extern "C"
         *info);
 }
 
-#include <cmath>
-#include <cstdio>
-
 #include "ssc/interpolation/Splines.hpp"
 #include "ssc/interpolation/SplinesException.hpp"
 #include "ssc/interpolation/VectorOfEquallySpacedNumbers.hpp"
+
+#include <cmath>
+#include <cstdio>
 
 using namespace ssc::interpolation;
 

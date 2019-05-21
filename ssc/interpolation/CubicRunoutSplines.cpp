@@ -2,7 +2,7 @@
  * CubicRunoutSplines.cpp
  *
  * \date 1 août 2012, 09:57:37
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/interpolation/CubicRunoutSplines.hpp"

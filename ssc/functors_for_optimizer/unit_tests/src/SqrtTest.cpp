@@ -1,8 +1,8 @@
 /*
  * SqrtTest.cpp
  *
- *  Created on: Mar 8, 2016
- *      Author: cady
+ * \date Mar 8, 2016
+ * \author cec
  */
 
 #include <cmath>

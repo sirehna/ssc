@@ -2,7 +2,7 @@
  * extra_test_assertions.hpp
  *
  * \date 8 oct. 2012, 08:27:53
- *  \author cec
+ * \author cec
  */
 
 #ifndef EXTRA_TEST_ASSERTIONS_HPP_

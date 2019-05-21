@@ -1,8 +1,8 @@
 /*
  * pairwise_sum.hpp
  *
- *  Created on: May 19, 2014
- *      Author: cady
+ * \date May 19, 2014
+ * \author cec
  */
 
 #ifndef PAIRWISE_SUM_HPP_

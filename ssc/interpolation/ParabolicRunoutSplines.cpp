@@ -2,7 +2,7 @@
  * ParabolicRunoutSplines.cpp
  *
  * \date 1 août 2012, 09:50:24
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/interpolation/ParabolicRunoutSplines.hpp"

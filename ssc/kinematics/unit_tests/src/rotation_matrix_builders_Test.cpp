@@ -1,9 +1,14 @@
 /*
  * rotation_matrix_builders_Test.cpp
  *
- *  Created on: 7 avr. 2014
- *      Author: cec
+ * \date 7 avr. 2014
+ * \author cec
  */
+
+#include "rotation_matrix_builders_Test.hpp"
+
+#include "ssc/kinematics/rotation_matrix_builders.hpp"
+#include "ssc/kinematics/EulerAngles.hpp"
 
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -11,10 +16,6 @@
 #define M_PI (4*atan(1.))
 #endif
 #define PI M_PI
-
-#include "rotation_matrix_builders_Test.hpp"
-#include "ssc/kinematics/rotation_matrix_builders.hpp"
-#include "ssc/kinematics/EulerAngles.hpp"
 
 #define EPS (1E-10)
 

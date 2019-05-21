@@ -1,8 +1,8 @@
 /*
  * DifferenceTest.cpp
  *
- * \date 1 f�vr. 2013, 09:20:24
- *  \author cec
+ * \date 1 févr. 2013, 09:20:24
+ * \author cec
  */
 
 #include "DifferenceTest.hpp"

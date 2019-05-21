@@ -1,11 +1,9 @@
 /*
  * WrenchTest.cpp
  *
- *  Created on: Apr 24, 2014
- *      Author: cady
+ * \date Apr 24, 2014
+ * \author cec
  */
-
-#include <cmath>
 
 #include "WrenchTest.hpp"
 #include "random_kinematics.hpp"
@@ -13,6 +11,8 @@
 #include "ssc/kinematics/Wrench.hpp"
 #include "ssc/kinematics/rotation_matrix_builders.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
+
+#include <cmath>
 
 #define PI (4.*atan(1.))
 #define EPS 1E-13

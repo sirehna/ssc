@@ -2,7 +2,7 @@
  * Parameter.hpp
  *
  * \date 15 mars 2013, 14:52:01
- *  \author cec
+ * \author cec
  */
 
 #ifndef PARAMETER_HPP_

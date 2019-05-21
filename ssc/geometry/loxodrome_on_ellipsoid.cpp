@@ -1,13 +1,13 @@
 /*
  * loxodrome_on_ellipsoid.cpp
  *
- *  Created on: May 12, 2014
- *      Author: cady
+ * \date May 12, 2014
+ * \author cec
  */
 
-#include <cmath>
-#include <boost/math/tools/roots.hpp>
 #include "ssc/geometry/loxodrome_on_ellipsoid.hpp"
+#include <boost/math/tools/roots.hpp>
+#include <cmath>
 
 using namespace ssc::geometry;
 

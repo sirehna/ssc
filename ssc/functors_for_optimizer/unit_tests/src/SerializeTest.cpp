@@ -1,8 +1,8 @@
 /*
  * SerializeTest.cpp
  *
- * \date 1 f�vr. 2013, 09:57:08
- *  \author cec
+ * \date 1 févr. 2013, 09:57:08
+ * \author cec
  */
 
 #include "SerializeTest.hpp"

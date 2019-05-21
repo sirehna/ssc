@@ -1,8 +1,8 @@
 /*
  * ParabolicInterpolationTest.hpp
  *
- * \date 19 f�vr. 2013, 09:55:50
- *  \author cec
+ * \date 19 févr. 2013, 09:55:50
+ * \author cec
  */
 
 #ifndef PARABOLICINTERPOLATIONTEST_HPP_

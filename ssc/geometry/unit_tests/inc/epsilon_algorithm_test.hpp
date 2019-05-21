@@ -1,8 +1,8 @@
 /*
  * epsilon_algorithm_test.hpp
  *
- *  Created on: May 15, 2014
- *      Author: cady
+ * \date May 15, 2014
+ * \author cec
  */
 
 #ifndef EPSILON_ALGORITHM_TEST_HPP_

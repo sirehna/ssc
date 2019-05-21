@@ -1,8 +1,8 @@
 /*
  * WebSocketObserverException.hpp
  *
- *  Created on: Apr 30, 2015
- *      Author: cady
+ * \date Apr 30, 2015
+ * \author cec
  */
 
 

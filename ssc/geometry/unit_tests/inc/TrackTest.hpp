@@ -2,7 +2,7 @@
  * TrackTest.hpp
  *
  * \date 8 avr. 2013, 15:16:12
- *  \author cec
+ * \author cec
  */
 
 #ifndef TRACKTEST_HPP_

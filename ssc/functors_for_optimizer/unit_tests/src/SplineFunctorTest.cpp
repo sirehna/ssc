@@ -1,8 +1,8 @@
 /*
- * CubicSplineFunctorTest.cpp
+ * SplineFunctorTest.cpp
  *
- * \date 19 f�vr. 2013, 09:38:01
- *  \author cec
+ * \date 19 févr. 2013, 09:38:01
+ * \author cec
  */
 
 #include "SplineFunctorTest.hpp"

@@ -2,18 +2,19 @@
  * SignalContainerTypeLists.hpp
  *
  * \date 18 juin 2013, 10:39:54
- *  \author cec
+ * \author cec
  */
 
 #ifndef SIGNALCONTAINERTYPELISTS_HPP_
 #define SIGNALCONTAINERTYPELISTS_HPP_
 
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(unordered_map)
+
 #include <boost/any.hpp>
 #include <string>
 #include <list>
 
-#include "ssc/macros/tr1_macros.hpp"
-#include TR1INC(unordered_map)
 
 //#include <map>
 

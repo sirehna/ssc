@@ -1,7 +1,6 @@
-#include <Eigen/Geometry>
-
 #include "ssc/kinematics/rotation_matrix_builders.hpp"
 #include "ssc/kinematics/EulerAngles.hpp"
+#include <Eigen/Geometry>
 
 using namespace ssc::kinematics;
 

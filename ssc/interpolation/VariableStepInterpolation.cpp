@@ -2,18 +2,18 @@
  * VariableStepInterpolation.cpp
  *
  * \date 10 sept. 2013, 11:55:04
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/interpolation/VariableStepInterpolation.hpp"
 #include "ssc/interpolation/IndexFinder.hpp"
 
-using namespace ssc::interpolation;
-
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !
 #endif
+
+using namespace ssc::interpolation;
 
 VariableStepInterpolation::VariableStepInterpolation() : index(TR1(shared_ptr)<IndexFinder>(new IndexFinder(std::vector<double>(),false))), idx(0), x0(0)
 {

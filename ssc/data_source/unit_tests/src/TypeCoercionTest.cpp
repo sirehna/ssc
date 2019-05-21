@@ -2,7 +2,7 @@
  * TypeCoercionTest.cpp
  *
  * \date 17 juin 2013, 14:54:12
- *  \author cec
+ * \author cec
  */
 
 #include "TypeCoercionTest.hpp"

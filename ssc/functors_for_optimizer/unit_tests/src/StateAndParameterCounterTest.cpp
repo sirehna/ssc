@@ -1,8 +1,8 @@
 /*
  * count_states_and_parametersTest.cpp
  *
- *  Created on: Feb 24, 2016
- *      Author: cady
+ * \date Feb 24, 2016
+ * \author cec
  */
 
 

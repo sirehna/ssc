@@ -2,14 +2,14 @@
  * Sum.cpp
  *
  * \date 31 janv. 2013, 16:05:53
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
-#include <algorithm>
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
+#include <algorithm>
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
@@ -58,7 +58,7 @@ std::vector<NodePtr> Sum::remove_zeros(std::vector<NodePtr> nodes) const
     auto new_end = std::remove_if (nodes.begin(), nodes.end(), equal_to_zero );
     return std::vector<NodePtr>(nodes.begin(), new_end);
 }
-#include <ssc/macros/test_macros.hpp>
+#include "ssc/macros/test_macros.hpp"
 #include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
 NodePtr Sum::diff(const StatePtr& state) const
 {

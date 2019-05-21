@@ -1,8 +1,8 @@
 /*
  * ConstantAzimuthLegTest.hpp
  *
- *  Created on: May 14, 2014
- *      Author: cady
+ * \date May 14, 2014
+ * \author cec
  */
 
 #ifndef CONSTANTAZIMUTHLEGTEST_HPP_

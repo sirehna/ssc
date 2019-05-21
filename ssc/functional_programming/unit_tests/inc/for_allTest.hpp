@@ -2,7 +2,7 @@
  * for_allTest.hpp
  *
  * \date 19 juil. 2013, 11:52:22
- *  \author cec
+ * \author cec
  */
 
 #ifndef FOR_ALLTEST_HPP_

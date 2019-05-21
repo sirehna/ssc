@@ -1,13 +1,13 @@
 /*
- * AbsTest.cpp
+ * IfPositiveTest.cpp
  *
- *  Created on: Mar 3, 2016
- *      Author: cady
+ * \date Mar 3, 2016
+ * \author cec
  */
 
-#include <cmath>
 #include "IfPositiveTest.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
+#include <cmath>
 
 using namespace ssc::functors_for_optimizer;
 

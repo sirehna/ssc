@@ -2,14 +2,14 @@
  * PhysicalQuantity.hpp
  *
  * \date 13 mars 2013, 16:09:27
- *  \author cec
+ * \author cec
  */
 
 #ifndef PHYSICALQUANTITY_HPP_
 #define PHYSICALQUANTITY_HPP_
 
-#include <vector>
 #include <list>
+#include <vector>
 
 /** \author cec
  *  \brief This class was created to store the international standard's value of a physical quantity.

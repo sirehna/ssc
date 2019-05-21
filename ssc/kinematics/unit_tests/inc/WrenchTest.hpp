@@ -1,8 +1,8 @@
 /*
  * WrenchTest.hpp
  *
- *  Created on: Apr 24, 2014
- *      Author: cady
+ * \date Apr 24, 2014
+ * \author cec
  */
 
 #ifndef WRENCHTEST_HPP_

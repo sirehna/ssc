@@ -2,23 +2,19 @@
  * Multiply.cpp
  *
  * \date 23 janv. 2013, 08:29:31
- *  \author cec
+ * \author cec
  */
 
-#include <iostream> // For std::cout
-
-#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
-
 #include "ssc/functors_for_optimizer/Multiply.hpp"
-
+#include "ssc/functors_for_optimizer/NodeVisitor.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
-#include <algorithm>
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Pow.hpp"
-
 #include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
 #include "ssc/functors_for_optimizer/Serialize.hpp"
+#include <algorithm>
+#include <iostream> // For std::cout
 
 using namespace ssc::functors_for_optimizer;
 

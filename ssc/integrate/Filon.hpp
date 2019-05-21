@@ -1,8 +1,8 @@
 /*
  * Filon.hpp
  *
- *  Created on: Dec 10, 2014
- *      Author: cady
+ * \date Dec 10, 2014
+ * \author cec
  */
 
 #ifndef FILON_HPP_

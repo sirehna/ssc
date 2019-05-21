@@ -1,17 +1,16 @@
 /*
  * ParabolicInterpolation.hpp
  *
- * \date 19 f�vr. 2013, 09:56:40
- *  \author cec
+ * \date 19 févr. 2013, 09:56:40
+ * \author cec
  */
 
 #ifndef PARABOLICINTERPOLATION_HPP_
 #define PARABOLICINTERPOLATION_HPP_
 
-#include <vector>
-
 #include "ParabolicCoefficients.hpp"
 #include "ConstantStepInterpolator.hpp"
+#include <vector>
 
 namespace ssc
 {

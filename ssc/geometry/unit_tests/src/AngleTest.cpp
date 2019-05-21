@@ -2,8 +2,13 @@
  * AngleTest.cpp
  *
  * \date 14 mars 2013, 10:45:43
- *  \author cec
+ * \author cec
  */
+
+
+#include "AngleTest.hpp"
+#include "ssc/geometry/Angle.hpp"
+#include "ssc/macros/extra_test_assertions.hpp"
 
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -11,11 +16,6 @@
 #define M_PI (4*atan(1.))
 #endif
 #define PI M_PI
-
-#include "AngleTest.hpp"
-#include "ssc/geometry/Angle.hpp"
-#include "ssc/macros/extra_test_assertions.hpp"
-
 #define EPS 1E-6
 
 using namespace ssc::geometry;

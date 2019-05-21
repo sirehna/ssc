@@ -1,8 +1,8 @@
 /*
  * IpoptSolver.hpp
  *
- * \date 22 f�vr. 2013, 15:28:59
- *  \author cec
+ * \date 22 févr. 2013, 15:28:59
+ * \author cec
  */
 
 #ifndef IPOPTSOLVER_HPP_
@@ -10,8 +10,8 @@
 
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
-#include <vector>
 #include "ssc/ipopt_interface/IpoptParameters.hpp"
+#include <vector>
 
 
 namespace ssc

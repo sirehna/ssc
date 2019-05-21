@@ -1,14 +1,15 @@
 /*
  * ParabolicInterpolation.cpp
  *
- * \date 19 f�vr. 2013, 09:56:40
- *  \author cec
+ * \date 19 févr. 2013, 09:56:40
+ * \author cec
  */
 
-#include <cmath>
 
 #include "ssc/interpolation/ParabolicInterpolation.hpp"
 #include "ssc/interpolation/ParabolicInterpolationException.hpp"
+
+#include <cmath>
 #define min(a,b) (a)>(b)?b:a
 #define max(a,b) (a)>(b)?a:b
 

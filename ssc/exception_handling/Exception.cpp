@@ -1,6 +1,5 @@
-#include <sstream>
-
 #include "ssc/exception_handling/Exception.hpp"
+#include <sstream>
 
 ::ssc::exception_handling::Exception::Exception(const std::string& message, const std::string& file, const std::string& function, const unsigned int line):
         full_message(""),

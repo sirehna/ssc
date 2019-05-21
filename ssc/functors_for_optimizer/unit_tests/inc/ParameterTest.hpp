@@ -1,8 +1,8 @@
 /*
- * ConstantTest.hpp
+ * ParameterTest.hpp
  *
  * \date 31 janv. 2013, 15:25:00
- *  \author cec
+ * \author cec
  */
 
 #ifndef PARAMETERTEST_HPP_

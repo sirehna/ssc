@@ -2,7 +2,7 @@
  * VariableStepInterpolation.hpp
  *
  * \date 10 sept. 2013, 11:55:03
- *  \author cec
+ * \author cec
  */
 
 #ifndef VARIABLESTEPINTERPOLATION_HPP_

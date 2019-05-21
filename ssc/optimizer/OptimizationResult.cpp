@@ -1,8 +1,8 @@
 /*
  * OptimizationResult.cpp
  *
- * \date 22 f�vr. 2013, 15:54:39
- *  \author cec
+ * \date 22 févr. 2013, 15:54:39
+ * \author cec
  */
 
 #include "ssc/optimizer/OptimizationResult.hpp"

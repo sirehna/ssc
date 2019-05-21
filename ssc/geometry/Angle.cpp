@@ -2,7 +2,7 @@
  * Angle.cpp
  *
  * \date 14 mars 2013, 10:49:16
- *  \author cec
+ * \author cec
  */
 
 #include "Angle.hpp"

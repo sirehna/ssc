@@ -2,14 +2,13 @@
  * DataSourceSerializer.cpp
  *
  * \date 29 oct. 2013, 08:38:28
- *  \author cec
+ * \author cec
  */
 
+#include "ssc/data_source/DataSourceDrawer.hpp"
+#include <boost/algorithm/string.hpp>
 #include <sstream>
 #include <map>
-#include <boost/algorithm/string.hpp>
-
-#include "ssc/data_source/DataSourceDrawer.hpp"
 
 using namespace ssc::data_source;
 

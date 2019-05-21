@@ -2,7 +2,7 @@
  * Leg.hpp
  *
  * \date 9 avr. 2013, 14:53:36
- *  \author cec
+ * \author cec
  */
 
 #ifndef SHORTEST_PATH_LEG_HPP_

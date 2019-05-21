@@ -1,8 +1,8 @@
 /*
  * DivideTest.hpp
  *
- * \date 1 f�vr. 2013, 08:49:57
- *  \author cec
+ * \date 1 févr. 2013, 08:49:57
+ * \author cec
  */
 
 #ifndef DIVIDETEST_HPP_

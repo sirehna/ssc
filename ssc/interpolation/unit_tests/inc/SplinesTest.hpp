@@ -2,7 +2,7 @@
  * SplineTest.hpp
  *
  * \date 8 juin 2012, 17:07:01
- *  \author cec
+ * \author cec
  */
 
 #ifndef SPLINETEST_HPP_

@@ -1,11 +1,11 @@
 /*
  * ClenshawCurtisCosine.cpp
  *
- *  Created on: Dec 9, 2014
- *      Author: cady
+ * \date Dec 9, 2014
+ * \author cec
  */
 
-#include <ssc/integrate/ClenshawCurtisCosine.hpp>
+#include "ssc/integrate/ClenshawCurtisCosine.hpp"
 
 ssc::integrate::ClenshawCurtisCosine::ClenshawCurtisCosine(const double tau) : ClenshawCurtis(tau)
 {

@@ -1,11 +1,9 @@
 /*
  * OptimizationProblem.cpp
  *
- * \date 21 f�vr. 2013, 10:15:54
- *  \author cec
+ * \date 21 févr. 2013, 10:15:54
+ * \author cec
  */
-#include <map>
-#include <algorithm>    // std::find
 #include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
@@ -15,6 +13,9 @@
 #include "ssc/functors_for_optimizer/GradHes.hpp"
 #include "ssc/functors_for_optimizer/Grad.hpp"
 #include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
+
+#include <map>
+#include <algorithm>    // std::find
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

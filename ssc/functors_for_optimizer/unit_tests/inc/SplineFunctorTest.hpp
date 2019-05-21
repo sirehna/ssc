@@ -1,8 +1,8 @@
 /*
- * CubicSplineFunctorTest.hpp
+ * SplineFunctorTest.hpp
  *
- * \date 19 f�vr. 2013, 09:37:52
- *  \author cec
+ * \date 19 févr. 2013, 09:37:52
+ * \author cec
  */
 
 #ifndef SPLINEFUNCTORTEST_HPP_

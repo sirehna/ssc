@@ -1,8 +1,8 @@
 /*
  * FilonTest.hpp
  *
- *  Created on: Dec 10, 2014
- *      Author: cady
+ * \date Dec 10, 2014
+ * \author cec
  */
 
 
@@ -10,7 +10,7 @@
 #define FILONTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class FilonTest : public ::testing::Test
 {

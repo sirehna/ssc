@@ -1,16 +1,16 @@
 /*
  * kahan_sumTest.cpp
  *
- *  Created on: May 19, 2014
- *      Author: cady
+ * \date May 19, 2014
+ * \author cec
  */
 
+#include "kahan_sumTest.hpp"
+#include "ssc/numeric/kahan_sum.hpp"
 #include <functional> // std::plus
 #include <numeric>    // std::accumulate
 
-#include "kahan_sumTest.hpp"
 
-#include "ssc/numeric/kahan_sum.hpp"
 
 using namespace ssc::numeric;
 

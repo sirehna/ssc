@@ -2,7 +2,7 @@
  * Simpson.hpp
  *
  * \date 23 avr. 2013, 15:39:50
- *  \author cec
+ * \author cec
  */
 
 #ifndef SIMPSON_HPP_

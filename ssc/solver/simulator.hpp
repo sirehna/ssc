@@ -1,7 +1,7 @@
 /*
  * simulator_interface.hpp
  *
- *  Created on: 4 mars 2014
+ * \date 4 mars 2014
  *      Author: cec
  */
 

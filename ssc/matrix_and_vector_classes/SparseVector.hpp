@@ -1,8 +1,8 @@
 #ifndef __SPARSEVECTOR__
 #define __SPARSEVECTOR__
 
-#include <vector>
 #include "ssc/exception_handling/Exception.hpp"
+#include <vector>
 #ifdef WIN32
 #include <ciso646>
 #endif

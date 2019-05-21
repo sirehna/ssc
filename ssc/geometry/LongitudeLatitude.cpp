@@ -2,7 +2,7 @@
  * LatitudeLongitude.cpp
  *
  * \date 22 mars 2013, 17:43:01
- *  \author cec
+ * \author cec
  */
 
 

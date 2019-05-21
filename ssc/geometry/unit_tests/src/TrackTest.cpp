@@ -2,12 +2,12 @@
  * TrackTest.cpp
  *
  * \date 8 avr. 2013, 15:15:05
- *  \author cec
+ * \author cec
  */
 
 #include "TrackTest.hpp"
-#include "ssc/geometry/Track.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
+#include "ssc/geometry/Track.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 #include "ssc/geometry/ShortestPathLeg.hpp"
 #include "ssc/geometry/ShortestPathLegChain.hpp"

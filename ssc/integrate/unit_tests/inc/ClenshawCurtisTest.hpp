@@ -1,8 +1,8 @@
 /*
  * ClenshawCurtisTest.hpp
  *
- *  Created on: Dec 9, 2014
- *      Author: cady
+ * \date Dec 9, 2014
+ * \author cec
  */
 
 
@@ -10,7 +10,7 @@
 #define CLENSHAWCURTISTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class ClenshawCurtisTest : public ::testing::Test
 {

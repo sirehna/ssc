@@ -2,7 +2,7 @@
  * CumulateTest.cpp
  *
  * \date 8 oct. 2013, 08:22:10
- *  \author cec
+ * \author cec
  */
 
 #include "CumulateTest.hpp"

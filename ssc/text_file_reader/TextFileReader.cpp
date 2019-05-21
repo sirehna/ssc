@@ -2,15 +2,14 @@
  * TextFileReader.cpp
  *
  * \date 21 mars 2012, 15:13:03
- *  \author cec
+ * \author cec
  */
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 #include "ssc/text_file_reader/TextFileReader.hpp"
 #include "ssc/text_file_reader/TextFileReaderException.hpp"
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace ssc::text_file_reader;
 
@@ -23,7 +22,7 @@ void TextFileReader::fill(const std::string& filename)
     }
 
     std::ifstream t(filename.c_str());
-    
+
     current_input_file.seekg(0, std::ios::end);
     const size_t nb_of_characters = (size_t)current_input_file.tellg();
     if (nb_of_characters == 0)

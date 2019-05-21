@@ -1,8 +1,8 @@
 /*
- * DataSourceSerializer.hpp
+ * DataSourceDrawer.hpp
  *
  * \date 29 oct. 2013, 08:38:28
- *  \author cec
+ * \author cec
  */
 
 #ifndef DATASOURCEDRAWER_HPP_
@@ -47,7 +47,7 @@ namespace ssc
         /** \author cec
          *  \ingroup data_source
          *  \brief Outputs the contents of a DataSource in a string
-         *  \details 
+         *  \details
          *  \section ex1 Example
          *  \snippet data_source/unit_tests/src/DataSourceSerializerTest.cpp DataSourceSerializerTest example
          *  \section ex2 Expected output

@@ -2,7 +2,7 @@
  * SignalContainerTest.cpp
  *
  * \date 18 mars 2013, 18:00:08
- *  \author cec
+ * \author cec
  */
 
 #include "SignalContainerTest.hpp"

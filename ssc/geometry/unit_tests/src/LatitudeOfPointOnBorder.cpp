@@ -2,7 +2,7 @@
  * GetMaxLongitude.cpp
  *
  * \date 27 mars 2013, 17:05:03
- *  \author cec
+ * \author cec
  */
 
 #include "LatitudeOfPointOnBorder.hpp"

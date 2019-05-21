@@ -1,7 +1,7 @@
 /*
  * ODEintTests.cpp
  *
- *  Created on: 7 mars 2014
+ * \date 7 mars 2014
  *      Author: cec
  */
 

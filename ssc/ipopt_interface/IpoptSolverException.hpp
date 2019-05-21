@@ -2,7 +2,7 @@
  * IpoptSolverException.hpp
  *
  * \date 21 nov. 2013, 09:08:24
- *  \author cec
+ * \author cec
  */
 
 #ifndef IPOPTSOLVEREXCEPTION_HPP_

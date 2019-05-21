@@ -1,8 +1,8 @@
 /*
  * Abs.hpp
  *
- * \date 1 f�vr. 2013, 14:40:27
- *  \author cec
+ * \date 1 févr. 2013, 14:40:27
+ * \author cec
  */
 
 #ifndef ABS_HPP_

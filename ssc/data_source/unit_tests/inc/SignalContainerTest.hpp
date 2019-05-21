@@ -2,7 +2,7 @@
  * SignalContainerTest.hpp
  *
  * \date 18 mars 2013, 17:59:57
- *  \author cec
+ * \author cec
  */
 
 #ifndef SIGNALCONTAINERTEST_HPP_

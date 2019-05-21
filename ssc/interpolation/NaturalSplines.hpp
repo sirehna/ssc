@@ -1,8 +1,8 @@
 /*
  * NaturalSpline.hpp
  *
- * \date 1 ao�t 2012, 09:37:58
- *  \author cec
+ * \date 1 août 2012, 09:37:58
+ * \author cec
  */
 
 #ifndef NATURALSPLINES_HPP_

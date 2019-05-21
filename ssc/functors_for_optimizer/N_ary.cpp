@@ -1,8 +1,8 @@
 /*
- * Binary.cpp
+ * N_ary.cpp
  *
  * \date 31 janv. 2013, 16:06:42
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/N_ary.hpp"

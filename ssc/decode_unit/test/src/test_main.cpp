@@ -1,4 +1,3 @@
-
 #include "matrix_extract_tests.hpp"
 
 pthread_mutex_t g_MutLapack;

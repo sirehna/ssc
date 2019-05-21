@@ -1,8 +1,8 @@
 /*
  * epsilon_algorithm_test.cpp
  *
- *  Created on: May 15, 2014
- *      Author: cady
+ * \date May 15, 2014
+ * \author cec
  */
 
 #include "epsilon_algorithm_test.hpp"

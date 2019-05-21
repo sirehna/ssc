@@ -1,8 +1,8 @@
 /*
  * TwoDimensionalInterpolationVariableStep.hpp
  *
- *  Created on: Dec 17, 2014
- *      Author: cady
+ * \date Dec 17, 2014
+ * \author cec
  */
 
 #ifndef TWODIMENSIONALINTERPOLATIONVARIABLESTEP_HPP_
@@ -10,11 +10,11 @@
 
 
 #include "ssc/interpolation/LinearInterpolationVariableStep.hpp"
-#include <vector>
+#include "ssc/exception_handling/Exception.hpp"
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include <vector>
 
-#include "ssc/exception_handling/Exception.hpp"
 
 /** \brief
  *  \details

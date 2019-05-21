@@ -2,7 +2,7 @@
  * PowTest.hpp
  *
  * \date 22 janv. 2013, 08:43:58
- *  \author cec
+ * \author cec
  */
 
 #ifndef POWTEST_HPP_

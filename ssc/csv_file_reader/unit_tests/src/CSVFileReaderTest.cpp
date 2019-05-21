@@ -2,16 +2,15 @@
  * CSVFileReaderTest.cpp
  *
  * \date 8 avr. 2012, 14:10:34
- *  \author cec
+ * \author cec
  */
-
-#include <iostream>
-#include <fstream>
-
-#include <sys/stat.h>
 
 #include "CSVFileReaderTest.hpp"
 #include "ssc/csv_file_reader/CSVFileReader.hpp"
+#include <iostream>
+#include <fstream>
+#include <sys/stat.h>
+
 
 using namespace ssc::csv_file_reader;
 

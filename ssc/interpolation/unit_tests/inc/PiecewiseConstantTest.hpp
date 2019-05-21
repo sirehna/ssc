@@ -1,8 +1,8 @@
 /*
  * PiecewiseConstantTest.hpp
  *
- * \date 18 f�vr. 2013, 12:59:14
- *  \author cec
+ * \date 18 févr. 2013, 12:59:14
+ * \author cec
  */
 
 #ifndef PIECEWISECONSTANTTEST_HPP_

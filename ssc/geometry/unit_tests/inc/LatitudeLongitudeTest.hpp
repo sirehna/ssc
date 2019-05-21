@@ -2,7 +2,7 @@
  * LongitudeLatitudeTest.hpp
  *
  * \date 28 mars 2013, 11:30:25
- *  \author cec
+ * \author cec
  */
 
 #ifndef LONGITUDELATITUDETEST_HPP_

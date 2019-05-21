@@ -2,7 +2,7 @@
  * LinearInterpolationTest.hpp
  *
  * \date 8 nov. 2012, 14:31:45
- *  \author cec
+ * \author cec
  */
 
 #ifndef LINEARINTERPOLATIONTEST_HPP_

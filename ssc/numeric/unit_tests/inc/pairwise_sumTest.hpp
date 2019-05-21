@@ -1,8 +1,8 @@
 /*
  * pairwise_sumTest.hpp
  *
- *  Created on: May 19, 2014
- *      Author: cady
+ * \date May 19, 2014
+ * \author cec
  */
 
 #ifndef PAIRWISE_SUMTEST_HPP_

@@ -1,15 +1,15 @@
 /*
  * TwoDimensionalInterpolationVariableStepTest.hpp
  *
- *  Created on: Dec 17, 2014
- *      Author: cady
+ * \date Dec 17, 2014
+ * \author cec
  */
 
 #ifndef TWODIMENSIONALINTERPOLATIONVARIABLESTEPTEST_HPP_
 #define TWODIMENSIONALINTERPOLATIONVARIABLESTEPTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class TwoDimensionalInterpolationVariableStepTest : public ::testing::Test
 {

@@ -1,8 +1,8 @@
 /*
- * Constant.cpp
+ * Parameter.cpp
  *
  * \date 29 janv. 2013, 09:41:02
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Parameter.hpp"

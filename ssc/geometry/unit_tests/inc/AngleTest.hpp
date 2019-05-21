@@ -2,7 +2,7 @@
  * AngleTest.hpp
  *
  * \date 14 mars 2013, 10:45:36
- *  \author cec
+ * \author cec
  */
 
 #ifndef ANGLETEST_HPP_

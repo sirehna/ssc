@@ -2,20 +2,18 @@
  * SignalContainer.hpp
  *
  * \date 18 mars 2013, 17:52:42
- *  \author cec
+ * \author cec
  */
 
 #ifndef SIGNALCONTAINER_HPP_
 #define SIGNALCONTAINER_HPP_
 
-
-#include <map>
-#include <typeinfo>
-#include <vector>
-
 #include "ssc/exception_handling/Exception.hpp"
 #include "ssc/data_source/SignalContainerTypeLists.hpp"
 #include "ssc/data_source/TypeCoercion.hpp"
+#include <map>
+#include <typeinfo>
+#include <vector>
 
 namespace ssc
 {

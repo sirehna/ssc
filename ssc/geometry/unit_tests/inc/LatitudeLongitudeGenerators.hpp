@@ -2,7 +2,7 @@
  * LongitudeLatitudeGenerators.hpp
  *
  * \date 27 mars 2013, 16:21:32
- *  \author cec
+ * \author cec
  */
 
 #ifndef LONGITUDELATITUDEGENERATORS_HPP_

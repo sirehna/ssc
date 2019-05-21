@@ -1,13 +1,12 @@
 /*
  * parse_unit_value.cpp
  *
- *  Created on: Apr 28, 2014
- *      Author: cady
+ * \date Apr 28, 2014
+ * \author cec
  */
 
-#include "ssc/decode_unit/DecodeUnit.h"
 #include "parse_unit_value.hpp"
-
+#include "ssc/decode_unit/DecodeUnit.h"
 
 void ssc::yaml_parser::parse_uv(const YAML::Node& node, std::vector<double>& d)
 {

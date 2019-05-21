@@ -2,7 +2,7 @@
  * random_increasing_vector.cpp
  *
  * \date 11 avr. 2013, 08:54:58
- *  \author cec
+ * \author cec
  */
 
 #include "random_increasing_vector.hpp"

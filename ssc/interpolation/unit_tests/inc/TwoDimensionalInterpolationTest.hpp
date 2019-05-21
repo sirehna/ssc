@@ -2,7 +2,7 @@
  * TwoDimensionalSplinesTest.hpp
  *
  * \date 13 nov. 2012, 16:48:41
- *  \author cec
+ * \author cec
  */
 
 #ifndef TWODIMENSIONALSPLINESTEST_HPP_

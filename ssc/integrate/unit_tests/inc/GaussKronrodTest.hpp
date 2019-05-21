@@ -2,7 +2,7 @@
  * QuadPackTest.hpp
  *
  * \date 5 juil. 2013, 13:31:57
- *  \author cec
+ * \author cec
  */
 
 #ifndef QUADPACKTEST_HPP_

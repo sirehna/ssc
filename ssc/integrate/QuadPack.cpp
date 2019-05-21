@@ -1,15 +1,14 @@
 /*
  * QuadPack.cpp
  *
- *  Created on: Dec 9, 2014
- *      Author: cady
+ * \date Dec 9, 2014
+ * \author cec
  */
 
+#include "ssc/integrate/QuadPack.hpp"
+#include "ssc/exception_handling/Exception.hpp"
 #include <iostream> // For cerr
 
-#include <ssc/integrate/QuadPack.hpp>
-
-#include "ssc/exception_handling/Exception.hpp"
 namespace ssc
 {
     namespace integrate

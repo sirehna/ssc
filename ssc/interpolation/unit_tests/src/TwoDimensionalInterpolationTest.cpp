@@ -2,14 +2,13 @@
  * TwoDimensionalSplinesTest.cpp
  *
  * \date 13 nov. 2012, 16:49:02
- *  \author cec
+ * \author cec
  */
-
-#include <vector>
 
 #include "TwoDimensionalInterpolationTest.hpp"
 #include "ssc/interpolation/TwoDimensionalInterpolation.hpp"
 #include "ssc/interpolation/LinearInterpolation.hpp"
+#include <vector>
 
 using namespace ssc::interpolation;
 

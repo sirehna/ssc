@@ -6,9 +6,9 @@
 #include "ssc/functors_for_optimizer/Ln.hpp"
 #include "ssc/functors_for_optimizer/Divide.hpp"
 #include "ssc/functors_for_optimizer/State.hpp"
-#include <cmath>
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Null.hpp"
+#include <cmath>
 
 using namespace ssc::functors_for_optimizer;
 

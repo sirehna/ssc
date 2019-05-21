@@ -1,8 +1,8 @@
 /*
  * loxodrome_on_ellipsoidTest.cpp
  *
- *  Created on: May 12, 2014
- *      Author: cady
+ * \date May 12, 2014
+ * \author cec
  */
 
 #include "loxodrome_on_ellipsoidTest.hpp"

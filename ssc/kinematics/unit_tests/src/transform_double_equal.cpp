@@ -1,16 +1,15 @@
 /*
  * transform_double_equal.cpp
  *
- *  Created on: Apr 28, 2014
- *      Author: cady
+ * \date Apr 28, 2014
+ * \author cec
  */
 
-#include <iostream>
-
+#include "transform_double_equal.hpp"
 #include "ssc/kinematics/Kinematics.hpp"
 #include "ssc/numeric/almost_equal.hpp"
-#include "transform_double_equal.hpp"
 #include "ssc/kinematics/Transform.hpp"
+#include <iostream>
 
 using namespace ssc::kinematics;
 

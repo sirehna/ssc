@@ -1,13 +1,11 @@
-#include "ssc/websocket/string2vector.hpp"
 #include "WebSocketObserverTest.hpp"
+#include "ssc/websocket/string2vector.hpp"
 #include "ssc/websocket/WebSocketException.hpp"
 #include "ssc/websocket/WebSocketClient.hpp"
 #include "ssc/websocket/WebSocketServer.hpp"
-
-#include <iostream>
-
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include <iostream>
 
 #define ADDRESS "127.0.0.1"
 #define WEBSOCKET_ADDRESS "ws://" ADDRESS

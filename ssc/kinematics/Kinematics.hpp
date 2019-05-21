@@ -1,17 +1,16 @@
 /*
  * Kinematics.hpp
  *
- *  Created on: 7 avr. 2014
- *      Author: cec
+ * \date 7 avr. 2014
+ * \author cec
  */
 
 #ifndef KINEMATICS_HPP_
 #define KINEMATICS_HPP_
 
-#include <string>
-
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include <string>
 
 namespace ssc
 {
@@ -40,7 +39,7 @@ namespace ssc
 
                 /** \author cec
                   *  \date 23 avr. 2014, 10:45:40
-                  *  \author cec
+                  * \author cec
                   *  \brief Adds a transform between two reference frames to *this
                   *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest add_example
                   */
@@ -49,7 +48,7 @@ namespace ssc
 
                 /** \author cec
                   *  \date 23 avr. 2014, 11:47:56
-                  *  \author cec
+                  * \author cec
                   *  \brief Returns the transform from one frame to another (or throws a KinematicsException).
                   *  \returns Transform from from_frame to to_frame
                   *  \snippet kinematics/unit_tests/src/KinematicsTests.cpp KinematicsTest get_example

@@ -2,7 +2,7 @@
  * QuadPackTest.cpp
  *
  * \date 5 juil. 2013, 13:32:10
- *  \author cec
+ * \author cec
  */
 
 #include "GaussKronrodTest.hpp"

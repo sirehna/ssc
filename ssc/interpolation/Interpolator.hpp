@@ -2,7 +2,7 @@
  * Interpolator.hpp
  *
  * \date 9 sept. 2013, 11:11:02
- *  \author cec
+ * \author cec
  */
 
 #ifndef INTERPOLATOR_HPP_

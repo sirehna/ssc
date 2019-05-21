@@ -2,17 +2,16 @@
  * LinearInterpolationVariableStep.hpp
  *
  * \date 10 avr. 2013, 12:54:12
- *  \author cec
+ * \author cec
  */
 
 #ifndef LINEARINTERPOLATIONVARIABLESTEP_HPP_
 #define LINEARINTERPOLATIONVARIABLESTEP_HPP_
 
-#include <vector>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include "ssc/interpolation/ConstantStepInterpolator.hpp"
-
+#include <vector>
 
 namespace ssc
 {

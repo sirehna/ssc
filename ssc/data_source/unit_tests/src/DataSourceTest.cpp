@@ -2,23 +2,24 @@
  * DataSourceTest.cpp
  *
  * \date 13 mars 2013, 15:19:45
- *  \author cec
+ * \author cec
  */
 
-#include <set>
+#include "DataSourceTest.hpp"
 
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
 #include "gmock/gmock.h"
 
-#include "DataSourceTest.hpp"
 #include "DataSourceModuleMock.hpp"
 #include "TestModules.hpp"
 
 #include "ssc/data_source/DataSource.hpp"
 #include "ssc/data_source/DataSourceModule.hpp"
 #include "ssc/data_source/DataSourceException.hpp"
+
+#include <set>
 
 using namespace ssc::data_source;
 

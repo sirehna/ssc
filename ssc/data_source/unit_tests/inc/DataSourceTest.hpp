@@ -2,7 +2,7 @@
  * DataSourceTest.hpp
  *
  * \date 13 mars 2013, 15:19:32
- *  \author cec
+ * \author cec
  */
 
 #ifndef DATASOURCETEST_HPP_

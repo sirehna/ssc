@@ -2,7 +2,7 @@
  * Nullary.cpp
  *
  * \date 29 janv. 2013, 09:38:54
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Nullary.hpp"

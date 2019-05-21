@@ -1,8 +1,8 @@
 /*
  * WebSocketMessage.cpp
  *
- *  Created on: May 4, 2015
- *      Author: cady
+ * \date May 4, 2015
+ * \author cec
  */
 
 #include "ssc/websocket/WebSocketMessage.hpp"

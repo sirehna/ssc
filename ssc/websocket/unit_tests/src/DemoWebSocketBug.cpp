@@ -111,7 +111,7 @@ int main()
         usleep(100000);
     }
     delete w;
-    
+
     /*
     WSServer * server = new WSServer;
     createServerEcho(*server, std::function<void(WSServer* , websocketpp::connection_hdl, message_ptr )>(on_message_string));

@@ -2,7 +2,7 @@
  * generic_pimpl.hpp
  *
  * \date 8 oct. 2013, 09:02:01
- *  \author cec
+ * \author cec
  */
 
 #ifndef GENERIC_PIMPL_HPP_

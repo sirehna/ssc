@@ -1,8 +1,8 @@
 /*
  * PiecewiseParabolicFunctorTest.cpp
  *
- * \date 19 f�vr. 2013, 14:43:26
- *  \author cec
+ * \date 19 févr. 2013, 14:43:26
+ * \author cec
  */
 
 #include "PiecewiseParabolicFunctorTest.hpp"

@@ -1,17 +1,17 @@
 /*
  * TransformTest.cpp
  *
- *  Created on: 8 avr. 2014
- *      Author: cec
+ * \date 8 avr. 2014
+ * \author cec
  */
-
-#include <cmath> // For atan
 
 #include "TransformTest.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 #include "ssc/kinematics/KinematicsException.hpp"
 #include "random_kinematics.hpp"
 #include "ssc/kinematics/rotation_matrix_builders.hpp"
+
+#include <cmath> // For atan
 
 #define PI (4.*atan(1.))
 

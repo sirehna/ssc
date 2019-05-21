@@ -1,8 +1,8 @@
 /*
  * Unary.hpp
  *
- * \date 1 f�vr. 2013, 12:33:33
- *  \author cec
+ * \date 1 févr. 2013, 12:33:33
+ * \author cec
  */
 
 #ifndef UNARY_HPP_

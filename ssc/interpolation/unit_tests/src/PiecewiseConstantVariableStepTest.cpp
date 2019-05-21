@@ -2,7 +2,7 @@
  * PiecewiseConstantVariableStep.cpp
  *
  * \date 11 avr. 2013, 08:44:14
- *  \author cec
+ * \author cec
  */
 
 #include "PiecewiseConstantVariableStepTest.hpp"

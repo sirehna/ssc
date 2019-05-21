@@ -2,7 +2,7 @@
  * VectorOfEquallySpacedNumbers.hpp
  *
  * \date 31 juil. 2012, 09:06:33
- *  \author cec
+ * \author cec
  */
 
 #ifndef VECTOROFEQUALLYSPACEDNUMBERS_HPP_

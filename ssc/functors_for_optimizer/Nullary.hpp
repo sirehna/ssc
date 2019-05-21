@@ -2,7 +2,7 @@
  * Nullary.hpp
  *
  * \date 29 janv. 2013, 09:38:54
- *  \author cec
+ * \author cec
  */
 
 #ifndef NULLARY_HPP_

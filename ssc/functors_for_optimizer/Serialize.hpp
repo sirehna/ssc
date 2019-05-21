@@ -1,16 +1,16 @@
 /*
  * Serialize.hpp
  *
- * \date 1 f�vr. 2013, 10:09:29
- *  \author cec
+ * \date 1 févr. 2013, 10:09:29
+ * \author cec
  */
 
 #ifndef SERIALIZE_HPP_
 #define SERIALIZE_HPP_
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
-#include <sstream>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include <sstream>
 
 
 /** \author cec

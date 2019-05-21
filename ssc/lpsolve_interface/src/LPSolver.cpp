@@ -2,7 +2,7 @@
  * LPSolver.cpp
  *
  * \date 20 nov. 2013, 14:01:21
- *  \author cec
+ * \author cec
  */
 
 #include "LPSolver.hpp"

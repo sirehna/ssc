@@ -2,16 +2,15 @@
  * PointInGeographicalPolygonTest.cpp
  *
  * \date 27 mars 2013, 16:10:22
- *  \author cec
+ * \author cec
  */
 
 #include "PointInGeographicalPolygonTest.hpp"
+#include "LatitudeLongitudeGenerators.hpp"
+#include "LatitudeOfPointOnBorder.hpp"
 #include "ssc/geometry/PointInGeographicalPolygon.hpp"
 #include "ssc/geometry/PointInSphericalPolygon.hpp"
 #include "ssc/geometry/PointInCartesianPolygon.hpp"
-#include "LatitudeLongitudeGenerators.hpp"
-#include "LatitudeOfPointOnBorder.hpp"
-
 
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>

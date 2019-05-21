@@ -1,12 +1,11 @@
 #ifndef __SPARSEMATRIX__
 #define __SPARSEMATRIX__
 
+#include "ssc/exception_handling/Exception.hpp"
+#include <vector>
 #ifdef WIN32
 #include <ciso646>
 #endif
-
-#include <vector>
-#include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc
 {

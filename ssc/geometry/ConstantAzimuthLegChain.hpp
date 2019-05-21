@@ -1,8 +1,8 @@
 /*
  * ConstantAzimuthLegChain.hpp
  *
- *  Created on: May 16, 2014
- *      Author: cady
+ * \date May 16, 2014
+ * \author cec
  */
 
 #ifndef CONSTANTAZIMUTHLEGCHAIN_HPP_

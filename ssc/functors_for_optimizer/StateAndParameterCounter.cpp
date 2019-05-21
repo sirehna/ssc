@@ -1,11 +1,9 @@
 /*
- * count_states_and_parameters.cpp
+ * StateAndParameterCounter.cpp
  *
- *  Created on: Feb 24, 2016
- *      Author: cady
+ * \date Feb 24, 2016
+ * \author cec
  */
-
-#include <algorithm>
 
 #include "ssc/functors_for_optimizer/StateAndParameterCounter.hpp"
 #include "ssc/functors_for_optimizer/NodeVisitor.hpp"
@@ -29,6 +27,7 @@
 #include "ssc/functors_for_optimizer/Sign.hpp"
 #include "ssc/functors_for_optimizer/Abs.hpp"
 #include "ssc/functors_for_optimizer/IfPositive.hpp"
+#include <algorithm>
 
 class CounterVisitor : public ssc::functors_for_optimizer::NodeVisitor
 {

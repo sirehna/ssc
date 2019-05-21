@@ -2,7 +2,7 @@
  * TrackGenerator.hpp
  *
  * \date 11 avr. 2013, 12:41:36
- *  \author cec
+ * \author cec
  */
 
 #ifndef TRACKGENERATOR_HPP_

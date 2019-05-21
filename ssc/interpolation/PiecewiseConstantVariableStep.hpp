@@ -2,16 +2,16 @@
  * PiecewiseConstantVariableStep.hpp
  *
  * \date 11 avr. 2013, 08:44:51
- *  \author cec
+ * \author cec
  */
 
 #ifndef PIECEWISECONSTANTVARIABLESTEP_HPP_
 #define PIECEWISECONSTANTVARIABLESTEP_HPP_
 
-#include <vector>
-
 #include "ssc/exception_handling/Exception.hpp"
 #include "ssc/interpolation/VariableStepInterpolation.hpp"
+
+#include <vector>
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__

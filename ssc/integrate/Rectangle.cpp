@@ -1,8 +1,8 @@
 /*
  * Rectangle.cpp
  *
- *  Created on: Nov 28, 2014
- *      Author: cady
+ * \date Nov 28, 2014
+ * \author cec
  */
 
 #include "Rectangle.hpp"

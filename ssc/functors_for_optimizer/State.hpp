@@ -1,10 +1,8 @@
 #ifndef STATES_HPP
 #define STATES_HPP
 
-#include <stdlib.h> // For size_t
-#include <string>
 #include "ssc/functors_for_optimizer/Parameter.hpp"
-
+#include <string>
 
 namespace ssc
 {

@@ -2,15 +2,13 @@
  * LinearInterpolation.hpp
  *
  * \date 8 nov. 2012, 14:32:11
- *  \author cec
+ * \author cec
  */
 
 #ifndef LINEARINTERPOLATION_HPP_
 #define LINEARINTERPOLATION_HPP_
-#include <vector>
 #include "ConstantStepInterpolator.hpp"
-
-
+#include <vector>
 
 namespace ssc
 {

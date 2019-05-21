@@ -2,7 +2,7 @@
  * IndexFinderTest.hpp
  *
  * \date 10 sept. 2013, 10:15:12
- *  \author cec
+ * \author cec
  */
 
 #ifndef INDEXFINDERTEST_HPP_

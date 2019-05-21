@@ -2,7 +2,7 @@
  * Track.cpp
  *
  * \date 8 avr. 2013, 15:16:34
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/geometry/Track.hpp"

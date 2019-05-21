@@ -1,12 +1,12 @@
 /*
- * Hes.hpp
+ * FunctionMatrix.hpp
  *
- * \date 20 f�vr. 2013, 15:23:43
- *  \author cec
+ * \date 20 févr. 2013, 15:23:43
+ * \author cec
  */
 
-#ifndef HES_HPP_
-#define HES_HPP_
+#ifndef FUNCTIONMATRIX_HPP_
+#define FUNCTIONMATRIX_HPP_
 
 /** \author cec
  *  \brief This class was created to
@@ -42,4 +42,4 @@ namespace ssc
     }
 }
 
-#endif /* HES_HPP_ */
+#endif /* FUNCTIONMATRIX_HPP_ */

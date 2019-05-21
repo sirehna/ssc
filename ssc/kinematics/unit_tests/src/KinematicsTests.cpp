@@ -1,8 +1,8 @@
 /*
  * KinematicsTests.cpp
  *
- *  Created on: 1 avr. 2014
- *      Author: cec
+ * \date 1 avr. 2014
+ * \author cec
  */
 
 #include "KinematicsTests.hpp"

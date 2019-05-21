@@ -2,7 +2,7 @@
  * SerializeTest.hpp
  *
  * \date 1 févr. 2013, 09:56:53
- *  \author cec
+ * \author cec
  */
 
 #ifndef SERIALIZETEST_HPP_

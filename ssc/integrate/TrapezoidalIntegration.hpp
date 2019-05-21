@@ -2,7 +2,7 @@
  * TrapezoidalIntegration.hpp
  *
  * \date 23 avr. 2013, 14:47:21
- *  \author cec
+ * \author cec
  */
 
 #ifndef TRAPEZOIDALINTEGRATION_HPP_

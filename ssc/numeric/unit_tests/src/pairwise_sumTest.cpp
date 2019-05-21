@@ -1,8 +1,8 @@
 /*
  * pairwise_sumTest.cpp
  *
- *  Created on: May 19, 2014
- *      Author: cady
+ * \date May 19, 2014
+ * \author cec
  */
 
 #include "pairwise_sumTest.hpp"

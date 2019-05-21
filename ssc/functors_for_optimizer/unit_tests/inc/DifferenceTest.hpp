@@ -1,8 +1,8 @@
 /*
  * DifferenceTest.hpp
  *
- * \date 1 f�vr. 2013, 09:20:05
- *  \author cec
+ * \date 1 févr. 2013, 09:20:05
+ * \author cec
  */
 
 #ifndef DIFFERENCETEST_HPP_

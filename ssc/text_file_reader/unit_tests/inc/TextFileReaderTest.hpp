@@ -2,7 +2,7 @@
  * TextFileReaderTest.hpp
  *
  * \date 21 mars 2012, 15:18:20
- *  \author cec
+ * \author cec
  */
 
 #ifndef TEXTFILEREADERTEST_HPP_

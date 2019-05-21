@@ -1,15 +1,15 @@
 /*
  * ConstantAzimuthLegTest.cpp
  *
- *  Created on: May 14, 2014
- *      Author: cady
+ * \date May 14, 2014
+ * \author cec
  */
 
-#include <algorithm> // std::mi std::max
 
 #include "ConstantAzimuthLegTest.hpp"
-#include "ssc/geometry/ConstantAzimuthLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
+#include "ssc/geometry/ConstantAzimuthLeg.hpp"
+#include <algorithm> // std::min std::max
 
 #define EPS 1E-6
 

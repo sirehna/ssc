@@ -1,18 +1,17 @@
 /*
  * WebSocketEndpoint.cpp
  *
- *  Created on: Apr 30, 2015
- *      Author: cady
+ * \date Apr 30, 2015
+ * \author cec
  */
-
-#include <unistd.h> //usleep
-
-#include <websocketpp/config/asio_no_tls_client.hpp>
-#include <websocketpp/client.hpp>
 
 #include "ConnectionMetadata.hpp"
 #include "ssc/websocket/WebSocketClient.hpp"
 #include "ssc/websocket/WebSocketException.hpp"
+#include <websocketpp/config/asio_no_tls_client.hpp>
+#include <websocketpp/client.hpp>
+#include <unistd.h> //usleep
+
 
 using namespace ssc::websocket;
 

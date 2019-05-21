@@ -2,7 +2,7 @@
  * LegTest.hpp
  *
  * \date 9 avr. 2013, 14:54:00
- *  \author cec
+ * \author cec
  */
 
 #ifndef LEGTEST_HPP_

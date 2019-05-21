@@ -1,15 +1,14 @@
 /*
  * PiecewiseConstantFunctor.hpp
  *
- * \date 18 f�vr. 2013, 17:29:41
- *  \author cec
+ * \date 18 févr. 2013, 17:29:41
+ * \author cec
  */
 
 #ifndef PIECEWISECONSTANTFUNCTOR_HPP_
 #define PIECEWISECONSTANTFUNCTOR_HPP_
 
 #include "ssc/interpolation/PiecewiseConstant.hpp"
-
 #include "ssc/functors_for_optimizer/Unary.hpp"
 
 /** \author cec

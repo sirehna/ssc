@@ -2,7 +2,7 @@
  * TestModules.hpp
  *
  * \date 19 juin 2013, 08:55:24
- *  \author cec
+ * \author cec
  */
 
 #ifndef TESTMODULES_HPP_

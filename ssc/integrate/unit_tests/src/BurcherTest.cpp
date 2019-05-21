@@ -1,8 +1,8 @@
 /*
  * BurcherTest.cpp
  *
- *  Created on: Dec 11, 2014
- *      Author: cady
+ * \date Dec 11, 2014
+ * \author cec
  */
 
 

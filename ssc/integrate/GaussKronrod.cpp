@@ -2,7 +2,7 @@
  * QuadPack.cpp
  *
  * \date 5 juil. 2013, 16:48:53
- *  \author cec
+ * \author cec
  */
 
 #include "GaussKronrod.hpp"
@@ -14,9 +14,8 @@
 
 #include <iostream>
 #include <cassert>
-
-
 #include <cstdlib>
+
 extern "C"
 {
 void dqags_(double f(void*,double*), void*, double*, double*, double*, double*, double*, double*, int*, int*, int*, int*, int* last, int* iwork, double* work);
@@ -99,4 +98,3 @@ ssc::integrate::GaussKronrod& ssc::integrate::GaussKronrod::operator=(const Gaus
     }
     return *this;
 }
-

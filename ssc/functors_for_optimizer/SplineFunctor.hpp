@@ -1,8 +1,8 @@
 /*
  * CubicSplineFunctor.hpp
  *
- * \date 19 f�vr. 2013, 09:39:25
- *  \author cec
+ * \date 19 févr. 2013, 09:39:25
+ * \author cec
  */
 
 #ifndef SPLINEFUNCTOR_HPP_

@@ -1,8 +1,8 @@
 /*
  * StateGetter.cpp
  *
- * \date 20 f�vr. 2013, 12:53:19
- *  \author cec
+ * \date 20 févr. 2013, 12:53:19
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/StateGetter.hpp"

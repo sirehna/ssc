@@ -1,8 +1,8 @@
 /*
  * SimplifyTest.hpp
  *
- * \date 13 f�vr. 2013, 08:57:17
- *  \author cec
+ * \date 13 févr. 2013, 08:57:17
+ * \author cec
  */
 
 #ifndef SIMPLIFYTEST_HPP_

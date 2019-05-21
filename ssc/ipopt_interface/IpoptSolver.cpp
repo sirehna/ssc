@@ -1,13 +1,13 @@
 /*
  * IpoptSolver.cpp
  *
- * \date 22 f�vr. 2013, 15:28:59
- *  \author cec
+ * \date 22 févr. 2013, 15:28:59
+ * \author cec
  */
 
+#include "ssc/ipopt_interface/IpoptSolver.hpp"
 #include "ssc/functors_for_optimizer/Grad.hpp"
 #include "ssc/functors_for_optimizer/FunctionMatrix.hpp"
-#include "ssc/ipopt_interface/IpoptSolver.hpp"
 #include "ssc/optimizer/OptimizationResult.hpp"
 #include "ssc/optimizer/OptimizationProblem.hpp"
 #include "ssc/functors_for_optimizer/Parameter.hpp"

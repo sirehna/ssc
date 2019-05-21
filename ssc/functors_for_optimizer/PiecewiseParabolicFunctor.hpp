@@ -1,8 +1,8 @@
 /*
  * PiecewiseParabolicFunctor.hpp
  *
- * \date 19 f�vr. 2013, 14:44:08
- *  \author cec
+ * \date 19 févr. 2013, 14:44:08
+ * \author cec
  */
 
 #ifndef PIECEWISEPARABOLICFUNCTOR_HPP_

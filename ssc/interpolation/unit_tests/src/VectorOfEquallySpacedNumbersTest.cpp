@@ -2,7 +2,7 @@
  * VectorOfEquallySpacedNumbersTest.cpp
  *
  * \date 31 juil. 2012, 09:07:26
- *  \author cec
+ * \author cec
  */
 
 #include "VectorOfEquallySpacedNumbersTest.hpp"

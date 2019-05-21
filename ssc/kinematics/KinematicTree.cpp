@@ -1,18 +1,17 @@
 /*
  * KinematicsTree.cpp
  *
- *  Created on: 23 avr. 2014
- *      Author: cady
+ * \date 23 avr. 2014
+ * \author cec
  */
-
-#include <algorithm> // std::reverse
-#include <map>
-
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/dijkstra_shortest_paths.hpp>
 
 #include "ssc/kinematics/KinematicTree.hpp"
 #include "ssc/kinematics/KinematicsException.hpp"
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <algorithm> // std::reverse
+#include <map>
+
 
 using namespace ssc::kinematics;
 

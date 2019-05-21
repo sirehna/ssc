@@ -1,12 +1,12 @@
 /*
  * TwoDimensionalInterpolationVariableStepTest.cpp
  *
- *  Created on: Dec 17, 2014
- *      Author: cady
+ * \date Dec 17, 2014
+ * \author cec
  */
 
-#include "ssc/interpolation/TwoDimensionalInterpolationVariableStep.hpp"
 #include "TwoDimensionalInterpolationVariableStepTest.hpp"
+#include "ssc/interpolation/TwoDimensionalInterpolationVariableStep.hpp"
 
 TwoDimensionalInterpolationVariableStepTest::TwoDimensionalInterpolationVariableStepTest() : a(ssc::random_data_generator::DataGenerator(5456466))
 {

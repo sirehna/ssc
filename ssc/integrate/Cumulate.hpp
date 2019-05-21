@@ -2,7 +2,7 @@
  * Cumulate.hpp
  *
  * \date 8 oct. 2013, 08:22:31
- *  \author cec
+ * \author cec
  */
 
 #ifndef CUMULATE_HPP_

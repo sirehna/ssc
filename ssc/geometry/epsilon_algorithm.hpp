@@ -1,8 +1,8 @@
 /*
  * epsilon_algorithm.h
  *
- *  Created on: May 15, 2014
- *      Author: cady
+ * \date May 15, 2014
+ * \author cec
  */
 
 #ifndef EPSILON_ALGORITHM_H_
@@ -14,7 +14,7 @@ namespace ssc
 {
     namespace geometry
     {
-        /**  \author cec
+        /** \author cec
           *  \date May 15, 2014, 3:06:32 PM
           *  \brief Finds the limit of a series in the case where only
           *         the first N+1 terms are known

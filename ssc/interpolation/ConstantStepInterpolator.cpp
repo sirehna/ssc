@@ -2,21 +2,21 @@
  * Interpolator.cpp
  *
  * \date 12 juin 2013, 15:26:56
- *  \author cec
+ * \author cec
  */
-
-#include <algorithm> // std::min, std::max
-#include <cmath>
 
 #include "ssc/interpolation/ConstantStepInterpolator.hpp"
 #include "ssc/interpolation/InterpolatorException.hpp"
 
-using namespace ssc::interpolation;
+#include <algorithm> // std::min, std::max
+#include <cmath>
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #define not !
 #endif
+
+using namespace ssc::interpolation;
 
 ConstantStepInterpolator::ConstantStepInterpolator() :
 xmin(0), xmax(0), y(std::vector<double>()), n(0), delta(0), idx(0), val_sat(0), coefficients_have_been_computed_for_interval(std::vector<bool>())

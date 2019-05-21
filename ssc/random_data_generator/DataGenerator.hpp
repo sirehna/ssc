@@ -1,6 +1,5 @@
-
-#ifndef GETA
-#define GETA
+#ifndef DATAGENERATOR_HPP_
+#define DATAGENERATOR_HPP_
 
 #define GET_A_MIN_STRING_LENGTH 3
 #define GET_A_MAX_STRING_LENGTH 17
@@ -113,7 +112,7 @@ namespace ssc
                     return tmp;
                 }
                 #endif
-        
+
                 operator T()
                 {
                     #if defined(_MSC_VER) /* Microsoft Visual Studio bullshit */

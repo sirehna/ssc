@@ -1,11 +1,10 @@
-#ifndef VALIDATE_AGAINST_CSV_FILE
-#define VALIDATE_AGAINST_CSV_FILE
+#ifndef CSVFILEREADER_HPP_
+#define CSVFILEREADER_HPP_
 
+#include "ssc/exception_handling/Exception.hpp"
 #include <vector>
 #include <string>
 #include <map>
-
-#include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc
 {

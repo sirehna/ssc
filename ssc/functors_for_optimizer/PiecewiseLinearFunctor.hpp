@@ -1,16 +1,16 @@
 /*
  * PiecewiseLinearFunctor.hpp
  *
- * \date 19 f�vr. 2013, 08:35:13
- *  \author cec
+ * \date 19 févr. 2013, 08:35:13
+ * \author cec
  */
 
 #ifndef PIECEWISELINEARFUNCTOR_HPP_
 #define PIECEWISELINEARFUNCTOR_HPP_
 
 #include "ssc/interpolation/LinearInterpolation.hpp"
-
 #include "ssc/functors_for_optimizer/Unary.hpp"
+
 namespace ssc
 {
     namespace functors_for_optimizer

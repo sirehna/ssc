@@ -1,11 +1,10 @@
 #ifndef POINTMATRIX_HPP_
 #define POINTMATRIX_HPP_
 
-#include <string>
-#include <Eigen/Dense>
-
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include <string>
+#include <Eigen/Dense>
 
 namespace ssc
 {

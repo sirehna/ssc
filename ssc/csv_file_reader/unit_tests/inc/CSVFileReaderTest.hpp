@@ -2,7 +2,7 @@
  * CSVFileReaderTest.hpp
  *
  * \date 8 avr. 2012, 14:10:21
- *  \author cec
+ * \author cec
  */
 
 #ifndef VALIDATEAGAINSTCSVTEST_HPP_

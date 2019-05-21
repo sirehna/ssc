@@ -2,7 +2,7 @@
  * TrapezoidalIntegration.cpp
  *
  * \date 23 avr. 2013, 14:47:22
- *  \author cec
+ * \author cec
  */
 
 #include "TrapezoidalIntegration.hpp"

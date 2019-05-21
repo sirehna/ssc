@@ -2,14 +2,13 @@
  * LinearInterpolationVariableStep.cpp
  *
  * \date 10 avr. 2013, 12:54:12
- *  \author cec
+ * \author cec
  */
-
-#include <algorithm> // std::min, std::max
-#include <cmath>
 
 #include "ssc/interpolation/LinearInterpolationVariableStep.hpp"
 #include "ssc/interpolation/PiecewiseConstantVariableStep.hpp"
+#include <algorithm> // std::min, std::max
+#include <cmath>
 
 using namespace ssc::interpolation;
 

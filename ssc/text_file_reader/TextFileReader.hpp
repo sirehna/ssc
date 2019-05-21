@@ -2,15 +2,14 @@
  * TextFileReader.hpp
  *
  * \date 21 mars 2012, 15:13:03
- *  \author cec
+ * \author cec
  */
-
-
-#include <string>
-#include <vector>
 
 #ifndef TEXTFILEREADER_HPP_
 #define TEXTFILEREADER_HPP_
+
+#include <string>
+#include <vector>
 
 namespace ssc
 {

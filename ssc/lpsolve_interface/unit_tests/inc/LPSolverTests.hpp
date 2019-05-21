@@ -2,7 +2,7 @@
  * LPSolverTests.hpp
  *
  * \date 20 nov. 2013, 14:01:54
- *  \author cec
+ * \author cec
  */
 
 #ifndef LPSOLVERTESTS_HPP_

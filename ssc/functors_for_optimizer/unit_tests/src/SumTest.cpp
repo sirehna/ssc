@@ -2,7 +2,7 @@
  * SumTest.cpp
  *
  * \date 31 janv. 2013, 16:02:15
- *  \author cec
+ * \author cec
  */
 
 #include "SumTest.hpp"

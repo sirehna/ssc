@@ -1,8 +1,8 @@
 /*
  * SerializeReversePolish.cpp
  *
- * \date 28 f�vr. 2013, 16:48:42
- *  \author cec
+ * \date 28 févr. 2013, 16:48:42
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/SerializeReversePolish.hpp"
