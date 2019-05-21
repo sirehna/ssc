@@ -1,8 +1,8 @@
 /*
  * ClenshawCurtisSine.hpp
  *
- *  Created on: Dec 9, 2014
- *      Author: cady
+ * \date Dec 9, 2014
+ * \author cec
  */
 
 #ifndef CLENSHAWCURTISSINE_HPP_

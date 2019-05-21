@@ -2,15 +2,15 @@
  * Interpolator.hpp
  *
  * \date 12 juin 2013, 15:26:55
- *  \author cec
+ * \author cec
  */
 
 #ifndef CONSTANTSTEPINTERPOLATOR_HPP_
 #define CONSTANTSTEPINTERPOLATOR_HPP_
 
+#include "Interpolator.hpp"
 #include <vector>
 #include <cstddef>
-#include "Interpolator.hpp"
 
 namespace ssc
 {

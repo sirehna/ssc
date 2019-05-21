@@ -1,8 +1,8 @@
 /*
  * Leg.hpp
  *
- *  Created on: May 13, 2014
- *      Author: cady
+ * \date May 13, 2014
+ * \author cec
  */
 
 #ifndef LEG_HPP_

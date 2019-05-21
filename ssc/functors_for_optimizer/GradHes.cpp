@@ -1,8 +1,8 @@
 /*
  * GradHes.cpp
  *
- * \date 20 f�vr. 2013, 12:21:18
- *  \author cec
+ * \date 20 févr. 2013, 12:21:18
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/GradHes.hpp"

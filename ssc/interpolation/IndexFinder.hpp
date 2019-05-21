@@ -2,15 +2,14 @@
  * IndexFinder.hpp
  *
  * \date 10 sept. 2013, 10:03:21
- *  \author cec
+ * \author cec
  */
 
 #ifndef INDEXFINDER_HPP_
 #define INDEXFINDER_HPP_
 
-#include <vector>
-
 #include "ssc/exception_handling/Exception.hpp"
+#include <vector>
 
 namespace ssc
 {

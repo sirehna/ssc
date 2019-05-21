@@ -1,8 +1,8 @@
 /*
  * Wrench.hpp
  *
- *  Created on: 24 avr. 2014
- *      Author: cady
+ * \date 24 avr. 2014
+ * \author cec
  */
 
 #ifndef WRENCH_HPP_

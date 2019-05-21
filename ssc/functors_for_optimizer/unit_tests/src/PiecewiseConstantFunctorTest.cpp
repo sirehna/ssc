@@ -1,8 +1,8 @@
 /*
  * PiecewiseConstantFunctor.cpp
  *
- * \date 18 f�vr. 2013, 17:19:21
- *  \author cec
+ * \date 18 févr. 2013, 17:19:21
+ * \author cec
  */
 
 #include "PiecewiseConstantFunctorTest.hpp"

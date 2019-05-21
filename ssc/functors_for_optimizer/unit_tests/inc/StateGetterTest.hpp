@@ -1,8 +1,8 @@
 /*
  * StateGetterTest.hpp
  *
- * \date 20 f�vr. 2013, 12:43:53
- *  \author cec
+ * \date 20 févr. 2013, 12:43:53
+ * \author cec
  */
 
 #ifndef STATEGETTERTEST_HPP_

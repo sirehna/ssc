@@ -2,14 +2,13 @@
  * almost_equal.cpp
  *
  * \date 26 nov. 2013, 11:22:57
- *  \author cec
+ * \author cec
  */
 
+#include "ssc/numeric/almost_equal.hpp"
+#include "gtest/internal/gtest-internal.h"
 #include <cmath>
 
-#include "gtest/internal/gtest-internal.h"
-
-#include "ssc/numeric/almost_equal.hpp"
 
 template <> bool almost_equal(const double& t1, const double& t2, const double eps)
 {

@@ -2,7 +2,7 @@
  * SplineVariableStepTest.hpp
  *
  * \date 9 sept. 2013, 10:47:23
- *  \author cec
+ * \author cec
  */
 
 #ifndef SPLINEVARIABLESTEPTEST_HPP_

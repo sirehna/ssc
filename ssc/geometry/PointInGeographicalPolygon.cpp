@@ -2,7 +2,7 @@
  * PointInGeographicalPolygon.cpp
  *
  * \date 27 mars 2013, 15:57:40
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/geometry/PointInGeographicalPolygon.hpp"

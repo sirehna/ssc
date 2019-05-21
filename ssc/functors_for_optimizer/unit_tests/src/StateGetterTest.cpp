@@ -1,8 +1,8 @@
 /*
  * StateGetterTest.cpp
  *
- * \date 20 f�vr. 2013, 12:44:42
- *  \author cec
+ * \date 20 févr. 2013, 12:44:42
+ * \author cec
  */
 
 #include "StateGetterTest.hpp"

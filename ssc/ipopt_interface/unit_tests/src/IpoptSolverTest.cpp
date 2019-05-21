@@ -1,8 +1,8 @@
 /*
  * IpoptSolverTest.cpp
  *
- * \date 22 f�vr. 2013, 15:28:17
- *  \author cec
+ * \date 22 févr. 2013, 15:28:17
+ * \author cec
  */
 
 #include "IpoptSolverTest.hpp"

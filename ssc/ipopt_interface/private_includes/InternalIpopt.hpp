@@ -2,7 +2,7 @@
  * InternalIpopt.hpp
  *
  * \date 25 fevr. 2013, 10:03:00
- *  \author cec
+ * \author cec
  */
 
 #ifndef INTERNALIPOPT_HPP_

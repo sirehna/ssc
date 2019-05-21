@@ -1,8 +1,8 @@
 /*
  * Serialize.cpp
  *
- * \date 1 f�vr. 2013, 10:09:29
- *  \author cec
+ * \date 1 févr. 2013, 10:09:29
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Serialize.hpp"

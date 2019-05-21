@@ -2,7 +2,7 @@
  * LinearInterpolationVariableStepTest.hpp
  *
  * \date 10 avr. 2013, 12:52:45
- *  \author cec
+ * \author cec
  */
 
 #ifndef LINEARINTERPOLATIONVARIABLESTEPTEST_HPP_

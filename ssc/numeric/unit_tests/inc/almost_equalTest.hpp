@@ -2,7 +2,7 @@
  * almost_equalTest.hpp
  *
  * \date 26 nov. 2013, 08:41:26
- *  \author cec
+ * \author cec
  */
 
 #ifndef ALMOST_EQUALTEST_HPP_

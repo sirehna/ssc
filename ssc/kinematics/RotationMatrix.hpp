@@ -1,8 +1,8 @@
 /*
  * RotationMatrix.hpp
  *
- *  Created on: 8 avr. 2014
- *      Author: cec
+ * \date 8 avr. 2014
+ * \author cec
  */
 
 #ifndef ROTATIONMATRIX_HPP_

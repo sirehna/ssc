@@ -2,12 +2,12 @@
  * PointInCartesianPolygonTest.cpp
  *
  * \date 27 mars 2013, 16:10:07
- *  \author cec
+ * \author cec
  */
 
 #include "PointInCartesianPolygonTest.hpp"
-#include "ssc/geometry/PointInCartesianPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
+#include "ssc/geometry/PointInCartesianPolygon.hpp"
 
 using namespace ssc::geometry;
 

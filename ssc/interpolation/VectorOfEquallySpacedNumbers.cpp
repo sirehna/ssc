@@ -2,19 +2,18 @@
  * VectorOfEquallySpacedNumbers.cpp
  *
  * \date 31 juil. 2012, 09:06:33
- *  \author cec
+ * \author cec
  */
-
-#include <sstream>
 
 #include "ssc/interpolation/VectorOfEquallySpacedNumbers.hpp"
 #include "ssc/interpolation/VectorOfEquallySpacedNumbersException.hpp"
-
-using namespace ssc::interpolation;
+#include <sstream>
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
+
+using namespace ssc::interpolation;
 
 VectorOfEquallySpacedNumbers::VectorOfEquallySpacedNumbers(const double& min_bound, const double& max_bound, const size_t& nb_of_values) :
 _min_bound(min_bound),

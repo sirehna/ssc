@@ -1,11 +1,9 @@
 /*
  * Filon.cpp
  *
- *  Created on: Dec 10, 2014
- *      Author: cady
+ * \date Dec 10, 2014
+ * \author cec
  */
-
-#include <cmath>
 
 #include "ssc/integrate/Filon.hpp"
 

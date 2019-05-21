@@ -1,8 +1,8 @@
 /*
  * SerializeReversePolishTest.hpp
  *
- * \date 28 f�vr. 2013, 17:02:32
- *  \author cec
+ * \date 28 févr. 2013, 17:02:32
+ * \author cec
  */
 
 #ifndef SERIALIZEREVERSEPOLISHTEST_HPP_

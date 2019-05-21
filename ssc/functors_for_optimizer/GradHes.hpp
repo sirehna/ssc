@@ -1,20 +1,18 @@
 /*
  * GradHes.hpp
  *
- * \date 20 f�vr. 2013, 12:21:08
- *  \author cec
+ * \date 20 févr. 2013, 12:21:08
+ * \author cec
  */
 
 #ifndef GRADHES_HPP_
 #define GRADHES_HPP_
 
-#include <vector>
-#include "ssc/macros/tr1_macros.hpp"
-#include TR1INC(memory)
-
 #include "Grad.hpp"
 #include "FunctionMatrix.hpp"
-
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
+#include <vector>
 
 namespace ssc
 {

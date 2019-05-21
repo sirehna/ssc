@@ -1,8 +1,8 @@
 /*
  * steppers.hpp
  *
- *  Created on: Jun 30, 2014
- *      Author: cady
+ * \date Jun 30, 2014
+ * \author cec
  */
 
 #ifndef STEPPERS_HPP_

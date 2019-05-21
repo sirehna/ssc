@@ -1,8 +1,8 @@
 /*
  * vector2stringTest.hpp
  *
- *  Created on: May 5, 2015
- *      Author: cady
+ * \date May 5, 2015
+ * \author cec
  */
 
 
@@ -10,7 +10,7 @@
 #define VECTOR2STRINGTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class string2vectorTest : public ::testing::Test
 {

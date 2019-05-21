@@ -1,8 +1,8 @@
 /*
  * transform_double_equal.hpp
  *
- *  Created on: Apr 28, 2014
- *      Author: cady
+ * \date Apr 28, 2014
+ * \author cec
  */
 
 #ifndef TRANSFORM_DOUBLE_EQUAL_HPP_

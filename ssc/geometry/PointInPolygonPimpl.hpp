@@ -2,7 +2,7 @@
  * PointInECAZonePimpl.hpp
  *
  * \date 27 mars 2013, 15:42:08
- *  \author cec
+ * \author cec
  */
 
 #ifndef POINTINPOLYGONPIMPL_HPP_

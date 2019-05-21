@@ -1,13 +1,13 @@
 /*
  * epsilon_algorithm.c
  *
- *  Created on: May 15, 2014
- *      Author: cady
+ * \date May 15, 2014
+ * \author cec
  */
 
+#include "ssc/geometry/epsilon_algorithm.hpp"
 #include <cmath>
 #include <cstdlib> //size_t
-#include "ssc/geometry/epsilon_algorithm.hpp"
 
 double ssc::geometry::epsilon_algorithm(std::vector<double> S)
 {

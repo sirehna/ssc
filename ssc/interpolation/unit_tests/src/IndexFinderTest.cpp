@@ -2,7 +2,7 @@
  * IndexFinderTest.cpp
  *
  * \date 10 sept. 2013, 10:15:24
- *  \author cec
+ * \author cec
  */
 
 #include "IndexFinderTest.hpp"

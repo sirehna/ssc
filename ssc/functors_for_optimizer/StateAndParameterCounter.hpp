@@ -1,8 +1,8 @@
 /*
- * count_states_and_parameters.hpp
+ * StateAndParameterCounter.hpp
  *
- *  Created on: Feb 24, 2016
- *      Author: cady
+ * \date Feb 24, 2016
+ * \author cec
  */
 
 #ifndef FUNCTORS_FOR_OPTIMIZER_COUNT_STATES_AND_PARAMETERS_HPP_

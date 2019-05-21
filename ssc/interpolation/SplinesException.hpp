@@ -2,7 +2,7 @@
  * SplinesException.hpp
  *
  * \date 13 juin 2013, 11:04:40
- *  \author cec
+ * \author cec
  */
 
 #ifndef SPLINESEXCEPTION_HPP_

@@ -1,8 +1,8 @@
 /*
  * ParabolicInterpolationTest.cpp
  *
- * \date 19 f�vr. 2013, 09:56:08
- *  \author cec
+ * \date 19 févr. 2013, 09:56:08
+ * \author cec
  */
 
 #include "ParabolicInterpolationTest.hpp"

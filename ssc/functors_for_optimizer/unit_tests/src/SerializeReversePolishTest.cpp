@@ -1,8 +1,8 @@
 /*
  * SerializeReversePolishTest.cpp
  *
- * \date 28 f�vr. 2013, 17:02:40
- *  \author cec
+ * \date 28 févr. 2013, 17:02:40
+ * \author cec
  */
 
 #include "SerializeReversePolishTest.hpp"

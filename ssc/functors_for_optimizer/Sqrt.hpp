@@ -1,7 +1,7 @@
 /*
  * Sqrt.hpp
  *
- *  \author cec
+ * \author cec
  */
 
 #ifndef SQRT_HPP_

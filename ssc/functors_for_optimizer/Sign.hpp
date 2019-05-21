@@ -1,7 +1,7 @@
 /*
  * Sign.hpp
  *
- *  \author cec
+ * \author cec
  */
 
 #ifndef SIGN_HPP_

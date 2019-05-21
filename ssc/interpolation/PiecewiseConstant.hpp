@@ -1,16 +1,15 @@
 /*
  * PiecewiseConstant.hpp
  *
- * \date 18 f�vr. 2013, 13:07:18
- *  \author cec
+ * \date 18 févr. 2013, 13:07:18
+ * \author cec
  */
 
 #ifndef PIECEWISECONSTANT_HPP_
 #define PIECEWISECONSTANT_HPP_
 
-#include <vector>
 #include "ConstantStepInterpolator.hpp"
-
+#include <vector>
 
 namespace ssc
 {

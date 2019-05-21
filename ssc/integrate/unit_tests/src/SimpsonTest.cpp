@@ -2,7 +2,7 @@
  * SimpsonTest.cpp
  *
  * \date 23 avr. 2013, 15:38:05
- *  \author cec
+ * \author cec
  */
 
 #include "SimpsonTest.hpp"

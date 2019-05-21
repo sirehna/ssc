@@ -1,8 +1,8 @@
 /*
  * GradHesTest.cpp
  *
- * \date 20 f�vr. 2013, 11:46:48
- *  \author cec
+ * \date 20 févr. 2013, 11:46:48
+ * \author cec
  */
 
 #include "GradHesTest.hpp"

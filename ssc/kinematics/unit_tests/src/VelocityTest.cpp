@@ -1,8 +1,8 @@
 /*
  * VelocityTest.cpp
  *
- *  Created on: 9 avr. 2014
- *      Author: cec
+ * \date 9 avr. 2014
+ * \author cec
  */
 
 #include "VelocityTest.hpp"

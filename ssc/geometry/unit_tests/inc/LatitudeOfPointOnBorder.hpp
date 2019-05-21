@@ -2,7 +2,7 @@
  * GetMaxLongitude.hpp
  *
  * \date 27 mars 2013, 17:05:03
- *  \author cec
+ * \author cec
  */
 
 #ifndef GETMAXLONGITUDE_HPP_

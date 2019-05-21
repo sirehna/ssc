@@ -1,11 +1,9 @@
 /*
- * PointInECAZone.cpp
+ * PointInPolygon.cpp
  *
  * \date 21 mars 2013, 18:00:41
- *  \author cec
+ * \author cec
  */
-
-
 
 #include "ssc/geometry/PointInPolygon.hpp"
 #include "ssc/geometry/PointInPolygonPimpl.hpp"

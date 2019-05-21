@@ -2,7 +2,7 @@
  * DataSourceException.hpp
  *
  * \date 17 juin 2013, 11:13:11
- *  \author cec
+ * \author cec
  */
 
 #ifndef DATASOURCEEXCEPTION_HPP_

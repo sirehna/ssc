@@ -1,8 +1,8 @@
 /*
  * Divide.cpp
  *
- * \date 1 f�vr. 2013, 08:59:33
- *  \author cec
+ * \date 1 févr. 2013, 08:59:33
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Divide.hpp"

@@ -2,7 +2,7 @@
  * TrapezoidalIntegrationTest.hpp
  *
  * \date 23 avr. 2013, 14:46:13
- *  \author cec
+ * \author cec
  */
 
 #ifndef TRAPEZOIDALINTEGRATIONTEST_HPP_

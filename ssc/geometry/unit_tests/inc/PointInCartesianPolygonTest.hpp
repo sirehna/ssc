@@ -2,7 +2,7 @@
  * PointInCartesianPolygonTest.hpp
  *
  * \date 27 mars 2013, 16:07:53
- *  \author cec
+ * \author cec
  */
 
 #ifndef POINTINCARTESIANPOLYGONTEST_HPP_

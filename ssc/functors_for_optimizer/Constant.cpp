@@ -1,8 +1,8 @@
 /*
  * Constant.cpp
  *
- * \date 5 f�vr. 2013, 11:22:54
- *  \author cec
+ * \date 5 févr. 2013, 11:22:54
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Constant.hpp"

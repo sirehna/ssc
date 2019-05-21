@@ -1,8 +1,8 @@
 /*
  * DefaultEventHandler.hpp
  *
- *  Created on: 21 mars 2014
- *      Author: cec
+ * \date 21 mars 2014
+ * \author cec
  */
 
 #ifndef DEFAULTEVENTHANDLER_HPP_

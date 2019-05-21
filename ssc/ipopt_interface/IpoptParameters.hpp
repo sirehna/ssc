@@ -1,8 +1,8 @@
 /*
  * IpoptParameters.hpp
  *
- * \date 26 f�vr. 2013, 10:31:33
- *  \author cec
+ * \date 26 févr. 2013, 10:31:33
+ * \author cec
  */
 
 #ifndef IPOPTPARAMETERS_HPP_

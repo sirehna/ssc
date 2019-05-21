@@ -2,16 +2,11 @@
  * DataSource.hpp
  *
  * \date 13 mars 2013, 15:31:43
- *  \author cec
+ * \author cec
  */
 
 #ifndef DATASOURCE_HPP_
 #define DATASOURCE_HPP_
-
-#include <string>
-#include <set>
-#include <sstream>
-#include <stack>
 
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
@@ -19,6 +14,11 @@
 #include "ssc/data_source/SignalContainer.hpp"
 #include "ssc/data_source/DataSourceException.hpp"
 #include "ssc/numeric/almost_equal.hpp"
+
+#include <string>
+#include <set>
+#include <sstream>
+#include <stack>
 
 #define MAKE(ns,x,T) namespace x {typedef T _type;static const std::string _name = #ns "_" #x;}
 #define DEFINE(ns,x, T) namespace ns {MAKE(ns,x,T)}

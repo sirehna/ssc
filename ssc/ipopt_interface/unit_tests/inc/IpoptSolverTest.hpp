@@ -1,8 +1,8 @@
 /*
  * IpoptSolverTest.hpp
  *
- * \date 22 f�vr. 2013, 15:28:07
- *  \author cec
+ * \date 22 févr. 2013, 15:28:07
+ * \author cec
  */
 
 #ifndef IPOPTSOLVERTEST_HPP_

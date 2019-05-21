@@ -1,8 +1,8 @@
 /*
  * BurcherTest.hpp
  *
- *  Created on: Dec 11, 2014
- *      Author: cady
+ * \date Dec 11, 2014
+ * \author cec
  */
 
 
@@ -10,7 +10,7 @@
 #define BURCHERTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class BurcherTest : public ::testing::Test
 {

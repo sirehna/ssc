@@ -2,7 +2,7 @@
  * Leg.cpp
  *
  * \date 9 avr. 2013, 14:53:36
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/geometry/ShortestPathLeg.hpp"

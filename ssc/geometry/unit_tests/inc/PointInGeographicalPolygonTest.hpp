@@ -2,7 +2,7 @@
  * PointInGeographicalPolygonTest.hpp
  *
  * \date 27 mars 2013, 16:08:18
- *  \author cec
+ * \author cec
  */
 
 #ifndef POINTINGEOGRAPHICALPOLYGONTEST_HPP_

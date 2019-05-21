@@ -1,8 +1,8 @@
 /*
  * parse_unit_value.hpp
  *
- *  Created on: Apr 28, 2014
- *      Author: cady
+ * \date Apr 28, 2014
+ * \author cec
  */
 
 #ifndef PARSE_UNIT_VALUE_HPP_

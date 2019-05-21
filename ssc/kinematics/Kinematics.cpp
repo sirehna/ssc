@@ -1,5 +1,5 @@
-#include "ssc/data_source/DataSource.hpp"
 #include "ssc/kinematics/Kinematics.hpp"
+#include "ssc/data_source/DataSource.hpp"
 #include "ssc/kinematics/KinematicsException.hpp"
 #include "ssc/kinematics/Transform.hpp"
 #include "ssc/kinematics/KinematicTree.hpp"

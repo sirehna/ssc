@@ -1,7 +1,7 @@
 /*
  * detection_of_state_update_methods.hpp
  *
- *  Created on: 21 mars 2014
+ * \date 21 mars 2014
  *      Author: cec
  */
 

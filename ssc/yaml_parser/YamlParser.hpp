@@ -1,8 +1,8 @@
 /*
  * YamlParser.hpp
  *
- * \date 27 ao�t 2012, 13:05:23
- *  \author cec
+ * \date 27 août 2012, 13:05:23
+ * \author cec
  */
 
 #ifndef YAMLPARSER_HPP_

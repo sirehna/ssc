@@ -1,8 +1,8 @@
 /*
  * Grad.hpp
  *
- * \date 20 f�vr. 2013, 15:20:24
- *  \author cec
+ * \date 20 févr. 2013, 15:20:24
+ * \author cec
  */
 
 #ifndef GRAD_HPP_
@@ -18,10 +18,10 @@
  *  \snippet MODULE_NAME/unit_tests/src/GradTest.cpp GradTest expected output
  */
 
-#include <vector>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include <functional>
+#include <vector>
 
 namespace ssc
 {

@@ -1,8 +1,8 @@
 /*
  * TwoDimensionalInterpolationVariableStep.cpp
  *
- *  Created on: Dec 17, 2014
- *      Author: cady
+ * \date Dec 17, 2014
+ * \author cec
  */
 #include "TwoDimensionalInterpolationVariableStep.hpp"
 

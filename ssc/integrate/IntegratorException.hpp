@@ -1,8 +1,8 @@
 /*
  * IntegratorException.hpp
  *
- *  Created on: Dec 1, 2014
- *      Author: cady
+ * \date Dec 1, 2014
+ * \author cec
  */
 
 #ifndef INTEGRATOREXCEPTION_HPP_

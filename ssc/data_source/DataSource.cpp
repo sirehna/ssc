@@ -2,15 +2,15 @@
  * DataSource.cpp
  *
  * \date 13 mars 2013, 15:31:43
- *  \author cec
+ * \author cec
  */
-
-#include <iostream>
-#include <sstream>
 
 #include "ssc/data_source/DataSource.hpp"
 #include "ssc/data_source/DataSourceException.hpp"
 #include "ssc/data_source/DataSourceDrawer.hpp"
+
+#include <iostream>
+#include <sstream>
 
 const std::string ssc::data_source::DataSource::default_setter = "Unregistered DataSource user";
 
@@ -218,7 +218,7 @@ void ssc::data_source::DataSource::update_dependencies()
 }
 
 /** \author cec
- *  \date 21 ao�t 2013, 16:34:06
+ *  \date 21 août 2013, 16:34:06
  *  \brief Registers a derivative: the corresponding variable is added to the
  *  list of states. The order in which this list is sorted corresponds to the
  *  order in which successive calls to define_derivative were made.
@@ -243,7 +243,7 @@ void ssc::data_source::DataSource::define_derivative(const std::string& state_na
 }
 
 /** \author cec
- *  \date 21 ao�t 2013, 16:42:17
+ *  \date 21 août 2013, 16:42:17
  *  \brief Computes the derivatives of all state variables in the DataSource
  *  \returns A vector of doubles containing all the values of the state variables
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_derivatives_example
@@ -265,7 +265,7 @@ void ssc::data_source::DataSource::get_derivatives(std::vector<double>& dx_dt //
 }
 
 /** \author cec
- *  \date 21 ao�t 2013, 16:50:03
+ *  \date 21 août 2013, 16:50:03
  *  \brief Sets the values of the state variables.
  *  \returns Nothing.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest set_derivatives_example
@@ -287,7 +287,7 @@ void ssc::data_source::DataSource::set_states(const std::vector<double>& v)
 }
 
 /** \author cec
- *  \date 22 ao�t 2013, 09:53:53
+ *  \date 22 août 2013, 09:53:53
  *  \brief Get the names of all the states in the DataSource
  *  \returns A vector of state names, sorted in the same order as set_states & get_state_derivatives.
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest get_state_names_example
@@ -320,7 +320,7 @@ std::vector<double> ssc::data_source::DataSource::get_states()
 }
 
 /** \author cec
- *  \date 22 ao�t 2013, 12:23:32
+ *  \date 22 août 2013, 12:23:32
  *  \returns All the signals currently in the DataSource
  *  \snippet data_source/unit_tests/src/DataSourceTest.cpp DataSourceTest DataSource::get_all_signal_names_example
 */

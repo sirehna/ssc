@@ -2,11 +2,11 @@
  * Model.hpp
  *
  * \date 15 mars 2013, 11:21:25
- *  \author cec
+ * \author cec
  */
 
-#ifndef MODEL_HPP_
-#define MODEL_HPP_
+#ifndef DATASOURCEMODULE_HPP_
+#define DATASOURCEMODULE_HPP_
 
 #include "ssc/macros/tr1_macros.hpp"
 #include <string>
@@ -169,4 +169,4 @@ namespace ssc
     }
 }
 
-#endif /* MODEL_HPP_ */
+#endif /* DATASOURCEMODULE_HPP_ */

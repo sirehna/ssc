@@ -2,9 +2,9 @@
 #define __NODEHPP__
 
 #include "ssc/macros/tr1_macros.hpp"
-#include <functional>
 #include TR1INC(memory)
 #include <map>
+#include <functional>
 #include <vector>
 #include <string>
 

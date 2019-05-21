@@ -1,19 +1,20 @@
 /*
  * KinematicsTree.hpp
  *
- *  Created on: 23 avr. 2014
- *      Author: cady
+ * \date 23 avr. 2014
+ * \author cec
  */
 
 #ifndef KINEMATICTREE_HPP_
 #define KINEMATICTREE_HPP_
 
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
+
 #include <vector>
 #include <utility> // std::pair
 #include <string>
 
-#include "ssc/macros/tr1_macros.hpp"
-#include TR1INC(memory)
 
 namespace ssc
 {

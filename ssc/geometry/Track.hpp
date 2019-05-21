@@ -2,18 +2,18 @@
  * Track.hpp
  *
  * \date 8 avr. 2013, 15:16:34
- *  \author cec
+ * \author cec
  */
 
 #ifndef TRACK_HPP_
 #define TRACK_HPP_
 
 #include "ssc/geometry/LatitudeLongitude.hpp"
-#include <vector>
-#include "ssc/macros/tr1_macros.hpp"
-#include TR1INC(memory)
 #include "ssc/exception_handling/Exception.hpp"
 #include "ssc/geometry/Angle.hpp"
+#include "ssc/macros/tr1_macros.hpp"
+#include TR1INC(memory)
+#include <vector>
 
 namespace ssc
 {

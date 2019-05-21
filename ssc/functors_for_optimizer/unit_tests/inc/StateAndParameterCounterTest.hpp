@@ -1,16 +1,15 @@
 /*
- * count_states_and_parametersTest.hpp
+ * StateAndParameterCounterTest.hpp
  *
- *  Created on: Feb 24, 2016
- *      Author: cady
+ * \date Feb 24, 2016
+ * \author cec
  */
-
 
 #ifndef FUNCTORS_FOR_OPTIMIZER_UNIT_TESTS_INC_COUNT_STATES_AND_PARAMETERSTEST_HPP_
 #define FUNCTORS_FOR_OPTIMIZER_UNIT_TESTS_INC_COUNT_STATES_AND_PARAMETERSTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class StateAndParameterCounterTest : public ::testing::Test
 {

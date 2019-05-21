@@ -2,12 +2,11 @@
  * PhysicalQuantity.cpp
  *
  * \date 14 mars 2013, 08:49:49
- *  \author cec
+ * \author cec
  */
 
-#include "ssc/macros/tr1_macros.hpp"
-
 #include "ssc/data_source/PhysicalQuantity.hpp"
+#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/exception_handling/Exception.hpp"
 
 using namespace ssc::data_source;

@@ -2,16 +2,15 @@
  * TextFileReaderTest.cpp
  *
  * \date 21 mars 2012, 15:18:47
- *  \author cec
+ * \author cec
  */
-
-#include <iostream>
-#include <fstream>
 
 #include "TextFileReaderTest.hpp"
 #include "ssc/text_file_reader/TextFileReader.hpp"
 #include "ssc/text_file_reader/TextFileReaderException.hpp"
 #include "ssc/macros/test_macros.hpp"
+#include <iostream>
+#include <fstream>
 
 using namespace ssc::text_file_reader;
 

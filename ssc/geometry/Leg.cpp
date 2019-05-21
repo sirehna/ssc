@@ -1,13 +1,13 @@
 /*
  * Leg.cpp
  *
- *  Created on: May 13, 2014
- *      Author: cady
+ * \date May 13, 2014
+ * \author cec
  */
 
-#include <algorithm> //std::min, std::max
 #include "ssc/macros/tr1_macros.hpp"
 #include "ssc/geometry/Leg.hpp"
+#include <algorithm> //std::min, std::max
 #include <sstream>
 
 #define EPS 1e-6

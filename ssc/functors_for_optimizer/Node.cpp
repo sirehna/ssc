@@ -2,9 +2,8 @@
  * Node.cpp
  *
  * \date 29 janv. 2013, 15:32:23
- *  \author cec
+ * \author cec
  */
-
 
 #include "ssc/functors_for_optimizer/Node.hpp"
 #include "ssc/functors_for_optimizer/Constant.hpp"

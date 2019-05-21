@@ -1,8 +1,8 @@
 /*
  * PiecewiseLinearFunctor.cpp
  *
- * \date 19 f�vr. 2013, 08:35:13
- *  \author cec
+ * \date 19 févr. 2013, 08:35:13
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/PiecewiseLinearFunctor.hpp"

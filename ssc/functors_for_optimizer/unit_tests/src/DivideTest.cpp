@@ -1,8 +1,8 @@
 /*
  * DivideTest.cpp
  *
- * \date 1 f�vr. 2013, 08:50:07
- *  \author cec
+ * \date 1 févr. 2013, 08:50:07
+ * \author cec
  */
 
 #include "DivideTest.hpp"

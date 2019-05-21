@@ -1,17 +1,16 @@
 /*
  * Burcher.hpp
  *
- *  Created on: Dec 11, 2014
- *      Author: cady
+ * \date Dec 11, 2014
+ * \author cec
  */
 
 #ifndef BURCHER_HPP_
 #define BURCHER_HPP_
 
+#include "ssc/integrate/Integrator.hpp"
 #include <cstddef>
 #include <vector>
-
-#include "ssc/integrate/Integrator.hpp"
 #include <stddef.h>
 
 namespace ssc

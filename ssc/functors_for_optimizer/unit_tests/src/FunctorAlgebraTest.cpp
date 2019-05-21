@@ -1,8 +1,8 @@
 /*
  * FunctorAlgebraTest.cpp
  *
- * \date 1 f�vr. 2013, 15:25:03
- *  \author cec
+ * \date 1 févr. 2013, 15:25:03
+ * \author cec
  */
 
 #include "FunctorAlgebraTest.hpp"

@@ -1,8 +1,8 @@
 /*
  * CubicRunoutSplines.hpp
  *
- * \date 1 ao�t 2012, 09:57:37
- *  \author cec
+ * \date 1 août 2012, 09:57:37
+ * \author cec
  */
 
 #ifndef CUBICRUNOUTSPLINES_HPP_

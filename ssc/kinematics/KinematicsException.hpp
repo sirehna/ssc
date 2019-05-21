@@ -1,8 +1,8 @@
 /*
  * KinematicsException.hpp
  *
- *  Created on: 7 avr. 2014
- *      Author: cec
+ * \date 7 avr. 2014
+ * \author cec
  */
 
 #ifndef KINEMATICSEXCEPTION_HPP_

@@ -1,11 +1,10 @@
 #ifndef __SIR_CSVWRITERTEST__
 #define __SIR_CSVWRITERTEST__
 
-#include <string>
-#include <vector>
-
 #include "gtest/gtest.h"
 #include "ssc/csv_writer/CSVWriter.hpp"
+#include <string>
+#include <vector>
 
 class CSVWriterTest : public ::testing::Test
 {

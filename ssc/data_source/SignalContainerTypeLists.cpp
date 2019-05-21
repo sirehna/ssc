@@ -2,12 +2,11 @@
  * SignalContainerTypeLists.cpp
  *
  * \date 18 juin 2013, 10:42:29
- *  \author cec
+ * \author cec
  */
 
-#include <ostream>
-
 #include "ssc/data_source/SignalContainerTypeLists.hpp"
+#include <ostream>
 
 using namespace ssc::data_source;
 

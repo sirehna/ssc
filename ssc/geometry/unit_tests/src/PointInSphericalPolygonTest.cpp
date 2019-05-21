@@ -2,13 +2,13 @@
  * PointInSphericalPolygonTest.cpp
  *
  * \date 27 mars 2013, 16:10:38
- *  \author cec
+ * \author cec
  */
 
 #include "PointInSphericalPolygonTest.hpp"
-#include "ssc/geometry/PointInSphericalPolygon.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
 #include "LatitudeOfPointOnBorder.hpp"
+#include "ssc/geometry/PointInSphericalPolygon.hpp"
 
 #define EPS 1e-6
 

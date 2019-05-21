@@ -1,8 +1,8 @@
 /*
  * ClenshawCurtisCosine.hpp
  *
- *  Created on: Dec 9, 2014
- *      Author: cady
+ * \date Dec 9, 2014
+ * \author cec
  */
 
 #ifndef CLENSHAWCURTISCOSINE_HPP_

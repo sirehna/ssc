@@ -1,10 +1,10 @@
 #ifndef __SIR_MATRIX_EXTRACT_TEST__
 #define __SIR_MATRIX_EXTRACT_TEST__
 
-#include <vector>
 
 #include "gtest/gtest.h"
 #include "matrix.h"
+#include <vector>
 
 using namespace math;
 

@@ -1,8 +1,8 @@
 /*
  * FunctorAlgebra.cpp
  *
- * \date 1 f�vr. 2013, 15:29:58
- *  \author cec
+ * \date 1 févr. 2013, 15:29:58
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"

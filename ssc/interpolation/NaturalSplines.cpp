@@ -2,7 +2,7 @@
  * NaturalSpline.cpp
  *
  * \date 1 août 2012, 09:37:58
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/interpolation/NaturalSplines.hpp"

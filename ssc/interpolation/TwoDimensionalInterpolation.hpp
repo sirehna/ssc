@@ -2,11 +2,13 @@
  * TwoDimensionalSplines.hpp
  *
  * \date 13 nov. 2012, 16:50:25
- *  \author cec
+ * \author cec
  */
-#include <vector>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
+#include "ssc/exception_handling/Exception.hpp"
+
+#include <vector>
 
 #if defined(_MSC_VER)
 #define __PRETTY_FUNCTION__ __FUNCSIG__
@@ -16,8 +18,6 @@
 class ParabolicRunoutSplines;
 #ifndef TWODIMENSIONALSPLINES_HPP_
 #define TWODIMENSIONALSPLINES_HPP_
-
-#include "ssc/exception_handling/Exception.hpp"
 
 namespace ssc
 {

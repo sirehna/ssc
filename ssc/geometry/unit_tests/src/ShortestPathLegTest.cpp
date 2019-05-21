@@ -1,13 +1,13 @@
 /*
- * LegTest.cpp
+ * ShortestPathLegTest.cpp
  *
  * \date 9 avr. 2013, 14:54:18
- *  \author cec
+ * \author cec
  */
 
 #include "ShortestPathLegTest.hpp"
-#include "ssc/geometry/ShortestPathLeg.hpp"
 #include "LatitudeLongitudeGenerators.hpp"
+#include "ssc/geometry/ShortestPathLeg.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
 #include <algorithm> // std::min, std::max
 #include <cmath>

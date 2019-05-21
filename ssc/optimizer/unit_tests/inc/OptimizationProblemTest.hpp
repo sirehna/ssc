@@ -1,8 +1,8 @@
 /*
  * OptimizationProblemTest.hpp
  *
- * \date 21 f�vr. 2013, 10:14:54
- *  \author cec
+ * \date 21 févr. 2013, 10:14:54
+ * \author cec
  */
 
 #ifndef OPTIMIZATIONPROBLEMTEST_HPP_

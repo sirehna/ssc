@@ -1,8 +1,8 @@
 /*
  * OptimizationProblemTest.cpp
  *
- * \date 21 f�vr. 2013, 10:15:03
- *  \author cec
+ * \date 21 févr. 2013, 10:15:03
+ * \author cec
  */
 
 #include "OptimizationProblemTest.hpp"

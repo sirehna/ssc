@@ -1,8 +1,8 @@
 /*
  * Constant.hpp
  *
- * \date 5 f�vr. 2013, 11:22:54
- *  \author cec
+ * \date 5 févr. 2013, 11:22:54
+ * \author cec
  */
 
 #ifndef CONSTANT_HPP_

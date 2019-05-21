@@ -1,9 +1,8 @@
-#include <iostream>
-
 // Test Environment:
 // server, no TLS, no locks, iostream based transport
 #include <websocketpp/config/core.hpp>
 #include <websocketpp/server.hpp>
+#include <iostream>
 
 #include "gtest/gtest.h"
 class WebSocketPPTest2_server : public ::testing::Test

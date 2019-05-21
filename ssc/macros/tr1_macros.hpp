@@ -1,8 +1,8 @@
 /*
  * smart_pointers_macros.hpp
  *
- *  Created on: Jun 12, 2014
- *      Author: cady
+ * \date Jun 12, 2014
+ * \author cec
  */
 
 #ifndef TR1_MACROS_HPP_

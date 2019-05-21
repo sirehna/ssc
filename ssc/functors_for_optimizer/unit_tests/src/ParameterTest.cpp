@@ -1,8 +1,8 @@
 /*
- * ConstantTest.cpp
+ * ParameterTest.cpp
  *
  * \date 31 janv. 2013, 15:25:10
- *  \author cec
+ * \author cec
  */
 
 #include "ParameterTest.hpp"

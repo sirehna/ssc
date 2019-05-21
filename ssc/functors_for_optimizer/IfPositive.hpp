@@ -1,8 +1,8 @@
 /*
- * Constant.hpp
+ * IfPositive.hpp
  *
  * \date 29 janv. 2013, 09:41:01
- *  \author cec
+ * \author cec
  */
 
 #ifndef IF_POSITIVE_HPP_

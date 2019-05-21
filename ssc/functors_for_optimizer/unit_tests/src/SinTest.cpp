@@ -1,8 +1,8 @@
 /*
  * SinTest.cpp
  *
- * \date 1 f�vr. 2013, 14:20:08
- *  \author cec
+ * \date 1 févr. 2013, 14:20:08
+ * \author cec
  */
 
 #include "SinTest.hpp"

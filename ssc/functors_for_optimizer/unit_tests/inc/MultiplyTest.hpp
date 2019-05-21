@@ -2,7 +2,7 @@
  * MultiplyTest.hpp
  *
  * \date 23 janv. 2013, 08:22:10
- *  \author cec
+ * \author cec
  */
 
 #ifndef MULTIPLYTEST_HPP_

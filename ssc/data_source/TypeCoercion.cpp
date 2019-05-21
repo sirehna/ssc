@@ -2,12 +2,11 @@
  * TypeCoercion.cpp
  *
  * \date 18 juin 2013, 16:49:02
- *  \author cec
+ * \author cec
  */
 
-#include "ssc/macros/tr1_macros.hpp"
 #include "ssc/data_source/TypeCoercion.hpp"
-
+#include "ssc/macros/tr1_macros.hpp"
 
 using namespace ssc::data_source;
 

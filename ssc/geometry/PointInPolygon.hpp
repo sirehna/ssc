@@ -2,17 +2,17 @@
  * PointInECAZone.hpp
  *
  * \date 21 mars 2013, 18:00:41
- *  \author cec
+ * \author cec
  */
 
 #ifndef POINTINECAZONE_HPP_
 #define POINTINECAZONE_HPP_
 
-#include <vector>
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 #include "ssc/geometry/LatitudeLongitude.hpp"
 #include "ssc/exception_handling/Exception.hpp"
+#include <vector>
 
 namespace ssc
 {

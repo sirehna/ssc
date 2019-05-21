@@ -2,7 +2,7 @@
  * QuadPack.hpp
  *
  * \date 5 juil. 2013, 16:48:53
- *  \author cec
+ * \author cec
  */
 
 #ifndef GAUSSKRONROD_HPP_
@@ -13,7 +13,7 @@
 /** \author cec
  *  \ingroup integrate
  *  \brief Responsibility
- *  \details 
+ *  \details
  *  \section ex1 Example
  *  \snippet integrate/unit_tests/src/QuadPackTest.cpp QuadPackTest example
  *  \section ex2 Expected output

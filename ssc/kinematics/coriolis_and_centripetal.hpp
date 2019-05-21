@@ -1,8 +1,8 @@
 /*
  * coriolis_and_centripetal.hpp
  *
- *  Created on: Jun 3, 2014
- *      Author: cady
+ * \date Jun 3, 2014
+ * \author cec
  */
 
 #ifndef CORIOLIS_AND_CENTRIPETAL_HPP_

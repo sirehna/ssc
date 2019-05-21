@@ -1,8 +1,8 @@
 /*
  * kahan_sumTest.hpp
  *
- *  Created on: May 19, 2014
- *      Author: cady
+ * \date May 19, 2014
+ * \author cec
  */
 
 #ifndef KAHAN_SUMTEST_HPP_

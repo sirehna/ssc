@@ -2,7 +2,7 @@
  * MultiplyTest.cpp
  *
  * \date 23 janv. 2013, 08:21:46
- *  \author cec
+ * \author cec
  */
 
 #include "MultiplyTest.hpp"

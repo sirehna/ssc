@@ -1,8 +1,8 @@
 /*
- * Binary.hpp
+ * N_ary.hpp
  *
  * \date 31 janv. 2013, 16:06:42
- *  \author cec
+ * \author cec
  */
 
 #ifndef NARY_HPP_

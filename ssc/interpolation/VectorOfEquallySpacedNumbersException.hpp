@@ -2,7 +2,7 @@
  * VectorOfEquallySpacedNumberException.hpp
  *
  * \date 12 juin 2013, 15:47:26
- *  \author cec
+ * \author cec
  */
 
 #ifndef VECTOROFEQUALLYSPACEDNUMBEREXCEPTION_HPP_

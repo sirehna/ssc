@@ -1,8 +1,8 @@
 /*
- * AbsTest.hpp
+ * IfPositiveTest.hpp
  *
- *  Created on: Mar 3, 2016
- *      Author: cady
+ * \date Mar 3, 2016
+ * \author cec
  */
 
 
@@ -10,7 +10,7 @@
 #define FUNCTORS_FOR_OPTIMIZER_UNIT_TESTS_INC_ABSTEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 #include "ssc/functors_for_optimizer/StateGenerator.hpp"
 
 class IfPositiveTest : public ::testing::Test

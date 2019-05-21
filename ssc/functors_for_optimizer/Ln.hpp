@@ -1,8 +1,8 @@
 /*
  * Ln.hpp
  *
- * \date 1 f�vr. 2013, 12:32:08
- *  \author cec
+ * \date 1 févr. 2013, 12:32:08
+ * \author cec
  */
 
 #ifndef LN_HPP_

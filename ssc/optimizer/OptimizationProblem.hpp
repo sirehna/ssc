@@ -1,14 +1,12 @@
 /*
  * OptimizationProblem.hpp
  *
- * \date 21 f�vr. 2013, 10:15:54
- *  \author cec
+ * \date 21 févr. 2013, 10:15:54
+ * \author cec
  */
 
 #ifndef OPTIMIZATIONPROBLEM_HPP_
 #define OPTIMIZATIONPROBLEM_HPP_
-
-#define INFTY 2e19
 
 #include "ssc/functors_for_optimizer/FunctorAlgebra.hpp"
 #include "ssc/functors_for_optimizer/Sum.hpp"
@@ -16,6 +14,8 @@
 #include "ssc/functors_for_optimizer/Pow.hpp"
 #include "ssc/functors_for_optimizer/Difference.hpp"
 #include "ssc/functors_for_optimizer/GradHes.hpp"
+
+#define INFTY 2e19
 
 /** \author cec
  *  \brief This class was created to

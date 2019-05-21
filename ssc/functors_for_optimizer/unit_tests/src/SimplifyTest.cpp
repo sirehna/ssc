@@ -1,8 +1,8 @@
 /*
  * SimplifyTest.cpp
  *
- * \date 13 f�vr. 2013, 08:57:25
- *  \author cec
+ * \date 13 févr. 2013, 08:57:25
+ * \author cec
  */
 
 #include "SimplifyTest.hpp"

@@ -2,7 +2,7 @@
  * Null.cpp
  *
  * \date 29 janv. 2013, 09:40:10
- *  \author cec
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Null.hpp"

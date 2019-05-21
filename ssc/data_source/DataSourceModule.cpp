@@ -2,7 +2,7 @@
  * DataSourceModule.cpp
  *
  * \date 15 mars 2013, 14:15:08
- *  \author cec
+ * \author cec
  */
 
 

@@ -2,18 +2,18 @@
  * SplineVariableStep.hpp
  *
  * \date 9 sept. 2013, 10:47:42
- *  \author cec
+ * \author cec
  */
 
 #ifndef SPLINEVARIABLESTEP_HPP_
 #define SPLINEVARIABLESTEP_HPP_
 
 #include "ssc/interpolation/VariableStepInterpolation.hpp"
-#include <vector>
+#include "ssc/exception_handling/Exception.hpp"
 #include "ssc/macros/tr1_macros.hpp"
 #include TR1INC(memory)
 
-#include "ssc/exception_handling/Exception.hpp"
+#include <vector>
 
 namespace ssc
 {

@@ -2,17 +2,16 @@
  * Splines.hpp
  *
  * \date 8 juin 2012, 17:14:15
- *  \author cec
+ * \author cec
  */
 
 #ifndef SPLINES_HPP_
 #define SPLINES_HPP_
 
-#include <vector>
-
 #include "ParabolicCoefficients.hpp"
 #include "ConstantStepInterpolator.hpp"
 #include <functional>
+#include <vector>
 
 namespace ssc
 {

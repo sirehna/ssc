@@ -1,8 +1,8 @@
 /*
  * ParabolicCoefficients.hpp
  *
- * \date 19 f�vr. 2013, 11:20:00
- *  \author cec
+ * \date 19 févr. 2013, 11:20:00
+ * \author cec
  */
 
 #ifndef PARABOLICCOEFFICIENTS_HPP_

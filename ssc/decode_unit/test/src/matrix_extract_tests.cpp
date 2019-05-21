@@ -1,6 +1,5 @@
-#include <vector>
-
 #include "matrix_extract_tests.hpp"
+#include <vector>
 
 void matrix_test::SetUp()
 {
@@ -162,7 +161,7 @@ TEST_F(matrix_test, extract_column_test)
     const double c2[] = {1.354541, -354541, 39554541.6456, -354541, 354541.982, 354541.982};
     const float c3[] = {872421.31, 87842131, -878.42131, 474752131, -472742131.648, -47425131.648};
     const int c4[] = {876121982, -7122131, 7122131, 57122131, 57121931, 5712131};
-    
+
     const std::vector<size_t> col1_ref(c1, c1 + sizeof(c1) / sizeof(size_t));
     const std::vector<double> col2_ref(c2, c2 + sizeof(c2) / sizeof(double));
     const std::vector<float> col3_ref(c3, c3 + sizeof(c3) / sizeof(float));

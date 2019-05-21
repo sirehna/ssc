@@ -2,16 +2,15 @@
  * for_all.hpp
  *
  * \date 19 juil. 2013, 12:09:00
- *  \author cec
+ * \author cec
  */
 
 #ifndef FOR_ALL_HPP_
 #define FOR_ALL_HPP_
 
+#include "Exception.hpp"
 #include <algorithm>
 #include <functional>
-
-#include "Exception.hpp"
 
 class For_all_exception : public Exception
 {

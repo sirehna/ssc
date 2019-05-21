@@ -1,7 +1,6 @@
 #ifndef __SIR_STATE_GENERATOR_TEST__
 #define __SIR_STATE_GENERATOR_TEST__
 
-
 #include "gtest/gtest.h"
 #include "ssc/random_data_generator/DataGenerator.hpp"
 

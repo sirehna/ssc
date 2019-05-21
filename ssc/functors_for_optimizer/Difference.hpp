@@ -1,8 +1,8 @@
 /*
  * Difference.hpp
  *
- * \date 1 f�vr. 2013, 09:22:47
- *  \author cec
+ * \date 1 févr. 2013, 09:22:47
+ * \author cec
  */
 
 #ifndef DIFFERENCE_HPP_

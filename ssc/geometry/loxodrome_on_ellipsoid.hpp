@@ -1,8 +1,8 @@
 /*
  * loxodrome_on_ellipsoid.hpp
  *
- *  Created on: May 12, 2014
- *      Author: cady
+ * \date May 12, 2014
+ * \author cec
  */
 
 #ifndef LOXODROME_ON_ELLIPSOID_HPP_
@@ -12,7 +12,7 @@ namespace ssc
 {
     namespace geometry
     {
-        /**  \author cec
+        /** \author cec
           *  \date May 13, 2014, 9:23:50 AM
           *  \brief Computes the azimuth of a loxodrome between two points P1 & P2
           *         on an ellipsoid.
@@ -26,7 +26,7 @@ namespace ssc
                                     const double lon_P2  //!< Longitude of P2 (in radians)
                                );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 13, 2014, 9:13:15 AM
           *  \brief Computes the isometric latitude on an ellipsoid of excentricity e.
           *  \details Equal increments of the isometric latitude give rise to equal
@@ -38,7 +38,7 @@ namespace ssc
                                   const double phi //!< Latitude of the point under consideration (in radians)
                                  );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 15, 2014, 11:47:15 AM
           *  \brief Computes the isometric latitude on the WGS84.
           *  \details Equal increments of the isometric latitude give rise to equal
@@ -49,7 +49,7 @@ namespace ssc
         double isometric_latitude(const double phi //!< Latitude of the point under consideration (in radians)
                                  );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 13, 2014, 8:55:58 AM
           *  \brief Computes the meridian distance to a point on an ellipsoid.
           *  \details Length of the arc of the meridian on an ellipsoid to a point in
@@ -63,7 +63,7 @@ namespace ssc
                                  const double phi   //!< Latitude of the point (in radians)
                                  );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 12, 2014, 5:20:00 PM
           *  \brief Solves the inverse loxodrome problem.
           *  \details Computes the arc length s12 along the loxodrome curve between P1
@@ -83,7 +83,7 @@ namespace ssc
                                double& az12         //!< Calculated loxodrome azimuth (in radians)
                                );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 12, 2014, 5:20:00 PM
           *  \brief Solves the inverse loxodrome problem on the WGS84.
           *  \details Computes the arc length s12 along the loxodrome curve between P1
@@ -99,7 +99,7 @@ namespace ssc
                                double& az12         //!< Calculated loxodrome azimuth (in radians)
                                );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 13, 2014, 10:54:09 AM
           *  \brief Computes coordinates of a point at a given distance of another.
           *  \details Given latitude and longitude of a point P1, the azimuth az12 of a
@@ -118,7 +118,7 @@ namespace ssc
                               const double az12    //!< Loxodrome azimuth (in radians)
                 );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 13, 2014, 10:54:09 AM
           *  \brief Solves the direct loxodrome problem on the WGS84.
           *  \details Given latitude and longitude of a point P1, the azimuth az12 of a
@@ -135,7 +135,7 @@ namespace ssc
                               const double az12    //!< Loxodrome azimuth (in radians)
                 );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 15, 2014, 10:28:00 AM
           *  \brief Calculates the latitude corresponding to an isometric latitude
           *  \details Solves the equation q(phi) = q0 for phi.
@@ -146,7 +146,7 @@ namespace ssc
                                                       const double q   //!< Isometric latitude to convert (in radians)
                                                       );
 
-        /**  \author cec
+        /** \author cec
           *  \date May 15, 2014, 10:28:00 AM
           *  \brief Calculates the latitude corresponding to an isometric latitude on the WGS84
           *  \details Solves the equation q(phi) = q0 for phi, on the WGS84.

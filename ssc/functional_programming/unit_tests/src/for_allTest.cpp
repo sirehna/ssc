@@ -2,7 +2,7 @@
  * for_allTest.cpp
  *
  * \date 19 juil. 2013, 11:52:33
- *  \author cec
+ * \author cec
  */
 
 #include "for_allTest.hpp"

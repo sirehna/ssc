@@ -1,8 +1,8 @@
 /*
  * KinematicTreeTest.cpp
  *
- *  Created on: 23 avr. 2014
- *      Author: cady
+ * \date 23 avr. 2014
+ * \author cec
  */
 
 

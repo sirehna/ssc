@@ -1,8 +1,8 @@
 /*
  * PiecewiseConstantFunctor.cpp
  *
- * \date 18 f�vr. 2013, 17:29:41
- *  \author cec
+ * \date 18 févr. 2013, 17:29:41
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/PiecewiseConstantFunctor.hpp"

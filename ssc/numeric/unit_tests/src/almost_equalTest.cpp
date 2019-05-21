@@ -2,15 +2,13 @@
  * almost_equalTest.cpp
  *
  * \date 26 nov. 2013, 08:41:34
- *  \author cec
+ * \author cec
  */
 
+#include "ssc/numeric/almost_equal.hpp"
+#include "almost_equalTest.hpp"
 #include <cmath>
 #include <limits>
-
-#include "almost_equalTest.hpp"
-
-#include "ssc/numeric/almost_equal.hpp"
 
 almost_equalTest::almost_equalTest() : a(ssc::random_data_generator::DataGenerator(7214222))
 {

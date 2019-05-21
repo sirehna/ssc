@@ -2,7 +2,7 @@
  * LPSolverException.hpp
  *
  * \date 20 nov. 2013, 16:09:25
- *  \author cec
+ * \author cec
  */
 
 #ifndef LPSOLVEREXCEPTION_HPP_

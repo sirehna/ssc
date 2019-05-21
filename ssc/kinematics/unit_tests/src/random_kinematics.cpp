@@ -1,10 +1,9 @@
 /*
  * random_kinematics.cpp
  *
- *  Created on: 23 avr. 2014
- *      Author: cady
+ * \date 23 avr. 2014
+ * \author cec
  */
-
 
 #include "random_kinematics.hpp"
 #include "ssc/random_data_generator/DataGenerator.hpp"

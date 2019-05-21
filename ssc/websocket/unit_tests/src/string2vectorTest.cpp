@@ -1,8 +1,8 @@
 /*
  * vector2stringTest.cpp
  *
- *  Created on: May 5, 2015
- *      Author: cady
+ * \date May 5, 2015
+ * \author cec
  */
 
 

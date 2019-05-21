@@ -1,8 +1,8 @@
 /*
  * FunctorAlgebra.hpp
  *
- * \date 1 f�vr. 2013, 15:29:46
- *  \author cec
+ * \date 1 févr. 2013, 15:29:46
+ * \author cec
  */
 
 #ifndef FUNCTORALGEBRA_HPP_

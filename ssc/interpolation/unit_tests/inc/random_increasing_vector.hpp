@@ -2,7 +2,7 @@
  * random_increasing_vector.hpp
  *
  * \date 11 avr. 2013, 08:54:45
- *  \author cec
+ * \author cec
  */
 
 #ifndef RANDOM_INCREASING_VECTOR_HPP_

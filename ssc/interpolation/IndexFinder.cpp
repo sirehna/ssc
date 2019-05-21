@@ -2,14 +2,13 @@
  * IndexFinder.cpp
  *
  * \date 10 sept. 2013, 10:03:21
- *  \author cec
+ * \author cec
  */
 
+#include "ssc/interpolation/IndexFinder.hpp"
 #include <algorithm> // std::min, std::max
 #include <cfloat>
 #include <sstream>
-
-#include "ssc/interpolation/IndexFinder.hpp"
 
 using namespace ssc::interpolation;
 

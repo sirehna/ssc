@@ -2,11 +2,8 @@
  * SplineTest.cpp
  *
  * \date 8 juin 2012, 17:07:12
- *  \author cec
+ * \author cec
  */
-
-#include <cmath>
-#include <algorithm>
 
 #include "SplinesTest.hpp"
 #include "ssc/macros/extra_test_assertions.hpp"
@@ -18,6 +15,8 @@
 #include "ssc/interpolation/SplineVariableStep.hpp"
 #include "ssc/interpolation/PiecewiseConstantVariableStep.hpp"
 
+#include <cmath>
+#include <algorithm>
 #define PI 4.*atan(1.)
 #define EPS 1E-8
 

@@ -1,13 +1,13 @@
 /*
-* InternalIpopt.cpp
-*
-* \date 25 fevr. 2013, 10:03:00
-*  \author cec
-*/
+ * InternalIpopt.cpp
+ *
+ * \date 25 fevr. 2013, 10:03:00
+ * \author cec
+ */
 
 #include "InternalIpopt.hpp"
-#include "ssc/functors_for_optimizer/State.hpp"
 #include "IpIpoptData.hpp"
+#include "ssc/functors_for_optimizer/State.hpp"
 #include "ssc/ipopt_interface/IpoptParameters.hpp"
 #include <sstream>
 #include <iomanip> //std::set_precision

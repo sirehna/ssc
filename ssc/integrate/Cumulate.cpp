@@ -2,14 +2,12 @@
  * Cumulate.cpp
  *
  * \date 8 oct. 2013, 08:22:31
- *  \author cec
+ * \author cec
  */
-
-//#include <vector>
-#include <list>
 
 #include "Cumulate.hpp"
 #include "ssc/pimpl_idiom/generic_pimpl_implementation.hpp"
+#include <list>
 
 class ssc::integrate::Cumulate::Impl
 {

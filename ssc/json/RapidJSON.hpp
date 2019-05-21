@@ -1,9 +1,8 @@
 #ifndef RAPIDJSONHPP
 #define RAPIDJSONHPP
 
-#include <string>
-
 #include "rapidjson/document.h"
+#include <string>
 
 namespace ssc
 {

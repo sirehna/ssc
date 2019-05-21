@@ -2,7 +2,7 @@
  * LinearInterpolationTest.cpp
  *
  * \date 8 nov. 2012, 14:31:52
- *  \author cec
+ * \author cec
  */
 
 #include "LinearInterpolationTest.hpp"

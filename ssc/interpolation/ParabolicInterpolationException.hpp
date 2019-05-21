@@ -2,7 +2,7 @@
  * ParabolicInterpolationException.hpp
  *
  * \date 12 juin 2013, 16:14:58
- *  \author cec
+ * \author cec
  */
 
 #ifndef PARABOLICINTERPOLATIONEXCEPTION_HPP_

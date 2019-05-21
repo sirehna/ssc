@@ -1,16 +1,14 @@
 /*
  * Burcher.cpp
  *
- *  Created on: Dec 11, 2014
- *      Author: cady
+ * \date Dec 11, 2014
+ * \author cec
  */
 
-#include <cmath>
-
+#include "ssc/integrate/Burcher.hpp"
+#include "ssc/macros/test_macros.hpp"
 #include <boost/math/special_functions/sinc.hpp>
-
-#include <ssc/integrate/Burcher.hpp>
-#include <ssc/macros/test_macros.hpp>
+#include <cmath>
 
 ssc::integrate::Burcher::Burcher() : Integrator() , tau(0)
 {

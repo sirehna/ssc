@@ -2,7 +2,7 @@
  * SplineVariableStepTest.cpp
  *
  * \date 9 sept. 2013, 10:46:50
- *  \author cec
+ * \author cec
  */
 
 #include "SplineVariableStepTest.hpp"

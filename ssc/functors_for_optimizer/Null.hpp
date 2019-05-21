@@ -2,7 +2,7 @@
  * Null.hpp
  *
  * \date 29 janv. 2013, 09:40:10
- *  \author cec
+ * \author cec
  */
 
 #ifndef NULL_HPP_

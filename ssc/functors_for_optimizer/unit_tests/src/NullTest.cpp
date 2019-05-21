@@ -2,7 +2,7 @@
  * NullTest.cpp
  *
  * \date 31 janv. 2013, 15:16:28
- *  \author cec
+ * \author cec
  */
 
 #include "NullTest.hpp"

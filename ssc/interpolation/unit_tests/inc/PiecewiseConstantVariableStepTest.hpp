@@ -2,7 +2,7 @@
  * PiecewiseConstantVariableStep.hpp
  *
  * \date 11 avr. 2013, 08:44:04
- *  \author cec
+ * \author cec
  */
 
 #ifndef PIECEWISECONSTANTVARIABLESTEPTEST_HPP_

@@ -2,7 +2,7 @@
  * NullTest.hpp
  *
  * \date 31 janv. 2013, 15:16:38
- *  \author cec
+ * \author cec
  */
 
 #ifndef NULLTEST_HPP_

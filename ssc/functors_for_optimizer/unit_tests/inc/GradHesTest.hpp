@@ -1,8 +1,8 @@
 /*
  * GradHesTest.hpp
  *
- * \date 20 f�vr. 2013, 11:46:39
- *  \author cec
+ * \date 20 févr. 2013, 11:46:39
+ * \author cec
  */
 
 #ifndef GRADHESTEST_HPP_

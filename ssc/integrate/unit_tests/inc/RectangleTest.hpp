@@ -1,15 +1,15 @@
 /*
  * RectangleTest.hpp
  *
- *  Created on: Nov 28, 2014
- *      Author: cady
+ * \date Nov 28, 2014
+ * \author cec
  */
 
 #ifndef RECTANGLETEST_HPP_
 #define RECTANGLETEST_HPP_
 
 #include "gtest/gtest.h"
-#include <ssc/random_data_generator/DataGenerator.hpp>
+#include "ssc/random_data_generator/DataGenerator.hpp"
 
 class RectangleTest : public ::testing::Test
 {

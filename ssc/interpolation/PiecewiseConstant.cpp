@@ -1,14 +1,14 @@
 /*
  * PiecewiseConstant.cpp
  *
- * \date 18 f�vr. 2013, 13:07:18
- *  \author cec
+ * \date 18 févr. 2013, 13:07:18
+ * \author cec
  */
-#include <algorithm> // std::min, std::max
-#include <cmath>
 
 #include "ssc/interpolation/PiecewiseConstant.hpp"
 #include "ssc/interpolation/PiecewiseConstantException.hpp"
+#include <algorithm> // std::min, std::max
+#include <cmath>
 
 using namespace ssc::interpolation;
 

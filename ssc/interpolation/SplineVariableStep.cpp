@@ -2,16 +2,15 @@
  * SplineVariableStep.cpp
  *
  * \date 9 sept. 2013, 10:47:42
- *  \author cec
+ * \author cec
  */
-
-#include <sstream>
-#include <list>
-#include <algorithm> //std::sort
 
 #include "ssc/interpolation/PiecewiseConstantVariableStep.hpp"
 #include "ssc/interpolation/SplineVariableStep.hpp"
 #include "ssc/interpolation/SplinesException.hpp"
+#include <sstream>
+#include <list>
+#include <algorithm> //std::sort
 
 using namespace ssc::interpolation;
 

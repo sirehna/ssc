@@ -2,13 +2,11 @@
  * LinearInterpolation.cpp
  *
  * \date 8 nov. 2012, 14:32:11
- *  \author cec
+ * \author cec
  */
 
-
-#include <cmath>
-
 #include "ssc/interpolation/LinearInterpolation.hpp"
+#include <cmath>
 
 using namespace ssc::interpolation;
 

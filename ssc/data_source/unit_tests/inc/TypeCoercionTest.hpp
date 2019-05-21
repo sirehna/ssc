@@ -2,7 +2,7 @@
  * TypeCoercionTest.hpp
  *
  * \date 17 juin 2013, 14:54:02
- *  \author cec
+ * \author cec
  */
 
 #ifndef TYPECOERCIONTEST_HPP_

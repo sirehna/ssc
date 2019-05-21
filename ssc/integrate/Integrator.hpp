@@ -2,7 +2,7 @@
  * Integrator.hpp
  *
  * \date 5 juin 2013, 16:07:13
- *  \author cec
+ * \author cec
  */
 
 #ifndef INTEGRATOR_HPP_
@@ -13,7 +13,7 @@ typedef std::function<double (const double&)> Function;
 /** \author cec
  *  \ingroup MODULE_NAME
  *  \brief Responsibility
- *  \details 
+ *  \details
  *  \section ex1 Example
  *  \snippet MODULE_NAME/unit_tests/src/IntegratorTest.cpp IntegratorTest example
  *  \section ex2 Expected output

@@ -2,7 +2,7 @@
  * LongitudeLatitudeGenerators.cpp
  *
  * \date 27 mars 2013, 16:22:14
- *  \author cec
+ * \author cec
  */
 
 #include "LatitudeLongitudeGenerators.hpp"

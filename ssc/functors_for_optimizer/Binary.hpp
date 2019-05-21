@@ -2,7 +2,7 @@
  * Binary.hpp
  *
  * \date 31 janv. 2013, 16:06:42
- *  \author cec
+ * \author cec
  */
 
 #ifndef BINARY_HPP_

@@ -1,8 +1,8 @@
 /*
  * Difference.cpp
  *
- * \date 1 f�vr. 2013, 09:22:47
- *  \author cec
+ * \date 1 févr. 2013, 09:22:47
+ * \author cec
  */
 
 #include "ssc/functors_for_optimizer/Difference.hpp"

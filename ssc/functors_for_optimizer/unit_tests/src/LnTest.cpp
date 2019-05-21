@@ -1,13 +1,13 @@
 /*
  * LnTest.cpp
  *
- * \date 1 f�vr. 2013, 12:28:55
- *  \author cec
+ * \date 1 févr. 2013, 12:28:55
+ * \author cec
  */
 
 #include "LnTest.hpp"
-#include <cmath>
 #include "ssc/functors_for_optimizer/Ln.hpp"
+#include <cmath>
 
 using namespace ssc::functors_for_optimizer;
 

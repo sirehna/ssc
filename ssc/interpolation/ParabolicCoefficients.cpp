@@ -1,8 +1,8 @@
 /*
  * ParabolicCoefficients.cpp
  *
- * \date 19 f�vr. 2013, 11:20:52
- *  \author cec
+ * \date 19 févr. 2013, 11:20:52
+ * \author cec
  */
 
 #include "ssc/interpolation/ParabolicCoefficients.hpp"

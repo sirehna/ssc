@@ -2,7 +2,7 @@
  * Multiply.hpp
  *
  * \date 23 janv. 2013, 08:29:31
- *  \author cec
+ * \author cec
  */
 
 #ifndef MULTIPLY_HPP_

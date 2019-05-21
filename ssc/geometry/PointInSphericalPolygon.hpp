@@ -2,7 +2,7 @@
  * PointInSphericalPolygon.hpp
  *
  * \date 27 mars 2013, 15:57:14
- *  \author cec
+ * \author cec
  */
 
 #ifndef POINTINSPHERICALPOLYGON_HPP_

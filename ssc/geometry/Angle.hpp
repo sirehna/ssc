@@ -2,7 +2,7 @@
  * Angle.hpp
  *
  * \date 14 mars 2013, 10:49:16
- *  \author cec
+ * \author cec
  */
 
 #ifndef ANGLE_HPP_
