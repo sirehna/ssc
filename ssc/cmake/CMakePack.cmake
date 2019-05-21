@@ -102,6 +102,7 @@ IF(UNIX OR MINGW)
     INCLUDE(CPack)
 ENDIF()
 
+MESSAGE(STATUS "ConfigPackageLocation = ${ConfigPackageLocation}")
 IF(TARGET ${PROJECT_NAME}Targets)
     SET(CPACK_COMPONENTS_ALL ${ALL_SSC_COMPONENTS})
     INSTALL(
@@ -109,8 +110,8 @@ IF(TARGET ${PROJECT_NAME}Targets)
         FILE ${PROJECT_NAME}Targets.cmake
         DESTINATION ${ConfigPackageLocation}
     )
-    INSTALL(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
-        DESTINATION ${ConfigPackageLocation}
-        )
 ENDIF()
+INSTALL(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+    DESTINATION ${ConfigPackageLocation}
+    )
