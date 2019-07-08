@@ -47,6 +47,14 @@ matrix:
         - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
         - BOOST_ROOT=/opt/boost
         - CREATE_INDIVIDUAL_LIBRARIES=True
+    - name: "Debian 10 release"
+      env:
+        - BUILD_TYPE=Release
+        - BUILD_DIR=build_deb10
+        - CPACK_GENERATOR=DEB
+        - DOCKER_IMAGE=sirehna/base-image-debian10-gcc8
+        - BOOST_ROOT=/opt/boost
+        - CREATE_INDIVIDUAL_LIBRARIES=True
     - name: "Centos 7.5 Gcc 485 release"
       env:
         - BUILD_TYPE=Release
@@ -188,6 +196,13 @@ after_success:
   shasum -a256 ssc/$BUILD_DIR/ssc.deb;
   cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian9_gcc8_amd64.deb;
   fi
+- if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_deb10" ];
+  then
+  echo "Fetching generated deb";
+  ls -altr ssc/$BUILD_DIR/ssc.deb;
+  shasum -a256 ssc/$BUILD_DIR/ssc.deb;
+  cp ssc/$BUILD_DIR/ssc.deb ssc_binary_debian10_amd64.deb;
+  fi
 - if [ "$TRAVIS_TAG" ] && [ "$BUILD_TYPE" == "Release" ] && [ "$BUILD_DIR" == "build_win32threads" ];
   then
   echo "Fetching generated zip";
@@ -222,6 +237,7 @@ deploy:
   #  - ssc_binary_debian8_amd64.deb
   #  - ssc_binary_debian9_amd64.deb
   #  - ssc_binary_debian9_gcc8_amd64.deb
+  #  - ssc_binary_debian10_amd64.deb
   #  - ssc_binary_windows_64.zip
   on:
     tags: true
