@@ -47,6 +47,14 @@ matrix:
         - DOCKER_IMAGE=sirehna/base-image-debian9-gcc820
         - BOOST_ROOT=/opt/boost
         - CREATE_INDIVIDUAL_LIBRARIES=True
+    - name: "Debian 10 release"
+      env:
+        - BUILD_TYPE=Release
+        - BUILD_DIR=build_deb10
+        - CPACK_GENERATOR=DEB
+        - DOCKER_IMAGE=sirehna/base-image-debian10-gcc8
+        - BOOST_ROOT=/opt/boost
+        - CREATE_INDIVIDUAL_LIBRARIES=True
     - name: "Centos 7.5 Gcc 485 release"
       env:
         - BUILD_TYPE=Release
