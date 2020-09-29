@@ -25,16 +25,6 @@ class Linear
         {
         }
 
-        Linear& operator=(const Linear& rhs)
-        {
-            if (this != &rhs)
-            {
-                slope = rhs.slope;
-                intersection_with_origin = rhs.intersection_with_origin;
-            }
-            return *this;
-        }
-
         double slope;
         double intersection_with_origin;
 };

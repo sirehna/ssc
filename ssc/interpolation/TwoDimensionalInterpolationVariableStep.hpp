@@ -33,12 +33,11 @@ namespace ssc
         {
             public:
                 TwoDimensionalInterpolationVariableStep();
-                TwoDimensionalInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y, const std::vector<std::vector<double> >& M, const bool allow_queries_outside_bounds = false);
+                TwoDimensionalInterpolationVariableStep(const std::vector<double>& x, const std::vector<double>& y, const std::vector<std::vector<double> >& M);
                 double f(const double x0, const double y0);
 
             private:
                 std::vector<LinearInterpolationVariableStep> y_interpolators_for_each_x;
-                bool allow_queries_outside_bounds;
                 std::vector<double> x;
         };
     }
