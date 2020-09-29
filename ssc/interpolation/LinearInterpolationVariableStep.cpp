@@ -19,6 +19,8 @@ class Linear
         {
         }
 
+        Linear(const Linear&) = default;
+
         Linear(const double& slope_, const double& intersection_with_origin_) : slope(slope_), intersection_with_origin(intersection_with_origin_)
         {
         }
