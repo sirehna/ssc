@@ -19,3 +19,6 @@
 [submodule "ssc/geographiclib"]
 	path = ssc/geographiclib
 	url = ../../ThirdParty/geographiclib.git
+[submodule "dockcross"]
+	path = dockcross
+	url = ../../sirehna/dockcross

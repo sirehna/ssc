@@ -20,6 +20,7 @@ lint:
 build:windows:
    stage: build
    script:
+     - docker build -t mydockcross/windows-x64 dockcross/windows_x64
      - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
           /bin/bash -c "mkdir /opt/share/.wine &&
                         export WINEPREFIX=/opt/share/.wine &&
