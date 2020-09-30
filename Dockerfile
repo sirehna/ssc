@@ -36,7 +36,7 @@ RUN mkdir -p /opt
 WORKDIR /opt
 
 RUN mkdir -p /opt/cmake && \
-    wget https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.sh -O cmake.sh && \
+    wget https://cmake.org/files/v3.18/cmake-3.18.3-Linux-x86_64.sh -O cmake.sh && \
     sh ./cmake.sh --exclude-subdir --prefix=/opt/cmake && \
     rm -rf cmake.sh
 ENV PATH="/opt/cmake/bin:${PATH}"
