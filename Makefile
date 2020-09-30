@@ -44,6 +44,7 @@ cmake:
 			  /shared/ssc
 
 windows:
+	docker build -t mydockcross/windows-x64 dockcross/windows_x64
 	mkdir -p ssc/build_windows
 	docker run \
 		--rm \
