@@ -42,7 +42,7 @@ RUN mkdir -p /opt/cmake && \
 ENV PATH="/opt/cmake/bin:${PATH}"
 
 # HDF5 with fortran support - No HDF5 V1.10 that does not work with eigen3-hdf5
-RUN wget https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.20.tar.gz -O hdf5_src.tar.gz && \
+RUN wget https://support.hdfgroup.org/ftp/HDF5/current18/src/hdf5-1.8.21.tar.gz -O hdf5_src.tar.gz && \
     mkdir -p HDF5_SRC && \
     tar -xf hdf5_src.tar.gz --strip 1 -C HDF5_SRC && \
     mkdir -p HDF5_build && \
