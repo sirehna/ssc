@@ -9,30 +9,22 @@ stages:
 lint:
    stage: lint
    script:
-     # Check for tabs
-     - cd ssc &&
-       if grep --recursive --include={*.cpp,*.c,*.hpp,*.h,*.md,*.yml,*.cmake.*.xml,*.html,*.in,*.txt}
-               --exclude-dir={eigen,f2c,gcovr,geographiclib,gmock,google-test,gtest,websocketpp,yaml-cpp,geometry,integrate,interpolation,rapidjson} -P "\t" . ;
-       then echo "Tabs found in the lines shown above."; false;
-       else echo "Repo passed no-tabs check."; fi &&
-       cd ..
+     - make lint
 
 build:windows:
    stage: build
    script:
-     - docker build -t mydockcross/windows-x64 dockcross/windows_x64
-     - make windows
-     - docker run --rm -u $( id -u $USER ):$( id -g $USER ) -v $(pwd):/opt/share -w /opt/share mydockcross/windows-x64
-          /bin/bash -c "mkdir -p /opt/share/.wine && export WINEPREFIX=/opt/share/.wine && wine winecfg && wine ./run_all_tests --gtest_filter=-WebSocketObserverTest*"
+     - make windows_posixthreads
+     - mv ssc/build_win/ssc.zip .
    artifacts:
      paths:
      - ssc.zip
 
-build:debian:
+build debian 10 with gcc 8:
    stage: build
    script:
-     - docker build --build-arg TOKEN="JOB_TOKEN:$CI_JOB_TOKEN" . -t ssc
-     - make package
+     - make debian_10_release_gcc_8
+     - mv ssc/build_deb10/ssc.deb .
    artifacts:
      paths:
      - ssc.deb
