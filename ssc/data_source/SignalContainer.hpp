@@ -54,7 +54,7 @@ namespace ssc
                     ConstSignalIterator it = signals_.begin();
                     for (;it!=signals_.end();++it)
                     {
-                        const TypedSignalName s = it->first;
+                        const TypedSignalName& s = it->first;
                         if ((s.get_signal_name() == name.get_signal_name()) or (s.get_type_name() == name.get_type_name()))
                         {
                             ret.push_back(s);
