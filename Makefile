@@ -146,3 +146,11 @@ windows_test:
 
 clean:
 	rm -rf ssc/build_*
+
+lint:
+	@cd ssc && \
+	if grep --recursive --include={*.cpp,*.c,*.hpp,*.h,*.md,*.yml,*.cmake.*.xml,*.html,*.in,*.txt} \
+	        --exclude-dir={eigen,f2c,gcovr,geographiclib,gmock,google-test,gtest,websocketpp,yaml-cpp,geometry,integrate,interpolation,rapidjson} -P "\t" . ; \
+	then echo "Tabs found in the lines shown above."; false; \
+	else echo "Repo passed no-tabs check."; fi && \
+	cd ..
