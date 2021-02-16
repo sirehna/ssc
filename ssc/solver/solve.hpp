@@ -27,10 +27,9 @@ namespace ssc
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
-            int i = 0;
-            const double dt = scheduler.get_step();
             while(scheduler.has_more_time_events())
             {
+                const double dt = scheduler.get_step();
                 const double t = scheduler.get_time();
                 stepper.do_step(sys, sys.state, t, dt);
                 if (event_handler.detected_state_events())
@@ -38,7 +37,7 @@ namespace ssc
                     event_handler.locate_event();
                     event_handler.run_event_actions();
                 }
-                scheduler.add_time_event(tstart + (++i)*dt);
+                scheduler.advance_to_next_time_event();
                 observer.observe(sys, scheduler.get_time());
             }
         }
@@ -65,12 +64,13 @@ namespace ssc
                         event_handler.locate_event();
                         event_handler.run_event_actions();
                     }
-                    scheduler.add_time_event(t+dt);
+                    scheduler.advance_to_next_time_event();
                     observer.observe(sys, t);
                 }
                 else
                 {
                     scheduler.add_time_event(t + dt/2);
+                    scheduler.advance_to_next_time_event();
                 }
             }
         }

@@ -20,6 +20,7 @@ class ODEMocks
 {
     public:
         ODEMocks(){}
+        MOCK_METHOD0(advance_to_next_time_event, void());
         MOCK_METHOD3(model_function, void(const std::vector<double>&, std::vector<double>&, double ));
         MOCK_METHOD2(observe, void(const SystemWithMock&, const double));
         MOCK_METHOD4(do_step, void(SystemWithMock& sys, std::vector<double>& , double , double ));
@@ -111,6 +112,11 @@ class SchedulerWithMock
         double get_step() const
         {
             return mock.get_step();
+        }
+
+        void advance_to_next_time_event()
+        {
+            mock.advance_to_next_time_event();
         }
 
     private:
