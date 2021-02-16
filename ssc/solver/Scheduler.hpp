@@ -40,7 +40,9 @@ namespace ssc
                     }
                 }
 
-                bool has_more_time_events() const
+                virtual ~Scheduler() = default;
+
+                virtual bool has_more_time_events() const
                 {
                     return not(scheduled_time_events.empty());
                 }
@@ -50,7 +52,7 @@ namespace ssc
                  *
                  * @return Callbacks to run to update the discrete states (e.g. one updater per controller).
                  */
-                std::vector<Callback> get_discrete_state_updaters_to_run()
+                virtual std::vector<Callback> get_discrete_state_updaters_to_run()
                 {
                     std::vector<Callback> updaters_to_run;
                     std::vector<std::pair<double, Callback> > remaining_updaters;
@@ -71,7 +73,7 @@ namespace ssc
                     return updaters_to_run;
                 }
 
-                void add_time_event(const double t)
+                virtual void add_time_event(const double t)
                 {
                     if (t <=tend)
                     {
@@ -80,12 +82,12 @@ namespace ssc
                     }
                 }
 
-                void schedule_discrete_state_update(const double t, const Callback& updater)
+                virtual void schedule_discrete_state_update(const double t, const Callback& updater)
                 {
                     discrete_state_updaters.push_back(std::make_pair(t, updater));
                 }
 
-                void advance_to_next_time_event()
+                virtual void advance_to_next_time_event()
                 {
                     if (not(scheduled_time_events.empty()))
                     {
@@ -94,12 +96,12 @@ namespace ssc
                     }
                 }
 
-                double get_time() const
+                virtual double get_time() const
                 {
                     return current_time;
                 }
 
-                double get_step() const
+                virtual double get_step() const
                 {
                     if (not(scheduled_time_events.empty()))
                     {

@@ -15,6 +15,8 @@
 #include <functional>
 #include <vector>
 
+#include "ssc/solver/Scheduler.hpp"
+
 class SystemWithMock;
 
 class ODEMocks
@@ -69,10 +71,10 @@ template <typename SystemType> class ObserverWithMock
         ODEMocks& mock;
 };
 
-class SchedulerWithMock
+class SchedulerWithMock : public ssc::solver::Scheduler
 {
     public:
-        SchedulerWithMock(ODEMocks& mock_) : mock(mock_), first_run(new bool(true)){}
+        SchedulerWithMock(ODEMocks& mock_) : ssc::solver::Scheduler(0,0,0), mock(mock_), first_run(new bool(true)){}
         bool has_more_time_events() const
         {
             mock.has_more_time_events();
@@ -105,7 +107,7 @@ class SchedulerWithMock
             return std::vector<Callback>();
         }
 
-        SchedulerWithMock(const SchedulerWithMock& rhs) : mock(rhs.mock), first_run(new bool(*(rhs.first_run)))
+        SchedulerWithMock(const SchedulerWithMock& rhs) : ssc::solver::Scheduler(0,0,0), mock(rhs.mock), first_run(new bool(*(rhs.first_run)))
         {
 
         }
