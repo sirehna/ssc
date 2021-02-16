@@ -10,7 +10,6 @@
 
 #include "ssc/solver/DefaultEventHandler.hpp"
 #include "ssc/solver/DefaultScheduler.hpp"
-#include "ssc/solver/detection_of_state_update_methods.hpp"
 
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 
@@ -39,7 +38,6 @@ namespace ssc
                     event_handler.locate_event();
                     event_handler.run_event_actions();
                 }
-                update<SystemType, can<SystemType>::update_discrete_states>::if_possible(sys);
                 scheduler.add_time_event(tstart + (++i)*dt);
                 observer.observe(sys, scheduler.get_time());
             }
@@ -67,7 +65,6 @@ namespace ssc
                         event_handler.locate_event();
                         event_handler.run_event_actions();
                     }
-                    update<SystemType, can<SystemType>::update_discrete_states>::if_possible(sys);
                     scheduler.add_time_event(t+dt);
                     observer.observe(sys, t);
                 }

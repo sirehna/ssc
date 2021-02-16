@@ -14,30 +14,29 @@
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 #include <vector>
 
-class SystemWithMockButNoUpdate;
+class SystemWithMock;
 
 class ODEMocks
 {
     public:
         ODEMocks(){}
         MOCK_METHOD3(model_function, void(const std::vector<double>&, std::vector<double>&, double ));
-        MOCK_METHOD2(observe, void(const SystemWithMockButNoUpdate&, const double));
-        MOCK_METHOD4(do_step, void(SystemWithMockButNoUpdate& sys, std::vector<double>& , double , double ));
-        MOCK_METHOD4(try_step, boost::numeric::odeint::controlled_step_result(SystemWithMockButNoUpdate& sys, std::vector<double>& , double , double ));
+        MOCK_METHOD2(observe, void(const SystemWithMock&, const double));
+        MOCK_METHOD4(do_step, void(SystemWithMock& sys, std::vector<double>& , double , double ));
+        MOCK_METHOD4(try_step, boost::numeric::odeint::controlled_step_result(SystemWithMock& sys, std::vector<double>& , double , double ));
         MOCK_CONST_METHOD0(has_more_time_events, bool());
         MOCK_CONST_METHOD0(get_time, double());
         MOCK_CONST_METHOD0(get_step, double());
         MOCK_CONST_METHOD0(detected_state_events, bool());
-        MOCK_CONST_METHOD0(update_discrete_states, void());
         MOCK_CONST_METHOD1(add_time_event, void(const double));
         MOCK_CONST_METHOD0(locate_event, void());
         MOCK_CONST_METHOD0(run_event_actions, void());
 };
 
-class SystemWithMockButNoUpdate
+class SystemWithMock
 {
     public:
-        SystemWithMockButNoUpdate(ODEMocks& mock_) : mock(mock_){}
+        SystemWithMock(ODEMocks& mock_) : mock(mock_){}
         void operator()(const std::vector<double>& x, std::vector<double>& dx_dt, double t)
         {
             mock.model_function(x, dx_dt, t);
@@ -49,23 +48,9 @@ class SystemWithMockButNoUpdate
         ODEMocks& mock;
 
     private:
-        SystemWithMockButNoUpdate();
+        SystemWithMock();
 
 
-};
-
-class SystemWithMockAndStateUpdate : public SystemWithMockButNoUpdate
-{
-    public:
-        SystemWithMockAndStateUpdate(ODEMocks& mock_) : SystemWithMockButNoUpdate(mock_){}
-
-        void update_discrete_states()
-        {
-            mock.update_discrete_states();
-        }
-
-    private:
-        SystemWithMockAndStateUpdate();
 };
 
 template <typename SystemType> class ObserverWithMock
@@ -163,7 +148,7 @@ class ExplicitStepperWithMock
 {
     public:
         ExplicitStepperWithMock(ODEMocks& mock_) : mock(mock_){}
-        void do_step(SystemWithMockButNoUpdate& sys, std::vector<double>& x, double t, double dt)
+        void do_step(SystemWithMock& sys, std::vector<double>& x, double t, double dt)
         {
             mock.do_step(sys,x,t,dt);
         }
@@ -178,7 +163,7 @@ class ControlledStepperWithMock
     public:
         ControlledStepperWithMock(ODEMocks& mock_) : mock(mock_){}
 
-        boost::numeric::odeint::controlled_step_result try_step(SystemWithMockButNoUpdate& sys, std::vector<double>& x, double t, double dt)
+        boost::numeric::odeint::controlled_step_result try_step(SystemWithMock& sys, std::vector<double>& x, double t, double dt)
         {
             return mock.try_step(sys,x,t,dt);
         }

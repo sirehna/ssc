@@ -22,14 +22,6 @@ struct SimpleODE
         dxdt[0] = 2;//*t;//2*x[0];
     }
 
-    void update_discrete_states()
-    {
-    }
-
-    void update_continuous_states()
-    {
-    }
-
     StateType state;
 };
 
