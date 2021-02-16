@@ -91,9 +91,9 @@ namespace ssc
         void quicksolve(SystemType& sys, const double t0, const double tend, double dt, ObserverType& observer)
         {
             StepperType stepper;
-            DefaultScheduler scheduler(t0, tend, dt);
+            Scheduler scheduler(t0, tend, dt);
             DefaultEventHandler event_handler;
-            solve_for_constant_step<StepperType,SystemType,ObserverType,DefaultScheduler,DefaultEventHandler>(sys,observer,stepper,scheduler,event_handler);
+            solve_for_constant_step<StepperType,SystemType,ObserverType,Scheduler,DefaultEventHandler>(sys,observer,stepper,scheduler,event_handler);
         }
     }
 }

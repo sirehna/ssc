@@ -16,11 +16,11 @@ namespace ssc
 {
     namespace solver
     {
-        class DefaultScheduler
+        class Scheduler
         {
             public:
                 typedef std::function<void(const double t, const std::vector<double>& x)> Callback;
-                DefaultScheduler(const double tstart, const double tend_, const double dt)
+                Scheduler(const double tstart, const double tend_, const double dt)
                         : current_time(tstart)
                         , scheduled_time_events()
                         , discrete_state_updaters()
@@ -110,7 +110,7 @@ namespace ssc
                 }
 
             private:
-                DefaultScheduler();
+                Scheduler();
                 double current_time;
                 std::list<double> scheduled_time_events;
                 std::vector<std::pair<double, Callback> > discrete_state_updaters;
