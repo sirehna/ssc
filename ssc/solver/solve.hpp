@@ -37,6 +37,11 @@ namespace ssc
                     event_handler.locate_event();
                     event_handler.run_event_actions();
                 }
+                const auto discrete_state_updaters = scheduler.get_discrete_state_updaters_to_run();
+                for (const auto state_updater:discrete_state_updaters)
+                {
+                    state_updater(t, sys.state);
+                }
                 scheduler.advance_to_next_time_event();
                 observer.observe(sys, scheduler.get_time());
             }
@@ -63,6 +68,11 @@ namespace ssc
                     {
                         event_handler.locate_event();
                         event_handler.run_event_actions();
+                    }
+                    const auto discrete_state_updaters = scheduler.get_discrete_state_updaters_to_run();
+                    for (const auto state_updater:discrete_state_updaters)
+                    {
+                        state_updater(t, sys.state);
                     }
                     scheduler.advance_to_next_time_event();
                     observer.observe(sys, t);

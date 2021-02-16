@@ -12,6 +12,7 @@
 #include "gmock/gmock.h"
 
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
+#include <functional>
 #include <vector>
 
 class SystemWithMock;
@@ -97,6 +98,11 @@ class SchedulerWithMock
                 *first_run = *(rhs.first_run);
             }
             return *this;
+        }
+        typedef std::function<void(const double t, const std::vector<double>& x)> Callback;
+        std::vector<Callback> get_discrete_state_updaters_to_run()
+        {
+            return std::vector<Callback>();
         }
 
         SchedulerWithMock(const SchedulerWithMock& rhs) : mock(rhs.mock), first_run(new bool(*(rhs.first_run)))

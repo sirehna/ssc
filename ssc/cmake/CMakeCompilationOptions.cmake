@@ -25,6 +25,7 @@ ELSEIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     # using GCC
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -pedantic -pedantic-errors -Wextra -Wall -Wunused-function -Wunused-label -Wunused-parameter -Wunused-value -Wunused-variable -fno-common -Wformat=2 -Winit-self -Wpacked -Wpointer-arith -Wmissing-declarations -Wmissing-format-attribute -Wsign-compare -Wstrict-aliasing=2 -Wundef -Wconversion -Wno-misleading-indentation")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS} -Woverloaded-virtual -Weffc++ -Wwrite-strings -Wfatal-errors -Wno-deprecated -Wvariadic-macros")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
     IF(CMAKE_SIZEOF_VOID_P EQUAL 8) # If on a 64 bit machine
         IF(UNIX AND NOT WIN32) # If on Linux
             SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
