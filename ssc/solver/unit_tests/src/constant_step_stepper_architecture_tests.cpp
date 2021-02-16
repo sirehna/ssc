@@ -55,7 +55,6 @@ TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_
     EXPECT_CALL(mock, locate_event()).RetiresOnSaturation();
     EXPECT_CALL(mock, run_event_actions()).RetiresOnSaturation();
     EXPECT_CALL(mock, update_discrete_states()).RetiresOnSaturation();
-    EXPECT_CALL(mock, update_continuous_states()).RetiresOnSaturation();
     EXPECT_CALL(mock, add_time_event(_)).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_,_));
@@ -118,7 +117,6 @@ TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_
     EXPECT_CALL(mock, do_step(_,_,_,_)).RetiresOnSaturation();
     EXPECT_CALL(mock, detected_state_events()).RetiresOnSaturation();
     EXPECT_CALL(mock, update_discrete_states()).RetiresOnSaturation();
-    EXPECT_CALL(mock, update_continuous_states()).RetiresOnSaturation();
     EXPECT_CALL(mock, add_time_event(_)).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_,_));

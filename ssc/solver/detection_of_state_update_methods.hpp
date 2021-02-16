@@ -26,7 +26,6 @@ namespace ssc
             static void if_possible(SystemType& sys)
             {
                 sys.update_discrete_states();
-                sys.update_continuous_states();
             }
         };
 
@@ -44,12 +43,11 @@ namespace ssc
             }
 
         HAS(update_discrete_states, class_can_update_discrete_states);
-        HAS(update_continuous_states, class_can_update_continuous_states);
 
         template <typename T>
         struct can
         {
-            static const bool update_discrete_and_continuous_states = class_can_update_discrete_states<T,void(T::*)()>::value and class_can_update_continuous_states<T,void(T::*)()>::value;
+            static const bool update_discrete_states = class_can_update_discrete_states<T,void(T::*)()>::value;
         };
     }
 }

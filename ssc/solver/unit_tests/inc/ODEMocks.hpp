@@ -29,7 +29,6 @@ class ODEMocks
         MOCK_CONST_METHOD0(get_step, double());
         MOCK_CONST_METHOD0(detected_state_events, bool());
         MOCK_CONST_METHOD0(update_discrete_states, void());
-        MOCK_CONST_METHOD0(update_continuous_states, void());
         MOCK_CONST_METHOD1(add_time_event, void(const double));
         MOCK_CONST_METHOD0(locate_event, void());
         MOCK_CONST_METHOD0(run_event_actions, void());
@@ -63,11 +62,6 @@ class SystemWithMockAndStateUpdate : public SystemWithMockButNoUpdate
         void update_discrete_states()
         {
             mock.update_discrete_states();
-        }
-
-        void update_continuous_states()
-        {
-            mock.update_continuous_states();
         }
 
     private:
