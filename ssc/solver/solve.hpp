@@ -70,7 +70,7 @@ namespace ssc
                 }
                 else
                 {
-                    scheduler.add_time_event(t+dt);
+                    scheduler.add_time_event(t + dt/2);
                 }
             }
         }
