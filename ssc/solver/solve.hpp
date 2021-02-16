@@ -9,7 +9,7 @@
 #define SOLVE_HPP_
 
 #include "ssc/solver/DefaultEventHandler.hpp"
-#include "ssc/solver/DefaultScheduler.hpp"
+#include "ssc/solver/Scheduler.hpp"
 
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 

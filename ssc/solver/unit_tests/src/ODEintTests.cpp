@@ -9,7 +9,7 @@
 
 #include <functional> // Otherwise CLang issues an error (bind.hpp:36:14: error: ‘std::bind’ has not been declared)
 #include "ssc/solver/Observers.hpp"
-#include "ssc/solver/DefaultScheduler.hpp"
+#include "ssc/solver/Scheduler.hpp"
 #include "ssc/solver/solve.hpp"
 #include "test_systems.hpp"
 
