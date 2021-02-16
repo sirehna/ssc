@@ -22,7 +22,7 @@ namespace ssc
                     return tend > current_time;
                 }
 
-                void append_time_event(const double t_)
+                void add_time_event(const double t_)
                 {
                     current_time = t_;
                 }

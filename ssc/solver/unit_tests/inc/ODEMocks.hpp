@@ -30,7 +30,7 @@ class ODEMocks
         MOCK_CONST_METHOD0(detected_state_events, bool());
         MOCK_CONST_METHOD0(update_discrete_states, void());
         MOCK_CONST_METHOD0(update_continuous_states, void());
-        MOCK_CONST_METHOD1(append_time_event, void(const double));
+        MOCK_CONST_METHOD1(add_time_event, void(const double));
         MOCK_CONST_METHOD0(locate_event, void());
         MOCK_CONST_METHOD0(run_event_actions, void());
 };
@@ -100,9 +100,9 @@ class SchedulerWithMock
             return b;
         }
 
-        void append_time_event(const double t)
+        void add_time_event(const double t)
         {
-            mock.append_time_event(t);
+            mock.add_time_event(t);
         }
 
         ~SchedulerWithMock()
