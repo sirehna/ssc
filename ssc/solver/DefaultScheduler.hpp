@@ -15,21 +15,21 @@ namespace ssc
         class DefaultScheduler
         {
             public:
-                DefaultScheduler(const double t0_, const double tend_, const double dt_) : t(t0_), tstart(t0_), tend(tend_), dt(dt_), i(0) {}
+                DefaultScheduler(const double t0_, const double tend_, const double dt_) : current_time(t0_), tstart(t0_), tend(tend_), dt(dt_), i(0) {}
 
                 bool has_more_time_events() const
                 {
-                    return tend > t;
+                    return tend > current_time;
                 }
 
                 void append_time_event(const double t_)
                 {
-                    t = t_;
+                    current_time = t_;
                 }
 
                 double get_time() const
                 {
-                    return t;
+                    return current_time;
                 }
 
                 double get_step() const
@@ -39,7 +39,7 @@ namespace ssc
 
             private:
                 DefaultScheduler();
-                double t;
+                double current_time;
                 double tstart;
                 double tend;
                 double dt;
