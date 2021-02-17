@@ -30,8 +30,14 @@ namespace ssc
                 os << "\n";
             }
         }
+        class Observer
+        {
+            public:
+                virtual ~Observer() = default;
+                virtual void observe(const System& sys, const double t) = 0;
+        };
 
-        class NullObserver
+        class NullObserver : public Observer
         {
             public:
                 NullObserver() {}
@@ -41,7 +47,7 @@ namespace ssc
                 }
         };
 
-        class DefaultObserver
+        class DefaultObserver : public Observer
         {
             public:
                 DefaultObserver(std::ostream& os_) : os(os_), initialized(false) {}
@@ -78,7 +84,7 @@ namespace ssc
                 bool initialized;
         };
 
-        class VectorObserver
+        class VectorObserver : public Observer
         {
             public:
                 VectorObserver() : v(std::vector<std::pair<double,double> >()) {}

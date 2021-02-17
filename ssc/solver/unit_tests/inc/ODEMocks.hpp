@@ -18,6 +18,7 @@
 #include "ssc/solver/EventHandler.hpp"
 #include "ssc/solver/Scheduler.hpp"
 #include "ssc/solver/System.hpp"
+#include "ssc/solver/Observers.hpp"
 
 class SystemWithMock;
 
@@ -57,7 +58,7 @@ class SystemWithMock : public ssc::solver::System
 
 };
 
-class ObserverWithMock
+class ObserverWithMock : public ssc::solver::Observer
 {
     public:
         ObserverWithMock(ODEMocks& mock_) : mock(mock_){}
