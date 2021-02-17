@@ -12,7 +12,7 @@ namespace ssc
 {
     namespace solver
     {
-        class DefaultEventHandler
+        class EventHandler
         {
             public:
                 bool detected_state_events() const

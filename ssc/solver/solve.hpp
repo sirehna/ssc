@@ -90,8 +90,8 @@ namespace ssc
         {
             StepperType stepper;
             Scheduler scheduler(t0, tend, dt);
-            DefaultEventHandler event_handler;
-            solve_for_constant_step<StepperType,SystemType,ObserverType,DefaultEventHandler>(sys,observer,stepper,scheduler,event_handler);
+            EventHandler event_handler;
+            solve_for_constant_step<StepperType,SystemType,ObserverType,EventHandler>(sys,observer,stepper,scheduler,event_handler);
         }
     }
 }
