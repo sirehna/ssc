@@ -19,10 +19,9 @@ namespace ssc
     {
         template <typename StepperType,
                   typename SystemType,
-                  typename ObserverType,
-                  typename EventHandlerType>
+                  typename ObserverType>
         void
-        solve_for_constant_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandlerType& event_handler)
+        solve_for_constant_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -48,10 +47,9 @@ namespace ssc
 
         template <typename StepperType,
                   typename SystemType,
-                  typename ObserverType,
-                  typename EventHandlerType>
+                  typename ObserverType>
         void
-        solve_for_adaptive_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandlerType& event_handler)
+        solve_for_adaptive_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -91,7 +89,7 @@ namespace ssc
             StepperType stepper;
             Scheduler scheduler(t0, tend, dt);
             EventHandler event_handler;
-            solve_for_constant_step<StepperType,SystemType,ObserverType,EventHandler>(sys,observer,stepper,scheduler,event_handler);
+            solve_for_constant_step<StepperType,SystemType,ObserverType>(sys,observer,stepper,scheduler,event_handler);
         }
     }
 }

@@ -15,6 +15,7 @@
 #include <functional>
 #include <vector>
 
+#include "ssc/solver/EventHandler.hpp"
 #include "ssc/solver/Scheduler.hpp"
 
 class SystemWithMock;
@@ -133,12 +134,12 @@ class SchedulerWithMock : public ssc::solver::Scheduler
         bool* first_run;
 };
 
-class EventHandlerWithMock
+class EventHandlerWithMock : public ssc::solver::EventHandler
 {
     public:
         EventHandlerWithMock(ODEMocks& mock_) : mock(mock_){}
 
-        bool detected_state_events()
+        bool detected_state_events() const
         {
             return mock.detected_state_events();
         }

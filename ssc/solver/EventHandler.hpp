@@ -15,16 +15,17 @@ namespace ssc
         class EventHandler
         {
             public:
-                bool detected_state_events() const
+                virtual ~EventHandler() = default;
+                virtual bool detected_state_events() const
                 {
                     return false;
                 }
 
-                void locate_event()
+                virtual void locate_event()
                 {
                 }
 
-                void run_event_actions()
+                virtual void run_event_actions()
                 {
                 }
         };
