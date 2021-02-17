@@ -36,7 +36,7 @@ TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_
 {
     StrictMock<ODEMocks> mock;
     SystemWithMock sys(mock);
-    ObserverWithMock<SystemWithMock> observer(mock);
+    ObserverWithMock observer(mock);
     SchedulerWithMock scheduler(mock);
     EventHandlerWithMock event_handler(mock);
     ExplicitStepperWithMock stepper(mock);
@@ -59,14 +59,14 @@ TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_
     EXPECT_CALL(mock, observe(_,_));
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
 
-    solve_for_constant_step<ExplicitStepperWithMock,SystemWithMock,ObserverWithMock<SystemWithMock> >(sys,observer,stepper,scheduler,event_handler);
+    solve_for_constant_step<ExplicitStepperWithMock,SystemWithMock,ObserverWithMock>(sys,observer,stepper,scheduler,event_handler);
 }
 
 TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_in_the_right_sequence_for_constant_step_steppers_no_event_detected)
 {
     StrictMock<ODEMocks> mock;
     SystemWithMock sys(mock);
-    ObserverWithMock<SystemWithMock> observer(mock);
+    ObserverWithMock observer(mock);
     SchedulerWithMock scheduler(mock);
     EventHandlerWithMock event_handler(mock);
     ExplicitStepperWithMock stepper(mock);
@@ -88,5 +88,5 @@ TEST_F(constant_step_stepper_architecture_tests, collaborators_should_be_called_
     EXPECT_CALL(mock, observe(_,_));
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
 
-    solve_for_constant_step<ExplicitStepperWithMock,SystemWithMock,ObserverWithMock<SystemWithMock> >(sys,observer,stepper,scheduler,event_handler);
+    solve_for_constant_step<ExplicitStepperWithMock,SystemWithMock,ObserverWithMock>(sys,observer,stepper,scheduler,event_handler);
 }

@@ -57,7 +57,7 @@ class SystemWithMock : public ssc::solver::System
 
 };
 
-template <typename SystemType> class ObserverWithMock
+class ObserverWithMock
 {
     public:
         ObserverWithMock(ODEMocks& mock_) : mock(mock_){}

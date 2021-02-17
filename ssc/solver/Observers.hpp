@@ -35,13 +35,13 @@ namespace ssc
         {
             public:
                 NullObserver() {}
-                template <typename SystemType, typename StateType> void observe(const System& , const double )
+                void observe(const System& , const double )
                 {
 
                 }
         };
 
-        template <typename SystemType> class DefaultObserver
+        class DefaultObserver
         {
             public:
                 DefaultObserver(std::ostream& os_) : os(os_), initialized(false) {}
@@ -78,7 +78,7 @@ namespace ssc
                 bool initialized;
         };
 
-        template <typename SystemType> class VectorObserver
+        class VectorObserver
         {
             public:
                 VectorObserver() : v(std::vector<std::pair<double,double> >()) {}

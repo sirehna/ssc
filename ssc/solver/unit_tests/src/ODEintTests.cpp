@@ -48,7 +48,7 @@ TEST_F(ODEintTests, linear)
     SimpleODE system(x0);
     double t0 = 0.0 , tend = 10.0 , dt = 1;
 
-    VectorObserver<SimpleODE> observer;
+    VectorObserver observer;
     quicksolve<EulerStepper>(system, t0, tend, dt, observer);
 //! [ODEintTests example]
 
@@ -71,7 +71,7 @@ TEST_F(ODEintTests, linear_with_adaptive_RK_Cash_Karp)
     SimpleODE system(x0);
     double t0 = 0.0 , tend = 10.0 , dt = 1;
 
-    VectorObserver<SimpleODE> observer;
+    VectorObserver observer;
     quicksolve<RKCK>(system, t0, tend, dt, observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
@@ -90,7 +90,7 @@ TEST_F(ODEintTests, quadratic_with_euler)
     const size_t N = 10;
     double t0 = 0.0 , tend = N , dt = 1;
 
-    VectorObserver<QuadraticODE> observer;
+    VectorObserver observer;
     quicksolve<EulerStepper>(system, t0, tend, dt, observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
@@ -109,7 +109,7 @@ TEST_F(ODEintTests, quadratic_with_RK4)
     const size_t N = 10;
     double t0 = 0.0 , tend = N , dt = 1;
 
-    VectorObserver<QuadraticODE> observer;
+    VectorObserver observer;
     quicksolve<RK4Stepper>(system, t0, tend, dt, observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
