@@ -82,10 +82,9 @@ namespace ssc
 
         template <typename StepperType,
                   typename SystemType>
-        void quicksolve(SystemType& sys, const double t0, const double tend, double dt, Observer& observer)
+        void quicksolve(SystemType& sys, Scheduler scheduler, Observer& observer)
         {
             StepperType stepper;
-            Scheduler scheduler(t0, tend, dt);
             EventHandler event_handler;
             solve_for_constant_step<StepperType,SystemType>(sys,observer,stepper,scheduler,event_handler);
         }

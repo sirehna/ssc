@@ -49,7 +49,7 @@ TEST_F(ODEintTests, linear)
     double t0 = 0.0 , tend = 10.0 , dt = 1;
 
     VectorObserver observer;
-    quicksolve<EulerStepper>(system, t0, tend, dt, observer);
+    quicksolve<EulerStepper>(system, ssc::solver::Scheduler(t0, tend, dt), observer);
 //! [ODEintTests example]
 
 //! [ODEintTests expected output]
@@ -72,7 +72,7 @@ TEST_F(ODEintTests, linear_with_adaptive_RK_Cash_Karp)
     double t0 = 0.0 , tend = 10.0 , dt = 1;
 
     VectorObserver observer;
-    quicksolve<RKCK>(system, t0, tend, dt, observer);
+    quicksolve<RKCK>(system, ssc::solver::Scheduler(t0, tend, dt), observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
     ASSERT_EQ(11,v.size());
@@ -91,7 +91,7 @@ TEST_F(ODEintTests, quadratic_with_euler)
     double t0 = 0.0 , tend = N , dt = 1;
 
     VectorObserver observer;
-    quicksolve<EulerStepper>(system, t0, tend, dt, observer);
+    quicksolve<EulerStepper>(system, ssc::solver::Scheduler(t0, tend, dt), observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
     ASSERT_EQ(N+1,v.size());
@@ -110,7 +110,7 @@ TEST_F(ODEintTests, quadratic_with_RK4)
     double t0 = 0.0 , tend = N , dt = 1;
 
     VectorObserver observer;
-    quicksolve<RK4Stepper>(system, t0, tend, dt, observer);
+    quicksolve<RK4Stepper>(system, ssc::solver::Scheduler(t0, tend, dt), observer);
 
     const std::vector<std::pair<double,double> > v = observer.get();
     ASSERT_EQ(N+1,v.size());
