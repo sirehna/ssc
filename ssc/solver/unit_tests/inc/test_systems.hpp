@@ -8,12 +8,15 @@
 #ifndef TEST_SYSTEMS_HPP_
 #define TEST_SYSTEMS_HPP_
 
+#include "ssc/solver/System.hpp"
+
 typedef std::vector<double> StateType;
 
-struct SimpleODE
+struct SimpleODE : public ssc::solver::System
 {
-    SimpleODE(const StateType& x0) : state(x0)
+    SimpleODE(const StateType& x0)
     {
+        state = x0;
     }
 
     void operator()(const StateType &x, StateType &dxdt, double )
@@ -21,14 +24,13 @@ struct SimpleODE
         state = x;
         dxdt[0] = 2;//*t;//2*x[0];
     }
-
-    StateType state;
 };
 
-struct QuadraticODE
+struct QuadraticODE : public ssc::solver::System
 {
-    QuadraticODE(const StateType& x0) : state(x0)
+    QuadraticODE(const StateType& x0)
     {
+        state = x0;
     }
 
     void operator()(const StateType &x, StateType &dxdt, double t)
@@ -36,8 +38,6 @@ struct QuadraticODE
         state = x;
         dxdt[0] = 2*t;
     }
-
-    StateType state;
 };
 
 
