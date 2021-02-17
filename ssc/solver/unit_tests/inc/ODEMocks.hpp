@@ -61,7 +61,7 @@ template <typename SystemType> class ObserverWithMock
 {
     public:
         ObserverWithMock(ODEMocks& mock_) : mock(mock_){}
-        void observe(const SystemType& s, const double d)
+        void observe(const ssc::solver::System& s, const double d)
         {
             mock.observe(s,d);
         }
