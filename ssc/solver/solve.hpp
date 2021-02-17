@@ -10,6 +10,7 @@
 
 #include "ssc/solver/EventHandler.hpp"
 #include "ssc/solver/Scheduler.hpp"
+#include "ssc/solver/Observers.hpp"
 
 #include <boost/numeric/odeint/stepper/controlled_step_result.hpp>
 
@@ -18,10 +19,9 @@ namespace ssc
     namespace solver
     {
         template <typename StepperType,
-                  typename SystemType,
-                  typename ObserverType>
+                  typename SystemType>
         void
-        solve_for_constant_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
+        solve_for_constant_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -46,10 +46,9 @@ namespace ssc
         }
 
         template <typename StepperType,
-                  typename SystemType,
-                  typename ObserverType>
+                  typename SystemType>
         void
-        solve_for_adaptive_step(SystemType& sys, ObserverType& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
+        solve_for_adaptive_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -82,14 +81,13 @@ namespace ssc
         }
 
         template <typename StepperType,
-                  typename SystemType,
-                  typename ObserverType>
-        void quicksolve(SystemType& sys, const double t0, const double tend, double dt, ObserverType& observer)
+                  typename SystemType>
+        void quicksolve(SystemType& sys, const double t0, const double tend, double dt, Observer& observer)
         {
             StepperType stepper;
             Scheduler scheduler(t0, tend, dt);
             EventHandler event_handler;
-            solve_for_constant_step<StepperType,SystemType,ObserverType>(sys,observer,stepper,scheduler,event_handler);
+            solve_for_constant_step<StepperType,SystemType>(sys,observer,stepper,scheduler,event_handler);
         }
     }
 }
