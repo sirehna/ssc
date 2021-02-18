@@ -25,13 +25,30 @@ namespace ssc
                 virtual void do_step(System& system, std::vector<double>& state, const double t, const double dt) = 0;
         };
 
+        class SystemWrapper
+        {
+            public:
+                SystemWrapper(System& s) : system(&s)
+                {}
+                void operator()(const std::vector<double>& x, std::vector<double>& dx_dt, const double t)
+                {
+                    system->operator()(x, dx_dt, t);
+                }
+                ~SystemWrapper() {}
+                SystemWrapper(const SystemWrapper& rhs) : system(rhs.system) {}
+                SystemWrapper& operator=(const SystemWrapper& rhs) { system = rhs.system; return *this;}
+            private:
+                SystemWrapper();
+                System* system;
+        };
+
         class EulerStepper : public Stepper
         {
             public:
                 EulerStepper() : stepper() {}
                 void do_step(System& system, std::vector<double>& state, const double t, const double dt)
                 {
-                    stepper.do_step(system, state, t, dt);
+                    stepper.do_step(SystemWrapper(system), state, t, dt);
                 }
 
             private:
@@ -44,7 +61,7 @@ namespace ssc
                 RK4Stepper() : stepper() {}
                 void do_step(System& system, std::vector<double>& state, const double t, const double dt)
                 {
-                    stepper.do_step(system, state, t, dt);
+                    stepper.do_step(SystemWrapper(system), state, t, dt);
                 }
 
             private:
@@ -57,7 +74,7 @@ namespace ssc
                 RKCK() : stepper() {}
                 void do_step(System& system, std::vector<double>& state, const double t, const double dt)
                 {
-                    stepper.do_step(system, state, t, dt);
+                    stepper.do_step(SystemWrapper(system), state, t, dt);
                 }
 
             private:
