@@ -35,6 +35,9 @@ namespace ssc
                     system->operator()(x, dx_dt, t);
                 }
                 ~SystemWrapper() {}
+                // This won't work because ODEINT expects the copy to be independent, which it isn't if we just copy the pointer.
+                // Basically, we can't remove 'System' from odeint's stepper's template argument without modifying odeint itself
+                // because do_step requires a system passed by value (copied, no link with the original, another instance).
                 SystemWrapper(const SystemWrapper& rhs) : system(rhs.system) {}
                 SystemWrapper& operator=(const SystemWrapper& rhs) { system = rhs.system; return *this;}
             private:
