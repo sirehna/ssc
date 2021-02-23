@@ -49,7 +49,7 @@ struct ContinuousSystem : public ssc::solver::System
 
 struct DiscreteSystem
 {
-    DiscreteSystem() : ticks({13}) {}
+    DiscreteSystem(const double dt_) : ticks({13}), dt(dt_) {}
     void operator()(ssc::solver::Scheduler<ContinuousSystem>& scheduler, ContinuousSystem& )
     {
         ssc::solver::Scheduler<ContinuousSystem>::Callback callback = std::bind(&DiscreteSystem::operator(), this, std::placeholders::_1, std::placeholders::_2);
@@ -57,6 +57,7 @@ struct DiscreteSystem
         ticks.push_back(ticks.back()+1);
     }
     std::vector<size_t> ticks;
+    const double dt;
 };
 
 TEST_F(DiscreteSystemsTests, one_second_steps)
@@ -64,7 +65,7 @@ TEST_F(DiscreteSystemsTests, one_second_steps)
     ssc::solver::VectorObserver observer;
     ssc::solver::Scheduler<ContinuousSystem> scheduler(6, 16, 0.1);
     ContinuousSystem system(std::vector<double>(1,0));
-    DiscreteSystem discrete_system;
+    DiscreteSystem discrete_system(1);
     ssc::solver::Scheduler<ContinuousSystem>::Callback callback = std::bind(&DiscreteSystem::operator(), &discrete_system, std::placeholders::_1, std::placeholders::_2);
     scheduler.schedule_discrete_state_update(7, callback);
     ssc::solver::quicksolve<EulerStepper>(system, scheduler, observer);
