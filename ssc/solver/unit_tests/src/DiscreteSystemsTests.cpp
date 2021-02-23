@@ -35,7 +35,7 @@ void DiscreteSystemsTests::TearDown()
 
 typedef boost::numeric::odeint::euler<StateType> EulerStepper;
 
-struct ContinuousSystem : public ssc::solver::System
+struct ContinuousSystem : public ssc::solver::ContinuousSystem
 {
     ContinuousSystem(const std::vector<double>& x0)
     {

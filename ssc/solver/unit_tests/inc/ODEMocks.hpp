@@ -17,7 +17,7 @@
 
 #include "ssc/solver/EventHandler.hpp"
 #include "ssc/solver/Scheduler.hpp"
-#include "ssc/solver/System.hpp"
+#include "ssc/solver/ContinuousSystem.hpp"
 #include "ssc/solver/Observers.hpp"
 
 class SystemWithMock;
@@ -28,9 +28,9 @@ class ODEMocks
         ODEMocks(){}
         MOCK_METHOD0(advance_to_next_time_event, void());
         MOCK_METHOD3(model_function, void(const std::vector<double>&, std::vector<double>&, double ));
-        MOCK_METHOD2(observe, void(const ssc::solver::System&, const double));
-        MOCK_METHOD4(do_step, void(ssc::solver::System& sys, std::vector<double>& , double , double ));
-        MOCK_METHOD4(try_step, boost::numeric::odeint::controlled_step_result(ssc::solver::System& sys, std::vector<double>& , double , double ));
+        MOCK_METHOD2(observe, void(const ssc::solver::ContinuousSystem&, const double));
+        MOCK_METHOD4(do_step, void(ssc::solver::ContinuousSystem& sys, std::vector<double>& , double , double ));
+        MOCK_METHOD4(try_step, boost::numeric::odeint::controlled_step_result(ssc::solver::ContinuousSystem& sys, std::vector<double>& , double , double ));
         MOCK_CONST_METHOD0(has_more_time_events, bool());
         MOCK_CONST_METHOD0(get_time, double());
         MOCK_CONST_METHOD0(get_step, double());
@@ -40,7 +40,7 @@ class ODEMocks
         MOCK_CONST_METHOD0(run_event_actions, void());
 };
 
-class SystemWithMock : public ssc::solver::System
+class SystemWithMock : public ssc::solver::ContinuousSystem
 {
     public:
         SystemWithMock(ODEMocks& mock_) : mock(mock_){}
@@ -62,7 +62,7 @@ class ObserverWithMock : public ssc::solver::Observer
 {
     public:
         ObserverWithMock(ODEMocks& mock_) : mock(mock_){}
-        void observe(const ssc::solver::System& s, const double d)
+        void observe(const ssc::solver::ContinuousSystem& s, const double d)
         {
             mock.observe(s,d);
         }

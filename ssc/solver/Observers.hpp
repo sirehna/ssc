@@ -11,7 +11,7 @@
 #include <sstream>
 #include <vector>
 
-#include "ssc/solver/System.hpp"
+#include "ssc/solver/ContinuousSystem.hpp"
 
 namespace ssc
 {
@@ -34,14 +34,14 @@ namespace ssc
         {
             public:
                 virtual ~Observer() = default;
-                virtual void observe(const System& sys, const double t) = 0;
+                virtual void observe(const ContinuousSystem& sys, const double t) = 0;
         };
 
         class NullObserver : public Observer
         {
             public:
                 NullObserver() {}
-                void observe(const System& , const double )
+                void observe(const ContinuousSystem& , const double )
                 {
 
                 }
@@ -51,7 +51,7 @@ namespace ssc
         {
             public:
                 DefaultObserver(std::ostream& os_) : os(os_), initialized(false) {}
-                void observe(const System& sys, const double t)
+                void observe(const ContinuousSystem& sys, const double t)
                 {
                     const std::vector<double> x = sys.state;
                     if (not(initialized))
@@ -88,7 +88,7 @@ namespace ssc
         {
             public:
                 VectorObserver() : v(std::vector<std::pair<double,double> >()) {}
-                void observe(const System& sys, const double t)
+                void observe(const ContinuousSystem& sys, const double t)
                 {
                     v.push_back(std::make_pair(t, sys.state[0]));
                 }

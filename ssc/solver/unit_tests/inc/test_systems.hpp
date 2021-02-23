@@ -8,11 +8,11 @@
 #ifndef TEST_SYSTEMS_HPP_
 #define TEST_SYSTEMS_HPP_
 
-#include "ssc/solver/System.hpp"
+#include "ssc/solver/ContinuousSystem.hpp"
 
 typedef std::vector<double> StateType;
 
-struct SimpleODE : public ssc::solver::System
+struct SimpleODE : public ssc::solver::ContinuousSystem
 {
     SimpleODE(const StateType& x0)
     {
@@ -26,7 +26,7 @@ struct SimpleODE : public ssc::solver::System
     }
 };
 
-struct QuadraticODE : public ssc::solver::System
+struct QuadraticODE : public ssc::solver::ContinuousSystem
 {
     QuadraticODE(const StateType& x0)
     {

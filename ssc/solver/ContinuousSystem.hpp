@@ -14,11 +14,11 @@ namespace ssc
 {
     namespace solver
     {
-        class System
+        class ContinuousSystem
         {
             public:
-                System() : state() {}
-                virtual ~System() = default;
+                ContinuousSystem() : state() {}
+                virtual ~ContinuousSystem() = default;
                 virtual void operator()(const std::vector<double>& x, std::vector<double>& dx_dt, const double t) = 0;
                 std::vector<double> state;
         };
