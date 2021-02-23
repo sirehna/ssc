@@ -72,10 +72,10 @@ class ObserverWithMock : public ssc::solver::Observer
         ODEMocks& mock;
 };
 
-class SchedulerWithMock : public ssc::solver::Scheduler
+class SchedulerWithMock : public ssc::solver::Scheduler<SystemWithMock>
 {
     public:
-        SchedulerWithMock(ODEMocks& mock_) : ssc::solver::Scheduler(0,0,0), mock(mock_), first_run(new bool(true)){}
+        SchedulerWithMock(ODEMocks& mock_) : ssc::solver::Scheduler<SystemWithMock>(0,0,0), mock(mock_), first_run(new bool(true)){}
         bool has_more_time_events() const
         {
             mock.has_more_time_events();
@@ -89,7 +89,7 @@ class SchedulerWithMock : public ssc::solver::Scheduler
             mock.add_time_event(t);
         }
 
-        ~SchedulerWithMock()
+        ~SchedulerWithMock() noexcept
         {
             delete first_run;
         }
@@ -102,13 +102,12 @@ class SchedulerWithMock : public ssc::solver::Scheduler
             }
             return *this;
         }
-        typedef std::function<void(const double t, const std::vector<double>& x)> Callback;
-        std::vector<Callback> get_discrete_state_updaters_to_run()
+        std::vector<SchedulerWithMock::Callback> get_discrete_state_updaters_to_run()
         {
             return std::vector<Callback>();
         }
 
-        SchedulerWithMock(const SchedulerWithMock& rhs) : ssc::solver::Scheduler(0,0,0), mock(rhs.mock), first_run(new bool(*(rhs.first_run)))
+        SchedulerWithMock(const SchedulerWithMock& rhs) : ssc::solver::Scheduler<SystemWithMock>(0,0,0), mock(rhs.mock), first_run(new bool(*(rhs.first_run)))
         {
 
         }

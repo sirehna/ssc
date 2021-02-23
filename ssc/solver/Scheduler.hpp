@@ -16,10 +16,10 @@ namespace ssc
 {
     namespace solver
     {
-        class Scheduler
+        template <typename System> class Scheduler
         {
             public:
-                typedef std::function<void(const double t, const std::vector<double>& x)> Callback;
+                typedef std::function<void(Scheduler<System>& scheduler, System& system)> Callback;
                 Scheduler(const double tstart, const double tend_, const double dt)
                         : current_time(tstart)
                         , scheduled_time_events()
@@ -82,7 +82,7 @@ namespace ssc
                     }
                 }
 
-                virtual void schedule_discrete_state_update(const double t, const Callback& updater)
+                virtual void schedule_discrete_state_update(const double t, Callback& updater)
                 {
                     discrete_state_updaters.push_back(std::make_pair(t, updater));
                 }

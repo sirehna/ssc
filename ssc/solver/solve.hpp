@@ -21,7 +21,7 @@ namespace ssc
         template <typename StepperType,
                   typename SystemType>
         void
-        solve_for_constant_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
+        solve_for_constant_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler<SystemType>& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -38,7 +38,7 @@ namespace ssc
                 const auto discrete_state_updaters = scheduler.get_discrete_state_updaters_to_run();
                 for (const auto state_updater:discrete_state_updaters)
                 {
-                    state_updater(t, sys.state);
+                    state_updater(scheduler, sys);
                 }
                 scheduler.advance_to_next_time_event();
                 observer.observe(sys, scheduler.get_time());
@@ -48,7 +48,7 @@ namespace ssc
         template <typename StepperType,
                   typename SystemType>
         void
-        solve_for_adaptive_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler& scheduler, EventHandler& event_handler)
+        solve_for_adaptive_step(SystemType& sys, Observer& observer, StepperType& stepper, Scheduler<SystemType>& scheduler, EventHandler& event_handler)
         {
             const double tstart = scheduler.get_time();
             observer.observe(sys,tstart);
@@ -67,7 +67,7 @@ namespace ssc
                     const auto discrete_state_updaters = scheduler.get_discrete_state_updaters_to_run();
                     for (const auto state_updater:discrete_state_updaters)
                     {
-                        state_updater(t, sys.state);
+                        state_updater(scheduler, sys);
                     }
                     scheduler.advance_to_next_time_event();
                     observer.observe(sys, t);
@@ -82,7 +82,7 @@ namespace ssc
 
         template <typename StepperType,
                   typename SystemType>
-        void quicksolve(SystemType& sys, Scheduler scheduler, Observer& observer)
+        void quicksolve(SystemType& sys, Scheduler<SystemType> scheduler, Observer& observer)
         {
             StepperType stepper;
             EventHandler event_handler;
