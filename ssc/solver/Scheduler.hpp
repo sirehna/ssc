@@ -11,7 +11,6 @@
 #include <functional>
 #include <list>
 #include <vector>
-
 namespace ssc
 {
     namespace solver
@@ -85,6 +84,7 @@ namespace ssc
                 virtual void schedule_discrete_state_update(const double t, Callback& updater)
                 {
                     discrete_state_updaters.push_back(std::make_pair(t, updater));
+                    add_time_event(t);
                 }
 
                 virtual void advance_to_next_time_event()
