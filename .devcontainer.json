@@ -1,0 +1,24 @@
+{
+    "image": "sirehna/base-image-debian10-gcc8",
+    "name": "C++",
+    "extensions": [
+		"ms-vscode.cpptools",
+		"eamodio.gitlens",
+		"ms-vscode.cmake-tools"
+	],
+    "settings": {
+        "editor.rulers": [
+            80, 120
+        ],
+		"editor.tabSize": 4,
+		"editor.detectIndentation": true,
+		"editor.renderWhitespace": "all",
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "ms-vscode.cpptools.includePath": ["${workspaceFolder}/ssc/solver/**",
+            "${workspaceFolder}",
+            "${workspaceFolder}/ssc/random_data_generator/**",
+            "/opt/googletest/googlemock/include/**",
+            "/opt/boost/include/**",
+            "/opt/googletest/googletest/include/**"]
+    }
+}
