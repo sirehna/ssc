@@ -1,27 +1,32 @@
 {
-    "image": "sirehna/base-image-debian10-gcc8",
+    "dockerFile": "Dockerfile.vscode.devcontainer",
     "name": "C++",
     "extensions": [
-		"ms-vscode.cpptools",
-		"eamodio.gitlens",
-		"ms-vscode.cmake-tools",
-		"cschlosser.doxdocgen"
-	],
+        "ms-vscode.cpptools",
+        "eamodio.gitlens",
+        "twxs.cmake",
+        "cschlosser.doxdocgen",
+        "xaver.clang-format"
+    ],
     "settings": {
         "editor.rulers": [
-            80, 120
+            100
         ],
-		"editor.tabSize": 4,
-		"editor.detectIndentation": true,
-		"editor.renderWhitespace": "all",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.detectIndentation": true,
+        "editor.renderWhitespace": "all",
         "terminal.integrated.shell.linux": "/bin/bash",
-        "ms-vscode.cpptools.includePath": ["${workspaceFolder}/ssc/solver/**",
+        "ms-vscode.cpptools.includePath": [
+            "${workspaceFolder}/ssc/solver/**",
             "${workspaceFolder}",
             "${workspaceFolder}/ssc/random_data_generator/**",
             "/opt/googletest/googlemock/include/**",
             "/opt/boost/include/**",
-            "/opt/googletest/googletest/include/**"],
+            "/opt/googletest/googletest/include/**"
+        ],
         "doxdocgen.generic.useGitUserEmail": true,
-        "doxdocgen.generic.useGitUserName": true
+        "doxdocgen.generic.useGitUserName": true,
+        "clang-format.executable": "/usr/bin/clang-format"
     }
 }
