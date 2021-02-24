@@ -11,7 +11,7 @@ void ssc::solver::DiscreteSystem::callback(Scheduler<ContinuousSystem> &schedule
                                            ContinuousSystem &system)
 {
     const double tcurrent = scheduler.get_time();
-    update_discrete_states(tcurrent, system);
+    update_discrete_states(tcurrent, &system);
     const double tnext = get_date_of_next_update(tcurrent);
     schedule_update(tnext, scheduler);
 }
