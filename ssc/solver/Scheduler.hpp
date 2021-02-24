@@ -11,14 +11,16 @@
 #include <functional>
 #include <list>
 #include <vector>
+
+#include "ssc/solver/ContinuousSystem.hpp"
 namespace ssc
 {
     namespace solver
     {
-        template <typename System> class Scheduler
+        class Scheduler
         {
             public:
-                typedef std::function<void(Scheduler<System>& scheduler, System& system)> Callback;
+                typedef std::function<void(Scheduler& scheduler, ContinuousSystem* system)> Callback;
                 Scheduler(const double tstart, const double tend_, const double dt)
                         : current_time(tstart)
                         , scheduled_time_events()

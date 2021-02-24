@@ -51,9 +51,9 @@ struct ContinuousSystem : public ssc::solver::ContinuousSystem
 struct DiscreteSystem
 {
     DiscreteSystem(const double dt_) : ticks({13}), calltimes(), dt(dt_) {}
-    void operator()(ssc::solver::Scheduler<ContinuousSystem>& scheduler, ContinuousSystem& )
+    void operator()(ssc::solver::Scheduler& scheduler, ssc::solver::ContinuousSystem* )
     {
-        ssc::solver::Scheduler<ContinuousSystem>::Callback callback = std::bind(&DiscreteSystem::operator(), this, std::placeholders::_1, std::placeholders::_2);
+        ssc::solver::Scheduler::Callback callback = std::bind(&DiscreteSystem::operator(), this, std::placeholders::_1, std::placeholders::_2);
         scheduler.schedule_discrete_state_update(scheduler.get_time() + dt, callback);
         ticks.push_back(ticks.back()+1);
         calltimes.push_back(scheduler.get_time());
@@ -66,10 +66,10 @@ struct DiscreteSystem
 TEST_F(DiscreteSystemsTests, one_second_steps)
 {
     ssc::solver::VectorObserver observer;
-    ssc::solver::Scheduler<ContinuousSystem> scheduler(6, 16, 0.1);
+    ssc::solver::Scheduler scheduler(6, 16, 0.1);
     ContinuousSystem system(std::vector<double>(1,0));
     DiscreteSystem discrete_system(1);
-    ssc::solver::Scheduler<ContinuousSystem>::Callback callback = std::bind(&DiscreteSystem::operator(), &discrete_system, std::placeholders::_1, std::placeholders::_2);
+    ssc::solver::Scheduler::Callback callback = std::bind(&DiscreteSystem::operator(), &discrete_system, std::placeholders::_1, std::placeholders::_2);
     scheduler.schedule_discrete_state_update(7, callback);
     ssc::solver::quicksolve<EulerStepper>(system, scheduler, observer);
     ASSERT_EQ(23, discrete_system.ticks.back());
@@ -81,10 +81,10 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
     const double t0 = 6;
     const double tend = 10;
     const double dt = 0.2;
-    ssc::solver::Scheduler<ContinuousSystem> scheduler(t0, tend, dt);
+    ssc::solver::Scheduler scheduler(t0, tend, dt);
     ContinuousSystem continuous_system(std::vector<double>(1,0));
     DiscreteSystem discrete_system(0.3);
-    ssc::solver::Scheduler<ContinuousSystem>::Callback callback = std::bind(&DiscreteSystem::operator(), &discrete_system, std::placeholders::_1, std::placeholders::_2);
+    ssc::solver::Scheduler::Callback callback = std::bind(&DiscreteSystem::operator(), &discrete_system, std::placeholders::_1, std::placeholders::_2);
     scheduler.schedule_discrete_state_update(7.325, callback);
     ssc::solver::quicksolve<EulerStepper>(continuous_system, scheduler, observer);
     const auto observations = observer.get();
