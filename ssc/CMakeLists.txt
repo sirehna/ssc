@@ -212,7 +212,7 @@ IF(CREATE_INDIVIDUAL_LIBRARIES)
             SSC_DEPENDENCIES exception_handling functors_for_optimizer matrix_and_vector_classes optimizer
             EXTERNAL_DEPENDENCIES ${IPOPT_LIB_DYNAMIC}
             EXTERNAL_DEPENDENCIES_STATIC ${IPOPT_LIB_STATIC})
-    add_headers(solver "${copyright}")
+    add_libs(solver "${copyright}")
 
     add_libs(json "${copyright}"
             SSC_DEPENDENCIES exception_handling
@@ -286,6 +286,7 @@ ADD_LIBRARY(ssc_static_no_deps STATIC
     $<TARGET_OBJECTS:f2c_object>
     $<TARGET_OBJECTS:Geographic_object>
     $<TARGET_OBJECTS:json_object>
+    $<TARGET_OBJECTS:solver_object>
     )
 
 TARGET_LINK_LIBRARIES(ssc_static_no_deps PRIVATE
