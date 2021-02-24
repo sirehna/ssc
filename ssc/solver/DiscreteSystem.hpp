@@ -20,6 +20,7 @@ namespace ssc
         class DiscreteSystem
         {
           public:
+            DiscreteSystem(const double dt);
             virtual ~DiscreteSystem() = default;
             /**
              * @brief This is the callback that is called by the scheduler.
@@ -29,7 +30,7 @@ namespace ssc
              * @param system This can be used by the 'update' method to retrieve the continuous
              * states of the system.
              */
-            void callback(Scheduler& scheduler, ContinuousSystem *system);
+            void callback(Scheduler &scheduler, ContinuousSystem *system);
 
             /**
              * @brief Ask the scheduler to call the 'callback' method some time in the future.
@@ -40,16 +41,18 @@ namespace ssc
             void schedule_update(const double t, Scheduler &scheduler);
 
           private:
+            DiscreteSystem();
             /**
              * @brief Get the date of next discrete state update.
              *
-             * This can be current_time+constant if this is a constant step controller (most common
-             * case). This method will be called by the "callback" public method.
+             * The default implementation is current_time+constant (most common case), but this
+             * behaviour can be overriden. This method will be called by the "callback" public
+             * method.
              *
              * @param current_time Current simulation time, in seconds.
              * @return Date at which "callback" will be called (in seconds).
              */
-            virtual double get_date_of_next_update(const double current_time) const = 0;
+            virtual double get_date_of_next_update(const double current_time) const;
 
             /**
              * @brief Update the discrete states.
@@ -58,7 +61,9 @@ namespace ssc
              * @param time Current simulation time (in seconds).
              * @param system The continuous system. Used to retrieve the continuous states.
              */
-            virtual void update_discrete_states(const double time, ContinuousSystem* system) = 0;
+            virtual void update_discrete_states(const double time, ContinuousSystem *system) = 0;
+
+            double dt;
         };
     }
 }
