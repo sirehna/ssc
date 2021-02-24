@@ -105,6 +105,17 @@ namespace ssc
             solve_for_constant_step<StepperType, SystemType>(sys, observer, stepper, scheduler,
                                                              event_handler);
         }
+        template <typename StepperType, typename SystemType>
+        void quicksolve(SystemType &sys, DiscreteSystem &discrete_system, Scheduler &scheduler,
+                        Observer &observer)
+        {
+            quicksolve<StepperType, SystemType>(
+                sys,
+                std::vector<DiscreteSystemPtr>(1,
+                                               std::make_shared<DiscreteSystem>(&discrete_system)),
+                scheduler, observer);
+        }
+
     }
 }
 
