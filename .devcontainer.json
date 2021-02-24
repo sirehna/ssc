@@ -4,7 +4,8 @@
     "extensions": [
 		"ms-vscode.cpptools",
 		"eamodio.gitlens",
-		"ms-vscode.cmake-tools"
+		"ms-vscode.cmake-tools",
+		"cschlosser.doxdocgen"
 	],
     "settings": {
         "editor.rulers": [
@@ -19,6 +20,8 @@
             "${workspaceFolder}/ssc/random_data_generator/**",
             "/opt/googletest/googlemock/include/**",
             "/opt/boost/include/**",
-            "/opt/googletest/googletest/include/**"]
+            "/opt/googletest/googletest/include/**"],
+        "doxdocgen.generic.useGitUserEmail": true,
+        "doxdocgen.generic.useGitUserName": true
     }
 }
