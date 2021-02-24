@@ -93,14 +93,14 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
             8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
     for (size_t i = 0; i < 30; ++i)
-        {
-            ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
-        }
+    {
+        ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
+    }
     // Check values
     for (const auto &observation : observations)
-        {
-            ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
-        }
+    {
+        ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
+    }
 }
 
 TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
@@ -122,12 +122,12 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
             8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
     for (size_t i = 0; i < 30; ++i)
-        {
-            ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
-        }
+    {
+        ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
+    }
     // Check values
     for (const auto &observation : observations)
-        {
-            ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
-        }
+    {
+        ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
+    }
 }
