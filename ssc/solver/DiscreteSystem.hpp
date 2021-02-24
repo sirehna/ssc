@@ -58,7 +58,7 @@ namespace ssc
              * @param time Current simulation time (in seconds).
              * @param system The continuous system. Used to retrieve the continuous states.
              */
-            virtual void update_discrete_states(const double time, ContinuousSystem& system) = 0;
+            virtual void update_discrete_states(const double time, ContinuousSystem* system) = 0;
         };
     }
 }
