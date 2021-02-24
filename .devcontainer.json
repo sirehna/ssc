@@ -27,6 +27,11 @@
         ],
         "doxdocgen.generic.useGitUserEmail": true,
         "doxdocgen.generic.useGitUserName": true,
-        "clang-format.executable": "/usr/bin/clang-format"
+        "clang-format.executable": "/usr/bin/clang-format",
+        "[cpp]": {
+            "editor.defaultFormatter": "xaver.clang-format"
+        },
+        "C_Cpp.errorSquiggles": "Enabled",
+        "C_Cpp.exclusionPolicy": "checkFilesAndFolders",
     }
 }
