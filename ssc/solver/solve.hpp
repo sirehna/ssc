@@ -33,6 +33,7 @@ namespace ssc
                 const double dt = scheduler.get_step();
                 const double t = scheduler.get_time();
                 stepper.do_step(sys, sys.state, t, dt);
+                sys.force_states(sys.state, t);
                 if (event_handler.detected_state_events())
                 {
                     event_handler.locate_event();
@@ -62,6 +63,7 @@ namespace ssc
                     = stepper.try_step(sys, sys.state, t, dt);
                 if (res == boost::numeric::odeint::success)
                 {
+                    sys.force_states(sys.state, t);
                     if (event_handler.detected_state_events())
                     {
                         event_handler.locate_event();
