@@ -14,32 +14,28 @@ typedef std::vector<double> StateType;
 
 struct SimpleODE : public ssc::solver::ContinuousSystem
 {
-    SimpleODE(const StateType& x0)
-    {
-        state = x0;
-    }
+    SimpleODE(const StateType &x0) { state = x0; }
 
-    void operator()(const StateType &x, StateType &dxdt, double )
+    void operator()(const StateType &x, StateType &dxdt, double)
     {
         state = x;
-        dxdt[0] = 2;//*t;//2*x[0];
+        dxdt[0] = 2; //*t;//2*x[0];
     }
+
+    void initialize_system_outputs_before_first_observation() {}
 };
 
 struct QuadraticODE : public ssc::solver::ContinuousSystem
 {
-    QuadraticODE(const StateType& x0)
-    {
-        state = x0;
-    }
+    QuadraticODE(const StateType &x0) { state = x0; }
 
     void operator()(const StateType &x, StateType &dxdt, double t)
     {
         state = x;
-        dxdt[0] = 2*t;
+        dxdt[0] = 2 * t;
     }
+
+    void initialize_system_outputs_before_first_observation() {}
 };
-
-
 
 #endif /* TEST_SYSTEMS_HPP_ */

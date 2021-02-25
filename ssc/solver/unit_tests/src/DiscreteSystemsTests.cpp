@@ -41,6 +41,8 @@ struct ContinuousSystem : public ssc::solver::ContinuousSystem
     {
         dx_dt[0] = 1;
     }
+
+    void initialize_system_outputs_before_first_observation() {}
 };
 
 class DiscreteSystem : public ssc::solver::DiscreteSystem

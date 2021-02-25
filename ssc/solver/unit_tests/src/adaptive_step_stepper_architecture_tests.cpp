@@ -48,6 +48,7 @@ TEST_F(
     InSequence
         seq; // Name is irrelevant: all expectations in its scope are expected to occur in sequence
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
+    EXPECT_CALL(mock, initialize_system_outputs_before_first_observation()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_, _)).RetiresOnSaturation();
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
@@ -75,6 +76,7 @@ TEST_F(
     ON_CALL(mock, detected_state_events()).WillByDefault(Return(true));     // Event detected
 
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
+    EXPECT_CALL(mock, initialize_system_outputs_before_first_observation()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_, _)).RetiresOnSaturation();
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
@@ -106,6 +108,7 @@ TEST_F(
     InSequence
         seq; // Name is irrelevant: all expectations in its scope are expected to occur in sequence
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
+    EXPECT_CALL(mock, initialize_system_outputs_before_first_observation()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_, _)).RetiresOnSaturation();
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
@@ -141,6 +144,7 @@ TEST_F(
     InSequence
         seq; // Name is irrelevant: all expectations in its scope are expected to occur in sequence
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();
+    EXPECT_CALL(mock, initialize_system_outputs_before_first_observation()).RetiresOnSaturation();
     EXPECT_CALL(mock, observe(_, _)).RetiresOnSaturation();
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
     EXPECT_CALL(mock, get_time()).RetiresOnSaturation();

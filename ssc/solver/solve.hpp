@@ -27,6 +27,7 @@ namespace ssc
                                      Scheduler &scheduler, EventHandler &event_handler)
         {
             const double tstart = scheduler.get_time();
+            sys.initialize_system_outputs_before_first_observation();
             observer.observe(sys, tstart);
             while (scheduler.has_more_time_events())
             {
@@ -54,6 +55,7 @@ namespace ssc
                                      Scheduler &scheduler, EventHandler &event_handler)
         {
             const double tstart = scheduler.get_time();
+            sys.initialize_system_outputs_before_first_observation();
             observer.observe(sys, tstart);
             while (scheduler.has_more_time_events())
             {

@@ -36,6 +36,21 @@ namespace ssc
              */
             virtual void force_states(std::vector<double> &, const double) const {}
             std::vector<double> state;
+
+            /**
+             * @brief Give a chance to the system to initialize its outputs before observation.
+             *
+             * Otherwise the initial state of the system will not be observed properly. This is to
+             * be used after construction and when all necessary commands are set, but before the
+             * very first observation. We made it pure virtual so that you must explicitly say
+             * what you want for initialization (and not blame the solver if you don't and don't get
+             * the observations you were expecting).
+             * Cf.
+             *
+https://gitlab.com/sirehna_naval_group/xdyn/-/commit/b3e624960e941d73a8b3823e9cbf306a7679a5be
+             *
+             */
+            virtual void initialize_system_outputs_before_first_observation() = 0;
         };
     }
 }
