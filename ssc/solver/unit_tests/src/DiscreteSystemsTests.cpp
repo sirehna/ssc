@@ -73,6 +73,8 @@ TEST_F(DiscreteSystemsTests, one_second_steps)
     DiscreteSystem discrete_system(1);
     discrete_system.schedule_update(7, scheduler);
     ssc::solver::quicksolve<EulerStepper>(system, scheduler, observer);
+    ASSERT_EQ(std::vector<double>({ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }),
+              discrete_system.calltimes);
     ASSERT_EQ(23, discrete_system.ticks.back());
 }
 
