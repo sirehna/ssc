@@ -10,7 +10,6 @@
 
 #include "ssc/solver/DiscreteSystem.hpp"
 #include "ssc/solver/EventHandler.hpp"
-#include "ssc/solver/Observers.hpp"
 #include "ssc/solver/Scheduler.hpp"
 
 #include "ssc/macros/tr1_macros.hpp"
@@ -22,8 +21,8 @@ namespace ssc
 {
     namespace solver
     {
-        template <typename StepperType, typename SystemType>
-        void solve_for_constant_step(SystemType &sys, Observer &observer, StepperType &stepper,
+        template <typename StepperType, typename SystemType, typename ObserverType>
+        void solve_for_constant_step(SystemType &sys, ObserverType &observer, StepperType &stepper,
                                      Scheduler &scheduler, EventHandler &event_handler)
         {
             const double tstart = scheduler.get_time();
@@ -50,8 +49,8 @@ namespace ssc
             }
         }
 
-        template <typename StepperType, typename SystemType>
-        void solve_for_adaptive_step(SystemType &sys, Observer &observer, StepperType &stepper,
+        template <typename StepperType, typename SystemType, typename ObserverType>
+        void solve_for_adaptive_step(SystemType &sys, ObserverType &observer, StepperType &stepper,
                                      Scheduler &scheduler, EventHandler &event_handler)
         {
             const double tstart = scheduler.get_time();
@@ -87,8 +86,8 @@ namespace ssc
                 }
             }
         }
-        template <typename StepperType, typename SystemType>
-        void quicksolve(SystemType &sys, Scheduler &scheduler, Observer &observer)
+        template <typename StepperType, typename SystemType, typename ObserverType>
+        void quicksolve(SystemType &sys, Scheduler &scheduler, ObserverType &observer)
         {
             StepperType stepper;
             EventHandler event_handler;
@@ -96,9 +95,10 @@ namespace ssc
                                                              event_handler);
         }
         typedef TR1(shared_ptr)<DiscreteSystem> DiscreteSystemPtr;
-        template <typename StepperType, typename SystemType>
+
+        template <typename StepperType, typename SystemType, typename ObserverType>
         void quicksolve(SystemType &sys, std::vector<DiscreteSystemPtr> &discrete_systems,
-                        Scheduler &scheduler, Observer &observer)
+                        Scheduler &scheduler, ObserverType &observer)
         {
             StepperType stepper;
             EventHandler event_handler;
@@ -106,18 +106,20 @@ namespace ssc
             {
                 discrete_system->schedule_update(scheduler.get_t0(), scheduler);
             }
-            solve_for_constant_step<StepperType, SystemType>(sys, observer, stepper, scheduler,
-                                                             event_handler);
+            solve_for_constant_step<StepperType, SystemType, ObserverType>(sys, observer, stepper,
+                                                                           scheduler, event_handler);
         }
-        template <typename StepperType, typename SystemType>
+
+        template <typename StepperType, typename SystemType, typename ObserverType>
         void quicksolve(SystemType &sys, DiscreteSystem &discrete_system, Scheduler &scheduler,
-                        Observer &observer)
+                        ObserverType &observer)
         {
-            quicksolve<StepperType, SystemType>(
+            quicksolve<StepperType, SystemType, ObserverType>(
                 sys,
                 std::vector<DiscreteSystemPtr>(1,
                                                std::make_shared<DiscreteSystem>(&discrete_system)),
-                scheduler, observer);
+                scheduler,
+                observer);
         }
 
     }

@@ -59,8 +59,8 @@ TEST_F(
     EXPECT_CALL(mock, observe(_, _));
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
 
-    solve_for_constant_step<ExplicitStepperWithMock, SystemWithMock>(sys, observer, stepper,
-                                                                     scheduler, event_handler);
+    solve_for_constant_step<ExplicitStepperWithMock, SystemWithMock, ObserverWithMock>(sys, observer, stepper,
+                                                                                       scheduler, event_handler);
 }
 
 TEST_F(
@@ -93,6 +93,6 @@ TEST_F(
     EXPECT_CALL(mock, observe(_, _));
     EXPECT_CALL(mock, has_more_time_events()).RetiresOnSaturation();
 
-    solve_for_constant_step<ExplicitStepperWithMock, SystemWithMock>(sys, observer, stepper,
-                                                                     scheduler, event_handler);
+    solve_for_constant_step<ExplicitStepperWithMock, SystemWithMock, ObserverWithMock>(sys, observer, stepper,
+                                                                                       scheduler, event_handler);
 }
