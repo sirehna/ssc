@@ -12,77 +12,13 @@
 #include <boost/numeric/odeint/stepper/runge_kutta4.hpp>
 #include <boost/numeric/odeint/stepper/runge_kutta_cash_karp54.hpp>
 
-#include "ssc/solver/System.hpp"
-
 namespace ssc
 {
     namespace solver
     {
-        class Stepper
-        {
-            public:
-                virtual ~Stepper() = default;
-                virtual void do_step(System& system, std::vector<double>& state, const double t, const double dt) = 0;
-        };
-
-        class SystemWrapper
-        {
-            public:
-                SystemWrapper(System& s) : system(&s)
-                {}
-                void operator()(const std::vector<double>& x, std::vector<double>& dx_dt, const double t)
-                {
-                    system->operator()(x, dx_dt, t);
-                }
-                ~SystemWrapper() {}
-                // This won't work because ODEINT expects the copy to be independent, which it isn't if we just copy the pointer.
-                // Basically, we can't remove 'System' from odeint's stepper's template argument without modifying odeint itself
-                // because do_step requires a system passed by value (copied, no link with the original, another instance).
-                SystemWrapper(const SystemWrapper& rhs) : system(rhs.system) {}
-                SystemWrapper& operator=(const SystemWrapper& rhs) { system = rhs.system; return *this;}
-            private:
-                SystemWrapper();
-                System* system;
-        };
-
-        class EulerStepper : public Stepper
-        {
-            public:
-                EulerStepper() : stepper() {}
-                void do_step(System& system, std::vector<double>& state, const double t, const double dt)
-                {
-                    stepper.do_step(SystemWrapper(system), state, t, dt);
-                }
-
-            private:
-                ::boost::numeric::odeint::euler<std::vector<double> > stepper;
-        };
-
-        class RK4Stepper : public Stepper
-        {
-            public:
-                RK4Stepper() : stepper() {}
-                void do_step(System& system, std::vector<double>& state, const double t, const double dt)
-                {
-                    stepper.do_step(SystemWrapper(system), state, t, dt);
-                }
-
-            private:
-                ::boost::numeric::odeint::runge_kutta4<std::vector<double> > stepper;
-        };
-
-        class RKCK : public Stepper
-        {
-            public:
-                RKCK() : stepper() {}
-                void do_step(System& system, std::vector<double>& state, const double t, const double dt)
-                {
-                    stepper.do_step(SystemWrapper(system), state, t, dt);
-                }
-
-            private:
-                ::boost::numeric::odeint::runge_kutta_cash_karp54<std::vector<double> > stepper;
-        };
+        typedef ::boost::numeric::odeint::euler<StateType> EulerStepper;
+        typedef ::boost::numeric::odeint::runge_kutta4<StateType> RK4Stepper;
+        typedef ::boost::numeric::odeint::runge_kutta_cash_karp54<StateType> RKCK;
     }
 }
 
