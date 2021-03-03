@@ -1,12 +1,12 @@
 /*
- * DefaultScheduler.hpp
+ * Scheduler.hpp
  *
  * \date 21 mars 2014
  *      Author: cec
  */
 
-#ifndef DEFAULTSCHEDULER_HPP_
-#define DEFAULTSCHEDULER_HPP_
+#ifndef SCHEDULER_HPP_
+#define SCHEDULER_HPP_
 
 #include <functional>
 #include <list>
@@ -122,4 +122,4 @@ namespace ssc
     }
 }
 
-#endif /* DEFAULTSCHEDULER_HPP_ */
+#endif /* SCHEDULER_HPP_ */
