@@ -4,7 +4,8 @@ project (${MODULE_UNDER_TEST}_tests)
 FILE(GLOB SRC src/ODEintTests.cpp
               src/constant_step_stepper_architecture_tests.cpp
               src/adaptive_step_stepper_architecture_tests.cpp
-              src/DiscreteSystemsTests.cpp)
+              src/DiscreteSystemsTests.cpp
+              src/SchedulerTests.cpp)
 # ------8<---------------------------------------------->8-----
 
 # Include directories

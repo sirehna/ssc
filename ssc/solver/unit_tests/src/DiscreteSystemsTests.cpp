@@ -92,7 +92,7 @@ TEST_F(DiscreteSystemsTests, can_initialize_discrete_states)
 TEST_F(DiscreteSystemsTests, one_second_steps)
 {
     ssc::solver::VectorObserver observer;
-    ssc::solver::Scheduler scheduler(6, 16, 0.1);
+    ssc::solver::Scheduler scheduler(6, 16.1, 0.1);
     ContinuousSystem system(std::vector<double>(1, 0));
     DiscreteSystem discrete_system(1);
     discrete_system.schedule_update(7, scheduler);
