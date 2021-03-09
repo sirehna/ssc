@@ -42,6 +42,9 @@ class ODEMocks
     MOCK_CONST_METHOD0(run_event_actions, void());
     MOCK_CONST_METHOD2(force_states, void(std::vector<double> &, const double));
     MOCK_METHOD0(initialize_system_outputs_before_first_observation, void());
+    MOCK_METHOD2(set_discrete_state, void(const std::string &, const double &));
+    MOCK_CONST_METHOD1(get_input_value, double(const std::string &));
+    MOCK_CONST_METHOD1(get_state_value, double(const std::string &));
 };
 
 class SystemWithMock : public ssc::solver::ContinuousSystem
@@ -62,6 +65,15 @@ class SystemWithMock : public ssc::solver::ContinuousSystem
     {
         mock.initialize_system_outputs_before_first_observation();
     }
+
+    void set_discrete_state(const std::string &discrete_state_name, const double value)
+    {
+        mock.set_discrete_state(discrete_state_name, value);
+    }
+
+    double get_input_value(const std::string &name) const { mock.get_input_value(name); }
+
+    double get_state_value(const std::string &name) const { mock.get_state_value(name); }
 
   protected:
     ODEMocks &mock;

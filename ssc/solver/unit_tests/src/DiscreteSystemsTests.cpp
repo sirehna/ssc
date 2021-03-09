@@ -43,6 +43,9 @@ struct ContinuousSystem : public ssc::solver::ContinuousSystem
     }
 
     void initialize_system_outputs_before_first_observation() {}
+    void set_discrete_state(const std::string &, const double) {}
+    double get_input_value(const std::string &) const { return -1; }
+    double get_state_value(const std::string &) const { return -1; }
 };
 
 class DiscreteSystem : public ssc::solver::DiscreteSystem
