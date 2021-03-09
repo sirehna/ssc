@@ -65,6 +65,27 @@ class DiscreteSystem : public ssc::solver::DiscreteSystem
     }
 };
 
+TEST_F(DiscreteSystemsTests, can_initialize_discrete_states)
+{
+    ssc::solver::VectorObserver observer;
+    const double t0 = 6;
+    const double dt = 2;
+    ssc::solver::Scheduler scheduler(t0, t0 + 4 * dt, dt);
+    ContinuousSystem continuous_system(std::vector<double>(1, 0));
+    DiscreteSystem discrete_system(dt / 2);
+    discrete_system.initialize(scheduler, &continuous_system);
+    // Check discrete_system has been initialized
+    ASSERT_EQ(std::vector<double>({ t0 }), discrete_system.calltimes);
+    ASSERT_EQ(14, discrete_system.ticks.back());
+    // Scheduler is still at t=t0, no discrete state updaters left to run.
+    ASSERT_EQ(t0, scheduler.get_time());
+    ASSERT_EQ(0, scheduler.get_discrete_state_updaters_to_run().size());
+    // Discrete system callback has been added to the scheduler.
+    scheduler.advance_to_next_time_event();
+    ASSERT_EQ(t0 + dt / 2, scheduler.get_time());
+    ASSERT_EQ(1, scheduler.get_discrete_state_updaters_to_run().size());
+}
+
 TEST_F(DiscreteSystemsTests, one_second_steps)
 {
     ssc::solver::VectorObserver observer;
