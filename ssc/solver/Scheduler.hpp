@@ -8,7 +8,7 @@
 #ifndef SCHEDULER_HPP_
 #define SCHEDULER_HPP_
 
-#include <algorithm>
+#include <cmath>
 #include <functional>
 #include <list>
 #include <vector>
@@ -126,9 +126,9 @@ namespace ssc
             {
                 for (double t : scheduled_time_events)
                 {
-                    if ((t <= new_t && new_t - t <= tolerance) || (t > new_t && t - new_t <= tolerance))
+                    if (std::abs(t - new_t) <= tolerance)
                     {
-                        return false; // abs(t-new_t) <= tolerance
+                        return false;
                     }
                     if (t > new_t)
                     {
