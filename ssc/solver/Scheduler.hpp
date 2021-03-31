@@ -132,7 +132,9 @@ namespace ssc
                     }
                     if (t > new_t)
                     {
-                        return true; // scheduled_time_events are sorted, so we're sure abs(t-new_t) > tolerance
+                        // We can end the loop because as scheduled_time_events is sorted,
+                        // all remaining time events t will be such that $`t - new_t > tolerance`$
+                        return true;
                     }
                 }
                 return false; // new_t > tend
