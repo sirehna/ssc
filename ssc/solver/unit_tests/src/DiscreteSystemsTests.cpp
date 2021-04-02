@@ -51,8 +51,8 @@ struct ContinuousSystem : public ssc::solver::ContinuousSystem
 class DiscreteSystem : public ssc::solver::DiscreteSystem
 {
   public:
-    DiscreteSystem(const double dt_)
-        : ssc::solver::DiscreteSystem(dt_)
+    DiscreteSystem(const double tstart_, const double dt_)
+        : ssc::solver::DiscreteSystem(tstart_, dt_)
         , ticks({ 13 })
         , calltimes()
     {
@@ -75,7 +75,7 @@ TEST_F(DiscreteSystemsTests, can_initialize_discrete_states)
     const double dt = 2;
     ssc::solver::Scheduler scheduler(t0, t0 + 4 * dt, dt);
     ContinuousSystem continuous_system(std::vector<double>(1, 0));
-    DiscreteSystem discrete_system(dt / 2);
+    DiscreteSystem discrete_system(t0, dt / 2);
     discrete_system.initialize(scheduler, &continuous_system);
     // Check discrete_system has been initialized
     ASSERT_EQ(std::vector<double>({ t0 }), discrete_system.calltimes);
@@ -92,9 +92,10 @@ TEST_F(DiscreteSystemsTests, can_initialize_discrete_states)
 TEST_F(DiscreteSystemsTests, one_second_steps)
 {
     ssc::solver::VectorObserver observer;
-    ssc::solver::Scheduler scheduler(6, 16.1, 0.1);
+    const double t0 = 6;
+    ssc::solver::Scheduler scheduler(t0, t0 + 10.1, 0.1);
     ContinuousSystem system(std::vector<double>(1, 0));
-    DiscreteSystem discrete_system(1);
+    DiscreteSystem discrete_system(t0, 1);
     discrete_system.schedule_update(7, scheduler);
     ssc::solver::quicksolve<EulerStepper>(system, scheduler, observer);
     ASSERT_EQ(std::vector<double>({ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }),
@@ -110,7 +111,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
     const double dt = 0.2;
     ssc::solver::Scheduler scheduler(t0, tend, dt);
     ContinuousSystem continuous_system(std::vector<double>(1, 0));
-    DiscreteSystem discrete_system(0.3);
+    DiscreteSystem discrete_system(t0, 0.3);
     discrete_system.schedule_update(7.325, scheduler);
     ssc::solver::quicksolve<EulerStepper>(continuous_system, scheduler, observer);
     const auto observations = observer.get();
@@ -139,7 +140,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
     const double dt = 0.2;
     ssc::solver::Scheduler scheduler(t0, tend, dt);
     ContinuousSystem continuous_system(std::vector<double>(1, 0));
-    DiscreteSystem discrete_system(0.3);
+    DiscreteSystem discrete_system(t0, 0.3);
     discrete_system.schedule_update(7.325, scheduler);
     ssc::solver::quicksolve<RungeKuttaStepper>(continuous_system, scheduler, observer);
     const auto observations = observer.get();
