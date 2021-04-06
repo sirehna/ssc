@@ -128,7 +128,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
 
     // Check discrete system calltimes
     const std::vector<double> expected_discrete_system_calltimes
-        = { 7, 7.3, 7.6, 7.9, 8.2, 8.5, 8.8, 9.1, 9.6, 9.9 };
+        = { 7, 7.2, 7.5, 7.8, 8.1, 8.4, 8.7, 9, 9.3, 9.6, 9.9 };
     ASSERT_EQ(expected_discrete_system_calltimes.size(), discrete_system.calltimes.size());
     for (size_t i = 0; i < expected_discrete_system_calltimes.size(); ++i)
     {
@@ -139,8 +139,8 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
 
     // Check continuous system calltimes
     const std::vector<double> expected_observation_instants
-        = { 6,   6.2, 6.4, 6.6, 6.8, 7, 7.2, 7.3, 7.4, 7.6, 7.8, 7.9, 8,
-            8.2, 8.4, 8.5, 8.6, 8.8, 9, 9.1, 9.2, 9.4, 9.6, 9.8, 9.9, 10 };
+        = { 6,   6.2, 6.4, 6.6, 6.8, 7, 7.2, 7.4, 7.5, 7.6, 7.8, 8,   8.1,
+            8.2, 8.4, 8.6, 8.7, 8.8, 9, 9.2, 9.3, 9.4, 9.6, 9.8, 9.9, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
     for (size_t i = 0; i < observations.size(); ++i)
     {
@@ -214,7 +214,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_shifted_start_and_discret
 
     // Check discrete system calltimes
     const std::vector<double> expected_discrete_system_calltimes
-        = { 7.325, 7.625, 7.925, 8.225, 8.525, 8.825, 9.125, 9.425, 9.725 };
+        = { 7.325, 7.5, 7.8, 8.1, 8.4, 8.7, 9, 9.3, 9.6, 9.9 };
     ASSERT_EQ(expected_discrete_system_calltimes.size(), discrete_system.calltimes.size());
     for (size_t i = 0; i < expected_discrete_system_calltimes.size(); ++i)
     {
@@ -225,8 +225,8 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_shifted_start_and_discret
 
     // Check continuous system calltimes
     const std::vector<double> expected_observation_instants
-        = { 6,     6.2, 6.4,   6.6, 6.8, 7,     7.2, 7.325, 7.4, 7.6, 7.625, 7.8, 7.925, 8,   8.2,
-            8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
+        = { 6,   6.2, 6.4, 6.6, 6.8, 7, 7.2, 7.325, 7.4, 7.5, 7.6, 7.8, 8, 8.1,
+            8.2, 8.4, 8.6, 8.7, 8.8, 9, 9.2, 9.3,   9.4, 9.6, 9.8, 9.9, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
     for (size_t i = 0; i < observations.size(); ++i)
     {
@@ -249,7 +249,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
     const double dt = 0.2;
     ssc::solver::Scheduler scheduler(t0, tend, dt);
 
-    DiscreteSystem discrete_system(t0, 0.3);
+    DiscreteSystem discrete_system(7.325, 0.3);
     discrete_system.schedule_update(7.325, scheduler);
 
     ssc::solver::quicksolve<RungeKuttaStepper>(continuous_system, scheduler, observer);
@@ -279,5 +279,40 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
     for (const auto &observation : observations)
     {
         ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
+    }
+}
+
+TEST_F(DiscreteSystemsTests, no_time_drift)
+{
+    ssc::solver::VectorObserver observer;
+    ContinuousSystem system(std::vector<double>(1, 0));
+
+    const double t0 = 0;
+    const double tend = 0.11;
+    const double dt = 0.1;
+    ssc::solver::Scheduler scheduler(t0, tend, dt);
+
+    DiscreteSystem discrete_system(t0, 1e-4);
+    discrete_system.schedule_update(t0, scheduler);
+
+    ssc::solver::quicksolve<EulerStepper>(system, scheduler, observer);
+
+    // Check discrete system calltimes
+    const std::vector<double> expected_discrete_system_calltimes
+        = { 0,
+            0.1000, 0.1001, 0.1002, 0.1003, 0.1004, 0.1005, 0.1006, 0.1007, 0.1008, 0.1009,
+            0.1010, 0.1011, 0.1012, 0.1013, 0.1014, 0.1015, 0.1016, 0.1017, 0.1018, 0.1019,
+            0.1020, 0.1021, 0.1022, 0.1023, 0.1024, 0.1025, 0.1026, 0.1027, 0.1028, 0.1029,
+            0.1030, 0.1031, 0.1032, 0.1033, 0.1034, 0.1035, 0.1036, 0.1037, 0.1038, 0.1039,
+            0.1040, 0.1041, 0.1042, 0.1043, 0.1044, 0.1045, 0.1046, 0.1047, 0.1048, 0.1049,
+            0.1050, 0.1051, 0.1052, 0.1053, 0.1054, 0.1055, 0.1056, 0.1057, 0.1058, 0.1059,
+            0.1060, 0.1061, 0.1062, 0.1063, 0.1064, 0.1065, 0.1066, 0.1067, 0.1068, 0.1069,
+            0.1070, 0.1071, 0.1072, 0.1073, 0.1074, 0.1075, 0.1076, 0.1077, 0.1078, 0.1079,
+            0.1080, 0.1081, 0.1082, 0.1083, 0.1084, 0.1085, 0.1086, 0.1087, 0.1088, 0.1089,
+            0.1090 };
+    ASSERT_EQ(expected_discrete_system_calltimes.size(), discrete_system.calltimes.size());
+    for (size_t i = 0; i < expected_discrete_system_calltimes.size(); ++i)
+    {
+        ASSERT_DOUBLE_EQ(expected_discrete_system_calltimes.at(i), discrete_system.calltimes.at(i));
     }
 }
