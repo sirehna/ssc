@@ -121,6 +121,49 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
     ssc::solver::Scheduler scheduler(t0, tend, dt);
 
     DiscreteSystem discrete_system(t0, 0.3);
+    discrete_system.schedule_update(7, scheduler);
+
+    ssc::solver::quicksolve<EulerStepper>(continuous_system, scheduler, observer);
+    const auto observations = observer.get();
+
+    // Check discrete system calltimes
+    const std::vector<double> expected_discrete_system_calltimes
+        = { 7, 7.3, 7.6, 7.9, 8.2, 8.5, 8.8, 9.1, 9.6, 9.9 };
+    ASSERT_EQ(expected_discrete_system_calltimes.size(), discrete_system.calltimes.size());
+    for (size_t i = 0; i < expected_discrete_system_calltimes.size(); ++i)
+    {
+        ASSERT_DOUBLE_EQ(expected_discrete_system_calltimes.at(i), discrete_system.calltimes.at(i));
+    }
+    // Check discrete system values
+    ASSERT_EQ(13 + discrete_system.calltimes.size(), discrete_system.ticks.back());
+
+    // Check continuous system calltimes
+    const std::vector<double> expected_observation_instants
+        = { 6,   6.2, 6.4, 6.6, 6.8, 7, 7.2, 7.3, 7.4, 7.6, 7.8, 7.9, 8,
+            8.2, 8.4, 8.5, 8.6, 8.8, 9, 9.1, 9.2, 9.4, 9.6, 9.8, 9.9, 10 };
+    ASSERT_EQ(expected_observation_instants.size(), observations.size());
+    for (size_t i = 0; i < observations.size(); ++i)
+    {
+        ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
+    }
+    // Check continuous system values
+    for (const auto &observation : observations)
+    {
+        ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
+    }
+}
+
+TEST_F(DiscreteSystemsTests, quarter_second_steps_with_shifted_start)
+{
+    ssc::solver::VectorObserver observer;
+    ContinuousSystem continuous_system(std::vector<double>(1, 0));
+
+    const double t0 = 6;
+    const double tend = 10;
+    const double dt = 0.2;
+    ssc::solver::Scheduler scheduler(t0, tend, dt);
+
+    DiscreteSystem discrete_system(7.325, 0.3);
     discrete_system.schedule_update(7.325, scheduler);
 
     ssc::solver::quicksolve<EulerStepper>(continuous_system, scheduler, observer);
@@ -142,7 +185,50 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps)
         = { 6,     6.2, 6.4,   6.6, 6.8, 7,     7.2, 7.325, 7.4, 7.6, 7.625, 7.8, 7.925, 8,   8.2,
             8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
-    for (size_t i = 0; i < 30; ++i)
+    for (size_t i = 0; i < observations.size(); ++i)
+    {
+        ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
+    }
+    // Check continuous system values
+    for (const auto &observation : observations)
+    {
+        ASSERT_DOUBLE_EQ(observation.first - t0, observation.second);
+    }
+}
+
+TEST_F(DiscreteSystemsTests, quarter_second_steps_with_shifted_start_and_discrete_system_initialized_at_t0)
+{
+    ssc::solver::VectorObserver observer;
+    ContinuousSystem continuous_system(std::vector<double>(1, 0));
+
+    const double t0 = 6;
+    const double tend = 10;
+    const double dt = 0.2;
+    ssc::solver::Scheduler scheduler(t0, tend, dt);
+
+    DiscreteSystem discrete_system(t0, 0.3);
+    discrete_system.schedule_update(7.325, scheduler);
+
+    ssc::solver::quicksolve<EulerStepper>(continuous_system, scheduler, observer);
+    const auto observations = observer.get();
+
+    // Check discrete system calltimes
+    const std::vector<double> expected_discrete_system_calltimes
+        = { 7.325, 7.625, 7.925, 8.225, 8.525, 8.825, 9.125, 9.425, 9.725 };
+    ASSERT_EQ(expected_discrete_system_calltimes.size(), discrete_system.calltimes.size());
+    for (size_t i = 0; i < expected_discrete_system_calltimes.size(); ++i)
+    {
+        ASSERT_DOUBLE_EQ(expected_discrete_system_calltimes.at(i), discrete_system.calltimes.at(i));
+    }
+    // Check discrete system values
+    ASSERT_EQ(13 + discrete_system.calltimes.size(), discrete_system.ticks.back());
+
+    // Check continuous system calltimes
+    const std::vector<double> expected_observation_instants
+        = { 6,     6.2, 6.4,   6.6, 6.8, 7,     7.2, 7.325, 7.4, 7.6, 7.625, 7.8, 7.925, 8,   8.2,
+            8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
+    ASSERT_EQ(expected_observation_instants.size(), observations.size());
+    for (size_t i = 0; i < observations.size(); ++i)
     {
         ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
     }
@@ -185,7 +271,7 @@ TEST_F(DiscreteSystemsTests, quarter_second_steps_with_rk4)
         = { 6,     6.2, 6.4,   6.6, 6.8, 7,     7.2, 7.325, 7.4, 7.6, 7.625, 7.8, 7.925, 8,   8.2,
             8.225, 8.4, 8.525, 8.6, 8.8, 8.825, 9,   9.125, 9.2, 9.4, 9.425, 9.6, 9.725, 9.8, 10 };
     ASSERT_EQ(expected_observation_instants.size(), observations.size());
-    for (size_t i = 0; i < 30; ++i)
+    for (size_t i = 0; i < observations.size(); ++i)
     {
         ASSERT_DOUBLE_EQ(expected_observation_instants.at(i), observations.at(i).first);
     }
