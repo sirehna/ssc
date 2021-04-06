@@ -1,4 +1,5 @@
 #include "ssc/solver/DiscreteSystem.hpp"
+#include <cmath>
 
 ssc::solver::DiscreteSystem::DiscreteSystem(const double tstart_, const double dt_)
     : tstart(tstart_), dt(dt_)

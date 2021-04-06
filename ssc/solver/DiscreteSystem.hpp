@@ -8,7 +8,6 @@
 #ifndef SOLVER_DISCRETESYSTEM_HPP_
 #define SOLVER_DISCRETESYSTEM_HPP_
 
-#include <cmath>
 #include <vector>
 
 #include "ssc/solver/ContinuousSystem.hpp"
